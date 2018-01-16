@@ -8,35 +8,37 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ArCiGoUnoSquare/tubular-react.git"
+    "url": "git+https://github.com/unosquare/tubular-react.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ArCiGoUnoSquare/tubular-react/issues"
+    "url": "https://github.com/unosquare/tubular-react/issues"
   },
-  "homepage": "https://github.com/ArCiGoUnoSquare/tubular-react#readme",
+  "homepage": "https://github.com/unosquare/tubular-react#readme",
   "dependencies": {
     "axios": "^0.17.1",
-    "css-loader": "^0.28.8",
-    "file-loader": "^1.1.6",
-    "html-webpack-plugin": "^2.30.1",
     "material-ui": "^1.0.0-beta.28",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-router-dom": "^4.2.2",
-    "style-loader": "^0.19.1",
-    "typeface-roboto": "0.0.50",
-    "url-loader": "^0.6.2",
-    "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.11.0"
+    "typeface-roboto": "0.0.50"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
-    "eslint-plugin-react": "^7.5.1"
+    "del": "^3.0.0",
+    "eslint": "^4.15.0",
+    "eslint-plugin-babel": "^4.1.2",
+    "eslint-plugin-react": "^7.5.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.0",
+    "gulp-copy": "^1.1.0"
+  },
+  "peerDependencies": {
+    "material-ui": "next",
+    "react": "^15.0.0 || ^16.0.0",
+    "react-dom": "^15.0.0 || ^16.0.0"
   }
 }
