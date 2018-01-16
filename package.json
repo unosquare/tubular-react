@@ -21,7 +21,6 @@
     "css-loader": "^0.28.8",
     "file-loader": "^1.1.6",
     "html-webpack-plugin": "^2.30.1",
-    "lodash": "^4.17.4",
     "material-ui": "^1.0.0-beta.28",
     "react": "^16.2.0",
     "react-csv": "^1.0.10",
