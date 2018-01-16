@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
-import TubularReact from './TubularReact/TubularReact.jsx';
+import TubularTable from './TubularTable/';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+export default TubularTable;
