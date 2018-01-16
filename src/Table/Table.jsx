@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class TubularReact extends Component{
+class Table extends Component{
   render() {
     return (
      <div style={{textAlign: 'center'}}>
@@ -9,4 +9,4 @@ class TubularReact extends Component{
   }
 }
 
-export default TubularReact;
+export default Table;
