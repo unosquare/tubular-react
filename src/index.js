@@ -1,5 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import TubularReact from './TubularReact.jsx';
+import React, { Component } from 'react';
+import TubularReact from './TubularReact/TubularReact.jsx';
 
 ReactDOM.render(<App />, document.getElementById('root'));
