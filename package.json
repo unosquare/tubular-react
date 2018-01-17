@@ -4,7 +4,8 @@
   "description": "Tubular React",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server"
+    "start": "gulp",
+    "test": "gulp test"
   },
   "repository": {
     "type": "git",
@@ -28,13 +29,18 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "chai": "^4.1.2",
     "del": "^3.0.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^4.15.0",
     "eslint-plugin-babel": "^4.1.2",
     "eslint-plugin-react": "^7.5.1",
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.0",
-    "gulp-copy": "^1.1.0"
+    "gulp-copy": "^1.1.0",
+    "gulp-mocha": "^5.0.0",
+    "sinon": "^4.1.6"
   },
   "peerDependencies": {
     "material-ui": "next",

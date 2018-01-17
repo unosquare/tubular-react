@@ -1,6 +1,6 @@
 import React from 'react';
 
-class TubularTable extends React.Component{
+class Grid extends React.Component{
   render() {
     return (
       <div style={{ textAlign: 'center' }}>
@@ -9,4 +9,4 @@ class TubularTable extends React.Component{
   }
 }
 
-export default TubularTable;
+export default Grid;

@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const babel = require('gulp-babel');
 const del = require('del');
 const copy = require('gulp-copy');
+const mocha = require('gulp-mocha');
 
 gulp.task('build', () => 
   gulp.src('src/**/*.js')
@@ -19,5 +20,11 @@ gulp.task('build:copy', () =>
     .pipe(copy('build/', { prefix: 1 })));
 
 gulp.task('clean:build', ['build:clean', 'build', 'build:copy']);
+
+gulp.task('test', () => gulp.src(['test/**/*.spec.js'])
+  .pipe(mocha({
+    reporter: 'spec',
+    compilers: 'babel-core/register'
+  })));
 
 gulp.task('default', ['clean:build']);
