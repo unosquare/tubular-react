@@ -11,6 +11,16 @@ const columns = [
     visible: true,
     isKey: false,
     dataType: 'string'
+  },
+  { 
+    name: 'sdasda', 
+    label: 'asdasda', 
+    sortable: true,
+    sortDirection: 'none',
+    searchable: true,
+    visible: true,
+    isKey: false,
+    dataType: 'string'
   }
 ];
 export default class Main extends React.Component{

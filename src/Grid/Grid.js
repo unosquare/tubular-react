@@ -17,24 +17,21 @@ class Grid extends React.Component{
   static defaultProps = {
     rowsPerPage: 5,
     page: 0,
-    initialSort: {
-      column: '',
-      order: 'asc'
-    },
     title: ''
   }
 
   state = {
-    order: this.props.initialSort.order,
-    orderBy: this.props.initialSort.column,
     page: this.props.page,
     rowsPerPage: this.props.rowsPerPage,
-    data: this.props.data
+    data: this.props.data,
+    columns: this.props.columns
   }
 
   render() {
-    const { classes, columns } = this.props;
-    const { data, rowsPerPage, page, order, orderBy } = this.state;
+    const { classes } = this.props;
+    const { data, rowsPerPage, page, columns } = this.state;
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+
     return (
       <Paper className={classes.root}>
         <Table className={classes.table}>
@@ -58,6 +55,11 @@ class Grid extends React.Component{
                   ) }
                 </TableRow>
               ))}
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 49 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </Paper>);
@@ -76,7 +78,8 @@ Grid.propTypes = {
       searchable: PropTypes.bool.isRequired,
       visible: PropTypes.bool.isRequired,
       isKey: PropTypes.bool.isRequired,
-      dataType: PropTypes.oneOf(['date', 'numeric', 'boolean', 'string']).isRequired
+      dataType: PropTypes.oneOf(['date', 'numeric', 'boolean', 'string']).isRequired,
+      filter: PropTypes.bool.isRequired
     })).isRequired,
   data: PropTypes.array.isRequired,
   rowsPerPage: PropTypes.number,    
