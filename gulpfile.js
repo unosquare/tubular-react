@@ -27,4 +27,4 @@ gulp.task('test', () => gulp.src(['test/**/*.spec.js'])
     require: ['babel-register', 'test/helpers/browser.js']
   })));
 
-gulp.task('default', ['clean:build']);
+gulp.task('default', ['build:clean', 'build']);
