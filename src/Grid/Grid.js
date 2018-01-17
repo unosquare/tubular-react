@@ -22,7 +22,6 @@ class Grid extends Component {
       column: '',
       order: 'asc'
     },
-    showTableFooter: true,
     title: ''
   }
 
@@ -40,7 +39,6 @@ class Grid extends Component {
   componentWillMount = () => {
     Axios.get(this.state.serverUrl)
       .then(response => {
-        console.log(response.data);
         this.setState({ records: response.data });
       });
   }
@@ -65,21 +63,10 @@ class Grid extends Component {
 
   render() {
 
-    const { classes, columns, showTableFooter } = this.props;
+    const { classes, columns } = this.props;
     const { data, records, rowsPerPage, page, order, orderBy } = this.state;
     
     const totalCount = records.length;
-    let tableFooter;
-
-    if(showTableFooter) {
-      tableFooter = (
-        <TableFooter>
-          <TableRow>
-            <TablePagination count = { totalCount } rowsPerPage = { rowsPerPage } page = { page } onChangePage = { this.handleChangePage } onChangeRowsPerPage = { this.handleChangeRowsPerPage } />
-          </TableRow>
-        </TableFooter>
-      );
-    }
 
     return (
       <Paper className={classes.root}>
@@ -87,7 +74,7 @@ class Grid extends Component {
           <TableHead>
             <TableRow>
               { columns.map(column => 
-                <TableCell key={column.key}>
+                <TableCell key={column.name}>
                   {column.label}
                 </TableCell>
               )}
@@ -99,13 +86,17 @@ class Grid extends Component {
                 <TableRow hover key={rowIndex}>
                   { columns.map((column, index) => 
                     <TableCell key={index} padding={column.label === '' ? 'none' : 'default'}>
-                      { row[column.key] && row[column.key] }
+                      { row[column.name] && row[column.name] }
                     </TableCell>
                   ) }
                 </TableRow>
               ))}
           </TableBody>
-          { tableFooter }
+          <TableFooter>
+            <TableRow>
+              <TablePagination count = { totalCount } rowsPerPage = { rowsPerPage } page = { page } onChangePage = { this.handleChangePage } onChangeRowsPerPage = { this.handleChangeRowsPerPage } />
+            </TableRow>
+          </TableFooter>
         </Table>
       </Paper>);
   }
@@ -115,7 +106,7 @@ Grid.propTypes = {
   classes: PropTypes.object.isRequired,
   columns: PropTypes.arrayOf(
     PropTypes.shape({
-      key: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,
       sortable: PropTypes.bool.isRequired,
       render: PropTypes.func
@@ -129,7 +120,6 @@ Grid.propTypes = {
   }),
   rowsPerPage: PropTypes.number,    
   serverUrl: PropTypes.string.isRequired,
-  showTableFooter: PropTypes.bool,
   title: PropTypes.string
 };
 
