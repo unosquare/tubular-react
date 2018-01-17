@@ -2,7 +2,7 @@ import Axios from 'axios';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
+import Table, { TableBody, TableCell, TableHead, TableRow, TableFooter, TablePagination } from 'material-ui/Table';
 import { withStyles } from 'material-ui/styles';
 
 const styles = theme => ({
@@ -22,6 +22,7 @@ class Grid extends Component {
       column: '',
       order: 'asc'
     },
+    showTableFooter: true,
     title: ''
   }
 
@@ -43,10 +44,41 @@ class Grid extends Component {
       });
   }
 
+  handleChangePage = (event, page) => {
+    const { onNextPageClick } = this.props;
+
+    if (onNextPageClick) {
+      onNextpageClick(event);
+    }
+    else {
+      this.setState({ page });
+    }
+  };
+
+  handleChangeRowsPerPage = event => {
+    const { handleChangeRowsPerPage } = this.props;
+
+    if (!handleChangeRowsPerPage) 
+      this.setState({ rowsPerPage: event.target.value });
+  };
+
   render() {
 
-    const { classes, columns } = this.props;
+    const { classes, columns, showTableFooter } = this.props;
     const { data, records, rowsPerPage, page, order, orderBy } = this.state;
+    
+    const totalCount = records.length;
+    let tableFooter;
+
+    if(showTableFooter) {
+      tableFooter  = (
+        <TableFooter>
+          <TableRow>
+            <TablePagination count = { totalCount } rowsPerPage = { rowsPerPage } page = { page } onChangePage = { } onChangeRowsPerPage = { } />
+          </TableRow>
+        </TableFooter>
+      );
+    }
 
     return (
       <Paper className={classes.root}>
@@ -72,6 +104,7 @@ class Grid extends Component {
                 </TableRow>
               ))}
           </TableBody>
+          { tableFooter }
         </Table>
       </Paper>);
   }
@@ -87,13 +120,16 @@ Grid.propTypes = {
       render: PropTypes.func
     })).isRequired,
   data: PropTypes.array.isRequired,
+  handleChangePage: PropTypes.func,
+  handleChangeRowsPerPage: PropTypes.func,
   initialSort: PropTypes.shape({
     column: PropTypes.string.isRequired,
     order: PropTypes.string.isRequired
   }),
   rowsPerPage: PropTypes.number,    
-  title: PropTypes.string,
-  serverUrl: PropTypes.string.isRequired
+  serverUrl: PropTypes.string.isRequired,
+  showTableFooter: PropTypes.bool,
+  title: PropTypes.string
 };
 
 export default withStyles(styles)(Grid);
