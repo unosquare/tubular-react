@@ -60,3 +60,6 @@ typings/
 #Build directory
 build
 
+# Examples bundle
+bundle.js
+
