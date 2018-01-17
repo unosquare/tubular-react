@@ -46,7 +46,7 @@ class Grid extends Component {
   render() {
 
     const { classes, columns } = this.props;
-    const { data, rowsPerPage, page, order, orderBy } = this.state;
+    const { data, logs, rowsPerPage, page, order, orderBy } = this.state;
 
     return (
       <Paper className={classes.root}>
