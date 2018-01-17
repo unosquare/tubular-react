@@ -32,12 +32,12 @@ class Grid extends Component {
     rowsPerPage: this.props.rowsPerPage,
     data: this.props.data,
 
-    URL: this.props.URL,
+    serverUrl: this.props.serverUrl,
     records: []
   }
 
   componentWillMount = () => {
-    Axios.get(this.state.URL)
+    Axios.get(this.state.serverUrl)
       .then(response => {
         this.setState({ records: response.data });
       });
@@ -93,7 +93,7 @@ Grid.propTypes = {
   }),
   rowsPerPage: PropTypes.number,    
   title: PropTypes.string,
-  URL: PropTypes.string.isRequired
+  serverUrl: PropTypes.string.isRequired
 };
 
 export default withStyles(styles)(Grid);
