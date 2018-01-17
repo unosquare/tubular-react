@@ -78,7 +78,7 @@ Grid.propTypes = {
       searchable: PropTypes.bool.isRequired,
       visible: PropTypes.bool.isRequired,
       isKey: PropTypes.bool.isRequired,
-      dataType: PropTypes.oneOf(['date', 'numeric', 'boolean', 'string']).isRequired,
+      dataType: PropTypes.oneOf(['date', 'date_time', 'date_utc', 'numeric', 'boolean', 'string']).isRequired,
       filter: PropTypes.bool.isRequired
     })).isRequired,
   data: PropTypes.array.isRequired,
