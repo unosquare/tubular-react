@@ -54,7 +54,7 @@ class Grid extends Component {
           <TableHead>
             <TableRow>
               { columns.map(column => 
-                <TableCell key={column.key}>
+                <TableCell key={column.name}>
                   {column.label}
                 </TableCell>
               )}
@@ -66,7 +66,7 @@ class Grid extends Component {
                 <TableRow hover key={rowIndex}>
                   { columns.map((column, index) => 
                     <TableCell key={index} padding={column.label === '' ? 'none' : 'default'}>
-                      { row[column.key] && row[column.key] }
+                      { row[column.name] && row[column.name] }
                     </TableCell>
                   ) }
                 </TableRow>
@@ -81,7 +81,7 @@ Grid.propTypes = {
   classes: PropTypes.object.isRequired,
   columns: PropTypes.arrayOf(
     PropTypes.shape({
-      key: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,
       sortable: PropTypes.bool.isRequired,
       render: PropTypes.func
@@ -92,8 +92,8 @@ Grid.propTypes = {
     order: PropTypes.string.isRequired
   }),
   rowsPerPage: PropTypes.number,    
-  title: PropTypes.string,
-  serverUrl: PropTypes.string.isRequired
+  serverUrl: PropTypes.string.isRequired,
+  title: PropTypes.string
 };
 
 export default withStyles(styles)(Grid);
