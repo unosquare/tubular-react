@@ -38,11 +38,6 @@ describe('<Grid />', () => {
     expect(columns).to.have.lengthOf(1);
   });
 
-  it('should have 0 rows', () => {
-    const rows = grid().find(TableBody).find(TableRow);
-    expect(rows).to.have.lengthOf(0);
-  });
-
   beforeEach(() => {
     props = {
       data: [],
