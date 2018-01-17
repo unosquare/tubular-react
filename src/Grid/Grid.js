@@ -1,9 +1,9 @@
+import Axios from 'axios';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
-import React from 'react';
-import { withStyles } from 'material-ui/styles';
+import React, { Component } from 'react';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
-
+import { withStyles } from 'material-ui/styles';
 
 const styles = theme => ({
   root: {
@@ -13,7 +13,8 @@ const styles = theme => ({
   }
 });
 
-class Grid extends React.Component{
+class Grid extends Component {
+  
   static defaultProps = {
     rowsPerPage: 5,
     page: 0,
@@ -29,12 +30,24 @@ class Grid extends React.Component{
     orderBy: this.props.initialSort.column,
     page: this.props.page,
     rowsPerPage: this.props.rowsPerPage,
-    data: this.props.data
+    data: this.props.data,
+
+    URL: this.props.URL,
+    logs: []
+  }
+
+  componentWillMount = () => {
+    Axios.get(this.state.URL)
+      .then(response => {
+        this.setState({ logs: response.data });
+      });
   }
 
   render() {
+
     const { classes, columns } = this.props;
     const { data, rowsPerPage, page, order, orderBy } = this.state;
+
     return (
       <Paper className={classes.root}>
         <Table className={classes.table}>
@@ -49,7 +62,7 @@ class Grid extends React.Component{
           </TableHead>
           <TableBody>
             {
-              data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, rowIndex) => (
+              logs.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, rowIndex) => (
                 <TableRow hover key={rowIndex}>
                   { columns.map((column, index) => 
                     <TableCell key={index} padding={column.label === '' ? 'none' : 'default'}>
@@ -79,6 +92,8 @@ Grid.propTypes = {
     order: PropTypes.string.isRequired
   }),
   rowsPerPage: PropTypes.number,    
-  title: PropTypes.string
+  title: PropTypes.string,
+  URL: PropTypes.string.isRequired
 };
+
 export default withStyles(styles)(Grid);
