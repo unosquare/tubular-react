@@ -41,7 +41,7 @@ class Grid extends React.Component{
           <TableHead>
             <TableRow>
               { columns.map(column => 
-                <TableCell key={column.key}>
+                <TableCell key={column.name}>
                   {column.label}
                 </TableCell>
               )}
@@ -53,7 +53,7 @@ class Grid extends React.Component{
                 <TableRow hover key={rowIndex}>
                   { columns.map((column, index) => 
                     <TableCell key={index} padding={column.label === '' ? 'none' : 'default'}>
-                      { row[column.key] && row[column.key] }
+                      { row[column.name] && row[column.name] }
                     </TableCell>
                   ) }
                 </TableRow>
@@ -68,16 +68,17 @@ Grid.propTypes = {
   classes: PropTypes.object.isRequired,
   columns: PropTypes.arrayOf(
     PropTypes.shape({
-      key: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,
       sortable: PropTypes.bool.isRequired,
-      render: PropTypes.func
+      sortOrder: PropTypes.number,
+      sortDirection: PropTypes.oneOf(['none', 'asc', 'desc']).isRequired,
+      searchable: PropTypes.bool.isRequired,
+      visible: PropTypes.bool.isRequired,
+      isKey: PropTypes.bool.isRequired,
+      dataType: PropTypes.oneOf(['date', 'numeric', 'boolean', 'string']).isRequired
     })).isRequired,
   data: PropTypes.array.isRequired,
-  initialSort: PropTypes.shape({
-    column: PropTypes.string.isRequired,
-    order: PropTypes.string.isRequired
-  }),
   rowsPerPage: PropTypes.number,    
   title: PropTypes.string
 };
