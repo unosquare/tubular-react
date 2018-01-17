@@ -40,6 +40,7 @@ class Grid extends Component {
   componentWillMount = () => {
     Axios.get(this.state.serverUrl)
       .then(response => {
+        console.log(response.data);
         this.setState({ records: response.data });
       });
   }
@@ -71,10 +72,10 @@ class Grid extends Component {
     let tableFooter;
 
     if(showTableFooter) {
-      tableFooter  = (
+      tableFooter = (
         <TableFooter>
           <TableRow>
-            <TablePagination count = { totalCount } rowsPerPage = { rowsPerPage } page = { page } onChangePage = { } onChangeRowsPerPage = { } />
+            <TablePagination count = { totalCount } rowsPerPage = { rowsPerPage } page = { page } onChangePage = { this.handleChangePage } onChangeRowsPerPage = { this.handleChangeRowsPerPage } />
           </TableRow>
         </TableFooter>
       );
