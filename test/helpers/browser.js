@@ -15,4 +15,7 @@ global.document = window.document;
 global.navigator = {
   userAgent: 'node.js'
 };
+global.requestAnimationFrame = callback => {
+  setTimeout(callback, 0);
+};
 copyProps(window, global);
