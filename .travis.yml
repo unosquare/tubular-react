@@ -10,4 +10,4 @@ install:
 - npm i -g gulp-cli
 script:
 - npm start
-- npm run test
+- npm run test:coveralls
