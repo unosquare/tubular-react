@@ -33,20 +33,20 @@ class Grid extends Component {
     data: this.props.data,
 
     URL: this.props.URL,
-    logs: []
+    records: []
   }
 
   componentWillMount = () => {
     Axios.get(this.state.URL)
       .then(response => {
-        this.setState({ logs: response.data });
+        this.setState({ records: response.data });
       });
   }
 
   render() {
 
     const { classes, columns } = this.props;
-    const { data, logs, rowsPerPage, page, order, orderBy } = this.state;
+    const { data, records, rowsPerPage, page, order, orderBy } = this.state;
 
     return (
       <Paper className={classes.root}>
@@ -62,7 +62,7 @@ class Grid extends Component {
           </TableHead>
           <TableBody>
             {
-              logs.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, rowIndex) => (
+              records.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, rowIndex) => (
                 <TableRow hover key={rowIndex}>
                   { columns.map((column, index) => 
                     <TableCell key={index} padding={column.label === '' ? 'none' : 'default'}>
