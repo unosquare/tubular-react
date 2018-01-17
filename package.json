@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "gulp",
-    "test": "gulp test"
+    "test": "gulp test",
+    "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov"
   },
   "repository": {
     "type": "git",
@@ -42,6 +43,7 @@
     "gulp-copy": "^1.1.0",
     "gulp-mocha": "^5.0.0",
     "jsdom": "^11.5.1",
+    "nyc": "^11.4.1",
     "sinon": "^4.1.6"
   },
   "peerDependencies": {
