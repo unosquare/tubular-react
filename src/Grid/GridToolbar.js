@@ -25,9 +25,6 @@ const styles = theme => ({
   },
   button: {
     minWidth: 150
-  },
-  paper: {
-    
   }
 });
 
@@ -50,6 +47,9 @@ class GridToolbar extends React.Component {
   clearSearchText = () => {
     this.setState({
       searchText: ''
+    }, () => {
+      if(this.props.onSearchTextChange)
+        this.props.onSearchTextChange(this.state.searchText);
     });
   }
   

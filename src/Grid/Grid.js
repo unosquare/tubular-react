@@ -1,9 +1,9 @@
+import GridToolbar from './GridToolbar';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { withStyles } from 'material-ui/styles';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
-
 
 const styles = theme => ({
   root: {
@@ -24,16 +24,37 @@ class Grid extends React.Component{
     page: this.props.page,
     rowsPerPage: this.props.rowsPerPage,
     data: this.props.data,
+    filteredData: this.props.data,
     columns: this.props.columns
   }
 
+  handleTextSearch = text => {
+    if(text === ''){
+      this.setState(prevState => ({
+        filteredData: prevState.data
+      }));
+      return;
+    }
+
+    this.setState(prevState => ({
+      filteredData: prevState.data
+        .filter( row => 
+          prevState.columns.some(col => 
+            (col.searchable && String(row[col.name]).toLowerCase().includes(String(text).toLowerCase()))
+          )
+        ) 
+    }));
+  }
+
+
   render() {
     const { classes } = this.props;
-    const { data, rowsPerPage, page, columns } = this.state;
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+    const { rowsPerPage, page, columns, filteredData } = this.state;
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, filteredData.length - page * rowsPerPage);
 
     return (
       <Paper className={classes.root}>
+        <GridToolbar onSearchTextChange={this.handleTextSearch} />
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
@@ -46,7 +67,7 @@ class Grid extends React.Component{
           </TableHead>
           <TableBody>
             {
-              data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, rowIndex) => (
+              filteredData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, rowIndex) => (
                 <TableRow hover key={rowIndex}>
                   { columns.map((column, index) => 
                     <TableCell key={index} padding={column.label === '' ? 'none' : 'default'}>
@@ -79,7 +100,7 @@ Grid.propTypes = {
       visible: PropTypes.bool.isRequired,
       isKey: PropTypes.bool.isRequired,
       dataType: PropTypes.oneOf(['date', 'datetime', 'datetimeutc', 'numeric', 'boolean', 'string']).isRequired,
-      filter: PropTypes.bool.isRequired
+      filter: PropTypes.bool
     })).isRequired,
   data: PropTypes.array.isRequired,
   rowsPerPage: PropTypes.number,    
