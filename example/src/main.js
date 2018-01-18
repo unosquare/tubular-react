@@ -47,7 +47,6 @@ export default class Main extends React.Component{
   render(){
     return(
       <Grid data={[{ key: 'data' }]} columns={columns} serverUrl = { 'https://jsonplaceholder.typicode.com/posts' } />
-      // <Grid columns={columns} serverUrl = { 'https://jsonplaceholder.typicode.com/posts' } />
     );
   }
 }
