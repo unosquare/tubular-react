@@ -1,12 +1,13 @@
 import Adapter from 'enzyme-adapter-react-16';
-import { expect } from 'chai';
+import { assert, expect } from 'chai';
 import Grid from '../src/Grid/Grid';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import React from 'react';
-import sinon from 'sinon';
+import sinon, { spy } from 'sinon';
 import Enzyme, { mount, shallow } from 'enzyme';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
+import Axios from 'axios';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -26,7 +27,6 @@ describe('<Grid />', () => {
     }
     return mountedGrid;
   };
-
   
   it('should render a Paper', () => {
     const wrapper = grid().find(Paper);
@@ -43,10 +43,20 @@ describe('<Grid />', () => {
     expect(rows).to.have.lengthOf(0);
   });
 
+  it('calls componentWillMount() lifecycle method', () => {
+    const componentWillMountSpy = spy(Grid.prototype, 'componentWillMount');
+    const wrapper = mount(<Grid { ...props } />);
+
+    assert.ok(Grid.prototype.componentWillMount.calledOnce);
+
+    componentWillMountSpy.restore();
+  });
+
   beforeEach(() => {
     props = {
       data: [],
-      columns: columns
+      columns: columns,
+      serverUrl: 'https://jsonplaceholder.typicode.com/users'
     };
   });
 });
