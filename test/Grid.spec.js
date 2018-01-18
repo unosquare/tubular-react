@@ -7,7 +7,6 @@ import React from 'react';
 import sinon, { spy } from 'sinon';
 import Enzyme, { mount, shallow } from 'enzyme';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
-import Axios from 'axios';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -37,7 +36,7 @@ describe('<Grid />', () => {
     const columns = grid().find(TableHead).find(TableRow).find(TableCell);
     expect(columns).to.have.lengthOf(1);
   });
-
+      
   it('should have 0 rows', () => {
     const rows = grid().find(TableBody).find(TableRow);
     expect(rows).to.have.lengthOf(0);
