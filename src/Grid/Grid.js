@@ -18,13 +18,18 @@ class Grid extends Component {
   static defaultProps = {
     rowsPerPage: 5,
     page: 0,
+    initialSort: {
+      column: '',
+      order: 'asc'
+    },
     title: ''
   }
 
   state = {
+    order: this.props.initialSort.order,
+    orderBy: this.props.initialSort.column,
     page: this.props.page,
     rowsPerPage: this.props.rowsPerPage,
-    data: this.props.data,
     serverUrl: this.props.serverUrl,
     records: []
   }
@@ -37,8 +42,9 @@ class Grid extends Component {
   }
 
   render() {
+
     const { classes, columns } = this.props;
-    const { data, records, rowsPerPage, page, order, orderBy } = this.state;
+    const { records, rowsPerPage, page, order, orderBy } = this.state;
 
     return (
       <Paper className={classes.root}>
@@ -63,11 +69,6 @@ class Grid extends Component {
                   ) }
                 </TableRow>
               ))}
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 49 * emptyRows }}>
-                <TableCell colSpan={6} />
-              </TableRow>
-            )}
           </TableBody>
         </Table>
       </Paper>);
@@ -81,15 +82,12 @@ Grid.propTypes = {
       name: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,
       sortable: PropTypes.bool.isRequired,
-      sortOrder: PropTypes.number,
-      sortDirection: PropTypes.oneOf(['none', 'asc', 'desc']).isRequired,
-      searchable: PropTypes.bool.isRequired,
-      visible: PropTypes.bool.isRequired,
-      isKey: PropTypes.bool.isRequired,
-      dataType: PropTypes.oneOf(['date', 'datetime', 'datetimeutc', 'numeric', 'boolean', 'string']).isRequired,
-      filter: PropTypes.bool.isRequired
+      render: PropTypes.func
     })).isRequired,
-  data: PropTypes.array.isRequired,
+  initialSort: PropTypes.shape({
+    column: PropTypes.string.isRequired,
+    order: PropTypes.string.isRequired
+  }),
   rowsPerPage: PropTypes.number,    
   serverUrl: PropTypes.string.isRequired,
   title: PropTypes.string
