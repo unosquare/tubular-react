@@ -24,10 +24,18 @@ const styles = theme => ({
     dialog: {
         minWidth: '400px',
         background: 'black'
+    },
+    applyButton: {
+        background: '#28b62c',
+        color: 'white'
+    },
+    clearButton: {
+        background: '#ff4136',
+        color: 'white'
     }
 });
 
-class RsTableHeader extends React.Component {
+class GridHeader extends React.Component {
     static propTypes = {
         columns: PropTypes.arrayOf(
             PropTypes.shape({
@@ -44,7 +52,8 @@ class RsTableHeader extends React.Component {
         open: false,
         columnType: "",
         filter: "",
-        activeFilter: ""
+        activeFilter: "",
+        functions: []
     }
 
     sortHandler = property => event => {
@@ -60,8 +69,6 @@ class RsTableHeader extends React.Component {
     };
 
     handleFilter = (column) => {
-        console.log("Lok'tar Ogar")
-
         this.setState({ columnType: column.columnType, activeFilter: column.key })
 
         this.handleClickOpen();
@@ -71,40 +78,118 @@ class RsTableHeader extends React.Component {
         this.setState({ [event.target.name]: event.target.value });
     };
 
-    DialogDropDown = (props) => {
-        const value = this.state[this.state.activeFilter] === undefined ? "None" : this.state[this.state.activeFilter];
+    handleTextFieldChange = name => event => {
+        this.setState({
+            [this.state.activeFilter + name]: event.target.value,
+        });
+    };
 
-        const dropdown = this.state.columnType === "text" ?
+    functionCleaner = () => {
+        var array = Object.assign([], this.state.functions);
+
+        for (var i = 0; i < array.length; i++) {
+            if(array[i]['column'] == this.state.activeFilter){
+                array.splice(i, 1);
+            }
+        } 
+
+        return array;
+    }
+
+    handleClear = (value1, value2) => {
+        var array = this.functionCleaner();
+
+        this.setState({
+            functions: array,
+            [this.state.activeFilter + value1]: "",
+            [this.state.activeFilter + value2]: ""
+        }, () => { 
+            this.props.filterHandler(this.state.functions) 
+        });
+    }
+
+    handleApply = (value1, value2) => {
+        var array = this.functionCleaner();
+        var value = value2 == null ? null : this.state[this.state.activeFilter + 'value2'];
+
+        this.setState({functions: array}, () => {
+            /* if(this.state[this.state.activeFilter + 'value'] == "")
+                return; */
+
+            this.setState({
+                functions: this.state.functions.concat([{
+                    column: this.state.activeFilter,
+                    filter: this.state[this.state.activeFilter],
+                    value: this.state[this.state.activeFilter + 'value'],
+                    value2: value
+                }])
+            }, () => { 
+                this.props.filterHandler(this.state.functions) 
+            })
+        }) 
+    }
+
+    DialogContent = (props) => {
+        const value = this.state[this.state.activeFilter + 'value'] === undefined ? "" : this.state[this.state.activeFilter + 'value'];
+        const value2 = this.state[this.state.activeFilter + 'value2'] === undefined ? "" : this.state[this.state.activeFilter + 'value2'];
+
+        if (this.state[this.state.activeFilter] == 'between') {
+            return (
+                <div >
+                    <TextField id={this.state.activeFilter} label={"Value"} value={value} onChange={this.handleTextFieldChange('value')} />
+                    <br />
+                    <TextField id={this.state.activeFilter} label={"Value 2"} value={value2} onChange={this.handleTextFieldChange('value2')} />
+                    <br />
+                    <Button className={props.classes.applyButton} onClick={() => this.handleApply('value', 'value2')} >Apply</Button>
+                    <Button className={props.classes.clearButton} onClick={() => this.handleClear('value', 'value2')}>Clear</Button>
+                </div>
+            )
+        } 
+
+        return (
+            <div >
+                <TextField id={this.state.activeFilter} label={"Value"} value={value} onChange={this.handleTextFieldChange('value')} />
+                <br />
+                <Button className={props.classes.applyButton} onClick={() => this.handleApply('value', null)}>Apply</Button>
+                <Button className={props.classes.clearButton} onClick={() => this.handleClear('value', null)}>Clear</Button>
+            </div>
+        )
+    }
+
+    DialogDropDown = (props) => {
+        const value = this.state[this.state.activeFilter] === undefined ? "none" : this.state[this.state.activeFilter];
+
+        const dropdown = this.state.columnType === "string" ?
             (<Select
                 className={props.classes.dropdown}
                 value={value}
                 onChange={this.handleChange}
-                input={<Input name={this.state.activeFilter} id="age-simple" />}
+                input={<Input name={this.state.activeFilter} />}
             >
-                <MenuItem value={'None'}>None</MenuItem>
-                <MenuItem value={'Equals'}>Equals</MenuItem>
-                <MenuItem value={'Not Equals'}>Not Equals</MenuItem>
-                <MenuItem value={'Contains'}>Contains</MenuItem>
-                <MenuItem value={'Not Contains'}>Not Contains</MenuItem>
-                <MenuItem value={'Starts With'}>Starts With</MenuItem>
-                <MenuItem value={'Not Starts With'}>Not Starts With</MenuItem>
-                <MenuItem value={'Ends With'}>Ends With</MenuItem>
-                <MenuItem value={'Not Ends With'}>Not Ends With</MenuItem>
+                <MenuItem value={'none'}>None</MenuItem>
+                <MenuItem value={'equals'}>Equals</MenuItem>
+                <MenuItem value={'notEquals'}>Not Equals</MenuItem>
+                <MenuItem value={'contains'}>Contains</MenuItem>
+                <MenuItem value={'notContains'}>Not Contains</MenuItem>
+                <MenuItem value={'startsWith'}>Starts With</MenuItem>
+                <MenuItem value={'notStartsWith'}>Not Starts With</MenuItem>
+                <MenuItem value={'endsWith'}>Ends With</MenuItem>
+                <MenuItem value={'notEndsWith'}>Not Ends With</MenuItem>
             </Select>)
             :
             (<Select
                 className={props.classes.dropdown}
                 value={value}
                 onChange={this.handleChange}
-                input={<Input name={this.state.activeFilter} id="age-simple" />}
+                input={<Input name={this.state.activeFilter} />}
             >
-                <MenuItem value={'None'}>None</MenuItem>
-                <MenuItem value={'Equals'}>Equals</MenuItem>
-                <MenuItem value={'Between'}>Between</MenuItem>
-                <MenuItem value={'>='}>>=</MenuItem>
-                <MenuItem value={'>'}>></MenuItem>
-                <MenuItem value={'<='}>&#60;=</MenuItem>
-                <MenuItem value={'<'}>&#60;</MenuItem>
+                <MenuItem value={'none'}>None</MenuItem>
+                <MenuItem value={'equals'}>Equals</MenuItem>
+                <MenuItem value={'between'}>Between</MenuItem>
+                <MenuItem value={'gte'}>>=</MenuItem>
+                <MenuItem value={'gt'}>></MenuItem>
+                <MenuItem value={'lte'}>&#60;=</MenuItem>
+                <MenuItem value={'lt'}>&#60;</MenuItem>
             </Select>);
 
         return (
@@ -114,27 +199,14 @@ class RsTableHeader extends React.Component {
         )
     }
 
-    DialogContent = () => {
-        /* if(this.state.) */
-
-        return (
-            <div /* style={{ height: '200px', background: 'black' }} */ >
-                <TextField/>
-                <br/>
-                <Button/>
-                <Button/>
-            </div>
-        )
-    }
-
     render() {
         const { columns, orderBy, order, classes } = this.props;
-        console.log(classes)
+
         return (
             <TableHead>
                 <Dialog open={this.state.open} onClose={this.handleClose} >
                     <this.DialogDropDown classes={classes} />
-                    <this.DialogContent />
+                    <this.DialogContent classes={classes} />
                 </Dialog>
                 <TableRow>
                     {columns.map(column => {
@@ -167,5 +239,4 @@ class RsTableHeader extends React.Component {
     }
 }
 
-/* export default RsTableHeader; */
-export default withStyles(styles)(RsTableHeader);
+export default withStyles(styles)(GridHeader);
