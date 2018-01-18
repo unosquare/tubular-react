@@ -7,7 +7,6 @@ import React from 'react';
 import sinon, { spy } from 'sinon';
 import Enzyme, { mount, shallow } from 'enzyme';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
-import Axios from 'axios';
 
 Enzyme.configure({ adapter: new Adapter() });
 
