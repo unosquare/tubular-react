@@ -1,36 +1,38 @@
 import Rx from 'Rx';
 import Axios from 'axios';
+import PropTypes from 'prop-types';
 
 
 class RemoteDataSource {
 
-    constructor(url) {
+    constructor(url, columns) {
         this.url = url;
         this.counter = 0;
-        this.dataStream = new Rx.BehaviorSubject({Payload: []});
+        this.dataStream = new Rx.BehaviorSubject({ Payload: [] });
+        this.columns = columns;
     }
 
-    connect(columns, rowsPerPage, page) {
-        this._doRequest(columns, rowsPerPage, page);
+    connect(rowsPerPage, page) {
+        this._doRequest(rowsPerPage, page);
         return this.dataStream;
     }
 
-    filter(columns, rowsPerPage, page) {
+    filter(rowsPerPage, page) {
         this._doRequest(columns, rowsPerPage, page);
     }
 
-    sort(columns, rowsPerPage, page) {
+    sort(rowsPerPage, page) {
         this._doRequest(columns, rowsPerPage, page);
     }
 
-    refresh(columns, rowsPerPage, page) {
+    refresh(rowsPerPage, page) {
         this._doRequest(columns, rowsPerPage, page);
     }
 
-    _doRequest(columns, rowsPerPage, page) {
+    _doRequest(rowsPerPage, page) {
         const request = {
             "Count": this.counter++,
-            "Columns": columns,
+            "Columns": this.columns,
             "Skip": page * rowsPerPage,
             "Take": rowsPerPage,
             "Search": { "Text": "", "Operator": "None" },
@@ -42,7 +44,7 @@ class RemoteDataSource {
             const rows = data.map(row => {
                 const obj = {};
 
-                columns.forEach((column, key) => {
+                this.columns.forEach((column, key) => {
                     obj[column.Name] = row[key] || row[column.Name];
                 });
 
@@ -52,5 +54,21 @@ class RemoteDataSource {
         });
     }
 }
+
+RemoteDataSource.propTypes = {
+    columns: PropTypes.arrayOf(
+      PropTypes.shape({
+        Name: PropTypes.string.isRequired,
+        Label: PropTypes.string.isRequired,
+        Sortable: PropTypes.bool,
+        SortOrder: PropTypes.number,
+        SortDirection: PropTypes.oneOf(['None', 'Asc', 'Desc']).isRequired,
+        Searchable: PropTypes.bool.isRequired,
+        Visible: PropTypes.bool.isRequired,
+        IsKey: PropTypes.bool.isRequired,
+        DataType: PropTypes.oneOf(['date', 'datetime', 'datetimeutc', 'numeric', 'boolean', 'string']).isRequired,
+        Filter: PropTypes.any
+      })).isRequired
+  };
 
 module.exports = RemoteDataSource;

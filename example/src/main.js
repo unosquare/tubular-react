@@ -53,9 +53,9 @@ const columns = [
   }];
 export default class Main extends React.Component {
   render() {
-    const dataSource = new RemoteDataSource("http://tubular.azurewebsites.net/api/orders/paged")
+    const dataSource = new RemoteDataSource("http://tubular.azurewebsites.net/api/orders/paged", columns)
     return (
-      <Grid data={[{ key: 'data' }]} columns={columns} dataSource={dataSource} />
+      <Grid dataSource={dataSource} />
     );
   }
 }
