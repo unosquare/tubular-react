@@ -13,7 +13,7 @@ const styles = theme => ({
   }
 });
 
-class Grid extends React.Component{
+class Grid extends React.Component {
   static defaultProps = {
     rowsPerPage: 5,
     page: 0,
@@ -23,43 +23,46 @@ class Grid extends React.Component{
   state = {
     page: this.props.page,
     rowsPerPage: this.props.rowsPerPage,
-    data: this.props.data,
+    dataSource: this.props.dataSource,
+    data: [],
     columns: this.props.columns
+  }
+
+  componentDidMount() {
+    this.state.dataSource.connect(this.state.columns, this.state.rowsPerPage, this.state.page)
+      .subscribe(tbResponse => {
+        this.setState({
+          data: tbResponse.Payload
+        });
+      });
   }
 
   render() {
     const { classes } = this.props;
     const { data, rowsPerPage, page, columns } = this.state;
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-
     return (
       <Paper className={classes.root}>
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              { columns.map(column => 
-                <TableCell key={column.name}>
-                  {column.label}
+              {columns.map(column =>
+                <TableCell key={column.Name}>
+                  {column.Label}
                 </TableCell>
               )}
             </TableRow>
           </TableHead>
           <TableBody>
             {
-              data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, rowIndex) => (
+              data.map((row, rowIndex) => (
                 <TableRow hover key={rowIndex}>
-                  { columns.map((column, index) => 
-                    <TableCell key={index} padding={column.label === '' ? 'none' : 'default'}>
-                      { row[column.name] && row[column.name] }
+                  {columns.map((column, colIndex) =>
+                    <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
+                      {row[column.Name]}
                     </TableCell>
-                  ) }
+                  )}
                 </TableRow>
               ))}
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 49 * emptyRows }}>
-                <TableCell colSpan={6} />
-              </TableRow>
-            )}
           </TableBody>
         </Table>
       </Paper>);
@@ -70,19 +73,19 @@ Grid.propTypes = {
   classes: PropTypes.object.isRequired,
   columns: PropTypes.arrayOf(
     PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
-      sortable: PropTypes.bool.isRequired,
-      sortOrder: PropTypes.number,
-      sortDirection: PropTypes.oneOf(['none', 'asc', 'desc']).isRequired,
-      searchable: PropTypes.bool.isRequired,
-      visible: PropTypes.bool.isRequired,
-      isKey: PropTypes.bool.isRequired,
-      dataType: PropTypes.oneOf(['date', 'datetime', 'datetimeutc', 'numeric', 'boolean', 'string']).isRequired,
-      filter: PropTypes.bool.isRequired
+      Name: PropTypes.string.isRequired,
+      Label: PropTypes.string.isRequired,
+      Sortable: PropTypes.bool,
+      SortOrder: PropTypes.number,
+      SortDirection: PropTypes.oneOf(['None', 'Asc', 'Desc']).isRequired,
+      Searchable: PropTypes.bool.isRequired,
+      Visible: PropTypes.bool.isRequired,
+      IsKey: PropTypes.bool.isRequired,
+      DataType: PropTypes.oneOf(['date', 'datetime', 'datetimeutc', 'numeric', 'boolean', 'string']).isRequired,
+      Filter: PropTypes.any
     })).isRequired,
-  data: PropTypes.array.isRequired,
-  rowsPerPage: PropTypes.number,    
+  dataSource: PropTypes.any.isRequired,
+  rowsPerPage: PropTypes.number,
   title: PropTypes.string
 };
 export default withStyles(styles)(Grid);
