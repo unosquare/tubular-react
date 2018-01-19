@@ -46,7 +46,7 @@ class Grid extends React.Component {
     if(dataType === 'datetime') {
       data = order === 'desc' ?
         this.state.currentData.sort((a, b) => new Date(b[orderBy]) - new Date(a[orderBy])) :
-        this.state.currentData.sort((a, b) => ( new Date(a[orderBy]) - new Date(b[orderBy])));
+        this.state.currentData.sort((a, b) => new Date(a[orderBy]) - new Date(b[orderBy]));
     }
     else{
       data = order === 'desc' ?
@@ -82,9 +82,19 @@ class Grid extends React.Component {
     const data = Object.assign([], this.state.currentData);
     const array = [];
 
-    for (let i = 0; i < data.length; i++) {
-      if (data[i][props.column] === props.value) {
-        array.push(data[i]);
+    console.log(new Date(props.value).getTime());
+
+    for (let i = 0; i < data.length; i++){
+      if(props.type === 'datetime'){
+        if (new Date(data[i][props.column]).getTime() === new Date(props.value).getTime()){
+          array.push(data[i]);
+        }
+      }
+      else{
+        console.log('Blackrock');
+        if (data[i][props.column] === props.value) {
+          array.push(data[i]);
+        }
       }
     }
 
@@ -203,8 +213,19 @@ class Grid extends React.Component {
     const array = [];
 
     for (let i = 0; i < data.length; i++) {
-      if (data[i][props.column] >= props.value && data[i][props.column] <= props.value2) {
-        array.push(data[i]);
+      /* console.log('---------------');
+      console.log(new Date(data[i][props.column]).getDate());
+      console.log(new Date(props.value).getDate());
+      console.log(new Date(props.value2).getDate()); */
+      if(props.type === 'datetime'){
+        if (new Date(data[i][props.column]).getTime() >= new Date(props.value).getTime() && new Date(data[i][props.column]).getTime() <= new Date(props.value2).getTime()){
+          array.push(data[i]);
+        }
+      }
+      else{
+        if (data[i][props.column] >= props.value && data[i][props.column] <= props.value2) {
+          array.push(data[i]);
+        }
       }
     }
 
@@ -218,8 +239,15 @@ class Grid extends React.Component {
     const array = [];
 
     for (let i = 0; i < data.length; i++) {
-      if (data[i][props.column] >= props.value) {
-        array.push(data[i]);
+      if(props.type === 'datetime'){
+        if (new Date(data[i][props.column]).getTime() >= new Date(props.value).getTime() ){
+          array.push(data[i]);
+        }
+      }
+      else{
+        if (data[i][props.column] >= props.value) {
+          array.push(data[i]);
+        }
       }
     }
 
@@ -233,8 +261,15 @@ class Grid extends React.Component {
     const array = [];
 
     for (let i = 0; i < data.length; i++) {
-      if (data[i][props.column] > props.value) {
-        array.push(data[i]);
+      if(props.type === 'datetime'){
+        if (new Date(data[i][props.column]).getTime() > new Date(props.value).getTime() ){
+          array.push(data[i]);
+        }
+      }
+      else{
+        if (data[i][props.column] > props.value) {
+          array.push(data[i]);
+        }
       }
     }
 
@@ -248,8 +283,15 @@ class Grid extends React.Component {
     const array = [];
 
     for (let i = 0; i < data.length; i++) {
-      if (data[i][props.column] <= props.value) {
-        array.push(data[i]);
+      if(props.type === 'datetime'){
+        if (new Date(data[i][props.column]).getTime() >= new Date(props.value).getTime() ){
+          array.push(data[i]);
+        }
+      }
+      else{
+        if (data[i][props.column] >= props.value) {
+          array.push(data[i]);
+        }
       }
     }
 
@@ -263,8 +305,15 @@ class Grid extends React.Component {
     const array = [];
 
     for (let i = 0; i < data.length; i++) {
-      if (data[i][props.column] < props.value) {
-        array.push(data[i]);
+      if(props.type === 'datetime'){
+        if (new Date(data[i][props.column]).getTime() < new Date(props.value).getTime() ){
+          array.push(data[i]);
+        }
+      }
+      else{
+        if (data[i][props.column] < props.value) {
+          array.push(data[i]);
+        }
       }
     }
 
