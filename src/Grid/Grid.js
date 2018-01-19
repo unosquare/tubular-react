@@ -30,241 +30,247 @@ class Grid extends React.Component {
     page: this.props.page,
     rowsPerPage: this.props.rowsPerPage,
     data: this.props.data,
-    currentData: this.props.data, 
-    functions : []
+    currentData: this.props.data,
+    functions: []
   }
 
-  handleSort = (event, property) => {
+  handleSort = (property, dataType) => {
     const orderBy = property;
     let order = 'desc';
+    let data = '';
 
     if (this.state.orderBy === property && this.state.order === 'desc') {
       order = 'asc';
     }
 
-    const data = order === 'desc' ?
-      this.state.currentData.sort((a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)) :
-      this.state.currentData.sort((a, b) => (a[orderBy] < b[orderBy] ? -1 : 1));
+    if(dataType === 'datetime') {
+      data = order === 'desc' ?
+        this.state.currentData.sort((a, b) => new Date(b[orderBy]) - new Date(a[orderBy])) :
+        this.state.currentData.sort((a, b) => ( new Date(a[orderBy]) - new Date(b[orderBy])));
+    }
+    else{
+      data = order === 'desc' ?
+        this.state.currentData.sort((a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)) :
+        this.state.currentData.sort((a, b) => (a[orderBy] < b[orderBy] ? -1 : 1));
+    }
+
+    
 
     this.setState({ data, orderBy, order });
   }
 
-  filterHandler = (functions) => {
-    var data = Object.assign([], this.state.data);
+  filterHandler = functions => {
+    const data = Object.assign([], this.state.data);
 
     this.setState({ currentData: data, functions: functions }, () => {
       this.funtionHandler();
-      /* for (var i = 0; i < functions.length; i++) {
-        this[functions[i]['filter'] + "Filter"](functions[i]);
-      } */
     });
-
   }
 
   funtionHandler = () => {
-    var functions = Object.assign([], this.state.functions);
+    const functions = Object.assign([], this.state.functions);
 
-    if(functions[0] !== undefined){
-      this[functions[0]['filter'] + "Filter"](functions[0]);
+    if (functions[0] !== undefined) {
+      this[`${functions[0]['filter']}Filter`](functions[0]);
       functions.splice(0, 1);
 
-      this.setState({functions: functions})
+      this.setState({ functions });
     }
   }
 
-  equalsFilter = (props) => {
-    var data = Object.assign([], this.state.currentData);
-    var array = [];
+  equalsFilter = props => {
+    const data = Object.assign([], this.state.currentData);
+    const array = [];
 
-    for (var i = 0; i < data.length; i++) {
-      if(data[i][props.column] == props.value){
-        array.push(data[i])
+    for (let i = 0; i < data.length; i++) {
+      if (data[i][props.column] === props.value) {
+        array.push(data[i]);
       }
     }
 
-    this.setState({currentData: array}, () => {
+    this.setState({ currentData: array }, () => {
       this.funtionHandler();
-    })
+    });
   }
 
-  notEqualsFilter = (props) => {
-    var data = Object.assign([], this.state.currentData);
-    var array = [];
+  notEqualsFilter = props => {
+    const data = Object.assign([], this.state.currentData);
+    const array = [];
 
-    for (var i = 0; i < data.length; i++) {
-      if(data[i][props.column] != props.value){
-        array.push(data[i])
+    for (let i = 0; i < data.length; i++) {
+      if (data[i][props.column] !== props.value) {
+        array.push(data[i]);
       }
     }
 
-    this.setState({currentData: array}, () => {
+    this.setState({ currentData: array }, () => {
       this.funtionHandler();
-    })
+    });
   }
 
-  startsWithFilter = (props) => {
-    var data = Object.assign([], this.state.currentData);
-    var array = [];
+  startsWithFilter = props => {
+    const data = Object.assign([], this.state.currentData);
+    const array = [];
 
-    for (var i = 0; i < data.length; i++) {
-      if(data[i][props.column].startsWith(props.value)){
-        array.push(data[i])
+    for (let i = 0; i < data.length; i++) {
+      if (data[i][props.column].startsWith(props.value)) {
+        array.push(data[i]);
       }
     }
 
-    this.setState({currentData: array}, () => {
+    this.setState({ currentData: array }, () => {
       this.funtionHandler();
-    })
+    });
   }
 
-  notStartsWithFilter = (props) => {
-    var data = Object.assign([], this.state.currentData);
-    var array = [];
+  notStartsWithFilter = props => {
+    const data = Object.assign([], this.state.currentData);
+    const array = [];
 
-    for (var i = 0; i < data.length; i++) {
-      if(!data[i][props.column].startsWith(props.value)){
-        array.push(data[i])
+    for (let i = 0; i < data.length; i++) {
+      if (!data[i][props.column].startsWith(props.value)) {
+        array.push(data[i]);
       }
     }
 
-    this.setState({currentData: array}, () => {
+    this.setState({ currentData: array }, () => {
       this.funtionHandler();
-    })
+    });
   }
 
-  endsWithFilter = (props) => {
-    var data = Object.assign([], this.state.currentData);
-    var array = [];
+  endsWithFilter = props => {
+    const data = Object.assign([], this.state.currentData);
+    const array = [];
 
-    for (var i = 0; i < data.length; i++) {
-      if(data[i][props.column].endsWith(props.value)){
-        array.push(data[i])
+    for (let i = 0; i < data.length; i++) {
+      if (data[i][props.column].endsWith(props.value)) {
+        array.push(data[i]);
       }
     }
 
-    this.setState({currentData: array}, () => {
+    this.setState({ currentData: array }, () => {
       this.funtionHandler();
-    })
+    });
   }
 
-  notEndsWithFilter = (props) => {
-    var data = Object.assign([], this.state.currentData);
-    var array = [];
+  notEndsWithFilter = props => {
+    const data = Object.assign([], this.state.currentData);
+    const array = [];
 
-    for (var i = 0; i < data.length; i++) {
-      if(!data[i][props.column].endsWith(props.value)){
-        array.push(data[i])
+    for (let i = 0; i < data.length; i++) {
+      if (!data[i][props.column].endsWith(props.value)) {
+        array.push(data[i]);
       }
     }
 
-    this.setState({currentData: array}, () => {
+    this.setState({ currentData: array }, () => {
       this.funtionHandler();
-    })
+    });
   }
 
-  containsFilter = (props) => {
-    var data = Object.assign([], this.state.currentData);
-    var array = [];
+  containsFilter = props => {
+    const data = Object.assign([], this.state.currentData);
+    const array = [];
 
-    for (var i = 0; i < data.length; i++) {
-      if(data[i][props.column].indexOf(props.value) !=-1 ){
-        array.push(data[i])
+    for (let i = 0; i < data.length; i++) {
+      if (data[i][props.column].indexOf(props.value) !== -1) {
+        array.push(data[i]);
       }
     }
 
-    this.setState({currentData: array}, () => {
+    this.setState({ currentData: array }, () => {
       this.funtionHandler();
-    })
+    });
   }
 
-  notContainsFilter = (props) => {
-    var data = Object.assign([], this.state.currentData);
-    var array = [];
+  notContainsFilter = props => {
+    const data = Object.assign([], this.state.currentData);
+    const array = [];
 
-    for (var i = 0; i < data.length; i++) {
-      if(data[i][props.column].indexOf(props.value) ==-1 ){
-        array.push(data[i])
+    for (let i = 0; i < data.length; i++) {
+      if (data[i][props.column].indexOf(props.value) === -1) {
+        array.push(data[i]);
       }
     }
 
-    this.setState({currentData: array}, () => {
+    this.setState({ currentData: array }, () => {
       this.funtionHandler();
-    })
+    });
   }
 
-  betweenFilter = (props) => {
-    var data = Object.assign([], this.state.currentData);
-    var array = [];
+  betweenFilter = props => {
+    const data = Object.assign([], this.state.currentData);
+    const array = [];
 
-    for (var i = 0; i < data.length; i++) {
-      if(data[i][props.column] >= props.value && data[i][props.column] <= props.value2){
-        array.push(data[i])
+    for (let i = 0; i < data.length; i++) {
+      if (data[i][props.column] >= props.value && data[i][props.column] <= props.value2) {
+        array.push(data[i]);
       }
     }
 
-    this.setState({currentData: array}, () => {
+    this.setState({ currentData: array }, () => {
       this.funtionHandler();
-    })
+    });
   }
 
-  gteFilter = (props) => {
-    var data = Object.assign([], this.state.currentData);
-    var array = [];
+  gteFilter = props => {
+    const data = Object.assign([], this.state.currentData);
+    const array = [];
 
-    for (var i = 0; i < data.length; i++) {
-      if(data[i][props.column] >= props.value){
-        array.push(data[i])
+    for (let i = 0; i < data.length; i++) {
+      if (data[i][props.column] >= props.value) {
+        array.push(data[i]);
       }
     }
 
-    this.setState({currentData: array}, () => {
+    this.setState({ currentData: array }, () => {
       this.funtionHandler();
-    })
+    });
   }
 
-  gtFilter = (props) => {
-    var data = Object.assign([], this.state.currentData);
-    var array = [];
+  gtFilter = props => {
+    const data = Object.assign([], this.state.currentData);
+    const array = [];
 
-    for (var i = 0; i < data.length; i++) {
-      if(data[i][props.column] > props.value){
-        array.push(data[i])
+    for (let i = 0; i < data.length; i++) {
+      if (data[i][props.column] > props.value) {
+        array.push(data[i]);
       }
     }
 
-    this.setState({currentData: array}, () => {
+    this.setState({ currentData: array }, () => {
       this.funtionHandler();
-    })
+    });
   }
 
-  lteFilter = (props) => {
-    var data = Object.assign([], this.state.currentData);
-    var array = [];
+  lteFilter = props => {
+    const data = Object.assign([], this.state.currentData);
+    const array = [];
 
-    for (var i = 0; i < data.length; i++) {
-      if(data[i][props.column] <= props.value){
-        array.push(data[i])
+    for (let i = 0; i < data.length; i++) {
+      if (data[i][props.column] <= props.value) {
+        array.push(data[i]);
       }
     }
 
-    this.setState({currentData: array}, () => {
+    this.setState({ currentData: array }, () => {
       this.funtionHandler();
-    })
+    });
   }
 
-  ltFilter = (props) => {
-    var data = Object.assign([], this.state.currentData);
-    var array = [];
+  ltFilter = props => {
+    const data = Object.assign([], this.state.currentData);
+    const array = [];
 
-    for (var i = 0; i < data.length; i++) {
-      if(data[i][props.column] < props.value){
-        array.push(data[i])
+    for (let i = 0; i < data.length; i++) {
+      if (data[i][props.column] < props.value) {
+        array.push(data[i]);
       }
     }
 
-    this.setState({currentData: array}, () => {
+    this.setState({ currentData: array }, () => {
       this.funtionHandler();
-    })
+    });
   }
 
   render() {
@@ -285,11 +291,11 @@ class Grid extends React.Component {
             {
               currentData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, rowIndex) => (
                 <TableRow hover key={rowIndex}>
-                  {columns.map((column, index) =>
+                  {columns.map((column, index) => (
                     <TableCell key={index} padding={column.label === '' ? 'none' : 'default'}>
                       {row[column.key] && row[column.key]}
                     </TableCell>
-
+                  )
                   )}
                 </TableRow>
               ))}
