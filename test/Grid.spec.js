@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import sinon, { spy } from 'sinon';
 import Enzyme, { mount, shallow } from 'enzyme';
+// import RemoteDataSource from '../../src/Grid/RemoteDataSource';
+import RemoteDataSource from '../src/Grid/RemoteDataSource';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -42,20 +44,19 @@ describe('<Grid />', () => {
     expect(rows).to.have.lengthOf(0);
   });
 
-  it('calls componentWillMount() lifecycle method', () => {
-    const componentWillMountSpy = spy(Grid.prototype, 'componentWillMount');
+  it('calls componentDidMount() lifecycle method', () => {
+    const componentDidMount = spy(Grid.prototype, 'componentDidMount');
     const wrapper = mount(<Grid { ...props } />);
 
-    assert.ok(Grid.prototype.componentWillMount.calledOnce);
+    assert.ok(Grid.prototype.componentDidMount.calledOnce);
 
-    componentWillMountSpy.restore();
+    componentDidMount.restore();
   });
 
   beforeEach(() => {
     props = {
-      data: [],
       columns: columns,
-      serverUrl: 'https://jsonplaceholder.typicode.com/users'
+      dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged')
     };
   });
 });

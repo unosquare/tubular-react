@@ -1,9 +1,8 @@
-import Axios from 'axios';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
+import React from 'react';
 import { withStyles } from 'material-ui/styles';
+import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 
 const styles = theme => ({
   root: {
@@ -13,60 +12,54 @@ const styles = theme => ({
   }
 });
 
-class Grid extends Component {
-  
+class Grid extends React.Component {
   static defaultProps = {
     rowsPerPage: 5,
     page: 0,
-    initialSort: {
-      column: '',
-      order: 'asc'
-    },
     title: ''
   }
 
   state = {
-    order: this.props.initialSort.order,
-    orderBy: this.props.initialSort.column,
     page: this.props.page,
     rowsPerPage: this.props.rowsPerPage,
-    serverUrl: this.props.serverUrl,
-    records: []
+    dataSource: this.props.dataSource,
+    data: [],
+    columns: this.props.columns
   }
 
-  componentWillMount = () => {
-    Axios.get(this.state.serverUrl)
-      .then(response => {
-        this.setState({ records: response.data });
+  componentDidMount() {
+    this.state.dataSource.connect(this.state.columns, this.state.rowsPerPage, this.state.page)
+      .subscribe(tbResponse => {
+        this.setState({
+          data: tbResponse.Payload
+        });
       });
   }
 
   render() {
-
-    const { classes, columns } = this.props;
-    const { records, rowsPerPage, page, order, orderBy } = this.state;
-
+    const { classes } = this.props;
+    const { data, rowsPerPage, page, columns } = this.state;
     return (
       <Paper className={classes.root}>
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              { columns.map(column => 
-                <TableCell key={column.name}>
-                  {column.label}
+              {columns.map(column =>
+                <TableCell key={column.Name}>
+                  {column.Label}
                 </TableCell>
               )}
             </TableRow>
           </TableHead>
           <TableBody>
             {
-              records.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, rowIndex) => (
+              data.map((row, rowIndex) => (
                 <TableRow hover key={rowIndex}>
-                  { columns.map((column, index) => 
-                    <TableCell key={index} padding={column.label === '' ? 'none' : 'default'}>
-                      { row[column.name] && row[column.name] }
+                  {columns.map((column, colIndex) =>
+                    <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
+                      {row[column.Name]}
                     </TableCell>
-                  ) }
+                  )}
                 </TableRow>
               ))}
           </TableBody>
@@ -79,18 +72,19 @@ Grid.propTypes = {
   classes: PropTypes.object.isRequired,
   columns: PropTypes.arrayOf(
     PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
-      sortable: PropTypes.bool.isRequired,
-      render: PropTypes.func
+      Name: PropTypes.string.isRequired,
+      Label: PropTypes.string.isRequired,
+      Sortable: PropTypes.bool,
+      SortOrder: PropTypes.number,
+      SortDirection: PropTypes.oneOf(['None', 'Asc', 'Desc']).isRequired,
+      Searchable: PropTypes.bool.isRequired,
+      Visible: PropTypes.bool.isRequired,
+      IsKey: PropTypes.bool.isRequired,
+      DataType: PropTypes.oneOf(['date', 'datetime', 'datetimeutc', 'numeric', 'boolean', 'string']).isRequired,
+      Filter: PropTypes.any
     })).isRequired,
-  initialSort: PropTypes.shape({
-    column: PropTypes.string.isRequired,
-    order: PropTypes.string.isRequired
-  }),
-  rowsPerPage: PropTypes.number,    
-  serverUrl: PropTypes.string.isRequired,
+  dataSource: PropTypes.any.isRequired,
+  rowsPerPage: PropTypes.number,
   title: PropTypes.string
 };
-
 export default withStyles(styles)(Grid);

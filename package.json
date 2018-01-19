@@ -23,6 +23,7 @@
     "material-ui": "next",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "rxjs-es": "^5.0.0-beta.12",
     "typeface-roboto": "0.0.50"
   },
   "devDependencies": {
