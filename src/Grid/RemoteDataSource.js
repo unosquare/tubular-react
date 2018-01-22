@@ -38,7 +38,7 @@ class RemoteDataSource {
     }
   }
 
-  isValidResponse(objectGiven) {
+  isValidResponse(response) {
     const expectedStructure = {
       'Counter': null,
       'Payload': null,
@@ -50,9 +50,9 @@ class RemoteDataSource {
     };
 
     const expectedStructureKeys = Object.keys(expectedStructure).sort();
-    const objectGivenKeys = Object.keys(objectGiven).sort();
+    const responseKeys = Object.keys(response).sort();
 
-    return JSON.stringify(expectedStructureKeys) === JSON.stringify(objectGivenKeys);
+    return JSON.stringify(expectedStructureKeys) === JSON.stringify(responseKeys);
   }
   
   _doRequest(rowsPerPage, page) {
