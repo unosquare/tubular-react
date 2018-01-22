@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import PropTypes from 'prop-types';
-import Rx from 'Rx';
+import Rx from 'rx';
 
 class RemoteDataSource {
   constructor(url, columns) {
