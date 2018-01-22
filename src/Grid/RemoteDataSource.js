@@ -14,23 +14,49 @@ class RemoteDataSource {
     this._doRequest(rowsPerPage, page);
     return this.dataStream;
   }
-
+  
   filter(rowsPerPage, page) {
-    this._doRequest(columns, rowsPerPage, page);
+    this._doRequest(rowsPerPage, page);
   }
-
+  
   sort(rowsPerPage, page) {
-    this._doRequest(columns, rowsPerPage, page);
+    this._doRequest(rowsPerPage, page);
   }
-
+  
   search(rowsPerPage, page, searchText) {
     this._doRequest(rowsPerPage, page, searchText);
   }
 
   refresh(rowsPerPage, page) {
-    this._doRequest(columns, rowsPerPage, page);
+    this._doRequest(rowsPerPage, page);
   }
 
+  handleError(error) {
+    if(error.status === 404) {
+      throw 'Keys were not found';
+    }
+    else if(error.status === 500) {
+      throw 'Internal server error';
+    }
+  }
+
+  isValidResponse(response) {
+    const expectedStructure = {
+      'Counter': null,
+      'Payload': null,
+      'TotalRecordCount': null, 
+      'FilteredRecordCount': null,
+      'TotalPages': null,
+      'CurrentPage': null,
+      'AggregationPayload': null
+    };
+
+    const expectedStructureKeys = Object.keys(expectedStructure).sort();
+    const responseKeys = Object.keys(response).sort();
+
+    return JSON.stringify(expectedStructureKeys) === JSON.stringify(responseKeys);
+  }
+  
   _doRequest(rowsPerPage, page, searchText) {
     const request = {
       'Count': this.counter++,
@@ -42,17 +68,23 @@ class RemoteDataSource {
     };
 
     Axios.post(this.url, request).then(response => {
+      if(response.data === undefined || !this.isValidResponse(response.data))
+        throw 'It\'s not a valid Tubular response object';
+          
       const data = response.data.Payload;
       const rows = data.map(row => {
         const obj = {};
-
+      
         this.columns.forEach((column, key) => {
           obj[column.Name] = row[key] || row[column.Name];
         });
-
+      
         return obj;
       });
+  
       this.dataStream.onNext({ Payload: rows });
+    }).catch(error => {
+      this.handleError(error);
     });
   }
 }
