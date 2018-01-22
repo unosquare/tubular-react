@@ -4,7 +4,6 @@ import React from 'react';
 import { withStyles } from 'material-ui/styles';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 
-
 const styles = theme => ({
   root: {
     width: '100%',
