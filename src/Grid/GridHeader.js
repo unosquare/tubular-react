@@ -45,13 +45,8 @@ class GridHeader extends React.Component {
   static propTypes = {
     columns: PropTypes.arrayOf(
       PropTypes.shape({
-        key: PropTypes.string.isRequired,
-        label: PropTypes.string.isRequired,
-        sortable: PropTypes.bool.isRequired
-      })).isRequired,
-    onRequestSort: PropTypes.func.isRequired,
-    order: PropTypes.string.isRequired,
-    orderBy: PropTypes.string.isRequired
+        Label: PropTypes.string.isRequired
+      })).isRequired
   };
 
   state = {
@@ -77,7 +72,7 @@ class GridHeader extends React.Component {
   };
 
   handleFilter = column => {
-    this.setState({ columnType: column.DataType, activeFilter: column.key });
+    this.setState({ columnType: column.DataType, activeFilter: column.Name });
 
     this.handleClickOpen();
   }
@@ -112,7 +107,7 @@ class GridHeader extends React.Component {
       [this.state.activeFilter + value1]: '',
       [this.state.activeFilter + value2]: ''
     }, () => {
-      this.props.filterHandler(this.state.functions);
+      this.props.functionHandler(this.state.functions);
     });
   }
 
@@ -139,7 +134,7 @@ class GridHeader extends React.Component {
           type: this.state.columnType
         }])
       }, () => {
-        this.props.filterHandler(this.state.functions);
+        this.props.functionHandler(this.state.functions);
       });
     });
   }
@@ -171,7 +166,7 @@ class GridHeader extends React.Component {
     const value = this.state[`${this.state.activeFilter}value`] === undefined ? '' : this.state[`${this.state.activeFilter}value`];
     const value2 = this.state[`${this.state.activeFilter}value2`] === undefined ? '' : this.state[`${this.state.activeFilter}value2`];
 
-    if (this.state[this.state.activeFilter] === 'between') {
+    if (this.state[this.state.activeFilter] === 'Between') {
       return (
         <div >
           <TextField id={this.state.activeFilter} label={'Value'} value={value} onChange={this.handleTextFieldChange('value')} />
@@ -196,7 +191,7 @@ class GridHeader extends React.Component {
                   id='datetime-local'
                   label='Next appointment'
                   type='datetime-local'
-                  defaultValue='2017-05-24T10:30'
+                  defaultValue='2016-03-19T19:00'
                   className={props.classes.textField}
                   onChange={this.handleDatePicker(this.state.editingValue) }
                   InputLabelProps={{
@@ -214,6 +209,7 @@ class GridHeader extends React.Component {
                     shrink: true
                   }}
                 /> */}
+                
                 <Button onClick={this.handleDatePickerAccept}>Accept</Button>
               </Dialog>
             </div>
@@ -240,7 +236,7 @@ class GridHeader extends React.Component {
                 id='datetime-local'
                 label='Next appointment'
                 type='datetime-local'
-                defaultValue='2017-05-24T10:30'
+                defaultValue='2016-03-18T19:00'
                 className={props.classes.textField}
                 onChange={this.handleDatePicker('Value')}
                 InputLabelProps={{
@@ -267,15 +263,15 @@ class GridHeader extends React.Component {
       onChange={this.handleChange}
       input={<Input name={this.state.activeFilter} />}
     >
-      <MenuItem value={'none'}>None</MenuItem>
-      <MenuItem value={'equals'}>Equals</MenuItem>
-      <MenuItem value={'notEquals'}>Not Equals</MenuItem>
-      <MenuItem value={'contains'}>Contains</MenuItem>
-      <MenuItem value={'notContains'}>Not Contains</MenuItem>
-      <MenuItem value={'startsWith'}>Starts With</MenuItem>
-      <MenuItem value={'notStartsWith'}>Not Starts With</MenuItem>
-      <MenuItem value={'endsWith'}>Ends With</MenuItem>
-      <MenuItem value={'notEndsWith'}>Not Ends With</MenuItem>
+      <MenuItem value={'None'}>None</MenuItem>
+      <MenuItem value={'Equals'}>Equals</MenuItem>
+      <MenuItem value={'NotEquals'}>Not Equals</MenuItem>
+      <MenuItem value={'Contains'}>Contains</MenuItem>
+      <MenuItem value={'NotContains'}>Not Contains</MenuItem>
+      <MenuItem value={'StartsWith'}>Starts With</MenuItem>
+      <MenuItem value={'NotStartsWith'}>Not Starts With</MenuItem>
+      <MenuItem value={'EndsWith'}>Ends With</MenuItem>
+      <MenuItem value={'NotEndsWith'}>Not Ends With</MenuItem>
     </Select>
   )
 
@@ -286,18 +282,18 @@ class GridHeader extends React.Component {
       onChange={this.handleChange}
       input={<Input name={this.state.activeFilter} />}
     >
-      <MenuItem value={'none'}>None</MenuItem>
-      <MenuItem value={'equals'}>Equals</MenuItem>
-      <MenuItem value={'between'}>Between</MenuItem>
-      <MenuItem value={'gte'}>>=</MenuItem>
-      <MenuItem value={'gt'}>></MenuItem>
-      <MenuItem value={'lte'}>&#60;=</MenuItem>
-      <MenuItem value={'lt'}>&#60;</MenuItem>
+      <MenuItem value={'None'}>None</MenuItem>
+      <MenuItem value={'Equals'}>Equals</MenuItem>
+      <MenuItem value={'Between'}>Between</MenuItem>
+      <MenuItem value={'Gte'}>>=</MenuItem>
+      <MenuItem value={'Gt'}>></MenuItem>
+      <MenuItem value={'Lte'}>&#60;=</MenuItem>
+      <MenuItem value={'Lt'}>&#60;</MenuItem>
     </Select>
   )
 
   DialogDropDown = props => {
-    const value = this.state[this.state.activeFilter] === undefined ? 'none' : this.state[this.state.activeFilter];
+    const value = this.state[this.state.activeFilter] === undefined ? 'None' : this.state[this.state.activeFilter];
 
     if (this.state.columnType === 'string') {
       return (<this.StringDropDown classes={props.classes} value={value} />);
@@ -311,7 +307,7 @@ class GridHeader extends React.Component {
   }
 
   render() {
-    const { columns, orderBy, order, classes } = this.props;
+    const { columns, classes } = this.props;
 
     return (
       <TableHead>
@@ -321,24 +317,22 @@ class GridHeader extends React.Component {
         </Dialog>
         <TableRow>
           {columns.map(column => {
-            const render = column.sortable ?
+            const render = column.Sortable ?
               (<Tooltip title='Sort' placement='bottom-start' enterDelay={300}>
                 <TableSortLabel
-                  active={orderBy === column.key}
-                  direction={order}
-                  onClick={() => this.sortHandler(column.key, column.DataType)}
+                  onClick={() => this.sortHandler(column.Label, column.DataType)}
                 >
-                  {column.label}
+                  {column.Label}
                 </TableSortLabel>
               </Tooltip>)
-              : (column.label);
-            const filter = column.filter ?
+              : (column.Label);
+            const filter = column.Filter ?
               (<IconButton >
                 <FilterListIcon onClick={() => this.handleFilter(column)} />
               </IconButton>)
               : (null);
             return (
-              <TableCell key={column.key} padding={column.label === '' ? 'none' : 'default'}>
+              <TableCell key={column.Label} padding={column.Label === '' ? 'none' : 'default'}>
                 {render}
                 {filter}
               </TableCell>

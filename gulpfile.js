@@ -23,7 +23,7 @@ function bundle_js(bundler) {
 
 gulp.task('watchify', () => {
   const bundler = watchify(browserify('./example/src/app.js', Object.assign(watchify.args, { debug: true }))
-    .transform('babelify', { presets: ['es2015', 'react', 'stage-0'] }), { verbose: true });
+    .transform('babelify', { presets: ['env', 'react', 'stage-0'] }), { verbose: true });
   bundle_js(bundler);
   bundler.on('update', () => {
     bundle_js(bundler);
@@ -45,10 +45,10 @@ gulp.task('browserSync', () => {
   gulp.watch('example/app/bundle.js').on('change', browserSync.reload);
 });
 
-gulp.task('build', () =>
+gulp.task('build', () => 
   gulp.src('src/**/*.js')
     .pipe(babel({
-      presets: ['es2015', 'stage-0', 'react']
+      presets: ['env', 'stage-0', 'react']
     }))
     .pipe(gulp.dest('build/')));
 
@@ -56,7 +56,7 @@ gulp.task('build:clean', () => {
   del.sync(['build']);
 });
 
-gulp.task('build:copy', () =>
+gulp.task('build:copy', () => 
   gulp.src(['package.json', 'README.md', 'LICENSE'])
     .pipe(copy('build/', { prefix: 1 })));
 
