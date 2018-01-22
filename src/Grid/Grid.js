@@ -1,8 +1,10 @@
+import GridToolbar from './GridToolbar';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { withStyles } from 'material-ui/styles';
 import Table, { TableBody, TableCell, TableFooter, TableHead, TablePagination, TableRow } from 'material-ui/Table';
+
 
 const styles = theme => ({
   root: {
@@ -16,10 +18,6 @@ class Grid extends React.Component {
   static defaultProps = {
     rowsPerPage: 5,
     page: 0,
-    initialSort: {
-      column: '',
-      order: 'asc'
-    },
     title: ''
   }
 
@@ -38,6 +36,10 @@ class Grid extends React.Component {
           data: tbResponse.Payload
         });
       });
+  }
+
+  handleTextSearch = text => {
+    this.state.dataSource.search(this.state.rowsPerPage, this.state.page, text);
   }
 
   handleChangePage = (event, page) => {
@@ -61,11 +63,12 @@ class Grid extends React.Component {
   render() {
     const { classes } = this.props;
     const { data, rowsPerPage, page, dataSource, showFooter } = this.state;
-
+    
     const totalCount = data.length;
 
     return (
       <Paper className={classes.root}>
+        <GridToolbar onSearchTextChange={this.handleTextSearch} />
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
@@ -78,7 +81,7 @@ class Grid extends React.Component {
           </TableHead>
           <TableBody>
             {
-              data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, rowIndex) => (
+              data.map((row, rowIndex) => (
                 <TableRow hover key={rowIndex}>
                   {dataSource.columns.map((column, colIndex) =>
                     <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
