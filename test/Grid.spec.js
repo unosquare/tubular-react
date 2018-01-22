@@ -14,13 +14,7 @@ Enzyme.configure({ adapter: new Adapter() });
 describe('<Grid />', () => {
   let mountedGrid;
   let props;
-
-  // const columns = [{
-  //   key: 'key',
-  //   label: 'col',
-  //   sortable: true
-  // }];
-
+  
   const columns = [{
     'Label': 'Order ID',
     'Name': 'OrderID',
