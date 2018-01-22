@@ -66,23 +66,21 @@ class RemoteDataSource {
     };
 
     Axios.post(this.url, request).then(response => {
-      if(response.data !== undefined) {
-        if(!this.isValidResponse(response.data)) 
-          throw 'It\'s not a valid Tubular response object';
+      if(response.data === undefined || !this.isValidResponse(response.data))
+        throw 'It\'s not a valid Tubular response object';
           
-        const data = response.data.Payload;
-        const rows = data.map(row => {
-          const obj = {};
-        
-          this.columns.forEach((column, key) => {
-            obj[column.Name] = row[key] || row[column.Name];
-          });
-        
-          return obj;
+      const data = response.data.Payload;
+      const rows = data.map(row => {
+        const obj = {};
+      
+        this.columns.forEach((column, key) => {
+          obj[column.Name] = row[key] || row[column.Name];
         });
-    
-        this.dataStream.onNext({ Payload: rows });
-      }
+      
+        return obj;
+      });
+  
+      this.dataStream.onNext({ Payload: rows });
     }).catch(error => {
       this.handleError(error);
     });
