@@ -30,11 +30,15 @@ class RemoteDataSource {
   }
 
   handleError(error) {
-    // TODO: Check what kind of error I'm receiving
-    console.log(error);
+    if(error.status === 404) {
+      throw 'Keys were not found';
+    }
+    else if(error.status === 500) {
+      throw 'Internal server error';
+    }
   }
 
-  handleValidateStructure(objectGiven) {
+  isValidResponse(objectGiven) {
     const expectedStructure = {
       'Counter': null,
       'Payload': null,
@@ -63,20 +67,21 @@ class RemoteDataSource {
 
     Axios.post(this.url, request).then(response => {
       if(response.data !== undefined) {
-        if(this.handleValidateStructure(response.data)) {
-          const data = response.data.Payload;
-          const rows = data.map(row => {
-            const obj = {};
+        if(!this.isValidResponse(response.data)) 
+          throw 'It\'s not a valid Tubular response object';
           
-            this.columns.forEach((column, key) => {
-              obj[column.Name] = row[key] || row[column.Name];
-            });
-          
-            return obj;
+        const data = response.data.Payload;
+        const rows = data.map(row => {
+          const obj = {};
+        
+          this.columns.forEach((column, key) => {
+            obj[column.Name] = row[key] || row[column.Name];
           });
-      
-          this.dataStream.onNext({ Payload: rows });
-        }
+        
+          return obj;
+        });
+    
+        this.dataStream.onNext({ Payload: rows });
       }
     }).catch(error => {
       this.handleError(error);
