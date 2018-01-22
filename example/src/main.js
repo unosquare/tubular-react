@@ -1,53 +1,62 @@
 import Grid from '../../src/Grid/Grid';
 import React from 'react';
+import RemoteDataSource from '../../src/Grid/RemoteDataSource';
 
 const columns = [
-  { 
-    name: 'userId', 
-    label: 'User ID', 
-    sortable: true,
-    sortDirection: 'none',
-    searchable: true,
-    visible: true,
-    isKey: false,
-    dataType: 'string'
+  {
+    'Label': 'Order ID',
+    'Name': 'OrderID',
+    'SortOrder': -1,
+    'SortDirection': 'None',
+    'IsKey': false,
+    'Searchable': false,
+    'Visible': true,
+    'Filter': null,
+    'DataType': 'numeric',
+    'Aggregate': 'None'
   },
-  { 
-    name: 'id', 
-    label: 'ID', 
-    sortable: true,
-    sortDirection: 'none',
-    searchable: true,
-    visible: true,
-    isKey: false,
-    dataType: 'string'
+  {
+    'Label': 'Customer Name',
+    'Name': 'CustomerName',
+    'SortOrder': -1,
+    'SortDirection': 'None',
+    'IsKey': false,
+    'Searchable': true,
+    'Visible': true,
+    'Filter': null,
+    'DataType': 'string',
+    'Aggregate': 'None'
   },
-  { 
-    name: 'title', 
-    label: 'Title', 
-    sortable: true,
-    sortDirection: 'none',
-    searchable: true,
-    visible: true,
-    isKey: false,
-    dataType: 'string'
+  {
+    'Label': 'Shipped Date',
+    'Name': 'ShippedDate',
+    'SortOrder': -1,
+    'SortDirection': 'None',
+    'IsKey': false,
+    'Searchable': false,
+    'Visible': true,
+    'Filter': null,
+    'DataType': 'string',
+    'Aggregate': 'None'
   },
-  { 
-    name: 'body', 
-    label: 'Body', 
-    sortable: true,
-    sortDirection: 'none',
-    searchable: true,
-    visible: true,
-    isKey: false,
-    dataType: 'string'
-  }
-];
-export default class Main extends React.Component{
-  render(){
-    return(
-      <Grid data={[{ key: 'data' }]} columns={columns} serverUrl = { 'https://jsonplaceholder.typicode.com/posts' } />
-      // <Grid columns={columns} serverUrl = { 'https://jsonplaceholder.typicode.com/posts' } />
+  {
+    'Label': 'Shipper City',
+    'Name': 'ShipperCity',
+    'SortOrder': -1,
+    'SortDirection': 'None',
+    'IsKey': false,
+    'Searchable': false,
+    'Visible': true,
+    'Filter': null,
+    'DataType': 'string',
+    'Aggregate': 'None'
+  }];
+
+export default class Main extends React.Component {
+  render() {
+    const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns);
+    return (
+      <Grid dataSource={dataSource} rowsPerPage = { 25 } showFooter = { true } />
     );
   }
 }

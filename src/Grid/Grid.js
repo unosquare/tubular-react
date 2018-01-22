@@ -1,9 +1,8 @@
-import Axios from 'axios';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
-import Table, { TableBody, TableCell, TableHead, TableRow, TableFooter, TablePagination } from 'material-ui/Table';
+import React from 'react';
 import { withStyles } from 'material-ui/styles';
+import Table, { TableBody, TableCell, TableFooter, TableHead, TablePagination, TableRow } from 'material-ui/Table';
 
 const styles = theme => ({
   root: {
@@ -13,8 +12,7 @@ const styles = theme => ({
   }
 });
 
-class Grid extends Component {
-  
+class Grid extends React.Component {
   static defaultProps = {
     rowsPerPage: 5,
     page: 0,
@@ -26,20 +24,19 @@ class Grid extends Component {
   }
 
   state = {
-    order: this.props.initialSort.order,
-    orderBy: this.props.initialSort.column,
     page: this.props.page,
     rowsPerPage: this.props.rowsPerPage,
-    data: this.props.data,
-
-    serverUrl: this.props.serverUrl,
-    records: []
+    showFooter: this.props.showFooter,
+    dataSource: this.props.dataSource,
+    data: []
   }
 
-  componentWillMount = () => {
-    Axios.get(this.state.serverUrl)
-      .then(response => {
-        this.setState({ records: response.data });
+  componentDidMount() {
+    this.state.dataSource.connect(this.state.rowsPerPage, this.state.page)
+      .subscribe(tbResponse => {
+        this.setState({
+          data: tbResponse.Payload
+        });
       });
   }
 
@@ -62,41 +59,43 @@ class Grid extends Component {
   };
 
   render() {
+    const { classes } = this.props;
+    const { data, rowsPerPage, page, dataSource, showFooter } = this.state;
 
-    const { classes, columns } = this.props;
-    const { data, records, rowsPerPage, page, order, orderBy } = this.state;
-    
-    const totalCount = records.length;
+    const totalCount = data.length;
 
     return (
       <Paper className={classes.root}>
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              { columns.map(column => 
-                <TableCell key={column.name}>
-                  {column.label}
+              {dataSource.columns.map(column =>
+                <TableCell key={column.Name}>
+                  {column.Label}
                 </TableCell>
               )}
             </TableRow>
           </TableHead>
           <TableBody>
             {
-              records.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, rowIndex) => (
+              data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, rowIndex) => (
                 <TableRow hover key={rowIndex}>
-                  { columns.map((column, index) => 
-                    <TableCell key={index} padding={column.label === '' ? 'none' : 'default'}>
-                      { row[column.name] && row[column.name] }
+                  {dataSource.columns.map((column, colIndex) =>
+                    <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
+                      {row[column.Name]}
                     </TableCell>
-                  ) }
+                  )}
                 </TableRow>
               ))}
           </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination count = { totalCount } rowsPerPage = { rowsPerPage } page = { page } onChangePage = { this.handleChangePage } onChangeRowsPerPage = { this.handleChangeRowsPerPage } />
-            </TableRow>
-          </TableFooter>
+          { 
+            showFooter === true &&
+              <TableFooter>
+                <TableRow>
+                  <TablePagination count = { totalCount } rowsPerPage = { rowsPerPage } page = { page } onChangePage = { this.handleChangePage } onChangeRowsPerPage = { this.handleChangeRowsPerPage } />
+                </TableRow>
+              </TableFooter>
+          }
         </Table>
       </Paper>);
   }
@@ -104,23 +103,8 @@ class Grid extends Component {
 
 Grid.propTypes = {
   classes: PropTypes.object.isRequired,
-  columns: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
-      sortable: PropTypes.bool.isRequired,
-      render: PropTypes.func
-    })).isRequired,
-  data: PropTypes.array.isRequired,
-  handleChangePage: PropTypes.func,
-  handleChangeRowsPerPage: PropTypes.func,
-  initialSort: PropTypes.shape({
-    column: PropTypes.string.isRequired,
-    order: PropTypes.string.isRequired
-  }),
-  rowsPerPage: PropTypes.number,    
-  serverUrl: PropTypes.string.isRequired,
+  dataSource: PropTypes.any.isRequired,
+  rowsPerPage: PropTypes.number,
   title: PropTypes.string
 };
-
 export default withStyles(styles)(Grid);
