@@ -15,10 +15,23 @@ describe('<Grid />', () => {
   let mountedGrid;
   let props;
 
+  // const columns = [{
+  //   key: 'key',
+  //   label: 'col',
+  //   sortable: true
+  // }];
+
   const columns = [{
-    key: 'key',
-    label: 'col',
-    sortable: true
+    'Label': 'Order ID',
+    'Name': 'OrderID',
+    'SortOrder': -1,
+    'SortDirection': 'None',
+    'IsKey': false,
+    'Searchable': false,
+    'Visible': true,
+    'Filter': null,
+    'DataType': 'numeric',
+    'Aggregate': 'None'
   }];
 
   const grid = () => {
@@ -51,11 +64,10 @@ describe('<Grid />', () => {
 
     componentDidMount.restore();
   });
-
+  
   beforeEach(() => {
     props = {
-      columns: columns,
-      dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged')
+      dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns)
     };
   });
 });
