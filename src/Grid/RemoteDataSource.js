@@ -51,6 +51,8 @@ class RemoteDataSource {
       });
     
       this.dataStream.onNext({ Payload: rows });
+    }).catch(response => {
+      console.log(response);
     });
   }
 }
