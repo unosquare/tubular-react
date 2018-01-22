@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import sinon, { spy } from 'sinon';
 import Enzyme, { mount, shallow } from 'enzyme';
-// import RemoteDataSource from '../../src/Grid/RemoteDataSource';
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 

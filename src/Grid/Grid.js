@@ -23,12 +23,11 @@ class Grid extends React.Component {
     page: this.props.page,
     rowsPerPage: this.props.rowsPerPage,
     dataSource: this.props.dataSource,
-    data: [],
-    columns: this.props.columns
+    data: []
   }
 
   componentDidMount() {
-    this.state.dataSource.connect(this.state.columns, this.state.rowsPerPage, this.state.page)
+    this.state.dataSource.connect(this.state.rowsPerPage, this.state.page)
       .subscribe(tbResponse => {
         this.setState({
           data: tbResponse.Payload
@@ -38,13 +37,13 @@ class Grid extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { data, rowsPerPage, page, columns } = this.state;
+    const { data, rowsPerPage, page, columns, dataSource } = this.state;
     return (
       <Paper className={classes.root}>
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              {columns.map(column =>
+              {dataSource.columns.map(column =>
                 <TableCell key={column.Name}>
                   {column.Label}
                 </TableCell>
@@ -55,7 +54,7 @@ class Grid extends React.Component {
             {
               data.map((row, rowIndex) => (
                 <TableRow hover key={rowIndex}>
-                  {columns.map((column, colIndex) =>
+                  {dataSource.columns.map((column, colIndex) =>
                     <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
                       {row[column.Name]}
                     </TableCell>
@@ -70,19 +69,6 @@ class Grid extends React.Component {
 
 Grid.propTypes = {
   classes: PropTypes.object.isRequired,
-  columns: PropTypes.arrayOf(
-    PropTypes.shape({
-      Name: PropTypes.string.isRequired,
-      Label: PropTypes.string.isRequired,
-      Sortable: PropTypes.bool,
-      SortOrder: PropTypes.number,
-      SortDirection: PropTypes.oneOf(['None', 'Asc', 'Desc']).isRequired,
-      Searchable: PropTypes.bool.isRequired,
-      Visible: PropTypes.bool.isRequired,
-      IsKey: PropTypes.bool.isRequired,
-      DataType: PropTypes.oneOf(['date', 'datetime', 'datetimeutc', 'numeric', 'boolean', 'string']).isRequired,
-      Filter: PropTypes.any
-    })).isRequired,
   dataSource: PropTypes.any.isRequired,
   rowsPerPage: PropTypes.number,
   title: PropTypes.string
