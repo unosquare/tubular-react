@@ -1,17 +1,15 @@
-import Rx from 'Rx';
 import Axios from 'axios';
 import PropTypes from 'prop-types';
+import Rx from 'rx';
 
 class RemoteDataSource {
-
   constructor(url, columns) {
     this.url = url;
     this.counter = 0;
     this.dataStream = new Rx.BehaviorSubject({ Payload: [] });
     this.columns = columns;
-    this.errorMessage = '';
   }
-  
+
   connect(rowsPerPage, page) {
     this._doRequest(rowsPerPage, page);
     return this.dataStream;
@@ -25,6 +23,10 @@ class RemoteDataSource {
     this._doRequest(rowsPerPage, page);
   }
   
+  search(rowsPerPage, page, searchText) {
+    this._doRequest(rowsPerPage, page, searchText);
+  }
+
   refresh(rowsPerPage, page) {
     this._doRequest(rowsPerPage, page);
   }
@@ -55,13 +57,13 @@ class RemoteDataSource {
     return JSON.stringify(expectedStructureKeys) === JSON.stringify(responseKeys);
   }
   
-  _doRequest(rowsPerPage, page) {
+  _doRequest(rowsPerPage, page, searchText) {
     const request = {
       'Count': this.counter++,
       'Columns': this.columns,
       'Skip': page * rowsPerPage,
       'Take': rowsPerPage,
-      'Search': { 'Text': '', 'Operator': 'None' },
+      'Search': { 'Text': searchText ? searchText : '', 'Operator': 'Auto' },
       'TimezoneOffset': 360
     };
 

@@ -1,3 +1,4 @@
+import GridToolbar from './GridToolbar';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -35,11 +36,17 @@ class Grid extends React.Component {
       });
   }
 
+  handleTextSearch = text => {
+    this.state.dataSource.search(this.state.rowsPerPage, this.state.page, text);
+  }
+
+
   render() {
     const { classes } = this.props;
     const { data, rowsPerPage, page, columns, dataSource } = this.state;
     return (
       <Paper className={classes.root}>
+        <GridToolbar onSearchTextChange={this.handleTextSearch} />
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
