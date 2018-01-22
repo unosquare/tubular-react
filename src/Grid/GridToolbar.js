@@ -34,23 +34,32 @@ class GridToolbar extends React.Component {
     anchorEl: null
   }
 
+   debounce = (fn, delay) => {
+     let timer = null;
+     return function () {
+       const context = this, args = arguments;
+       clearTimeout(timer);
+       timer = setTimeout(() => {
+         fn.apply(context, args);
+       }, delay);
+     };
+   }
+
+  handleSearchTextChange = this.debounce(() => {
+    if(this.props.onSearchTextChange)
+      this.props.onSearchTextChange(this.state.searchText);
+  }, 700);
 
   handleInputChange = event => {
     this.setState({
       searchText: event.target.value
-    }, () => {
-      if(this.props.onSearchTextChange)
-        this.props.onSearchTextChange(this.state.searchText);
-    });
+    }, this.handleSearchTextChange);
   }
 
   clearSearchText = () => {
     this.setState({
       searchText: ''
-    }, () => {
-      if(this.props.onSearchTextChange)
-        this.props.onSearchTextChange(this.state.searchText);
-    });
+    }, this.handleSearchTextChange);
   }
   
   handleMenuOpen = event => {
@@ -129,10 +138,10 @@ class GridToolbar extends React.Component {
 }
 
 GridToolbar.propTypes = {
-  classes: PropTypes.object.isRequired,  
+  classes: PropTypes.object.isRequired, 
   isExportEnabled: PropTypes.bool,
   isPrintEnabled: PropTypes.bool,
-  onSearchTextChange: PropTypes.func
+  onSearchTextChange: PropTypes.func  
 };
 
 export default withStyles(styles)(GridToolbar);
