@@ -42,9 +42,6 @@ class Grid extends React.Component {
       const functions = Object.assign([], this.state.functions);
       functions.splice(0, 1);
 
-      console.log(filter);
-      console.log(this.state.data);
-
       for(let i = 0; i < dataSource.columns.length; i++){
         if(dataSource.columns[i].Name === filter.column){
           dataSource.columns[i].Filter.Text = filter.value;
@@ -62,7 +59,6 @@ class Grid extends React.Component {
   }
 
   componentDidMount() {
-    console.log('Warsong');
     this.state.dataSource.connect(this.state.rowsPerPage, this.state.page)
       .subscribe(tbResponse => {
         this.setState({
