@@ -7,6 +7,7 @@ import PrintIcon from 'material-ui-icons/Print';
 import PropTypes from 'prop-types';
 import React from 'react';
 import SearchIcon from 'material-ui-icons/Search';
+import { Subject } from 'rx';
 import Toolbar from 'material-ui/Toolbar';
 import { withStyles } from 'material-ui/styles';
 import Input, { InputAdornment } from 'material-ui/Input';
@@ -29,37 +30,32 @@ const styles = theme => ({
 });
 
 class GridToolbar extends React.Component {
-  state = {
-    searchText: '',
-    anchorEl: null
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchText: '',
+      debounced: '',
+      anchorEl: null
+    };
+    this.search = new Subject();
+  }
+  
+  componentDidMount(){
+    this.search.debounce(700).subscribe(() => {
+      if(this.props.onSearchTextChange)
+        this.props.onSearchTextChange(this.state.searchText);
+    });
   }
 
-   debounce = (fn, delay) => {
-     let timer = null;
-     return function () {
-       const context = this, args = arguments;
-       clearTimeout(timer);
-       timer = setTimeout(() => {
-         fn.apply(context, args);
-       }, delay);
-     };
-   }
-
-  handleSearchTextChange = this.debounce(() => {
-    if(this.props.onSearchTextChange)
-      this.props.onSearchTextChange(this.state.searchText);
-  }, 700);
-
   handleInputChange = event => {
-    this.setState({
-      searchText: event.target.value
-    }, this.handleSearchTextChange);
+    const searchText = event.target.value;
+    this.setState({ searchText }, () => this.search.onNext());
   }
 
   clearSearchText = () => {
     this.setState({
       searchText: ''
-    }, this.handleSearchTextChange);
+    }, () => this.search.onNext());
   }
   
   handleMenuOpen = event => {
