@@ -29,35 +29,6 @@ class Grid extends React.Component {
     currentData: []
   }
 
-  functionHandler = functions => {
-    this.setState({ functions }, () => {
-      this.filterHandler();
-    });
-  }
-
-  filterHandler = () => {
-    if (this.state.functions[0] !== undefined) {
-      const filter = this.state.functions[0];
-      const dataSource = Object.assign([{}], this.state.dataSource);
-      const functions = Object.assign([], this.state.functions);
-      functions.splice(0, 1);
-
-      for(let i = 0; i < dataSource.columns.length; i++){
-        if(dataSource.columns[i].Name === filter.column){
-          dataSource.columns[i].Filter.Text = filter.value;
-          dataSource.columns[i].Filter.Operator = filter.filter;
-          if(filter.value2 !== undefined){
-            dataSource.columns[i].Filter.Argument = [filter.value2];
-          }
-        }
-      }
-
-      this.state.dataSource.filter(this.state.rowsPerPage, this.state.page);
-      
-      this.setState({ functions }, () => this.filterHandler());
-    }
-  }
-
   componentDidMount() {
     this.state.dataSource.connect(this.state.rowsPerPage, this.state.page)
       .subscribe(tbResponse => {
@@ -75,8 +46,9 @@ class Grid extends React.Component {
       <Paper className={classes.root}>
         <Table className={classes.table}>
           <GridHeader
-            columns={dataSource.columns}
-            functionHandler={this.functionHandler.bind(this)}
+            dataSource={dataSource}
+            page={page}
+            rowsPerPage={rowsPerPage}
           />
           <TableBody>
             {

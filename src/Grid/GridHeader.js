@@ -16,7 +16,12 @@ import Input, { InputLabel } from 'material-ui/Input';
 import { MenuItem } from 'material-ui/Menu';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
+import LeftArrowIcon from 'material-ui-icons/ChevronLeft';
+import RightArrowIcon from 'material-ui-icons/ChevronRight';
+import TimeIcon from 'material-ui-icons/Schedule';
 import TextField from 'material-ui/TextField';
+import { TimePicker, DatePicker, DateTimePicker } from 'material-ui-pickers';
+import moment from 'moment';
 
 const styles = theme => ({
   dropdown: {
@@ -43,16 +48,21 @@ const styles = theme => ({
 
 class GridHeader extends React.Component {
   static propTypes = {
-    columns: PropTypes.arrayOf(
+    /* columns: PropTypes.arrayOf( */
+    /* dataSource: PropTypes.object(
       PropTypes.shape({
         Label: PropTypes.string.isRequired
-      })).isRequired
+      })).isRequired */
   };
 
   state = {
+    dataSource: this.props.dataSource,
+    page: this.props.page,
+    rowsPerPage: this.props.rowsPerPage,
     open: false,
     columnType: '',
-    datePickerValue: '',
+    datePickerValue: moment().format(),
+    datePickerValue2: moment().format(),
     activeFilter: '',
     functions: [],
     openTextField: false,
@@ -87,61 +97,50 @@ class GridHeader extends React.Component {
     });
   };
 
-  functionCleaner = () => {
-    const array = Object.assign([], this.state.functions);
-
-    for (let i = 0; i < array.length; i++) {
-      if (array[i]['column'] === this.state.activeFilter) {
-        array.splice(i, 1);
-      }
-    }
-
-    return array;
-  }
-
-  handleClear = (value1, value2) => {
-    const array = this.functionCleaner();
+  handleClear = () => {
+    const value1 = '';
+    const value2 = '';
 
     this.setState({
-      functions: array,
-      [this.state.activeFilter + value1]: '',
-      [this.state.activeFilter + value2]: ''
+      [this.state.activeFilter]: 'None',
+      [`${this.state.activeFilter}Value`]: '',
+      [`${this.state.activeFilter}Value2`]: ''
     }, () => {
-      this.props.functionHandler(this.state.functions);
+      this.filterHandler(value1, value2);
     });
   }
 
   handleApply = () => {
-    const array = this.functionCleaner();
-    let value1 = this.state[`${this.state.activeFilter}value`];
-    let value2 = value2 === null ? null : this.state[`${this.state.activeFilter}value2`];
+    let value1 = this.state[`${this.state.activeFilter}Value`];
+    let value2 = value2 === null ? null : this.state[`${this.state.activeFilter}Value2`];
 
     if(this.state.columnType === 'numeric'){
       value1 = parseFloat(value1);
       value2 = parseFloat(value2);
     }
 
-    this.setState({ functions: array }, () => {
-      /* if(this.state[this.state.activeFilter + 'value'] == "")
-        return; */
+    this.filterHandler(value1, value2);
+  }
 
-      this.setState({
-        functions: this.state.functions.concat([{
-          column: this.state.activeFilter,
-          filter: this.state[this.state.activeFilter],
-          value: value1,
-          value2: value2,
-          type: this.state.columnType
-        }])
-      }, () => {
-        this.props.functionHandler(this.state.functions);
-      });
-    });
+  filterHandler = (value1, value2) => {
+    const dataSource = Object.assign([{}], this.state.dataSource);
+    
+    for(let i = 0; i < dataSource.columns.length; i++){
+      if(dataSource.columns[i].Name === this.state.activeFilter){
+        dataSource.columns[i].Filter.Text = value1;
+        dataSource.columns[i].Filter.Operator = this.state[this.state.activeFilter];
+        if(value2 !== undefined){
+          dataSource.columns[i].Filter.Argument = [value2];
+        }
+      }
+    }
+
+    this.state.dataSource.filter(this.state.rowsPerPage, this.state.page);
   }
 
   handleDatePicker = name => event => {
     this.setState({
-      [`datePicker${name}`]: event.target.value
+      [`datePicker${name}`]: event.format()
     });
   };
 
@@ -155,106 +154,66 @@ class GridHeader extends React.Component {
 
   handleDatePickerAccept = () => {
     this.setState({
-      [`${this.state.activeFilter}value`]: this.state.datePickerValue,
-      [`${this.state.activeFilter}value2`]: this.state.datePickerValue2
+      [`${this.state.activeFilter}Value`]: this.state.datePickerValue,
+      [`${this.state.activeFilter}Value2`]: this.state.datePickerValue2
     }, () => {
       this.handleDatePickerClose();
     });
   }
 
   DialogContent = props => {
-    const value = this.state[`${this.state.activeFilter}value`] === undefined ? '' : this.state[`${this.state.activeFilter}value`];
-    const value2 = this.state[`${this.state.activeFilter}value2`] === undefined ? '' : this.state[`${this.state.activeFilter}value2`];
-
-    if (this.state[this.state.activeFilter] === 'Between') {
-      return (
-        <div >
-          <TextField id={this.state.activeFilter} label={'Value'} value={value} onChange={this.handleTextFieldChange('value')} />
-          {this.state.columnType === 'datetime' ?
-            <div style={{ display: 'inline-flex' }}>
-              <IconButton onClick={() => this.handleDatePickerOpen('Value')}>
-                <DateRangeIcon />
-              </IconButton>
-            </div>
-            :
-            <div />
-          }
-          <br />
-          <TextField id={this.state.activeFilter} label={'Value 2'} value={value2} onChange={this.handleTextFieldChange('value2')} />
-          {this.state.columnType === 'datetime' ?
-            <div style={{ display: 'inline-flex' }}>
-              <IconButton onClick={() => this.handleDatePickerOpen('Value2')}>
-                <DateRangeIcon />
-              </IconButton>
-              <Dialog open={this.state.openTextField} onClose={this.handleDatePickerClose}>
-                <TextField
-                  id='datetime-local'
-                  label='Next appointment'
-                  type='datetime-local'
-                  defaultValue='2016-03-19T19:00'
-                  className={props.classes.textField}
-                  onChange={this.handleDatePicker(this.state.editingValue) }
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                />
-                {/* <TextField
-                  id='datetime-local'
-                  label='Next appointment'
-                  type='datetime-local'
-                  defaultValue='2017-05-24T10:30'
-                  className={props.classes.textField}
-                  onChange={this.handleDatePicker('Value2')}
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                /> */}
-                
-                <Button onClick={this.handleDatePickerAccept}>Accept</Button>
-              </Dialog>
-            </div>
-            :
-            <div />
-          }
-          <br />
-          <Button className={props.classes.applyButton} onClick={() => this.handleApply()} >Apply</Button>
-          <Button className={props.classes.clearButton} onClick={() => this.handleClear('value', 'value2')}>Clear</Button>
-        </div>
-      );
+    let value = '';
+    let value2 = '';
+    
+    
+    if(this.state.columnType === 'datetime'){
+      value = this.state.datePickerValue;
+      value2 = this.state.datePickerValue2;
+    }
+    else{
+      value = this.state[`${this.state.activeFilter}Value`] === undefined ? '' : this.state[`${this.state.activeFilter}Value`];
+      value2 = this.state[`${this.state.activeFilter}Value2`] === undefined ? '' : this.state[`${this.state.activeFilter}Value2`];
     }
 
     return (
       <div >
-        <TextField id={this.state.activeFilter} label={'Value'} value={value} onChange={this.handleTextFieldChange('value')} />
-        {this.state.columnType === 'datetime' ?
-          <div style={{ display: 'inline-flex' }}>
-            <IconButton onClick={() => this.handleDatePickerOpen('Value')}>
-              <DateRangeIcon />
-            </IconButton>
-            <Dialog open={this.state.openTextField} onClose={this.handleDatePickerClose}>
-              <TextField
-                id='datetime-local'
-                label='Next appointment'
-                type='datetime-local'
-                defaultValue='2016-03-18T19:00'
-                className={props.classes.textField}
-                onChange={this.handleDatePicker('Value')}
-                InputLabelProps={{
-                  shrink: true
-                }}
-              />
-              <Button onClick={this.handleDatePickerAccept}>Accept</Button>
-            </Dialog>
-          </div>
-          :
-          <div />
-        }
-        <br />
+        <this.DialogTextField value={value} label={'Value'} mod={'Value'} />
+        {this.state[this.state.activeFilter] === 'Between' ? <this.DialogTextField value={value2} label={'Value 2'} mod={'Value2'} /> : null}
         <Button className={props.classes.applyButton} onClick={() => this.handleApply()}>Apply</Button>
-        <Button className={props.classes.clearButton} onClick={() => this.handleClear('value', null)}>Clear</Button>
+        <Button className={props.classes.clearButton} onClick={() => this.handleClear()}>Clear</Button>
       </div>
     );
   }
+
+  DialogTextField = props => (
+    <div>
+      <TextField id={this.state.activeFilter} label={props.label} value={props.value} onChange={this.handleTextFieldChange(props.mod)} />
+      {this.state.columnType === 'datetime' ?
+        <div style={{ display: 'inline-flex' }}>
+          <IconButton onClick={() => this.handleDatePickerOpen(props.mod)}>
+            <DateRangeIcon />
+          </IconButton>
+        </div>
+        :
+        <div />
+      }
+      <br />
+    </div>
+  )
+
+  DateTimePickerDialog = () => (
+    <Dialog open={this.state.openTextField} onClose={this.handleDatePickerClose}>
+      <DateTimePicker
+        value={this.state[`datePicker${this.state.editingValue}`]}
+        onChange={this.handleDatePicker(this.state.editingValue)}
+        leftArrowIcon={<LeftArrowIcon />}
+        rightArrowIcon={<RightArrowIcon />}
+        dateRangeIcon={<DateRangeIcon/>}
+        timeIcon={<TimeIcon/>}
+      />
+      <Button onClick={this.handleDatePickerAccept}>Accept</Button>
+    </Dialog>
+  )
 
   StringDropDown = props => (
     <Select
@@ -307,7 +266,7 @@ class GridHeader extends React.Component {
   }
 
   render() {
-    const { columns, classes } = this.props;
+    const { dataSource, classes } = this.props;
 
     return (
       <TableHead>
@@ -315,8 +274,9 @@ class GridHeader extends React.Component {
           <this.DialogDropDown classes={classes} />
           <this.DialogContent classes={classes} />
         </Dialog>
+        <this.DateTimePickerDialog/>
         <TableRow>
-          {columns.map(column => {
+          {dataSource.columns.map(column => {
             const render = column.Sortable ?
               (<Tooltip title='Sort' placement='bottom-start' enterDelay={300}>
                 <TableSortLabel
