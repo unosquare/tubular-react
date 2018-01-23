@@ -1,24 +1,17 @@
+import BooleanDropdown from './BooleanDropdown.js';
+import BooleanInput from './BooleanInput.js';
 import Button from 'material-ui/Button';
-import DateRangeIcon from 'material-ui-icons/DateRange';
+import DateInput from './DateInput.js';
 import Dialog from 'material-ui/Dialog';
 import FilterListIcon from 'material-ui-icons/FilterList';
 import IconButton from 'material-ui/IconButton';
-import Input from 'material-ui/Input';
-import LeftArrowIcon from 'material-ui-icons/ChevronLeft';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import PropTypes from 'prop-types';
+import NumericDropdown from './NumericDropdown.js';
 import React from 'react';
-import RightArrowIcon from 'material-ui-icons/ChevronRight';
-import Select from 'material-ui/Select';
-import TimeIcon from 'material-ui-icons/Schedule';
+import StringDropdown from './StringDropdown.js';
+import TextInput from './TextInput.js';
 import Tooltip from 'material-ui/Tooltip';
-import createMuiTheme from 'material-ui/styles/createMuiTheme';
-import createPalette from 'material-ui/styles/createPalette';
 import moment from 'moment';
-import { MenuItem } from 'material-ui/Menu';
-import { deepPurple } from 'material-ui/colors';
 import { withStyles } from 'material-ui/styles';
-import { DateTimePicker, DatePicker } from 'material-ui-pickers';
 import { TableCell, TableHead, TableRow, TableSortLabel } from 'material-ui/Table';
 
 const styles = theme => ({
@@ -48,22 +41,7 @@ const styles = theme => ({
   }
 });
 
-const muiTheme = createMuiTheme({
-  palette: createPalette({
-    primary: deepPurple,
-    type: 'light'
-  })
-});
-
 class GridHeader extends React.Component {
-  static propTypes = {
-    /* columns: PropTypes.arrayOf( */
-    /* dataSource: PropTypes.object(
-      PropTypes.shape({
-        Label: PropTypes.string.isRequired
-      })).isRequired */
-  };
-
   state = {
     dataSource: this.props.dataSource,
     page: this.props.page,
@@ -105,7 +83,7 @@ class GridHeader extends React.Component {
     let value1 = '';
     let value2 = '';
 
-    if(this.state.columnType === 'datetime' || this.state.columnType === 'date') {
+    if(this.state.columnType === 'datetime' || this.state.columnType === 'date' || this.state.columnType === 'datetimeutc') {
       value1 = moment().format();
       value2 = moment().format();
     }
@@ -161,7 +139,7 @@ class GridHeader extends React.Component {
     let value = '';
     let value2 = '';
     
-    if(this.state.columnType === 'datetime' || this.state.columnType === 'date'){
+    if(this.state.columnType === 'datetime' || this.state.columnType === 'date' || this.state.columnType === 'datetimeutc'){
       value = this.state[`${this.state.activeFilter}Value`] === undefined ? moment().format() : this.state[`${this.state.activeFilter}Value`];
       value2 = this.state[`${this.state.activeFilter}Value2`] === undefined ? moment().format() : this.state[`${this.state.activeFilter}Value2`];
     }
@@ -176,20 +154,44 @@ class GridHeader extends React.Component {
     return (
       <div >
         {
-          this.state.columnType === 'datetime' || this.state.columnType === 'date' ? 
-            <this.DateTimeInput value={value} label={'Value'} mod={'Value'} />
+          this.state.columnType === 'datetime' || this.state.columnType === 'date' || this.state.columnType === 'datetimeutc' ? 
+            <DateInput 
+              value={value} 
+              columnType={this.state.columnType}
+              label={'Value'} 
+              handleDatePicker={this.handleDatePicker.bind(this)}
+              mod={'Value'} />
             : this.state.columnType === 'boolean' ? 
-              <this.BooleanInput classes={props.classes} value={value}/> 
+              <BooleanInput 
+                classes={props.classes} 
+                value={value} 
+                handleBooleanDropDown={this.handleBooleanDropDown.bind(this)}
+                activeFilter={this.state.activeFilter}/>
               :
-              <this.TextInput value={value} label={'Value'} mod={'Value'} />
+              <TextInput 
+                value={value} 
+                label={'Value'} 
+                mod={'Value'} 
+                activeFilter={this.state.activeFilter}
+                handleTextFieldChange={this.handleTextFieldChange.bind(this)}/>
         }
 
         {
           this.state[this.state.activeFilter] === 'Between' ? 
-            this.state.columnType === 'datetime' || this.state.columnType === 'date' ? 
-              <this.DateTimeInput value={value2} label={'Value 2'} mod={'Value2'} /> 
+            this.state.columnType === 'datetime' || this.state.columnType === 'date' || this.state.columnType === 'datetimeutc' ? 
+              <DateInput 
+                value={value2} 
+                columnType={this.state.columnType}
+                label={'Value 2'} 
+                handleDatePicker={this.handleDatePicker.bind(this)}
+                mod={'Value2'} />
               : 
-              <this.TextInput value={value2} label={'Value 2'} mod={'Value2'} />
+              <TextInput 
+                value={value2} 
+                label={'Value 2'} 
+                mod={'Value2'} 
+                activeFilter={this.state.activeFilter}
+                handleTextFieldChange={this.handleTextFieldChange.bind(this)}/>
             : 
             null
         }
@@ -206,125 +208,17 @@ class GridHeader extends React.Component {
     this.setState({ [`${[this.state.activeFilter]}Value`]: event.target.value });
   };
 
-  BooleanInput = props => (
-    <div style={{ padding: '13px 15px 6px 10px' }}>
-      <Select
-        style={{ minWidth: '300px' }}
-        className={props.classes.dropdown}
-        value={props.value}
-        onChange={this.handleBooleanDropDown}
-        input={<Input name={this.state.activeFilter} />}
-      >
-        <MenuItem value={''}></MenuItem>
-        <MenuItem value={'true'}>True</MenuItem>
-        <MenuItem value={'false'}>False</MenuItem>
-      </Select>
-    </div>
-  )
-
-  TextInput = props => (
-    <div style={{ padding: '13px 15px 6px 10px' }}>
-      <Input style={{ minWidth: '300px' }} id={this.state.activeFilter} placeholder={props.label} value={props.value} onChange={this.handleTextFieldChange(props.mod)} />
-      <br />
-    </div>
-  )
-
-  DateTimeInput = props => (
-    <div style={{ padding: '13px 15px 6px 10px' }}>
-      <MuiThemeProvider theme={muiTheme}>
-        {
-          this.state.columnType === 'datetime' ? 
-            <DateTimePicker
-              style={{ minWidth: '300px' }}
-              value={this.state[`${this.state.activeFilter}${props.mod}`]}
-              onChange={this.handleDatePicker(props.mod)}
-              leftArrowIcon={<LeftArrowIcon />}
-              rightArrowIcon={<RightArrowIcon />}
-              dateRangeIcon={<DateRangeIcon/>}
-              timeIcon={<TimeIcon/>}
-              format={'MMMM Do YYYY hh:mm a'}
-            />
-            : 
-            <DatePicker
-              style={{ minWidth: '300px' }}
-              value={this.state[`${this.state.activeFilter}${props.mod}`]}
-              onChange={this.handleDatePicker(props.mod)}
-              leftArrowIcon={<LeftArrowIcon />}
-              rightArrowIcon={<RightArrowIcon />}
-              format={'MMMM Do YYYY'}
-            />
-        }
-      </MuiThemeProvider>
-      <br />
-    </div>
-  )
-
-  BooleanDropDown = props => (
-    <div style={{ padding: '13px 15px 6px 10px' }}>
-      <Select
-        className={props.classes.dropdown}
-        value={props.value}
-        onChange={this.handleChange}
-        input={<Input name={this.state.activeFilter} />}
-      >
-        <MenuItem value={'None'}>None</MenuItem>
-        <MenuItem value={'Equals'}>Equals</MenuItem>
-        <MenuItem value={'NotEquals'}>Not Equals</MenuItem>
-      </Select>
-    </div>
-  )
-
-  StringDropDown = props => (
-    <div style={{ padding: '13px 15px 6px 10px' }}>
-      <Select
-        className={props.classes.dropdown}
-        value={props.value}
-        onChange={this.handleChange}
-        input={<Input name={this.state.activeFilter} />}
-      >
-        <MenuItem value={'None'}>None</MenuItem>
-        <MenuItem value={'Equals'}>Equals</MenuItem>
-        <MenuItem value={'NotEquals'}>Not Equals</MenuItem>
-        <MenuItem value={'Contains'}>Contains</MenuItem>
-        <MenuItem value={'NotContains'}>Not Contains</MenuItem>
-        <MenuItem value={'StartsWith'}>Starts With</MenuItem>
-        <MenuItem value={'NotStartsWith'}>Not Starts With</MenuItem>
-        <MenuItem value={'EndsWith'}>Ends With</MenuItem>
-        <MenuItem value={'NotEndsWith'}>Not Ends With</MenuItem>
-      </Select>
-    </div>
-  )
-
-  NumericDropdown = props => (
-    <div style={{ padding: '13px 15px 6px 10px' }}>
-      <Select
-        className={props.classes.dropdown}
-        value={props.value}
-        onChange={this.handleChange}
-        input={<Input name={this.state.activeFilter} />}
-      >
-        <MenuItem value={'None'}>None</MenuItem>
-        <MenuItem value={'Equals'}>Equals</MenuItem>
-        <MenuItem value={'Between'}>Between</MenuItem>
-        <MenuItem value={'Gte'}>>=</MenuItem>
-        <MenuItem value={'Gt'}>></MenuItem>
-        <MenuItem value={'Lte'}>&#60;=</MenuItem>
-        <MenuItem value={'Lt'}>&#60;</MenuItem>
-      </Select>
-    </div>
-  )
-
-  DialogDropDown = props => {
+  DialogDropdown = props => {
     const value = this.state[this.state.activeFilter] === undefined ? 'None' : this.state[this.state.activeFilter];
-
+    
     if (this.state.columnType === 'string') {
-      return (<this.StringDropDown classes={props.classes} value={value} />);
+      return (<StringDropdown classes={props.classes} value={value} activeFilter={this.state.activeFilter} handleChange={this.handleChange.bind(this)}/>);
     }
-    else if (this.state.columnType === 'numeric' || this.state.columnType === 'datetime' || this.state.columnType === 'date') {
-      return (<this.NumericDropdown classes={props.classes} value={value} />);
+    else if (this.state.columnType === 'numeric' || this.state.columnType === 'datetime' || this.state.columnType === 'date' || this.state.columnType === 'datetimeutc') {
+      return (<NumericDropdown classes={props.classes} value={value} activeFilter={this.state.activeFilter} handleChange={this.handleChange.bind(this)}/>);
     }
     else if(this.state.columnType === 'boolean'){
-      return (<this.BooleanDropDown classes={props.classes} value={value} />);
+      return (<BooleanDropdown classes={props.classes} value={value} activeFilter={this.state.activeFilter} handleChange={this.handleChange.bind(this)}/>);
     }
     else {
       return (<div />);
@@ -337,7 +231,7 @@ class GridHeader extends React.Component {
     return (
       <TableHead>
         <Dialog open={this.state.open} onClose={this.handleClose} >
-          <this.DialogDropDown classes={classes} />
+          <this.DialogDropdown classes={classes} />
           <this.DialogContent classes={classes} />
         </Dialog>
         <TableRow>
