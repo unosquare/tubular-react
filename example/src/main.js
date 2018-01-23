@@ -1,6 +1,7 @@
 import Grid from '../../src/Grid/Grid';
 import React from 'react';
 import RemoteDataSource from '../../src/Grid/RemoteDataSource';
+import Table, { TableCell, TableRow } from 'material-ui/Table';
 
 const columns = [
   {
@@ -55,8 +56,17 @@ const columns = [
 export default class Main extends React.Component {
   render() {
     const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns);
+    const gridFooterDefinition = (
+      <TableRow>
+        <TableCell>Totals:</TableCell>
+        <TableCell>500</TableCell>
+        <TableCell>...</TableCell>
+        <TableCell>...</TableCell>
+      </TableRow>
+    );
+
     return (
-      <Grid dataSource={dataSource} rowsPerPage = { 25 } showFooter = { true } />
+      <Grid dataSource={dataSource} rowsPerPage = { 25 } showFooter = { true } gridFooterDefinition = { gridFooterDefinition } />
     );
   }
 }

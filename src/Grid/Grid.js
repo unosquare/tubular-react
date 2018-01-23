@@ -1,10 +1,10 @@
+import GridFooter from './GridFooter';
 import GridToolbar from './GridToolbar';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { withStyles } from 'material-ui/styles';
 import Table, { TableBody, TableCell, TableFooter, TableHead, TablePagination, TableRow } from 'material-ui/Table';
-
 
 const styles = theme => ({
   root: {
@@ -25,6 +25,7 @@ class Grid extends React.Component {
     page: this.props.page,
     rowsPerPage: this.props.rowsPerPage,
     showFooter: this.props.showFooter,
+    gridFooterDefinition: this.props.gridFooterDefinition,
     dataSource: this.props.dataSource,
     data: []
   }
@@ -42,29 +43,9 @@ class Grid extends React.Component {
     this.state.dataSource.search(this.state.rowsPerPage, this.state.page, text);
   }
 
-  handleChangePage = (event, page) => {
-    const { onNextPageClick } = this.props;
-
-    if (onNextPageClick) {
-      onNextpageClick(event);
-    }
-    else {
-      this.setState({ page });
-    }
-  };
-
-  handleChangeRowsPerPage = event => {
-    const { handleChangeRowsPerPage } = this.props;
-
-    if (!handleChangeRowsPerPage) 
-      this.setState({ rowsPerPage: event.target.value });
-  };
-
   render() {
     const { classes } = this.props;
-    const { data, rowsPerPage, page, dataSource, showFooter } = this.state;
-    
-    const totalCount = data.length;
+    const { data, dataSource, showFooter, gridFooterDefinition } = this.state;
 
     return (
       <Paper className={classes.root}>
@@ -94,9 +75,7 @@ class Grid extends React.Component {
           { 
             showFooter === true &&
               <TableFooter>
-                <TableRow>
-                  <TablePagination count = { totalCount } rowsPerPage = { rowsPerPage } page = { page } onChangePage = { this.handleChangePage } onChangeRowsPerPage = { this.handleChangeRowsPerPage } />
-                </TableRow>
+                { gridFooterDefinition }
               </TableFooter>
           }
         </Table>
@@ -110,4 +89,5 @@ Grid.propTypes = {
   rowsPerPage: PropTypes.number,
   title: PropTypes.string
 };
+
 export default withStyles(styles)(Grid);
