@@ -2,7 +2,7 @@ import Grid from '../../src/Grid/Grid';
 import GridFooter from '../../src/Grid/GridFooter';
 import React from 'react';
 import RemoteDataSource from '../../src/Grid/RemoteDataSource';
-import Table, { TableCell, TableRow } from 'material-ui/Table';
+import { TableCell, TableRow } from 'material-ui/Table';
 
 const columns = [
   {
@@ -59,7 +59,7 @@ export default class Main extends React.Component {
     const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns);
 
     return (
-      <Grid dataSource={dataSource} rowsPerPage = { 25 }>
+      <Grid dataSource={dataSource} rowsPerPage = { 25 } showFooter = { false }>
         <GridFooter>
           <TableRow>
             <TableCell>Totals:</TableCell>

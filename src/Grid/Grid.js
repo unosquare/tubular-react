@@ -1,4 +1,3 @@
-import GridFooter from './GridFooter';
 import GridToolbar from './GridToolbar';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
@@ -72,8 +71,9 @@ class Grid extends React.Component {
                 </TableRow>
               ))}
           </TableBody>
-          {
-            this.props.children
+          { 
+            showFooter === true && 
+              this.props.children
           }
         </Table>
       </Paper>);
