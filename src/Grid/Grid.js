@@ -72,11 +72,8 @@ class Grid extends React.Component {
                 </TableRow>
               ))}
           </TableBody>
-          { 
-            showFooter === true &&
-              <TableFooter>
-                { gridFooterDefinition }
-              </TableFooter>
+          {
+            this.props.children
           }
         </Table>
       </Paper>);
