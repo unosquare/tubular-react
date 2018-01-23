@@ -51,10 +51,6 @@ class GridHeader extends React.Component {
     activeFilter: ''
   }
 
-  sortHandler = (property, dataType) => {
-    /* this.props.onRequestSort(property, dataType); */
-  };
-
   handleClickOpen = () => {
     this.setState({ open: true });
   };
@@ -128,6 +124,22 @@ class GridHeader extends React.Component {
 
     this.state.dataSource.filter(this.state.rowsPerPage, this.state.page);
   }
+
+  sortHandler = property => {
+    const dataSource = Object.assign([{}], this.state.dataSource);
+
+    for(let i = 0; i < dataSource.columns.length; i++){
+      if(dataSource.columns[i].SortOrder === 1){
+        dataSource.columns[i].SortOrder = -1;
+      }
+
+      if(dataSource.columns[i].Name === property){
+        dataSource.columns[i].SortOrder = 1;
+        this.state.dataSource.sort(this.state.rowsPerPage, this.state.page);
+        dataSource.columns[i].SortDirection = dataSource.columns[i].SortDirection === 'Ascending' ? 'Descending' : 'Ascending';
+      }
+    }
+  };
 
   handleDatePicker = name => event => {
     this.setState({
@@ -239,7 +251,7 @@ class GridHeader extends React.Component {
             const render = column.Sortable ?
               (<Tooltip title='Sort' placement='bottom-start' enterDelay={300}>
                 <TableSortLabel
-                  onClick={() => this.sortHandler(column.Label, column.DataType)}
+                  onClick={() => this.sortHandler(column.Name)}
                 >
                   {column.Label}
                 </TableSortLabel>
