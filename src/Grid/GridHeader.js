@@ -74,7 +74,7 @@ class GridHeader extends React.Component {
   }
 
   sortHandler = (property, dataType) => {
-    this.props.onRequestSort(property, dataType);
+    /* this.props.onRequestSort(property, dataType); */
   };
 
   handleClickOpen = () => {
