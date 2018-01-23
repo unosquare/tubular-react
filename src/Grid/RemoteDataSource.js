@@ -14,7 +14,7 @@ class RemoteDataSource {
     this._doRequest(rowsPerPage, page);
     return this.dataStream;
   }
-  
+
   filter(rowsPerPage, page) {
     this._doRequest(rowsPerPage, page);
   }
