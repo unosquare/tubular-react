@@ -15,10 +15,10 @@ import Tooltip from 'material-ui/Tooltip';
 import createMuiTheme from 'material-ui/styles/createMuiTheme';
 import createPalette from 'material-ui/styles/createPalette';
 import moment from 'moment';
-import { DateTimePicker } from 'material-ui-pickers';
 import { MenuItem } from 'material-ui/Menu';
 import { deepPurple } from 'material-ui/colors';
 import { withStyles } from 'material-ui/styles';
+import { DateTimePicker, DatePicker } from 'material-ui-pickers';
 import { TableCell, TableHead, TableRow, TableSortLabel } from 'material-ui/Table';
 
 const styles = theme => ({
@@ -105,7 +105,7 @@ class GridHeader extends React.Component {
     let value1 = '';
     let value2 = '';
 
-    if(this.state.columnType === 'datetime') {
+    if(this.state.columnType === 'datetime' || this.state.columnType === 'date') {
       value1 = moment().format();
       value2 = moment().format();
     }
@@ -137,7 +137,7 @@ class GridHeader extends React.Component {
 
   filterHandler = (value1, value2) => {
     const dataSource = Object.assign([{}], this.state.dataSource);
-    
+
     for(let i = 0; i < dataSource.columns.length; i++){
       if(dataSource.columns[i].Name === this.state.activeFilter){
         dataSource.columns[i].Filter.Text = value1;
@@ -161,7 +161,7 @@ class GridHeader extends React.Component {
     let value = '';
     let value2 = '';
     
-    if(this.state.columnType === 'datetime'){
+    if(this.state.columnType === 'datetime' || this.state.columnType === 'date'){
       value = this.state[`${this.state.activeFilter}Value`] === undefined ? moment().format() : this.state[`${this.state.activeFilter}Value`];
       value2 = this.state[`${this.state.activeFilter}Value2`] === undefined ? moment().format() : this.state[`${this.state.activeFilter}Value2`];
     }
@@ -176,7 +176,7 @@ class GridHeader extends React.Component {
     return (
       <div >
         {
-          this.state.columnType === 'datetime' ? 
+          this.state.columnType === 'datetime' || this.state.columnType === 'date' ? 
             <this.DateTimeInput value={value} label={'Value'} mod={'Value'} />
             : this.state.columnType === 'boolean' ? 
               <this.BooleanInput classes={props.classes} value={value}/> 
@@ -186,7 +186,7 @@ class GridHeader extends React.Component {
 
         {
           this.state[this.state.activeFilter] === 'Between' ? 
-            this.state.columnType === 'datetime' ? 
+            this.state.columnType === 'datetime' || this.state.columnType === 'date' ? 
               <this.DateTimeInput value={value2} label={'Value 2'} mod={'Value2'} /> 
               : 
               <this.TextInput value={value2} label={'Value 2'} mod={'Value2'} />
@@ -232,15 +232,28 @@ class GridHeader extends React.Component {
   DateTimeInput = props => (
     <div style={{ padding: '13px 15px 6px 10px' }}>
       <MuiThemeProvider theme={muiTheme}>
-        <DateTimePicker
-          style={{ minWidth: '300px' }}
-          value={this.state[`${this.state.activeFilter}${props.mod}`]}
-          onChange={this.handleDatePicker(props.mod)}
-          leftArrowIcon={<LeftArrowIcon />}
-          rightArrowIcon={<RightArrowIcon />}
-          dateRangeIcon={<DateRangeIcon/>}
-          timeIcon={<TimeIcon/>}
-        />
+        {
+          this.state.columnType === 'datetime' ? 
+            <DateTimePicker
+              style={{ minWidth: '300px' }}
+              value={this.state[`${this.state.activeFilter}${props.mod}`]}
+              onChange={this.handleDatePicker(props.mod)}
+              leftArrowIcon={<LeftArrowIcon />}
+              rightArrowIcon={<RightArrowIcon />}
+              dateRangeIcon={<DateRangeIcon/>}
+              timeIcon={<TimeIcon/>}
+              format={'MMMM Do YYYY hh:mm a'}
+            />
+            : 
+            <DatePicker
+              style={{ minWidth: '300px' }}
+              value={this.state[`${this.state.activeFilter}${props.mod}`]}
+              onChange={this.handleDatePicker(props.mod)}
+              leftArrowIcon={<LeftArrowIcon />}
+              rightArrowIcon={<RightArrowIcon />}
+              format={'MMMM Do YYYY'}
+            />
+        }
       </MuiThemeProvider>
       <br />
     </div>
@@ -307,7 +320,7 @@ class GridHeader extends React.Component {
     if (this.state.columnType === 'string') {
       return (<this.StringDropDown classes={props.classes} value={value} />);
     }
-    else if (this.state.columnType === 'numeric' || this.state.columnType === 'datetime') {
+    else if (this.state.columnType === 'numeric' || this.state.columnType === 'datetime' || this.state.columnType === 'date') {
       return (<this.NumericDropdown classes={props.classes} value={value} />);
     }
     else if(this.state.columnType === 'boolean'){
@@ -339,8 +352,8 @@ class GridHeader extends React.Component {
               </Tooltip>)
               : (column.Label);
             const filter = column.Filter ?
-              (<IconButton >
-                <FilterListIcon onClick={() => this.handleFilter(column)} />
+              (<IconButton onClick={() => this.handleFilter(column)} >
+                <FilterListIcon/>
               </IconButton>)
               : (null);
             return (

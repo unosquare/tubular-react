@@ -9,5 +9,5 @@ install:
 - npm install
 - npm i -g gulp-cli
 script:
-- npm start
+- npm run build
 - npm run test:coveralls

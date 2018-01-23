@@ -74,7 +74,14 @@ const columns = [
     'IsKey': false,
     'Searchable': false,
     'Visible': true,
-    'Filter': null,
+    'Filter': { 
+      Argument: [],
+      HasFilter: true,
+      Name: 'ShipperCity',
+      Operator: 'None',
+      OptionsUrl: null,
+      Text: null
+    },
     'DataType': 'string',
     'Aggregate': 'None'
   }

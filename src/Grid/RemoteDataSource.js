@@ -15,44 +15,6 @@ class RemoteDataSource {
     return this.dataStream;
   }
 
-  /*
-    filter(rowsPerPage, page) {
-    this._doRequest(rowsPerPage, page);
-  }
-
-  sort(rowsPerPage, page) {
-    this._doRequest(columns, rowsPerPage, page);
-  }
-
-  refresh(rowsPerPage, page) {
-    this._doRequest(columns, rowsPerPage, page);
-  }
-
-  _doRequest(rowsPerPage, page) {
-    const request = {
-      'Count': this.counter++,
-      'Columns': this.columns,
-      'Skip': page * rowsPerPage,
-      'Take': rowsPerPage,
-      'Search': { 'Text': '', 'Operator': 'None' },
-      'TimezoneOffset': 360
-    };
-
-    Axios.post(this.url, request).then(response => {
-      const data = response.data.Payload;
-      const rows = data.map(row => {
-        const obj = {};
-
-        this.columns.forEach((column, key) => {
-          obj[column.Name] = row[key] || row[column.Name];
-        });
-
-        return obj;
-      });
-      this.dataStream.onNext({ Payload: rows });
-  */
-
-  
   filter(rowsPerPage, page) {
     this._doRequest(rowsPerPage, page);
   }
