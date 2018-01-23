@@ -1,31 +1,29 @@
+import Button from 'material-ui/Button';
+import DateRangeIcon from 'material-ui-icons/DateRange';
+import Dialog from 'material-ui/Dialog';
+import FilterListIcon from 'material-ui-icons/FilterList';
+import IconButton from 'material-ui/IconButton';
+import Input from 'material-ui/Input';
+import LeftArrowIcon from 'material-ui-icons/ChevronLeft';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import PropTypes from 'prop-types';
 import React from 'react';
-import Tooltip from 'material-ui/Tooltip';
-import { TableCell, TableHead, TableRow, TableSortLabel } from 'material-ui/Table';
-import IconButton from 'material-ui/IconButton';
-import FilterListIcon from 'material-ui-icons/FilterList';
-import DateRangeIcon from 'material-ui-icons/DateRange';
-import Dialog, {
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle
-} from 'material-ui/Dialog';
-import Select from 'material-ui/Select';
-import Input, { InputLabel } from 'material-ui/Input';
-import { MenuItem } from 'material-ui/Menu';
-import { withStyles } from 'material-ui/styles';
-import Button from 'material-ui/Button';
-import LeftArrowIcon from 'material-ui-icons/ChevronLeft';
 import RightArrowIcon from 'material-ui-icons/ChevronRight';
+import Select from 'material-ui/Select';
 import TimeIcon from 'material-ui-icons/Schedule';
-import TextField from 'material-ui/TextField';
-import { TimePicker, DatePicker, DateTimePicker } from 'material-ui-pickers';
+import Tooltip from 'material-ui/Tooltip';
+import createMuiTheme from 'material-ui/styles/createMuiTheme';
+import createPalette from 'material-ui/styles/createPalette';
 import moment from 'moment';
+import { DateTimePicker } from 'material-ui-pickers';
+import { MenuItem } from 'material-ui/Menu';
+import { deepPurple } from 'material-ui/colors';
+import { withStyles } from 'material-ui/styles';
+import { TableCell, TableHead, TableRow, TableSortLabel } from 'material-ui/Table';
 
 const styles = theme => ({
   dropdown: {
-    minWidth: '200px'
+    minWidth: '300px'
   },
   dialog: {
     minWidth: '400px',
@@ -33,7 +31,8 @@ const styles = theme => ({
   },
   applyButton: {
     background: '#28b62c',
-    color: 'white'
+    color: 'white',
+    marginRight: '30px'
   },
   clearButton: {
     background: '#ff4136',
@@ -43,7 +42,17 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     width: 200
+  },
+  mainDialogStyle: {
+    padding: '25px 25px 25px 25px'
   }
+});
+
+const muiTheme = createMuiTheme({
+  palette: createPalette({
+    primary: deepPurple,
+    type: 'light'
+  })
 });
 
 class GridHeader extends React.Component {
@@ -61,12 +70,7 @@ class GridHeader extends React.Component {
     rowsPerPage: this.props.rowsPerPage,
     open: false,
     columnType: '',
-    datePickerValue: moment().format(),
-    datePickerValue2: moment().format(),
-    activeFilter: '',
-    functions: [],
-    openTextField: false,
-    editingValue: ''
+    activeFilter: ''
   }
 
   sortHandler = (property, dataType) => {
@@ -98,13 +102,18 @@ class GridHeader extends React.Component {
   };
 
   handleClear = () => {
-    const value1 = '';
-    const value2 = '';
+    let value1 = '';
+    let value2 = '';
+
+    if(this.state.columnType === 'datetime') {
+      value1 = moment().format();
+      value2 = moment().format();
+    }
 
     this.setState({
       [this.state.activeFilter]: 'None',
-      [`${this.state.activeFilter}Value`]: '',
-      [`${this.state.activeFilter}Value2`]: ''
+      [`${this.state.activeFilter}Value`]: value1,
+      [`${this.state.activeFilter}Value2`]: value2
     }, () => {
       this.filterHandler(value1, value2);
     });
@@ -118,7 +127,11 @@ class GridHeader extends React.Component {
       value1 = parseFloat(value1);
       value2 = parseFloat(value2);
     }
-
+    else if(this.state.columnType === 'boolean'){
+      value1 = (value1 === 'true');
+      value2 = 1;
+    }
+    
     this.filterHandler(value1, value2);
   }
 
@@ -140,35 +153,20 @@ class GridHeader extends React.Component {
 
   handleDatePicker = name => event => {
     this.setState({
-      [`datePicker${name}`]: event.format()
+      [`${this.state.activeFilter}${name}`]: event.format()
     });
   };
-
-  handleDatePickerOpen = value => {
-    this.setState({ editingValue: value, openTextField: true });
-  }
-
-  handleDatePickerClose = () => {
-    this.setState({ openTextField: false });
-  }
-
-  handleDatePickerAccept = () => {
-    this.setState({
-      [`${this.state.activeFilter}Value`]: this.state.datePickerValue,
-      [`${this.state.activeFilter}Value2`]: this.state.datePickerValue2
-    }, () => {
-      this.handleDatePickerClose();
-    });
-  }
 
   DialogContent = props => {
     let value = '';
     let value2 = '';
     
-    
     if(this.state.columnType === 'datetime'){
-      value = this.state.datePickerValue;
-      value2 = this.state.datePickerValue2;
+      value = this.state[`${this.state.activeFilter}Value`] === undefined ? moment().format() : this.state[`${this.state.activeFilter}Value`];
+      value2 = this.state[`${this.state.activeFilter}Value2`] === undefined ? moment().format() : this.state[`${this.state.activeFilter}Value2`];
+    }
+    else if(this.state.columnType === 'boolean'){
+      value = this.state[`${this.state.activeFilter}Value`] === undefined ? '' : this.state[`${this.state.activeFilter}Value`];
     }
     else{
       value = this.state[`${this.state.activeFilter}Value`] === undefined ? '' : this.state[`${this.state.activeFilter}Value`];
@@ -177,78 +175,130 @@ class GridHeader extends React.Component {
 
     return (
       <div >
-        <this.DialogTextField value={value} label={'Value'} mod={'Value'} />
-        {this.state[this.state.activeFilter] === 'Between' ? <this.DialogTextField value={value2} label={'Value 2'} mod={'Value2'} /> : null}
-        <Button className={props.classes.applyButton} onClick={() => this.handleApply()}>Apply</Button>
-        <Button className={props.classes.clearButton} onClick={() => this.handleClear()}>Clear</Button>
+        {
+          this.state.columnType === 'datetime' ? 
+            <this.DateTimeInput value={value} label={'Value'} mod={'Value'} />
+            : this.state.columnType === 'boolean' ? 
+              <this.BooleanInput classes={props.classes} value={value}/> 
+              :
+              <this.TextInput value={value} label={'Value'} mod={'Value'} />
+        }
+
+        {
+          this.state[this.state.activeFilter] === 'Between' ? 
+            this.state.columnType === 'datetime' ? 
+              <this.DateTimeInput value={value2} label={'Value 2'} mod={'Value2'} /> 
+              : 
+              <this.TextInput value={value2} label={'Value 2'} mod={'Value2'} />
+            : 
+            null
+        }
+        
+        <div style={{ padding: '20px 10px 15px 10px', textAlign: 'center' }}>
+          <Button className={props.classes.applyButton} onClick={() => this.handleApply()}>Apply</Button>
+          <Button className={props.classes.clearButton} onClick={() => this.handleClear()}>Clear</Button>
+        </div>
       </div>
     );
   }
 
-  DialogTextField = props => (
-    <div>
-      <TextField id={this.state.activeFilter} label={props.label} value={props.value} onChange={this.handleTextFieldChange(props.mod)} />
-      {this.state.columnType === 'datetime' ?
-        <div style={{ display: 'inline-flex' }}>
-          <IconButton onClick={() => this.handleDatePickerOpen(props.mod)}>
-            <DateRangeIcon />
-          </IconButton>
-        </div>
-        :
-        <div />
-      }
+  handleBooleanDropDown = event => {
+    this.setState({ [`${[this.state.activeFilter]}Value`]: event.target.value });
+  };
+
+  BooleanInput = props => (
+    <div style={{ padding: '13px 15px 6px 10px' }}>
+      <Select
+        style={{ minWidth: '300px' }}
+        className={props.classes.dropdown}
+        value={props.value}
+        onChange={this.handleBooleanDropDown}
+        input={<Input name={this.state.activeFilter} />}
+      >
+        <MenuItem value={''}></MenuItem>
+        <MenuItem value={'true'}>True</MenuItem>
+        <MenuItem value={'false'}>False</MenuItem>
+      </Select>
+    </div>
+  )
+
+  TextInput = props => (
+    <div style={{ padding: '13px 15px 6px 10px' }}>
+      <Input style={{ minWidth: '300px' }} id={this.state.activeFilter} placeholder={props.label} value={props.value} onChange={this.handleTextFieldChange(props.mod)} />
       <br />
     </div>
   )
 
-  DateTimePickerDialog = () => (
-    <Dialog open={this.state.openTextField} onClose={this.handleDatePickerClose}>
-      <DateTimePicker
-        value={this.state[`datePicker${this.state.editingValue}`]}
-        onChange={this.handleDatePicker(this.state.editingValue)}
-        leftArrowIcon={<LeftArrowIcon />}
-        rightArrowIcon={<RightArrowIcon />}
-        dateRangeIcon={<DateRangeIcon/>}
-        timeIcon={<TimeIcon/>}
-      />
-      <Button onClick={this.handleDatePickerAccept}>Accept</Button>
-    </Dialog>
+  DateTimeInput = props => (
+    <div style={{ padding: '13px 15px 6px 10px' }}>
+      <MuiThemeProvider theme={muiTheme}>
+        <DateTimePicker
+          style={{ minWidth: '300px' }}
+          value={this.state[`${this.state.activeFilter}${props.mod}`]}
+          onChange={this.handleDatePicker(props.mod)}
+          leftArrowIcon={<LeftArrowIcon />}
+          rightArrowIcon={<RightArrowIcon />}
+          dateRangeIcon={<DateRangeIcon/>}
+          timeIcon={<TimeIcon/>}
+        />
+      </MuiThemeProvider>
+      <br />
+    </div>
+  )
+
+  BooleanDropDown = props => (
+    <div style={{ padding: '13px 15px 6px 10px' }}>
+      <Select
+        className={props.classes.dropdown}
+        value={props.value}
+        onChange={this.handleChange}
+        input={<Input name={this.state.activeFilter} />}
+      >
+        <MenuItem value={'None'}>None</MenuItem>
+        <MenuItem value={'Equals'}>Equals</MenuItem>
+        <MenuItem value={'NotEquals'}>Not Equals</MenuItem>
+      </Select>
+    </div>
   )
 
   StringDropDown = props => (
-    <Select
-      className={props.classes.dropdown}
-      value={props.value}
-      onChange={this.handleChange}
-      input={<Input name={this.state.activeFilter} />}
-    >
-      <MenuItem value={'None'}>None</MenuItem>
-      <MenuItem value={'Equals'}>Equals</MenuItem>
-      <MenuItem value={'NotEquals'}>Not Equals</MenuItem>
-      <MenuItem value={'Contains'}>Contains</MenuItem>
-      <MenuItem value={'NotContains'}>Not Contains</MenuItem>
-      <MenuItem value={'StartsWith'}>Starts With</MenuItem>
-      <MenuItem value={'NotStartsWith'}>Not Starts With</MenuItem>
-      <MenuItem value={'EndsWith'}>Ends With</MenuItem>
-      <MenuItem value={'NotEndsWith'}>Not Ends With</MenuItem>
-    </Select>
+    <div style={{ padding: '13px 15px 6px 10px' }}>
+      <Select
+        className={props.classes.dropdown}
+        value={props.value}
+        onChange={this.handleChange}
+        input={<Input name={this.state.activeFilter} />}
+      >
+        <MenuItem value={'None'}>None</MenuItem>
+        <MenuItem value={'Equals'}>Equals</MenuItem>
+        <MenuItem value={'NotEquals'}>Not Equals</MenuItem>
+        <MenuItem value={'Contains'}>Contains</MenuItem>
+        <MenuItem value={'NotContains'}>Not Contains</MenuItem>
+        <MenuItem value={'StartsWith'}>Starts With</MenuItem>
+        <MenuItem value={'NotStartsWith'}>Not Starts With</MenuItem>
+        <MenuItem value={'EndsWith'}>Ends With</MenuItem>
+        <MenuItem value={'NotEndsWith'}>Not Ends With</MenuItem>
+      </Select>
+    </div>
   )
 
   NumericDropdown = props => (
-    <Select
-      className={props.classes.dropdown}
-      value={props.value}
-      onChange={this.handleChange}
-      input={<Input name={this.state.activeFilter} />}
-    >
-      <MenuItem value={'None'}>None</MenuItem>
-      <MenuItem value={'Equals'}>Equals</MenuItem>
-      <MenuItem value={'Between'}>Between</MenuItem>
-      <MenuItem value={'Gte'}>>=</MenuItem>
-      <MenuItem value={'Gt'}>></MenuItem>
-      <MenuItem value={'Lte'}>&#60;=</MenuItem>
-      <MenuItem value={'Lt'}>&#60;</MenuItem>
-    </Select>
+    <div style={{ padding: '13px 15px 6px 10px' }}>
+      <Select
+        className={props.classes.dropdown}
+        value={props.value}
+        onChange={this.handleChange}
+        input={<Input name={this.state.activeFilter} />}
+      >
+        <MenuItem value={'None'}>None</MenuItem>
+        <MenuItem value={'Equals'}>Equals</MenuItem>
+        <MenuItem value={'Between'}>Between</MenuItem>
+        <MenuItem value={'Gte'}>>=</MenuItem>
+        <MenuItem value={'Gt'}>></MenuItem>
+        <MenuItem value={'Lte'}>&#60;=</MenuItem>
+        <MenuItem value={'Lt'}>&#60;</MenuItem>
+      </Select>
+    </div>
   )
 
   DialogDropDown = props => {
@@ -259,6 +309,9 @@ class GridHeader extends React.Component {
     }
     else if (this.state.columnType === 'numeric' || this.state.columnType === 'datetime') {
       return (<this.NumericDropdown classes={props.classes} value={value} />);
+    }
+    else if(this.state.columnType === 'boolean'){
+      return (<this.BooleanDropDown classes={props.classes} value={value} />);
     }
     else {
       return (<div />);
@@ -274,7 +327,6 @@ class GridHeader extends React.Component {
           <this.DialogDropDown classes={classes} />
           <this.DialogContent classes={classes} />
         </Dialog>
-        <this.DateTimePickerDialog/>
         <TableRow>
           {dataSource.columns.map(column => {
             const render = column.Sortable ?

@@ -4,7 +4,8 @@
   "description": "Tubular React",
   "main": "index.js",
   "scripts": {
-    "start": "gulp",
+    "start": "gulp watch",
+    "build": "gulp",
     "test": "gulp test",
     "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov"
   },
