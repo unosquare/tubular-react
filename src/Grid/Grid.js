@@ -3,7 +3,7 @@ import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { withStyles } from 'material-ui/styles';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
+import Table, { TableBody, TableCell, TableFooter, TableHead, TablePagination, TableRow } from 'material-ui/Table';
 
 const styles = theme => ({
   root: {
@@ -23,6 +23,8 @@ class Grid extends React.Component {
   state = {
     page: this.props.page,
     rowsPerPage: this.props.rowsPerPage,
+    showFooter: this.props.showFooter,
+    gridFooterDefinition: this.props.gridFooterDefinition,
     dataSource: this.props.dataSource,
     data: []
   }
@@ -40,10 +42,10 @@ class Grid extends React.Component {
     this.state.dataSource.search(this.state.rowsPerPage, this.state.page, text);
   }
 
-
   render() {
     const { classes } = this.props;
-    const { data, rowsPerPage, page, columns, dataSource } = this.state;
+    const { data, dataSource, showFooter, gridFooterDefinition } = this.state;
+
     return (
       <Paper className={classes.root}>
         <GridToolbar onSearchTextChange={this.handleTextSearch} />
@@ -69,6 +71,10 @@ class Grid extends React.Component {
                 </TableRow>
               ))}
           </TableBody>
+          { 
+            showFooter === true && 
+              this.props.children
+          }
         </Table>
       </Paper>);
   }
@@ -80,4 +86,5 @@ Grid.propTypes = {
   rowsPerPage: PropTypes.number,
   title: PropTypes.string
 };
+
 export default withStyles(styles)(Grid);

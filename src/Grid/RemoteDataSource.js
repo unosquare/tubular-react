@@ -22,7 +22,7 @@ class RemoteDataSource {
   sort(rowsPerPage, page) {
     this._doRequest(rowsPerPage, page);
   }
-  
+
   search(rowsPerPage, page, searchText) {
     this._doRequest(rowsPerPage, page, searchText);
   }
