@@ -3,24 +3,25 @@ import { MenuItem } from 'material-ui/Menu';
 import React from 'react';
 import Select from 'material-ui/Select';
 
-class BooleanInput extends React.Component {
+class Dropdown extends React.Component {
   render(){
     return(
       <div style={{ padding: '13px 15px 6px 10px' }}>
         <Select
-          style={{ minWidth: '300px' }}
           className={this.props.classes.dropdown}
           value={this.props.value}
-          onChange={this.props.handleBooleanDropDown}
+          onChange={this.props.handleChange}
           input={<Input name={this.props.activeFilter} />}
         >
-          <MenuItem value={''}></MenuItem>
-          <MenuItem value={'true'}>True</MenuItem>
-          <MenuItem value={'false'}>False</MenuItem>
+          {
+            this.props.operators.map( (row, i) => (
+              <MenuItem key={i} value={row.Value}>{row.Title}</MenuItem>
+            ))
+          }
         </Select>
       </div>
     );
   }
 }
 
-export default BooleanInput;
+export default Dropdown;
