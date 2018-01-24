@@ -20,4 +20,13 @@ Please visit the <a href="http://unosquare.github.io/tubular" target="_blank">Tu
 ## npm Installation 
 
 
-## Samples
+### Run Sample
+
+There is a sample included in this project, you can run it just by doing the following.
+
+```
+// Install all the dependencies
+npm install
+// Runs the sample project
+npm start
+```
