@@ -1,4 +1,5 @@
 import Grid from '../../src/Grid/Grid';
+import GridBody from '../../src/Grid/GridBody';
 import GridFooter from '../../src/Grid/GridFooter';
 import React from 'react';
 import RemoteDataSource from '../../src/Grid/RemoteDataSource';
@@ -59,13 +60,21 @@ export default class Main extends React.Component {
     const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns);
 
     return (
-      <Grid dataSource={dataSource} rowsPerPage = { 25 } showFooter = { false }>
+      <Grid dataSource={dataSource} rowsPerPage = { 25 } showFooter = { true }>
+        <GridBody>
+          <TableRow>
+            <TableCell>"OrderID"</TableCell>
+            <TableCell>"CustomerName"</TableCell>
+            <TableCell>"ShippedDate"</TableCell>
+            <TableCell>"ShipperCity"</TableCell>
+          </TableRow>
+        </GridBody>
         <GridFooter>
           <TableRow>
-            <TableCell>Totals:</TableCell>
-            <TableCell>500</TableCell>{/*Aggregation function*/}
-            <TableCell>...</TableCell>
-            <TableCell>...</TableCell>
+            <TableCell>Total:</TableCell>
+            <TableCell>500</TableCell>
+            <TableCell>!!!</TableCell>
+            <TableCell>!!!</TableCell>
           </TableRow>
         </GridFooter>
       </Grid>
