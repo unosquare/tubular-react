@@ -75,10 +75,7 @@ class Grid extends React.Component {
     );
 
     const body = this.getChildByName('GridBody') || defaultBody;
-    let footer = this.getChildByName('GridFooter');
-
-    if(footer === undefined)
-      footer = null;
+    const footer = this.getChildByName('GridFooter') || null;
 
     return (
       <Paper className={classes.root}>
