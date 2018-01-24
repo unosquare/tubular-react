@@ -43,9 +43,9 @@ class Grid extends React.Component {
     this.state.dataSource.search(this.state.rowsPerPage, this.state.page, text);
   }
 
-  getChildByName = (name) => {
+  getChildByName = name => {
     if(this.props.children) {
-      if(this.props.children.constructor === Array) {
+      if(Array.isArray(this.props.children)) {
         return this.props.children.find(element => {
           return element.type.name === name;
         });
@@ -77,8 +77,8 @@ class Grid extends React.Component {
       </TableBody>
     );
 
-    let body = this.getChildByName('GridBody');
-    let footer = this.getChildByName('GridFooter');
+    let body = this.getChildByName('GridBody', childrenCounter);
+    let footer = this.getChildByName('GridFooter', childrenCounter);
 
     if(body === undefined)
       body = defaultBody;
