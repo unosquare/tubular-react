@@ -1,7 +1,7 @@
 import GridBody from '../../src/Grid/GridBody';
 import GridToolbar from './GridToolbar';
 import Paper from 'material-ui/Paper';
-import PropTypes, { instanceOf } from 'prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { withStyles } from 'material-ui/styles';
 import Table, { TableBody, TableCell, TableFooter, TableHead, TablePagination, TableRow } from 'material-ui/Table';
