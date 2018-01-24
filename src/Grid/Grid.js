@@ -46,9 +46,7 @@ class Grid extends React.Component {
   getChildByName = name => {
     if(this.props.children) {
       if(Array.isArray(this.props.children)) {
-        return this.props.children.find(element => {
-          return element.type.name === name;
-        });
+        return this.props.children.find(element => element.type.name === name);
       }
   
       if(this.props.children.type.name === name)
