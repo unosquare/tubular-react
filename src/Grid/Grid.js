@@ -57,7 +57,6 @@ class Grid extends React.Component {
   render() {
     const { classes } = this.props;
     const { data, dataSource, showFooter } = this.state;
-    const childrenCounter = React.Children.count(this.props.children);
 
     const defaultBody = (
       <TableBody>
@@ -75,8 +74,8 @@ class Grid extends React.Component {
       </TableBody>
     );
 
-    let body = this.getChildByName('GridBody', childrenCounter);
-    let footer = this.getChildByName('GridFooter', childrenCounter);
+    let body = this.getChildByName('GridBody');
+    let footer = this.getChildByName('GridFooter');
 
     if(body === undefined)
       body = defaultBody;
