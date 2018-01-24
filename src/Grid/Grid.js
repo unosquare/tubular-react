@@ -74,11 +74,8 @@ class Grid extends React.Component {
       </TableBody>
     );
 
-    let body = this.getChildByName('GridBody');
+    const body = this.getChildByName('GridBody') || defaultBody;
     let footer = this.getChildByName('GridFooter');
-
-    if(body === undefined)
-      body = defaultBody;
 
     if(footer === undefined)
       footer = null;
