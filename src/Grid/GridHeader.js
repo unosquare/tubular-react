@@ -50,7 +50,9 @@ class GridHeader extends React.Component {
     rowsPerPage: this.props.rowsPerPage,
     open: false,
     columnType: '',
-    activeFilter: ''
+    activeFilter: '',
+    keyState: 'Up',
+    sortOrder: 1
   }
 
   handleClose = () => {
@@ -104,13 +106,13 @@ class GridHeader extends React.Component {
   }
 
   filterHandler = (firstValue, secondValue, hasFilter) => {
-    this.state.dataSource.columns.forEach( (row, i) => {
-      if(row.Name === this.state.activeFilter){
-        row.Filter.Text = firstValue;
-        row.Filter.Operator = this.state[this.state.activeFilter];
-        row.Filter.HasFilter = hasFilter;
+    this.state.dataSource.columns.forEach( (column, i) => {
+      if(column.Name === this.state.activeFilter){
+        column.Filter.Text = firstValue;
+        column.Filter.Operator = this.state[this.state.activeFilter];
+        column.Filter.HasFilter = hasFilter;
         if(secondValue !== undefined){
-          row.Filter.Argument = [secondValue];
+          column.Filter.Argument = [secondValue];
         }
       }
     });
@@ -118,30 +120,96 @@ class GridHeader extends React.Component {
     this.state.dataSource.filter(this.state.rowsPerPage, this.state.page);
   }
 
+  handleKeyDown(event) {
+    if(this.state.keyState === 'Up' && event.ctrlKey) {
+      this.setState({ keyState: 'Down' });
+    } 
+  }
+
+  handleKeyUp(event) {
+    if(this.state.keyState === 'Down') {
+      this.setState({ keyState: 'Up' });
+    } 
+  }
+
+  componentDidMount() {
+    document.addEventListener('keydown', () => this.handleKeyDown(event));
+    document.addEventListener('keyup', () => this.handleKeyUp(event));
+  }
+
   sortHandler = (event, property) => {
+    if(this.state.keyState === 'Down'){
+      this.multiSort(event, property);
+    }
+    else{
+      this.singleSort(event, property);
+    }
+  }
+
+  multiSort = (event, property) => {
+    let sortOrder = this.state.sortOrder;
+    const array = Object.assign({}, this.state.dataSource);
+    
+    array.columns.forEach( (column, i) => {
+      if(column.Name === property){
+        if(column.SortOrder === -1) {
+          column.SortOrder = sortOrder;
+        }
+        else if(column.SortOrder !== -1 && column.SortDirection === 'Descending'){
+          column.SortOrder = -1;
+        }
+
+        const currentlySortedColumns = array.columns.filter(col => col.SortOrder > 0).sort((a, b) => a.SortOrder === b.SortOrder ? 0 : a.SortOrder > b.SortOrder );
+
+        for (let i = 0; i < currentlySortedColumns.length; i ++) { 
+          sortOrder = i + 2;
+
+          array.columns.forEach( (column, j) => {
+            if(column.Name === currentlySortedColumns[i].Name){
+              array.columns[j].SortOrder = (i + 1);
+            }
+          }); 
+        }
+
+        column.SortDirection = column.SortDirection === 'Ascending' ? 
+          'Descending' 
+          : 
+          column.SortDirection === 'Descending' ? 
+            'None' 
+            :
+            'Ascending';
+      }
+    });
+
+    this.setState({ sortOrder }, this.state.dataSource.sort(this.state.rowsPerPage, this.state.page) );
+  }
+
+  singleSort = (event, property) => {
     let sortOrder = 1;
 
-    this.state.dataSource.columns.forEach( row => {
-      if(row.Name === property){
-        if(row.SortDirection === 'Descending') {
+    this.state.dataSource.columns.forEach( column => {
+      if(column.Name === property){
+        if(column.SortDirection === 'Descending') {
           sortOrder = -1;
         }
 
-        row.SortOrder = sortOrder;
+        column.SortOrder = sortOrder;
         this.state.dataSource.sort(this.state.rowsPerPage, this.state.page);
-        row.SortDirection = row.SortDirection === 'Ascending' ? 
+        column.SortDirection = column.SortDirection === 'Ascending' ? 
           'Descending' 
           : 
-          row.SortDirection === 'Descending' ? 
+          column.SortDirection === 'Descending' ? 
             'None' 
             :
             'Ascending';
       }
       else{
-        row.SortOrder = -1;
-        row.SortDirection = 'None';
+        column.SortOrder = -1;
+        column.SortDirection = 'None';
       }
     });
+
+    this.setState({ sortOrder: 1 });
   }
 
   handleDatePicker = name => event => {
