@@ -5,25 +5,28 @@ import moment from 'moment';
 
 class DialogContent extends React.Component {
   render(){
-    let value = '';
-    let value2 = '';
+    let firstValue = '';
+    let secondValue = '';
     
-    if(this.props.columnType === 'datetime' || this.props.columnType === 'date' || this.props.columnType === 'datetimeutc'){
-      value = this.props.value === undefined ? moment().format() : this.props.value;
-      value2 = this.props.value2 === undefined ? moment().format() : this.props.value2;
-    }
-    else if(this.props.columnType === 'boolean'){
-      value = this.props.value === undefined ? '' : this.props.value;
-    }
-    else{
-      value = this.props.value === undefined ? '' : this.props.value;
-      value2 = this.props.value2 === undefined ? '' : this.props.value2;
+    switch (this.props.columnType){
+    case 'datetime':
+    case 'date':
+    case 'datetimeutc':
+      firstValue = this.props.value === undefined ? moment().format() : this.props.value;
+      secondValue = this.props.value2 === undefined ? moment().format() : this.props.value2;
+      break;
+    case 'boolean':
+      firstValue = this.props.value === undefined ? '' : this.props.value;
+      break;
+    default:
+      firstValue = this.props.value === undefined ? '' : this.props.value;
+      secondValue = this.props.value2 === undefined ? '' : this.props.value2;
     }
 
     return (
       <div >
         <DialogInput
-          value={value} 
+          value={firstValue} 
           mod={'Value'}
           label={'Value'} 
           classes={this.props.classes} 
@@ -34,9 +37,9 @@ class DialogContent extends React.Component {
           handleTextFieldChange={this.props.handleTextFieldChange} 
         />
         
-        {this.props.operator === 'Between' ? 
+        {this.props.operator === 'Between' && 
           <DialogInput
-            value={value2} 
+            value={secondValue} 
             mod={'Value2'}
             label={'Value 2'} 
             classes={this.props.classes} 
@@ -45,9 +48,7 @@ class DialogContent extends React.Component {
             handleDatePicker={this.props.handleDatePicker}
             handleBooleanDropDown={this.props.handleBooleanDropDown}
             handleTextFieldChange={this.props.handleTextFieldChange} 
-          />
-          : 
-          null}
+          />}
         
         <div style={{ padding: '20px 10px 15px 10px', textAlign: 'center' }}>
           <Button className={this.props.classes.applyButton} onClick={() => this.props.handleApply()}>Apply</Button>

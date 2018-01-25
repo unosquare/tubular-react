@@ -1,7 +1,5 @@
 import ArrowDownward from 'material-ui-icons/ArrowDownward';
 import ArrowUpward from 'material-ui-icons/ArrowUpward';
-import Button from 'material-ui/Button';
-import DateInput from './DateInput.js';
 import Dialog from 'material-ui/Dialog';
 import DialogContent from './DialogContent.js';
 import DialogDropdown from './DialogDropdown.js';
@@ -12,6 +10,7 @@ import Tooltip from 'material-ui/Tooltip';
 import moment from 'moment';
 import { withStyles } from 'material-ui/styles';
 import { TableCell, TableHead, TableRow, TableSortLabel } from 'material-ui/Table';
+
 
 const styles = theme => ({
   dropdown: {
@@ -63,49 +62,55 @@ class GridHeader extends React.Component {
   }
 
   handleClear = () => {
-    let value1 = '';
-    let value2 = '';
+    let firstValue = '';
+    let secondValue = '';
 
-    if(this.state.columnType === 'datetime' || this.state.columnType === 'date' || this.state.columnType === 'datetimeutc') {
-      value1 = moment().format();
-      value2 = moment().format();
+    switch (this.state.columnType){
+    case 'datetime':
+    case 'date':
+    case 'datetimeutc':
+      firstValue = moment().format();
+      secondValue = moment().format();
+      break;
+    default:
     }
 
     this.setState({
       [this.state.activeFilter]: 'None',
-      [`${this.state.activeFilter}Value`]: value1,
-      [`${this.state.activeFilter}Value2`]: value2
+      [`${this.state.activeFilter}Value`]: firstValue,
+      [`${this.state.activeFilter}Value2`]: secondValue
     }, () => {
-      this.filterHandler(value1, value2, false);
+      this.filterHandler(firstValue, secondValue, false);
     });
   }
 
   handleApply = () => {
-    let value1 = this.state[`${this.state.activeFilter}Value`];
-    let value2 = value2 === null ? null : this.state[`${this.state.activeFilter}Value2`];
+    let firstValue = this.state[`${this.state.activeFilter}Value`];
+    let secondValue = secondValue !== null && this.state[`${this.state.activeFilter}Value2`];
 
-    if(this.state.columnType === 'numeric'){
-      value1 = parseFloat(value1);
-      value2 = parseFloat(value2);
-    }
-    else if(this.state.columnType === 'boolean'){
-      value1 = (value1 === 'true');
-      value2 = 1;
+    switch (this.state.columnType){
+    case 'numeric':
+      firstValue = parseFloat(firstValue);
+      secondValue = parseFloat(secondValue);
+      break;
+    case 'boolean':
+      firstValue = (firstValue === 'true');
+      secondValue = 1;
+      break;
+    default:
     }
     
-    this.filterHandler(value1, value2, true);
+    this.filterHandler(firstValue, secondValue, true);
   }
 
-  filterHandler = (value1, value2, hasFilter) => {
-    const dataSource = Object.assign([{}], this.state.dataSource);
-
-    dataSource.columns.forEach( (row, i) => {
+  filterHandler = (firstValue, secondValue, hasFilter) => {
+    this.state.dataSource.columns.forEach( (row, i) => {
       if(row.Name === this.state.activeFilter){
-        dataSource.columns[i].Filter.Text = value1;
-        dataSource.columns[i].Filter.Operator = this.state[this.state.activeFilter];
-        dataSource.columns[i].Filter.HasFilter = hasFilter;
-        if(value2 !== undefined){
-          dataSource.columns[i].Filter.Argument = [value2];
+        row.Filter.Text = firstValue;
+        row.Filter.Operator = this.state[this.state.activeFilter];
+        row.Filter.HasFilter = hasFilter;
+        if(secondValue !== undefined){
+          row.Filter.Argument = [secondValue];
         }
       }
     });
@@ -113,21 +118,31 @@ class GridHeader extends React.Component {
     this.state.dataSource.filter(this.state.rowsPerPage, this.state.page);
   }
 
-  sortHandler = property => {
-    const dataSource = Object.assign([{}], this.state.dataSource);
+  sortHandler = (event, property) => {
+    let sortOrder = 1;
 
-    dataSource.columns.forEach( (row, i) => {
-      if(row.SortOrder === 1){
-        dataSource.columns[i].SortOrder = -1;
-      }
-
+    this.state.dataSource.columns.forEach( row => {
       if(row.Name === property){
-        dataSource.columns[i].SortOrder = 1;
+        if(row.SortDirection === 'Descending') {
+          sortOrder = -1;
+        }
+
+        row.SortOrder = sortOrder;
         this.state.dataSource.sort(this.state.rowsPerPage, this.state.page);
-        dataSource.columns[i].SortDirection = row.SortDirection === 'Ascending' ? 'Descending' : 'Ascending';
+        row.SortDirection = row.SortDirection === 'Ascending' ? 
+          'Descending' 
+          : 
+          row.SortDirection === 'Descending' ? 
+            'None' 
+            :
+            'Ascending';
+      }
+      else{
+        row.SortOrder = -1;
+        row.SortDirection = 'None';
       }
     });
-  };
+  }
 
   handleDatePicker = name => event => {
     this.setState({
@@ -180,11 +195,11 @@ class GridHeader extends React.Component {
           {dataSource.columns.map(column => {
             const render = column.Sortable ?
               (<Tooltip title='Sort' placement='bottom-start' enterDelay={300}>
-                <TableSortLabel onClick={() => this.sortHandler(column.Name)} >
+                <TableSortLabel onClick={() => this.sortHandler(event, column.Name)} >
                   {column.Label}
-                  {column.SortOrder === 1 && column.SortDirection === 'Ascending' ? 
+                  {column.SortDirection === 'Ascending' ? 
                     <ArrowUpward className={classes.arrowStyle} />
-                    : column.SortOrder === 1 && column.SortDirection === 'Descending' ? 
+                    : column.SortDirection === 'Descending' ? 
                       <ArrowDownward className={classes.arrowStyle} />
                       :
                       <div className={classes.arrowStyle} />
@@ -192,14 +207,13 @@ class GridHeader extends React.Component {
                 </TableSortLabel>
               </Tooltip>)
               : (column.Label);
-            const filter = column.Filter ?
+            const filter = column.Filter &&
               (<IconButton onClick={() => this.handleOpen(column)} >
                 {column.Filter.HasFilter ? 
                   <FilterListIcon style={{ background: '#28b62c', color: 'white', borderRadius: '50%' }}/> 
                   : 
                   <FilterListIcon/>}
-              </IconButton>)
-              : (null);
+              </IconButton>);
             return (
               <TableCell key={column.Label} padding={column.Label === '' ? 'none' : 'default'}>
                 {render}

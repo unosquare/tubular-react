@@ -32,19 +32,27 @@ const BooleanOperators = [
 class DialogDropdown extends React.Component {
   render(){
     const value = this.props.value === undefined ? 'None' : this.props.value;
-    
-    if (this.props.columnType === 'string') {
-      return (<Dropdown operators={StringOperators} classes={this.props.classes} value={value} activeFilter={this.props.activeFilter} handleChange={this.props.handleChange}/>);
+    let component;
+
+    switch (this.props.columnType){
+    case 'string':
+      component = <Dropdown operators={StringOperators} classes={this.props.classes} value={value} activeFilter={this.props.activeFilter} handleChange={this.props.handleChange}/>;
+      break;
+    case 'numeric':
+    case 'datetime':
+    case 'date':
+    case 'datetimeutc':
+      component = <Dropdown operators={NumericOperators} classes={this.props.classes} value={value} activeFilter={this.props.activeFilter} handleChange={this.props.handleChange}/>;
+      break;
+    case 'boolean':
+      component = <Dropdown operators={BooleanOperators} classes={this.props.classes} value={value} activeFilter={this.props.activeFilter} handleChange={this.props.handleChange}/>;
+      break;
+    default: 
+      component = null;
+      break;
     }
-    else if (this.props.columnType === 'numeric' || this.props.columnType === 'datetime' || this.props.columnType === 'date' || this.props.columnType === 'datetimeutc') {
-      return (<Dropdown operators={NumericOperators} classes={this.props.classes} value={value} activeFilter={this.props.activeFilter} handleChange={this.props.handleChange}/>);
-    }
-    else if(this.props.columnType === 'boolean'){
-      return (<Dropdown operators={BooleanOperators} classes={this.props.classes} value={value} activeFilter={this.props.activeFilter} handleChange={this.props.handleChange}/>);
-    }
-    else {
-      return (null);
-    }
+
+    return component;
   }
 }
 
