@@ -51,8 +51,7 @@ class GridHeader extends React.Component {
     open: false,
     columnType: '',
     activeFilter: '',
-    keyState: 'Up',
-    sortOrder: 1
+    sorting: 'Single'
   }
 
   handleClose = () => {
@@ -121,14 +120,14 @@ class GridHeader extends React.Component {
   }
 
   handleKeyDown(event) {
-    if(this.state.keyState === 'Up' && event.ctrlKey) {
-      this.setState({ keyState: 'Down' });
+    if(this.state.sorting === 'Single' && event.ctrlKey) {
+      this.setState({ sorting: 'Multiple' });
     } 
   }
 
   handleKeyUp(event) {
-    if(this.state.keyState === 'Down') {
-      this.setState({ keyState: 'Up' });
+    if(this.state.sorting === 'Multiple') {
+      this.setState({ sorting: 'Single' });
     } 
   }
 
@@ -138,113 +137,37 @@ class GridHeader extends React.Component {
   }
 
   sortHandler = (event, property) => {
-    if(this.state.keyState === 'Down'){
-      this.multiSort(event, property);
-    }
-    else{
-      this.singleSort(event, property);
-    }
-  }
-
-  /* multiSort = (event, property) => {
-    let sortOrder = this.state.sortOrder;
     const array = Object.assign({}, this.state.dataSource);
     
-    array.columns.forEach( (column, i) => {
+    array.columns.forEach( column => {
       if(column.Name === property){
-        if(column.SortOrder === -1) {
-          column.SortOrder = sortOrder;
-        }
-        else if(column.SortOrder !== -1 && column.SortDirection === 'Descending'){
+        column.SortDirection = column.SortDirection === 'Ascending' 
+          ? 'Descending' 
+          : column.SortDirection === 'Descending' ? 'None' : 'Ascending';
+
+        if(column.SortDirection === 'None'){
           column.SortOrder = -1;
         }
-
-        const currentlySortedColumns = array.columns.filter(col => col.SortOrder > 0).sort((a, b) => a.SortOrder === b.SortOrder ? 0 : a.SortOrder > b.SortOrder );
-
-        currentlySortedColumns.forEach( (column, i) => { 
-          sortOrder = i + 2;
-
-          array.columns.forEach( (arrayColumn, j) => {
-            if(arrayColumn.Name === currentlySortedColumns[i].Name){
-              array.columns[j].SortOrder = (i + 1);
-            }
-          }); 
-        });
-
-        column.SortDirection = column.SortDirection === 'Ascending' ? 
-          'Descending' 
-          : 
-          column.SortDirection === 'Descending' ? 
-            'None' 
-            :
-            'Ascending';
-      }
-    });
-
-    this.setState({ sortOrder }, this.state.dataSource.sort(this.state.rowsPerPage, this.state.page) );
-  } */
-
-  multiSort = (event, property) => {
-    const array = Object.assign({}, this.state.dataSource);
-    
-    array.columns.forEach( (column, i) => {
-      if(column.Name === property){
-        column.SortDirection = column.SortDirection === 'Ascending' ? 
-          'Descending' 
-          : 
-          column.SortDirection === 'Descending' ? 
-            'None' 
-            :
-            'Ascending';
-
-        if(column.SortOrder === -1) {
+        else{
           column.SortOrder = Number.MAX_VALUE;
         }
-        else if(column.SortOrder !== -1 && column.SortDirection === 'None'){
-          column.SortOrder = -1;
+
+        if (this.state.sorting === 'Single') {
+          array.columns.filter(col => col.Name !== property).forEach( column => {
+            column.SortOrder = -1;
+            column.SortDirection = 'None';
+          });
         }
 
         const currentlySortedColumns = array.columns.filter(col => col.SortOrder > 0).sort((a, b) => a.SortOrder === b.SortOrder ? 0 : a.SortOrder > b.SortOrder );
 
         currentlySortedColumns.forEach( (column, i) => { 
-          array.columns.forEach( (arrayColumn, j) => {
-            if(arrayColumn.Name === currentlySortedColumns[i].Name){
-              array.columns[j].SortOrder = (i + 1);
-            }
-          }); 
+          column.SortOrder = i + 1; 
         });
       }
     });
 
     this.state.dataSource.sort(this.state.rowsPerPage, this.state.page);
-  }
-
-  singleSort = (event, property) => {
-    let sortOrder = 1;
-
-    this.state.dataSource.columns.forEach( column => {
-      if(column.Name === property){
-        if(column.SortDirection === 'Descending') {
-          sortOrder = -1;
-        }
-
-        column.SortOrder = sortOrder;
-        this.state.dataSource.sort(this.state.rowsPerPage, this.state.page);
-        column.SortDirection = column.SortDirection === 'Ascending' ? 
-          'Descending' 
-          : 
-          column.SortDirection === 'Descending' ? 
-            'None' 
-            :
-            'Ascending';
-      }
-      else{
-        column.SortOrder = -1;
-        column.SortDirection = 'None';
-      }
-    });
-
-    this.setState({ sortOrder: 1 });
   }
 
   handleDatePicker = name => event => {
@@ -297,7 +220,10 @@ class GridHeader extends React.Component {
         <TableRow>
           {dataSource.columns.map(column => {
             const render = column.Sortable ?
-              (<Tooltip title='Sort' placement='bottom-start' enterDelay={300}>
+              (<Tooltip 
+                title='Click to sort. Press Ctrl to sort by multiple columns' 
+                placement='bottom-start' 
+                enterDelay={300}>
                 <TableSortLabel onClick={() => this.sortHandler(event, column.Name)} >
                   {column.Label}
                   {column.SortDirection === 'Ascending' ? 
