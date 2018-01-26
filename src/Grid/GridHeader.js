@@ -5,6 +5,7 @@ import DialogContent from './DialogContent.js';
 import DialogDropdown from './DialogDropdown.js';
 import FilterListIcon from 'material-ui-icons/FilterList';
 import IconButton from 'material-ui/IconButton';
+import PropTypes from 'prop-types';
 import React from 'react';
 import Tooltip from 'material-ui/Tooltip';
 import moment from 'moment';
@@ -255,5 +256,11 @@ class GridHeader extends React.Component {
     );
   }
 }
+
+GridHeader.propTypes = {
+  dataSource: PropTypes.any.isRequired,
+  page: PropTypes.number,
+  rowsPerPage: PropTypes.number
+};
 
 export default withStyles(styles)(GridHeader);

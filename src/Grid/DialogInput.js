@@ -15,7 +15,7 @@ const DialogInput = ({ classes, value, columnType, activeFilter, label,
   columnType === 'datetime' || columnType === 'date' || columnType === 'datetimeutc' ? 
     <DateInput 
       value={value} 
-      label={tabel} 
+      label={label} 
       mod={mod}
       columnType={columnType}
       handleDatePicker={handleDatePicker} />
