@@ -16,7 +16,7 @@ const columns = [
     'Visible': true,
     'Filter': { 
       Argument: [],
-      HasFilter: true,
+      HasFilter: false,
       Name: 'OrderID',
       Operator: 'None',
       OptionsUrl: null,
@@ -36,7 +36,7 @@ const columns = [
     'Visible': true,
     'Filter': { 
       Argument: [],
-      HasFilter: true,
+      HasFilter: false,
       Name: 'CustomerName',
       Operator: 'None',
       OptionsUrl: null,
@@ -56,7 +56,7 @@ const columns = [
     'Visible': true,
     'Filter': { 
       Argument: [],
-      HasFilter: true,
+      HasFilter: false,
       Name: 'ShippedDate',
       Operator: 'None',
       OptionsUrl: null,
@@ -76,7 +76,7 @@ const columns = [
     'Visible': true,
     'Filter': { 
       Argument: [],
-      HasFilter: true,
+      HasFilter: false,
       Name: 'ShipperCity',
       Operator: 'None',
       OptionsUrl: null,
