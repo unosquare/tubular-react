@@ -1,5 +1,4 @@
 import Grid from '../../src/Grid/Grid';
-import GridBody from '../../src/Grid/GridBody';
 import GridFooter from '../../src/Grid/GridFooter';
 import React from 'react';
 import RemoteDataSource from '../../src/Grid/RemoteDataSource';
@@ -61,8 +60,22 @@ export default class Main extends React.Component {
 
     return (
       <Grid dataSource={dataSource} 
-        renders={
-          { ShipperCity: row => row.ShipperCity }
+        bodyRenderer = {
+          (row, index) => 
+            <TableRow hover key = { index }>
+              <TableCell padding = { 'default' }>
+                { row.OrderID}
+              </TableCell>
+              <TableCell padding = { 'default' }>
+                { row.CustomerName}
+              </TableCell>
+              <TableCell padding = { 'default' }>
+                { row.ShippedDate}
+              </TableCell>
+              <TableCell padding = { 'default' }>
+                { row.ShipperCity}
+              </TableCell>
+            </TableRow>
         } 
         rowsPerPage = { 25 } 
         showFooter = { true } 

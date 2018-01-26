@@ -54,15 +54,15 @@ class Grid extends React.Component {
   }
 
   render() {
-    const { classes, render } = this.props;
+    const { classes, bodyRenderer } = this.props;
     const { data, dataSource, showFooter } = this.state;
 
     const body = (
       <TableBody>
         {
           data.map((row, rowIndex) => (            
-            render  
-              ? render(row, rowIndex) 
+            bodyRenderer  
+              ? bodyRenderer(row, rowIndex) 
               : <TableRow hover key={rowIndex}>
                 {                
                   dataSource.columns.map((column, colIndex) =>
@@ -96,9 +96,9 @@ class Grid extends React.Component {
 }
 
 Grid.propTypes = {
+  bodyRenderer: PropTypes.func,
   classes: PropTypes.object.isRequired,
   dataSource: PropTypes.any.isRequired,
-  render: PropTypes.func,
   rowsPerPage: PropTypes.number,
   title: PropTypes.string
 };
