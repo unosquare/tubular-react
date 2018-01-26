@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 const TextInput = ({ activeFilter, handleTextFieldChange, label, mod, value }) => (
-  <div style={{ padding: '13px 15px 6px 10px' }}>
+  <div style={{ padding: '15px 20px 5px 20px' }}>
     <Input 
-      style={{ minWidth: '300px' }} 
+      style={{ width: '100%' }} 
       id={activeFilter} 
       placeholder={label} 
       value={value} 

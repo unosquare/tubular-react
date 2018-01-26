@@ -5,7 +5,7 @@ import React from 'react';
 import Select from 'material-ui/Select';
 
 const Dropdown = ({ classes, value, handleChange, activeFilter, operators }) => (
-  <div style={{ padding: '13px 15px 6px 10px' }}>
+  <div style={{ padding: '20px 20px 5px 20px' }}>
     <Select
       className={classes.dropdown}
       value={value}

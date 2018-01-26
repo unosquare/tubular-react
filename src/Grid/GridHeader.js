@@ -1,6 +1,5 @@
 import ArrowDownward from 'material-ui-icons/ArrowDownward';
 import ArrowUpward from 'material-ui-icons/ArrowUpward';
-import Dialog from 'material-ui/Dialog';
 import DialogContent from './DialogContent.js';
 import DialogDropdown from './DialogDropdown.js';
 import FilterListIcon from 'material-ui-icons/FilterList';
@@ -10,12 +9,13 @@ import React from 'react';
 import Tooltip from 'material-ui/Tooltip';
 import moment from 'moment';
 import { withStyles } from 'material-ui/styles';
+import Dialog, { DialogTitle } from 'material-ui/Dialog';
 import { TableCell, TableHead, TableRow, TableSortLabel } from 'material-ui/Table';
 
 
 const styles = theme => ({
   dropdown: {
-    minWidth: '300px'
+    width: '100%'
   },
   dialog: {
     minWidth: '400px',
@@ -197,6 +197,7 @@ class GridHeader extends React.Component {
     return (
       <TableHead>
         <Dialog open={this.state.open} onClose={this.handleClose} >
+          <DialogTitle style={{ minWidth: '300px', background: '#ececec', padding: '15px 20px 15px 20px' }} id='responsive-dialog-title'>{'Filter'}</DialogTitle>
           <DialogDropdown 
             classes={classes}
             value={this.state[this.state.activeFilter]}
