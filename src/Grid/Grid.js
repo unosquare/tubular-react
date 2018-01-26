@@ -1,4 +1,3 @@
-import GridBody from '../../src/Grid/GridBody';
 import GridToolbar from './GridToolbar';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
