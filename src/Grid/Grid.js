@@ -55,27 +55,27 @@ class Grid extends React.Component {
   }
 
   render() {
-    const { classes, renders } = this.props;
+    const { classes, render } = this.props;
     const { data, dataSource, showFooter } = this.state;
 
-    const defaultBody = (
+    const body = (
       <TableBody>
         {
-          data.map((row, rowIndex) => (
-            <TableRow hover key={rowIndex}>
-              {dataSource.columns.map((column, colIndex) =>
-                <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
-                  {renders[column.Name] ? renders[column.Name](row, column) : row[column.Name]}
-                </TableCell>
-              )}
-            </TableRow>
+          data.map((row, rowIndex) => (            
+            render  
+              ? render(row, rowIndex) 
+              : <TableRow hover key={rowIndex}>
+                {                
+                  dataSource.columns.map((column, colIndex) =>
+                    <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
+                      {row[column.Name]}
+                    </TableCell>)
+                }
+              </TableRow>              
           ))
         }
       </TableBody>
     );
-
-    const body = this.getChildByName('GridBody') || defaultBody;
-    const footer = this.getChildByName('GridFooter') || null;
 
     return (
       <Paper className={classes.root}>
@@ -91,10 +91,6 @@ class Grid extends React.Component {
             </TableRow>
           </TableHead>
           { body }
-          { 
-            showFooter === true && 
-              footer
-          }
         </Table>
       </Paper>);
   }
@@ -103,6 +99,7 @@ class Grid extends React.Component {
 Grid.propTypes = {
   classes: PropTypes.object.isRequired,
   dataSource: PropTypes.any.isRequired,
+  render: PropTypes.func,
   rowsPerPage: PropTypes.number,
   title: PropTypes.string
 };
