@@ -55,7 +55,7 @@ class Grid extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, renders } = this.props;
     const { data, dataSource, showFooter } = this.state;
 
     const defaultBody = (
@@ -65,7 +65,7 @@ class Grid extends React.Component {
             <TableRow hover key={rowIndex}>
               {dataSource.columns.map((column, colIndex) =>
                 <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
-                  {row[column.Name]}
+                  {renders[column.Name] ? renders[column.Name](row, column) : row[column.Name]}
                 </TableCell>
               )}
             </TableRow>

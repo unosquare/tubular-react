@@ -60,24 +60,13 @@ export default class Main extends React.Component {
     const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns);
 
     return (
-      <Grid dataSource={dataSource} rowsPerPage = { 25 } showFooter = { true }>
-        <GridBody>
-          <TableRow>
-            <TableCell>"OrderID"</TableCell>
-            <TableCell>"CustomerName"</TableCell>
-            <TableCell>"ShippedDate"</TableCell>
-            <TableCell>"ShipperCity"</TableCell>
-          </TableRow>
-        </GridBody>
-        <GridFooter>
-          <TableRow>
-            <TableCell>Total:</TableCell>
-            <TableCell>500</TableCell>
-            <TableCell>!!!</TableCell>
-            <TableCell>!!!</TableCell>
-          </TableRow>
-        </GridFooter>
-      </Grid>
+      <Grid dataSource={dataSource} 
+        renders={
+          { ShipperCity: row => row.ShipperCity }
+        } 
+        rowsPerPage = { 25 } 
+        showFooter = { true } 
+      />
     );
   }
 }
