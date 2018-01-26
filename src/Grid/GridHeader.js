@@ -142,9 +142,9 @@ class GridHeader extends React.Component {
     
     array.columns.forEach( column => {
       if(column.Name === property){
-        column.SortDirection = column.SortDirection === 'Ascending' 
-          ? 'Descending' 
-          : column.SortDirection === 'Descending' ? 'None' : 'Ascending';
+        column.SortDirection = column.SortDirection === 'None' 
+          ? 'Ascending' 
+          : column.SortDirection === 'Ascending' ? 'Descending' : 'None';
 
         if(column.SortDirection === 'None'){
           column.SortOrder = -1;
