@@ -1,5 +1,6 @@
 import DateInput from './DateInput.js';
 import Dropdown from './Dropdown.js';
+import PropTypes from 'prop-types';
 import React from 'react';
 import TextInput from './TextInput.js';
 
@@ -9,32 +10,42 @@ const BooleanInputOperators = [
   { Value: 'false', Title: 'False' }
 ];
 
-class DialogInput extends React.Component {
-  render(){
-    return(
-      this.props.columnType === 'datetime' || this.props.columnType === 'date' || this.props.columnType === 'datetimeutc' ? 
-        <DateInput 
-          value={this.props.value} 
-          label={this.props.label} 
-          mod={this.props.mod}
-          columnType={this.props.columnType}
-          handleDatePicker={this.props.handleDatePicker} />
-        : this.props.columnType === 'boolean' ? 
-          <Dropdown 
-            value={this.props.value} 
-            operators={BooleanInputOperators} 
-            classes={this.props.classes} 
-            activeFilter={this.props.activeFilter} 
-            handleChange={this.props.handleBooleanDropDown}/> 
-          :
-          <TextInput 
-            value={this.props.value} 
-            label={this.props.label} 
-            mod={this.props.mod} 
-            activeFilter={this.props.activeFilter}
-            handleTextFieldChange={this.props.handleTextFieldChange}/>
-    );
-  }
-}
+const DialogInput = ({ classes, value, columnType, activeFilter, label, 
+  mod, handleBooleanDropDown, handleDatePicker, handleTextFieldChange }) => (
+  columnType === 'datetime' || columnType === 'date' || columnType === 'datetimeutc' ? 
+    <DateInput 
+      value={value} 
+      label={tabel} 
+      mod={mod}
+      columnType={columnType}
+      handleDatePicker={handleDatePicker} />
+    : 
+    columnType === 'boolean' ? 
+      <Dropdown 
+        value={value} 
+        operators={BooleanInputOperators} 
+        classes={classes} 
+        activeFilter={activeFilter} 
+        handleChange={handleBooleanDropDown}/> 
+      :
+      <TextInput 
+        value={value} 
+        label={label} 
+        mod={mod} 
+        activeFilter={activeFilter}
+        handleTextFieldChange={handleTextFieldChange}/>
+);
+
+DialogInput.propTypes = {
+  activeFilter: PropTypes.string.isRequired, 
+  classes: PropTypes.object.isRequired,
+  columnType: PropTypes.string.isRequired,
+  handleBooleanDropDown: PropTypes.func.isRequired,
+  handleDatePicker: PropTypes.func.isRequired,
+  handleTextFieldChange: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired, 
+  mod: PropTypes.string.isRequired, 
+  value: PropTypes.string.isRequired
+};
 
 export default DialogInput;

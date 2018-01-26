@@ -1,62 +1,73 @@
 import Button from 'material-ui/Button';
 import DialogInput from './DialogInput.js';
+import PropTypes from 'prop-types';
 import React from 'react';
 import moment from 'moment';
 
-class DialogContent extends React.Component {
-  render(){
-    let firstValue = '';
-    let secondValue = '';
+const DialogContent = ({ classes, value, value2, columnType, activeFilter, operator,
+  handleDatePicker, handleBooleanDropDown, handleTextFieldChange, handleApply, handleClear }) => {
+  let firstValue = '';
+  let secondValue = '';
     
-    switch (this.props.columnType){
-    case 'datetime':
-    case 'date':
-    case 'datetimeutc':
-      firstValue = this.props.value === undefined ? moment().format() : this.props.value;
-      secondValue = this.props.value2 === undefined ? moment().format() : this.props.value2;
-      break;
-    case 'boolean':
-      firstValue = this.props.value === undefined ? '' : this.props.value;
-      break;
-    default:
-      firstValue = this.props.value === undefined ? '' : this.props.value;
-      secondValue = this.props.value2 === undefined ? '' : this.props.value2;
-    }
-
-    return (
-      <div >
-        <DialogInput
-          value={firstValue} 
-          mod={'Value'}
-          label={'Value'} 
-          classes={this.props.classes} 
-          columnType={this.props.columnType}
-          activeFilter={this.props.activeFilter} 
-          handleDatePicker={this.props.handleDatePicker}
-          handleBooleanDropDown={this.props.handleBooleanDropDown}
-          handleTextFieldChange={this.props.handleTextFieldChange} 
-        />
-        
-        {this.props.operator === 'Between' && 
-          <DialogInput
-            value={secondValue} 
-            mod={'Value2'}
-            label={'Value 2'} 
-            classes={this.props.classes} 
-            columnType={this.props.columnType}
-            activeFilter={this.props.activeFilter} 
-            handleDatePicker={this.props.handleDatePicker}
-            handleBooleanDropDown={this.props.handleBooleanDropDown}
-            handleTextFieldChange={this.props.handleTextFieldChange} 
-          />}
-        
-        <div style={{ padding: '20px 10px 15px 10px', textAlign: 'center' }}>
-          <Button className={this.props.classes.applyButton} onClick={() => this.props.handleApply()}>Apply</Button>
-          <Button className={this.props.classes.clearButton} onClick={() => this.props.handleClear()}>Clear</Button>
-        </div>
-      </div>
-    );
+  switch (columnType){
+  case 'datetime':
+  case 'date':
+  case 'datetimeutc':
+    firstValue = value === undefined ? moment().format() : value;
+    secondValue = value2 === undefined ? moment().format() : value2;
+    break;
+  case 'boolean':
+    firstValue = value === undefined ? '' : value;
+    break;
+  default:
+    firstValue = value === undefined ? '' : value;
+    secondValue = value2 === undefined ? '' : value2;
   }
-}
+  
+  return (
+    <div >
+      <DialogInput
+        value={firstValue} 
+        mod={'Value'}
+        label={'Value'} 
+        classes={classes} 
+        columnType={columnType}
+        activeFilter={activeFilter} 
+        handleDatePicker={handleDatePicker}
+        handleBooleanDropDown={handleBooleanDropDown}
+        handleTextFieldChange={handleTextFieldChange} 
+      />
+        
+      {operator === 'Between' && 
+        <DialogInput
+          value={secondValue} 
+          mod={'Value2'}
+          label={'Value 2'} 
+          classes={classes} 
+          columnType={columnType}
+          activeFilter={activeFilter} 
+          handleDatePicker={handleDatePicker}
+          handleBooleanDropDown={handleBooleanDropDown}
+          handleTextFieldChange={handleTextFieldChange} 
+        />}
+        
+      <div style={{ padding: '20px 10px 15px 10px', textAlign: 'center' }}>
+        <Button className={classes.applyButton} onClick={() => handleApply()}>Apply</Button>
+        <Button className={classes.clearButton} onClick={() => handleClear()}>Clear</Button>
+      </div>
+    </div>
+  );
+};
+
+DialogContent.propTypes = {
+  activeFilter: PropTypes.string.isRequired, 
+  classes: PropTypes.object.isRequired,
+  columnType: PropTypes.string.isRequired,
+  handleApply: PropTypes.func.isRequired,
+  handleBooleanDropDown: PropTypes.func.isRequired, 
+  handleClear: PropTypes.func.isRequired,
+  handleDatePicker: PropTypes.func.isRequired, 
+  handleTextFieldChange: PropTypes.func.isRequired
+};
 
 export default DialogContent;

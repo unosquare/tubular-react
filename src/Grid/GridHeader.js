@@ -146,7 +146,7 @@ class GridHeader extends React.Component {
     }
   }
 
-  multiSort = (event, property) => {
+  /* multiSort = (event, property) => {
     let sortOrder = this.state.sortOrder;
     const array = Object.assign({}, this.state.dataSource);
     
@@ -161,15 +161,15 @@ class GridHeader extends React.Component {
 
         const currentlySortedColumns = array.columns.filter(col => col.SortOrder > 0).sort((a, b) => a.SortOrder === b.SortOrder ? 0 : a.SortOrder > b.SortOrder );
 
-        for (let i = 0; i < currentlySortedColumns.length; i ++) { 
+        currentlySortedColumns.forEach( (column, i) => { 
           sortOrder = i + 2;
 
-          array.columns.forEach( (column, j) => {
-            if(column.Name === currentlySortedColumns[i].Name){
+          array.columns.forEach( (arrayColumn, j) => {
+            if(arrayColumn.Name === currentlySortedColumns[i].Name){
               array.columns[j].SortOrder = (i + 1);
             }
           }); 
-        }
+        });
 
         column.SortDirection = column.SortDirection === 'Ascending' ? 
           'Descending' 
@@ -182,6 +182,41 @@ class GridHeader extends React.Component {
     });
 
     this.setState({ sortOrder }, this.state.dataSource.sort(this.state.rowsPerPage, this.state.page) );
+  } */
+
+  multiSort = (event, property) => {
+    const array = Object.assign({}, this.state.dataSource);
+    
+    array.columns.forEach( (column, i) => {
+      if(column.Name === property){
+        column.SortDirection = column.SortDirection === 'Ascending' ? 
+          'Descending' 
+          : 
+          column.SortDirection === 'Descending' ? 
+            'None' 
+            :
+            'Ascending';
+
+        if(column.SortOrder === -1) {
+          column.SortOrder = Number.MAX_VALUE;
+        }
+        else if(column.SortOrder !== -1 && column.SortDirection === 'None'){
+          column.SortOrder = -1;
+        }
+
+        const currentlySortedColumns = array.columns.filter(col => col.SortOrder > 0).sort((a, b) => a.SortOrder === b.SortOrder ? 0 : a.SortOrder > b.SortOrder );
+
+        currentlySortedColumns.forEach( (column, i) => { 
+          array.columns.forEach( (arrayColumn, j) => {
+            if(arrayColumn.Name === currentlySortedColumns[i].Name){
+              array.columns[j].SortOrder = (i + 1);
+            }
+          }); 
+        });
+      }
+    });
+
+    this.state.dataSource.sort(this.state.rowsPerPage, this.state.page);
   }
 
   singleSort = (event, property) => {

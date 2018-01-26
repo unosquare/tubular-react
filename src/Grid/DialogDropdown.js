@@ -1,5 +1,6 @@
 import Dropdown from './Dropdown.js';
 import Input from 'material-ui/Input';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 const NumericOperators = [
@@ -29,31 +30,36 @@ const BooleanOperators = [
   { Value: 'NotEquals', Title: 'Not Equals' }
 ];
 
-class DialogDropdown extends React.Component {
-  render(){
-    const value = this.props.value === undefined ? 'None' : this.props.value;
-    let component;
+const DialogDropdown = ({ classes, value, columnType, activeFilter, handleChange }) => {
+  const dropdownValue = value === undefined ? 'None' : value;
+  let component;
 
-    switch (this.props.columnType){
-    case 'string':
-      component = <Dropdown operators={StringOperators} classes={this.props.classes} value={value} activeFilter={this.props.activeFilter} handleChange={this.props.handleChange}/>;
-      break;
-    case 'numeric':
-    case 'datetime':
-    case 'date':
-    case 'datetimeutc':
-      component = <Dropdown operators={NumericOperators} classes={this.props.classes} value={value} activeFilter={this.props.activeFilter} handleChange={this.props.handleChange}/>;
-      break;
-    case 'boolean':
-      component = <Dropdown operators={BooleanOperators} classes={this.props.classes} value={value} activeFilter={this.props.activeFilter} handleChange={this.props.handleChange}/>;
-      break;
-    default: 
-      component = null;
-      break;
-    }
-
-    return component;
+  switch (columnType){
+  case 'string':
+    component = <Dropdown operators={StringOperators} classes={classes} value={dropdownValue} activeFilter={activeFilter} handleChange={handleChange}/>;
+    break;
+  case 'numeric':
+  case 'datetime':
+  case 'date':
+  case 'datetimeutc':
+    component = <Dropdown operators={NumericOperators} classes={classes} value={dropdownValue} activeFilter={activeFilter} handleChange={handleChange}/>;
+    break;
+  case 'boolean':
+    component = <Dropdown operators={BooleanOperators} classes={classes} value={dropdownValue} activeFilter={activeFilter} handleChange={handleChange}/>;
+    break;
+  default: 
+    component = null;
+    break;
   }
-}
+
+  return component;
+};
+
+DialogDropdown.propTypes = {
+  activeFilter: PropTypes.string.isRequired,
+  classes: PropTypes.object.isRequired,
+  columnType: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired
+};
 
 export default DialogDropdown;
