@@ -1,4 +1,5 @@
-import GridHeader from './GridHeader.js';
+import GridHeader from './GridHeader';
+import Pager from './Pager';
 import GridToolbar from './GridToolbar';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
@@ -44,10 +45,14 @@ class Grid extends React.Component {
     this.state.dataSource.search(this.state.rowsPerPage, this.state.page, text);
   }
 
+  handlePager = (rowsPerPage, page) => {
+    this.setState({ rowsPerPage, page });
+  }
+
   render() {
     const { classes } = this.props;
     const { data, rowsPerPage, page, columns, dataSource, showFooter, gridFooterDefinition } = this.state;
-
+    
     return (
       <Paper className={classes.root}>
         <GridToolbar onSearchTextChange={this.handleTextSearch} />
@@ -68,11 +73,20 @@ class Grid extends React.Component {
                   )}
                 </TableRow>
               ))}
+            <TableRow>
+              <Pager
+                dataSource={dataSource}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                handlePager={this.handlePager.bind(this)}
+              />
+            </TableRow>
           </TableBody>
           { 
             showFooter === true && 
               this.props.children
           }
+          
         </Table>
       </Paper>
     );

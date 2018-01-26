@@ -137,6 +137,13 @@ class GridHeader extends React.Component {
     document.addEventListener('keyup', () => this.handleKeyUp(event));
   }
 
+  componentWillReceiveProps(){
+    this.setState({ 
+      page: this.props.page, 
+      rowsPerPage: this.props.rowsPerPage 
+    });
+  }
+
   sortHandler = (event, property) => {
     const array = Object.assign({}, this.state.dataSource);
     
@@ -193,7 +200,7 @@ class GridHeader extends React.Component {
 
   render() {
     const { dataSource, classes } = this.props;
-
+    
     return (
       <TableHead>
         <Dialog open={this.state.open} onClose={this.handleClose} >
