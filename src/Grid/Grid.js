@@ -1,4 +1,4 @@
-import GridHeader from './GridHeader.js';
+import GridHeader from './GridHeader';
 import GridToolbar from './GridToolbar';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
