@@ -1,7 +1,6 @@
 import Grid from '../../src/Grid/Grid';
 import React from 'react';
 import RemoteDataSource from '../../src/Grid/RemoteDataSource';
-import _ from 'lodash';
 import { TableCell, TableFooter, TableRow } from 'material-ui/Table';
 
 const columns = [
@@ -43,7 +42,7 @@ const columns = [
       Text: null
     },
     'DataType': 'string',
-    'Aggregate': 'None'
+    'Aggregate': 'Count'
   },
   {
     'Label': 'Shipped Date',
@@ -117,7 +116,7 @@ export default class Main extends React.Component {
             <TableFooter>
               <TableRow>
                 <TableCell>Total: </TableCell>
-                <TableCell> { _.size(row.CustomerName) } </TableCell>
+                <TableCell> { row.CustomerName } </TableCell>
                 <TableCell> ~~~ </TableCell>
                 <TableCell> ~~~ </TableCell>
               </TableRow>

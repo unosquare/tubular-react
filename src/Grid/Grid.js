@@ -28,14 +28,16 @@ class Grid extends React.Component {
     gridFooterDefinition: this.props.gridFooterDefinition,
     dataSource: this.props.dataSource,
     data: [],
-    currentData: []
+    currentData: [],
+    aggregate: {}
   }
 
   componentDidMount() {
     this.state.dataSource.connect(this.state.rowsPerPage, this.state.page)
       .subscribe(tbResponse => {
         this.setState({
-          data: tbResponse.Payload
+          data: tbResponse.Payload,
+          aggregate: tbResponse.Aggregate
         });
       });
   }
@@ -46,8 +48,8 @@ class Grid extends React.Component {
 
   render() {
     const { classes, bodyRenderer, footerRenderer } = this.props;
-    const { data, rowsPerPage, page, columns, dataSource, showFooter, gridFooterDefinition } = this.state;
-
+    const { data, rowsPerPage, page, columns, dataSource, showFooter, gridFooterDefinition, aggregate } = this.state;
+    
     const body = (
       <TableBody>
         {
@@ -69,14 +71,6 @@ class Grid extends React.Component {
       </TableBody>
     );
 
-    const objectElements = {};
-    
-    dataSource.columns.forEach(column => {
-      objectElements[column.Name] = data.map(row => row[column.Name]);
-    });
-
-    const footer = footerRenderer(objectElements);
-
     return (
       <Paper className={classes.root}>
         <GridToolbar onSearchTextChange={this.handleTextSearch} />
@@ -89,7 +83,8 @@ class Grid extends React.Component {
           { body }
           {
             showFooter === true && 
-              footer
+              aggregate &&
+                footerRenderer(aggregate)
           }
         </Table>
       </Paper>
