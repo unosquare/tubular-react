@@ -138,8 +138,8 @@ class GridHeader extends React.Component {
   }
 
   componentWillUnmount() {
-    document.addEventListener('keydown', event => this.handleKeyDown(event));
-    document.addEventListener('keyup', event => this.handleKeyUp(event));
+    document.removeEventListener('keydown', event => this.handleKeyDown(event));
+    document.removeEventListener('keyup', event => this.handleKeyUp(event));
   }
 
   componentWillReceiveProps(){
