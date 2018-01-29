@@ -46,9 +46,6 @@ const styles = theme => ({
 
 class GridHeader extends React.Component {
   state = {
-    dataSource: this.props.dataSource,
-    page: this.props.page,
-    rowsPerPage: this.props.rowsPerPage,
     open: false,
     columnType: '',
     activeFilter: '',
@@ -106,7 +103,7 @@ class GridHeader extends React.Component {
   }
 
   filterHandler = (firstValue, secondValue, hasFilter) => {
-    this.state.dataSource.columns.forEach( (column, i) => {
+    this.props.dataSource.columns.forEach( (column, i) => {
       if(column.Name === this.state.activeFilter){
         column.Filter.Text = firstValue;
         column.Filter.Operator = this.state[this.state.activeFilter];
@@ -117,35 +114,33 @@ class GridHeader extends React.Component {
       }
     });
 
-    this.state.dataSource.filter(this.state.rowsPerPage, this.state.page);
+    this.props.dataSource.filter(this.props.rowsPerPage, this.props.page);
   }
 
   handleKeyDown(event) {
-    if(this.state.sorting === 'Single' && event.ctrlKey) {
+    if(event.key === 'Control' && this.state.sorting === 'Single') {
       this.setState({ sorting: 'Multiple' });
     } 
   }
 
   handleKeyUp(event) {
-    if(this.state.sorting === 'Multiple') {
+    if(event.key === 'Control' && this.state.sorting === 'Multiple') {
       this.setState({ sorting: 'Single' });
     } 
   }
 
   componentDidMount() {
-    document.addEventListener('keydown', () => this.handleKeyDown(event));
-    document.addEventListener('keyup', () => this.handleKeyUp(event));
+    document.addEventListener('keydown', event => this.handleKeyDown(event));
+    document.addEventListener('keyup', event => this.handleKeyUp(event));
   }
 
-  componentWillReceiveProps(){
-    this.setState({ 
-      page: this.props.page, 
-      rowsPerPage: this.props.rowsPerPage 
-    });
+  componentWillUnmount() {
+    document.removeEventListener('keydown', event => this.handleKeyDown(event));
+    document.removeEventListener('keyup', event => this.handleKeyUp(event));
   }
 
   sortHandler = (event, property) => {
-    const array = Object.assign({}, this.state.dataSource);
+    const array = Object.assign({}, this.props.dataSource);
     
     array.columns.forEach( column => {
       if(column.Name === property){
@@ -175,7 +170,7 @@ class GridHeader extends React.Component {
       }
     });
 
-    this.state.dataSource.sort(this.state.rowsPerPage, this.state.page);
+    this.props.dataSource.sort(this.props.rowsPerPage, this.props.page);
   }
 
   handleDatePicker = name => event => {
@@ -233,7 +228,7 @@ class GridHeader extends React.Component {
                 title='Click to sort. Press Ctrl to sort by multiple columns' 
                 placement='bottom-start' 
                 enterDelay={300}>
-                <TableSortLabel onClick={() => this.sortHandler(event, column.Name)} >
+                <TableSortLabel onClick={event => this.sortHandler(event, column.Name)} >
                   {column.Label}
                   {column.SortDirection === 'Ascending' ? 
                     <ArrowUpward className={classes.arrowStyle} />
