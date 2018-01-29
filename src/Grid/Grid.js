@@ -26,7 +26,6 @@ class Grid extends React.Component {
     page: this.props.page,
     rowsPerPage: this.props.rowsPerPage,
     showFooter: this.props.showFooter,
-    gridFooterDefinition: this.props.gridFooterDefinition,
     dataSource: this.props.dataSource,
     data: [],
     currentData: []
@@ -51,7 +50,7 @@ class Grid extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { data, rowsPerPage, page, columns, dataSource, showFooter, gridFooterDefinition } = this.state;
+    const { data, rowsPerPage, page, dataSource, showFooter } = this.state;
     
     return (
       <Paper className={classes.root}>
