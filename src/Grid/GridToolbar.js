@@ -12,6 +12,7 @@ import Toolbar from 'material-ui/Toolbar';
 import { withStyles } from 'material-ui/styles';
 import Input, { InputAdornment } from 'material-ui/Input';
 import Menu, { MenuItem } from 'material-ui/Menu';
+import ButtonCSV from './ButtonCSV';
 
 const styles = theme => ({
   spacer: {
@@ -72,23 +73,12 @@ class GridToolbar extends React.Component {
 
 
   render(){
-    const { classes, isPrintEnabled, isExportEnabled } = this.props;
+    const { classes, isPrintEnabled, isExportEnabled, allData, data } = this.props;
     const { searchText, anchorEl } = this.state;
     return(
       <Toolbar>
         <div className={classes.spacer}></div>
-        {
-          isExportEnabled && 
-          <Button
-            raised
-            color='accent'
-            className={classes.button}
-            onClick={this.handleMenuOpen}
-          >
-            <DownloadIcon/>
-            Export csv
-          </Button>
-        }
+          <ButtonCSV data={allData} currentData={data} filename='data.csv'/>
         {
           isPrintEnabled && 
           <IconButton>
@@ -120,14 +110,6 @@ class GridToolbar extends React.Component {
             }
           />
         </FormControl>
-        <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={this.handleMenuClose}
-        >
-          <MenuItem onClick={this.handleMenuClose}>All rows</MenuItem>
-          <MenuItem onClick={this.handleMenuClose}>Current rows</MenuItem>
-        </Menu>
       </Toolbar>
     );
   }

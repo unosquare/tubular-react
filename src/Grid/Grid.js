@@ -28,7 +28,8 @@ class Grid extends React.Component {
     gridFooterDefinition: this.props.gridFooterDefinition,
     dataSource: this.props.dataSource,
     data: [],
-    currentData: []
+    currentData: [],
+    allData: [],
   }
 
   componentDidMount() {
@@ -36,6 +37,12 @@ class Grid extends React.Component {
       .subscribe(tbResponse => {
         this.setState({
           data: tbResponse.Payload
+        });
+      });
+      this.state.dataSource.connect()
+      .subscribe(tbResponse => {
+        this.setState({
+          allData: tbResponse.Payload
         });
       });
   }
@@ -46,7 +53,7 @@ class Grid extends React.Component {
 
   render() {
     const { classes, bodyRenderer } = this.props;
-    const { data, rowsPerPage, page, columns, dataSource, showFooter, gridFooterDefinition } = this.state;
+    const { data, allData, rowsPerPage, page, columns, dataSource, showFooter, gridFooterDefinition } = this.state;
 
     const body = (
       <TableBody>
@@ -69,7 +76,7 @@ class Grid extends React.Component {
 
     return (
       <Paper className={classes.root}>
-        <GridToolbar onSearchTextChange={this.handleTextSearch} />
+        <GridToolbar onSearchTextChange={this.handleTextSearch} data={data} allData={allData} />
         <Table className={classes.table}>
           <GridHeader
             dataSource={dataSource}
