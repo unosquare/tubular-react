@@ -133,8 +133,13 @@ class GridHeader extends React.Component {
   }
 
   componentDidMount() {
-    document.addEventListener('keydown', () => this.handleKeyDown(event));
-    document.addEventListener('keyup', () => this.handleKeyUp(event));
+    document.addEventListener('keydown', event => this.handleKeyDown(event));
+    document.addEventListener('keyup', event => this.handleKeyUp(event));
+  }
+
+  componentWillUnmount() {
+    document.addEventListener('keydown', event => this.handleKeyDown(event));
+    document.addEventListener('keyup', event => this.handleKeyUp(event));
   }
 
   componentWillReceiveProps(){
@@ -233,7 +238,7 @@ class GridHeader extends React.Component {
                 title='Click to sort. Press Ctrl to sort by multiple columns' 
                 placement='bottom-start' 
                 enterDelay={300}>
-                <TableSortLabel onClick={() => this.sortHandler(event, column.Name)} >
+                <TableSortLabel onClick={event => this.sortHandler(event, column.Name)} >
                   {column.Label}
                   {column.SortDirection === 'Ascending' ? 
                     <ArrowUpward className={classes.arrowStyle} />
