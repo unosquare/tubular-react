@@ -1,3 +1,4 @@
+import GridHeader from './GridHeader.js';
 import GridToolbar from './GridToolbar';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
@@ -26,7 +27,8 @@ class Grid extends React.Component {
     showFooter: this.props.showFooter,
     gridFooterDefinition: this.props.gridFooterDefinition,
     dataSource: this.props.dataSource,
-    data: []
+    data: [],
+    currentData: []
   }
 
   componentDidMount() {
@@ -44,7 +46,7 @@ class Grid extends React.Component {
 
   render() {
     const { classes, bodyRenderer } = this.props;
-    const { data, dataSource, showFooter } = this.state;
+    const { data, rowsPerPage, page, columns, dataSource, showFooter, gridFooterDefinition } = this.state;
 
     const body = (
       <TableBody>
@@ -69,22 +71,19 @@ class Grid extends React.Component {
       <Paper className={classes.root}>
         <GridToolbar onSearchTextChange={this.handleTextSearch} />
         <Table className={classes.table}>
-          <TableHead>
-            <TableRow>
-              {dataSource.columns.map(column =>
-                <TableCell key={column.Name}>
-                  {column.Label}
-                </TableCell>
-              )}
-            </TableRow>
-          </TableHead>
+          <GridHeader
+            dataSource={dataSource}
+            page={page}
+            rowsPerPage={rowsPerPage}
+          />
           { body }
           {
             showFooter === true && 
               this.props.children
           }
         </Table>
-      </Paper>);
+      </Paper>
+    );
   }
 }
 

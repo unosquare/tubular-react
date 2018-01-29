@@ -4,7 +4,8 @@
   "description": "Tubular React",
   "main": "index.js",
   "scripts": {
-    "start": "gulp",
+    "start": "gulp watch",
+    "build": "gulp",
     "test": "gulp test",
     "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov"
   },
@@ -22,6 +23,8 @@
     "axios": "^0.17.1",
     "material-ui": "next",
     "material-ui-icons": "^1.0.0-beta.17",
+    "material-ui-pickers": "^1.0.0-beta.12",
+    "moment": "^2.20.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "rxjs-es": "^5.0.0-beta.12",
