@@ -1,6 +1,6 @@
 import GridHeader from './GridHeader';
-import Pager from './Pager';
 import GridToolbar from './GridToolbar';
+import Pager from './Pager';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -29,14 +29,15 @@ class Grid extends React.Component {
     gridFooterDefinition: this.props.gridFooterDefinition,
     dataSource: this.props.dataSource,
     data: [],
-    currentData: []
+    totalRecordCount: 0
   }
 
   componentDidMount() {
     this.state.dataSource.connect(this.state.rowsPerPage, this.state.page)
       .subscribe(tbResponse => {
         this.setState({
-          data: tbResponse.Payload
+          data: tbResponse.Payload,
+          totalRecordCount: tbResponse.TotalRecordCount !== undefined ? tbResponse.TotalRecordCount : 0
         });
       });
   }
@@ -72,21 +73,20 @@ class Grid extends React.Component {
                     </TableCell>
                   )}
                 </TableRow>
-              ))}
+              ))
+            }
+          </TableBody>
+          <TableFooter>
             <TableRow>
               <Pager
                 dataSource={dataSource}
                 rowsPerPage={rowsPerPage}
                 page={page}
+                totalRecordCount={this.state.totalRecordCount}
                 handlePager={this.handlePager.bind(this)}
               />
-            </TableRow>
-          </TableBody>
-          { 
-            showFooter === true && 
-              this.props.children
-          }
-          
+            </TableRow> 
+          </TableFooter>
         </Table>
       </Paper>
     );
