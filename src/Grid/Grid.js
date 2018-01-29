@@ -45,7 +45,7 @@ class Grid extends React.Component {
   }
 
   render() {
-    const { classes, bodyRenderer } = this.props;
+    const { classes, bodyRenderer, footerRenderer } = this.props;
     const { data, rowsPerPage, page, columns, dataSource, showFooter, gridFooterDefinition } = this.state;
 
     const body = (
@@ -58,7 +58,9 @@ class Grid extends React.Component {
                 {                
                   dataSource.columns.map((column, colIndex) =>
                     <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
-                      {row[column.Name]}
+                      {
+                        row[column.Name]
+                      }
                     </TableCell>)
                 }
               </TableRow>              
@@ -66,6 +68,14 @@ class Grid extends React.Component {
         }
       </TableBody>
     );
+
+    const objectElements = {};
+    
+    dataSource.columns.forEach(column => {
+      objectElements[column.Name] = data.map(row => row[column.Name]);
+    });
+
+    const footer = footerRenderer(objectElements);
 
     return (
       <Paper className={classes.root}>
@@ -79,7 +89,7 @@ class Grid extends React.Component {
           { body }
           {
             showFooter === true && 
-              this.props.children
+              footer
           }
         </Table>
       </Paper>
@@ -91,6 +101,7 @@ Grid.propTypes = {
   bodyRenderer: PropTypes.func,
   classes: PropTypes.object.isRequired,
   dataSource: PropTypes.any.isRequired,
+  footerRenderer: PropTypes.func,
   rowsPerPage: PropTypes.number,
   title: PropTypes.string
 };

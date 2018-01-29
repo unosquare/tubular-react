@@ -2,7 +2,8 @@ import Grid from '../../src/Grid/Grid';
 import GridFooter from '../../src/Grid/GridFooter';
 import React from 'react';
 import RemoteDataSource from '../../src/Grid/RemoteDataSource';
-import { TableCell, TableRow } from 'material-ui/Table';
+import _ from 'lodash';
+import { TableCell, TableFooter, TableRow } from 'material-ui/Table';
 
 const columns = [
   {
@@ -112,15 +113,18 @@ export default class Main extends React.Component {
         } 
         rowsPerPage = { 25 } 
         showFooter = { true } 
+        footerRenderer = {
+          row => 
+            <TableFooter>
+              <TableRow>
+                <TableCell>Total: </TableCell>
+                <TableCell> { _.size(row.CustomerName) } </TableCell>
+                <TableCell> ~~~ </TableCell>
+                <TableCell> ~~~ </TableCell>
+              </TableRow>
+            </TableFooter>
+        }
       >
-        <GridFooter>
-          <TableRow>
-            <TableCell>Totals:</TableCell>
-            <TableCell>500</TableCell>{/*Aggregation function*/}
-            <TableCell>~~~</TableCell>
-            <TableCell>~~~</TableCell>
-          </TableRow>
-        </GridFooter>
       </Grid>
     );
   }
