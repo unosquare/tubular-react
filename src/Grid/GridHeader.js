@@ -46,9 +46,6 @@ const styles = theme => ({
 
 class GridHeader extends React.Component {
   state = {
-    dataSource: this.props.dataSource,
-    page: this.props.page,
-    rowsPerPage: this.props.rowsPerPage,
     open: false,
     columnType: '',
     activeFilter: '',
@@ -106,7 +103,7 @@ class GridHeader extends React.Component {
   }
 
   filterHandler = (firstValue, secondValue, hasFilter) => {
-    this.state.dataSource.columns.forEach( (column, i) => {
+    this.props.dataSource.columns.forEach( (column, i) => {
       if(column.Name === this.state.activeFilter){
         column.Filter.Text = firstValue;
         column.Filter.Operator = this.state[this.state.activeFilter];
@@ -117,7 +114,7 @@ class GridHeader extends React.Component {
       }
     });
 
-    this.state.dataSource.filter(this.state.rowsPerPage, this.state.page);
+    this.props.dataSource.filter(this.props.rowsPerPage, this.props.page);
   }
 
   handleKeyDown(event) {
@@ -142,15 +139,8 @@ class GridHeader extends React.Component {
     document.removeEventListener('keyup', event => this.handleKeyUp(event));
   }
 
-  componentWillReceiveProps(){
-    this.setState({ 
-      page: this.props.page, 
-      rowsPerPage: this.props.rowsPerPage 
-    });
-  }
-
   sortHandler = (event, property) => {
-    const array = Object.assign({}, this.state.dataSource);
+    const array = Object.assign({}, this.props.dataSource);
     
     array.columns.forEach( column => {
       if(column.Name === property){
@@ -180,7 +170,7 @@ class GridHeader extends React.Component {
       }
     });
 
-    this.state.dataSource.sort(this.state.rowsPerPage, this.state.page);
+    this.props.dataSource.sort(this.props.rowsPerPage, this.props.page);
   }
 
   handleDatePicker = name => event => {
