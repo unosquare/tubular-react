@@ -10,8 +10,11 @@ import { withStyles } from 'material-ui/styles';
 const styles = theme => ({
   root: {
     flexShrink: 0,
-    color: theme.palette.text.secondary,
     marginLeft: theme.spacing.unit * 2.5
+  },
+  buttonStyle: {
+    height: '35px',
+    width: '35px'
   }
 });
 
@@ -83,10 +86,12 @@ class TablePaginationActions extends React.Component {
 
   render (){
     const { activePage, pages } = this.state;
+    const { classes } = this.props;
 
     return (
-      <div className={this.props.classes.root}>
+      <div className={classes.root}>
         <IconButton
+          className={classes.buttonStyle}
           onClick={this.handleFirstPageButtonClick}
           disabled={this.props.page === 0}
           aria-label='First Page'
@@ -95,6 +100,7 @@ class TablePaginationActions extends React.Component {
         </IconButton>
 
         <IconButton
+          className={classes.buttonStyle}
           onClick={this.handleBackButtonClick}
           disabled={this.props.page === 0}
           aria-label='Previous Page'
@@ -105,6 +111,7 @@ class TablePaginationActions extends React.Component {
         {
           pages.map((element, index) => ( this.props.count / this.props.rowsPerPage > index &&
             <IconButton
+              className={classes.buttonStyle}
               key={index}
               onClick={event => this.handlePageButtonClick(event, pages[index])}
               aria-label='Next Page'
@@ -115,13 +122,16 @@ class TablePaginationActions extends React.Component {
         }
 
         <IconButton
+          className={classes.buttonStyle}
           onClick={this.handleNextButtonClick}
           disabled={this.props.page >= Math.ceil(this.props.count / this.props.rowsPerPage) - 1}
           aria-label='Next Page'
         >
           <KeyboardArrowRight />
         </IconButton>
+
         <IconButton
+          className={classes.buttonStyle}
           onClick={this.handleLastPageButtonClick}
           disabled={this.props.page >= Math.ceil(this.props.count / this.props.rowsPerPage) - 1}
           aria-label='Last Page'

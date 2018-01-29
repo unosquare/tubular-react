@@ -1,6 +1,13 @@
 import React from 'react';
 import { TablePagination } from 'material-ui/Table';
 import TablePaginationActions from './TablePaginationActions';
+import { withStyles } from 'material-ui/styles';
+
+const styles = theme => ({
+  spacer: {
+    flex: 0
+  }
+});
 
 class Pager extends React.Component {
     state = {
@@ -25,10 +32,14 @@ class Pager extends React.Component {
 
     render(){
       const { rowsPerPage } = this.state;
-      const { totalRecordCount, page } = this.props;
+      const { totalRecordCount, page, classes } = this.props;
 
       return(
         <TablePagination
+          classes={{
+            spacer: classes.spacer
+          }}
+          labelDisplayedRows={	({ from, to, count }) => `${from}-${to} of ${count}` }
           count={totalRecordCount}
           rowsPerPage={rowsPerPage}
           page={page}
@@ -41,4 +52,4 @@ class Pager extends React.Component {
     }
 }
 
-export default Pager;
+export default withStyles(styles)(Pager);
