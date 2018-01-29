@@ -90,7 +90,7 @@ class GridHeader extends React.Component {
     let firstValue = this.state[`${this.state.activeFilter}Value`];
     let secondValue = secondValue !== null && this.state[`${this.state.activeFilter}Value2`];
 
-    switch (this.state.columnType){
+    switch (this.state.columnType) {
     case 'numeric':
       firstValue = parseFloat(firstValue);
       secondValue = parseFloat(secondValue);
@@ -103,6 +103,10 @@ class GridHeader extends React.Component {
     }
     
     this.filterHandler(firstValue, secondValue, true);
+
+    this.setState({
+      open: false
+    });
   }
 
   filterHandler = (firstValue, secondValue, hasFilter) => {
