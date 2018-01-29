@@ -24,14 +24,15 @@ class Pager extends React.Component {
     };
 
     render(){
-      const { rowsPerPage, page } = this.state;
-      const { totalRecordCount } = this.props;
+      const { rowsPerPage } = this.state;
+      const { totalRecordCount, page } = this.props;
 
       return(
         <TablePagination
           count={totalRecordCount}
           rowsPerPage={rowsPerPage}
           page={page}
+          rowsPerPageOptions={[10, 20, 50, 100]}
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
           Actions={TablePaginationActions}

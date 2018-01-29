@@ -51,41 +51,80 @@ class Grid extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
-    const { data, rowsPerPage, page, columns, dataSource, showFooter, gridFooterDefinition } = this.state;
-    
+    const { classes, bodyRenderer, showBottomPager, showTopPager } = this.props;
+    const { data, rowsPerPage, page, dataSource } = this.state;
+
+    const body = (
+      <TableBody>
+        {
+          data.map((row, rowIndex) => (            
+            bodyRenderer  
+              ? bodyRenderer(row, rowIndex) 
+              : <TableRow hover key={rowIndex}>
+                {                
+                  dataSource.columns.map((column, colIndex) =>
+                    <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
+                      {row[column.Name]}
+                    </TableCell>)
+                }
+              </TableRow>              
+          ))
+        }
+      </TableBody>
+    );
+
+    const pager = (
+      <TableRow>
+        <Pager
+          dataSource={dataSource}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          totalRecordCount={this.state.totalRecordCount}
+          handlePager={this.handlePager.bind(this)}
+        />
+      </TableRow>
+    );
+
     return (
       <Paper className={classes.root}>
         <GridToolbar onSearchTextChange={this.handleTextSearch} />
         <Table className={classes.table}>
-          <GridHeader
-            dataSource={dataSource}
-            page={page}
-            rowsPerPage={rowsPerPage}
-          />
-          <TableBody>
-            {
-              data.map((row, rowIndex) => (
-                <TableRow hover key={rowIndex}>
-                  {dataSource.columns.map((column, colIndex) =>
-                    <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
-                      {row[column.Name]}
-                    </TableCell>
-                  )}
-                </TableRow>
-              ))
-            }
-          </TableBody>
+          <TableHead>
+
+            { showTopPager === true && 
+              <TableRow>
+                <Pager
+                  dataSource={dataSource}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  totalRecordCount={this.state.totalRecordCount}
+                  handlePager={this.handlePager.bind(this)}
+                />
+              </TableRow>}
+
+            <GridHeader
+              dataSource={dataSource}
+              page={page}
+              rowsPerPage={rowsPerPage}
+              pager={pager}
+            />
+          </TableHead>
+
+          { body }
+          
           <TableFooter>
-            <TableRow>
-              <Pager
-                dataSource={dataSource}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                totalRecordCount={this.state.totalRecordCount}
-                handlePager={this.handlePager.bind(this)}
-              />
-            </TableRow> 
+
+            { showBottomPager === true && 
+              <TableRow>
+                <Pager
+                  dataSource={dataSource}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  totalRecordCount={this.state.totalRecordCount}
+                  handlePager={this.handlePager.bind(this)}
+                />
+              </TableRow>}
+
           </TableFooter>
         </Table>
       </Paper>
@@ -94,6 +133,7 @@ class Grid extends React.Component {
 }
 
 Grid.propTypes = {
+  bodyRenderer: PropTypes.func,
   classes: PropTypes.object.isRequired,
   dataSource: PropTypes.any.isRequired,
   rowsPerPage: PropTypes.number,

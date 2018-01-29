@@ -15,57 +15,123 @@ const styles = theme => ({
   }
 });
 
-const TablePaginationActions = ({ classes, count, onChangePage, page, rowsPerPage, theme }) => {
-  const handleFirstPageButtonClick = event => {
-    onChangePage(event, 0);
-  };
-  const handleBackButtonClick = event => {
-    onChangePage(event, page - 1);
+class TablePaginationActions extends React.Component {
+  state = {
+    pages: [0, 1, 2, 3, 4],
+    activePage: 0
+  }
+
+  handleFirstPageButtonClick = event => {
+    this.props.onChangePage(event, 0);
+
+    this.setCurrentPage(0);
   };
   
-  const handleNextButtonClick = event => {
-    onChangePage(event, page + 1);
+  handleBackButtonClick = event => {
+    this.props.onChangePage(event, this.props.page - 1);
+
+    this.setCurrentPage(this.props.page - 1);
   };
   
-  const handleLastPageButtonClick = event => {
-    onChangePage(
+  handleNextButtonClick = event => {
+    this.props.onChangePage(event, this.props.page + 1);
+    
+    this.setCurrentPage(this.props.page + 1);
+  };
+  
+  handleLastPageButtonClick = event => {
+    const maxPage = Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1);
+
+    this.props.onChangePage(
       event,
-      Math.max(0, Math.ceil(count / rowsPerPage) - 1),
+      maxPage
     );
+
+    this.setCurrentPage(maxPage);
   };
-  return (
-    <div className={classes.root}>
-      <IconButton
-        onClick={handleFirstPageButtonClick}
-        disabled={page === 0}
-        aria-label='First Page'
-      >
-        <FirstPageIcon />
-      </IconButton>
-      <IconButton
-        onClick={handleBackButtonClick}
-        disabled={page === 0}
-        aria-label='Previous Page'
-      >
-        <KeyboardArrowLeft />
-      </IconButton>
-      <IconButton
-        onClick={handleNextButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label='Next Page'
-      >
-        <KeyboardArrowRight />
-      </IconButton>
-      <IconButton
-        onClick={handleLastPageButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label='Last Page'
-      >
-        <LastPageIcon />
-      </IconButton>
-    </div>
-  );
-};
+
+  handlePageButtonClick = (event, page) => {
+    this.props.onChangePage(
+      event,
+      page,
+    );
+
+    this.setCurrentPage(page);
+  };
+
+  setCurrentPage = page => {
+    let array = [];
+    const maxPage = Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1);
+
+    if(page < 2){
+      array = [ 0, 1, 2, 3, 4 ];
+    }
+    else if (page > maxPage - 2){
+      array = [maxPage - 4, maxPage - 3, maxPage - 2, maxPage - 1, maxPage];
+    }
+    else{
+      array = [ page - 2, page - 1, page, page + 1, page + 2 ];
+    }
+  
+    this.setState({ pages: array, activePage: page });
+  }
+
+  componentWillReceiveProps = () => {
+    this.setState({ activePage: this.props.page }, 
+      this.setCurrentPage(this.props.page) );
+  }
+
+  render (){
+    const { activePage, pages } = this.state;
+
+    return (
+      <div className={this.props.classes.root}>
+        <IconButton
+          onClick={this.handleFirstPageButtonClick}
+          disabled={this.props.page === 0}
+          aria-label='First Page'
+        >
+          <FirstPageIcon />
+        </IconButton>
+
+        <IconButton
+          onClick={this.handleBackButtonClick}
+          disabled={this.props.page === 0}
+          aria-label='Previous Page'
+        >
+          <KeyboardArrowLeft />
+        </IconButton>
+
+        {
+          pages.map((element, index) => ( this.props.count / this.props.rowsPerPage > index &&
+            <IconButton
+              key={index}
+              onClick={event => this.handlePageButtonClick(event, pages[index])}
+              aria-label='Next Page'
+              style={ pages[index] === activePage ? { background: '#5999e8', color: 'white' } : null } 
+            >
+              {pages[index] + 1}
+            </IconButton>))
+        }
+
+        <IconButton
+          onClick={this.handleNextButtonClick}
+          disabled={this.props.page >= Math.ceil(this.props.count / this.props.rowsPerPage) - 1}
+          aria-label='Next Page'
+        >
+          <KeyboardArrowRight />
+        </IconButton>
+        <IconButton
+          onClick={this.handleLastPageButtonClick}
+          disabled={this.props.page >= Math.ceil(this.props.count / this.props.rowsPerPage) - 1}
+          aria-label='Last Page'
+        >
+          <LastPageIcon />
+        </IconButton>
+      </div>
+    );
+  }
+}
 
 TablePaginationActions.propTypes = {
   classes: PropTypes.object.isRequired,

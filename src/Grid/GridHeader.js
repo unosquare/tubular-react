@@ -87,7 +87,7 @@ class GridHeader extends React.Component {
     let firstValue = this.state[`${this.state.activeFilter}Value`];
     let secondValue = secondValue !== null && this.state[`${this.state.activeFilter}Value2`];
 
-    switch (this.state.columnType){
+    switch (this.state.columnType) {
     case 'numeric':
       firstValue = parseFloat(firstValue);
       secondValue = parseFloat(secondValue);
@@ -115,6 +115,7 @@ class GridHeader extends React.Component {
     });
 
     this.props.dataSource.filter(this.props.rowsPerPage, this.props.page);
+    this.handleClose();
   }
 
   handleKeyDown(event) {
@@ -197,7 +198,8 @@ class GridHeader extends React.Component {
     const { dataSource, classes } = this.props;
     
     return (
-      <TableHead>
+        
+      <TableRow>
         <Dialog open={this.state.open} onClose={this.handleClose} >
           <DialogTitle style={{ minWidth: '300px', background: '#ececec', padding: '15px 20px 15px 20px' }} id='responsive-dialog-title'>{'Filter'}</DialogTitle>
           <DialogDropdown 
@@ -221,41 +223,39 @@ class GridHeader extends React.Component {
             handleClear={this.handleClear.bind(this)} 
           />          
         </Dialog>
-        <TableRow>
-          {dataSource.columns.map(column => {
-            const render = column.Sortable ?
-              (<Tooltip 
-                title='Click to sort. Press Ctrl to sort by multiple columns' 
-                placement='bottom-start' 
-                enterDelay={300}>
-                <TableSortLabel onClick={event => this.sortHandler(event, column.Name)} >
-                  {column.Label}
-                  {column.SortDirection === 'Ascending' ? 
-                    <ArrowUpward className={classes.arrowStyle} />
-                    : column.SortDirection === 'Descending' ? 
-                      <ArrowDownward className={classes.arrowStyle} />
-                      :
-                      <div className={classes.arrowStyle} />
-                  }
-                </TableSortLabel>
-              </Tooltip>)
-              : (column.Label);
-            const filter = column.Filter &&
+        {dataSource.columns.map(column => {
+          const render = column.Sortable ?
+            (<Tooltip 
+              title='Click to sort. Press Ctrl to sort by multiple columns' 
+              placement='bottom-start' 
+              enterDelay={300}>
+              <TableSortLabel onClick={event => this.sortHandler(event, column.Name)} >
+                {column.Label}
+                {column.SortDirection === 'Ascending' ? 
+                  <ArrowUpward className={classes.arrowStyle} />
+                  : column.SortDirection === 'Descending' ? 
+                    <ArrowDownward className={classes.arrowStyle} />
+                    :
+                    <div className={classes.arrowStyle} />
+                }
+              </TableSortLabel>
+            </Tooltip>)
+            : (column.Label);
+          const filter = column.Filter &&
               (<IconButton onClick={() => this.handleOpen(column)} >
                 {column.Filter.HasFilter ? 
                   <FilterListIcon style={{ background: '#28b62c', color: 'white', borderRadius: '50%' }}/> 
                   : 
                   <FilterListIcon/>}
               </IconButton>);
-            return (
-              <TableCell key={column.Label} padding={column.Label === '' ? 'none' : 'default'}>
-                {render}
-                {filter}
-              </TableCell>
-            );
-          })}
-        </TableRow>
-      </TableHead>
+          return (
+            <TableCell key={column.Label} padding={column.Label === '' ? 'none' : 'default'}>
+              {render}
+              {filter}
+            </TableCell>
+          );
+        })}
+      </TableRow>
     );
   }
 }
