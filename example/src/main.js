@@ -1,5 +1,4 @@
 import Grid from '../../src/Grid/Grid';
-import GridFooter from '../../src/Grid/GridFooter';
 import React from 'react';
 import RemoteDataSource from '../../src/Grid/RemoteDataSource';
 import _ from 'lodash';
