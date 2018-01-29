@@ -1,5 +1,6 @@
 import React from 'react';
-import Table, { TableBody, TableCell, TableFooter, TableHead, TablePagination, TableRow } from 'material-ui/Table';
+import { TablePagination } from 'material-ui/Table';
+import TablePaginationActions from './TablePaginationActions';
 
 class Pager extends React.Component {
     state = {
@@ -24,14 +25,16 @@ class Pager extends React.Component {
 
     render(){
       const { rowsPerPage, page } = this.state;
+      const { totalRecordCount } = this.props;
+
       return(
         <TablePagination
-          /* colSpan={1} */
-          count={500}
+          count={totalRecordCount}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
+          Actions={TablePaginationActions}
         />
       );
     }
