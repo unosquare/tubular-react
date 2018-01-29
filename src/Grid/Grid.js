@@ -26,7 +26,6 @@ class Grid extends React.Component {
     page: this.props.page,
     rowsPerPage: this.props.rowsPerPage,
     showFooter: this.props.showFooter,
-    gridFooterDefinition: this.props.gridFooterDefinition,
     dataSource: this.props.dataSource,
     data: [],
     totalRecordCount: 0

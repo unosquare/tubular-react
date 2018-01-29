@@ -113,7 +113,7 @@ export default class Main extends React.Component {
         rowsPerPage = { 10 } 
         showFooter = { true } 
         showTopPager = { true }
-        showBottomPager = { false }
+        showBottomPager = { true }
       >
       </Grid>
     );
