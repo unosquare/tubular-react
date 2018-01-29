@@ -121,13 +121,13 @@ class GridHeader extends React.Component {
   }
 
   handleKeyDown(event) {
-    if(this.state.sorting === 'Single' && event.ctrlKey) {
+    if(event.key === 'Control' && this.state.sorting === 'Single') {
       this.setState({ sorting: 'Multiple' });
     } 
   }
 
   handleKeyUp(event) {
-    if(this.state.sorting === 'Multiple') {
+    if(event.key === 'Control' && this.state.sorting === 'Multiple') {
       this.setState({ sorting: 'Single' });
     } 
   }
