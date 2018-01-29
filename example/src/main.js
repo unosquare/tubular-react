@@ -79,7 +79,16 @@ export default class Main extends React.Component {
         } 
         rowsPerPage = { 25 } 
         showFooter = { true } 
-      />
+      >
+        <GridFooter>
+          <TableRow>
+            <TableCell>Totals:</TableCell>
+            <TableCell>500</TableCell>{/*Aggregation function*/}
+            <TableCell>~~~</TableCell>
+            <TableCell>~~~</TableCell>
+          </TableRow>
+        </GridFooter>
+      </Grid>
     );
   }
 }
