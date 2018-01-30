@@ -114,7 +114,7 @@ class GridHeader extends React.Component {
       }
     });
 
-    this.props.dataSource.filter(this.props.rowsPerPage, this.props.page);
+    this.props.refreshGrid();
     this.handleClose();
   }
 
@@ -171,7 +171,7 @@ class GridHeader extends React.Component {
       }
     });
 
-    this.props.dataSource.sort(this.props.rowsPerPage, this.props.page);
+    this.props.refreshGrid();
   }
 
   handleDatePicker = name => event => {

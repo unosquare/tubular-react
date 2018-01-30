@@ -60,7 +60,7 @@ class Grid extends React.Component {
   }
 
   handlePager = (rowsPerPage, page) => {
-    this.setState({ rowsPerPage, page });
+    this.setState({ rowsPerPage, page }, this.refreshGrid );
   }
 
   refreshGrid = () => {
@@ -100,6 +100,7 @@ class Grid extends React.Component {
           filteredRecordCount={this.state.filteredRecordCount}
           totalRecordCount={this.state.totalRecordCount}
           handlePager={this.handlePager.bind(this)}
+          refreshGrid={this.refreshGrid.bind(this)}
         />
       </TableRow>
     );
@@ -116,6 +117,7 @@ class Grid extends React.Component {
               dataSource={dataSource}
               page={page}
               rowsPerPage={rowsPerPage}
+              refreshGrid={this.refreshGrid.bind(this)}
             />
           </TableHead>
 
