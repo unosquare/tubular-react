@@ -110,7 +110,6 @@ export default class Main extends React.Component {
             </TableRow>
         } 
         rowsPerPage = { 25 } 
-        showFooter = { true } 
         footerRenderer = {
           row => 
             <TableFooter>

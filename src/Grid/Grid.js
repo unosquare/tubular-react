@@ -24,7 +24,6 @@ class Grid extends React.Component {
   state = {
     page: this.props.page,
     rowsPerPage: this.props.rowsPerPage,
-    showFooter: this.props.showFooter,
     gridFooterDefinition: this.props.gridFooterDefinition,
     dataSource: this.props.dataSource,
     data: [],
@@ -48,7 +47,7 @@ class Grid extends React.Component {
 
   render() {
     const { classes, bodyRenderer, footerRenderer } = this.props;
-    const { data, rowsPerPage, page, columns, dataSource, showFooter, gridFooterDefinition, aggregate } = this.state;
+    const { data, rowsPerPage, page, columns, dataSource, gridFooterDefinition, aggregate } = this.state;
     
     const body = (
       <TableBody>
@@ -82,7 +81,7 @@ class Grid extends React.Component {
           />
           { body }
           {
-            showFooter === true && 
+            footerRenderer &&
               aggregate &&
                 footerRenderer(aggregate)
           }
