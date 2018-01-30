@@ -201,12 +201,13 @@ describe('<Grid />', () => {
   });
 
   describe('When footer is not defined', () => {
-    beforeEach(() => {
-      props.footerRenderer = null;
-    });
+    const grid = <Grid dataSource = {new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged')} 
+      columns = {columns} />;
 
     it('should not render nothing', () => {
-      const footer = grid().find(Table).find(TableFooter);
+      const wrapper = shallow(grid);
+      const footer = wrapper.find(Table).find(TableFooter);
+
       expect(footer).to.not.have.lengthOf(1);
     });
   });
@@ -219,8 +220,8 @@ describe('<Grid />', () => {
     it('should render the custom footer', () => {
       const wrapper = shallow(grid);
       wrapper.setState({ aggregate });
-
       const footer = wrapper.find(Table).find(TableFooter);
+      
       expect(footer).to.have.lengthOf(1);
     });
   });
