@@ -81,9 +81,7 @@ class Grid extends React.Component {
           />
           { body }
           {
-            footerRenderer &&
-              aggregate &&
-                footerRenderer(aggregate)
+            aggregate && footerRenderer(aggregate)
           }
         </Table>
       </Paper>

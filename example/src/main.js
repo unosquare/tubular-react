@@ -111,11 +111,11 @@ export default class Main extends React.Component {
         } 
         rowsPerPage = { 25 } 
         footerRenderer = {
-          row => 
+          aggregates => 
             <TableFooter>
               <TableRow>
                 <TableCell>Total: </TableCell>
-                <TableCell> { row.CustomerName } </TableCell>
+                <TableCell> { aggregates.CustomerName } </TableCell>
                 <TableCell> ~~~ </TableCell>
                 <TableCell> ~~~ </TableCell>
               </TableRow>
