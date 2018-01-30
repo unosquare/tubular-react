@@ -24,18 +24,19 @@ class Grid extends React.Component {
   state = {
     page: this.props.page,
     rowsPerPage: this.props.rowsPerPage,
-    showFooter: this.props.showFooter,
     gridFooterDefinition: this.props.gridFooterDefinition,
     dataSource: this.props.dataSource,
     data: [],
-    currentData: []
+    currentData: [],
+    aggregate: {}
   }
 
   componentDidMount() {
     this.state.dataSource.connect(this.state.rowsPerPage, this.state.page)
       .subscribe(tbResponse => {
         this.setState({
-          data: tbResponse.Payload
+          data: tbResponse.Payload,
+          aggregate: tbResponse.Aggregate
         });
       });
   }
@@ -45,9 +46,9 @@ class Grid extends React.Component {
   }
 
   render() {
-    const { classes, bodyRenderer } = this.props;
-    const { data, rowsPerPage, page, columns, dataSource, showFooter, gridFooterDefinition } = this.state;
-
+    const { classes, bodyRenderer, footerRenderer } = this.props;
+    const { data, rowsPerPage, page, columns, dataSource, gridFooterDefinition, aggregate } = this.state;
+    
     const body = (
       <TableBody>
         {
@@ -58,7 +59,9 @@ class Grid extends React.Component {
                 {                
                   dataSource.columns.map((column, colIndex) =>
                     <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
-                      {row[column.Name]}
+                      {
+                        row[column.Name]
+                      }
                     </TableCell>)
                 }
               </TableRow>              
@@ -78,8 +81,8 @@ class Grid extends React.Component {
           />
           { body }
           {
-            showFooter === true && 
-              this.props.children
+            footerRenderer &&
+              footerRenderer(aggregate)
           }
         </Table>
       </Paper>
@@ -91,6 +94,7 @@ Grid.propTypes = {
   bodyRenderer: PropTypes.func,
   classes: PropTypes.object.isRequired,
   dataSource: PropTypes.any.isRequired,
+  footerRenderer: PropTypes.func,
   rowsPerPage: PropTypes.number,
   title: PropTypes.string
 };

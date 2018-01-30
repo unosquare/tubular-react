@@ -1,8 +1,7 @@
 import Grid from '../../src/Grid/Grid';
-import GridFooter from '../../src/Grid/GridFooter';
 import React from 'react';
 import RemoteDataSource from '../../src/Grid/RemoteDataSource';
-import { TableCell, TableRow } from 'material-ui/Table';
+import { TableCell, TableFooter, TableRow } from 'material-ui/Table';
 
 const columns = [
   {
@@ -43,7 +42,7 @@ const columns = [
       Text: null
     },
     'DataType': 'string',
-    'Aggregate': 'None'
+    'Aggregate': 'Count'
   },
   {
     'Label': 'Shipped Date',
@@ -111,16 +110,18 @@ export default class Main extends React.Component {
             </TableRow>
         } 
         rowsPerPage = { 25 } 
-        showFooter = { true } 
+        footerRenderer = {
+          aggregates => 
+            <TableFooter>
+              <TableRow>
+                <TableCell>Total: </TableCell>
+                <TableCell> { aggregates && aggregates.CustomerName } </TableCell>
+                <TableCell> ~~~ </TableCell>
+                <TableCell> ~~~ </TableCell>
+              </TableRow>
+            </TableFooter>
+        }
       >
-        <GridFooter>
-          <TableRow>
-            <TableCell>Totals:</TableCell>
-            <TableCell>500</TableCell>{/*Aggregation function*/}
-            <TableCell>~~~</TableCell>
-            <TableCell>~~~</TableCell>
-          </TableRow>
-        </GridFooter>
       </Grid>
     );
   }
