@@ -176,7 +176,18 @@ describe('<Grid />', () => {
       expect(body).to.have.lengthOf(1);
     });
   });
-  
+
+  describe('When custom body is defined', () => {
+    beforeEach(() => {
+      props.bodyRenderer = null;
+    });
+
+    it('should render the custom body', () => {
+      const body = grid().find(Table).find(TableBody);
+      expect(body).to.have.lengthOf(1);
+    });
+  });
+
   beforeEach(() => {
     props = {
       dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns, bodyRenderer)
