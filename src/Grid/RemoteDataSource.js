@@ -85,7 +85,8 @@ class RemoteDataSource {
       this.dataStream.onNext({ 
         Payload: rows, 
         FilteredRecordCount: response.data.FilteredRecordCount, 
-        TotalRecordCount: response.data.TotalRecordCount 
+        TotalRecordCount: response.data.TotalRecordCount, 
+        Aggregate: response.data.AggregationPayload 
       });
     }).catch(error => {
       this.handleError(error);

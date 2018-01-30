@@ -28,12 +28,13 @@ class Grid extends React.Component {
     this.state = {
       page: this.props.page,
       rowsPerPage: this.props.rowsPerPage,
-      showFooter: this.props.showFooter,
+      gridFooterDefinition: this.props.gridFooterDefinition,
       dataSource: this.props.dataSource,
       searchText: '',
       data: [],
       totalRecordCount: 0,
-      filteredRecordCount: 0
+      filteredRecordCount: 0,
+      aggregate: {}
     };
 
     this.search = new Subject();
@@ -45,7 +46,8 @@ class Grid extends React.Component {
         this.setState({
           data: tbResponse.Payload,
           totalRecordCount: tbResponse.TotalRecordCount || 0,
-          filteredRecordCount: tbResponse.FilteredRecordCount || 0
+          filteredRecordCount: tbResponse.FilteredRecordCount || 0,
+          aggregate: tbResponse.Aggregate
         });
       });
 
@@ -69,9 +71,9 @@ class Grid extends React.Component {
   }
 
   render() {
-    const { classes, bodyRenderer, showBottomPager, showTopPager } = this.props;
-    const { data, rowsPerPage, page, dataSource } = this.state;
-
+    const { classes, bodyRenderer, footerRenderer, showBottomPager, showTopPager } = this.props;
+    const { data, rowsPerPage, page, dataSource, aggregate } = this.state;
+    
     const body = (
       <TableBody>
         {
@@ -82,7 +84,9 @@ class Grid extends React.Component {
                 {                
                   dataSource.columns.map((column, colIndex) =>
                     <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
-                      {row[column.Name]}
+                      {
+                        row[column.Name]
+                      }
                     </TableCell>)
                 }
               </TableRow>              
@@ -110,7 +114,6 @@ class Grid extends React.Component {
         <GridToolbar onSearchTextChange={this.handleTextSearch} />
         <Table className={classes.table}>
           <TableHead>
-
             { showTopPager && pager }
 
             <GridHeader
@@ -124,10 +127,11 @@ class Grid extends React.Component {
           { body }
           
           <TableFooter>
+            { footerRenderer && footerRenderer(aggregate) }
 
             { showBottomPager && pager }
-
           </TableFooter>
+
         </Table>
       </Paper>
     );
@@ -138,6 +142,7 @@ Grid.propTypes = {
   bodyRenderer: PropTypes.func,
   classes: PropTypes.object.isRequired,
   dataSource: PropTypes.any.isRequired,
+  footerRenderer: PropTypes.func,
   rowsPerPage: PropTypes.number,
   title: PropTypes.string
 };
