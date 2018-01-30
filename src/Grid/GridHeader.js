@@ -10,7 +10,7 @@ import Tooltip from 'material-ui/Tooltip';
 import moment from 'moment';
 import { withStyles } from 'material-ui/styles';
 import Dialog, { DialogTitle } from 'material-ui/Dialog';
-import { TableCell, TableHead, TableRow, TableSortLabel } from 'material-ui/Table';
+import { TableCell, TableRow, TableSortLabel } from 'material-ui/Table';
 
 
 const styles = theme => ({

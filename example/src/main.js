@@ -111,7 +111,6 @@ export default class Main extends React.Component {
             </TableRow>
         } 
         rowsPerPage = { 10 } 
-        showFooter = { true } 
         showTopPager = { true }
         showBottomPager = { true }
       >

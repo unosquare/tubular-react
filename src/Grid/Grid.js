@@ -5,7 +5,7 @@ import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { withStyles } from 'material-ui/styles';
-import Table, { TableBody, TableCell, TableFooter, TableHead, TablePagination, TableRow } from 'material-ui/Table';
+import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
 
 const styles = theme => ({
   root: {
@@ -37,8 +37,8 @@ class Grid extends React.Component {
       .subscribe(tbResponse => {
         this.setState({
           data: tbResponse.Payload,
-          totalRecordCount: tbResponse.TotalRecordCount !== undefined ? tbResponse.TotalRecordCount : 0,
-          filteredRecordCount: tbResponse.FilteredRecordCount !== undefined ? tbResponse.FilteredRecordCount : 0
+          totalRecordCount: tbResponse.TotalRecordCount || 0,
+          filteredRecordCount: tbResponse.FilteredRecordCount || 0
         });
       });
   }
@@ -93,7 +93,7 @@ class Grid extends React.Component {
         <Table className={classes.table}>
           <TableHead>
 
-            { showTopPager === true && pager}
+            { showTopPager && pager }
 
             <GridHeader
               dataSource={dataSource}
@@ -106,7 +106,7 @@ class Grid extends React.Component {
           
           <TableFooter>
 
-            { showBottomPager === true && pager}
+            { showBottomPager && pager }
 
           </TableFooter>
         </Table>

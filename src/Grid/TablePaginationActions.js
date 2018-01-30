@@ -114,7 +114,7 @@ class TablePaginationActions extends React.Component {
               className={classes.buttonStyle}
               key={index}
               onClick={event => this.handlePageButtonClick(event, pages[index])}
-              aria-label='Next Page'
+              aria-label={`Page${index + 1}`}
               style={ pages[index] === activePage ? 
                 { fontSize: '18px', background: '#5999e8', color: 'white' } : 
                 { fontSize: '18px' } } 
