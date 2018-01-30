@@ -44,16 +44,15 @@ class Grid extends React.Component {
     this.state.dataSource.connect(this.state.rowsPerPage, this.state.page)
       .subscribe(tbResponse => {
         this.setState({
-          data: tbResponse.Payload,
-          totalRecordCount: tbResponse.TotalRecordCount || 0,
-          filteredRecordCount: tbResponse.FilteredRecordCount || 0,
-          aggregate: tbResponse.Aggregate
+          data: tbResponse.payload,
+          totalRecordCount: tbResponse.totalRecordCount || 0,
+          filteredRecordCount: tbResponse.filteredRecordCount || 0,
+          aggregate: tbResponse.aggregate
         });
       });
 
     this.search.debounce(600).subscribe(() => {
-      const { dataSource, rowsPerPage, page, searchText } = this.state;
-      dataSource.refresh(rowsPerPage, page, searchText);
+      this.refreshGrid();
     });
   }
 
@@ -72,7 +71,7 @@ class Grid extends React.Component {
 
   render() {
     const { classes, bodyRenderer, footerRenderer, showBottomPager, showTopPager } = this.props;
-    const { data, rowsPerPage, page, dataSource, aggregate } = this.state;
+    const { data, rowsPerPage, page, dataSource, aggregate, filteredRecordCount, totalRecordCount } = this.state;
     
     const body = (
       <TableBody>
@@ -101,8 +100,8 @@ class Grid extends React.Component {
           dataSource={dataSource}
           rowsPerPage={rowsPerPage}
           page={page}
-          filteredRecordCount={this.state.filteredRecordCount}
-          totalRecordCount={this.state.totalRecordCount}
+          filteredRecordCount={filteredRecordCount}
+          totalRecordCount={totalRecordCount}
           handlePager={this.handlePager.bind(this)}
           refreshGrid={this.refreshGrid.bind(this)}
         />

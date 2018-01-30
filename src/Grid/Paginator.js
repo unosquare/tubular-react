@@ -23,11 +23,11 @@ const Paginator = ({ handlePager, rowsPerPage, page, filteredRecordCount, classe
     handlePager(event.target.value, page);
   };
 
-  const message = totalRecordCount === filteredRecordCount ?
-    ({ from, to, count }) => `${from}-${to} of ${count}` : 
+  const message = ({ from, to, count }) => totalRecordCount === filteredRecordCount ?
+    `${from}-${to} of ${count}` : 
     filteredRecordCount === 0 ?  
-      () => '0 records found' :
-      ({ from, to, count }) => `${from} to ${to} of ${count} from ${totalRecordCount} records`;
+      '0 records found' :
+      `${from} to ${to} of ${count} from ${totalRecordCount} records`;
 
   return(
     <TablePagination
