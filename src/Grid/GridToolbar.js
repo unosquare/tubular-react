@@ -81,7 +81,7 @@ class GridToolbar extends React.Component {
           isExportEnabled && 
           <Button
             raised
-            color='accent'
+            color='secondary'
             className={classes.button}
             onClick={this.handleMenuOpen}
           >
