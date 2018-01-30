@@ -4,6 +4,7 @@ import Pager from './Pager';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Subject } from 'rx';
 import { withStyles } from 'material-ui/styles';
 import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
 
@@ -22,14 +23,20 @@ class Grid extends React.Component {
     title: ''
   }
 
-  state = {
-    page: this.props.page,
-    rowsPerPage: this.props.rowsPerPage,
-    showFooter: this.props.showFooter,
-    dataSource: this.props.dataSource,
-    data: [],
-    totalRecordCount: 0,
-    filteredRecordCount: 0
+  constructor(props) {
+    super(props);
+    this.state = {
+      page: this.props.page,
+      rowsPerPage: this.props.rowsPerPage,
+      showFooter: this.props.showFooter,
+      dataSource: this.props.dataSource,
+      searchText: '',
+      data: [],
+      totalRecordCount: 0,
+      filteredRecordCount: 0
+    };
+
+    this.search = new Subject();
   }
 
   componentDidMount() {
@@ -41,14 +48,24 @@ class Grid extends React.Component {
           filteredRecordCount: tbResponse.FilteredRecordCount || 0
         });
       });
+
+    this.search.debounce(600).subscribe(() => {
+      const { dataSource, rowsPerPage, page, searchText } = this.state;
+      dataSource.refresh(rowsPerPage, page, searchText);
+    });
   }
 
-  handleTextSearch = text => {
-    this.state.dataSource.search(this.state.rowsPerPage, this.state.page, text);
+  handleTextSearch = searchText => {   
+    this.setState({ searchText }, () => this.search.onNext());
   }
 
   handlePager = (rowsPerPage, page) => {
     this.setState({ rowsPerPage, page });
+  }
+
+  refreshGrid = () => {
+    const { dataSource, rowsPerPage, page, searchText } = this.state;
+    dataSource.refresh(rowsPerPage, page, searchText);
   }
 
   render() {

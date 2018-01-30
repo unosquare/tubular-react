@@ -27,8 +27,8 @@ class RemoteDataSource {
     this._doRequest(rowsPerPage, page, searchText);
   }
 
-  refresh(rowsPerPage, page) {
-    this._doRequest(rowsPerPage, page);
+  refresh(rowsPerPage, page, searchText) {
+    this._doRequest(rowsPerPage, page, searchText);
   }
 
   handleError(error) {

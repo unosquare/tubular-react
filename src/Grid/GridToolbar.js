@@ -7,7 +7,6 @@ import PrintIcon from 'material-ui-icons/Print';
 import PropTypes from 'prop-types';
 import React from 'react';
 import SearchIcon from 'material-ui-icons/Search';
-import { Subject } from 'rx';
 import Toolbar from 'material-ui/Toolbar';
 import { withStyles } from 'material-ui/styles';
 import Input, { InputAdornment } from 'material-ui/Input';
@@ -30,32 +29,22 @@ const styles = theme => ({
 });
 
 class GridToolbar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      searchText: '',
-      debounced: '',
-      anchorEl: null
-    };
-    this.search = new Subject();
-  }
+  state = {
+    searchText: '',
+    debounced: '',
+    anchorEl: null
+  };
   
-  componentDidMount(){
-    this.search.debounce(700).subscribe(() => {
-      if(this.props.onSearchTextChange)
-        this.props.onSearchTextChange(this.state.searchText);
-    });
-  }
 
   handleInputChange = event => {
     const searchText = event.target.value;
-    this.setState({ searchText }, () => this.search.onNext());
+    this.setState({ searchText }, () => this.props.onSearchTextChange(searchText));
   }
 
   clearSearchText = () => {
     this.setState({
       searchText: ''
-    }, () => this.search.onNext());
+    }, () => this.props.onSearchTextChange(this.state.searchText));
   }
   
   handleMenuOpen = event => {
