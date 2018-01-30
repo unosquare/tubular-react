@@ -66,13 +66,17 @@ class TablePaginationActions extends React.Component {
     let array = [];
     const maxPage = Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1);
     
-    if(page < 2){
+
+    switch(page){
+    case(0):
+    case(1):
       array = [ 0, 1, 2, 3, 4 ];
-    }
-    else if (page > maxPage - 2){
+      break;
+    case(maxPage):
+    case(maxPage - 1):
       array = [maxPage - 4, maxPage - 3, maxPage - 2, maxPage - 1, maxPage];
-    }
-    else{
+      break;
+    default:
       array = [ page - 2, page - 1, page, page + 1, page + 2 ];
     }
 

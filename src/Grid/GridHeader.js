@@ -12,7 +12,6 @@ import { withStyles } from 'material-ui/styles';
 import Dialog, { DialogTitle } from 'material-ui/Dialog';
 import { TableCell, TableRow, TableSortLabel } from 'material-ui/Table';
 
-
 const styles = theme => ({
   dropdown: {
     width: '100%'
@@ -103,7 +102,7 @@ class GridHeader extends React.Component {
   }
 
   filterHandler = (firstValue, secondValue, hasFilter) => {
-    this.props.dataSource.columns.forEach( (column, i) => {
+    this.props.dataSource.columns.forEach( column => {
       if(column.Name === this.state.activeFilter){
         column.Filter.Text = firstValue;
         column.Filter.Operator = this.state[this.state.activeFilter];
