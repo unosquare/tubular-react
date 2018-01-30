@@ -6,7 +6,7 @@ import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
+import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
 import { createMount, createShallow } from 'material-ui/test-utils';
 
 
@@ -133,7 +133,17 @@ describe('<Grid />', () => {
         { row.ShipperCity}
       </TableCell>
     </TableRow>;
- 
+
+  const footerRenderer = aggregates => 
+    <TableFooter>
+      <TableRow>
+        <TableCell>Total: </TableCell>
+        <TableCell> { aggregates && aggregates.CustomerName } </TableCell>
+        <TableCell> ~~~ </TableCell>
+        <TableCell> ~~~ </TableCell>
+      </TableRow>
+    </TableFooter>;
+  
   const grid = () => {
     if(!mountedGrid){
       mountedGrid = mount(<Grid {...props} />);
@@ -170,6 +180,17 @@ describe('<Grid />', () => {
     });
   });
   
+  describe('When custom body is not defined', () => {
+    beforeEach(() => {
+      props.bodyRenderer = null;
+    });
+
+    it('should render the default body', () => {
+      const body = grid().find(Table).find(TableBody);
+      expect(body).to.have.lengthOf(1);
+    });
+  });
+
   describe('When custom body is defined', () => {
     it('should render the custom body', () => {
       const body = grid().find(Table).find(TableBody);
@@ -177,20 +198,20 @@ describe('<Grid />', () => {
     });
   });
 
-  describe('When custom body is defined', () => {
+  describe('When footer is not defined', () => {
     beforeEach(() => {
-      props.bodyRenderer = null;
+      props.footerRenderer = null;
     });
 
-    it('should render the custom body', () => {
-      const body = grid().find(Table).find(TableBody);
-      expect(body).to.have.lengthOf(1);
+    it('should not render nothing', () => {
+      const body = grid().find(Table).find(TableFooter);
+      expect(body).to.not.have.lengthOf(1);
     });
   });
 
   beforeEach(() => {
     props = {
-      dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns, bodyRenderer)
+      dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns, bodyRenderer, footerRenderer)
     };
   });
 });
