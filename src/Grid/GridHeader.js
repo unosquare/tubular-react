@@ -1,22 +1,21 @@
-import BooleanDropdown from './BooleanDropdown.js';
-import BooleanInput from './BooleanInput.js';
-import Button from 'material-ui/Button';
-import DateInput from './DateInput.js';
-import Dialog from 'material-ui/Dialog';
+import ArrowDownward from 'material-ui-icons/ArrowDownward';
+import ArrowUpward from 'material-ui-icons/ArrowUpward';
+import DialogContent from './DialogContent.js';
+import DialogDropdown from './DialogDropdown.js';
 import FilterListIcon from 'material-ui-icons/FilterList';
 import IconButton from 'material-ui/IconButton';
-import NumericDropdown from './NumericDropdown.js';
+import PropTypes from 'prop-types';
 import React from 'react';
-import StringDropdown from './StringDropdown.js';
-import TextInput from './TextInput.js';
 import Tooltip from 'material-ui/Tooltip';
 import moment from 'moment';
 import { withStyles } from 'material-ui/styles';
+import Dialog, { DialogTitle } from 'material-ui/Dialog';
 import { TableCell, TableHead, TableRow, TableSortLabel } from 'material-ui/Table';
+
 
 const styles = theme => ({
   dropdown: {
-    minWidth: '300px'
+    width: '100%'
   },
   dialog: {
     minWidth: '400px',
@@ -38,6 +37,10 @@ const styles = theme => ({
   },
   mainDialogStyle: {
     padding: '25px 25px 25px 25px'
+  },
+  arrowStyle: {
+    width: '15px', 
+    marginLeft: '5px'
   }
 });
 
@@ -48,26 +51,135 @@ class GridHeader extends React.Component {
     rowsPerPage: this.props.rowsPerPage,
     open: false,
     columnType: '',
-    activeFilter: ''
+    activeFilter: '',
+    sorting: 'Single'
   }
-
-  sortHandler = (property, dataType) => {
-    /* this.props.onRequestSort(property, dataType); */
-  };
-
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
 
   handleClose = () => {
     this.setState({ open: false });
   };
 
-  handleFilter = column => {
-    this.setState({ columnType: column.DataType, activeFilter: column.Name });
-
-    this.handleClickOpen();
+  handleOpen = column => {
+    this.setState({ columnType: column.DataType, activeFilter: column.Name, open: true });
   }
+
+  handleClear = () => {
+    let firstValue = '';
+    let secondValue = '';
+
+    switch (this.state.columnType){
+    case 'datetime':
+    case 'date':
+    case 'datetimeutc':
+      firstValue = moment().format();
+      secondValue = moment().format();
+      break;
+    default:
+    }
+
+    this.setState({
+      [this.state.activeFilter]: 'None',
+      [`${this.state.activeFilter}Value`]: firstValue,
+      [`${this.state.activeFilter}Value2`]: secondValue
+    }, () => {
+      this.filterHandler(firstValue, secondValue, false);
+    });
+  }
+
+  handleApply = () => {
+    let firstValue = this.state[`${this.state.activeFilter}Value`];
+    let secondValue = secondValue !== null && this.state[`${this.state.activeFilter}Value2`];
+
+    switch (this.state.columnType) {
+    case 'numeric':
+      firstValue = parseFloat(firstValue);
+      secondValue = parseFloat(secondValue);
+      break;
+    case 'boolean':
+      firstValue = (firstValue === 'true');
+      secondValue = 1;
+      break;
+    default:
+    }
+    
+    this.filterHandler(firstValue, secondValue, true);
+
+    this.setState({
+      open: false
+    });
+  }
+
+  filterHandler = (firstValue, secondValue, hasFilter) => {
+    this.state.dataSource.columns.forEach( (column, i) => {
+      if(column.Name === this.state.activeFilter){
+        column.Filter.Text = firstValue;
+        column.Filter.Operator = this.state[this.state.activeFilter];
+        column.Filter.HasFilter = hasFilter;
+        if(secondValue !== undefined){
+          column.Filter.Argument = [secondValue];
+        }
+      }
+    });
+
+    this.state.dataSource.filter(this.state.rowsPerPage, this.state.page);
+  }
+
+  handleKeyDown(event) {
+    if(this.state.sorting === 'Single' && event.ctrlKey) {
+      this.setState({ sorting: 'Multiple' });
+    } 
+  }
+
+  handleKeyUp(event) {
+    if(this.state.sorting === 'Multiple') {
+      this.setState({ sorting: 'Single' });
+    } 
+  }
+
+  componentDidMount() {
+    document.addEventListener('keydown', () => this.handleKeyDown(event));
+    document.addEventListener('keyup', () => this.handleKeyUp(event));
+  }
+
+  sortHandler = (event, property) => {
+    const array = Object.assign({}, this.state.dataSource);
+    
+    array.columns.forEach( column => {
+      if(column.Name === property){
+        column.SortDirection = column.SortDirection === 'None' 
+          ? 'Ascending' 
+          : column.SortDirection === 'Ascending' ? 'Descending' : 'None';
+
+        if(column.SortDirection === 'None'){
+          column.SortOrder = -1;
+        }
+        else{
+          column.SortOrder = Number.MAX_VALUE;
+        }
+
+        if (this.state.sorting === 'Single') {
+          array.columns.filter(col => col.Name !== property).forEach( column => {
+            column.SortOrder = -1;
+            column.SortDirection = 'None';
+          });
+        }
+
+        const currentlySortedColumns = array.columns.filter(col => col.SortOrder > 0).sort((a, b) => a.SortOrder === b.SortOrder ? 0 : a.SortOrder > b.SortOrder );
+
+        currentlySortedColumns.forEach( (column, i) => { 
+          column.SortOrder = i + 1; 
+        });
+      }
+    });
+
+    this.state.dataSource.sort(this.state.rowsPerPage, this.state.page);
+  }
+
+  handleDatePicker = name => event => {
+    this.setState({
+      [`${this.state.activeFilter}${name}`]: event.format()
+    });
+  };
 
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
@@ -79,151 +191,9 @@ class GridHeader extends React.Component {
     });
   };
 
-  handleClear = () => {
-    let value1 = '';
-    let value2 = '';
-
-    if(this.state.columnType === 'datetime' || this.state.columnType === 'date' || this.state.columnType === 'datetimeutc') {
-      value1 = moment().format();
-      value2 = moment().format();
-    }
-
-    this.setState({
-      [this.state.activeFilter]: 'None',
-      [`${this.state.activeFilter}Value`]: value1,
-      [`${this.state.activeFilter}Value2`]: value2
-    }, () => {
-      this.filterHandler(value1, value2);
-    });
-  }
-
-  handleApply = () => {
-    let value1 = this.state[`${this.state.activeFilter}Value`];
-    let value2 = value2 === null ? null : this.state[`${this.state.activeFilter}Value2`];
-
-    if(this.state.columnType === 'numeric'){
-      value1 = parseFloat(value1);
-      value2 = parseFloat(value2);
-    }
-    else if(this.state.columnType === 'boolean'){
-      value1 = (value1 === 'true');
-      value2 = 1;
-    }
-    
-    this.filterHandler(value1, value2);
-  }
-
-  filterHandler = (value1, value2) => {
-    const dataSource = Object.assign([{}], this.state.dataSource);
-
-    for(let i = 0; i < dataSource.columns.length; i++){
-      if(dataSource.columns[i].Name === this.state.activeFilter){
-        dataSource.columns[i].Filter.Text = value1;
-        dataSource.columns[i].Filter.Operator = this.state[this.state.activeFilter];
-        if(value2 !== undefined){
-          dataSource.columns[i].Filter.Argument = [value2];
-        }
-      }
-    }
-
-    this.state.dataSource.filter(this.state.rowsPerPage, this.state.page);
-  }
-
-  handleDatePicker = name => event => {
-    this.setState({
-      [`${this.state.activeFilter}${name}`]: event.format()
-    });
-  };
-
-  DialogContent = props => {
-    let value = '';
-    let value2 = '';
-    
-    if(this.state.columnType === 'datetime' || this.state.columnType === 'date' || this.state.columnType === 'datetimeutc'){
-      value = this.state[`${this.state.activeFilter}Value`] === undefined ? moment().format() : this.state[`${this.state.activeFilter}Value`];
-      value2 = this.state[`${this.state.activeFilter}Value2`] === undefined ? moment().format() : this.state[`${this.state.activeFilter}Value2`];
-    }
-    else if(this.state.columnType === 'boolean'){
-      value = this.state[`${this.state.activeFilter}Value`] === undefined ? '' : this.state[`${this.state.activeFilter}Value`];
-    }
-    else{
-      value = this.state[`${this.state.activeFilter}Value`] === undefined ? '' : this.state[`${this.state.activeFilter}Value`];
-      value2 = this.state[`${this.state.activeFilter}Value2`] === undefined ? '' : this.state[`${this.state.activeFilter}Value2`];
-    }
-
-    return (
-      <div >
-        {
-          this.state.columnType === 'datetime' || this.state.columnType === 'date' || this.state.columnType === 'datetimeutc' ? 
-            <DateInput 
-              value={value} 
-              columnType={this.state.columnType}
-              label={'Value'} 
-              handleDatePicker={this.handleDatePicker.bind(this)}
-              mod={'Value'} />
-            : this.state.columnType === 'boolean' ? 
-              <BooleanInput 
-                classes={props.classes} 
-                value={value} 
-                handleBooleanDropDown={this.handleBooleanDropDown.bind(this)}
-                activeFilter={this.state.activeFilter}/>
-              :
-              <TextInput 
-                value={value} 
-                label={'Value'} 
-                mod={'Value'} 
-                activeFilter={this.state.activeFilter}
-                handleTextFieldChange={this.handleTextFieldChange.bind(this)}/>
-        }
-
-        {
-          this.state[this.state.activeFilter] === 'Between' ? 
-            this.state.columnType === 'datetime' || this.state.columnType === 'date' || this.state.columnType === 'datetimeutc' ? 
-              <DateInput 
-                value={value2} 
-                columnType={this.state.columnType}
-                label={'Value 2'} 
-                handleDatePicker={this.handleDatePicker.bind(this)}
-                mod={'Value2'} />
-              : 
-              <TextInput 
-                value={value2} 
-                label={'Value 2'} 
-                mod={'Value2'} 
-                activeFilter={this.state.activeFilter}
-                handleTextFieldChange={this.handleTextFieldChange.bind(this)}/>
-            : 
-            null
-        }
-        
-        <div style={{ padding: '20px 10px 15px 10px', textAlign: 'center' }}>
-          <Button className={props.classes.applyButton} onClick={() => this.handleApply()}>Apply</Button>
-          <Button className={props.classes.clearButton} onClick={() => this.handleClear()}>Clear</Button>
-        </div>
-      </div>
-    );
-  }
-
   handleBooleanDropDown = event => {
     this.setState({ [`${[this.state.activeFilter]}Value`]: event.target.value });
   };
-
-  DialogDropdown = props => {
-    const value = this.state[this.state.activeFilter] === undefined ? 'None' : this.state[this.state.activeFilter];
-    
-    if (this.state.columnType === 'string') {
-      return (<StringDropdown classes={props.classes} value={value} activeFilter={this.state.activeFilter} handleChange={this.handleChange.bind(this)}/>);
-    }
-    else if (this.state.columnType === 'numeric' || this.state.columnType === 'datetime' || this.state.columnType === 'date' || this.state.columnType === 'datetimeutc') {
-      return (<NumericDropdown classes={props.classes} value={value} activeFilter={this.state.activeFilter} handleChange={this.handleChange.bind(this)}/>);
-    }
-    else if(this.state.columnType === 'boolean'){
-      return (<BooleanDropdown classes={props.classes} value={value} activeFilter={this.state.activeFilter} handleChange={this.handleChange.bind(this)}/>);
-    }
-    else {
-      return (<div />);
-    }
-  }
 
   render() {
     const { dataSource, classes } = this.props;
@@ -231,25 +201,54 @@ class GridHeader extends React.Component {
     return (
       <TableHead>
         <Dialog open={this.state.open} onClose={this.handleClose} >
-          <this.DialogDropdown classes={classes} />
-          <this.DialogContent classes={classes} />
+          <DialogTitle style={{ minWidth: '300px', background: '#ececec', padding: '15px 20px 15px 20px' }} id='responsive-dialog-title'>{'Filter'}</DialogTitle>
+          <DialogDropdown 
+            classes={classes}
+            value={this.state[this.state.activeFilter]}
+            columnType={this.state.columnType}
+            activeFilter={this.state.activeFilter}
+            handleChange={this.handleChange.bind(this)} 
+          /> 
+          <DialogContent
+            classes={classes}
+            columnType={this.state.columnType}
+            activeFilter={this.state.activeFilter}
+            operator={this.state[this.state.activeFilter]}
+            value={this.state[`${this.state.activeFilter}Value`]}
+            value2={this.state[`${this.state.activeFilter}Value2`]}
+            handleDatePicker={this.handleDatePicker.bind(this)}
+            handleBooleanDropDown={this.handleBooleanDropDown.bind(this)}
+            handleTextFieldChange={this.handleTextFieldChange.bind(this)}
+            handleApply={this.handleApply.bind(this)}
+            handleClear={this.handleClear.bind(this)} 
+          />          
         </Dialog>
         <TableRow>
           {dataSource.columns.map(column => {
             const render = column.Sortable ?
-              (<Tooltip title='Sort' placement='bottom-start' enterDelay={300}>
-                <TableSortLabel
-                  onClick={() => this.sortHandler(column.Label, column.DataType)}
-                >
+              (<Tooltip 
+                title='Click to sort. Press Ctrl to sort by multiple columns' 
+                placement='bottom-start' 
+                enterDelay={300}>
+                <TableSortLabel onClick={() => this.sortHandler(event, column.Name)} >
                   {column.Label}
+                  {column.SortDirection === 'Ascending' ? 
+                    <ArrowUpward className={classes.arrowStyle} />
+                    : column.SortDirection === 'Descending' ? 
+                      <ArrowDownward className={classes.arrowStyle} />
+                      :
+                      <div className={classes.arrowStyle} />
+                  }
                 </TableSortLabel>
               </Tooltip>)
               : (column.Label);
-            const filter = column.Filter ?
-              (<IconButton onClick={() => this.handleFilter(column)} >
-                <FilterListIcon/>
-              </IconButton>)
-              : (null);
+            const filter = column.Filter &&
+              (<IconButton onClick={() => this.handleOpen(column)} >
+                {column.Filter.HasFilter ? 
+                  <FilterListIcon style={{ background: '#28b62c', color: 'white', borderRadius: '50%' }}/> 
+                  : 
+                  <FilterListIcon/>}
+              </IconButton>);
             return (
               <TableCell key={column.Label} padding={column.Label === '' ? 'none' : 'default'}>
                 {render}
@@ -262,5 +261,11 @@ class GridHeader extends React.Component {
     );
   }
 }
+
+GridHeader.propTypes = {
+  dataSource: PropTypes.any.isRequired,
+  page: PropTypes.number,
+  rowsPerPage: PropTypes.number
+};
 
 export default withStyles(styles)(GridHeader);

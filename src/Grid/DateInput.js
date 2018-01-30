@@ -1,6 +1,7 @@
 import DateRangeIcon from 'material-ui-icons/DateRange';
 import LeftArrowIcon from 'material-ui-icons/ChevronLeft';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import PropTypes from 'prop-types';
 import React from 'react';
 import RightArrowIcon from 'material-ui-icons/ChevronRight';
 import TimeIcon from 'material-ui-icons/Schedule';
@@ -16,38 +17,41 @@ const muiTheme = createMuiTheme({
   })
 });
 
-class DateInput extends React.Component {
-  render(){
-    return(
-      <div style={{ padding: '13px 15px 6px 10px' }}>
-        <MuiThemeProvider theme={muiTheme}>
-          {
-            this.props.columnType === 'datetime' || this.props.columnType === 'datetimeutc' ? 
-              <DateTimePicker
-                style={{ minWidth: '300px' }}
-                value={this.props.value}
-                onChange={this.props.handleDatePicker(this.props.mod)}
-                leftArrowIcon={<LeftArrowIcon />}
-                rightArrowIcon={<RightArrowIcon />}
-                dateRangeIcon={<DateRangeIcon/>}
-                timeIcon={<TimeIcon/>}
-                format={'MMMM Do YYYY hh:mm a'}
-              />
-              : 
-              <DatePicker
-                style={{ minWidth: '300px' }}
-                value={this.props.value}
-                onChange={this.props.handleDatePicker(this.props.mod)}
-                leftArrowIcon={<LeftArrowIcon />}
-                rightArrowIcon={<RightArrowIcon />}
-                format={'MMMM Do YYYY'}
-              />
-          }
-        </MuiThemeProvider>
-        <br />
-      </div>
-    );
-  }
-}
+const DateInput = ({ columnType, value, mod, handleDatePicker }) => (
+  <div style={{ padding: '15px 20px 5px 20px' }}>
+    <MuiThemeProvider theme={muiTheme}>
+      {
+        columnType === 'datetime' || columnType === 'datetimeutc' ? 
+          <DateTimePicker
+            style={{ width: '100%' }}
+            value={value}
+            onChange={handleDatePicker(mod)}
+            leftArrowIcon={<LeftArrowIcon />}
+            rightArrowIcon={<RightArrowIcon />}
+            dateRangeIcon={<DateRangeIcon/>}
+            timeIcon={<TimeIcon/>}
+            format={'MMMM Do YYYY hh:mm a'}
+          />
+          : 
+          <DatePicker
+            style={{ width: '100%' }}
+            value={value}
+            onChange={handleDatePicker(mod)}
+            leftArrowIcon={<LeftArrowIcon />}
+            rightArrowIcon={<RightArrowIcon />}
+            format={'MMMM Do YYYY'}
+          />
+      }
+    </MuiThemeProvider>
+    <br />
+  </div>
+);
+
+DateInput.propTypes = {
+  columnType: PropTypes.string.isRequired,
+  handleDatePicker: PropTypes.func.isRequired,
+  mod: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired
+};
 
 export default DateInput;

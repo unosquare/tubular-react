@@ -24,18 +24,19 @@ class Grid extends React.Component {
   state = {
     page: this.props.page,
     rowsPerPage: this.props.rowsPerPage,
-    showFooter: this.props.showFooter,
     gridFooterDefinition: this.props.gridFooterDefinition,
     dataSource: this.props.dataSource,
     data: [],
-    currentData: []
+    currentData: [],
+    aggregate: {}
   }
 
   componentDidMount() {
     this.state.dataSource.connect(this.state.rowsPerPage, this.state.page)
       .subscribe(tbResponse => {
         this.setState({
-          data: tbResponse.Payload
+          data: tbResponse.Payload,
+          aggregate: tbResponse.Aggregate
         });
       });
   }
@@ -45,8 +46,29 @@ class Grid extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
-    const { data, rowsPerPage, page, columns, dataSource, showFooter, gridFooterDefinition } = this.state;
+    const { classes, bodyRenderer, footerRenderer } = this.props;
+    const { data, rowsPerPage, page, columns, dataSource, gridFooterDefinition, aggregate } = this.state;
+    
+    const body = (
+      <TableBody>
+        {
+          data.map((row, rowIndex) => (            
+            bodyRenderer  
+              ? bodyRenderer(row, rowIndex) 
+              : <TableRow hover key={rowIndex}>
+                {                
+                  dataSource.columns.map((column, colIndex) =>
+                    <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
+                      {
+                        row[column.Name]
+                      }
+                    </TableCell>)
+                }
+              </TableRow>              
+          ))
+        }
+      </TableBody>
+    );
 
     return (
       <Paper className={classes.root}>
@@ -57,21 +79,10 @@ class Grid extends React.Component {
             page={page}
             rowsPerPage={rowsPerPage}
           />
-          <TableBody>
-            {
-              data.map((row, rowIndex) => (
-                <TableRow hover key={rowIndex}>
-                  {dataSource.columns.map((column, colIndex) =>
-                    <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
-                      {row[column.Name]}
-                    </TableCell>
-                  )}
-                </TableRow>
-              ))}
-          </TableBody>
-          { 
-            showFooter === true && 
-              this.props.children
+          { body }
+          {
+            footerRenderer &&
+              footerRenderer(aggregate)
           }
         </Table>
       </Paper>
@@ -80,8 +91,10 @@ class Grid extends React.Component {
 }
 
 Grid.propTypes = {
+  bodyRenderer: PropTypes.func,
   classes: PropTypes.object.isRequired,
   dataSource: PropTypes.any.isRequired,
+  footerRenderer: PropTypes.func,
   rowsPerPage: PropTypes.number,
   title: PropTypes.string
 };

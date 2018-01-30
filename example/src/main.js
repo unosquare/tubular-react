@@ -1,8 +1,7 @@
 import Grid from '../../src/Grid/Grid';
-import GridFooter from '../../src/Grid/GridFooter';
 import React from 'react';
 import RemoteDataSource from '../../src/Grid/RemoteDataSource';
-import { TableCell, TableRow } from 'material-ui/Table';
+import { TableCell, TableFooter, TableRow } from 'material-ui/Table';
 
 const columns = [
   {
@@ -16,7 +15,7 @@ const columns = [
     'Visible': true,
     'Filter': { 
       Argument: [],
-      HasFilter: true,
+      HasFilter: false,
       Name: 'OrderID',
       Operator: 'None',
       OptionsUrl: null,
@@ -36,14 +35,14 @@ const columns = [
     'Visible': true,
     'Filter': { 
       Argument: [],
-      HasFilter: true,
+      HasFilter: false,
       Name: 'CustomerName',
       Operator: 'None',
       OptionsUrl: null,
       Text: null
     },
     'DataType': 'string',
-    'Aggregate': 'None'
+    'Aggregate': 'Count'
   },
   {
     'Label': 'Shipped Date',
@@ -56,7 +55,7 @@ const columns = [
     'Visible': true,
     'Filter': { 
       Argument: [],
-      HasFilter: true,
+      HasFilter: false,
       Name: 'ShippedDate',
       Operator: 'None',
       OptionsUrl: null,
@@ -76,7 +75,7 @@ const columns = [
     'Visible': true,
     'Filter': { 
       Argument: [],
-      HasFilter: true,
+      HasFilter: false,
       Name: 'ShipperCity',
       Operator: 'None',
       OptionsUrl: null,
@@ -92,15 +91,37 @@ export default class Main extends React.Component {
     const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns);
 
     return (
-      <Grid dataSource={dataSource} rowsPerPage = { 10 } showFooter = { true }>
-        <GridFooter>
-          <TableRow>
-            <TableCell>Totals:</TableCell>
-            <TableCell>500</TableCell>{/*Aggregation function*/}
-            <TableCell>...</TableCell>
-            <TableCell>...</TableCell>
-          </TableRow>
-        </GridFooter>
+      <Grid dataSource={dataSource} 
+        bodyRenderer = {
+          (row, index) => 
+            <TableRow hover key = { index }>
+              <TableCell padding = { 'default' }>
+                { row.OrderID}
+              </TableCell>
+              <TableCell padding = { 'default' }>
+                { row.CustomerName}
+              </TableCell>
+              <TableCell padding = { 'default' }>
+                { row.ShippedDate}
+              </TableCell>
+              <TableCell padding = { 'default' }>
+                { row.ShipperCity}
+              </TableCell>
+            </TableRow>
+        } 
+        rowsPerPage = { 25 } 
+        footerRenderer = {
+          aggregates => 
+            <TableFooter>
+              <TableRow>
+                <TableCell>Total: </TableCell>
+                <TableCell> { aggregates && aggregates.CustomerName } </TableCell>
+                <TableCell> ~~~ </TableCell>
+                <TableCell> ~~~ </TableCell>
+              </TableRow>
+            </TableFooter>
+        }
+      >
       </Grid>
     );
   }

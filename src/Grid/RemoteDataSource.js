@@ -81,8 +81,8 @@ class RemoteDataSource {
       
         return obj;
       });
-  
-      this.dataStream.onNext({ Payload: rows });
+
+      this.dataStream.onNext({ Payload: rows, Aggregate: response.data.AggregationPayload });
     }).catch(error => {
       this.handleError(error);
     });
