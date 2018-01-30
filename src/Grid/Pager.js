@@ -37,10 +37,12 @@ class Pager extends React.Component {
     render(){
       const { rowsPerPage } = this.state;
       const { totalRecordCount, filteredRecordCount, page, classes } = this.props;
-
+      
       const message = totalRecordCount === filteredRecordCount ?
-        ({ from, to, count }) => `${from}-${to} of ${count}` :
-        ({ from, to, count }) => `${from} to ${to} of ${count} from ${totalRecordCount} records`;
+        ({ from, to, count }) => `${from}-${to} of ${count}` : 
+        filteredRecordCount === 0 ?  
+          () => '0 records found' :
+          ({ from, to, count }) => `${from} to ${to} of ${count} from ${totalRecordCount} records`;
 
       return(
         <TablePagination
