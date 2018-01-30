@@ -13,7 +13,7 @@ const styles = theme => ({
   }
 });
 
-const Pager = ({ handlePager, rowsPerPage, page, filteredRecordCount, classes, totalRecordCount }) => {
+const Paginator = ({ handlePager, rowsPerPage, page, filteredRecordCount, classes, totalRecordCount }) => {
   const handleChangePage = (event, page) => {
     handlePager(rowsPerPage, page);
   };
@@ -47,4 +47,4 @@ const Pager = ({ handlePager, rowsPerPage, page, filteredRecordCount, classes, t
   );
 };
 
-export default withStyles(styles)(Pager);
+export default withStyles(styles)(Paginator);

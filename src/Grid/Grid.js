@@ -1,6 +1,6 @@
 import GridHeader from './GridHeader';
 import GridToolbar from './GridToolbar';
-import Pager from './Pager';
+import Paginator from './Paginator';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -95,9 +95,9 @@ class Grid extends React.Component {
       </TableBody>
     );
 
-    const pager = (
+    const paginator = (
       <TableRow>
-        <Pager
+        <Paginator
           dataSource={dataSource}
           rowsPerPage={rowsPerPage}
           page={page}
@@ -114,7 +114,7 @@ class Grid extends React.Component {
         <GridToolbar onSearchTextChange={this.handleTextSearch} />
         <Table className={classes.table}>
           <TableHead>
-            { showTopPager && pager }
+            { showTopPager && paginator }
 
             <GridHeader
               dataSource={dataSource}
@@ -129,7 +129,7 @@ class Grid extends React.Component {
           <TableFooter>
             { footerRenderer && footerRenderer(aggregate) }
 
-            { showBottomPager && pager }
+            { showBottomPager && paginator }
           </TableFooter>
 
         </Table>
