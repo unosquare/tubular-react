@@ -6,6 +6,10 @@ import { withStyles } from 'material-ui/styles';
 const styles = theme => ({
   spacer: {
     flex: 0
+  },
+  select: {
+    border: '1px solid #c3c3c3',
+    borderRadius: '5px'
   }
 });
 
@@ -32,15 +36,21 @@ class Pager extends React.Component {
 
     render(){
       const { rowsPerPage } = this.state;
-      const { totalRecordCount, page, classes } = this.props;
+      const { totalRecordCount, filteredRecordCount, page, classes } = this.props;
+
+      const message = totalRecordCount === filteredRecordCount ?
+        ({ from, to, count }) => `${from}-${to} of ${count}` :
+        ({ from, to, count }) => `${from} to ${to} of ${count} from ${totalRecordCount} records`;
 
       return(
         <TablePagination
           classes={{
-            spacer: classes.spacer
+            spacer: classes.spacer,
+            select: classes.select
           }}
-          labelDisplayedRows={	({ from, to, count }) => `${from}-${to} of ${count}` }
-          count={totalRecordCount}
+          labelDisplayedRows={message}
+          labelRowsPerPage={'Page size:'}
+          count={filteredRecordCount}
           rowsPerPage={rowsPerPage}
           page={page}
           rowsPerPageOptions={[10, 20, 50, 100]}

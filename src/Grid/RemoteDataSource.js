@@ -82,7 +82,11 @@ class RemoteDataSource {
         return obj;
       });
   
-      this.dataStream.onNext({ Payload: rows, TotalRecordCount: response.data.FilteredRecordCount });
+      this.dataStream.onNext({ 
+        Payload: rows, 
+        FilteredRecordCount: response.data.FilteredRecordCount, 
+        TotalRecordCount: response.data.TotalRecordCount 
+      });
     }).catch(error => {
       this.handleError(error);
     });

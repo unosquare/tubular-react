@@ -13,8 +13,8 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit * 2.5
   },
   buttonStyle: {
-    height: '35px',
-    width: '35px'
+    height: '30px',
+    width: '30px'
   }
 });
 
@@ -65,7 +65,7 @@ class TablePaginationActions extends React.Component {
   setCurrentPage = page => {
     let array = [];
     const maxPage = Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1);
-
+    
     if(page < 2){
       array = [ 0, 1, 2, 3, 4 ];
     }
@@ -75,7 +75,7 @@ class TablePaginationActions extends React.Component {
     else{
       array = [ page - 2, page - 1, page, page + 1, page + 2 ];
     }
-  
+
     this.setState({ pages: array, activePage: page });
   }
 
@@ -115,7 +115,9 @@ class TablePaginationActions extends React.Component {
               key={index}
               onClick={event => this.handlePageButtonClick(event, pages[index])}
               aria-label='Next Page'
-              style={ pages[index] === activePage ? { background: '#5999e8', color: 'white' } : null } 
+              style={ pages[index] === activePage ? 
+                { fontSize: '18px', background: '#5999e8', color: 'white' } : 
+                { fontSize: '18px' } } 
             >
               {pages[index] + 1}
             </IconButton>))

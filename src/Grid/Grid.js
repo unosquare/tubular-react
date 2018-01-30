@@ -28,7 +28,8 @@ class Grid extends React.Component {
     showFooter: this.props.showFooter,
     dataSource: this.props.dataSource,
     data: [],
-    totalRecordCount: 0
+    totalRecordCount: 0,
+    filteredRecordCount: 0
   }
 
   componentDidMount() {
@@ -36,7 +37,8 @@ class Grid extends React.Component {
       .subscribe(tbResponse => {
         this.setState({
           data: tbResponse.Payload,
-          totalRecordCount: tbResponse.TotalRecordCount !== undefined ? tbResponse.TotalRecordCount : 0
+          totalRecordCount: tbResponse.TotalRecordCount !== undefined ? tbResponse.TotalRecordCount : 0,
+          filteredRecordCount: tbResponse.FilteredRecordCount !== undefined ? tbResponse.FilteredRecordCount : 0
         });
       });
   }
@@ -78,6 +80,7 @@ class Grid extends React.Component {
           dataSource={dataSource}
           rowsPerPage={rowsPerPage}
           page={page}
+          filteredRecordCount={this.state.filteredRecordCount}
           totalRecordCount={this.state.totalRecordCount}
           handlePager={this.handlePager.bind(this)}
         />
@@ -90,22 +93,12 @@ class Grid extends React.Component {
         <Table className={classes.table}>
           <TableHead>
 
-            { showTopPager === true && 
-              <TableRow>
-                <Pager
-                  dataSource={dataSource}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  totalRecordCount={this.state.totalRecordCount}
-                  handlePager={this.handlePager.bind(this)}
-                />
-              </TableRow>}
+            { showTopPager === true && pager}
 
             <GridHeader
               dataSource={dataSource}
               page={page}
               rowsPerPage={rowsPerPage}
-              pager={pager}
             />
           </TableHead>
 
@@ -113,16 +106,7 @@ class Grid extends React.Component {
           
           <TableFooter>
 
-            { showBottomPager === true && 
-              <TableRow>
-                <Pager
-                  dataSource={dataSource}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  totalRecordCount={this.state.totalRecordCount}
-                  handlePager={this.handlePager.bind(this)}
-                />
-              </TableRow>}
+            { showBottomPager === true && pager}
 
           </TableFooter>
         </Table>
