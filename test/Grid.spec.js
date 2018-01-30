@@ -117,6 +117,22 @@ describe('<Grid />', () => {
     [9, 'Vesta', '2016-11-07T18:00:00', 'Guadalajara, JAL, Mexico'], 
     [10, 'Unosquare LLC', '2016-11-05T18:00:00', 'Portland, OR, USA']
   ];
+
+  const bodyRenderer = (row, index) => 
+    <TableRow hover key = { index }>
+      <TableCell padding = { 'default' }>
+        { row.OrderID}
+      </TableCell>
+      <TableCell padding = { 'default' }>
+        { row.CustomerName}
+      </TableCell>
+      <TableCell padding = { 'default' }>
+        { row.ShippedDate}
+      </TableCell>
+      <TableCell padding = { 'default' }>
+        { row.ShipperCity}
+      </TableCell>
+    </TableRow>;
  
   const grid = () => {
     if(!mountedGrid){
@@ -154,10 +170,16 @@ describe('<Grid />', () => {
     });
   });
   
+  describe('When custom body is defined', () => {
+    it('should render the custom body', () => {
+      const body = grid().find(Table).find(TableBody);
+      expect(body).to.have.lengthOf(1);
+    });
+  });
   
   beforeEach(() => {
     props = {
-      dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns)
+      dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns, bodyRenderer)
     };
   });
 });
