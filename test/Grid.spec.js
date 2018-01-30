@@ -118,6 +118,8 @@ describe('<Grid />', () => {
     [10, 'Unosquare LLC', '2016-11-05T18:00:00', 'Portland, OR, USA']
   ];
 
+  const aggregate = { CustomerName: 500 };
+
   const bodyRenderer = (row, index) => 
     <TableRow hover key = { index }>
       <TableCell padding = { 'default' }>
@@ -204,14 +206,28 @@ describe('<Grid />', () => {
     });
 
     it('should not render nothing', () => {
-      const body = grid().find(Table).find(TableFooter);
-      expect(body).to.not.have.lengthOf(1);
+      const footer = grid().find(Table).find(TableFooter);
+      expect(footer).to.not.have.lengthOf(1);
+    });
+  });
+
+  describe('When footer is defined', () => {
+    const grid = <Grid dataSource = {new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged')} 
+      columns = {columns} 
+      footerRenderer = {footerRenderer} />;
+    
+    it('should render the custom footer', () => {
+      const wrapper = shallow(grid);
+      wrapper.setState({ aggregate });
+
+      const footer = wrapper.find(Table).find(TableFooter);
+      expect(footer).to.have.lengthOf(1);
     });
   });
 
   beforeEach(() => {
     props = {
-      dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns, bodyRenderer, footerRenderer)
+      dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns)
     };
   });
 });
