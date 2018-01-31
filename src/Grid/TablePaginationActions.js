@@ -46,11 +46,20 @@ const TablePaginationActions = ({ classes, count, page, rowsPerPage, onChangePag
       page,
     );
   };
+  
 
-  const maxPage = Math.max(0, Math.ceil(count / rowsPerPage) - 1);    
-  const threshold = page <= 1 ? 4 : page >= (maxPage - 1) ? maxPage : page + 2;
-  const minPage = (page <= 1 || threshold === maxPage) ? 0 : (page + 4) >= maxPage ? page - ((page + 4) - threshold) : page - 2;
-  const pages = Array(...{ length: threshold + 1 - minPage }).map((_, idx) => idx + minPage);
+  let pages = [];
+  const maxPage = Math.max(0, Math.ceil(count / rowsPerPage) - 1);
+    
+  if(page < 2){
+    pages = [ 0, 1, 2, 3, 4 ];
+  }
+  else if (page > maxPage - 2){
+    pages = [maxPage - 4, maxPage - 3, maxPage - 2, maxPage - 1, maxPage];
+  }
+  else{
+    pages = [ page - 2, page - 1, page, page + 1, page + 2 ];
+  }
   
   return (
     <div className={classes.root}>
