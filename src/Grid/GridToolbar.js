@@ -41,8 +41,6 @@ class GridToolbar extends React.Component {
     if (searchText){
       this.setState({ 
         searchText 
-      }, () => {
-        this.props.onSearchTextChange(searchText);
       });
     }
   }
