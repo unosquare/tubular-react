@@ -60,6 +60,12 @@ class Grid extends React.Component {
         rowsPerPage: parseInt(localStorage.getItem(`tubular.${this.props.gridName}_pageSize`))
       }, () => this.refreshGrid() );
     }
+
+    if (localStorage.getItem(`tubular.${this.props.gridName}_searchText`)){
+      this.setState({ 
+        searchText: localStorage.getItem(`tubular.${this.props.gridName}_searchText`)
+      }, () => this.refreshGrid() );
+    }
   }
 
   handleTextSearch = searchText => {   

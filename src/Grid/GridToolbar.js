@@ -36,11 +36,13 @@ class GridToolbar extends React.Component {
   };
   
   componentDidMount() {
-    if (localStorage.getItem(`tubular.${this.props.gridName}_searchText`)){
+    const searchText = localStorage.getItem(`tubular.${this.props.gridName}_searchText`);
+
+    if (searchText){
       this.setState({ 
-        searchText: localStorage.getItem(`tubular.${this.props.gridName}_searchText`) 
+        searchText 
       }, () => {
-        this.props.onSearchTextChange(this.state.searchText);
+        this.props.onSearchTextChange(searchText);
       });
     }
   }
