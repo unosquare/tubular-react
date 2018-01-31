@@ -47,12 +47,14 @@ const TablePaginationActions = ({ classes, count, page, rowsPerPage, onChangePag
     );
   };
   
-
   let pages = [];
   const maxPage = Math.max(0, Math.ceil(count / rowsPerPage) - 1);
-    
-  if(page < 2){
+
+  if(page < 3){
     pages = [ 0, 1, 2, 3, 4 ];
+  }
+  else if(maxPage === 3){
+    pages = [ 0, 1, 2, 3];
   }
   else if (page > maxPage - 2){
     pages = [maxPage - 4, maxPage - 3, maxPage - 2, maxPage - 1, maxPage];
