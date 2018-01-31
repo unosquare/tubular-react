@@ -18,136 +18,96 @@ const styles = theme => ({
   }
 });
 
-class TablePaginationActions extends React.Component {
-  state = {
-    pages: [0, 1, 2, 3, 4],
-    activePage: 0
-  }
-
-  handleFirstPageButtonClick = event => {
-    this.props.onChangePage(event, 0);
-
-    this.setCurrentPage(0);
+const TablePaginationActions = ({ classes, count, page, rowsPerPage, onChangePage }) => {
+  const handleFirstPageButtonClick = event => {
+    onChangePage(event, 0);
   };
   
-  handleBackButtonClick = event => {
-    this.props.onChangePage(event, this.props.page - 1);
-
-    this.setCurrentPage(this.props.page - 1);
+  const handleBackButtonClick = event => {
+    onChangePage(event, page - 1);
   };
   
-  handleNextButtonClick = event => {
-    this.props.onChangePage(event, this.props.page + 1);
-    
-    this.setCurrentPage(this.props.page + 1);
+  const handleNextButtonClick = event => {
+    onChangePage(event, page + 1);
   };
   
-  handleLastPageButtonClick = event => {
-    const maxPage = Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1);
+  const handleLastPageButtonClick = event => {
+    const maxPage = Math.max(0, Math.ceil(count / rowsPerPage) - 1);
 
-    this.props.onChangePage(
+    onChangePage(
       event,
       maxPage
     );
-
-    this.setCurrentPage(maxPage);
   };
 
-  handlePageButtonClick = (event, page) => {
-    this.props.onChangePage(
+  const handlePageButtonClick = (event, page) => {
+    onChangePage(
       event,
       page,
     );
-
-    this.setCurrentPage(page);
   };
 
-  setCurrentPage = page => {
-    let array = [];
-    const maxPage = Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1);
-    
+  const maxPage = Math.max(0, Math.ceil(count / rowsPerPage) - 1);    
+  const threshold = page <= 1 ? 4 : page >= (maxPage - 1) ? maxPage : page + 2;
+  const minPage = page <= 1 ? 0 : (page + 4) >= maxPage ? page - ((page + 4) - threshold) : page - 2;
+  const pages = Array(...{ length: threshold + 1 - minPage }).map((_, idx) => idx + minPage);
+  
+  return (
+    <div className={classes.root}>
+      <IconButton
+        className={classes.buttonStyle}
+        onClick={handleFirstPageButtonClick}
+        disabled={page === 0}
+        aria-label='First Page'
+      >
+        <FirstPageIcon />
+      </IconButton>
 
-    switch(page){
-    case(0):
-    case(1):
-      array = [ 0, 1, 2, 3, 4 ];
-      break;
-    case(maxPage):
-    case(maxPage - 1):
-      array = [maxPage - 4, maxPage - 3, maxPage - 2, maxPage - 1, maxPage];
-      break;
-    default:
-      array = [ page - 2, page - 1, page, page + 1, page + 2 ];
-    }
+      <IconButton
+        className={classes.buttonStyle}
+        onClick={handleBackButtonClick}
+        disabled={page === 0}
+        aria-label='Previous Page'
+      >
+        <KeyboardArrowLeft />
+      </IconButton>
 
-    this.setState({ pages: array, activePage: page });
-  }
-
-  componentWillReceiveProps = () => {
-    this.setState({ activePage: this.props.page }, 
-      this.setCurrentPage(this.props.page) );
-  }
-
-  render (){
-    const { activePage, pages } = this.state;
-    const { classes } = this.props;
-
-    return (
-      <div className={classes.root}>
-        <IconButton
-          className={classes.buttonStyle}
-          onClick={this.handleFirstPageButtonClick}
-          disabled={this.props.page === 0}
-          aria-label='First Page'
-        >
-          <FirstPageIcon />
-        </IconButton>
-
-        <IconButton
-          className={classes.buttonStyle}
-          onClick={this.handleBackButtonClick}
-          disabled={this.props.page === 0}
-          aria-label='Previous Page'
-        >
-          <KeyboardArrowLeft />
-        </IconButton>
-
-        {
-          pages.map((element, index) => ( this.props.count / this.props.rowsPerPage > index &&
+      {
+        pages.map((element, index) => ( count / rowsPerPage > index &&
             <IconButton
               className={classes.buttonStyle}
               key={index}
-              onClick={event => this.handlePageButtonClick(event, pages[index])}
+              onClick={event => handlePageButtonClick(event, pages[index])}
               aria-label={`Page${index + 1}`}
-              style={ pages[index] === activePage ? 
+              style={ pages[index] === page ? 
                 { fontSize: '18px', background: '#5999e8', color: 'white' } : 
                 { fontSize: '18px' } } 
             >
               {pages[index] + 1}
             </IconButton>))
-        }
+      }
 
-        <IconButton
-          className={classes.buttonStyle}
-          onClick={this.handleNextButtonClick}
-          disabled={this.props.page >= Math.ceil(this.props.count / this.props.rowsPerPage) - 1}
-          aria-label='Next Page'
-        >
-          <KeyboardArrowRight />
-        </IconButton>
+      <IconButton
+        className={classes.buttonStyle}
+        onClick={handleNextButtonClick}
+        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+        aria-label='Next Page'
+      >
+        <KeyboardArrowRight />
+      </IconButton>
 
-        <IconButton
-          className={classes.buttonStyle}
-          onClick={this.handleLastPageButtonClick}
-          disabled={this.props.page >= Math.ceil(this.props.count / this.props.rowsPerPage) - 1}
-          aria-label='Last Page'
-        >
-          <LastPageIcon />
-        </IconButton>
-      </div>
-    );
-  }
-}
+      <IconButton
+        className={classes.buttonStyle}
+        onClick={handleLastPageButtonClick}
+        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+        aria-label='Last Page'
+      >
+        <LastPageIcon />
+      </IconButton> 
+
+    </div>
+  );
+};
 
 TablePaginationActions.propTypes = {
   classes: PropTypes.object.isRequired,
