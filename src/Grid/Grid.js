@@ -51,8 +51,9 @@ class Grid extends React.Component {
 
   printTable = () => {
     const { dataSource, filteredRecordCount, searchText } = this.state;
-    dataSource.getAllRecords(filteredRecordCount, searchText)
-      .then(rows => {
+    dataSource.getAllRecords(filteredRecordCount, 0, searchText)
+      .then(response => {
+        const { payload } = response;
         const popup = window.open('about:blank', 'Print', 'location=0,height=500,width=800');
         popup.document.write('<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.min.css" />');
         const tableHtml = `<table class="table table-bordered table-striped"><thead><tr>${
@@ -60,7 +61,7 @@ class Grid extends React.Component {
             .filter(c => c.Visible)
             .reduce((prev, el) => `${prev}<th>${el.Label || el.Name}</th>`, '')
         }</tr></thead><tbody>${ 
-          rows.map(row => {
+          payload.map(row => {
             if(typeof(row) === 'object'){
               row = Object.keys(row).map(key => row[key]);
             }

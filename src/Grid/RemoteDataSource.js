@@ -31,12 +31,12 @@ class RemoteDataSource {
     this._doRequest(rowsPerPage, page);
   }
 
-  getAllRecords = (count, searchText) => new Promise((resolve, reject) => {
+  getAllRecords = (rowsPerPage, page, searchText) => new Promise((resolve, reject) => {
     const request = {
       'Count': this.counter++,
       'Columns': this.columns,
-      'Skip': 0,
-      'Take': count,
+      'Skip': page * rowsPerPage,
+      'Take': rowsPerPage,
       'Search': { 'Text': searchText ? searchText : '', 'Operator': 'Auto' },
       'TimezoneOffset': 360
     };
@@ -56,7 +56,12 @@ class RemoteDataSource {
         return obj;
       });
     
-      resolve(rows);
+      resolve({ 
+        payload: rows,
+        filteredRecordCount: response.data.FilteredRecordCount,
+        totalRecordCount: response.data.TotalRecordCount,
+        aggregate: response.data.AggregationPayload 
+      });
     }).catch(error => {
       reject(error);
     });
@@ -89,39 +94,13 @@ class RemoteDataSource {
   }
   
   _doRequest(rowsPerPage, page, searchText) {
-    const request = {
-      'Count': this.counter++,
-      'Columns': this.columns,
-      'Skip': page * rowsPerPage,
-      'Take': rowsPerPage,
-      'Search': { 'Text': searchText ? searchText : '', 'Operator': 'Auto' },
-      'TimezoneOffset': 360
-    };
-
-    Axios.post(this.url, request).then(response => {
-      if(response.data === undefined || !this.isValidResponse(response.data))
-        throw 'It\'s not a valid Tubular response object';
-          
-      const data = response.data.Payload;
-      const rows = data.map(row => {
-        const obj = {};
-      
-        this.columns.forEach((column, key) => {
-          obj[column.Name] = row[key] || row[column.Name];
-        });
-      
-        return obj;
-      });
-
-      this.dataStream.onNext({ 
-        payload: rows,
-        filteredRecordCount: response.data.FilteredRecordCount,
-        totalRecordCount: response.data.TotalRecordCount,
-        aggregate: response.data.AggregationPayload 
-      });
-    }).catch(error => {
-      this.handleError(error);
-    });
+    this.getAllRecords(rowsPerPage, page, searchText)
+      .then( data => {
+        this.dataStream.onNext(data);
+      })
+      .catch( error => {
+        this.handleError(error);
+      }) ;
   }
 }
 
