@@ -28,15 +28,19 @@ class Grid extends React.Component {
     dataSource: this.props.dataSource,
     data: [],
     currentData: [],
-    aggregate: {}
+    aggregate: {},
+    totalRecordCount: 0,
+    filteredRecordCount: 0
   }
 
   componentDidMount() {
     this.state.dataSource.connect(this.state.rowsPerPage, this.state.page)
       .subscribe(tbResponse => {
         this.setState({
-          data: tbResponse.Payload,
-          aggregate: tbResponse.Aggregate
+          data: tbResponse.payload,
+          totalRecordCount: tbResponse.totalRecordCount || 0,
+          filteredRecordCount: tbResponse.filteredRecordCount || 0,
+          aggregate: tbResponse.aggregate
         });
       });
   }
@@ -46,12 +50,13 @@ class Grid extends React.Component {
   }
 
   printTable = () => {
-    this.state.dataSource.getAllRecords(this.state.filteredRecordCount, this.state.searchText)
+    const { dataSource, filteredRecordCount, searchText } = this.state;
+    dataSource.getAllRecords(filteredRecordCount, searchText)
       .then(rows => {
         const popup = window.open('about:blank', 'Print', 'location=0,height=500,width=800');
         popup.document.write('<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.min.css" />');
         const tableHtml = `<table class="table table-bordered table-striped"><thead><tr>${
-          this.state.dataSource.columns
+          dataSource.columns
             .filter(c => c.Visible)
             .reduce((prev, el) => `${prev}<th>${el.Label || el.Name}</th>`, '')
         }</tr></thead><tbody>${ 
@@ -59,10 +64,14 @@ class Grid extends React.Component {
             if(typeof(row) === 'object'){
               row = Object.keys(row).map(key => row[key]);
             }
-            return `<tr>${row.map(cell => `<td>${cell}</td>`).join(' ')}</tr>`;
+            return `<tr>${row.map((cell, index) => {
+              if(dataSource.columns[index] && !dataSource.columns[index].Visible){
+                return '';
+              }
+              return `<td>${cell}</td>`;
+            }).join(' ')}</tr>`;
           }).join(' ')}</tbody></table>`;
         popup.document.write('<body onload="window.print();">');
-        popup.document.write('<h1>Title</h1>');
         popup.document.write(tableHtml);
         popup.document.write('</body>');
         popup.document.close();
@@ -96,7 +105,7 @@ class Grid extends React.Component {
 
     return (
       <Paper className={classes.root}>
-        <GridToolbar onSearchTextChange={this.handleTextSearch} />
+        <GridToolbar onSearchTextChange={this.handleTextSearch} isPrintEnabled onPrint={this.printTable} />
         <Table className={classes.table}>
           <GridHeader
             dataSource={dataSource}

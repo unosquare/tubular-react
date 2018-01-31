@@ -6,7 +6,7 @@ class RemoteDataSource {
   constructor(url, columns) {
     this.url = url;
     this.counter = 0;
-    this.dataStream = new Rx.BehaviorSubject({ Payload: [] });
+    this.dataStream = new Rx.BehaviorSubject({ payload: [] });
     this.columns = columns;
   }
 
@@ -113,7 +113,12 @@ class RemoteDataSource {
         return obj;
       });
 
-      this.dataStream.onNext({ Payload: rows, Aggregate: response.data.AggregationPayload });
+      this.dataStream.onNext({ 
+        payload: rows,
+        filteredRecordCount: response.data.FilteredRecordCount,
+        totalRecordCount: response.data.TotalRecordCount,
+        aggregate: response.data.AggregationPayload 
+      });
     }).catch(error => {
       this.handleError(error);
     });
