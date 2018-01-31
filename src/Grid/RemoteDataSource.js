@@ -31,6 +31,37 @@ class RemoteDataSource {
     this._doRequest(rowsPerPage, page);
   }
 
+  getAllRecords = (count, searchText) => new Promise((resolve, reject) => {
+    const request = {
+      'Count': this.counter++,
+      'Columns': this.columns,
+      'Skip': 0,
+      'Take': count,
+      'Search': { 'Text': searchText ? searchText : '', 'Operator': 'Auto' },
+      'TimezoneOffset': 360
+    };
+  
+    Axios.post(this.url, request).then(response => {
+      if(response.data === undefined || !this.isValidResponse(response.data))
+        throw 'It\'s not a valid Tubular response object';
+        
+      const data = response.data.Payload;
+      const rows = data.map(row => {
+        const obj = {};
+        
+        this.columns.forEach((column, key) => {
+          obj[column.Name] = row[key] || row[column.Name];
+        });
+        
+        return obj;
+      });
+    
+      resolve(rows);
+    }).catch(error => {
+      reject(error);
+    });
+  })
+
   handleError(error) {
     if(error.status === 404) {
       throw 'Keys were not found';

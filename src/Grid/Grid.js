@@ -45,6 +45,30 @@ class Grid extends React.Component {
     this.state.dataSource.search(this.state.rowsPerPage, this.state.page, text);
   }
 
+  printTable = () => {
+    this.state.dataSource.getAllRecords(this.state.filteredRecordCount, this.state.searchText)
+      .then(rows => {
+        const popup = window.open('about:blank', 'Print', 'location=0,height=500,width=800');
+        popup.document.write('<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.min.css" />');
+        const tableHtml = `<table class="table table-bordered table-striped"><thead><tr>${
+          this.state.dataSource.columns
+            .filter(c => c.Visible)
+            .reduce((prev, el) => `${prev}<th>${el.Label || el.Name}</th>`, '')
+        }</tr></thead><tbody>${ 
+          rows.map(row => {
+            if(typeof(row) === 'object'){
+              row = Object.keys(row).map(key => row[key]);
+            }
+            return `<tr>${row.map(cell => `<td>${cell}</td>`).join(' ')}</tr>`;
+          }).join(' ')}</tbody></table>`;
+        popup.document.write('<body onload="window.print();">');
+        popup.document.write('<h1>Title</h1>');
+        popup.document.write(tableHtml);
+        popup.document.write('</body>');
+        popup.document.close();
+      });
+  }
+
   render() {
     const { classes, bodyRenderer, footerRenderer } = this.props;
     const { data, rowsPerPage, page, columns, dataSource, gridFooterDefinition, aggregate } = this.state;
