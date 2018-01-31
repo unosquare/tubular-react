@@ -183,10 +183,6 @@ describe('<Grid />', () => {
   });
   
   describe('When custom body is not defined', () => {
-    beforeEach(() => {
-      props.bodyRenderer = null;
-    });
-
     it('should render the default body', () => {
       const body = grid().find(Table).find(TableBody);
       expect(body).to.have.lengthOf(1);
@@ -194,15 +190,21 @@ describe('<Grid />', () => {
   });
 
   describe('When custom body is defined', () => {
+    const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') } 
+      bodyRenderer = { bodyRenderer }
+      columns = { columns } />;
+
     it('should render the custom body', () => {
-      const body = grid().find(Table).find(TableBody);
+      const wrapper = shallow(grid);
+      const body = wrapper.find(Table).find(TableBody);
+
       expect(body).to.have.lengthOf(1);
     });
   });
 
   describe('When footer is not defined', () => {
-    const grid = <Grid dataSource = {new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged')} 
-      columns = {columns} />;
+    const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') } 
+      columns = { columns } />;
 
     it('should not render nothing', () => {
       const wrapper = shallow(grid);
@@ -213,9 +215,9 @@ describe('<Grid />', () => {
   });
 
   describe('When footer is defined', () => {
-    const grid = <Grid dataSource = {new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged')} 
-      columns = {columns} 
-      footerRenderer = {footerRenderer} />;
+    const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') } 
+      columns = { columns } 
+      footerRenderer = { footerRenderer } />;
     
     it('should render the custom footer', () => {
       const wrapper = shallow(grid);
