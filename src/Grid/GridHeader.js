@@ -113,43 +113,53 @@ class GridHeader extends React.Component {
     } 
   }
 
-  localStorageHandler = count => {
-    const storage = JSON.parse(localStorage.getItem(`tubular.${this.props.gridName}`));
-    const dataSource = this.props.dataSource;
-
-    dataSource.columns = storage;
-
-    if(count < dataSource.columns.length) {
-      let firstValue;
-      let secondValue;
+  localStorageHandler = (count, dataSource) => {
+    if(count >= dataSource.columns.length) 
+      return;
+    
+    let firstValue = '';
+    let secondValue = '';
       
-      switch(dataSource.columns[count].DataType ){
-      case 'date':
-      case 'datetime':
-      case 'datetimeutc':
-        firstValue = moment().format();
-        secondValue = moment().format();
-        break;
-      default:
-        firstValue = dataSource.columns[count].Filter.Text ? dataSource.columns[count].Filter.Text.toString() : '';
-        secondValue = dataSource.columns[count].Filter.Argument[0] ? dataSource.columns[count].Filter.Argument[0].toString : '';
-      }
-
-      this.setState({
-        [dataSource.columns[count].Name]: dataSource.columns[count].Filter.Operator,
-        [`${dataSource.columns[count].Name}Value`]: firstValue,
-        [`${dataSource.columns[count].Name}Value2`]: secondValue,
-        activeFilter: dataSource.columns[count].Name,
-        columnType: dataSource.columns[count].DataType
-      }, () => {
-        this.localStorageHandler(count + 1);
-      });
+    switch(dataSource.columns[count].DataType ){
+    case 'date':
+    case 'datetime':
+    case 'datetimeutc':
+      firstValue = moment().format();
+      secondValue = moment().format();
+      break;
+    default:
+      firstValue = dataSource.columns[count].Filter.Text && dataSource.columns[count].Filter.Text.toString();
+      secondValue = dataSource.columns[count].Filter.Argument[0] && dataSource.columns[count].Filter.Argument[0].toString();
     }
+
+    this.setState({
+      [dataSource.columns[count].Name]: dataSource.columns[count].Filter.Operator,
+      [`${dataSource.columns[count].Name}Value`]: firstValue,
+      [`${dataSource.columns[count].Name}Value2`]: secondValue,
+      activeFilter: dataSource.columns[count].Name,
+      columnType: dataSource.columns[count].DataType
+    }, () => {
+      this.localStorageHandler(count + 1, dataSource);
+    });
   }
 
   componentDidMount() {
     if (localStorage.getItem(`tubular.${this.props.gridName}`)){
-      this.localStorageHandler(0);
+      const storage = JSON.parse(localStorage.getItem(`tubular.${this.props.gridName}`));
+      const dataSource = this.props.dataSource;
+      
+      storage.forEach( (element, i) => {
+        if(dataSource.columns[i] !== undefined){
+          dataSource.columns[i].SortDirection = element.SortDirection;
+          dataSource.columns[i].SortOrder = element.SortOrder;
+          dataSource.columns[i].Filter.HasFilter = element.Filter.HasFilter;
+          dataSource.columns[i].Filter.Operator = element.Filter.Operator;
+          dataSource.columns[i].Filter.Text = element.Filter.Text || '';
+          dataSource.columns[i].Filter.Argument[0] = element.Filter.Argument[0] || '';
+        }
+      });
+
+      this.localStorageHandler(0, dataSource);
     }
 
     document.addEventListener('keydown', event => this.handleKeyDown(event));
@@ -287,8 +297,8 @@ class GridHeader extends React.Component {
               </IconButton>);
           return (
             <TableCell key={column.Label} padding={column.Label === '' ? 'none' : 'default'}>
-              {render}
-              {filter}
+              {column.Visible && render}
+              {column.Visible && filter}
             </TableCell>
           );
         })}

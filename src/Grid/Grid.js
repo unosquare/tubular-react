@@ -55,17 +55,13 @@ class Grid extends React.Component {
       this.refreshGrid();
     });
 
-    if (localStorage.getItem(`tubular.${this.props.gridName}_pageSize`)){
-      this.setState({ 
-        rowsPerPage: parseInt(localStorage.getItem(`tubular.${this.props.gridName}_pageSize`))
-      }, () => this.refreshGrid() );
-    }
+    const pageSize = parseInt(localStorage.getItem(`tubular.${this.props.gridName}_pageSize`)) || 10;
+    const searchText = localStorage.getItem(`tubular.${this.props.gridName}_searchText`) || '';
 
-    if (localStorage.getItem(`tubular.${this.props.gridName}_searchText`)){
-      this.setState({ 
-        searchText: localStorage.getItem(`tubular.${this.props.gridName}_searchText`)
-      }, () => this.refreshGrid() );
-    }
+    this.setState({ 
+      rowsPerPage: pageSize,
+      searchText: searchText
+    }, () => this.refreshGrid() );
   }
 
   handleTextSearch = searchText => {   
@@ -100,7 +96,7 @@ class Grid extends React.Component {
                   dataSource.columns.map((column, colIndex) =>
                     <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
                       {
-                        row[column.Name]
+                        column.Visible && row[column.Name]
                       }
                     </TableCell>)
                 }

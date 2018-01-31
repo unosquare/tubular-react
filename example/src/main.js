@@ -83,17 +83,37 @@ const columns = [
     },
     'DataType': 'string',
     'Aggregate': 'None'
+  },
+  {
+    'Label': 'Amount',
+    'Name': 'Amount',
+    'Sortable': true,
+    'SortOrder': -1,
+    'SortDirection': 'None',
+    'IsKey': false,
+    'Searchable': false,
+    'Visible': true,
+    'Filter': { 
+      Argument: [],
+      HasFilter: false,
+      Name: 'Amount',
+      Operator: 'None',
+      OptionsUrl: null,
+      Text: null
+    },
+    'DataType': 'numeric',
+    'Aggregate': 'None'
   }
 ];
 
 export default class Main extends React.Component {
   render() {
     const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns);
-
+    
     return (
       <Grid dataSource={dataSource} 
         gridName = 'Motorhead'
-        bodyRenderer = {
+        /* bodyRenderer = {
           (row, index) => 
             <TableRow hover key = { index }>
               <TableCell padding = { 'default' }>
@@ -109,7 +129,7 @@ export default class Main extends React.Component {
                 { row.ShipperCity}
               </TableCell>
             </TableRow>
-        } 
+        }  */
         rowsPerPage = { 10 } 
         showTopPager = { true }
         showBottomPager = { true }
