@@ -92,6 +92,7 @@ export default class Main extends React.Component {
 
     return (
       <Grid dataSource={dataSource} 
+        gridName = 'Motorhead'
         bodyRenderer = {
           (row, index) => 
             <TableRow hover key = { index }>
@@ -112,7 +113,6 @@ export default class Main extends React.Component {
         rowsPerPage = { 10 } 
         showTopPager = { true }
         showBottomPager = { true }
-
         footerRenderer = {
           aggregates => 
             <TableRow>

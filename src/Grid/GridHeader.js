@@ -101,6 +101,61 @@ class GridHeader extends React.Component {
     this.filterHandler(firstValue, secondValue, true);
   }
 
+  handleKeyDown(event) {
+    if(event.key === 'Control' && this.state.sorting === 'Single') {
+      this.setState({ sorting: 'Multiple' });
+    } 
+  }
+
+  handleKeyUp(event) {
+    if(event.key === 'Control' && this.state.sorting === 'Multiple') {
+      this.setState({ sorting: 'Single' });
+    } 
+  }
+
+  localStorageHandler = count => {
+    const storage = JSON.parse(localStorage.getItem(`tubular.${this.props.gridName}`));
+    const dataSource = this.props.dataSource;
+
+    dataSource.columns = storage;
+
+    if(count < dataSource.columns.length) {
+      let firstValue;
+      let secondValue;
+      
+      switch(dataSource.columns[count].DataType ){
+      case 'date':
+      case 'datetime':
+      case 'datetimeutc':
+        firstValue = moment().format();
+        secondValue = moment().format();
+        break;
+      default:
+        firstValue = dataSource.columns[count].Filter.Text ? dataSource.columns[count].Filter.Text.toString() : '';
+        secondValue = dataSource.columns[count].Filter.Argument[0] ? dataSource.columns[count].Filter.Argument[0].toString : '';
+      }
+
+      this.setState({
+        [dataSource.columns[count].Name]: dataSource.columns[count].Filter.Operator,
+        [`${dataSource.columns[count].Name}Value`]: firstValue,
+        [`${dataSource.columns[count].Name}Value2`]: secondValue,
+        activeFilter: dataSource.columns[count].Name,
+        columnType: dataSource.columns[count].DataType
+      }, () => {
+        this.localStorageHandler(count + 1);
+      });
+    }
+  }
+
+  componentDidMount() {
+    if (localStorage.getItem(`tubular.${this.props.gridName}`)){
+      this.localStorageHandler(0);
+    }
+
+    document.addEventListener('keydown', event => this.handleKeyDown(event));
+    document.addEventListener('keyup', event => this.handleKeyUp(event));
+  }
+
   filterHandler = (firstValue, secondValue, hasFilter) => {
     this.props.dataSource.columns.forEach( column => {
       if(column.Name === this.state.activeFilter){
@@ -115,23 +170,6 @@ class GridHeader extends React.Component {
 
     this.props.refreshGrid();
     this.handleClose();
-  }
-
-  handleKeyDown(event) {
-    if(event.key === 'Control' && this.state.sorting === 'Single') {
-      this.setState({ sorting: 'Multiple' });
-    } 
-  }
-
-  handleKeyUp(event) {
-    if(event.key === 'Control' && this.state.sorting === 'Multiple') {
-      this.setState({ sorting: 'Single' });
-    } 
-  }
-
-  componentDidMount() {
-    document.addEventListener('keydown', event => this.handleKeyDown(event));
-    document.addEventListener('keyup', event => this.handleKeyUp(event));
   }
 
   componentWillUnmount() {
@@ -242,7 +280,7 @@ class GridHeader extends React.Component {
             : (column.Label);
           const filter = column.Filter &&
               (<IconButton onClick={() => this.handleOpen(column)} >
-                {column.Filter.HasFilter ? 
+                {column.Filter.HasFilter && column.Filter.Operator !== 'None' ? 
                   <FilterListIcon style={{ background: '#28b62c', color: 'white', borderRadius: '50%' }}/> 
                   : 
                   <FilterListIcon/>}

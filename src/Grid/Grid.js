@@ -54,6 +54,12 @@ class Grid extends React.Component {
     this.search.debounce(600).subscribe(() => {
       this.refreshGrid();
     });
+
+    if (localStorage.getItem(`tubular.${this.props.gridName}_pageSize`)){
+      this.setState({ 
+        rowsPerPage: parseInt(localStorage.getItem(`tubular.${this.props.gridName}_pageSize`))
+      }, () => this.refreshGrid() );
+    }
   }
 
   handleTextSearch = searchText => {   
@@ -67,12 +73,16 @@ class Grid extends React.Component {
   refreshGrid = () => {
     const { dataSource, rowsPerPage, page, searchText } = this.state;
     dataSource.refresh(rowsPerPage, page, searchText);
+
+    localStorage.setItem(`tubular.${this.props.gridName}`, JSON.stringify(dataSource.columns) );
+    localStorage.setItem(`tubular.${this.props.gridName}_pageSize`, rowsPerPage );
+    localStorage.setItem(`tubular.${this.props.gridName}_searchText`, searchText );
   }
 
   render() {
     const { classes, bodyRenderer, footerRenderer, showBottomPager, showTopPager } = this.props;
     const { data, rowsPerPage, page, dataSource, aggregate, filteredRecordCount, totalRecordCount } = this.state;
-    
+
     const body = (
       <TableBody>
         {
@@ -110,12 +120,13 @@ class Grid extends React.Component {
 
     return (
       <Paper className={classes.root}>
-        <GridToolbar onSearchTextChange={this.handleTextSearch} />
+        <GridToolbar gridName = {this.props.gridName} onSearchTextChange={this.handleTextSearch} />
         <Table className={classes.table}>
           <TableHead>
             { showTopPager && paginator }
 
             <GridHeader
+              gridName = {this.props.gridName}
               dataSource={dataSource}
               page={page}
               rowsPerPage={rowsPerPage}
