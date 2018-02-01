@@ -61,7 +61,7 @@ class Grid extends React.Component {
             .reduce((prev, el) => `${prev}<th>${el.Label || el.Name}</th>`, '')
         }</tr></thead><tbody>${ 
           payload.map(row => {
-            if(typeof(row) === 'object'){
+            if(row instanceof Object){
               row = Object.keys(row).map(key => row[key]);
             }
             return `<tr>${row.map((cell, index) => {
