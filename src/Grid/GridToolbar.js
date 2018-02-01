@@ -69,7 +69,7 @@ class GridToolbar extends React.Component {
   }
 
   render(){
-    const { classes, isPrintEnabled, isExportEnabled } = this.props;
+    const { classes, isPrintEnabled, isExportEnabled, onPrint } = this.props;
     const { searchText, anchorEl } = this.state;
     return(
       <Toolbar>
@@ -78,7 +78,7 @@ class GridToolbar extends React.Component {
           isExportEnabled && 
           <Button
             raised
-            color='accent'
+            color='secondary'
             className={classes.button}
             onClick={this.handleMenuOpen}
           >
@@ -88,7 +88,7 @@ class GridToolbar extends React.Component {
         }
         {
           isPrintEnabled && 
-          <IconButton>
+          <IconButton onClick={onPrint}>
             <PrintIcon/>
           </IconButton>
         }
@@ -134,7 +134,11 @@ GridToolbar.propTypes = {
   classes: PropTypes.object.isRequired, 
   isExportEnabled: PropTypes.bool,
   isPrintEnabled: PropTypes.bool,
-  onSearchTextChange: PropTypes.func  
+  onSearchTextChange: PropTypes.func.isRequired  
+};
+
+GridToolbar.defaultProps = {
+  onSearchTextChange: x => x
 };
 
 export default withStyles(styles)(GridToolbar);
