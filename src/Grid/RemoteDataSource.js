@@ -10,8 +10,8 @@ class RemoteDataSource {
     this.columns = columns;
   }
 
-  connect(rowsPerPage, page) {
-    this._updateDataStream(rowsPerPage, page);
+  connect(rowsPerPage, page, searchText) {
+    this._updateDataStream(rowsPerPage, page, searchText);
     return this.dataStream;
   }
 
