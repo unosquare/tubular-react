@@ -1,14 +1,13 @@
 import Adapter from 'enzyme-adapter-react-16';
-import { expect } from 'chai';
 import Enzyme from 'enzyme';
 import Grid from '../src/Grid/Grid';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
+import { expect } from 'chai';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import { createMount, createShallow } from 'material-ui/test-utils';
-
 
 Enzyme.configure({ adapter: new Adapter() });
 

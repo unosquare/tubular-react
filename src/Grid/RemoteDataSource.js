@@ -27,8 +27,8 @@ class RemoteDataSource {
     this._updateDataStream(rowsPerPage, page, searchText);
   }
 
-  refresh(rowsPerPage, page) {
-    this._updateDataStream(rowsPerPage, page);
+  refresh(rowsPerPage, page, searchText) {
+    this._updateDataStream(rowsPerPage, page, searchText);
   }
 
   getAllRecords = (rowsPerPage, page, searchText) => new Promise((resolve, reject) => {
@@ -92,7 +92,7 @@ class RemoteDataSource {
 
     return JSON.stringify(expectedStructureKeys) === JSON.stringify(responseKeys);
   }
-  
+    
   _updateDataStream(rowsPerPage, page, searchText) {
     this.getAllRecords(rowsPerPage, page, searchText)
       .then( data => {

@@ -12,8 +12,6 @@ import Toolbar from 'material-ui/Toolbar';
 import { expect } from 'chai';
 import { createMount, createShallow } from 'material-ui/test-utils';
 
-
-
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('<GridToolbar/>', () => {

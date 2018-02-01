@@ -2,6 +2,7 @@ const { JSDOM } = require('jsdom');
 
 const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
 const { window } = jsdom;
+const localStorage = require('mock-local-storage');
 
 function copyProps(src, target) {
   const props = Object.getOwnPropertyNames(src)
@@ -10,6 +11,7 @@ function copyProps(src, target) {
   Object.defineProperties(target, props);
 }
 
+window.localStorage = global.localStorage;
 global.window = window;
 global.document = window.document;
 global.navigator = {
