@@ -137,7 +137,7 @@ class Grid extends React.Component {
               <TableCell style={{ display: 'flex', padding: '10px' }}>
                 <WarningIcon/>
                 <Typography style={{ paddingLeft: '15px' }} type='body2' gutterBottom>
-                    No records found
+                  No records found
                 </Typography>
               </TableCell>
             </TableRow>)
