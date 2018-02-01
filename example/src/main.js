@@ -113,7 +113,7 @@ export default class Main extends React.Component {
     return (
       <Grid dataSource={dataSource} 
         gridName = 'Motorhead'
-        /* bodyRenderer = {
+        bodyRenderer = {
           (row, index) => 
             <TableRow hover key = { index }>
               <TableCell padding = { 'default' }>
@@ -128,8 +128,11 @@ export default class Main extends React.Component {
               <TableCell padding = { 'default' }>
                 { row.ShipperCity}
               </TableCell>
+              <TableCell padding = { 'default' }>
+                { row.Amount}
+              </TableCell>
             </TableRow>
-        }  */
+        } 
         rowsPerPage = { 10 } 
         showTopPager = { true }
         showBottomPager = { true }
