@@ -57,7 +57,7 @@ class Grid extends React.Component {
 
     const pageSize = parseInt(localStorage.getItem(`tubular.${this.props.gridName}_pageSize`)) || 10;
     const searchText = localStorage.getItem(`tubular.${this.props.gridName}_searchText`) || '';
-
+    
     this.setState({ 
       rowsPerPage: pageSize,
       searchText: searchText
@@ -75,7 +75,7 @@ class Grid extends React.Component {
   refreshGrid = () => {
     const { dataSource, rowsPerPage, page, searchText } = this.state;
     dataSource.refresh(rowsPerPage, page, searchText);
-
+    
     localStorage.setItem(`tubular.${this.props.gridName}`, JSON.stringify(dataSource.columns) );
     localStorage.setItem(`tubular.${this.props.gridName}_pageSize`, rowsPerPage );
     localStorage.setItem(`tubular.${this.props.gridName}_searchText`, searchText );

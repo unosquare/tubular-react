@@ -111,25 +111,25 @@ export default class Main extends React.Component {
     const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns);
     
     return (
-      <Grid dataSource={dataSource} 
+      <Grid dataSource={ dataSource } 
         gridName = 'Motorhead'
         bodyRenderer = {
           (row, index) => 
             <TableRow hover key = { index }>
               <TableCell padding = { 'default' }>
-                { row.OrderID}
+                { row.OrderID }
               </TableCell>
               <TableCell padding = { 'default' }>
-                { row.CustomerName}
+                { row.CustomerName }
               </TableCell>
               <TableCell padding = { 'default' }>
-                { row.ShippedDate}
+                { row.ShippedDate }
               </TableCell>
               <TableCell padding = { 'default' }>
-                { row.ShipperCity}
+                { row.ShipperCity }
               </TableCell>
               <TableCell padding = { 'default' }>
-                { row.Amount}
+                { row.Amount }
               </TableCell>
             </TableRow>
         } 

@@ -49,15 +49,6 @@ describe('<Grid />', () => {
     const rows = grid().find(TableBody).find(TableRow);
     expect(rows).to.have.lengthOf(0);
   });
-
-  it('calls componentDidMount() lifecycle method', () => {
-    const componentDidMount = spy(Grid.prototype, 'componentDidMount');
-    const wrapper = mount(<Grid { ...props } />);
-
-    assert.ok(Grid.prototype.componentDidMount.calledOnce);
-
-    componentDidMount.restore();
-  });
   
   beforeEach(() => {
     props = {
