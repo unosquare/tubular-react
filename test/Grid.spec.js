@@ -19,7 +19,7 @@ describe('<Grid />', () => {
   let mount;
   let shallow;
 
-  let instance; 
+  let axiosInstance; 
   let mock;
    
   before(() => {
@@ -198,7 +198,7 @@ describe('<Grid />', () => {
     it('should render the custom body', () => {
       mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { columns }).reply(200);
 
-      instance.post('http://tubular.azurewebsites.net/api/orders/paged', { columns }).then(response => {
+      axiosInstance.post('http://tubular.azurewebsites.net/api/orders/paged', { columns }).then(response => {
         const grid = <Grid dataSource = { response }
           bodyRenderer = { bodyRenderer }
           columns = { columns } />;
@@ -241,7 +241,7 @@ describe('<Grid />', () => {
     props = {
       dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns)
     };
-    instance = Axios.create();
-    mock = new MockAdapter(instance);
+    axiosInstance = Axios.create();
+    mock = new MockAdapter(axiosInstance);
   });
 });
