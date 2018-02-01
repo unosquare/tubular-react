@@ -102,6 +102,8 @@ These are all the available props (and their default values) for the `<Grid />` 
 ```
 
 ### DataSource
+`<Grid/>` requires a dataSource prop which is an instance of the `RemoteDataSource` class, that deals with data retrieval among other things. At the same time, `RemoteDataSource` needs both a URL and a columns variable in its constructor. 
+
 
 ## Run integrated sample
 
