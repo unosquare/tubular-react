@@ -75,8 +75,12 @@ const columns = [
 ];
 
 class CustomComponent extends React.Component {
+state={
+dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns)
+}
+
   render() {
-    const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns);
+    const { dataSource } = this.state; 
 
     return (
       <Grid dataSource={dataSource} rowsPerPage = { 25 } />
