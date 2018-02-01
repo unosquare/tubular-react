@@ -3,6 +3,7 @@ import Axios from 'axios';
 import Enzyme from 'enzyme';
 import Grid from '../src/Grid/Grid';
 import MockAdapter from 'axios-mock-adapter';
+import orders from './utils/orders.json';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -196,44 +197,55 @@ describe('<Grid />', () => {
 
   describe('When custom body is defined', () => {
     it('should render the custom body', () => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { columns }).reply(200);
-
-      axiosInstance.post('http://tubular.azurewebsites.net/api/orders/paged', { columns }).then(response => {
-        const grid = <Grid dataSource = { response }
-          bodyRenderer = { bodyRenderer }
-          columns = { columns } />;
-        const wrapper = shallow(grid);
-        const body = wrapper.find(Table).find(TableBody);
-
-        expect(body).to.have.lengthOf(1);
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { columns }).reply(200, {
+        orders
       });
+
+      const grid = <Grid 
+        dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') }
+        bodyRenderer = { bodyRenderer }
+        columns = { columns } />;
+
+      const wrapper = shallow(grid);
+      const body = wrapper.find(Table).find(TableBody);
+
+      expect(body).to.have.lengthOf(1);
     });
   });
 
   /** Unit tests for custom footer */
   describe('When footer is not defined', () => {
-    const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') } 
-      columns = { columns } />;
-
     it('should not render nothing', () => {
-      const wrapper = shallow(grid);
-      const footer = wrapper.find(Table).find(TableFooter);
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { columns }).reply(200);
 
-      expect(footer).to.not.have.lengthOf(1);
+      axiosInstance.post('http://tubular.azurewebsites.net/api/orders/paged', { columns }).then(response => {
+        const grid = <Grid dataSource = { response }
+          columns = { columns } />;
+
+        const wrapper = shallow(grid);
+        const footer = wrapper.find(Table).find(TableFooter);
+
+        expect(footer).to.not.have.lengthOf(1);
+      });
     });
   });
 
   describe('When footer is defined', () => {
-    const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') } 
-      columns = { columns } 
-      footerRenderer = { footerRenderer } />;
-    
     it('should render the custom footer', () => {
-      const wrapper = shallow(grid);
-      wrapper.setState({ aggregate });
-      const footer = wrapper.find(Table).find(TableFooter);
-      
-      expect(footer).to.have.lengthOf(1);
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { columns }).reply(200);
+
+      axiosInstance.post('http://tubular.azurewebsites.net/api/orders/paged', { columns }).then(response => {
+        const grid = <Grid dataSource = { response }
+          columns = { columns }
+          footerRenderer = { footerRenderer }
+        />;
+
+        const wrapper = shallow(grid);
+        wrapper.setState({ aggregate });
+        const footer = wrapper.find(Table).find(TableFooter);
+
+        expect(footer).to.have.lengthOf(1);
+      });
     });
   });
 
