@@ -52,8 +52,7 @@ class Grid extends React.Component {
   printTable = () => {
     const { dataSource, filteredRecordCount, searchText } = this.state;
     dataSource.getAllRecords(filteredRecordCount, 0, searchText)
-      .then(response => {
-        const { payload } = response;
+      .then(({ payload }) => {
         const popup = window.open('about:blank', 'Print', 'location=0,height=500,width=800');
         popup.document.write('<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.min.css" />');
         const tableHtml = `<table class="table table-bordered table-striped"><thead><tr>${
