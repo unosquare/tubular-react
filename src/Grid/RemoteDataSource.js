@@ -11,24 +11,24 @@ class RemoteDataSource {
   }
 
   connect(rowsPerPage, page) {
-    this._doRequest(rowsPerPage, page);
+    this._updateDataStream(rowsPerPage, page);
     return this.dataStream;
   }
 
   filter(rowsPerPage, page) {
-    this._doRequest(rowsPerPage, page);
+    this._updateDataStream(rowsPerPage, page);
   }
   
   sort(rowsPerPage, page) {
-    this._doRequest(rowsPerPage, page);
+    this._updateDataStream(rowsPerPage, page);
   }
 
   search(rowsPerPage, page, searchText) {
-    this._doRequest(rowsPerPage, page, searchText);
+    this._updateDataStream(rowsPerPage, page, searchText);
   }
 
   refresh(rowsPerPage, page) {
-    this._doRequest(rowsPerPage, page);
+    this._updateDataStream(rowsPerPage, page);
   }
 
   getAllRecords = (rowsPerPage, page, searchText) => new Promise((resolve, reject) => {
@@ -93,7 +93,7 @@ class RemoteDataSource {
     return JSON.stringify(expectedStructureKeys) === JSON.stringify(responseKeys);
   }
   
-  _doRequest(rowsPerPage, page, searchText) {
+  _updateDataStream(rowsPerPage, page, searchText) {
     this.getAllRecords(rowsPerPage, page, searchText)
       .then( data => {
         this.dataStream.onNext(data);
