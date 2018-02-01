@@ -1,14 +1,15 @@
 import Adapter from 'enzyme-adapter-react-16';
-import { expect } from 'chai';
+import Axios from 'axios';
 import Enzyme from 'enzyme';
 import Grid from '../src/Grid/Grid';
+import MockAdapter from 'axios-mock-adapter';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
+import { expect } from 'chai';
 import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
 import { createMount, createShallow } from 'material-ui/test-utils';
-
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -17,6 +18,9 @@ describe('<Grid />', () => {
   let props;
   let mount;
   let shallow;
+
+  let instance; 
+  let mock;
    
   before(() => {
     mount = createMount();
@@ -145,7 +149,7 @@ describe('<Grid />', () => {
         <TableCell> ~~~ </TableCell>
       </TableRow>
     </TableFooter>;
-  
+
   const grid = () => {
     if(!mountedGrid){
       mountedGrid = mount(<Grid {...props} />);
@@ -182,6 +186,7 @@ describe('<Grid />', () => {
     });
   });
   
+  /** Unit test for default/custom body */
   describe('When custom body is not defined', () => {
     it('should render the default body', () => {
       const body = grid().find(Table).find(TableBody);
@@ -190,18 +195,22 @@ describe('<Grid />', () => {
   });
 
   describe('When custom body is defined', () => {
-    const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') } 
-      bodyRenderer = { bodyRenderer }
-      columns = { columns } />;
-
     it('should render the custom body', () => {
-      const wrapper = shallow(grid);
-      const body = wrapper.find(Table).find(TableBody);
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { columns }).reply(200);
 
-      expect(body).to.have.lengthOf(1);
+      instance.post('http://tubular.azurewebsites.net/api/orders/paged', { columns }).then(response => {
+        const grid = <Grid dataSource = { response }
+          bodyRenderer = { bodyRenderer }
+          columns = { columns } />;
+        const wrapper = shallow(grid);
+        const body = wrapper.find(Table).find(TableBody);
+
+        expect(body).to.have.lengthOf(1);
+      });
     });
   });
 
+  /** Unit tests for custom footer */
   describe('When footer is not defined', () => {
     const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') } 
       columns = { columns } />;
@@ -232,5 +241,7 @@ describe('<Grid />', () => {
     props = {
       dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns)
     };
+    instance = Axios.create();
+    mock = new MockAdapter(instance);
   });
 });
