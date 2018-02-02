@@ -9,7 +9,7 @@ const columns = [
     Name: 'OrderID',
     Sortable: true,
     SortOrder: 1,
-    SortDirection: 'Ascending',
+    SortDirection: 'Descending',
     IsKey: true,
     DataType: 'numeric',    
     Filtering: true
@@ -17,7 +17,6 @@ const columns = [
   {
     Label: 'Customer Name',
     Name: 'CustomerName',
-    Sortable: true,
     Searchable: true,
     Aggregate: 'Count',
     Filtering: true
@@ -25,19 +24,16 @@ const columns = [
   {
     Label: 'Shipped Date',
     Name: 'ShippedDate',
-    Sortable: true,
     DataType: 'datetime',
     Filtering: true
   },
   {
     Label: 'Shipper City',
     Name: 'ShipperCity',
-    Sortable: true
   },
   {
     Label: 'Amount',
     Name: 'Amount',
-    Sortable: true,
     DataType: 'numeric'
   }
 ];
