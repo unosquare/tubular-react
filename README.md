@@ -32,16 +32,16 @@ import Grid, { RemoteDataSource } from 'tubular-react';
 import React from 'react';
 
 const columns = [
-  {
-    'Label': 'Order ID',
-    'Name': 'OrderID',
-    'Sortable': true,
-    'SortOrder': 1,
-    'SortDirection': 'Ascending',
-    'IsKey': true,
-    'Searchable': false,
-    'Visible': true,
-    'Filter': { 
+   {
+    Label: 'Order ID',
+    Name: 'OrderID',
+    Sortable: true,
+    SortOrder: 1,
+    SortDirection: 'Ascending',
+    IsKey: true,
+    Searchable: false,
+    Visible: true,
+    Filter: { 
       Argument: [],
       HasFilter: false,
       Name: 'OrderID',
@@ -49,19 +49,19 @@ const columns = [
       OptionsUrl: null,
       Text: null
     },
-    'DataType': 'numeric',
-    'Aggregate': 'None'
+    DataType: 'numeric',
+    Aggregate: 'None'
   },
   {
-    'Label': 'Customer Name',
-    'Name': 'CustomerName',
-    'Sortable': true,
-    'SortOrder': -1,
-    'SortDirection': 'None',
-    'IsKey': false,
-    'Searchable': true,
-    'Visible': true,
-    'Filter': { 
+    Label: 'Customer Name',
+    Name: 'CustomerName',
+    Sortable: true,
+    SortOrder: -1,
+    SortDirection: 'None',
+    IsKey: false,
+    Searchable: true,
+    Visible: true,
+    Filter: { 
       Argument: [],
       HasFilter: false,
       Name: 'CustomerName',
@@ -69,8 +69,8 @@ const columns = [
       OptionsUrl: null,
       Text: null
     },
-    'DataType': 'string',
-    'Aggregate': 'Count'
+    DataType: 'string',
+    Aggregate: 'Count'
   }
 ];
 
