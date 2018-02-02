@@ -176,16 +176,16 @@ describe('<Grid />', () => {
     expect(columns).to.have.lengthOf(4);
   });
       
-  it('should have 0 rows at first', () => {
+  it('should have 1 rows at first', () => {
     const rows = grid().find(TableBody).find(TableRow);
-    expect(rows).to.have.lengthOf(0);
+    expect(rows).to.have.lengthOf(1);
   });
 
   describe('when data is retrieved', () => {
     it('should render all rows', () => {
       const wrapper = shallow(<Grid { ...props } />);
       wrapper.setState({ data });
-      expect(wrapper.find(TableRow)).to.have.lengthOf(10);
+      expect(wrapper.find(TableRow)).to.have.lengthOf(11);
     });
   });
   

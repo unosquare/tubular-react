@@ -4,17 +4,7 @@ import { TablePagination } from 'material-ui/Table';
 import TablePaginationActions from './TablePaginationActions';
 import { withStyles } from 'material-ui/styles';
 
-const styles = theme => ({
-  spacer: {
-    flex: 0
-  },
-  select: {
-    border: '1px solid #c3c3c3',
-    borderRadius: '5px'
-  }
-});
-
-const Paginator = ({ handlePager, rowsPerPage, page, filteredRecordCount, classes, totalRecordCount }) => {
+const Paginator = ({ handlePager, rowsPerPage, page, filteredRecordCount, totalRecordCount }) => {
   const handleChangePage = (event, page) => {
     handlePager(rowsPerPage, page);
   };
@@ -31,10 +21,6 @@ const Paginator = ({ handlePager, rowsPerPage, page, filteredRecordCount, classe
 
   return(
     <TablePagination
-      classes={{
-        spacer: classes.spacer,
-        select: classes.select
-      }}
       labelDisplayedRows={message}
       labelRowsPerPage={'Page size:'}
       count={filteredRecordCount}
@@ -55,4 +41,4 @@ Paginator.propTypes = {
   rowsPerPage: PropTypes.number.isRequired
 };
 
-export default withStyles(styles)(Paginator);
+export default Paginator;

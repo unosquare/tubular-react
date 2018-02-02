@@ -90,9 +90,7 @@ const TablePaginationActions = ({ classes, count, page, rowsPerPage, onChangePag
               key={index}
               onClick={event => handlePageButtonClick(event, pages[index])}
               aria-label={`Page${index + 1}`}
-              style={ pages[index] === page ? 
-                { fontSize: '18px', background: '#5999e8', color: 'white' } : 
-                { fontSize: '18px' } } 
+              style={ { fontSize: '18px' } } 
             >
               {pages[index] + 1}
             </IconButton>))
