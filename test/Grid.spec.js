@@ -233,11 +233,13 @@ describe('<Grid />', () => {
   });
 
   describe('When footer has n rows', () => {
-    it('should render the row with the aggregate operation', () => {
+    beforeEach(() => {
       mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { columns }).reply(200, {
         orders
       });
-    
+    });
+
+    it('should render the row with the aggregate operation', () => {
       const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') }
         columns = { columns }
         footerRenderer = { footerRenderer }
@@ -251,10 +253,6 @@ describe('<Grid />', () => {
     });
 
     it('should render the row with the bottom pager', () => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { columns }).reply(200, {
-        orders
-      });
-    
       const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') }
         columns = { columns }
         showBottomPager = { true }
@@ -267,10 +265,6 @@ describe('<Grid />', () => {
     });
 
     it('should render the rows with the aggregate operation and the bottom pager', () => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { columns }).reply(200, {
-        orders
-      });
-    
       const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') }
         columns = { columns }
         showBottomPager = { true }
@@ -286,11 +280,13 @@ describe('<Grid />', () => {
   });
 
   describe('When footer has showBottomPager property set as true', () => {
-    it('should have a paginator', () => {
+    beforeEach(() => {
       mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { columns }).reply(200, {
         orders
       });
-    
+    });
+
+    it('should have a paginator', () => {
       const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') }
         columns = { columns }
         showBottomPager = { true }
