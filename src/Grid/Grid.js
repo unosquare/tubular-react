@@ -5,6 +5,8 @@ import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Subject } from 'rx';
+import Typography from 'material-ui/Typography';
+import WarningIcon from 'material-ui-icons/Warning';
 import { withStyles } from 'material-ui/styles';
 import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
 
@@ -41,27 +43,24 @@ class Grid extends React.Component {
   }
 
   componentDidMount() {
-    this.state.dataSource.connect(this.state.rowsPerPage, this.state.page)
+    const pageSize = parseInt(localStorage.getItem(`tubular.${this.props.gridName}_pageSize`)) || 10;
+    const searchText = localStorage.getItem(`tubular.${this.props.gridName}_searchText`) || '';
+
+    this.state.dataSource.connect(pageSize, this.state.page, searchText)
       .subscribe(tbResponse => {
         this.setState({
           data: tbResponse.payload,
           totalRecordCount: tbResponse.totalRecordCount || 0,
           filteredRecordCount: tbResponse.filteredRecordCount || 0,
-          aggregate: tbResponse.aggregate
+          aggregate: tbResponse.aggregate,
+          rowsPerPage: pageSize,
+          searchText: searchText
         });
       });
 
     this.search.debounce(600).subscribe(() => {
       this.refreshGrid();
     });
-
-    const pageSize = parseInt(localStorage.getItem(`tubular.${this.props.gridName}_pageSize`)) || 10;
-    const searchText = localStorage.getItem(`tubular.${this.props.gridName}_searchText`) || '';
-    
-    this.setState({ 
-      rowsPerPage: pageSize,
-      searchText: searchText
-    }, () => this.refreshGrid() );
   }
 
   handleTextSearch = searchText => {   
@@ -131,6 +130,17 @@ class Grid extends React.Component {
                 }
               </TableRow>              
           ))
+        }
+        {
+          filteredRecordCount === 0 && 
+            (<TableRow>
+              <TableCell style={{ display: 'flex', padding: '10px' }}>
+                <WarningIcon/>
+                <Typography style={{ paddingLeft: '15px' }} type='body2' gutterBottom>
+                  No records found
+                </Typography>
+              </TableCell>
+            </TableRow>)
         }
       </TableBody>
     );
