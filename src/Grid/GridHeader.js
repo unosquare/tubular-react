@@ -128,12 +128,14 @@ class GridHeader extends React.Component {
       secondValue = moment().format();
       break;
     default:
-      firstValue = dataSource.columns[count].Filter.Text && dataSource.columns[count].Filter.Text.toString();
-      secondValue = dataSource.columns[count].Filter.Argument[0] && dataSource.columns[count].Filter.Argument[0].toString();
+      firstValue = dataSource.columns[count].Filter && 
+        dataSource.columns[count].Filter.Text && dataSource.columns[count].Filter.Text.toString();
+      secondValue = dataSource.columns[count].Filter && 
+        dataSource.columns[count].Filter.Argument[0] && dataSource.columns[count].Filter.Argument[0].toString();
     }
 
     this.setState({
-      [dataSource.columns[count].Name]: dataSource.columns[count].Filter.Operator,
+      [dataSource.columns[count].Name]: dataSource.columns[count].Filter && dataSource.columns[count].Filter.Operator,
       [`${dataSource.columns[count].Name}Value`]: firstValue,
       [`${dataSource.columns[count].Name}Value2`]: secondValue,
       activeFilter: dataSource.columns[count].Name,
@@ -152,10 +154,12 @@ class GridHeader extends React.Component {
         if(dataSource.columns[i] !== undefined){
           dataSource.columns[i].SortDirection = element.SortDirection;
           dataSource.columns[i].SortOrder = element.SortOrder;
-          dataSource.columns[i].Filter.HasFilter = element.Filter.HasFilter;
-          dataSource.columns[i].Filter.Operator = element.Filter.Operator;
-          dataSource.columns[i].Filter.Text = element.Filter.Text || '';
-          dataSource.columns[i].Filter.Argument[0] = element.Filter.Argument[0] || '';
+          if(dataSource.columns[i].Filter && element.Filter){
+            dataSource.columns[i].Filter.HasFilter = element.Filter.HasFilter;
+            dataSource.columns[i].Filter.Operator = element.Filter.Operator;
+            dataSource.columns[i].Filter.Text = element.Filter.Text || '';
+            dataSource.columns[i].Filter.Argument[0] = element.Filter.Argument[0] || '';
+          }
         }
       });
 
@@ -245,7 +249,6 @@ class GridHeader extends React.Component {
     const { dataSource, classes } = this.props;
     
     return (
-        
       <TableRow>
         <Dialog open={this.state.open} onClose={this.handleClose} >
           <DialogTitle style={{ minWidth: '300px', background: '#ececec', padding: '15px 20px 15px 20px' }} id='responsive-dialog-title'>{'Filter'}</DialogTitle>
