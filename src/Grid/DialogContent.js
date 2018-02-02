@@ -17,11 +17,11 @@ const DialogContent = ({ classes, value, value2, columnType, activeFilter, opera
     secondValue = value2 ? value2 : moment().format();
     break;
   case 'boolean':
-    firstValue = value ? value : '';
+    firstValue = value || '';
     break;
   default:
-    firstValue = value ? value : '';
-    secondValue = value2 ? value2 : '';
+    firstValue = value || '';
+    secondValue = value2 || '';
   }
   
   return (
