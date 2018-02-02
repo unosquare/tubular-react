@@ -10,8 +10,7 @@ import Tooltip from 'material-ui/Tooltip';
 import moment from 'moment';
 import { withStyles } from 'material-ui/styles';
 import Dialog, { DialogTitle } from 'material-ui/Dialog';
-import { TableCell, TableHead, TableRow, TableSortLabel } from 'material-ui/Table';
-
+import { TableCell, TableRow, TableSortLabel } from 'material-ui/Table';
 
 const styles = theme => ({
   dropdown: {
@@ -46,9 +45,6 @@ const styles = theme => ({
 
 class GridHeader extends React.Component {
   state = {
-    dataSource: this.props.dataSource,
-    page: this.props.page,
-    rowsPerPage: this.props.rowsPerPage,
     open: false,
     columnType: '',
     activeFilter: '',
@@ -103,14 +99,75 @@ class GridHeader extends React.Component {
     }
     
     this.filterHandler(firstValue, secondValue, true);
+  }
+
+  handleKeyDown(event) {
+    if(event.key === 'Control' && this.state.sorting === 'Single') {
+      this.setState({ sorting: 'Multiple' });
+    } 
+  }
+
+  handleKeyUp(event) {
+    if(event.key === 'Control' && this.state.sorting === 'Multiple') {
+      this.setState({ sorting: 'Single' });
+    } 
+  }
+
+  localStorageHandler = (count, dataSource) => {
+    if(count >= dataSource.columns.length) 
+      return;
+    
+    let firstValue = '';
+    let secondValue = '';
+      
+    switch(dataSource.columns[count].DataType ){
+    case 'date':
+    case 'datetime':
+    case 'datetimeutc':
+      firstValue = moment().format();
+      secondValue = moment().format();
+      break;
+    default:
+      firstValue = dataSource.columns[count].Filter.Text && dataSource.columns[count].Filter.Text.toString();
+      secondValue = dataSource.columns[count].Filter.Argument[0] && dataSource.columns[count].Filter.Argument[0].toString();
+    }
 
     this.setState({
-      open: false
+      [dataSource.columns[count].Name]: dataSource.columns[count].Filter.Operator,
+      [`${dataSource.columns[count].Name}Value`]: firstValue,
+      [`${dataSource.columns[count].Name}Value2`]: secondValue,
+      activeFilter: dataSource.columns[count].Name,
+      columnType: dataSource.columns[count].DataType
+    }, () => {
+      this.localStorageHandler(count + 1, dataSource);
     });
   }
 
+  componentDidMount() {
+    if (localStorage.getItem(`tubular.${this.props.gridName}`)){
+      const storage = JSON.parse(localStorage.getItem(`tubular.${this.props.gridName}`));
+      const dataSource = this.props.dataSource;
+      
+      storage.forEach( (element, i) => {
+        if(dataSource.columns[i] !== undefined){
+          dataSource.columns[i].SortDirection = element.SortDirection;
+          dataSource.columns[i].SortOrder = element.SortOrder;
+          dataSource.columns[i].Filter.HasFilter = element.Filter.HasFilter;
+          dataSource.columns[i].Filter.Operator = element.Filter.Operator;
+          dataSource.columns[i].Filter.Text = element.Filter.Text || '';
+          dataSource.columns[i].Filter.Argument[0] = element.Filter.Argument[0] || '';
+        }
+      });
+
+      this.localStorageHandler(0, dataSource);
+    }
+
+    document.addEventListener('keydown', event => this.handleKeyDown(event));
+    document.addEventListener('keyup', event => this.handleKeyUp(event));
+  }
+
   filterHandler = (firstValue, secondValue, hasFilter) => {
-    this.state.dataSource.columns.forEach( (column, i) => {
+    this.props.dataSource.columns.forEach( column => {
       if(column.Name === this.state.activeFilter){
         column.Filter.Text = firstValue;
         column.Filter.Operator = this.state[this.state.activeFilter];
@@ -121,28 +178,17 @@ class GridHeader extends React.Component {
       }
     });
 
-    this.state.dataSource.filter(this.state.rowsPerPage, this.state.page);
+    this.props.refreshGrid();
+    this.handleClose();
   }
 
-  handleKeyDown(event) {
-    if(this.state.sorting === 'Single' && event.ctrlKey) {
-      this.setState({ sorting: 'Multiple' });
-    } 
-  }
-
-  handleKeyUp(event) {
-    if(this.state.sorting === 'Multiple') {
-      this.setState({ sorting: 'Single' });
-    } 
-  }
-
-  componentDidMount() {
-    document.addEventListener('keydown', () => this.handleKeyDown(event));
-    document.addEventListener('keyup', () => this.handleKeyUp(event));
+  componentWillUnmount() {
+    document.removeEventListener('keydown', event => this.handleKeyDown(event));
+    document.removeEventListener('keyup', event => this.handleKeyUp(event));
   }
 
   sortHandler = (event, property) => {
-    const array = Object.assign({}, this.state.dataSource);
+    const array = Object.assign({}, this.props.dataSource);
     
     array.columns.forEach( column => {
       if(column.Name === property){
@@ -172,7 +218,7 @@ class GridHeader extends React.Component {
       }
     });
 
-    this.state.dataSource.sort(this.state.rowsPerPage, this.state.page);
+    this.props.refreshGrid();
   }
 
   handleDatePicker = name => event => {
@@ -197,9 +243,10 @@ class GridHeader extends React.Component {
 
   render() {
     const { dataSource, classes } = this.props;
-
+    
     return (
-      <TableHead>
+        
+      <TableRow>
         <Dialog open={this.state.open} onClose={this.handleClose} >
           <DialogTitle style={{ minWidth: '300px', background: '#ececec', padding: '15px 20px 15px 20px' }} id='responsive-dialog-title'>{'Filter'}</DialogTitle>
           <DialogDropdown 
@@ -223,41 +270,39 @@ class GridHeader extends React.Component {
             handleClear={this.handleClear.bind(this)} 
           />          
         </Dialog>
-        <TableRow>
-          {dataSource.columns.map(column => {
-            const render = column.Sortable ?
-              (<Tooltip 
-                title='Click to sort. Press Ctrl to sort by multiple columns' 
-                placement='bottom-start' 
-                enterDelay={300}>
-                <TableSortLabel onClick={() => this.sortHandler(event, column.Name)} >
-                  {column.Label}
-                  {column.SortDirection === 'Ascending' ? 
-                    <ArrowUpward className={classes.arrowStyle} />
-                    : column.SortDirection === 'Descending' ? 
-                      <ArrowDownward className={classes.arrowStyle} />
-                      :
-                      <div className={classes.arrowStyle} />
-                  }
-                </TableSortLabel>
-              </Tooltip>)
-              : (column.Label);
-            const filter = column.Filter &&
+        {dataSource.columns.map(column => {
+          const render = column.Sortable ?
+            (<Tooltip 
+              title='Click to sort. Press Ctrl to sort by multiple columns' 
+              placement='bottom-start' 
+              enterDelay={300}>
+              <TableSortLabel onClick={event => this.sortHandler(event, column.Name)} >
+                {column.Label}
+                {column.SortDirection === 'Ascending' ? 
+                  <ArrowUpward className={classes.arrowStyle} />
+                  : column.SortDirection === 'Descending' ? 
+                    <ArrowDownward className={classes.arrowStyle} />
+                    :
+                    <div className={classes.arrowStyle} />
+                }
+              </TableSortLabel>
+            </Tooltip>)
+            : (column.Label);
+          const filter = column.Filter &&
               (<IconButton onClick={() => this.handleOpen(column)} >
-                {column.Filter.HasFilter ? 
+                {column.Filter.HasFilter && column.Filter.Operator !== 'None' ? 
                   <FilterListIcon style={{ background: '#28b62c', color: 'white', borderRadius: '50%' }}/> 
                   : 
                   <FilterListIcon/>}
               </IconButton>);
-            return (
-              <TableCell key={column.Label} padding={column.Label === '' ? 'none' : 'default'}>
-                {render}
-                {filter}
-              </TableCell>
-            );
-          })}
-        </TableRow>
-      </TableHead>
+          return (
+            <TableCell key={column.Label} padding={column.Label === '' ? 'none' : 'default'}>
+              {column.Visible && render}
+              {column.Visible && filter}
+            </TableCell>
+          );
+        })}
+      </TableRow>
     );
   }
 }

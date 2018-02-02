@@ -83,43 +83,67 @@ const columns = [
     },
     'DataType': 'string',
     'Aggregate': 'None'
+  },
+  {
+    'Label': 'Amount',
+    'Name': 'Amount',
+    'Sortable': true,
+    'SortOrder': -1,
+    'SortDirection': 'None',
+    'IsKey': false,
+    'Searchable': false,
+    'Visible': true,
+    'Filter': { 
+      Argument: [],
+      HasFilter: false,
+      Name: 'Amount',
+      Operator: 'None',
+      OptionsUrl: null,
+      Text: null
+    },
+    'DataType': 'numeric',
+    'Aggregate': 'None'
   }
 ];
 
 export default class Main extends React.Component {
   render() {
     const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns);
-
+    
     return (
-      <Grid dataSource={dataSource} 
+      <Grid dataSource={ dataSource } 
+        gridName = 'Motorhead'
         bodyRenderer = {
           (row, index) => 
             <TableRow hover key = { index }>
               <TableCell padding = { 'default' }>
-                { row.OrderID}
+                { row.OrderID }
               </TableCell>
               <TableCell padding = { 'default' }>
-                { row.CustomerName}
+                { row.CustomerName }
               </TableCell>
               <TableCell padding = { 'default' }>
-                { row.ShippedDate}
+                { row.ShippedDate }
               </TableCell>
               <TableCell padding = { 'default' }>
-                { row.ShipperCity}
+                { row.ShipperCity }
+              </TableCell>
+              <TableCell padding = { 'default' }>
+                { row.Amount }
               </TableCell>
             </TableRow>
         } 
-        rowsPerPage = { 25 } 
+        rowsPerPage = { 10 } 
+        showTopPager = { true }
+        showBottomPager = { true }
         footerRenderer = {
           aggregates => 
-            <TableFooter>
-              <TableRow>
-                <TableCell>Total: </TableCell>
-                <TableCell> { aggregates && aggregates.CustomerName } </TableCell>
-                <TableCell> ~~~ </TableCell>
-                <TableCell> ~~~ </TableCell>
-              </TableRow>
-            </TableFooter>
+            <TableRow>
+              <TableCell>Total: </TableCell>
+              <TableCell> { aggregates && aggregates.CustomerName } </TableCell>
+              <TableCell> ~~~ </TableCell>
+              <TableCell> ~~~ </TableCell>
+            </TableRow>
         }
       >
       </Grid>
