@@ -73,8 +73,9 @@ export default class Main extends React.Component {
             <TableRow>
               <TableCell>Total: </TableCell>
               <TableCell> { aggregates && aggregates.CustomerName } </TableCell>
-              <TableCell> ~~~ </TableCell>
-              <TableCell> ~~~ </TableCell>
+              <TableCell> </TableCell>
+              <TableCell> </TableCell>
+              <TableCell> </TableCell>
             </TableRow>
         }
       >

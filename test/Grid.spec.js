@@ -1,7 +1,7 @@
 import Adapter from 'enzyme-adapter-react-16';
 import Axios from 'axios';
 import Enzyme from 'enzyme';
-import fakeColumnStructure from './utils/fakeColumnStructure.json';
+import fakeColumnStructure from './utils/fakeColumnStructure.js';
 import Grid from '../src/Grid/Grid';
 import MockAdapter from 'axios-mock-adapter';
 import orders from './utils/orders.json';
@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
 import { expect } from 'chai';
+import Typography from 'material-ui/Typography';
 import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
 import { createMount, createShallow } from 'material-ui/test-utils';
 
@@ -204,7 +205,7 @@ describe('<Grid />', () => {
       });
 
       const grid = <Grid 
-        dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') }
+        dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns) }
         bodyRenderer = { bodyRenderer }
         columns = { columns } />;
 
@@ -216,17 +217,17 @@ describe('<Grid />', () => {
   });
 
   describe('When the column structure defined by the user is wrong', () => {
-    it('should not render any row in the body', () => {
+    it('should render a row in the body with the warning message', () => {
       mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { fakeColumnStructure });
 
       const grid = <Grid 
-        dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') }
+        dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', fakeColumnStructure) }
         columns = { fakeColumnStructure } />;
 
       const wrapper = shallow(grid);
-      const rowBody = wrapper.find(Table).find(TableBody).find(TableRow);
+      const rowBody = wrapper.find(Table).find(TableBody).find(TableRow).find(TableCell).find(Typography);
 
-      expect(rowBody).to.have.lengthOf(0);
+      expect(rowBody).to.have.lengthOf(1);
     });
   });
 
@@ -237,7 +238,7 @@ describe('<Grid />', () => {
         orders
       });
     
-      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') }
+      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns) }
         columns = { columns }
       />;
 
@@ -256,7 +257,7 @@ describe('<Grid />', () => {
     });
 
     it('should render the row with the aggregate operation', () => {
-      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') }
+      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns) }
         columns = { columns }
         footerRenderer = { footerRenderer }
       />;
@@ -269,7 +270,7 @@ describe('<Grid />', () => {
     });
 
     it('should render the row with the bottom pager', () => {
-      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') }
+      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns) }
         columns = { columns }
         showBottomPager = { true }
       />;
@@ -281,7 +282,7 @@ describe('<Grid />', () => {
     });
 
     it('should render the rows with the aggregate operation and the bottom pager', () => {
-      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') }
+      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns) }
         columns = { columns }
         showBottomPager = { true }
         footerRenderer = { footerRenderer }
@@ -303,7 +304,7 @@ describe('<Grid />', () => {
     });
 
     it('should have a paginator', () => {
-      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') }
+      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns) }
         columns = { columns }
         showBottomPager = { true }
       />;
