@@ -36,16 +36,16 @@ const DialogDropdown = ({ classes, value, columnType, activeFilter, handleChange
 
   switch (columnType){
   case 'string':
-    component = <Dropdown operators={StringOperators} classes={classes} value={dropdownValue} activeFilter={activeFilter} handleChange={handleChange}/>;
+    component = <Dropdown disabled={false} operators={StringOperators} classes={classes} value={dropdownValue} activeFilter={activeFilter} handleChange={handleChange}/>;
     break;
   case 'numeric':
   case 'datetime':
   case 'date':
   case 'datetimeutc':
-    component = <Dropdown operators={NumericOperators} classes={classes} value={dropdownValue} activeFilter={activeFilter} handleChange={handleChange}/>;
+    component = <Dropdown disabled={false} operators={NumericOperators} classes={classes} value={dropdownValue} activeFilter={activeFilter} handleChange={handleChange}/>;
     break;
   case 'boolean':
-    component = <Dropdown operators={BooleanOperators} classes={classes} value={dropdownValue} activeFilter={activeFilter} handleChange={handleChange}/>;
+    component = <Dropdown disabled={false} operators={BooleanOperators} classes={classes} value={dropdownValue} activeFilter={activeFilter} handleChange={handleChange}/>;
     break;
   default: 
     component = null;

@@ -56,7 +56,11 @@ class GridHeader extends React.Component {
   };
 
   handleOpen = column => {
-    this.setState({ columnType: column.DataType, activeFilter: column.Name, open: true });
+    this.setState({ columnType: column.DataType, activeFilter: column.Name, open: true }, 
+      () => {
+        document.getElementById(this.state.activeFilter).blur();
+      }
+    );
   }
 
   handleClear = () => {
@@ -85,7 +89,7 @@ class GridHeader extends React.Component {
   handleApply = () => {
     let firstValue = this.state[`${this.state.activeFilter}Value`];
     let secondValue = secondValue !== null && this.state[`${this.state.activeFilter}Value2`];
-
+    
     switch (this.state.columnType) {
     case 'numeric':
       firstValue = parseFloat(firstValue);
@@ -292,7 +296,7 @@ class GridHeader extends React.Component {
             </Tooltip>)
             : (column.Label);
           const filter = column.Filter &&
-              (<IconButton onClick={() => this.handleOpen(column)} >
+              (<IconButton id={column.Name} onClick={() => this.handleOpen(column)} >
                 {column.Filter.HasFilter && column.Filter.Operator !== 'None' ? 
                   <FilterListIcon style={{ background: '#28b62c', color: 'white', borderRadius: '50%' }}/> 
                   : 

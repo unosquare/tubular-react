@@ -10,10 +10,11 @@ const BooleanInputOperators = [
   { Value: 'false', Title: 'False' }
 ];
 
-const DialogInput = ({ classes, value, columnType, activeFilter, label, 
-  mod, handleBooleanDropDown, handleDatePicker, handleTextFieldChange }) => (
+const DialogInput = ({ classes, disabled, value, columnType, activeFilter, label, 
+  mod, handleApply, handleBooleanDropDown, handleDatePicker, handleTextFieldChange }) => (
   columnType === 'datetime' || columnType === 'date' || columnType === 'datetimeutc' ? 
     <DateInput 
+      disabled={disabled}
       value={value} 
       label={label} 
       mod={mod}
@@ -22,6 +23,7 @@ const DialogInput = ({ classes, value, columnType, activeFilter, label,
     : 
     columnType === 'boolean' ? 
       <Dropdown 
+        disabled={disabled}
         value={value} 
         operators={BooleanInputOperators} 
         classes={classes} 
@@ -29,10 +31,12 @@ const DialogInput = ({ classes, value, columnType, activeFilter, label,
         handleChange={handleBooleanDropDown}/> 
       :
       <TextInput 
+        disabled={disabled}
         value={value} 
         label={label} 
         mod={mod} 
         activeFilter={activeFilter}
+        handleApply={handleApply}
         handleTextFieldChange={handleTextFieldChange}/>
 );
 
@@ -40,6 +44,7 @@ DialogInput.propTypes = {
   activeFilter: PropTypes.string.isRequired, 
   classes: PropTypes.object.isRequired,
   columnType: PropTypes.string.isRequired,
+  disabled: PropTypes.bool.isRequired,
   handleBooleanDropDown: PropTypes.func.isRequired,
   handleDatePicker: PropTypes.func.isRequired,
   handleTextFieldChange: PropTypes.func.isRequired,
