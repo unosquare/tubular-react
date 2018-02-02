@@ -4,6 +4,7 @@ import Enzyme from 'enzyme';
 import Grid from '../src/Grid/Grid';
 import MockAdapter from 'axios-mock-adapter';
 import orders from './utils/orders.json';
+import Paginator from '../src/Grid/Paginator';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -281,6 +282,24 @@ describe('<Grid />', () => {
       const rowFooter = wrapper.find(Table).find(TableFooter).find(TableRow);
 
       expect(rowFooter).to.have.lengthOf(2);
+    });
+  });
+
+  describe('When footer has showBottomPager property set as true', () => {
+    it('should have a paginator', () => {
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { columns }).reply(200, {
+        orders
+      });
+    
+      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') }
+        columns = { columns }
+        showBottomPager = { true }
+      />;
+
+      const wrapper = shallow(grid);
+      const rowFooter = wrapper.find(Table).find(TableFooter).find(TableRow).find(Paginator);
+
+      expect(rowFooter).to.have.lengthOf(1);
     });
   });
 
