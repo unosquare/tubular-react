@@ -1,7 +1,7 @@
 import Grid from '../../src/Grid/Grid';
 import React from 'react';
 import RemoteDataSource from '../../src/Grid/RemoteDataSource';
-import { TableCell, TableFooter, TableRow } from 'material-ui/Table';
+import { TableCell, TableRow } from 'material-ui/Table';
 
 const columns = [
   {

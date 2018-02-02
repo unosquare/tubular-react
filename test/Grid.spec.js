@@ -215,6 +215,21 @@ describe('<Grid />', () => {
     });
   });
 
+  describe('When the column structure defined by the user is wrong', () => {
+    it('should not render any row in the body', () => {
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { fakeColumnStructure });
+
+      const grid = <Grid 
+        dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') }
+        columns = { fakeColumnStructure } />;
+
+      const wrapper = shallow(grid);
+      const rowBody = wrapper.find(Table).find(TableBody).find(TableRow);
+
+      expect(rowBody).to.have.lengthOf(0);
+    });
+  });
+
   /** Unit tests for custom footer */
   describe('When footer has no rows', () => {
     it('should not render any row', () => {
@@ -297,26 +312,6 @@ describe('<Grid />', () => {
       const rowFooter = wrapper.find(Table).find(TableFooter).find(TableRow).find(Paginator);
 
       expect(rowFooter).to.have.lengthOf(1);
-    });
-  });
-  
-  describe('RemoteDataSource', () => {
-    it('should response with status 200 when column structure is OK', () => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { columns }).reply(200);
-
-      axiosInstance.post('http://tubular.azurewebsites.net/api/orders/paged', { columns })
-        .then(response => {
-          expect(response.status).to.equal(200);
-        });
-    });
-
-    it('should response with status 500 when column structure is not OK', () => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { fakeColumnStructure }).reply(500);
-
-      axiosInstance.post('http://tubular.azurewebsites.net/api/orders/paged', { fakeColumnStructure })
-        .catch(error => {
-          expect(error.response.status).to.equal(500);
-        });
     });
   });
 
