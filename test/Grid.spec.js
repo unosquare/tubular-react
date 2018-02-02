@@ -243,6 +243,7 @@ describe('<Grid />', () => {
       />;
 
       const wrapper = shallow(grid);
+      wrapper.setState({ aggregate });
       const rowFooter = wrapper.find(Table).find(TableFooter).find(TableRow);
 
       expect(rowFooter).to.have.lengthOf(1);
@@ -276,6 +277,7 @@ describe('<Grid />', () => {
       />;
 
       const wrapper = shallow(grid);
+      wrapper.setState({ aggregate });
       const rowFooter = wrapper.find(Table).find(TableFooter).find(TableRow);
 
       expect(rowFooter).to.have.lengthOf(2);
