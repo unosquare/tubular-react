@@ -222,6 +222,23 @@ describe('<Grid />', () => {
     
       const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') }
         columns = { columns }
+      />;
+
+      const wrapper = shallow(grid);
+      const rowFooter = wrapper.find(Table).find(TableFooter).find(TableRow);
+
+      expect(rowFooter).to.have.lengthOf(0);
+    });
+  });
+
+  describe('When footer has n rows', () => {
+    it('should render the row with the aggregate operation', () => {
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { columns }).reply(200, {
+        orders
+      });
+    
+      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') }
+        columns = { columns }
         footerRenderer = { footerRenderer }
       />;
 
@@ -231,42 +248,6 @@ describe('<Grid />', () => {
       expect(rowFooter).to.have.lengthOf(1);
     });
   });
-
-  // describe('When footer is not defined', () => {
-  //   it('should not render nothing', () => {
-  //     mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { columns }).reply(200, {
-  //       orders
-  //     });
-    
-  //     const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') }
-  //       columns = { columns }
-  //     />;
-
-  //     const wrapper = shallow(grid);
-  //     const footer = wrapper.find(Table).find(TableFooter);
-
-  //     expect(footer).to.not.have.lengthOf(1);
-  //   });
-  // });
-
-  // describe('When footer is defined', () => {
-  //   it('should render the custom footer', () => {
-  //     mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { columns }).reply(200, {
-  //       orders
-  //     });
-
-  //     const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') }
-  //       columns = { columns }
-  //       footerRenderer = { footerRenderer }
-  //     />;
-
-  //     const wrapper = shallow(grid);
-  //     wrapper.setState({ aggregate });
-  //     const footer = wrapper.find(Table).find(TableFooter);
-
-  //     expect(footer).to.have.lengthOf(1);
-  //   });
-  // });
 
   beforeEach(() => {
     props = {
