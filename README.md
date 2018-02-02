@@ -19,7 +19,7 @@ Please visit the <a href="http://unosquare.github.io/tubular" target="_blank">Tu
 
 ## Dependencies
 * [React](https://reactjs.org/) - 15.x or 16.x
-* [Material-ui](https://material-ui-next.com/) - Next
+* [Material-UI](https://material-ui-next.com/) - Next
 * [ReactDOM](https://reactjs.org/docs/react-dom.html) - 15.x or 16.x
 
 ## npm Installation 
@@ -41,14 +41,7 @@ const columns = [
     IsKey: true,
     Searchable: false,
     Visible: true,
-    Filter: { 
-      Argument: [],
-      HasFilter: false,
-      Name: 'OrderID',
-      Operator: 'None',
-      OptionsUrl: null,
-      Text: null
-    },
+    Filter: null,
     DataType: 'numeric',
     Aggregate: 'None'
   },
@@ -83,11 +76,37 @@ dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/pa
     const { dataSource } = this.state; 
 
     return (
-      <Grid dataSource={dataSource} rowsPerPage = { 25 } />
+      <Grid dataSource={dataSource} rowsPerPage = { 10 } gridName = 'table' />
     );
   }
 }
 
+```
+
+Using a custom body and footer renderer
+```js
+<Grid dataSource={ dataSource } 
+        gridName = 'table'
+        bodyRenderer = {
+          (row, index) => 
+            <TableRow hover key = { index }>
+              <TableCell padding = { 'default' }>
+                { row.OrderID }
+              </TableCell>
+              <TableCell padding = { 'default' }>
+                { row.CustomerName }
+              </TableCell>
+            </TableRow>
+        } 
+        rowsPerPage = { 10 } 
+        footerRenderer = {
+          aggregates => 
+            <TableRow>
+              <TableCell>Total: </TableCell>
+              <TableCell> { aggregates && aggregates.CustomerName } </TableCell>
+            </TableRow>
+        }
+      />
 ```
 
 ### Props 
@@ -95,12 +114,14 @@ These are all the available props (and their default values) for the `<Grid />` 
 ```js
 {
   bodyRenderer: undefined,
-  dataSource: undefined,
+  dataSource: undefined, //required
   footerRenderer: undefined,  
+  gridName: undefined, // required
   page: 0,
   rowsPerpage: 5,
-  title: '',
-  showPrintButton: false
+  showPrintButton: false,
+  showTopPager: false,
+  showBottomPager: false,
 }
 
 ```
