@@ -1,6 +1,7 @@
 import Adapter from 'enzyme-adapter-react-16';
 import Axios from 'axios';
 import Enzyme from 'enzyme';
+import fakeColumnStructure from './utils/fakeColumnStructure.json';
 import Grid from '../src/Grid/Grid';
 import MockAdapter from 'axios-mock-adapter';
 import orders from './utils/orders.json';
@@ -296,6 +297,26 @@ describe('<Grid />', () => {
       const rowFooter = wrapper.find(Table).find(TableFooter).find(TableRow).find(Paginator);
 
       expect(rowFooter).to.have.lengthOf(1);
+    });
+  });
+  
+  describe('RemoteDataSource', () => {
+    it('should response with status 200 when column structure is OK', () => {
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { columns }).reply(200);
+
+      axiosInstance.post('http://tubular.azurewebsites.net/api/orders/paged', { columns })
+        .then(response => {
+          expect(response.status).to.equal(200);
+        });
+    });
+
+    it('should response with status 500 when column structure is not OK', () => {
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { fakeColumnStructure }).reply(500);
+
+      axiosInstance.post('http://tubular.azurewebsites.net/api/orders/paged', { fakeColumnStructure })
+        .catch(error => {
+          expect(error.response.status).to.equal(500);
+        });
     });
   });
 
