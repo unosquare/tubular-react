@@ -247,6 +247,39 @@ describe('<Grid />', () => {
 
       expect(rowFooter).to.have.lengthOf(1);
     });
+
+    it('should render the row with paginator', () => {
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { columns }).reply(200, {
+        orders
+      });
+    
+      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') }
+        columns = { columns }
+        showBottomPager = { true }
+      />;
+
+      const wrapper = shallow(grid);
+      const rowFooter = wrapper.find(Table).find(TableFooter).find(TableRow);
+
+      expect(rowFooter).to.have.lengthOf(1);
+    });
+
+    it('should render the rows with the aggregate operation and paginator', () => {
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { columns }).reply(200, {
+        orders
+      });
+    
+      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged') }
+        columns = { columns }
+        showBottomPager = { true }
+        footerRenderer = { footerRenderer }
+      />;
+
+      const wrapper = shallow(grid);
+      const rowFooter = wrapper.find(Table).find(TableFooter).find(TableRow);
+
+      expect(rowFooter).to.have.lengthOf(2);
+    });
   });
 
   beforeEach(() => {
