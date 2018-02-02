@@ -248,7 +248,7 @@ describe('<Grid />', () => {
       expect(rowFooter).to.have.lengthOf(1);
     });
 
-    it('should render the row with paginator', () => {
+    it('should render the row with the bottom pager', () => {
       mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { columns }).reply(200, {
         orders
       });
@@ -264,7 +264,7 @@ describe('<Grid />', () => {
       expect(rowFooter).to.have.lengthOf(1);
     });
 
-    it('should render the rows with the aggregate operation and paginator', () => {
+    it('should render the rows with the aggregate operation and the bottom pager', () => {
       mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { columns }).reply(200, {
         orders
       });
