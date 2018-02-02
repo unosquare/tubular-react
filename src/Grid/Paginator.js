@@ -4,7 +4,7 @@ import { TablePagination } from 'material-ui/Table';
 import TablePaginationActions from './TablePaginationActions';
 import { withStyles } from 'material-ui/styles';
 
-const Paginator = ({ handlePager, rowsPerPage, page, filteredRecordCount, totalRecordCount }) => {
+const Paginator = ({ gridName, handlePager, rowsPerPage, page, filteredRecordCount, totalRecordCount }) => {
   const handleChangePage = (event, page) => {
     handlePager(rowsPerPage, page);
   };
@@ -18,6 +18,9 @@ const Paginator = ({ handlePager, rowsPerPage, page, filteredRecordCount, totalR
     filteredRecordCount === 0 ?  
       '0 records found' :
       `${from} to ${to} of ${count} from ${totalRecordCount} records`;
+
+  const pageSize = parseInt(localStorage.getItem(`tubular.${gridName}_pageSize`)) || 10;
+  rowsPerPage = pageSize;
 
   return(
     <TablePagination

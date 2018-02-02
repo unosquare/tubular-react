@@ -153,7 +153,7 @@ class GridHeader extends React.Component {
     if (localStorage.getItem(`tubular.${this.props.gridName}`)){
       const storage = JSON.parse(localStorage.getItem(`tubular.${this.props.gridName}`));
       const dataSource = this.props.dataSource;
-      
+
       storage.forEach( (element, i) => {
         if(dataSource.columns[i] !== undefined){
           dataSource.columns[i].SortDirection = element.SortDirection;
