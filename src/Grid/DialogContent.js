@@ -8,20 +8,20 @@ const DialogContent = ({ classes, value, value2, columnType, activeFilter, opera
   handleDatePicker, handleBooleanDropDown, handleTextFieldChange, handleApply, handleClear }) => {
   let firstValue = '';
   let secondValue = '';
-    
+
   switch (columnType){
   case 'datetime':
   case 'date':
   case 'datetimeutc':
-    firstValue = value === undefined ? moment().format() : value;
-    secondValue = value2 === undefined ? moment().format() : value2;
+    firstValue = value ? value : moment().format();
+    secondValue = value2 ? value2 : moment().format();
     break;
   case 'boolean':
-    firstValue = value === undefined ? '' : value;
+    firstValue = value || '';
     break;
   default:
-    firstValue = value === undefined ? '' : value;
-    secondValue = value2 === undefined ? '' : value2;
+    firstValue = value || '';
+    secondValue = value2 || '';
   }
   
   return (

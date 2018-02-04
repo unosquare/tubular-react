@@ -7,19 +7,18 @@ import PrintIcon from 'material-ui-icons/Print';
 import PropTypes from 'prop-types';
 import React from 'react';
 import SearchIcon from 'material-ui-icons/Search';
-import { Subject } from 'rx';
 import Toolbar from 'material-ui/Toolbar';
 import { withStyles } from 'material-ui/styles';
 import Input, { InputAdornment } from 'material-ui/Input';
 import Menu, { MenuItem } from 'material-ui/Menu';
-import ButtonCSV from './ButtonCSV';
+import { buildURI, toCSV } from './ExportCSV';
 
 const styles = theme => ({
   spacer: {
     flex: '1 1 100%'
   },
   searchField: {
- 
+
   },
   formControl: {
     margin: theme.spacing.unit,
@@ -31,34 +30,34 @@ const styles = theme => ({
 });
 
 class GridToolbar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      searchText: '',
-      debounced: '',
-      anchorEl: null
-    };
-    this.search = new Subject();
-  }
-  
-  componentDidMount(){
-    this.search.debounce(700).subscribe(() => {
-      if(this.props.onSearchTextChange)
-        this.props.onSearchTextChange(this.state.searchText);
-    });
+  state = {
+    searchText: '',
+    debounced: '',
+    anchorEl: null,
+    data: [],
+  };
+
+  componentDidMount() {
+    const searchText = localStorage.getItem(`tubular.${this.props.gridName}_searchText`);
+
+    if (searchText) {
+      this.setState({
+        searchText
+      });
+    }
   }
 
   handleInputChange = event => {
     const searchText = event.target.value;
-    this.setState({ searchText }, () => this.search.onNext());
+    this.setState({ searchText }, () => this.props.onSearchTextChange(searchText));
   }
 
   clearSearchText = () => {
     this.setState({
       searchText: ''
-    }, () => this.search.onNext());
+    }, () => this.props.onSearchTextChange(this.state.searchText));
   }
-  
+
   handleMenuOpen = event => {
     this.setState({
       anchorEl: event.currentTarget
@@ -70,19 +69,37 @@ class GridToolbar extends React.Component {
       anchorEl: null
     });
   }
+  buildURI() {
+    const { dataSource, filteredRecordCount } = this.props;
+    const { searchText, data } = this.state;
+    dataSource.getAllRecords(filteredRecordCount, 0, searchText)
+    .then(({ payload }) => {
+        this.setState({data: payload})
+})
+    return buildURI(data);
+  }
 
-
-  render(){
-    const { classes, isPrintEnabled, isExportEnabled, allData, data } = this.props;
-    const { searchText, anchorEl } = this.state;
-    return(
+  render() {
+    const { classes, isPrintEnabled, isExportEnabled, onPrint, headers, separator, uFEFF, children, ...rest } = this.props;
+    const { searchText, anchorEl, data } = this.state;
+    return (
       <Toolbar>
         <div className={classes.spacer}></div>
-          <ButtonCSV data={allData} currentData={data} filename='data.csv'/>
         {
-          isPrintEnabled && 
-          <IconButton>
-            <PrintIcon/>
+          isExportEnabled &&
+          <a download={"data.csv"} {...rest}
+            ref={link => (this.link = link)}
+            href={this.buildURI(data, uFEFF, headers, separator, "data.csv")}
+            >
+            <IconButton>
+              <DownloadIcon />
+            </IconButton>
+          </a>
+        }
+        {
+          isPrintEnabled &&
+          <IconButton onClick={onPrint}>
+            <PrintIcon />
           </IconButton>
         }
         <FormControl className={classes.formControl}>
@@ -96,7 +113,7 @@ class GridToolbar extends React.Component {
             startAdornment={
               <InputAdornment position='end'>
                 <IconButton>
-                  <SearchIcon/>
+                  <SearchIcon />
                 </IconButton>
               </InputAdornment>
             }
@@ -104,7 +121,7 @@ class GridToolbar extends React.Component {
               searchText !== '' &&
               <InputAdornment position='end'>
                 <IconButton onClick={this.clearSearchText}>
-                  <CloseIcon/>
+                  <CloseIcon />
                 </IconButton>
               </InputAdornment>
             }
@@ -116,10 +133,14 @@ class GridToolbar extends React.Component {
 }
 
 GridToolbar.propTypes = {
-  classes: PropTypes.object.isRequired, 
+  classes: PropTypes.object.isRequired,
   isExportEnabled: PropTypes.bool,
   isPrintEnabled: PropTypes.bool,
-  onSearchTextChange: PropTypes.func  
+  onSearchTextChange: PropTypes.func.isRequired
+};
+
+GridToolbar.defaultProps = {
+  onSearchTextChange: x => x
 };
 
 export default withStyles(styles)(GridToolbar);
