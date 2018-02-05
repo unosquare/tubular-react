@@ -11,7 +11,6 @@ import Toolbar from 'material-ui/Toolbar';
 import { withStyles } from 'material-ui/styles';
 import Input, { InputAdornment } from 'material-ui/Input';
 import Menu, { MenuItem } from 'material-ui/Menu';
-import { buildURI, toCSV } from './ExportCSV';
 
 const styles = theme => ({
   spacer: {
@@ -34,7 +33,6 @@ class GridToolbar extends React.Component {
     searchText: '',
     debounced: '',
     anchorEl: null,
-    data: [],
   };
 
   componentDidMount() {
@@ -69,41 +67,38 @@ class GridToolbar extends React.Component {
       anchorEl: null
     });
   }
-
-  buildURI() {
-    const { dataSource, filteredRecordCount } = this.props;
-    const { searchText, data } = this.state;
-    
-    dataSource.getAllRecords(filteredRecordCount, 0, searchText)
-      .then(({ payload }) => {
-        this.setState({ data: payload });
-      });
-
-    return buildURI(data);
+  exportCSV = (filtered, e) => {
+    const { onExport } = this.props;
+    e.preventDefault();
+    this.setState({
+      anchorEl: null
+    });
+    onExport(filtered)
   }
 
   render() {
-    const { classes, isPrintEnabled, isExportEnabled, onPrint, headers, separator, uFEFF } = this.props;
-    const { searchText, anchorEl, data } = this.state;
+    const { classes, isPrintEnabled, isExportEnabled, onPrint } = this.props;
+    const { searchText, anchorEl } = this.state;
     return (
       <Toolbar>
         <div className={classes.spacer}></div>
         {
           isExportEnabled &&
-          <a download={ 'data.csv' }
-            ref={link => (this.link = link)}
-            href={this.buildURI(data, uFEFF, headers, separator, 'data.csv' )}
+          <Button
+            raised
+            color='accent'
+            className={classes.button}
+            onClick={this.handleMenuOpen}
           >
-            <IconButton>
-              <DownloadIcon />
-            </IconButton>
-          </a>
+            <DownloadIcon />
+            Export CSV
+         </Button>
         }
         {
           isPrintEnabled &&
-            <IconButton onClick={onPrint}>
-              <PrintIcon />
-            </IconButton>
+          <IconButton onClick={onPrint}>
+            <PrintIcon />
+          </IconButton>
         }
         <FormControl className={classes.formControl}>
           <Input
@@ -130,6 +125,14 @@ class GridToolbar extends React.Component {
             }
           />
         </FormControl>
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={this.handleMenuClose}
+        >
+            <MenuItem onClick={(e) => this.exportCSV(false, e)}> All rows</MenuItem>
+            <MenuItem onClick={(e) => this.exportCSV(true, e)}> Current rows</MenuItem>
+        </Menu>
       </Toolbar>
     );
   }
