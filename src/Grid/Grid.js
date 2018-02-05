@@ -174,15 +174,12 @@ class Grid extends React.Component {
               refreshGrid={this.refreshGrid.bind(this)}
             />
           </TableHead>
-
           { body }
-          
           <TableFooter>
             { footerRenderer && footerRenderer(aggregate) }
 
             { showBottomPager && paginator }
           </TableFooter>
-
         </Table>
       </Paper>
     );
