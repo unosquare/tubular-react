@@ -1,4 +1,3 @@
-import Button from 'material-ui/Button';
 import GridHeader from './GridHeader';
 import GridToolbar from './GridToolbar';
 import Paginator from './Paginator';
@@ -9,7 +8,6 @@ import { Subject } from 'rx';
 import Typography from 'material-ui/Typography';
 import WarningIcon from 'material-ui-icons/Warning';
 import { withStyles } from 'material-ui/styles';
-import Dialog, { DialogActions, DialogContent, DialogContentText, DialogTitle } from 'material-ui/Dialog';
 import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
 
 const styles = theme => ({
@@ -53,8 +51,7 @@ class Grid extends React.Component {
       data: [],
       totalRecordCount: 0,
       filteredRecordCount: 0,
-      aggregate: {},
-      printError: false
+      aggregate: {}
     };
 
     this.search = new Subject();
@@ -99,21 +96,11 @@ class Grid extends React.Component {
     localStorage.setItem(`tubular.${this.props.gridName}_searchText`, searchText );
   }
 
-  openPrintErrorHandler = () => {
-    this.setState({ printError: true });
-  }
-
-  closePrintErrorHandler = () => {
-    this.setState({ printError: false });
-  }
-
   printTable = () => {
     const { dataSource, filteredRecordCount, searchText } = this.state;
 
-    if(filteredRecordCount === 0){
-      this.openPrintErrorHandler();
+    if(filteredRecordCount === 0)
       return;
-    }
 
     dataSource.getAllRecords(filteredRecordCount, 0, searchText)
       .then(({ payload }) => {
@@ -193,35 +180,10 @@ class Grid extends React.Component {
       </TableRow>
     );
 
-    const printErrorDialog = (
-      <Dialog
-        open={this.state.printError}
-        onClose={this.closePrintErrorHandler}
-      >
-        <DialogTitle className={classes.dialogTitleStyle}>
-          No records found
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText className={classes.dialogContentStyle}>
-              There are no records to print
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button 
-            onClick={this.closePrintErrorHandler} 
-            className={classes.dialogButtonStyle} 
-            autoFocus
-          >
-              Ok
-          </Button>
-        </DialogActions>
-      </Dialog>
-    );
-
     return (
       <Paper className={classes.root}>
-        {printErrorDialog}
         <GridToolbar 
+          filteredRecordCount={filteredRecordCount}
           gridName={this.props.gridName} 
           onSearchTextChange={this.handleTextSearch} 
           isPrintEnabled={showPrintButton} 
@@ -243,7 +205,6 @@ class Grid extends React.Component {
           { body }
           <TableFooter>
             { footerRenderer && footerRenderer(aggregate) }
-
             { showBottomPager && paginator }
           </TableFooter>
         </Table>
