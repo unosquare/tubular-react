@@ -101,9 +101,9 @@ These are all the available props (and their default values) for the `<Grid />` 
   dataSource: undefined, //required
   footerRenderer: undefined,  
   gridName: undefined, // required
-  page: 0,
-  rowsPerpage: 5,
+  rowsPerpage: 10,
   showPrintButton: false,
+  showExportButton: false,
   showTopPager: false,
   showBottomPager: false,
 }
