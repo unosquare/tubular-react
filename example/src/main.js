@@ -1,6 +1,7 @@
 import Grid from '../../src/Grid/Grid';
 import React from 'react';
 import RemoteDataSource from '../../src/Grid/RemoteDataSource';
+import moment from 'moment';
 import { TableCell, TableRow } from 'material-ui/Table';
 
 const columns = [
@@ -35,11 +36,14 @@ const columns = [
   },
   {
     Label: 'Shipper City',
-    Name: 'ShipperCity',
+    Name: 'ShipperCity'
   },
   {
     Label: 'Amount',
     Name: 'Amount',
+    Sortable: true,
+    SortOrder: -1,
+    SortDirection: 'None',
     DataType: 'numeric'
   }
 ];
@@ -61,13 +65,13 @@ export default class Main extends React.Component {
                 { row.CustomerName }
               </TableCell>
               <TableCell padding = { 'default' }>
-                { row.ShippedDate }
+                { moment(row.ShippedDate).format('MMMM Do YYYY, h:mm:ss a')}
               </TableCell>
               <TableCell padding = { 'default' }>
                 { row.ShipperCity }
               </TableCell>
               <TableCell padding = { 'default' }>
-                { row.Amount }
+                { row.Amount || 0 }
               </TableCell>
             </TableRow>
         } 

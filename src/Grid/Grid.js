@@ -7,6 +7,7 @@ import React from 'react';
 import { Subject } from 'rx';
 import Typography from 'material-ui/Typography';
 import WarningIcon from 'material-ui-icons/Warning';
+import moment from 'moment';
 import { withStyles } from 'material-ui/styles';
 import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
 
@@ -112,6 +113,7 @@ class Grid extends React.Component {
             .reduce((prev, el) => `${prev}<th>${el.Label || el.Name}</th>`, '')
         }</tr></thead><tbody>${ 
           payload.map(row => {
+            /* console.log(payload); */
             if(row instanceof Object){
               row = Object.keys(row).map(key => row[key]);
             }
@@ -119,7 +121,11 @@ class Grid extends React.Component {
               if(dataSource.columns[index] && !dataSource.columns[index].Visible){
                 return '';
               }
-              return `<td>${cell || ''}</td>`;
+              return `<td>${ dataSource.columns[index].DataType === 'datetime' || 
+              dataSource.columns[index].DataType === 'date' || 
+              dataSource.columns[index].DataType === 'datetimeutc' ? 
+                moment(cell).format('MMMM Do YYYY, h:mm:ss a') : 
+                cell || 0}</td>`;
             }).join(' ')}</tr>`;
           }).join(' ')}</tbody></table>`;
         popup.document.write('<body onload="window.print();">');
@@ -142,10 +148,14 @@ class Grid extends React.Component {
               ? bodyRenderer(row, rowIndex) 
               : <TableRow hover key={rowIndex}>
                 {                
-                  dataSource.columns.map((column, colIndex) =>
+                  dataSource.columns.filter(col => col.Visible).map((column, colIndex) =>
                     <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
                       {
-                        column.Visible && row[column.Name]
+                        column.DataType === 'numeric' ? 
+                          row[column.Name] || 0 : 
+                          column.DataType === 'datetime' || column.DataType === 'date' || column.DataType === 'datetimeutc' ? 
+                            moment(row[column.Name]).format('MMMM Do YYYY, h:mm:ss a') || '' : 
+                            row[column.Name]
                       }
                     </TableCell>)
                 }
