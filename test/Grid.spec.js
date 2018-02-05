@@ -57,7 +57,7 @@ describe('<Grid />', () => {
 
   it('should render n columns', () => {
     const columns = grid().find(TableHead).find(TableRow).find(TableCell);
-    expect(columns).to.have.lengthOf(4);
+    expect(columns).to.have.lengthOf(5);
   });
       
   it('should have 1 rows at first', () => {
