@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Select from 'material-ui/Select';
 
-const Dropdown = ({ classes, value, handleChange, activeFilter, operators }) => (
+const Dropdown = ({ classes, disabled, value, handleChange, activeFilter, operators }) => (
   <div style={{ padding: '20px 20px 5px 20px' }}>
     <Select
+      disabled={disabled}
       className={classes.dropdown}
       value={value}
       onChange={handleChange}
@@ -24,6 +25,7 @@ const Dropdown = ({ classes, value, handleChange, activeFilter, operators }) => 
 Dropdown.propTypes = {
   activeFilter: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
+  disabled: PropTypes.bool.isRequired,
   operators: PropTypes.array.isRequired,
   value: PropTypes.string.isRequired
 };

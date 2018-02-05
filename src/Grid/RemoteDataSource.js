@@ -99,12 +99,14 @@ class RemoteDataSource {
         
         return obj;
       });
-    
+      
       resolve({ 
         payload: rows,
         filteredRecordCount: response.data.FilteredRecordCount,
         totalRecordCount: response.data.TotalRecordCount,
-        aggregate: response.data.AggregationPayload 
+        aggregate: response.data.AggregationPayload,
+        searchText: searchText,
+        rowsPerPage: rowsPerPage
       });
     }).catch(error => {
       reject(error);

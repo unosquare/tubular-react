@@ -17,17 +17,19 @@ const DialogContent = ({ classes, value, value2, columnType, activeFilter, opera
     secondValue = value2 ? value2 : moment().format();
     break;
   case 'boolean':
-    firstValue = value || '';
+    firstValue = operator === 'None' ? '' : value || '';
     break;
   default:
-    firstValue = value || '';
+    firstValue = operator === 'None' ? '' : value || '';
     secondValue = value2 || '';
   }
   
   return (
     <div >
       <DialogInput
+        disabled={operator === 'None'}
         value={firstValue} 
+        handleApply={handleApply}
         mod={'Value'}
         label={'Value'} 
         classes={classes} 
@@ -40,7 +42,9 @@ const DialogContent = ({ classes, value, value2, columnType, activeFilter, opera
         
       {operator === 'Between' && 
         <DialogInput
+          disabled={false}
           value={secondValue} 
+          handleApply={handleApply}
           mod={'Value2'}
           label={'Value 2'} 
           classes={classes} 
@@ -52,7 +56,14 @@ const DialogContent = ({ classes, value, value2, columnType, activeFilter, opera
         />}
         
       <div style={{ padding: '20px 10px 15px 10px', textAlign: 'center' }}>
-        <Button className={classes.applyButton} onClick={() => handleApply()}>Apply</Button>
+        <Button 
+          className={classes.applyButton} 
+          onClick={() => handleApply()} 
+          disabled={operator === 'None'} 
+          style={operator === 'None' ? { background: 'grey' } : {}} 
+        >
+          Apply
+        </Button>
         <Button className={classes.clearButton} onClick={() => handleClear()}>Clear</Button>
       </div>
     </div>

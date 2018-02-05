@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { TablePagination } from 'material-ui/Table';
 import TablePaginationActions from './TablePaginationActions';
-import { withStyles } from 'material-ui/styles';
 
 const Paginator = ({ handlePager, rowsPerPage, page, filteredRecordCount, totalRecordCount }) => {
   const handleChangePage = (event, page) => {
@@ -36,9 +35,12 @@ const Paginator = ({ handlePager, rowsPerPage, page, filteredRecordCount, totalR
 
 Paginator.propTypes = {
   dataSource: PropTypes.object.isRequired,
+  filteredRecordCount: PropTypes.number.isRequired,
+  handlePager: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
   refreshGrid: PropTypes.func.isRequired,
-  rowsPerPage: PropTypes.number.isRequired
+  rowsPerPage: PropTypes.number.isRequired,
+  totalRecordCount: PropTypes.number.isRequired
 };
 
 export default Paginator;
