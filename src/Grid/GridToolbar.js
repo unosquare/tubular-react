@@ -69,28 +69,31 @@ class GridToolbar extends React.Component {
       anchorEl: null
     });
   }
+
   buildURI() {
     const { dataSource, filteredRecordCount } = this.props;
     const { searchText, data } = this.state;
+    
     dataSource.getAllRecords(filteredRecordCount, 0, searchText)
-    .then(({ payload }) => {
-        this.setState({data: payload})
-})
+      .then(({ payload }) => {
+        this.setState({ data: payload });
+      });
+
     return buildURI(data);
   }
 
   render() {
-    const { classes, isPrintEnabled, isExportEnabled, onPrint, headers, separator, uFEFF, children, ...rest } = this.props;
+    const { classes, isPrintEnabled, isExportEnabled, onPrint, headers, separator, uFEFF } = this.props;
     const { searchText, anchorEl, data } = this.state;
     return (
       <Toolbar>
         <div className={classes.spacer}></div>
         {
           isExportEnabled &&
-          <a download={"data.csv"} {...rest}
+          <a download={ 'data.csv' }
             ref={link => (this.link = link)}
-            href={this.buildURI(data, uFEFF, headers, separator, "data.csv")}
-            >
+            href={this.buildURI(data, uFEFF, headers, separator, 'data.csv' )}
+          >
             <IconButton>
               <DownloadIcon />
             </IconButton>
@@ -98,9 +101,9 @@ class GridToolbar extends React.Component {
         }
         {
           isPrintEnabled &&
-          <IconButton onClick={onPrint}>
-            <PrintIcon />
-          </IconButton>
+            <IconButton onClick={onPrint}>
+              <PrintIcon />
+            </IconButton>
         }
         <FormControl className={classes.formControl}>
           <Input
