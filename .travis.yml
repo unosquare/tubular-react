@@ -4,6 +4,7 @@ dist: trusty
 node_js:
 - node
 notifications:
+  email: false
   slack: unolabs:cbusXPH6pBwZ35rVDzi4k4ve
 install:
 - npm install
