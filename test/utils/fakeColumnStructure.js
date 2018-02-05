@@ -1,8 +1,5 @@
 const columns = [
   {
-    // Label: 'Order ID',
-    // Name: 'OrderID',
-    // Sortable: true,
     SortOrder: 1,
     SortDirection: 'Descending',
     IsKey: true,
