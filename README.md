@@ -40,29 +40,13 @@ const columns = [
     SortDirection: 'Ascending',
     IsKey: true,
     Searchable: false,
-    Visible: true,
-    Filter: null,
     DataType: 'numeric',
-    Aggregate: 'None'
   },
   {
     Label: 'Customer Name',
     Name: 'CustomerName',
-    Sortable: true,
-    SortOrder: -1,
-    SortDirection: 'None',
     IsKey: false,
-    Searchable: true,
-    Visible: true,
-    Filter: { 
-      Argument: [],
-      HasFilter: false,
-      Name: 'CustomerName',
-      Operator: 'None',
-      OptionsUrl: null,
-      Text: null
-    },
-    DataType: 'string',
+    Filtering: true,
     Aggregate: 'Count'
   }
 ];
@@ -127,7 +111,22 @@ These are all the available props (and their default values) for the `<Grid />` 
 ```
 
 ### DataSource
-`<Grid/>` requires a dataSource prop which is an instance of the `RemoteDataSource` class, that deals with data retrieval among other things. At the same time, `RemoteDataSource` needs both a URL and a columns variable in its constructor. 
+`<Grid/>` requires a dataSource prop which is an instance of the `RemoteDataSource` class, that deals with data retrieval among other things. At the same time, `RemoteDataSource` needs both a URL and a columns variable in its constructor. The expected `column` structure (and the default values) is the following:
+
+```js
+{
+  Name: undefined, // required
+  Label: undefined, //required
+  Sortable: false,
+  SortOrder: undefined, //required only if Sortable is true
+  SortDirection: undefined, //required only if Sortable is true
+  Searchable: true,
+  Visible: true,
+  IsKey: false,
+  DataType: 'string',
+  Filtering: false
+}
+```
 
 
 ## Run integrated sample
