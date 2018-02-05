@@ -1,3 +1,4 @@
+import Button from 'material-ui/Button';
 import GridHeader from './GridHeader';
 import GridToolbar from './GridToolbar';
 import Paginator from './Paginator';
@@ -8,6 +9,7 @@ import { Subject } from 'rx';
 import Typography from 'material-ui/Typography';
 import WarningIcon from 'material-ui-icons/Warning';
 import { withStyles } from 'material-ui/styles';
+import Dialog, { DialogActions, DialogContent, DialogContentText, DialogTitle } from 'material-ui/Dialog';
 import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
 
 const styles = theme => ({
@@ -15,6 +17,21 @@ const styles = theme => ({
     width: '100%',
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto'
+  },
+  dialogButtonStyle: {
+    background: '#28b62c', 
+    color: 'white', 
+    marginRight: '5px', 
+    marginBottom: '5px', 
+    minWidth: '90px'
+  },
+  dialogTitleStyle: {
+    minWidth: '300px', 
+    background: '#ececec' 
+  },
+  dialogContentStyle: {
+    color: 'black', 
+    paddingTop: '25px'
   }
 });
 
@@ -22,7 +39,7 @@ class Grid extends React.Component {
   static defaultProps = {
     rowsPerPage: 10,
     page: 0,
-    title: ''
+    gridName: ''
   }
 
   constructor(props) {
@@ -36,7 +53,8 @@ class Grid extends React.Component {
       data: [],
       totalRecordCount: 0,
       filteredRecordCount: 0,
-      aggregate: {}
+      aggregate: {},
+      printError: false
     };
 
     this.search = new Subject();
@@ -81,8 +99,22 @@ class Grid extends React.Component {
     localStorage.setItem(`tubular.${this.props.gridName}_searchText`, searchText );
   }
 
+  openPrintErrorHandler = () => {
+    this.setState({ printError: true });
+  }
+
+  closePrintErrorHandler = () => {
+    this.setState({ printError: false });
+  }
+
   printTable = () => {
     const { dataSource, filteredRecordCount, searchText } = this.state;
+
+    if(filteredRecordCount === 0){
+      this.openPrintErrorHandler();
+      return;
+    }
+
     dataSource.getAllRecords(filteredRecordCount, 0, searchText)
       .then(({ payload }) => {
         const popup = window.open('about:blank', 'Print', 'location=0,height=500,width=800');
@@ -104,6 +136,7 @@ class Grid extends React.Component {
             }).join(' ')}</tr>`;
           }).join(' ')}</tbody></table>`;
         popup.document.write('<body onload="window.print();">');
+        popup.document.write(`<h1>${this.props.gridName}</h1>`);
         popup.document.write(tableHtml);
         popup.document.write('</body>');
         popup.document.close();
@@ -111,7 +144,7 @@ class Grid extends React.Component {
   }
 
   render() {
-    const { classes, bodyRenderer, footerRenderer, showBottomPager, showTopPager } = this.props;
+    const { classes, bodyRenderer, footerRenderer, showBottomPager, showTopPager, showPrintButton, showExportButton } = this.props;
     const { data, rowsPerPage, page, dataSource, aggregate, filteredRecordCount, totalRecordCount } = this.state;
 
     const body = (
@@ -160,9 +193,41 @@ class Grid extends React.Component {
       </TableRow>
     );
 
+    const printErrorDialog = (
+      <Dialog
+        open={this.state.printError}
+        onClose={this.closePrintErrorHandler}
+      >
+        <DialogTitle className={classes.dialogTitleStyle}>
+          No records found
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText className={classes.dialogContentStyle}>
+              There are no records to print
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button 
+            onClick={this.closePrintErrorHandler} 
+            className={classes.dialogButtonStyle} 
+            autoFocus
+          >
+              Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+
     return (
       <Paper className={classes.root}>
-        <GridToolbar gridName = {this.props.gridName} onSearchTextChange={this.handleTextSearch} isPrintEnabled onPrint={this.printTable} />
+        {printErrorDialog}
+        <GridToolbar 
+          gridName={this.props.gridName} 
+          onSearchTextChange={this.handleTextSearch} 
+          isPrintEnabled={showPrintButton} 
+          isExportEnabled={showExportButton} 
+          onPrint={this.printTable} 
+        />
         <Table className={classes.table}>
           <TableHead>
             { showTopPager && paginator }
@@ -192,8 +257,8 @@ Grid.propTypes = {
   classes: PropTypes.object.isRequired,
   dataSource: PropTypes.any.isRequired,
   footerRenderer: PropTypes.func,
-  rowsPerPage: PropTypes.number,
-  title: PropTypes.string
+  gridName: PropTypes.string.isRequired,
+  rowsPerPage: PropTypes.number
 };
 
 export default withStyles(styles)(Grid);

@@ -9,7 +9,7 @@ const columns = [
     Name: 'OrderID',
     Sortable: true,
     SortOrder: 1,
-    SortDirection: 'Descending',
+    SortDirection: 'Ascending',
     IsKey: true,
     DataType: 'numeric',    
     Filtering: true
@@ -17,6 +17,9 @@ const columns = [
   {
     Label: 'Customer Name',
     Name: 'CustomerName',
+    Sortable: true,
+    SortOrder: -1,
+    SortDirection: 'None',
     Searchable: true,
     Aggregate: 'Count',
     Filtering: true
@@ -24,6 +27,9 @@ const columns = [
   {
     Label: 'Shipped Date',
     Name: 'ShippedDate',
+    Sortable: true,
+    SortOrder: -1,
+    SortDirection: 'None',
     DataType: 'datetime',
     Filtering: true
   },
@@ -66,8 +72,10 @@ export default class Main extends React.Component {
             </TableRow>
         } 
         rowsPerPage = { 10 } 
-        showTopPager = { true }
-        showBottomPager = { true }
+        showTopPager
+        showBottomPager
+        showPrintButton
+        showExportButton
         footerRenderer = {
           aggregates => 
             <TableRow>
