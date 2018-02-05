@@ -2,9 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { TablePagination } from 'material-ui/Table';
 import TablePaginationActions from './TablePaginationActions';
-import { withStyles } from 'material-ui/styles';
 
-const Paginator = ({ gridName, handlePager, rowsPerPage, page, filteredRecordCount, totalRecordCount }) => {
+const Paginator = ({ handlePager, rowsPerPage, page, filteredRecordCount, totalRecordCount }) => {
   const handleChangePage = (event, page) => {
     handlePager(rowsPerPage, page);
   };
@@ -18,9 +17,6 @@ const Paginator = ({ gridName, handlePager, rowsPerPage, page, filteredRecordCou
     filteredRecordCount === 0 ?  
       '0 records found' :
       `${from} to ${to} of ${count} from ${totalRecordCount} records`;
-
-  const pageSize = parseInt(localStorage.getItem(`tubular.${gridName}_pageSize`)) || 10;
-  rowsPerPage = pageSize;
 
   return(
     <TablePagination
@@ -39,9 +35,12 @@ const Paginator = ({ gridName, handlePager, rowsPerPage, page, filteredRecordCou
 
 Paginator.propTypes = {
   dataSource: PropTypes.object.isRequired,
+  filteredRecordCount: PropTypes.number.isRequired,
+  handlePager: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
   refreshGrid: PropTypes.func.isRequired,
-  rowsPerPage: PropTypes.number.isRequired
+  rowsPerPage: PropTypes.number.isRequired,
+  totalRecordCount: PropTypes.number.isRequired
 };
 
 export default Paginator;

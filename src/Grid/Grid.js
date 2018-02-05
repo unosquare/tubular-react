@@ -53,8 +53,8 @@ class Grid extends React.Component {
           totalRecordCount: tbResponse.totalRecordCount || 0,
           filteredRecordCount: tbResponse.filteredRecordCount || 0,
           aggregate: tbResponse.aggregate,
-          rowsPerPage: pageSize,
-          searchText: searchText
+          searchText: tbResponse.searchText || '',
+          rowsPerPage: tbResponse.rowsPerPage || 10
         });
       });
 
@@ -63,7 +63,7 @@ class Grid extends React.Component {
     });
   }
 
-  handleTextSearch = searchText => {   
+  handleTextSearch = searchText => { 
     this.setState({ searchText }, () => this.search.onNext());
   }
 
@@ -149,7 +149,6 @@ class Grid extends React.Component {
     const paginator = (
       <TableRow>
         <Paginator
-          gridName = {this.props.gridName}
           dataSource={dataSource}
           rowsPerPage={rowsPerPage}
           page={page}

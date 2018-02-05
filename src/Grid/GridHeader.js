@@ -316,7 +316,9 @@ class GridHeader extends React.Component {
 
 GridHeader.propTypes = {
   dataSource: PropTypes.any.isRequired,
+  gridName: PropTypes.string.isRequired,
   page: PropTypes.number,
+  refreshGrid: PropTypes.func.isRequired,
   rowsPerPage: PropTypes.number
 };
 
