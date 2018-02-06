@@ -110,7 +110,7 @@ class Grid extends React.Component {
           dataSource.columns
             .filter(c => c.Visible)
             .reduce((prev, el) => `${prev}<th>${el.Label || el.Name}</th>`, '')
-          }</tr></thead><tbody>${
+        }</tr></thead><tbody>${
           payload.map(row => {
             if (row instanceof Object) {
               row = Object.keys(row).map(key => row[key]);
@@ -199,7 +199,7 @@ class Grid extends React.Component {
         downloadLink.setAttribute('download', 'data.csv');
         downloadLink.click();
         URL.revokeObjectURL(fileURL);
-      })
+      });
   }
   render() {
     const { classes, bodyRenderer, footerRenderer, showBottomPager, showTopPager, showPrintButton, showExportButton } = this.props;
