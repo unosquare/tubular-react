@@ -197,6 +197,27 @@ describe('<Grid />', () => {
     });
   });
 
+  /** Unit test for top pager */
+  describe('When <TableHead /> has showTopPager property set as true', () => {
+    beforeEach(() => {
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200, {
+        orders
+      });
+    });
+
+    it('Should have a paginator', () => {
+      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample) }
+        columns = { validColumnsSample }
+        showTopPager = { true }
+      />;
+
+      const wrapper = shallow(grid);
+      const rowHeader = wrapper.find(Table).find(TableHead).find(TableRow).find(Paginator);
+
+      expect(rowHeader).to.have.lengthOf(1);
+    });
+  });
+
   beforeEach(() => {
     props = {
       dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)
