@@ -135,7 +135,7 @@ class Grid extends React.Component {
       });
   }
   
-  exportTable = (filtered) => {
+  exportTable = filtered => {
     const { dataSource, filteredRecordCount, totalRecordCount, searchText } = this.state;
     const header = dataSource.columns.map(x => x.Label);
     const visibility = dataSource.columns.map(x => x.Visible);
@@ -149,7 +149,7 @@ class Grid extends React.Component {
 
       for (let i = 0; i < row.length; i++) {
         if (visibility[i]) {
-          let innerValue = row[i] == null ? '' : row[i].toString();
+          let innerValue = row[i] === null ? '' : row[i].toString();
 
           if (row[i] instanceof Date) {
             innerValue = row[i].toLocaleString();
@@ -177,25 +177,26 @@ class Grid extends React.Component {
       csvFile += processRow(header);
     }
     if(filtered){
-      count = filteredRecordCount
-      search = searchText
-    }else{
-      count = totalRecordCount
-      search = ''
+      count = filteredRecordCount;
+      search = searchText;
     }
-    const rows = dataSource.getAllRecords(count, 0, search)
+    else{
+      count = totalRecordCount;
+      search = '';
+    }
+    dataSource.getAllRecords(count, 0, search)
       .then(({ payload }) => {
         payload.forEach(row => {
-          csvFile += processRow(row)
-        })
+          csvFile += processRow(row);
+        });
       }).then(() => {
         const blob = new Blob([`\uFEFF${csvFile}`], {
           type: 'text/csv;charset=utf-8;'
         });
         const fileURL = URL.createObjectURL(blob);
-        const downloadLink = document.createElement("A");
-        downloadLink.setAttribute("href", fileURL);
-        downloadLink.setAttribute("download", "data.csv");
+        const downloadLink = document.createElement('a');
+        downloadLink.setAttribute('href', fileURL);
+        downloadLink.setAttribute('download', 'data.csv');
         downloadLink.click();
         URL.revokeObjectURL(fileURL);
       })
