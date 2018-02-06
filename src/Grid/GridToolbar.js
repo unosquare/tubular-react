@@ -79,7 +79,7 @@ class GridToolbar extends React.Component {
   render() {
     const { classes, isPrintEnabled, isExportEnabled, onPrint } = this.props;
     const { searchText, anchorEl } = this.state;
-    return (
+    return(
       <Toolbar>
         <div className={classes.spacer}></div>
         {

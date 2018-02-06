@@ -20,7 +20,7 @@ const styles = theme => ({
 
 class Grid extends React.Component {
   static defaultProps = {
-    rowsPerPage: 5,
+    rowsPerPage: 10,
     page: 0,
     title: ''
   }
@@ -45,7 +45,7 @@ class Grid extends React.Component {
   componentDidMount() {
     const pageSize = parseInt(localStorage.getItem(`tubular.${this.props.gridName}_pageSize`)) || 10;
     const searchText = localStorage.getItem(`tubular.${this.props.gridName}_searchText`) || '';
-
+    
     this.state.dataSource.connect(pageSize, this.state.page, searchText)
       .subscribe(tbResponse => {
         this.setState({
@@ -53,8 +53,8 @@ class Grid extends React.Component {
           totalRecordCount: tbResponse.totalRecordCount || 0,
           filteredRecordCount: tbResponse.filteredRecordCount || 0,
           aggregate: tbResponse.aggregate,
-          rowsPerPage: pageSize,
-          searchText: searchText
+          searchText: tbResponse.searchText || '',
+          rowsPerPage: tbResponse.rowsPerPage || 10
         });
       });
 
@@ -63,16 +63,17 @@ class Grid extends React.Component {
     });
   }
 
-  handleTextSearch = searchText => {
+  handleTextSearch = searchText => { 
     this.setState({ searchText }, () => this.search.onNext());
   }
 
   handlePager = (rowsPerPage, page) => {
-    this.setState({ rowsPerPage, page }, this.refreshGrid);
+    this.setState({ rowsPerPage, page }, () => this.refreshGrid());
   }
 
   refreshGrid = () => {
     const { dataSource, rowsPerPage, page, searchText } = this.state;
+
     dataSource.refresh(rowsPerPage, page, searchText);
 
     localStorage.setItem(`tubular.${this.props.gridName}`, JSON.stringify(dataSource.columns));
@@ -240,15 +241,12 @@ class Grid extends React.Component {
               refreshGrid={this.refreshGrid.bind(this)}
             />
           </TableHead>
-
-          {body}
-
+          { body }
           <TableFooter>
             {footerRenderer && footerRenderer(aggregate)}
 
             {showBottomPager && paginator}
           </TableFooter>
-
         </Table>
       </Paper>
     );

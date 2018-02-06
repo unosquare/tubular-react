@@ -56,7 +56,11 @@ class GridHeader extends React.Component {
   };
 
   handleOpen = column => {
-    this.setState({ columnType: column.DataType, activeFilter: column.Name, open: true });
+    this.setState({ columnType: column.DataType, activeFilter: column.Name, open: true }, 
+      () => {
+        document.getElementById(this.state.activeFilter).blur();
+      }
+    );
   }
 
   handleClear = () => {
@@ -85,7 +89,7 @@ class GridHeader extends React.Component {
   handleApply = () => {
     let firstValue = this.state[`${this.state.activeFilter}Value`];
     let secondValue = secondValue !== null && this.state[`${this.state.activeFilter}Value2`];
-
+    
     switch (this.state.columnType) {
     case 'numeric':
       firstValue = parseFloat(firstValue);
@@ -149,7 +153,7 @@ class GridHeader extends React.Component {
     if (localStorage.getItem(`tubular.${this.props.gridName}`)){
       const storage = JSON.parse(localStorage.getItem(`tubular.${this.props.gridName}`));
       const dataSource = this.props.dataSource;
-      
+
       storage.forEach( (element, i) => {
         if(dataSource.columns[i] !== undefined){
           dataSource.columns[i].SortDirection = element.SortDirection;
@@ -292,7 +296,7 @@ class GridHeader extends React.Component {
             </Tooltip>)
             : (column.Label);
           const filter = column.Filter &&
-              (<IconButton onClick={() => this.handleOpen(column)} >
+              (<IconButton id={column.Name} onClick={() => this.handleOpen(column)} >
                 {column.Filter.HasFilter && column.Filter.Operator !== 'None' ? 
                   <FilterListIcon style={{ background: '#28b62c', color: 'white', borderRadius: '50%' }}/> 
                   : 
@@ -312,7 +316,9 @@ class GridHeader extends React.Component {
 
 GridHeader.propTypes = {
   dataSource: PropTypes.any.isRequired,
+  gridName: PropTypes.string.isRequired,
   page: PropTypes.number,
+  refreshGrid: PropTypes.func.isRequired,
   rowsPerPage: PropTypes.number
 };
 

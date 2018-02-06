@@ -17,12 +17,13 @@ const muiTheme = createMuiTheme({
   })
 });
 
-const DateInput = ({ columnType, value, mod, handleDatePicker }) => (
+const DateInput = ({ columnType, disabled, value, mod, handleDatePicker }) => (
   <div style={{ padding: '15px 20px 5px 20px' }}>
     <MuiThemeProvider theme={muiTheme}>
       {
         columnType === 'datetime' || columnType === 'datetimeutc' ? 
           <DateTimePicker
+            disabled={disabled}
             style={{ width: '100%' }}
             value={value}
             onChange={handleDatePicker(mod)}
@@ -34,6 +35,7 @@ const DateInput = ({ columnType, value, mod, handleDatePicker }) => (
           />
           : 
           <DatePicker
+            disabled={disabled}
             style={{ width: '100%' }}
             value={value}
             onChange={handleDatePicker(mod)}
@@ -49,6 +51,7 @@ const DateInput = ({ columnType, value, mod, handleDatePicker }) => (
 
 DateInput.propTypes = {
   columnType: PropTypes.string.isRequired,
+  disabled: PropTypes.bool.isRequired,
   handleDatePicker: PropTypes.func.isRequired,
   mod: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired
