@@ -93,7 +93,7 @@ class GridToolbar extends React.Component {
           >
             <DownloadIcon />
             Export CSV
-         </Button>
+          </Button>
         }
         {
           isPrintEnabled && 
@@ -131,8 +131,8 @@ class GridToolbar extends React.Component {
           open={Boolean(anchorEl)}
           onClose={this.handleMenuClose}
         >
-            <MenuItem onClick={e => this.exportCSV(false, e)}> All rows</MenuItem>
-            <MenuItem onClick={e => this.exportCSV(true, e)}> Current rows</MenuItem>
+              <MenuItem onClick={e => this.exportCSV(false, e)}> All rows</MenuItem>
+              <MenuItem onClick={e => this.exportCSV(true, e)}> Current rows</MenuItem>
         </Menu>
       </Toolbar>
     );
