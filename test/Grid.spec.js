@@ -1,10 +1,9 @@
 import Adapter from 'enzyme-adapter-react-16';
 import Axios from 'axios';
 import bodyRenderer from './utils/bodyRenderer.js';
-import columnStructure from './utils/columnStructure.js';
+import { validColumnsSample, invalidColumnsSample } from './utils/columns.js';
 import data from './utils/data.js';
 import Enzyme from 'enzyme';
-import fakeColumnStructure from './utils/fakeColumnStructure.js';
 import footerRenderer from './utils/footerRenderer.js';
 import Grid from '../src/Grid/Grid';
 import MockAdapter from 'axios-mock-adapter';
@@ -82,14 +81,14 @@ describe('<Grid />', () => {
 
   describe('When custom body is defined', () => {
     it('should render the custom body', () => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { columnStructure }).reply(200, {
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200, {
         orders
       });
 
       const grid = <Grid 
-        dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columnStructure) }
+        dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample) }
         bodyRenderer = { bodyRenderer }
-        columns = { columnStructure } />;
+        columns = { validColumnsSample } />;
 
       const wrapper = shallow(grid);
       const body = wrapper.find(Table).find(TableBody);
@@ -100,11 +99,11 @@ describe('<Grid />', () => {
 
   describe('When the column structure defined by the user is wrong', () => {
     it('should render a row in the body with the warning message', () => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { fakeColumnStructure });
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { invalidColumnsSample });
 
       const grid = <Grid 
-        dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', fakeColumnStructure) }
-        columns = { fakeColumnStructure } />;
+        dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', invalidColumnsSample) }
+        columns = { invalidColumnsSample } />;
 
       const wrapper = shallow(grid);
       const rowBody = wrapper.find(Table).find(TableBody).find(TableRow).find(TableCell).find(Typography);
@@ -116,12 +115,12 @@ describe('<Grid />', () => {
   /** Unit tests for custom footer */
   describe('When footer has no rows', () => {
     it('should not render any row', () => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { columnStructure }).reply(200, {
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200, {
         orders
       });
     
-      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columnStructure) }
-        columns = { columnStructure }
+      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample) }
+        columns = { validColumnsSample }
       />;
 
       const wrapper = shallow(grid);
@@ -133,14 +132,14 @@ describe('<Grid />', () => {
 
   describe('When footer has n rows', () => {
     beforeEach(() => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { columnStructure }).reply(200, {
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200, {
         orders
       });
     });
 
     it('should render the row with the aggregate operation', () => {
-      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columnStructure) }
-        columns = { columnStructure }
+      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample) }
+        columns = { validColumnsSample }
         footerRenderer = { footerRenderer }
       />;
 
@@ -152,8 +151,8 @@ describe('<Grid />', () => {
     });
 
     it('should render the row with the bottom pager', () => {
-      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columnStructure) }
-        columns = { columnStructure }
+      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample) }
+        columns = { validColumnsSample }
         showBottomPager = { true }
       />;
 
@@ -164,8 +163,8 @@ describe('<Grid />', () => {
     });
 
     it('should render the rows with the aggregate operation and the bottom pager', () => {
-      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columnStructure) }
-        columns = { columnStructure }
+      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample) }
+        columns = { validColumnsSample }
         showBottomPager = { true }
         footerRenderer = { footerRenderer }
       />;
@@ -180,14 +179,14 @@ describe('<Grid />', () => {
 
   describe('When footer has showBottomPager property set as true', () => {
     beforeEach(() => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { columnStructure }).reply(200, {
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200, {
         orders
       });
     });
 
     it('should have a paginator', () => {
-      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columnStructure) }
-        columns = { columnStructure }
+      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample) }
+        columns = { validColumnsSample }
         showBottomPager = { true }
       />;
 
@@ -200,7 +199,7 @@ describe('<Grid />', () => {
 
   beforeEach(() => {
     props = {
-      dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columnStructure)
+      dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)
     };
     axiosInstance = Axios.create();
     mock = new MockAdapter(axiosInstance);
