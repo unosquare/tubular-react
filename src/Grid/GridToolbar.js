@@ -32,7 +32,7 @@ class GridToolbar extends React.Component {
   state = {
     searchText: '',
     debounced: '',
-    anchorEl: null,
+    anchorEl: null
   };
 
   componentDidMount() {
@@ -67,13 +67,14 @@ class GridToolbar extends React.Component {
       anchorEl: null
     });
   }
+  
   exportCSV = (filtered, e) => {
     const { onExport } = this.props;
     e.preventDefault();
     this.setState({
       anchorEl: null
     });
-    onExport(filtered)
+    onExport(filtered);
   }
 
   render(){
@@ -130,8 +131,8 @@ class GridToolbar extends React.Component {
           open={Boolean(anchorEl)}
           onClose={this.handleMenuClose}
         >
-            <MenuItem onClick={(e) => this.exportCSV(false, e)}> All rows</MenuItem>
-            <MenuItem onClick={(e) => this.exportCSV(true, e)}> Current rows</MenuItem>
+            <MenuItem onClick={e => this.exportCSV(false, e)}> All rows</MenuItem>
+            <MenuItem onClick={e => this.exportCSV(true, e)}> Current rows</MenuItem>
         </Menu>
       </Toolbar>
     );
