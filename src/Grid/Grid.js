@@ -7,6 +7,7 @@ import React from 'react';
 import { Subject } from 'rx';
 import Typography from 'material-ui/Typography';
 import WarningIcon from 'material-ui-icons/Warning';
+import moment from 'moment';
 import { withStyles } from 'material-ui/styles';
 import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
 
@@ -15,6 +16,21 @@ const styles = theme => ({
     width: '100%',
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto'
+  },
+  dialogButtonStyle: {
+    background: '#28b62c', 
+    color: 'white', 
+    marginRight: '5px', 
+    marginBottom: '5px', 
+    minWidth: '90px'
+  },
+  dialogTitleStyle: {
+    minWidth: '300px', 
+    background: '#ececec' 
+  },
+  dialogContentStyle: {
+    color: 'black', 
+    paddingTop: '25px'
   }
 });
 
@@ -22,7 +38,7 @@ class Grid extends React.Component {
   static defaultProps = {
     rowsPerPage: 10,
     page: 0,
-    title: ''
+    gridName: ''
   }
 
   constructor(props) {
@@ -83,6 +99,10 @@ class Grid extends React.Component {
 
   printTable = () => {
     const { dataSource, filteredRecordCount, searchText } = this.state;
+
+    if(filteredRecordCount === 0)
+      return;
+
     dataSource.getAllRecords(filteredRecordCount, 0, searchText)
       .then(({ payload }) => {
         const popup = window.open('about:blank', 'Print', 'location=0,height=500,width=800');
@@ -100,10 +120,16 @@ class Grid extends React.Component {
               if(dataSource.columns[index] && !dataSource.columns[index].Visible){
                 return '';
               }
-              return `<td>${cell || ''}</td>`;
+              return `<td>${ dataSource.columns[index].DataType === 'datetime' || 
+              dataSource.columns[index].DataType === 'date' || 
+              dataSource.columns[index].DataType === 'datetimeutc' ? 
+                moment(cell).format('MMMM Do YYYY, h:mm:ss a') : 
+                cell || 0}</td>`;
             }).join(' ')}</tr>`;
           }).join(' ')}</tbody></table>`;
+        popup.document.title = this.props.gridName;
         popup.document.write('<body onload="window.print();">');
+        popup.document.write(`<h1>${this.props.gridName}</h1>`);
         popup.document.write(tableHtml);
         popup.document.write('</body>');
         popup.document.close();
@@ -111,7 +137,7 @@ class Grid extends React.Component {
   }
 
   render() {
-    const { classes, bodyRenderer, footerRenderer, showBottomPager, showTopPager } = this.props;
+    const { classes, bodyRenderer, footerRenderer, showBottomPager, showTopPager, showPrintButton, showExportButton } = this.props;
     const { data, rowsPerPage, page, dataSource, aggregate, filteredRecordCount, totalRecordCount } = this.state;
 
     const body = (
@@ -122,10 +148,14 @@ class Grid extends React.Component {
               ? bodyRenderer(row, rowIndex) 
               : <TableRow hover key={rowIndex}>
                 {                
-                  dataSource.columns.map((column, colIndex) =>
+                  dataSource.columns.filter(col => col.Visible).map((column, colIndex) =>
                     <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
                       {
-                        column.Visible && row[column.Name]
+                        column.DataType === 'numeric' ? 
+                          row[column.Name] || 0 : 
+                          column.DataType === 'datetime' || column.DataType === 'date' || column.DataType === 'datetimeutc' ? 
+                            moment(row[column.Name]).format('MMMM Do YYYY, h:mm:ss a') || '' : 
+                            row[column.Name]
                       }
                     </TableCell>)
                 }
@@ -162,7 +192,14 @@ class Grid extends React.Component {
 
     return (
       <Paper className={classes.root}>
-        <GridToolbar gridName = {this.props.gridName} onSearchTextChange={this.handleTextSearch} isPrintEnabled onPrint={this.printTable} />
+        <GridToolbar 
+          filteredRecordCount={filteredRecordCount}
+          gridName={this.props.gridName} 
+          onSearchTextChange={this.handleTextSearch} 
+          isPrintEnabled={showPrintButton} 
+          isExportEnabled={showExportButton} 
+          onPrint={this.printTable} 
+        />
         <Table className={classes.table}>
           <TableHead>
             { showTopPager && paginator }
@@ -178,7 +215,6 @@ class Grid extends React.Component {
           { body }
           <TableFooter>
             { footerRenderer && footerRenderer(aggregate) }
-
             { showBottomPager && paginator }
           </TableFooter>
         </Table>
@@ -192,8 +228,8 @@ Grid.propTypes = {
   classes: PropTypes.object.isRequired,
   dataSource: PropTypes.any.isRequired,
   footerRenderer: PropTypes.func,
-  rowsPerPage: PropTypes.number,
-  title: PropTypes.string
+  gridName: PropTypes.string.isRequired,
+  rowsPerPage: PropTypes.number
 };
 
 export default withStyles(styles)(Grid);

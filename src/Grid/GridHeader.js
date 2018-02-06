@@ -277,7 +277,7 @@ class GridHeader extends React.Component {
             handleClear={this.handleClear.bind(this)} 
           />          
         </Dialog>
-        {dataSource.columns.map(column => {
+        {dataSource.columns.filter(col => col.Visible).map(column => {
           const render = column.Sortable ?
             (<Tooltip 
               title='Click to sort. Press Ctrl to sort by multiple columns' 
@@ -304,8 +304,8 @@ class GridHeader extends React.Component {
               </IconButton>);
           return (
             <TableCell key={column.Label} padding={column.Label === '' ? 'none' : 'default'}>
-              {column.Visible && render}
-              {column.Visible && filter}
+              {render}
+              {filter}
             </TableCell>
           );
         })}
