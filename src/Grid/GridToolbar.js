@@ -76,8 +76,8 @@ class GridToolbar extends React.Component {
     onExport(filtered)
   }
 
-  render() {
-    const { classes, isPrintEnabled, isExportEnabled, onPrint } = this.props;
+  render(){
+    const { classes, isPrintEnabled, isExportEnabled, onPrint, filteredRecordCount } = this.props;
     const { searchText, anchorEl } = this.state;
     return(
       <Toolbar>
@@ -85,9 +85,9 @@ class GridToolbar extends React.Component {
         {
           isExportEnabled &&
           <Button
-            raised
-            color='accent'
             className={classes.button}
+            color='primary'
+            disabled={filteredRecordCount === 0}
             onClick={this.handleMenuOpen}
           >
             <DownloadIcon />
@@ -95,9 +95,9 @@ class GridToolbar extends React.Component {
          </Button>
         }
         {
-          isPrintEnabled &&
-          <IconButton onClick={onPrint}>
-            <PrintIcon />
+          isPrintEnabled && 
+          <IconButton onClick={onPrint} disabled={filteredRecordCount === 0}>
+            <PrintIcon/>
           </IconButton>
         }
         <FormControl className={classes.formControl}>
