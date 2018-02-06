@@ -113,7 +113,6 @@ class Grid extends React.Component {
             .reduce((prev, el) => `${prev}<th>${el.Label || el.Name}</th>`, '')
         }</tr></thead><tbody>${ 
           payload.map(row => {
-            /* console.log(payload); */
             if(row instanceof Object){
               row = Object.keys(row).map(key => row[key]);
             }
@@ -128,6 +127,7 @@ class Grid extends React.Component {
                 cell || 0}</td>`;
             }).join(' ')}</tr>`;
           }).join(' ')}</tbody></table>`;
+        popup.document.title = this.props.gridName;
         popup.document.write('<body onload="window.print();">');
         popup.document.write(`<h1>${this.props.gridName}</h1>`);
         popup.document.write(tableHtml);
