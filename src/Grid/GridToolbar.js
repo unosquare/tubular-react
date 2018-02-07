@@ -1,4 +1,3 @@
-import Button from 'material-ui/Button';
 import CloseIcon from 'material-ui-icons/Close';
 import DownloadIcon from 'material-ui-icons/FileDownload';
 import { FormControl } from 'material-ui/Form';
@@ -17,7 +16,7 @@ const styles = theme => ({
     flex: '1 1 100%'
   },
   searchField: {
- 
+
   },
   formControl: {
     margin: theme.spacing.unit,
@@ -34,13 +33,13 @@ class GridToolbar extends React.Component {
     debounced: '',
     anchorEl: null
   };
-  
+
   componentDidMount() {
     const searchText = localStorage.getItem(`tubular.${this.props.gridName}_searchText`);
 
-    if (searchText){
-      this.setState({ 
-        searchText 
+    if (searchText) {
+      this.setState({
+        searchText
       });
     }
   }
@@ -55,7 +54,7 @@ class GridToolbar extends React.Component {
       searchText: ''
     }, () => this.props.onSearchTextChange(this.state.searchText));
   }
-  
+
   handleMenuOpen = event => {
     this.setState({
       anchorEl: event.currentTarget
@@ -67,25 +66,27 @@ class GridToolbar extends React.Component {
       anchorEl: null
     });
   }
+  
+  exportCSV = (filtered, e) => {
+    const { onExport } = this.props;
+    e.preventDefault();
+    this.setState({
+      anchorEl: null
+    });
+    onExport(filtered);
+  }
 
   render(){
     const { classes, isPrintEnabled, isExportEnabled, onPrint, filteredRecordCount } = this.props;
     const { searchText, anchorEl } = this.state;
-
     return(
       <Toolbar>
         <div className={classes.spacer}></div>
         {
-          isExportEnabled && 
-          <Button
-            className={classes.button}
-            color='primary'
-            disabled={filteredRecordCount === 0}
-            onClick={this.handleMenuOpen}
-          >
-            <DownloadIcon/>
-            Export csv
-          </Button>
+          isExportEnabled &&
+          <IconButton disabled={filteredRecordCount === 0} onClick={this.handleMenuOpen}>
+            <DownloadIcon />
+          </IconButton>
         }
         {
           isPrintEnabled && 
@@ -104,7 +105,7 @@ class GridToolbar extends React.Component {
             startAdornment={
               <InputAdornment position='end'>
                 <IconButton>
-                  <SearchIcon/>
+                  <SearchIcon />
                 </IconButton>
               </InputAdornment>
             }
@@ -112,19 +113,15 @@ class GridToolbar extends React.Component {
               searchText !== '' &&
               <InputAdornment position='end'>
                 <IconButton onClick={this.clearSearchText}>
-                  <CloseIcon/>
+                  <CloseIcon />
                 </IconButton>
               </InputAdornment>
             }
           />
         </FormControl>
-        <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={this.handleMenuClose}
-        >
-          <MenuItem onClick={this.handleMenuClose}>All rows</MenuItem>
-          <MenuItem onClick={this.handleMenuClose}>Current rows</MenuItem>
+        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleMenuClose}>
+          <MenuItem onClick={e => this.exportCSV(false, e)}> All rows</MenuItem>
+          <MenuItem onClick={e => this.exportCSV(true, e)}> Current rows</MenuItem>
         </Menu>
       </Toolbar>
     );
@@ -132,10 +129,10 @@ class GridToolbar extends React.Component {
 }
 
 GridToolbar.propTypes = {
-  classes: PropTypes.object.isRequired, 
+  classes: PropTypes.object.isRequired,
   isExportEnabled: PropTypes.bool,
   isPrintEnabled: PropTypes.bool,
-  onSearchTextChange: PropTypes.func.isRequired  
+  onSearchTextChange: PropTypes.func.isRequired
 };
 
 GridToolbar.defaultProps = {

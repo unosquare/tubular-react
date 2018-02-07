@@ -92,9 +92,9 @@ class Grid extends React.Component {
 
     dataSource.refresh(rowsPerPage, page, searchText);
 
-    localStorage.setItem(`tubular.${this.props.gridName}`, JSON.stringify(dataSource.columns) );
-    localStorage.setItem(`tubular.${this.props.gridName}_pageSize`, rowsPerPage );
-    localStorage.setItem(`tubular.${this.props.gridName}_searchText`, searchText );
+    localStorage.setItem(`tubular.${this.props.gridName}`, JSON.stringify(dataSource.columns));
+    localStorage.setItem(`tubular.${this.props.gridName}_pageSize`, rowsPerPage);
+    localStorage.setItem(`tubular.${this.props.gridName}_searchText`, searchText);
   }
 
   printTable = () => {
@@ -111,13 +111,13 @@ class Grid extends React.Component {
           dataSource.columns
             .filter(c => c.Visible)
             .reduce((prev, el) => `${prev}<th>${el.Label || el.Name}</th>`, '')
-        }</tr></thead><tbody>${ 
+        }</tr></thead><tbody>${
           payload.map(row => {
-            if(row instanceof Object){
+            if (row instanceof Object) {
               row = Object.keys(row).map(key => row[key]);
             }
             return `<tr>${row.map((cell, index) => {
-              if(dataSource.columns[index] && !dataSource.columns[index].Visible){
+              if (dataSource.columns[index] && !dataSource.columns[index].Visible) {
                 return '';
               }
               return `<td>${ dataSource.columns[index].DataType === 'datetime' || 
@@ -135,6 +135,72 @@ class Grid extends React.Component {
         popup.document.close();
       });
   }
+  
+  exportTable = filtered => {
+    const { dataSource, filteredRecordCount, totalRecordCount, searchText } = this.state;
+    const header = dataSource.columns.map(x => x.Label);
+    const visibility = dataSource.columns.map(x => x.Visible);
+    let count, search;
+    const processRow = row => {
+      if (row instanceof Object) {
+        row = Object.keys(row).map(key => row[key]);
+      }
+
+      let finalVal = '';
+
+      for (let i = 0; i < row.length; i++) {
+        if (visibility[i]) {
+          let innerValue = row[i] === null || row[i] === undefined ? '' : row[i].toString();
+          if (moment(row[i], moment.ISO_8601, true).isValid()) {
+            innerValue = moment(row[i]).format('MMMM Do YYYY, h:mm:ss a');
+          }
+
+          let result = innerValue.replace(/"/g, '""');
+
+          if (result.search(/("|,|\n)/g) >= 0) {
+            result = `"${result}"`;
+          }
+
+          if (i > 0) {
+            finalVal += ',';
+          }
+
+          finalVal += result;
+        }
+      }
+
+      return `${finalVal}\n`;
+    };
+
+    let csvFile = '';
+    if (header.length > 0) {
+      csvFile += processRow(header);
+    }
+    if(filtered){
+      count = filteredRecordCount;
+      search = searchText;
+    }
+    else{
+      count = totalRecordCount;
+      search = '';
+    }
+    dataSource.getAllRecords(count, 0, search)
+      .then(({ payload }) => {
+        payload.forEach(row => {
+          csvFile += processRow(row);
+        });
+      }).then(() => {
+        const blob = new Blob([`\uFEFF${csvFile}`], {
+          type: 'text/csv;charset=utf-8;'
+        });
+        const fileURL = URL.createObjectURL(blob);
+        const downloadLink = document.createElement('a');
+        downloadLink.setAttribute('href', fileURL);
+        downloadLink.setAttribute('download', 'data.csv');
+        downloadLink.click();
+        URL.revokeObjectURL(fileURL);
+      });
+  }
 
   render() {
     const { classes, bodyRenderer, footerRenderer, showBottomPager, showTopPager, showPrintButton, showExportButton } = this.props;
@@ -143,9 +209,9 @@ class Grid extends React.Component {
     const body = (
       <TableBody>
         {
-          data.map((row, rowIndex) => (            
-            bodyRenderer  
-              ? bodyRenderer(row, rowIndex) 
+          data.map((row, rowIndex) => (
+            bodyRenderer
+              ? bodyRenderer(row, rowIndex)
               : <TableRow hover key={rowIndex}>
                 {                
                   dataSource.columns.filter(col => col.Visible).map((column, colIndex) =>
@@ -159,19 +225,19 @@ class Grid extends React.Component {
                       }
                     </TableCell>)
                 }
-              </TableRow>              
+              </TableRow>
           ))
         }
         {
-          filteredRecordCount === 0 && 
-            (<TableRow>
-              <TableCell style={{ display: 'flex', padding: '10px' }}>
-                <WarningIcon/>
-                <Typography style={{ paddingLeft: '15px' }} type='body2' gutterBottom>
-                  No records found
-                </Typography>
-              </TableCell>
-            </TableRow>)
+          filteredRecordCount === 0 &&
+          (<TableRow>
+            <TableCell style={{ display: 'flex', padding: '10px' }}>
+              <WarningIcon />
+              <Typography style={{ paddingLeft: '15px' }} type='body2' gutterBottom>
+                No records found
+              </Typography>
+            </TableCell>
+          </TableRow>)
         }
       </TableBody>
     );
@@ -198,14 +264,15 @@ class Grid extends React.Component {
           onSearchTextChange={this.handleTextSearch} 
           isPrintEnabled={showPrintButton} 
           isExportEnabled={showExportButton} 
-          onPrint={this.printTable} 
+          onPrint={this.printTable}
+          onExport={this.exportTable}
         />
         <Table className={classes.table}>
           <TableHead>
-            { showTopPager && paginator }
+            {showTopPager && paginator}
 
             <GridHeader
-              gridName = {this.props.gridName}
+              gridName={this.props.gridName}
               dataSource={dataSource}
               page={page}
               rowsPerPage={rowsPerPage}

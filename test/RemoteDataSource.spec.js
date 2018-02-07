@@ -1,133 +1,60 @@
-import Axios from 'axios';
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
 import expect from 'expect.js';
+import { validColumnsSample } from './utils/columns.js';
 
 describe('RemoteDateSource', () => {
-  const columns = [
-    {
-      'Label': 'Order ID',
-      'Name': 'OrderID',
-      'Sortable': true,
-      'SortOrder': 1,
-      'SortDirection': 'Ascending',
-      'IsKey': true,
-      'Searchable': false,
-      'Visible': true,
-      'Filter': { 
-        Argument: [],
-        HasFilter: true,
-        Name: 'OrderID',
-        Operator: 'None',
-        OptionsUrl: null,
-        Text: null
-      },
-      'DataType': 'numeric',
-      'Aggregate': 'None'
-    },
-    {
-      'Label': 'Customer Name',
-      'Name': 'CustomerName',
-      'Sortable': true,
-      'SortOrder': -1,
-      'SortDirection': 'None',
-      'IsKey': false,
-      'Searchable': true,
-      'Visible': true,
-      'Filter': { 
-        Argument: [],
-        HasFilter: true,
-        Name: 'CustomerName',
-        Operator: 'None',
-        OptionsUrl: null,
-        Text: null
-      },
-      'DataType': 'string',
-      'Aggregate': 'None'
-    },
-    {
-      'Label': 'Shipped Date',
-      'Name': 'ShippedDate',
-      'Sortable': true,
-      'SortOrder': -1,
-      'SortDirection': 'None',
-      'IsKey': false,
-      'Searchable': false,
-      'Visible': true,
-      'Filter': { 
-        Argument: [],
-        HasFilter: true,
-        Name: 'ShippedDate',
-        Operator: 'None',
-        OptionsUrl: null,
-        Text: null
-      },
-      'DataType': 'datetime',
-      'Aggregate': 'None'
-    },
-    {
-      'Label': 'Shipper City',
-      'Name': 'ShipperCity',
-      'Sortable': true,
-      'SortOrder': -1,
-      'SortDirection': 'None',
-      'IsKey': false,
-      'Searchable': false,
-      'Visible': true,
-      'Filter': { 
-        Argument: [],
-        HasFilter: true,
-        Name: 'ShipperCity',
-        Operator: 'None',
-        OptionsUrl: null,
-        Text: null
-      },
-      'DataType': 'string',
-      'Aggregate': 'None'
-    }
-  ];
-
   const expected = { 
-    'payload': [ 
-      { OrderID: 1,
-        CustomerName: 'Microsoft',
-        ShippedDate: '2016-03-19T19:00:00',
-        ShipperCity: 'Guadalajara, JAL, Mexico' },
-      { OrderID: 2,
-        CustomerName: 'Microsoft',
-        ShippedDate: '2016-04-23T10:00:00',
-        ShipperCity: 'Guadalajara, JAL, Mexico' },
-      { OrderID: 3,
-        CustomerName: 'Microsoft',
-        ShippedDate: '2016-12-22T08:00:00',
-        ShipperCity: 'Guadalajara, JAL, Mexico' },
-      { OrderID: 4,
-        CustomerName: 'Unosquare LLC',
-        ShippedDate: '2016-02-01T18:00:00',
-        ShipperCity: 'Los Angeles, CA, USA' },
-      { OrderID: 5,
-        CustomerName: 'Microsoft',
-        ShippedDate: '2016-11-10T18:00:00',
-        ShipperCity: 'Guadalajara, JAL, Mexico' },
-      { OrderID: 6,
-        CustomerName: 'Unosquare LLC',
-        ShippedDate: '2016-11-06T18:00:00',
-        ShipperCity: 'Los Angeles, CA, USA' },
-      { OrderID: 7,
-        CustomerName: 'Unosquare LLC',
+    payload: [ 
+      { OrderID: 500,
+        CustomerName: 'Vesta',
+        ShippedDate: '2016-11-02T18:00:00',
+        ShipperCity: 'Los Angeles, CA, USA',
+        Amount: 120 },
+      { OrderID: 499,
+        CustomerName: 'Oxxo',
         ShippedDate: '2016-11-11T18:00:00',
-        ShipperCity: 'Leon, GTO, Mexico' },
-      { OrderID: 8,
+        ShipperCity: 'Portland, OR, USA',
+        Amount: 66 },
+      { OrderID: 498,
         CustomerName: 'Unosquare LLC',
         ShippedDate: '2016-11-08T18:00:00',
-        ShipperCity: 'Portland, OR, USA' },
-      { OrderID: 9,
+        ShipperCity: 'Portland, OR, USA',
+        Amount: 6 },
+      { OrderID: 497,
+        CustomerName: 'Microsoft',
+        ShippedDate: '2016-11-03T18:00:00',
+        ShipperCity: 'Los Angeles, CA, USA',
+        Amount: 79 },
+      { OrderID: 496,
         CustomerName: 'Vesta',
-        ShippedDate: '2016-11-07T18:00:00',
-        ShipperCity: 'Guadalajara, JAL, Mexico' },
-      { OrderID: 10,
-        CustomerName: 'Unosquare LLC',
         ShippedDate: '2016-11-05T18:00:00',
-        ShipperCity: 'Portland, OR, USA' } 
+        ShipperCity: 'Guadalajara, JAL, Mexico',
+        Amount: 72 },
+      { OrderID: 495,
+        CustomerName: 'Oxxo',
+        ShippedDate: '2016-11-10T18:00:00',
+        ShipperCity: 'Guadalajara, JAL, Mexico',
+        Amount: 20 },
+      { OrderID: 494,
+        CustomerName: 'Vesta',
+        ShippedDate: '2016-11-03T18:00:00',
+        ShipperCity: 'Portland, OR, USA',
+        Amount: 35 },
+      { OrderID: 493,
+        CustomerName: 'Vesta',
+        ShippedDate: '2016-11-11T18:00:00',
+        ShipperCity: 'Leon, GTO, Mexico',
+        Amount: 118 },
+      { OrderID: 492,
+        CustomerName: 'Oxxo',
+        ShippedDate: '2016-11-09T18:00:00',
+        ShipperCity: 'Los Angeles, CA, USA',
+        Amount: 110 },
+      { OrderID: 491,
+        CustomerName: 'Unosquare LLC',
+        ShippedDate: '2016-11-02T18:00:00',
+        ShipperCity: 'Los Angeles, CA, USA',
+        Amount: 108 } 
     ]
   };
 
@@ -138,11 +65,11 @@ describe('RemoteDateSource', () => {
     beforeEach(() => {
       expectedResponse = expected;
       dataSource = 
-        new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns);
+        new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
     });
 
     it('should return 10 records', () => dataSource.getAllRecords(10, 0, '')
-      .then(r => { 
+      .then(r => {
         expect(JSON.stringify(r.payload)).to.be(JSON.stringify(expectedResponse.payload));
       }));
   });
