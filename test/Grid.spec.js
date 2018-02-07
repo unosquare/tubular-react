@@ -1,34 +1,35 @@
 import Adapter from 'enzyme-adapter-react-16';
 import Axios from 'axios';
 import Enzyme from 'enzyme';
-import fakeColumnStructure from './utils/fakeColumnStructure.js';
 import Grid from '../src/Grid/Grid';
+import GridHeader from '../src/Grid/GridHeader';
 import MockAdapter from 'axios-mock-adapter';
-import orders from './utils/orders.json';
 import Paginator from '../src/Grid/Paginator';
 import Paper from 'material-ui/Paper';
-import PropTypes from 'prop-types';
 import React from 'react';
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
-import { expect } from 'chai';
 import Typography from 'material-ui/Typography';
-import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
-import { createMount, createShallow } from 'material-ui/test-utils';
+import { createShallow } from 'material-ui/test-utils';
+import { expect } from 'chai';
+import fakeColumnStructure from './utils/fakeColumnStructure.js';
+import orders from './utils/orders.json';
+import Table, { TableBody, TableCell, TableFooter, TableRow } from 'material-ui/Table';
 
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('<Grid />', () => {
-  let mountedGrid;
-  let props;
-  let mount;
   let shallow;
-
   let axiosInstance; 
   let mock;
-   
+  let grid;
+
   before(() => {
-    mount = createMount();
     shallow = createShallow({ dive: true });
+    grid = <Grid 
+      gridName = 'Motorhead'
+      showTopPager
+      dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns) } />
+    ;
   });
   
   const columns = [
@@ -154,47 +155,52 @@ describe('<Grid />', () => {
       </TableRow>
     </TableFooter>;
 
-  const grid = () => {
-    if(!mountedGrid){
-      mountedGrid = mount(<Grid {...props} />);
-    }
-    return mountedGrid;
-  };
-  
   it('should render a Paper', () => {
-    const wrapper = grid().find(Paper);
+    const wrapper = shallow(grid).find(Paper);
     expect(wrapper).to.have.lengthOf(1);
   });
 
   it('should render a Table', () => {
-    const wrapper = grid().find(Table);
+    const wrapper = shallow(grid).find(Table);
     expect(wrapper).to.have.lengthOf(1);
   });
 
+  it('should have 1 rows at first', () => {
+    const wrapper = shallow(grid).find(Table).find(TableBody);
+    expect(wrapper).to.have.lengthOf(1);
+  });
 
   it('should render n columns', () => {
-    const columns = grid().find(TableHead).find(TableRow).find(TableCell);
-    expect(columns).to.have.lengthOf(4);
-  });
-      
-  it('should have 1 rows at first', () => {
-    const rows = grid().find(TableBody).find(TableRow);
-    expect(rows).to.have.lengthOf(1);
+    const gridHeader = <GridHeader
+      gridName = 'Motorhead'
+      dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns) } 
+      page={0}
+      rowsPerPage={10}
+      refreshGrid={ () => console.log('Warsong')}
+    />;
+
+    const wrapper = shallow(gridHeader);
+    wrapper.setState({ data });
+    const cols = wrapper.find(TableRow).find(TableCell);
+
+    expect(cols).to.have.lengthOf(4);
   });
 
-  describe('when data is retrieved', () => {
+  describe('When data is retrieved', () => {
     it('should render all rows', () => {
-      const wrapper = shallow(<Grid { ...props } />);
+      const wrapper = shallow(grid);
       wrapper.setState({ data });
-      expect(wrapper.find(TableRow)).to.have.lengthOf(11);
+      expect(wrapper.find(TableBody).find(TableRow)).to.have.lengthOf(11);
     });
   });
   
-  /** Unit test for default/custom body */
+  // Unit test for default/custom body
   describe('When custom body is not defined', () => {
     it('should render the default body', () => {
-      const body = grid().find(Table).find(TableBody);
-      expect(body).to.have.lengthOf(1);
+      const wrapper = shallow(grid);
+
+      const body = wrapper.find(Table).find(TableBody);
+      expect(body).to.have.lengthOf(1); 
     });
   });
 
@@ -231,17 +237,13 @@ describe('<Grid />', () => {
     });
   });
 
-  /** Unit tests for custom footer */
+  // Unit tests for custom footer
   describe('When footer has no rows', () => {
     it('should not render any row', () => {
       mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { columns }).reply(200, {
         orders
       });
     
-      const grid = <Grid dataSource = { new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns) }
-        columns = { columns }
-      />;
-
       const wrapper = shallow(grid);
       const rowFooter = wrapper.find(Table).find(TableFooter).find(TableRow);
 
@@ -317,9 +319,6 @@ describe('<Grid />', () => {
   });
 
   beforeEach(() => {
-    props = {
-      dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns)
-    };
     axiosInstance = Axios.create();
     mock = new MockAdapter(axiosInstance);
   });
