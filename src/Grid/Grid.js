@@ -2,7 +2,7 @@ import GridHeader from './GridHeader';
 import GridToolbar from './GridToolbar';
 import Paginator from './Paginator';
 import Paper from 'material-ui/Paper';
-import PropTypes, { instanceOf } from 'prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Subject } from 'rx';
 import Typography from 'material-ui/Typography';
