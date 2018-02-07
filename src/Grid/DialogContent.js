@@ -1,7 +1,7 @@
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
 import Button from 'material-ui/Button';
 import DialogInput from './DialogInput.js';
-import PropTypes from 'prop-types';
-import React from 'react';
 import moment from 'moment';
 
 const DialogContent = ({ classes, value, value2, columnType, activeFilter, operator,

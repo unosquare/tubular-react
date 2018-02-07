@@ -1,7 +1,7 @@
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
 import Input from 'material-ui/Input';
 import { MenuItem } from 'material-ui/Menu';
-import PropTypes from 'prop-types';
-import React from 'react';
 import Select from 'material-ui/Select';
 
 const Dropdown = ({ classes, disabled, value, handleChange, activeFilter, operators }) => (

@@ -1,9 +1,11 @@
 import Axios from 'axios';
-import PropTypes from 'prop-types';
-import Rx from 'rx';
-import requiredIf from '../Util';
-
+import * as Rx from 'rx';
 class RemoteDataSource {
+  columns: Array<any>;
+  dataStream: any;
+  url: string;
+  counter: number;
+
   static defaultColumnValues ={
     Sortable: false,
     Searchable: false,
@@ -13,52 +15,23 @@ class RemoteDataSource {
     Visible: true
   }
 
-  static propTypes ={
-    columns: PropTypes.arrayOf(
-      PropTypes.shape({
-        Name: PropTypes.string.isRequired,
-        Label: PropTypes.string.isRequired,
-        Sortable: PropTypes.bool,
-        SortOrder: requiredIf(PropTypes.number, props => props.Sortable),
-        SortDirection: requiredIf(PropTypes.oneOf(['None', 'Ascending', 'Descending']), props => props.Sortable),
-        Searchable: PropTypes.bool,
-        Visible: PropTypes.bool,
-        IsKey: PropTypes.bool,
-        DataType: PropTypes.oneOf(['date', 'datetime', 'datetimeutc', 'numeric', 'boolean', 'string']),
-        Filtering: PropTypes.bool
-      })).isRequired
-  }
-
-  constructor(url, columns) {
-    PropTypes.checkPropTypes(RemoteDataSource.propTypes, { columns }, 'prop', 'RemoteDataSource');
+  constructor(url : string, columns : Array<any>) {
     this.url = url;
     this.counter = 0;
     this.dataStream = new Rx.BehaviorSubject({ payload: [] });
     this.columns = this._normalizeColumns(columns);
   }
 
-  connect(rowsPerPage, page, searchText) {
+  connect(rowsPerPage: number, page: number, searchText: number) {
     this._updateDataStream(rowsPerPage, page, searchText);
     return this.dataStream;
   }
 
-  filter(rowsPerPage, page) {
-    this._updateDataStream(rowsPerPage, page);
-  }
-  
-  sort(rowsPerPage, page) {
-    this._updateDataStream(rowsPerPage, page);
-  }
-
-  search(rowsPerPage, page, searchText) {
+  refresh(rowsPerPage: number, page: number, searchText: number){
     this._updateDataStream(rowsPerPage, page, searchText);
   }
 
-  refresh(rowsPerPage, page, searchText) {
-    this._updateDataStream(rowsPerPage, page, searchText);
-  }
-
-  _normalizeColumns= columns => 
+  _normalizeColumns= (columns: Array<any>) => 
     columns.map(column => {
       const obj = Object.assign({}, RemoteDataSource.defaultColumnValues, column);
       if(column.Filtering){
@@ -75,7 +48,7 @@ class RemoteDataSource {
       return obj;
     });   
 
-  getAllRecords = (rowsPerPage, page, searchText) => new Promise((resolve, reject) => {
+  getAllRecords = (rowsPerPage: number, page: number, searchText: number) => new Promise((resolve :Function, reject:Function) => {
     const request = {
       'Count': this.counter++,
       'Columns': this.columns,
@@ -90,10 +63,10 @@ class RemoteDataSource {
         throw 'It\'s not a valid Tubular response object';
         
       const data = response.data.Payload;
-      const rows = data.map(row => {
-        const obj = {};
+      const rows = data.map((row:any) => {
+        const obj: any = {};
         
-        this.columns.forEach((column, key) => {
+        this.columns.forEach((column: any, key: any) => {
           obj[column.Name] = row[key] || row[column.Name];
         });
         
@@ -113,7 +86,7 @@ class RemoteDataSource {
     });
   })
 
-  handleError(error) {
+  handleError(error: any) {
     if(error.status === 404) {
       throw 'Keys were not found';
     }
@@ -122,15 +95,15 @@ class RemoteDataSource {
     }
   }
 
-  isValidResponse(response) {
-    const expectedStructure = {
-      'Counter': null,
-      'Payload': null,
-      'TotalRecordCount': null, 
-      'FilteredRecordCount': null,
-      'TotalPages': null,
-      'CurrentPage': null,
-      'AggregationPayload': null
+  isValidResponse(response: Object) {
+    const expectedStructure : any = {
+      Counter: null,
+      Payload: null,
+      TotalRecordCount: null, 
+      FilteredRecordCount: null,
+      TotalPages: null,
+      CurrentPage: null,
+      AggregationPayload: null
     };
 
     const expectedStructureKeys = Object.keys(expectedStructure).sort();
@@ -139,7 +112,7 @@ class RemoteDataSource {
     return JSON.stringify(expectedStructureKeys) === JSON.stringify(responseKeys);
   }
     
-  _updateDataStream(rowsPerPage, page, searchText) {
+  _updateDataStream(rowsPerPage: number, page: number, searchText: number) {
     this.getAllRecords(rowsPerPage, page, searchText)
       .then( data => {
         this.dataStream.onNext(data);

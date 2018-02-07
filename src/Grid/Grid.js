@@ -1,10 +1,10 @@
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
+import * as Rx from 'rx';
 import GridHeader from './GridHeader';
 import GridToolbar from './GridToolbar';
 import Paginator from './Paginator';
 import Paper from 'material-ui/Paper';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { Subject } from 'rx';
 import Typography from 'material-ui/Typography';
 import WarningIcon from 'material-ui-icons/Warning';
 import moment from 'moment';
@@ -55,7 +55,7 @@ class Grid extends React.Component {
       aggregate: {}
     };
 
-    this.search = new Subject();
+    this.search = new Rx.Subject();
   }
 
   componentDidMount() {

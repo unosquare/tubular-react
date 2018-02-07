@@ -1,13 +1,13 @@
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
+import * as moment from 'moment';
 import ArrowDownward from 'material-ui-icons/ArrowDownward';
 import ArrowUpward from 'material-ui-icons/ArrowUpward';
 import DialogContent from './DialogContent.js';
 import DialogDropdown from './DialogDropdown.js';
 import FilterListIcon from 'material-ui-icons/FilterList';
 import IconButton from 'material-ui/IconButton';
-import PropTypes from 'prop-types';
-import React from 'react';
 import Tooltip from 'material-ui/Tooltip';
-import moment from 'moment';
 import { withStyles } from 'material-ui/styles';
 import Dialog, { DialogTitle } from 'material-ui/Dialog';
 import { TableCell, TableRow, TableSortLabel } from 'material-ui/Table';

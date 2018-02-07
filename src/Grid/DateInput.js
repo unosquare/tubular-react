@@ -1,8 +1,8 @@
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
 import DateRangeIcon from 'material-ui-icons/DateRange';
 import LeftArrowIcon from 'material-ui-icons/ChevronLeft';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import PropTypes from 'prop-types';
-import React from 'react';
 import RightArrowIcon from 'material-ui-icons/ChevronRight';
 import TimeIcon from 'material-ui-icons/Schedule';
 import createMuiTheme from 'material-ui/styles/createMuiTheme';

@@ -1,10 +1,10 @@
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
 import FirstPageIcon from 'material-ui-icons/FirstPage';
 import IconButton from 'material-ui/IconButton';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
 import LastPageIcon from 'material-ui-icons/LastPage';
-import PropTypes from 'prop-types';
-import React from 'react';
 import { withStyles } from 'material-ui/styles';
 
 const styles = theme => ({

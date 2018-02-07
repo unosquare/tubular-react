@@ -1,6 +1,6 @@
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
 import Input from 'material-ui/Input';
-import PropTypes from 'prop-types';
-import React from 'react';
 
 const TextInput = ({ activeFilter, disabled, handleApply, handleTextFieldChange, label, mod, value }) => (
   <div style={{ padding: '15px 20px 5px 20px' }}>

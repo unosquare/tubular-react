@@ -1,10 +1,10 @@
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
 import CloseIcon from 'material-ui-icons/Close';
 import DownloadIcon from 'material-ui-icons/FileDownload';
 import { FormControl } from 'material-ui/Form';
 import IconButton from 'material-ui/IconButton';
 import PrintIcon from 'material-ui-icons/Print';
-import PropTypes from 'prop-types';
-import React from 'react';
 import SearchIcon from 'material-ui-icons/Search';
 import Toolbar from 'material-ui/Toolbar';
 import { withStyles } from 'material-ui/styles';

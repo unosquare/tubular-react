@@ -1,0 +1,18 @@
+{
+    "files": [
+        "src/**/*.*"
+    ],
+    "compilerOptions": {
+        "outDir": "./build/",
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "target": "es5",
+        "allowJs": true,
+        "jsx": "react",
+        "lib": ["es5", "es6", "dom"],
+        "module": "commonjs"    
+    },    
+    "include": [
+        "./src/**/*"
+    ]
+}
