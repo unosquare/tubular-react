@@ -34,25 +34,6 @@ describe('<GridToolbar/>', () => {
   it('should render a Toolbar', () => {
     expect(toolbar().find(Toolbar)).to.have.lengthOf(1);
   });
-
-  describe('when isExportEnabled is true', () => {
-    beforeEach(() => {
-      props.isExportEnabled = true;    
-    });
-    it('should render a export button', () => {    
-      const wrapper = shallow(<GridToolbar {...props}/>); 
-      expect(wrapper.find(Button).find(DownloadIcon)).to.have.lengthOf(1);
-    });
-
-    describe('when export button is pressed', () => {         
-      it('should update state anchorEl', () => {     
-        const wrapper = shallow(<GridToolbar {...props}/>);          
-        wrapper.find(Button).simulate('click', { currentTarget: 'element' });
-        expect(wrapper.state().anchorEl).to.be.equal('element');
-      });
-    }); 
-  });
-
   describe('when isPrintEnabled is true', () => {
     it('should render a print button', () => {
       props.isPrintEnabled = true;
