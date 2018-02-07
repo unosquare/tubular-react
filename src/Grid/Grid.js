@@ -2,7 +2,7 @@ import GridHeader from './GridHeader';
 import GridToolbar from './GridToolbar';
 import Paginator from './Paginator';
 import Paper from 'material-ui/Paper';
-import PropTypes from 'prop-types';
+import PropTypes, { instanceOf } from 'prop-types';
 import React from 'react';
 import { Subject } from 'rx';
 import Typography from 'material-ui/Typography';
@@ -96,6 +96,7 @@ class Grid extends React.Component {
     localStorage.setItem(`tubular.${this.props.gridName}_pageSize`, rowsPerPage);
     localStorage.setItem(`tubular.${this.props.gridName}_searchText`, searchText);
   }
+
   printTable = () => {
     const { dataSource, filteredRecordCount, searchText } = this.state;
 
@@ -149,10 +150,9 @@ class Grid extends React.Component {
 
       for (let i = 0; i < row.length; i++) {
         if (visibility[i]) {
-          let innerValue = row[i] === null ? '' : row[i].toString();
-
-          if (row[i] instanceof Date) {
-            innerValue = row[i].toLocaleString();
+          let innerValue = row[i] === null || row[i] === undefined ? '' : row[i].toString();
+          if (moment(row[i], moment.ISO_8601, true).isValid()) {
+            innerValue = moment(row[i]).format('MMMM Do YYYY, h:mm:ss a');
           }
 
           let result = innerValue.replace(/"/g, '""');
@@ -201,6 +201,7 @@ class Grid extends React.Component {
         URL.revokeObjectURL(fileURL);
       });
   }
+
   render() {
     const { classes, bodyRenderer, footerRenderer, showBottomPager, showTopPager, showPrintButton, showExportButton } = this.props;
     const { data, rowsPerPage, page, dataSource, aggregate, filteredRecordCount, totalRecordCount } = this.state;
