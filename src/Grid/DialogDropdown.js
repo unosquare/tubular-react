@@ -1,5 +1,4 @@
 import Dropdown from './Dropdown.js';
-import Input from 'material-ui/Input';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -21,7 +20,7 @@ const StringOperators = [
   { Value: 'StartsWith', Title: 'Starts With' },
   { Value: 'NotStartsWith', Title: 'Not Starts With' },
   { Value: 'EndsWith', Title: 'Ends With' },
-  { Value: 'NotEndsWith', Title: 'Not Ends With' },
+  { Value: 'NotEndsWith', Title: 'Not Ends With' }
 ];
   
 const BooleanOperators = [

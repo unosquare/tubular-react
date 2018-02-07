@@ -1,4 +1,3 @@
-import Button from 'material-ui/Button';
 import CloseIcon from 'material-ui-icons/Close';
 import DownloadIcon from 'material-ui-icons/FileDownload';
 import { FormControl } from 'material-ui/Form';
@@ -121,8 +120,8 @@ class GridToolbar extends React.Component {
           />
         </FormControl>
         <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleMenuClose}>
-            <MenuItem onClick={e => this.exportCSV(false, e)}> All rows</MenuItem>
-            <MenuItem onClick={e => this.exportCSV(true, e)}> Current rows</MenuItem>
+          <MenuItem onClick={e => this.exportCSV(false, e)}> All rows</MenuItem>
+          <MenuItem onClick={e => this.exportCSV(true, e)}> Current rows</MenuItem>
         </Menu>
       </Toolbar>
     );

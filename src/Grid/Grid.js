@@ -235,7 +235,7 @@ class Grid extends React.Component {
               <WarningIcon />
               <Typography style={{ paddingLeft: '15px' }} type='body2' gutterBottom>
                 No records found
-                </Typography>
+              </Typography>
             </TableCell>
           </TableRow>)
         }
