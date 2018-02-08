@@ -7,31 +7,55 @@ import IconButton from 'material-ui/IconButton';
 import PrintIcon from 'material-ui-icons/Print';
 import SearchIcon from 'material-ui-icons/Search';
 import Toolbar from 'material-ui/Toolbar';
-import { withStyles } from 'material-ui/styles';
+import { StyleRules, Theme } from 'material-ui/styles';
+import { WithStyles, Button, withStyles } from 'material-ui';
 import Input, { InputAdornment } from 'material-ui/Input';
 import Menu, { MenuItem } from 'material-ui/Menu';
+import { MouseEvent } from 'react';
 
-const styles = theme => ({
-  spacer: {
-    flex: '1 1 100%'
-  },
-  searchField: {
+const styleClasses  = {
+  formControl:'',
+  spacer:'',
+  button:''
+};
 
-  },
-  formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 250
-  },
-  button: {
-    minWidth: 150
+const styles = (theme: Theme): StyleRules<keyof typeof styleClasses> => (
+  { 
+    formControl: {
+      margin: theme.spacing.unit,
+      minWidth: 250
+    },
+    spacer: {
+      flex: '1 1 100%'
+    },
+    button: {
+      minWidth: 150
+    },
   }
-});
+);
 
-class GridToolbar extends React.Component {
+interface State {  
+  anchorEl?: HTMLElement,
+  searchText: string,
+}
+
+interface Props {
+  gridName: string,
+  onSearchTextChange(text: string): void,
+  onPrint(): void,
+  onExport(condition:boolean):void
+  isExportEnabled: boolean,
+  isPrintEnabled: boolean,
+  filteredRecordCount: number
+}
+
+class GridToolbar extends React.Component <Props & WithStyles<keyof typeof styleClasses>,State> {
+  static defaultProps= {
+    onSearchTextChange: (x:any):any => x
+  }
   state = {
     searchText: '',
-    debounced: '',
-    anchorEl: null
+    anchorEl: null as HTMLElement
   };
 
   componentDidMount() {
@@ -44,34 +68,34 @@ class GridToolbar extends React.Component {
     }
   }
 
-  handleInputChange = event => {
+  handleInputChange = (event: React.ChangeEvent<HTMLInputElement>):void => {
     const searchText = event.target.value;
     this.setState({ searchText }, () => this.props.onSearchTextChange(searchText));
   }
 
-  clearSearchText = () => {
+  clearSearchText = ():void => {
     this.setState({
       searchText: ''
     }, () => this.props.onSearchTextChange(this.state.searchText));
   }
 
-  handleMenuOpen = event => {
+  handleMenuOpen = (event: React.MouseEvent<HTMLElement>):void => {
     this.setState({
       anchorEl: event.currentTarget
     });
   }
 
-  handleMenuClose = () => {
+  handleMenuClose = ():void => {
     this.setState({
-      anchorEl: null
+      anchorEl: null as HTMLElement
     });
   }
   
-  exportCSV = (filtered, e) => {
+  exportCSV = (filtered: boolean, e:React.MouseEvent<HTMLElement>) => {
     const { onExport } = this.props;
     e.preventDefault();
     this.setState({
-      anchorEl: null
+      anchorEl: null as HTMLElement
     });
     onExport(filtered);
   }
@@ -96,9 +120,7 @@ class GridToolbar extends React.Component {
         }
         <FormControl className={classes.formControl}>
           <Input
-            margin='none'
             fullWidth
-            className={classes.searchField}
             type='text'
             value={this.state.searchText}
             onChange={this.handleInputChange}
@@ -119,7 +141,7 @@ class GridToolbar extends React.Component {
             }
           />
         </FormControl>
-        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleMenuClose}>
+        <Menu anchorEl={anchorEl}  open={Boolean(anchorEl)} onClose={this.handleMenuClose}>
           <MenuItem onClick={e => this.exportCSV(false, e)}> All rows</MenuItem>
           <MenuItem onClick={e => this.exportCSV(true, e)}> Current rows</MenuItem>
         </Menu>
@@ -127,16 +149,5 @@ class GridToolbar extends React.Component {
     );
   }
 }
-
-GridToolbar.propTypes = {
-  classes: PropTypes.object.isRequired,
-  isExportEnabled: PropTypes.bool,
-  isPrintEnabled: PropTypes.bool,
-  onSearchTextChange: PropTypes.func.isRequired
-};
-
-GridToolbar.defaultProps = {
-  onSearchTextChange: x => x
-};
 
 export default withStyles(styles)(GridToolbar);

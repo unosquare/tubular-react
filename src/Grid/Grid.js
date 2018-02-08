@@ -7,7 +7,7 @@ import Paginator from './Paginator';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import WarningIcon from 'material-ui-icons/Warning';
-import moment from 'moment';
+import * as moment from 'moment';
 import { withStyles } from 'material-ui/styles';
 import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
 
