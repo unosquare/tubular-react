@@ -1,15 +1,29 @@
+import Button from 'material-ui/Button';
+import * as moment from 'moment';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
-import Button from 'material-ui/Button';
 import DialogInput from './DialogInput.js';
-import moment from 'moment';
 
-const DialogContent = ({ classes, value, value2, columnType, activeFilter, operator,
+interface IProps {
+  activeFilter: string;
+  classes: any;
+  columnType: string;
+  operator: string;
+  value: any;
+  value2: any;
+  handleApply(): void;
+  handleBooleanDropDown(): void;
+  handleClear(): void;
+  handleDatePicker(): void;
+  handleTextFieldChange(): void;
+}
+
+const DialogContent: React.SFC<IProps> = ({ classes, value, value2, columnType, activeFilter, operator,
   handleDatePicker, handleBooleanDropDown, handleTextFieldChange, handleApply, handleClear }) => {
   let firstValue = '';
   let secondValue = '';
 
-  switch (columnType){
+  switch (columnType) {
   case 'datetime':
   case 'date':
   case 'datetimeutc':
@@ -23,44 +37,44 @@ const DialogContent = ({ classes, value, value2, columnType, activeFilter, opera
     firstValue = operator === 'None' ? '' : value || '';
     secondValue = value2 || '';
   }
-  
+
   return (
     <div >
       <DialogInput
         disabled={operator === 'None'}
-        value={firstValue} 
+        value={firstValue}
         handleApply={handleApply}
         mod={'Value'}
-        label={'Value'} 
-        classes={classes} 
+        label={'Value'}
+        classes={classes}
         columnType={columnType}
-        activeFilter={activeFilter} 
+        activeFilter={activeFilter}
         handleDatePicker={handleDatePicker}
         handleBooleanDropDown={handleBooleanDropDown}
-        handleTextFieldChange={handleTextFieldChange} 
+        handleTextFieldChange={handleTextFieldChange}
       />
-        
-      {operator === 'Between' && 
+
+      {operator === 'Between' &&
         <DialogInput
           disabled={false}
-          value={secondValue} 
+          value={secondValue}
           handleApply={handleApply}
           mod={'Value2'}
-          label={'Value 2'} 
-          classes={classes} 
+          label={'Value 2'}
+          classes={classes}
           columnType={columnType}
-          activeFilter={activeFilter} 
+          activeFilter={activeFilter}
           handleDatePicker={handleDatePicker}
           handleBooleanDropDown={handleBooleanDropDown}
-          handleTextFieldChange={handleTextFieldChange} 
+          handleTextFieldChange={handleTextFieldChange}
         />}
-        
+
       <div style={{ padding: '20px 10px 15px 10px', textAlign: 'center' }}>
-        <Button 
-          className={classes.applyButton} 
-          onClick={() => handleApply()} 
-          disabled={operator === 'None'} 
-          style={operator === 'None' ? { background: 'grey' } : {}} 
+        <Button
+          className={classes.applyButton}
+          onClick={() => handleApply()}
+          disabled={operator === 'None'}
+          style={operator === 'None' ? { background: 'grey' } : {}}
         >
           Apply
         </Button>
@@ -68,17 +82,6 @@ const DialogContent = ({ classes, value, value2, columnType, activeFilter, opera
       </div>
     </div>
   );
-};
-
-DialogContent.propTypes = {
-  activeFilter: PropTypes.string.isRequired, 
-  classes: PropTypes.object.isRequired,
-  columnType: PropTypes.string.isRequired,
-  handleApply: PropTypes.func.isRequired,
-  handleBooleanDropDown: PropTypes.func.isRequired, 
-  handleClear: PropTypes.func.isRequired,
-  handleDatePicker: PropTypes.func.isRequired, 
-  handleTextFieldChange: PropTypes.func.isRequired
 };
 
 export default DialogContent;
