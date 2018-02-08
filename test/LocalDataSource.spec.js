@@ -56,6 +56,26 @@ describe('LocalDataSource', () => {
     });
   });
 
+  describe('When column structure is wrong', () => {
+    beforeEach(() => {
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { invalidColumnsSample }).reply(500);
+    });
+
+    it('should return a status code 500', done => {
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', invalidColumnsSample);
+
+      dataSource.getAllRecords(10, 0, '').then(response => {
+        setTimeout(() => {
+          expect(response.payload).to.deep.equal(expected.payload);
+          done();
+        });
+      }).catch(error => {
+        expect(error.response.status).to.equal(500);
+        done();
+      });
+    });
+  });
+
   beforeEach(() => {
     axiosInstance = Axios.create();
     mock = new MockAdapter(axiosInstance);
