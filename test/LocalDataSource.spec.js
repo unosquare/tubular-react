@@ -38,6 +38,18 @@ describe('LocalDataSource', () => {
     });
   });
 
+  describe('isValidResponse()', () => {
+    beforeEach(() => {
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200);
+    });
+
+    it('should return true when Tubular response.data is OK', () => {
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+      
+      expect(dataSource.isValidResponse(expectedResponseStructure)).to.be.true;
+    });
+  });
+
   beforeEach(() => {
     axiosInstance = Axios.create();
     mock = new MockAdapter(axiosInstance);
