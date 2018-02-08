@@ -1,68 +1,78 @@
-import * as PropTypes from 'prop-types';
-import * as React from 'react';
 import FirstPageIcon from 'material-ui-icons/FirstPage';
-import IconButton from 'material-ui/IconButton';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
 import LastPageIcon from 'material-ui-icons/LastPage';
-import { withStyles } from 'material-ui/styles';
+import IconButton from 'material-ui/IconButton';
+import { StyleRules, Theme, withStyles } from 'material-ui/styles';
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
 
-const styles = theme => ({
-  root: {
-    flexShrink: 0,
-    marginLeft: theme.spacing.unit * 2.5
-  },
-  buttonStyle: {
-    height: '30px',
-    width: '30px'
+const styleClasses  = {
+  buttonStyle: '',
+  root: '',
+};
+
+const styles = (theme: Theme): StyleRules<keyof typeof styleClasses> => (
+  {
+    buttonStyle: {
+      height: '30px',
+      width: '30px'
+    },
+    root: {
+      flexShrink: 0,
+      marginLeft: theme.spacing.unit * 2.5
+    }
   }
-});
-
-const TablePaginationActions = ({ classes, count, page, rowsPerPage, onChangePage }) => {
-  const handleFirstPageButtonClick = event => {
+);
+interface IProps {
+  classes: any;
+  count: number;
+  page: number;
+  rowsPerPage: number;
+  onChangePage(event: React.MouseEvent<HTMLElement>, page: number): void;
+}
+const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsPerPage, onChangePage }) => {
+  const handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     onChangePage(event, 0);
   };
-  
-  const handleBackButtonClick = event => {
+
+  const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     onChangePage(event, page - 1);
   };
-  
-  const handleNextButtonClick = event => {
+
+  const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     onChangePage(event, page + 1);
   };
-  
-  const handleLastPageButtonClick = event => {
-    const maxPage = Math.max(0, Math.ceil(count / rowsPerPage) - 1);
+
+  const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const $maxPage: number = Math.max(0, Math.ceil(count / rowsPerPage) - 1);
 
     onChangePage(
       event,
-      maxPage
+      $maxPage
     );
   };
 
-  const handlePageButtonClick = (event, page) => {
+  const handlePageButtonClick = (event: React.MouseEvent<HTMLElement>, Page: number) => {
     onChangePage(
       event,
-      page,
+      Page,
     );
   };
-  
-  let pages = [];
+
+  let pages: any[] = [];
   const maxPage = Math.max(0, Math.ceil(count / rowsPerPage) - 1);
 
-  if(page < 3){
+  if (page < 3) {
     pages = [ 0, 1, 2, 3, 4 ];
-  }
-  else if(maxPage === 3){
+  } else if (maxPage === 3) {
     pages = [ 0, 1, 2, 3];
-  }
-  else if (page > maxPage - 2){
+  } else if (page > maxPage - 2) {
     pages = [maxPage - 4, maxPage - 3, maxPage - 2, maxPage - 1, maxPage];
-  }
-  else{
+  } else {
     pages = [ page - 2, page - 1, page, page + 1, page + 2 ];
   }
-  
+
   return (
     <div className={classes.root}>
       <IconButton
@@ -88,11 +98,11 @@ const TablePaginationActions = ({ classes, count, page, rowsPerPage, onChangePag
             <IconButton
               className={classes.buttonStyle}
               key={index}
-              onClick={event => handlePageButtonClick(event, pages[index])}
+              onClick={(event) => handlePageButtonClick(event, pages[index])}
               aria-label={`Page${index + 1}`}
-              style={ pages[index] === page ? 
-                { fontSize: '18px', background: '#158cba', color: 'white' } : 
-                { fontSize: '18px' } } 
+              style={ pages[index] === page ?
+                { fontSize: '18px', background: '#158cba', color: 'white' } :
+                { fontSize: '18px' } }
             >
               {pages[index] + 1}
             </IconButton>))
@@ -114,21 +124,12 @@ const TablePaginationActions = ({ classes, count, page, rowsPerPage, onChangePag
         aria-label='Last Page'
       >
         <LastPageIcon />
-      </IconButton> 
+      </IconButton>
 
     </div>
   );
 };
 
-TablePaginationActions.propTypes = {
-  classes: PropTypes.object.isRequired,
-  count: PropTypes.number.isRequired,
-  onChangePage: PropTypes.func.isRequired,
-  page: PropTypes.number.isRequired,
-  rowsPerPage: PropTypes.number.isRequired,
-  theme: PropTypes.object.isRequired
-};
-  
 export default withStyles(styles, { withTheme: true })(
   TablePaginationActions,
 );
