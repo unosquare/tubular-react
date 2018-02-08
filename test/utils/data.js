@@ -87,4 +87,14 @@ const expected = {
   ]
 };
 
-export { data, expected };
+const expectedResponseStructure = {
+  'Counter': null,
+  'Payload': null,
+  'TotalRecordCount': null, 
+  'FilteredRecordCount': null,
+  'TotalPages': null,
+  'CurrentPage': null,
+  'AggregationPayload': null
+};
+
+export { data, expected, expectedResponseStructure };
