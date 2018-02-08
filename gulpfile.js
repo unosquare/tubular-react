@@ -66,8 +66,8 @@ gulp.task('clean:build', ['build:clean', 'build', 'build:copy']);
 
 gulp.task('test', () => gulp.src(['test/**/*.spec.js'])
   .pipe(mocha({
-    reporter: 'spec',
-    require: ['babel-register', 'test/helpers/browser.js']
+    reporter: 'nyan',
+    require: ['ts-node/register', 'test/helpers/browser.js']
   })));
 
 gulp.task('default', ['build:clean', 'build']);
