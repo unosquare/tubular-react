@@ -1,6 +1,6 @@
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
-import Dropdown from './Dropdown.js';
+import * as Dropdown from './Dropdown.tsx';
 
 const NumericOperators = [
   { Value: 'None', Title: 'None' },
