@@ -58,7 +58,7 @@ class RemoteDataSource {
     this._updateDataStream(rowsPerPage, page, searchText);
   }
 
-  _normalizeColumns= columns => 
+  _normalizeColumns = columns => 
     columns.map(column => {
       const obj = Object.assign({}, RemoteDataSource.defaultColumnValues, column);
       if(column.Filtering){

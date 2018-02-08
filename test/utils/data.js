@@ -12,7 +12,7 @@ const data = [
 ];
 
 const expected = { 
-  'payload': [ 
+  payload: [ 
     { 
       OrderID: 1,
       CustomerName: 'Microsoft',
@@ -85,5 +85,24 @@ const expected = {
   ]
 };
 
+const validResponseStructure = {
+  'Counter': null,
+  'Payload': null,
+  'TotalRecordCount': null, 
+  'FilteredRecordCount': null,
+  'TotalPages': null,
+  'CurrentPage': null,
+  'AggregationPayload': null
+};
+
+const invalidResponseStructure = {
+  'Counters': null,
+  'Paiload': null,
+  'TotalRecordCount': null, 
+  'FilteredRecordCount': null,
+  'TotalPages': null,
+  'AggregationPayload': null
+};
+
 export default data;
-export { expected };
+export { expected, validResponseStructure, invalidResponseStructure };
