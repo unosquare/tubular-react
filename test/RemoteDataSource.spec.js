@@ -1,6 +1,6 @@
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
 import expect from 'expect.js';
-import { validColumnsSample } from './utils/columns.js';
+import { invalidColumnsSample, validColumnsSample } from './utils/columns.js';
 
 describe('RemoteDateSource', () => {
   const expected = { 
@@ -60,7 +60,7 @@ describe('RemoteDateSource', () => {
 
   let expectedResponse;
   let dataSource;
-
+  
   describe('When columns structure is valid', () => {
     beforeEach(() => {
       expectedResponse = expected;
@@ -71,6 +71,24 @@ describe('RemoteDateSource', () => {
     it('should return 10 records', () => dataSource.getAllRecords(10, 0, '')
       .then(r => {
         expect(JSON.stringify(r.payload)).to.be(JSON.stringify(expectedResponse.payload));
-      }));
+      })
+    );
+  });
+  
+  describe('When columns structure is invalid', () => {
+    beforeEach(() => {
+      expectedResponse = expected;
+      dataSource = 
+        new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', invalidColumnsSample);
+    });
+
+    it('throws an Internal Server Error', () => 
+      dataSource.getAllRecords(10, 0, '')
+        .then(r => {
+          expect(JSON.stringify(r.payload)).to.be(JSON.stringify(expectedResponse.payload));
+        }).catch( error => 
+          expect(error.response.statusText).to.be('Internal Server Error')
+        )
+    );
   });
 });
