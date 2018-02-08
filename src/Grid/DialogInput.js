@@ -2,7 +2,7 @@ import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import DateInput from './DateInput.js';
 import Dropdown from './Dropdown.js';
-import TextInput from './TextInput.js';
+import TextInput from './TextInput.tsx';
 
 const BooleanInputOperators = [
   { Value: '', Title: '' },

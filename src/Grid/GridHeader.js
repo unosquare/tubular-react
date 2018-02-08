@@ -239,9 +239,9 @@ class GridHeader extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  handleTextFieldChange = name => event => {
+  handleTextFieldChange = (event, name) => {
     this.setState({
-      [this.state.activeFilter + name]: event.target.value
+      [this.state.activeFilter + name]: event
     });
   };
 
