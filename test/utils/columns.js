@@ -4,7 +4,7 @@ const validColumnsSample = [
     Name: 'OrderID',
     Sortable: true,
     SortOrder: 1,
-    SortDirection: 'Descending',
+    SortDirection: 'Ascending',
     IsKey: true,
     DataType: 'numeric',    
     Filtering: true
