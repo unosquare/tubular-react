@@ -4,7 +4,7 @@ const validColumnsSample = [
     Name: 'OrderID',
     Sortable: true,
     SortOrder: 1,
-    SortDirection: 'Descending',
+    SortDirection: 'Ascending',
     IsKey: true,
     DataType: 'numeric',    
     Filtering: true
@@ -24,7 +24,7 @@ const validColumnsSample = [
   },
   {
     Label: 'Shipper City',
-    Name: 'ShipperCity',
+    Name: 'ShipperCity'
   },
   {
     Label: 'Amount',
@@ -56,7 +56,7 @@ const invalidColumnsSample = [
   },
   {
     Label: 'Shipper City',
-    Name: 'ShipperCity',
+    Name: 'ShipperCity'
   },
   {
     Label: 'Amount',
