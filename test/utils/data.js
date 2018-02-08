@@ -97,4 +97,13 @@ const expectedResponseStructure = {
   'AggregationPayload': null
 };
 
-export { data, expected, expectedResponseStructure };
+const fakeResponseStructure = {
+  'Counters': null,
+  'Paiload': null,
+  'TotalRecordCount': null, 
+  'FilteredRecordCount': null,
+  'TotalPages': null,
+  'AggregationPayload': null
+};
+
+export { data, expected, expectedResponseStructure, fakeResponseStructure };

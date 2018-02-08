@@ -2,7 +2,7 @@ import Axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
 import { expect } from 'chai';
-import { expected, expectedResponseStructure } from './utils/data.js';
+import { expected, expectedResponseStructure, fakeResponseStructure } from './utils/data.js';
 import { invalidColumnsSample, validColumnsSample } from './utils/columns.js';
 import { setTimeout } from 'timers';
 
@@ -45,8 +45,14 @@ describe('LocalDataSource', () => {
 
     it('should return true when Tubular response.data is OK', () => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
-      
+
       expect(dataSource.isValidResponse(expectedResponseStructure)).to.be.true;
+    });
+
+    it('should return false when Tubular response.data is wrong', () => {
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+
+      expect(dataSource.isValidResponse(fakeResponseStructure)).to.be.false;
     });
   });
 
