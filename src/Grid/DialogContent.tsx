@@ -2,7 +2,7 @@ import Button from 'material-ui/Button';
 import * as moment from 'moment';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
-import DialogInput from './DialogInput.js';
+import DialogInput from './DialogInput';
 
 interface IProps {
   activeFilter: string;
