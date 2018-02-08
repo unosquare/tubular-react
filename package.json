@@ -49,9 +49,6 @@
     "del": "^3.0.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "eslint": "^4.15.0",
-    "eslint-plugin-babel": "^4.1.2",
-    "eslint-plugin-react": "^7.5.1",
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.0",
     "gulp-copy": "^1.1.0",
@@ -62,6 +59,8 @@
     "nyc": "^11.4.1",
     "sinon": "^4.1.6",
     "tsify": "^3.0.4",
+    "tslint": "^5.9.1",
+    "tslint-react": "^3.4.0",
     "typescript": "^2.7.1",
     "vinyl-source-stream": "^2.0.0",
     "watchify": "^3.9.0"
