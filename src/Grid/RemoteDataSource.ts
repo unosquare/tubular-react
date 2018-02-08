@@ -31,7 +31,7 @@ class RemoteDataSource {
     return this.dataStream;
   }
 
-  public refresh(rowsPerPage: number, page: number, searchText: number){
+  public refresh(rowsPerPage: number, page: number, searchText: number) {
     this._updateDataStream(rowsPerPage, page, searchText);
   }
 

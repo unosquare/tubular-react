@@ -6,7 +6,7 @@
   "scripts": {
     "start": "gulp watch",
     "build": "gulp",
-    "lint": "eslint src/**/*.*",
+    "lint": "tslint src/**/*.ts src/**/*.tsx",
     "test": "gulp test",
     "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov"
   },
