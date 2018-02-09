@@ -1,5 +1,4 @@
 import Axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
 import { expect } from 'chai';
 import { setTimeout } from 'timers';
@@ -7,14 +6,7 @@ import { expected, expectedColumnStructure, expectedResponseStructure, fakeRespo
 import { invalidColumnsSample, validColumnsSample } from './utils/columns.js';
 
 describe('LocalDataSource', () => {
-  let axiosInstance; 
-  let mock;
-
   describe('getAllRecords()', () => {
-    beforeEach(() => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200);
-    });
-
     it('should return a payload', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
       
@@ -39,10 +31,6 @@ describe('LocalDataSource', () => {
   });
 
   describe('isValidResponse()', () => {
-    beforeEach(() => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200);
-    });
-
     it('should return true when there\'s a Tubular Response Object', () => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
@@ -57,10 +45,6 @@ describe('LocalDataSource', () => {
   });
 
   describe('When column structure is wrong', () => {
-    beforeEach(() => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { invalidColumnsSample }).reply(500);
-    });
-
     it('should return a status code 500', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', invalidColumnsSample);
 
@@ -77,10 +61,6 @@ describe('LocalDataSource', () => {
   });
 
   describe('_normalizeColumns()', () => {
-    beforeEach(() => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200);
-    });
-
     it('should return an object with the column structure accepted for Tubular', () => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
@@ -90,10 +70,6 @@ describe('LocalDataSource', () => {
 
   /** Unit tests for numeric columns */
   describe('When numeric column has filters', () => {
-    beforeEach(() => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200);
-    });
-
     /** None */
     it('should return a payload without filters', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
@@ -218,10 +194,6 @@ describe('LocalDataSource', () => {
 
   /** Unit test for string/date columns */
   describe('When string/date column has filters', () => {
-    beforeEach(() => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200);
-    });
-
     it('should return a payload with records where the CustomerName isn\'t equal to Microsoft', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
@@ -241,7 +213,5 @@ describe('LocalDataSource', () => {
   });
 
   beforeEach(() => {
-    axiosInstance = Axios.create();
-    mock = new MockAdapter(axiosInstance);
   });
 });
