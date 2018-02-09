@@ -1,6 +1,6 @@
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
-import * as Dropdown from './Dropdown.tsx';
+import Dropdown from './Dropdown';
 
 const NumericOperators = [
   { Value: 'None', Title: 'None' },
@@ -11,7 +11,7 @@ const NumericOperators = [
   { Value: 'Lte', Title: '<=' },
   { Value: 'Lt', Title: '<' }
 ];
-  
+
 const StringOperators = [
   { Value: 'None', Title: 'None' },
   { Value: 'Equals', Title: 'Equals' },
@@ -22,43 +22,72 @@ const StringOperators = [
   { Value: 'EndsWith', Title: 'Ends With' },
   { Value: 'NotEndsWith', Title: 'Not Ends With' }
 ];
-  
+
 const BooleanOperators = [
   { Value: 'None', Title: 'None' },
   { Value: 'Equals', Title: 'Equals' },
   { Value: 'NotEquals', Title: 'Not Equals' }
 ];
 
-const DialogDropdown = ({ classes, value, columnType, activeFilter, handleChange }) => {
+interface IProps {
+  activeFilter: string;
+  classes: any;
+  columnType: string;
+  value: string;
+  handleChange(event: any, value: any): void;
+}
+
+const DialogDropdown: React.SFC<IProps> = ({ classes, value, columnType, activeFilter, handleChange }) => {
+  const handleDropdownChange = (ev: any) => {
+    handleChange(ev.target.name, ev.target.value);
+  };
   const dropdownValue = value === undefined ? 'None' : value;
   let component;
-
-  switch (columnType){
+  switch (columnType) {
   case 'string':
-    component = <Dropdown disabled={false} operators={StringOperators} classes={classes} value={dropdownValue} activeFilter={activeFilter} handleChange={handleChange}/>;
-    break;
+    return(
+    <Dropdown
+      disabled={false}
+      operators={StringOperators}
+      classes={classes}
+      value={dropdownValue}
+      activeFilter={activeFilter}
+      handleChange={handleDropdownChange}
+    />);
   case 'numeric':
   case 'datetime':
   case 'date':
   case 'datetimeutc':
-    component = <Dropdown disabled={false} operators={NumericOperators} classes={classes} value={dropdownValue} activeFilter={activeFilter} handleChange={handleChange}/>;
+    component = (
+    <Dropdown
+      disabled={false}
+      operators={NumericOperators}
+      classes={classes}
+      value={dropdownValue}
+      activeFilter={activeFilter}
+      handleChange={handleDropdownChange}
+    />
+  );
     break;
   case 'boolean':
-    component = <Dropdown disabled={false} operators={BooleanOperators} classes={classes} value={dropdownValue} activeFilter={activeFilter} handleChange={handleChange}/>;
+    component =
+    (
+      <Dropdown
+        disabled={false}
+        operators={BooleanOperators}
+        classes={classes}
+        value={dropdownValue}
+        activeFilter={activeFilter}
+        handleChange={handleDropdownChange}
+      />
+    );
     break;
-  default: 
+  default:
     component = null;
     break;
   }
 
   return component;
-};
-
-DialogDropdown.propTypes = {
-  activeFilter: PropTypes.string.isRequired,
-  classes: PropTypes.object.isRequired,
-  columnType: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired
 };
 
 export default DialogDropdown;

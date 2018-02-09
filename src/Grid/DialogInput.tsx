@@ -19,9 +19,9 @@ interface IProps {
   mod: string;
   value: string;
   handleApply(): void;
-  handleBooleanDropDown(): void;
-  handleDatePicker(): void;
-  handleTextFieldChange(): void;
+  handleBooleanDropDown(event: any): void;
+  handleDatePicker(name: string): (event: any) => void;
+  handleTextFieldChange(event: any, name: string): void;
 }
 
 const DialogInput: React.SFC<IProps> = ({ classes, disabled, value, columnType, activeFilter, label,

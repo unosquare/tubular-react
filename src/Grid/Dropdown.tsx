@@ -9,7 +9,7 @@ interface IProps {
   disabled: boolean;
   operators: any[];
   value: string;
-  handleChange(): void;
+  handleChange(event: any): void;
 }
 
 const Dropdown: React.SFC<IProps> = ({ classes, disabled, value, handleChange, activeFilter, operators }) => (

@@ -9,7 +9,8 @@
         "quotemark": [true, "single", "avoid-escape", "avoid-template"],
         "trailing-comma": [false, {"multiline": "always", "singleline": "never"}],
         "jsx-no-lambda": false,
-        "jsx-no-multiline-js": false
+        "jsx-no-multiline-js": false,
+        "no-string-literal": false
     },
     "rulesDirectory": []
 }
