@@ -82,7 +82,12 @@ const expected = {
       ShipperCity: 'Portland, OR, USA',
       Amount: 15 
     } 
-  ]
+  ],
+  filteredRecordCount: 500,
+  totalRecordCount: 500,
+  aggregate: { CustomerName: 500 },
+  searchText: '',
+  rowsPerPage: 10 
 };
 
 const validResponseStructure = {
