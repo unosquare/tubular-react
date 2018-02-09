@@ -1,7 +1,6 @@
 import Axios from 'axios';
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
 import { expect } from 'chai';
-import { setTimeout } from 'timers';
 import { expected, expectedColumnStructure, expectedResponseStructure, fakeResponseStructure } from './utils/data.js';
 import { invalidColumnsSample, validColumnsSample } from './utils/columns.js';
 
@@ -11,10 +10,8 @@ describe('LocalDataSource', () => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
       
       dataSource.getAllRecords(10, 0, '').then(response => {
-        setTimeout(() => {
-          expect(response.payload).to.deep.equal(expected.payload);
-          done();
-        });
+        expect(response.payload).to.deep.equal(expected.payload);
+        done();
       });
     });
 
@@ -22,10 +19,8 @@ describe('LocalDataSource', () => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
       
       dataSource.getAllRecords(10, 0, '').then(response => {
-        setTimeout(() => {
-          expect(response.payload).to.have.lengthOf(10);
-          done();
-        });
+        expect(response.payload).to.have.lengthOf(10);
+        done();
       });
     });
   });
@@ -49,10 +44,8 @@ describe('LocalDataSource', () => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', invalidColumnsSample);
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        setTimeout(() => {
-          expect(response.payload).to.deep.equal(expected.payload);
-          done();
-        });
+        expect(response.payload).to.deep.equal(expected.payload);
+        done();
       }).catch(error => {
         expect(error.response.status).to.equal(500);
         done();
@@ -80,13 +73,12 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        setTimeout(() => {
-          expect(response.payload).to.have.lengthOf(10);
-          response.payload.map((element, i) => {
-            expect(element.OrderID).to.be.equal(i + 1);
-          });
-          done();
-        });        
+        expect(response.payload).to.have.lengthOf(10);
+
+        response.payload.forEach((element, i) => {
+          expect(element.OrderID).to.be.equal(i + 1);
+        });
+        done();     
       });      
     });
 
@@ -100,13 +92,12 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        setTimeout(() => {
-          expect(response.payload).to.have.lengthOf(1);
-          response.payload.map(element => {
-            expect(element.OrderID).to.be.equal(9);
-          });
-          done();
+        expect(response.payload).to.have.lengthOf(1);
+
+        response.payload.forEach(element => {
+          expect(element.OrderID).to.be.equal(9);
         });
+        done();
       });
     });
 
@@ -120,13 +111,11 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.Argument = [9];
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        setTimeout(() => {
-          expect(response.payload).to.have.lengthOf(8);
-          response.payload.map((element, i) => {
-            expect(element.OrderID).to.be.equal(i + 2);
-          });
-          done();
+        expect(response.payload).to.have.lengthOf(8);
+        response.payload.forEach((element, i) => {
+          expect(element.OrderID).to.be.equal(i + 2);
         });
+        done();
       });      
     });
 
@@ -140,13 +129,11 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        setTimeout(() => {
-          expect(response.payload).to.have.lengthOf(10);
-          response.payload.map((element, i) => {
-            expect(element.OrderID).to.be.equal(i + 9);
-          });
-          done();
+        expect(response.payload).to.have.lengthOf(10);
+        response.payload.forEach((element, i) => {
+          expect(element.OrderID).to.be.equal(i + 9);
         });
+        done();
       });
     });
 
@@ -160,14 +147,12 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        setTimeout(() => {
-          expect(response.payload).to.have.lengthOf(10);
-          response.payload.map((element, i) => {
-            expect(element.OrderID).to.not.be.equal(9);
-            expect(element.OrderID).to.be.equal(i + 10);
-          });
-          done();
+        expect(response.payload).to.have.lengthOf(10);
+        response.payload.forEach((element, i) => {
+          expect(element.OrderID).to.not.be.equal(9);
+          expect(element.OrderID).to.be.equal(i + 10);
         });
+        done();
       });
     });
 
@@ -181,13 +166,11 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        setTimeout(() => {
-          expect(response.payload).to.have.lengthOf(5);
-          response.payload.map((element, i) => {
-            expect(element.OrderID).to.be.equal(i + 1);
-          });
-          done();
+        expect(response.payload).to.have.lengthOf(5);
+        response.payload.forEach((element, i) => {
+          expect(element.OrderID).to.be.equal(i + 1);
         });
+        done();
       });
     });
 
@@ -201,13 +184,11 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        setTimeout(() => {
-          expect(response.payload).to.have.lengthOf(4);
-          response.payload.map((element, i) => {
-            expect(element.OrderID).to.be.equal(i + 1);
-          });
-          done(); 
+        expect(response.payload).to.have.lengthOf(4);
+        response.payload.forEach((element, i) => {
+          expect(element.OrderID).to.be.equal(i + 1);
         });
+        done();
       });
     });
   });
@@ -223,13 +204,11 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.HasFilter = false;
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        setTimeout(() => {
-          expect(response.payload).to.have.lengthOf(10);
-          response.payload.map((element, i) => {
-            expect(element.OrderID).to.be.equal(i + 1);
-          });
-          done();
+        expect(response.payload).to.have.lengthOf(10);
+        response.payload.forEach((element, i) => {
+          expect(element.OrderID).to.be.equal(i + 1);
         });
+        done();
       });
     });
 
@@ -242,13 +221,11 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.HasFilter = true;
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        setTimeout(() => {
-          expect(response.payload).to.have.lengthOf(10);
-          response.payload.map(element => {
-            expect(element.CustomerName).to.be.equal('Unosquare LLC');
-          });
-          done();
+        expect(response.payload).to.have.lengthOf(10);
+        response.payload.forEach(element => {
+          expect(element.CustomerName).to.be.equal('Unosquare LLC');
         });
+        done();
       });
     });
 
@@ -261,10 +238,8 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.HasFilter = true;
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        setTimeout(() => {
-          expect(response.payload).to.have.lengthOf(10);
-          done();
-        });
+        expect(response.payload).to.have.lengthOf(10);
+        done();
       });
     });
 
@@ -277,12 +252,10 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.HasFilter = true;
       
       dataSource.getAllRecords(10, 0, '').then(response => {
-        setTimeout(() => {
-          response.payload.map(element => {
-            expect(element.CustomerName).to.not.equal('Microsoft');
-          }); 
-          done();
-        });
+        response.payload.forEach(element => {
+          expect(element.CustomerName).to.not.equal('Microsoft');
+        }); 
+        done();
       });
     });
   });
