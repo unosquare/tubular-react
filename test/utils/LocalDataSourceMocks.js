@@ -1,6 +1,6 @@
-// Mocks for unit tests for string/date columns
+// Mocks for unit tests for string columns
 
-const expectedPayloadNone_SD = [ 
+const expectedPayloadNone_S = [ 
   { 
     OrderID: 1,
     CustomerName: 'Microsoft',
@@ -73,7 +73,7 @@ const expectedPayloadNone_SD = [
   } 
 ];
 
-const expectedPayloadEquals_SD = [ 
+const expectedPayloadEquals_S = [ 
   { 
     OrderID: 4,
     CustomerName: 'Unosquare LLC',
@@ -146,7 +146,7 @@ const expectedPayloadEquals_SD = [
   } 
 ];
 
-const expectedPayloadContains_SD = [ 
+const expectedPayloadContains_S = [ 
     { 
       OrderID: 9,
       CustomerName: 'Vesta',
@@ -219,7 +219,7 @@ const expectedPayloadContains_SD = [
     } 
 ];
 
-const expectedPayloadNotEquals_SD = [ 
+const expectedPayloadNotEquals_S = [ 
   { 
     OrderID: 4,
     CustomerName: 'Unosquare LLC',
@@ -292,7 +292,7 @@ const expectedPayloadNotEquals_SD = [
   } 
 ];
 
-const expectedPayloadStartsWith_SD = [ 
+const expectedPayloadStartsWith_S = [ 
   { 
     OrderID: 1,
     CustomerName: 'Microsoft',
@@ -365,7 +365,7 @@ const expectedPayloadStartsWith_SD = [
   } 
 ];
 
-const expectedPayloadNotStartsWith_SD = [ 
+const expectedPayloadNotStartsWith_S = [ 
   { 
     OrderID: 4,
     CustomerName: 'Unosquare LLC',
@@ -438,7 +438,7 @@ const expectedPayloadNotStartsWith_SD = [
   } 
 ];
 
-const expectedPayloadEndsWith_SD = [ 
+const expectedPayloadEndsWith_S = [ 
   { 
     OrderID: 9,
     CustomerName: 'Vesta',
@@ -511,7 +511,7 @@ const expectedPayloadEndsWith_SD = [
   } 
 ];
 
-const expectedPayloadNotEndsWith_SD = [ 
+const expectedPayloadNotEndsWith_S = [ 
   { 
     OrderID: 1,
     CustomerName: 'Microsoft',
@@ -585,12 +585,12 @@ const expectedPayloadNotEndsWith_SD = [
 ];
 
 export { 
-  expectedPayloadNone_SD, 
-  expectedPayloadContains_SD, 
-  expectedPayloadEquals_SD, 
-  expectedPayloadNotEquals_SD, 
-  expectedPayloadStartsWith_SD,
-  expectedPayloadNotStartsWith_SD,
-  expectedPayloadEndsWith_SD,
-  expectedPayloadNotEndsWith_SD
+  expectedPayloadNone_S, 
+  expectedPayloadContains_S, 
+  expectedPayloadEquals_S, 
+  expectedPayloadNotEquals_S, 
+  expectedPayloadStartsWith_S,
+  expectedPayloadNotStartsWith_S,
+  expectedPayloadEndsWith_S,
+  expectedPayloadNotEndsWith_S
 };
