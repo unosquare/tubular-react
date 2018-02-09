@@ -109,8 +109,8 @@ describe('LocalDataSource', () => {
           response.payload.map((element, i) => {
             expect(element.OrderID).to.be.equal(i + 1);
           });
-        });
-        done();
+          done();
+        });        
       });      
     });
 
@@ -149,8 +149,8 @@ describe('LocalDataSource', () => {
           response.payload.map((element, i) => {
             expect(element.OrderID).to.be.equal(i + 2);
           });
+          done();
         });
-        done();
       });      
     });
 
@@ -169,8 +169,8 @@ describe('LocalDataSource', () => {
           response.payload.map((element, i) => {
             expect(element.OrderID).to.be.equal(i + 9);
           });
+          done();
         });
-        done();
       });
     });
 
@@ -188,10 +188,30 @@ describe('LocalDataSource', () => {
           expect(response.payload).to.have.lengthOf(10);
           response.payload.map((element, i) => {
             expect(element.OrderID).to.not.be.equal(9);
-            expect(element.OrderID).to.be.equal(i + 9);
+            expect(element.OrderID).to.be.equal(i + 10);
           });
+          done();
         });
-        done();
+      });
+    });
+
+    /** <= */
+    it('should return a payload with records where OrderID <= 5', done => {
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+
+      dataSource.columns[0].Filter.Text = 5;
+      dataSource.columns[0].Filter.Operator = 'Lte';
+      dataSource.columns[0].Filter.HasFilter = true;
+      dataSource.columns[0].Filter.Argument = [];
+
+      dataSource.getAllRecords(10, 0, '').then(response => {
+        setTimeout(() => {
+          expect(response.payload).to.have.lengthOf(5);
+          response.payload.map((element, i) => {
+            expect(element.OrderID).to.be.equal(i + 1);
+          });
+          done();
+        });
       });
     });
   });
