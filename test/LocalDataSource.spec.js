@@ -2,9 +2,9 @@ import Axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
 import { expect } from 'chai';
+import { setTimeout } from 'timers';
 import { expected, expectedColumnStructure, expectedResponseStructure, fakeResponseStructure } from './utils/data.js';
 import { invalidColumnsSample, validColumnsSample } from './utils/columns.js';
-import { setTimeout } from 'timers';
 
 describe('LocalDataSource', () => {
   let axiosInstance; 
@@ -88,12 +88,121 @@ describe('LocalDataSource', () => {
     });
   });
 
-  describe('When columns has filters', () => {
+  /** Unit tests for numeric columns */
+  describe('When numeric column has filters', () => {
     beforeEach(() => {
       mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200);
     });
 
-    it('should return a payload with records where the CustomerName is NOT equal to Microsoft', done => {
+    /** None */
+    it('should return a payload without filters', done => {
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+      
+      dataSource.columns[0].Filter.Text = null;
+      dataSource.columns[0].Filter.Operator = 'None';
+      dataSource.columns[0].Filter.HasFilter = false;
+      dataSource.columns[0].Filter.Argument = [];
+
+      dataSource.getAllRecords(10, 0, '').then(response => {
+        setTimeout(() => {
+          expect(response.payload).to.have.lengthOf(10);
+          response.payload.map((element, i) => {
+            expect(element.OrderID).to.be.equal(i + 1);
+          });
+        });
+        done();
+      });      
+    });
+
+    /** Equals */
+    it('should return a payload with one record', done => {
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+
+      dataSource.columns[0].Filter.Text = 9;
+      dataSource.columns[0].Filter.Operator = 'Equals';
+      dataSource.columns[0].Filter.HasFilter = true;
+      dataSource.columns[0].Filter.Argument = [];
+
+      dataSource.getAllRecords(10, 0, '').then(response => {
+        setTimeout(() => {
+          expect(response.payload).to.have.lengthOf(1);
+          response.payload.map(element => {
+            expect(element.OrderID).to.be.equal(9);
+          });
+          done();
+        });
+      });
+    });
+
+    /** Between */
+    it('should return a payload with records 2 to 9', done => {
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+      
+      dataSource.columns[0].Filter.Text = 2;
+      dataSource.columns[0].Filter.Operator = 'Between';
+      dataSource.columns[0].Filter.HasFilter = true;
+      dataSource.columns[0].Filter.Argument = [9];
+
+      dataSource.getAllRecords(10, 0, '').then(response => {
+        setTimeout(() => {
+          expect(response.payload).to.have.lengthOf(8);
+          response.payload.map((element, i) => {
+            expect(element.OrderID).to.be.equal(i + 2);
+          });
+        });
+        done();
+      });      
+    });
+
+    /** >= */
+    it('should return a payload with records where OrderID >= 9', done => {
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+
+      dataSource.columns[0].Filter.Text = 9;
+      dataSource.columns[0].Filter.Operator = 'Gte';
+      dataSource.columns[0].Filter.HasFilter = true;
+      dataSource.columns[0].Filter.Argument = [];
+
+      dataSource.getAllRecords(10, 0, '').then(response => {
+        setTimeout(() => {
+          expect(response.payload).to.have.lengthOf(10);
+          response.payload.map((element, i) => {
+            expect(element.OrderID).to.be.equal(i + 9);
+          });
+        });
+        done();
+      });
+    });
+
+    /** > */
+    it('should return a payload with records where OrderID > 9', done => {
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+
+      dataSource.columns[0].Filter.Text = 9;
+      dataSource.columns[0].Filter.Operator = 'Gt';
+      dataSource.columns[0].Filter.HasFilter = true;
+      dataSource.columns[0].Filter.Argument = [];
+
+      dataSource.getAllRecords(10, 0, '').then(response => {
+        setTimeout(() => {
+          expect(response.payload).to.have.lengthOf(10);
+          response.payload.map((element, i) => {
+            expect(element.OrderID).to.not.be.equal(9);
+            expect(element.OrderID).to.be.equal(i + 9);
+          });
+        });
+        done();
+      });
+    });
+  });
+
+  /** Unit test for string/date columns */
+  describe('When string/date column has filters', () => {
+    beforeEach(() => {
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200);
+    });
+
+    it('should return a payload with records where the CustomerName isn\'t equal to Microsoft', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
       dataSource.columns[1].Filter.Text = 'Microsoft';
