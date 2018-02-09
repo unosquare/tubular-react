@@ -1,6 +1,6 @@
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
-import DateInput from './DateInput.js';
+import DateInput from './DateInput';
 import Dropdown from './Dropdown';
 import TextInput from './TextInput';
 

@@ -268,7 +268,7 @@ class GridHeader extends React.Component <IProps, IState> {
 
   public handleDatePicker = (name: string) => (event: any) => {
     this.setState({
-      activeFilter: event.format()
+      firstFilterValue: event.format()
     });
   }
 
