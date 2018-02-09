@@ -106,4 +106,83 @@ const fakeResponseStructure = {
   'AggregationPayload': null
 };
 
-export { data, expected, expectedResponseStructure, fakeResponseStructure };
+const expectedColumnStructure = [ 
+  { 
+    Sortable: true,
+    Searchable: false,
+    Aggregate: 'None',
+    DataType: 'numeric',
+    IsKey: true,
+    Visible: true,
+    Label: 'Order ID',
+    Name: 'OrderID',
+    SortOrder: 1,
+    SortDirection: 'Ascending',
+    Filter: { 
+      Argument: [],
+      HasFilter: false,
+      Name: 'OrderID',
+      Operator: 'None',
+      OptionsUrl: null,
+      Text: null 
+    } 
+  },
+  { 
+    Sortable: false,
+    Searchable: true,
+    Aggregate: 'Count',
+    DataType: 'string',
+    IsKey: false,
+    Visible: true,
+    Label: 'Customer Name',
+    Name: 'CustomerName',
+    Filter: { 
+      Argument: [],
+      HasFilter: false,
+      Name: 'CustomerName',
+      Operator: 'None',
+      OptionsUrl: null,
+      Text: null 
+    } 
+  },
+  { 
+    Sortable: false,
+    Searchable: false,
+    Aggregate: 'None',
+    DataType: 'datetime',
+    IsKey: false,
+    Visible: true,
+    Label: 'Shipped Date',
+    Name: 'ShippedDate',
+    Filter: { 
+      Argument: [],
+      HasFilter: false,
+      Name: 'ShippedDate',
+      Operator: 'None',
+      OptionsUrl: null,
+      Text: null 
+    } 
+  },
+  { 
+    Sortable: false,
+    Searchable: false,
+    Aggregate: 'None',
+    DataType: 'string',
+    IsKey: false,
+    Visible: true,
+    Label: 'Shipper City',
+    Name: 'ShipperCity' 
+  },
+  { 
+    Sortable: false,
+    Searchable: false,
+    Aggregate: 'None',
+    DataType: 'numeric',
+    IsKey: false,
+    Visible: true,
+    Label: 'Amount',
+    Name: 'Amount' 
+  } 
+];
+
+export { data, expected, expectedColumnStructure, expectedResponseStructure, fakeResponseStructure };
