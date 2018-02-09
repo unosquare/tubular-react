@@ -190,11 +190,86 @@ describe('LocalDataSource', () => {
         });
       });
     });
+
+    /** < */
+    it('should return a payload with records where OrderId < 5', done => {
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+
+      dataSource.columns[0].Filter.Text = 5;
+      dataSource.columns[0].Filter.Operator = 'Lt';
+      dataSource.columns[0].Filter.HasFilter = true;
+      dataSource.columns[0].Filter.Argument = [];
+
+      dataSource.getAllRecords(10, 0, '').then(response => {
+        setTimeout(() => {
+          expect(response.payload).to.have.lengthOf(4);
+          response.payload.map((element, i) => {
+            expect(element.OrderID).to.be.equal(i + 1);
+          });
+          done(); 
+        });
+      });
+    });
   });
 
   /** Unit test for string/date columns */
   describe('When string/date column has filters', () => {
-    it('should return a payload with records where the CustomerName isn\'t equal to Microsoft', done => {
+    /** None */
+    it('should return a payload without filters', done => {
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+
+      dataSource.columns[1].Filter.Text = null;
+      dataSource.columns[1].Filter.Operator = 'None';
+      dataSource.columns[1].Filter.HasFilter = false;
+
+      dataSource.getAllRecords(10, 0, '').then(response => {
+        setTimeout(() => {
+          expect(response.payload).to.have.lengthOf(10);
+          response.payload.map((element, i) => {
+            expect(element.OrderID).to.be.equal(i + 1);
+          });
+          done();
+        });
+      });
+    });
+
+    /** Equals */
+    it('should return a payload with records where CustomerName are equals to Unosquare LLC', done => {
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+
+      dataSource.columns[1].Filter.Text = 'Unosquare LLC';
+      dataSource.columns[1].Filter.Operator = 'Equals';
+      dataSource.columns[1].Filter.HasFilter = true;
+
+      dataSource.getAllRecords(10, 0, '').then(response => {
+        setTimeout(() => {
+          expect(response.payload).to.have.lengthOf(10);
+          response.payload.map(element => {
+            expect(element.CustomerName).to.be.equal('Unosquare LLC');
+          });
+          done();
+        });
+      });
+    });
+
+    /** Contains */
+    it('should return a payload with records where the CustomerName contains a letter v', done => {
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+
+      dataSource.columns[1].Filter.Text = 'v';
+      dataSource.columns[1].Filter.Operator = 'Contains';
+      dataSource.columns[1].Filter.HasFilter = true;
+
+      dataSource.getAllRecords(10, 0, '').then(response => {
+        setTimeout(() => {
+          expect(response.payload).to.have.lengthOf(10);
+          done();
+        });
+      });
+    });
+
+    /** Not Equals */
+    it('should return a payload with records where the CustomerName isn\'t equals to Microsoft', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
       dataSource.columns[1].Filter.Text = 'Microsoft';
