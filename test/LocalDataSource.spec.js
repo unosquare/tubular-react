@@ -1,8 +1,8 @@
-import Axios from 'axios';
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
 import { expect } from 'chai';
-import { expected, expectedColumnStructure, expectedResponseStructure, fakeResponseStructure } from './utils/data.js';
+import { expected, expectedColumnStructure, expectedResponseStructure, fakeResponseStructure, data } from './utils/data.js';
 import { invalidColumnsSample, validColumnsSample } from './utils/columns.js';
+import { expectedPayloadNone_S, expectedPayloadEquals_S } from './utils/LocalDataSourceMocks';
 
 describe('LocalDataSource', () => {
   describe('getAllRecords()', () => {
@@ -193,8 +193,8 @@ describe('LocalDataSource', () => {
     });
   });
 
-  /** Unit test for string/date columns */
-  describe('When string/date column has filters', () => {
+  /** Unit tests for string columns */
+  describe('When string column has filters', () => {
     /** None */
     it('should return a payload without filters', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
@@ -204,10 +204,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.HasFilter = false;
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        expect(response.payload).to.have.lengthOf(10);
-        response.payload.forEach((element, i) => {
-          expect(element.OrderID).to.be.equal(i + 1);
-        });
+        expect(response.payload).to.deep.equal(expectedPayloadNone_S);
         done();
       });
     });
@@ -221,40 +218,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.HasFilter = true;
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        expect(response.payload).to.have.lengthOf(10);
-        response.payload.forEach(element => {
-          expect(element.CustomerName).to.be.equal('Unosquare LLC');
-        });
-        done();
-      });
-    });
-
-    /** Contains */
-    it('should return a payload with records where the CustomerName contains a letter v', done => {
-      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
-
-      dataSource.columns[1].Filter.Text = 'v';
-      dataSource.columns[1].Filter.Operator = 'Contains';
-      dataSource.columns[1].Filter.HasFilter = true;
-
-      dataSource.getAllRecords(10, 0, '').then(response => {
-        expect(response.payload).to.have.lengthOf(10);
-        done();
-      });
-    });
-
-    /** Not Equals */
-    it('should return a payload with records where the CustomerName isn\'t equals to Microsoft', done => {
-      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
-
-      dataSource.columns[1].Filter.Text = 'Microsoft';
-      dataSource.columns[1].Filter.Operator = 'NotEquals';
-      dataSource.columns[1].Filter.HasFilter = true;
-      
-      dataSource.getAllRecords(10, 0, '').then(response => {
-        response.payload.forEach(element => {
-          expect(element.CustomerName).to.not.equal('Microsoft');
-        }); 
+        expect(response.payload).to.deep.equal(expectedPayloadEquals_S);
         done();
       });
     });

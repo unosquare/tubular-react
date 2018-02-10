@@ -147,76 +147,76 @@ const expectedPayloadEquals_S = [
 ];
 
 const expectedPayloadContains_S = [ 
-    { 
-      OrderID: 9,
-      CustomerName: 'Vesta',
-      ShippedDate: '2016-11-07T18:00:00',
-      ShipperCity: 'Guadalajara, JAL, Mexico',
-      Amount: 108 
-    },
-    { 
-      OrderID: 12,
-      CustomerName: 'Vesta',
-      ShippedDate: '2016-11-09T18:00:00',
-      ShipperCity: 'Leon, GTO, Mexico',
-      Amount: 174 
-    },
-    { 
-      OrderID: 14,
-      CustomerName: 'Advanced Technology Systems',
-      ShippedDate: '2016-11-09T18:00:00',
-      ShipperCity: 'Leon, GTO, Mexico',
-      Amount: undefined 
-    },
-    { 
-      OrderID: 23,
-      CustomerName: 'Vesta',
-      ShippedDate: '2016-11-07T18:00:00',
-      ShipperCity: 'Leon, GTO, Mexico',
-      Amount: 95 
-    },
-    { 
-      OrderID: 28,
-      CustomerName: 'Vesta',
-      ShippedDate: '2016-11-08T18:00:00',
-      ShipperCity: 'Guadalajara, JAL, Mexico',
-      Amount: 60 
-    },
-    { 
-      OrderID: 29,
-      CustomerName: 'Advanced Technology Systems',
-      ShippedDate: '2016-11-10T18:00:00',
-      ShipperCity: 'Guadalajara, JAL, Mexico',
-      Amount: 54 
-    },
-    { 
-      OrderID: 32,
-      CustomerName: 'Advanced Technology Systems',
-      ShippedDate: '2016-11-04T18:00:00',
-      ShipperCity: 'Portland, OR, USA',
-      Amount: 225 
-    },
-    { 
-      OrderID: 38,
-      CustomerName: 'Advanced Technology Systems',
-      ShippedDate: '2016-11-09T18:00:00',
-      ShipperCity: 'Portland, OR, USA',
-      Amount: 7 
-    },
-    { 
-      OrderID: 42,
-      CustomerName: 'Advanced Technology Systems',
-      ShippedDate: '2016-11-09T18:00:00',
-      ShipperCity: 'Leon, GTO, Mexico',
-      Amount: undefined 
-    },
-    { 
-      OrderID: 46,
-      CustomerName: 'Advanced Technology Systems',
-      ShippedDate: '2016-11-07T18:00:00',
-      ShipperCity: 'Los Angeles, CA, USA',
-      Amount: 128 
-    } 
+  { 
+    OrderID: 9,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-07T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 108 
+  },
+  { 
+    OrderID: 12,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-09T18:00:00',
+    ShipperCity: 'Leon, GTO, Mexico',
+    Amount: 174 
+  },
+  { 
+    OrderID: 14,
+    CustomerName: 'Advanced Technology Systems',
+    ShippedDate: '2016-11-09T18:00:00',
+    ShipperCity: 'Leon, GTO, Mexico',
+    Amount: undefined 
+  },
+  { 
+    OrderID: 23,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-07T18:00:00',
+    ShipperCity: 'Leon, GTO, Mexico',
+    Amount: 95 
+  },
+  { 
+    OrderID: 28,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-08T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 60 
+  },
+  { 
+    OrderID: 29,
+    CustomerName: 'Advanced Technology Systems',
+    ShippedDate: '2016-11-10T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 54 
+  },
+  { 
+    OrderID: 32,
+    CustomerName: 'Advanced Technology Systems',
+    ShippedDate: '2016-11-04T18:00:00',
+    ShipperCity: 'Portland, OR, USA',
+    Amount: 225 
+  },
+  { 
+    OrderID: 38,
+    CustomerName: 'Advanced Technology Systems',
+    ShippedDate: '2016-11-09T18:00:00',
+    ShipperCity: 'Portland, OR, USA',
+    Amount: 7 
+  },
+  { 
+    OrderID: 42,
+    CustomerName: 'Advanced Technology Systems',
+    ShippedDate: '2016-11-09T18:00:00',
+    ShipperCity: 'Leon, GTO, Mexico',
+    Amount: undefined 
+  },
+  { 
+    OrderID: 46,
+    CustomerName: 'Advanced Technology Systems',
+    ShippedDate: '2016-11-07T18:00:00',
+    ShipperCity: 'Los Angeles, CA, USA',
+    Amount: 128 
+  } 
 ];
 
 const expectedPayloadNotEquals_S = [ 
