@@ -317,6 +317,5 @@ describe('LocalDataSource', () => {
     });
   });
 
-  beforeEach(() => {
-  });
+  beforeEach(() => {});
 });
