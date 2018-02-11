@@ -1,8 +1,8 @@
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
 import { expect } from 'chai';
 import { expected, expectedColumnStructure, expectedResponseStructure, fakeResponseStructure, data } from './utils/data.js';
+import { expectedPayloadContains_S, expectedPayloadEquals_S, expectedPayloadNone_S } from './utils/LocalDataSourceMocks';
 import { invalidColumnsSample, validColumnsSample } from './utils/columns.js';
-import { expectedPayloadNone_S, expectedPayloadEquals_S } from './utils/LocalDataSourceMocks';
 
 describe('LocalDataSource', () => {
   describe('getAllRecords()', () => {
@@ -219,6 +219,20 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then(response => {
         expect(response.payload).to.deep.equal(expectedPayloadEquals_S);
+        done();
+      });
+    });
+
+    /** Contains */
+    it('should return a payload with records where the CustomerName contains a letter v', done => {
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+
+      dataSource.columns[1].Filter.Text = 'v';
+      dataSource.columns[1].Filter.Operator = 'Contains';
+      dataSource.columns[1].Filter.HasFilter = true;
+
+      dataSource.getAllRecords(10, 0, '').then(response => {
+        expect(response.payload).to.deep.equal(expectedPayloadContains_S);
         done();
       });
     });
