@@ -72,7 +72,7 @@ describe('LocalDataSource', () => {
 
   /** Unit tests for numeric columns */
   describe('When numeric column has filters', () => {
-    /** None */
+    // None
     it('should return a payload without filters', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
       
@@ -91,7 +91,7 @@ describe('LocalDataSource', () => {
       });      
     });
 
-    /** Equals */
+    // Equals
     it('should return a payload with one record', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
@@ -110,7 +110,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    /** Between */
+    // Between
     it('should return a payload with records 2 to 9', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
       
@@ -128,7 +128,7 @@ describe('LocalDataSource', () => {
       });      
     });
 
-    /** >= */
+    // >=
     it('should return a payload with records where OrderID >= 9', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
@@ -146,7 +146,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    /** > */
+    // >
     it('should return a payload with records where OrderID > 9', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
@@ -165,7 +165,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    /** <= */
+    // <=
     it('should return a payload with records where OrderID <= 5', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
@@ -183,7 +183,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    /** < */
+    // <
     it('should return a payload with records where OrderId < 5', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
@@ -204,7 +204,7 @@ describe('LocalDataSource', () => {
 
   /** Unit tests for string columns */
   describe('When string column has filters', () => {
-    /** None */
+    // None
     it('should return a payload without filters', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
@@ -218,7 +218,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    /** Equals */
+    // Equals
     it('should return a payload with records where CustomerName are equals to \'Unosquare LLC\'', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
@@ -232,7 +232,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    /** Contains */
+    // Contains
     it('should return a payload with records where CustomerName contains a letter \'v\'', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
@@ -246,7 +246,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    /** Not Equals */
+    // Not Equals
     it('should return a payload with records where CustomerName isn\'t equals to \'Microsoft\'', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
@@ -260,7 +260,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    /** Starts With */
+    // Starts With
     it('should return a payload with records where CustomerName starts with \'M\'', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
@@ -274,7 +274,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    /** Not Starts With */
+    // Not Starts With
     it('should return a payload with records where CustomerName not starts with \'M\'', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
@@ -288,7 +288,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    /** Ends With */
+    // Ends With
     it('should return a payload with records where CustomerName ends with \'a\'', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
@@ -302,7 +302,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    /** Not Ends With */
+    // Not Ends With
     it('should return a payload with records where CustomerName not ends with \'a\'', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
