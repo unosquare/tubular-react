@@ -1,7 +1,16 @@
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
 import { expect } from 'chai';
 import { expected, expectedColumnStructure, expectedResponseStructure, fakeResponseStructure, data } from './utils/data.js';
-import { expectedPayloadContains_S, expectedPayloadEquals_S, expectedPayloadNone_S } from './utils/LocalDataSourceMocks';
+import { 
+  expectedPayloadContains_S, 
+  expectedPayloadEndsWith_S,
+  expectedPayloadEquals_S, 
+  expectedPayloadNone_S,
+  expectedPayloadNotEndsWith_S, 
+  expectedPayloadNotEquals_S, 
+  expectedPayloadNotStartsWith_S,
+  expectedPayloadStartsWith_S 
+} from './utils/LocalDataSourceMocks';
 import { invalidColumnsSample, validColumnsSample } from './utils/columns.js';
 
 describe('LocalDataSource', () => {
@@ -210,7 +219,7 @@ describe('LocalDataSource', () => {
     });
 
     /** Equals */
-    it('should return a payload with records where CustomerName are equals to Unosquare LLC', done => {
+    it('should return a payload with records where CustomerName are equals to \'Unosquare LLC\'', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
       dataSource.columns[1].Filter.Text = 'Unosquare LLC';
@@ -224,7 +233,7 @@ describe('LocalDataSource', () => {
     });
 
     /** Contains */
-    it('should return a payload with records where the CustomerName contains a letter v', done => {
+    it('should return a payload with records where CustomerName contains a letter \'v\'', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
       dataSource.columns[1].Filter.Text = 'v';
@@ -233,6 +242,76 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then(response => {
         expect(response.payload).to.deep.equal(expectedPayloadContains_S);
+        done();
+      });
+    });
+
+    /** Not Equals */
+    it('should return a payload with records where CustomerName isn\'t equals to \'Microsoft\'', done => {
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+
+      dataSource.columns[1].Filter.Text = 'Microsoft';
+      dataSource.columns[1].Filter.Operator = 'NotEquals';
+      dataSource.columns[1].Filter.HasFilter = true;
+      
+      dataSource.getAllRecords(10, 0, '').then(response => {
+        expect(response.payload).to.deep.equal(expectedPayloadNotEquals_S);
+        done();
+      });
+    });
+
+    /** Starts With */
+    it('should return a payload with records where CustomerName starts with \'M\'', done => {
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+
+      dataSource.columns[1].Filter.Text = 'M';
+      dataSource.columns[1].Filter.Operator = 'StartsWith';
+      dataSource.columns[1].Filter.HasFilter = true;
+
+      dataSource.getAllRecords(10, 0, '').then(response => {
+        expect(response.payload).to.deep.equal(expectedPayloadStartsWith_S);
+        done();
+      });
+    });
+
+    // /** Not Starts With */
+    it('should return a payload with records where CustomerName not starts with \'M\'', done => {
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+
+      dataSource.columns[1].Filter.Text = 'M';
+      dataSource.columns[1].Filter.Operator = 'NotStartsWith';
+      dataSource.columns[1].Filter.HasFilter = true;
+
+      dataSource.getAllRecords(10, 0, '').then(response => {
+        expect(response.payload).to.deep.equal(expectedPayloadNotStartsWith_S);
+        done();
+      });
+    });
+
+    // /** Ends With */
+    it('should return a payload with records where CustomerName ends with \'a\'', done => {
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+
+      dataSource.columns[1].Filter.Text = 'a';
+      dataSource.columns[1].Filter.Operator = 'EndsWith';
+      dataSource.columns[1].Filter.HasFilter = true;
+
+      dataSource.getAllRecords(10, 0, '').then(response => {
+        expect(response.payload).to.deep.equal(expectedPayloadEndsWith_S);
+        done();
+      });
+    });
+
+    // /** Not Ends With */
+    it('should return a payload with records where CustomerName not ends with \'a\'', done => {
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+
+      dataSource.columns[1].Filter.Text = 'a';
+      dataSource.columns[1].Filter.Operator = 'NotEndsWith';
+      dataSource.columns[1].Filter.HasFilter = true;
+
+      dataSource.getAllRecords(10, 0, '').then(response => {
+        expect(response.payload).to.deep.equal(expectedPayloadNotEndsWith_S);
         done();
       });
     });
