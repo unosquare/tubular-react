@@ -1,6 +1,6 @@
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
 import { expect } from 'chai';
-import { expected, expectedColumnStructure, expectedResponseStructure, fakeResponseStructure, data } from './utils/data.js';
+import { expected, expectedColumnStructure, expectedResponseStructure, fakeResponseStructure } from './utils/data.js';
 import { 
   expectedPayloadContains_S, 
   expectedPayloadEndsWith_S,
@@ -274,7 +274,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    // /** Not Starts With */
+    /** Not Starts With */
     it('should return a payload with records where CustomerName not starts with \'M\'', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
@@ -288,7 +288,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    // /** Ends With */
+    /** Ends With */
     it('should return a payload with records where CustomerName ends with \'a\'', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
@@ -302,7 +302,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    // /** Not Ends With */
+    /** Not Ends With */
     it('should return a payload with records where CustomerName not ends with \'a\'', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
