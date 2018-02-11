@@ -1,3 +1,78 @@
+// Mock for unit test when page is set to 1 (Page 2)
+
+const expectedPayloadPage2 = [ 
+  { 
+    OrderID: 11,
+    CustomerName: 'Unosquare LLC',
+    ShippedDate: '2016-11-11T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 60 
+  },
+  { 
+    OrderID: 12,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-09T18:00:00',
+    ShipperCity: 'Leon, GTO, Mexico',
+    Amount: 174 
+  },
+  { 
+    OrderID: 13,
+    CustomerName: 'Super La Playa',
+    ShippedDate: '2016-11-04T18:00:00',
+    ShipperCity: 'Portland, OR, USA',
+    Amount: 16 
+  },
+  { 
+    OrderID: 14,
+    CustomerName: 'Advanced Technology Systems',
+    ShippedDate: '2016-11-09T18:00:00',
+    ShipperCity: 'Leon, GTO, Mexico',
+    Amount: undefined 
+  },
+  { 
+    OrderID: 15,
+    CustomerName: 'Unosquare LLC',
+    ShippedDate: '2016-11-08T18:00:00',
+    ShipperCity: 'Leon, GTO, Mexico',
+    Amount: 78 
+  },
+  { 
+    OrderID: 16,
+    CustomerName: 'Super La Playa',
+    ShippedDate: '2016-11-08T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 41 
+  },
+  { 
+    OrderID: 17,
+    CustomerName: 'Microsoft',
+    ShippedDate: '2016-11-07T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: undefined 
+  },
+  { 
+    OrderID: 18,
+    CustomerName: 'Microsoft',
+    ShippedDate: '2016-11-03T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 64 
+  },
+  { 
+    OrderID: 19,
+    CustomerName: 'Oxxo',
+    ShippedDate: '2016-11-10T18:00:00',
+    ShipperCity: 'Los Angeles, CA, USA',
+    Amount: 25 
+  },
+  { 
+    OrderID: 20,
+    CustomerName: 'Microsoft',
+    ShippedDate: '2016-11-08T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 3 
+  } 
+];
+
 // Mocks for unit tests for string columns
 
 const expectedPayloadNone_S = [ 
@@ -584,7 +659,8 @@ const expectedPayloadNotEndsWith_S = [
   } 
 ];
 
-export { 
+export {
+  expectedPayloadPage2, 
   expectedPayloadNone_S, 
   expectedPayloadContains_S, 
   expectedPayloadEquals_S, 
