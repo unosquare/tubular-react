@@ -2,28 +2,13 @@ import MockAdapter from 'axios-mock-adapter';
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
 import axios from 'axios';
 import { expect }from 'chai';
-import { invalidColumnsSample, normalizedColumns, validColumnsSample, request } from './utils/columns.js';
-import { invalidResponseStructure, twentyRecordsExpected, validResponseStructure } from './utils/data.js';
+import { invalidColumnsSample, normalizedColumns, validColumnsSample } from './utils/columns.js';
+import { invalidResponseStructure, onlyMicrosoftExpected, simpleRecordsExpected, twentyRecordsExpected, validResponseStructure } from './utils/data.js';
+import { onlyMicrosoftRecordsRequest, simpleRequest, twentyRecordsRequest } from './utils/requests.js';
 
 describe('RemoteDateSource', () => {
   let dataSource;
   const mock = new MockAdapter(axios);
-  const payload = twentyRecordsExpected;
-
-  describe('_normalizeColumns()', () => {
-    beforeEach(() => {
-      dataSource = 
-        new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
-    });
-
-    it('should return normalizedColumns with a validColumnsSample', () => {
-      expect(dataSource._normalizeColumns(validColumnsSample)).to.deep.equal(normalizedColumns);
-    });
-
-    it('should return invalidNormalizedColumns with a invalidColumnsSample', () => {
-      expect(dataSource._normalizeColumns(invalidColumnsSample)).to.not.deep.equal(normalizedColumns);
-    });
-  });
 
   describe('isValidResponse()', () => {
     beforeEach(() => {
@@ -41,52 +26,122 @@ describe('RemoteDateSource', () => {
   });
 
   describe('When columns structure is valid', () => {
-    beforeEach( () => {
-      dataSource = 
-        new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
-  
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', request).reply(200, {
-        Counter: payload.Counter,
-        Payload: payload.Payload,
-        TotalRecordCount: payload.TotalRecordCount, 
-        FilteredRecordCount: payload.FilteredRecordCount,
-        TotalPages: payload.TotalPages,
-        CurrentPage: payload.CurrentPage,
-        AggregationPayload: payload.AggregationPayload
+    describe('When 20 records are requested', () => {
+      beforeEach( () => {
+        dataSource = 
+          new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+
+        mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', twentyRecordsRequest).reply(200, {
+          Counter: twentyRecordsExpected.Counter,
+          Payload: twentyRecordsExpected.Payload,
+          TotalRecordCount: twentyRecordsExpected.TotalRecordCount, 
+          FilteredRecordCount: twentyRecordsExpected.FilteredRecordCount,
+          TotalPages: twentyRecordsExpected.TotalPages,
+          CurrentPage: twentyRecordsExpected.CurrentPage,
+          AggregationPayload: twentyRecordsExpected.AggregationPayload
+        });
       });
-    });
-  
-    it('Should return a payload', done => {
-      dataSource.getAllRecords(20, 0, '')
+
+      it('Should return a payload with 20 records', () => dataSource.getAllRecords(20, 0, '')
         .then(r => {
           expect(r.payload).to.deep.equal(twentyRecordsExpected.Payload);
           expect(r.filteredRecordCount).to.deep.equal(twentyRecordsExpected.FilteredRecordCount);
           expect(r.totalRecordCount).to.deep.equal(twentyRecordsExpected.TotalRecordCount);
-        }).finally( done() );
+        }));
+    });
+
+    describe('When search input is Microsoft', () => {
+      beforeEach( () => {
+        dataSource = 
+          new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+
+        mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', onlyMicrosoftRecordsRequest).reply(200, {
+          Counter: onlyMicrosoftExpected.Counter,
+          Payload: onlyMicrosoftExpected.Payload,
+          TotalRecordCount: onlyMicrosoftExpected.TotalRecordCount, 
+          FilteredRecordCount: onlyMicrosoftExpected.FilteredRecordCount,
+          TotalPages: onlyMicrosoftExpected.TotalPages,
+          CurrentPage: onlyMicrosoftExpected.CurrentPage,
+          AggregationPayload: onlyMicrosoftExpected.AggregationPayload
+        });
+      });
+
+      it('Should return a payload with only Microsoft records', () => dataSource.getAllRecords(10, 0, 'Microsoft')
+        .then(r => {
+          expect(r.payload).to.deep.equal(onlyMicrosoftExpected.Payload);
+          expect(r.filteredRecordCount).to.deep.equal(onlyMicrosoftExpected.FilteredRecordCount);
+          expect(r.totalRecordCount).to.deep.equal(onlyMicrosoftExpected.TotalRecordCount);
+        }));
+    });
+
+    describe('When refresh is called', () => {
+      beforeEach( () => {
+        dataSource = 
+          new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+
+        mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', simpleRequest).reply(200, {
+          Counter: simpleRecordsExpected.Counter,
+          Payload: simpleRecordsExpected.Payload,
+          TotalRecordCount: simpleRecordsExpected.TotalRecordCount, 
+          FilteredRecordCount: simpleRecordsExpected.FilteredRecordCount,
+          TotalPages: simpleRecordsExpected.TotalPages,
+          CurrentPage: simpleRecordsExpected.CurrentPage,
+          AggregationPayload: simpleRecordsExpected.AggregationPayload
+        });
+
+        dataSource.refresh(10, 0, '');
+      });
+
+      it('Should return a payload', () => {
+        setTimeout( () => {
+          expect(dataSource.dataStream.value.payload).to.deep.equal(simpleRecordsExpected.Payload);
+          expect(dataSource.dataStream.value.filteredRecordCount).to.deep.equal(simpleRecordsExpected.FilteredRecordCount);
+          expect(dataSource.dataStream.value.totalRecordCount).to.deep.equal(simpleRecordsExpected.TotalRecordCount);
+        }, 0);
+      });
+    });
+
+    describe('When _normalizeColumns is called', () => {
+      beforeEach(() => {
+        dataSource = 
+          new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+      });
+  
+      it('should return normalizedColumns', () => {
+        expect(dataSource._normalizeColumns(validColumnsSample)).to.deep.equal(normalizedColumns);
+      });
     });
   });
 
   describe('When columns structure is invalid', () => {
     beforeEach(() => {
       dataSource = 
-        new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', invalidColumnsSample);
+      new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', invalidColumnsSample);
 
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', request).reply(200, {
-        Counter: payload.Counter,
-        Payload: payload.Payload,
-        TotalRecordCount: payload.TotalRecordCount, 
-        FilteredRecordCount: payload.FilteredRecordCount,
-        TotalPages: payload.TotalPages,
-        CurrentPage: payload.CurrentPage,
-        AggregationPayload: payload.AggregationPayload
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', twentyRecordsRequest).reply(200, {
+        Counter: twentyRecordsExpected.Counter,
+        Payload: twentyRecordsExpected.Payload,
+        TotalRecordCount: twentyRecordsExpected.TotalRecordCount, 
+        FilteredRecordCount: twentyRecordsExpected.FilteredRecordCount,
+        TotalPages: twentyRecordsExpected.TotalPages,
+        CurrentPage: twentyRecordsExpected.CurrentPage,
+        AggregationPayload: twentyRecordsExpected.AggregationPayload
       });
     });
 
-    it('throws an Error 404', () => 
-      dataSource.getAllRecords(10, 0, '')
-        .catch( error => 
-          expect(error.response.status).to.be.equal(404)
-        )
-    );
+    describe('When records are requested', () => {
+      it('throws an Error 404', () => 
+        dataSource.getAllRecords(20, 0, '')
+          .catch( error => 
+            expect(error.response.status).to.be.equal(404)
+          )
+      );
+    });
+
+    describe('When _normalizeColumns is called', () => {
+      it('should return invalidNormalizedColumns with a invalidColumnsSample', () => {
+        expect(dataSource._normalizeColumns(invalidColumnsSample)).to.not.deep.equal(normalizedColumns);
+      });
+    });
   });
 });
