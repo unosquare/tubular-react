@@ -1,4 +1,4 @@
-interface DataSource {
+interface IDataSource {
   connect(rowsPerPage?: number, page?: number, searchText?: number): any;
 
   refresh(rowsPerPage?: number, page?: number, searchText?: number): void;
