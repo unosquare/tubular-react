@@ -269,7 +269,7 @@ class Grid extends React.Component <IProps & WithStyles<keyof typeof styleClasse
           (<TableRow>
             <TableCell style={{ display: 'flex', padding: '10px' }}>
               <WarningIcon />
-              <Typography style={{ paddingLeft: '15px' }} type='body2' gutterBottom={true}>
+              <Typography style={{ paddingLeft: '15px' }} variant='body2' gutterBottom={true}>
                 No records found
               </Typography>
             </TableCell>
