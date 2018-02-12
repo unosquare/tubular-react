@@ -2,14 +2,14 @@ import RemoteDataSource from '../src/Grid/RemoteDataSource';
 import { expect } from 'chai';
 import { expected, expectedColumnStructure, expectedResponseStructure, fakeResponseStructure } from './utils/data.js';
 import { 
-  expectedPayloadContains_S, 
-  expectedPayloadEndsWith_S,
-  expectedPayloadEquals_S, 
-  expectedPayloadNone_S,
-  expectedPayloadNotEndsWith_S, 
-  expectedPayloadNotEquals_S, 
-  expectedPayloadNotStartsWith_S,
-  expectedPayloadStartsWith_S 
+  expectedPayloadContains_string, 
+  expectedPayloadEndsWith_string,
+  expectedPayloadEquals_string, 
+  expectedPayloadNone_string,
+  expectedPayloadNotEndsWith_string, 
+  expectedPayloadNotEquals_string, 
+  expectedPayloadNotStartsWith_string,
+  expectedPayloadStartsWith_string 
 } from './utils/LocalDataSourceMocks';
 import { invalidColumnsSample, validColumnsSample } from './utils/columns.js';
 
@@ -213,7 +213,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.HasFilter = false;
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        expect(response.payload).to.deep.equal(expectedPayloadNone_S);
+        expect(response.payload).to.deep.equal(expectedPayloadNone_string);
         done();
       });
     });
@@ -227,7 +227,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.HasFilter = true;
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        expect(response.payload).to.deep.equal(expectedPayloadEquals_S);
+        expect(response.payload).to.deep.equal(expectedPayloadEquals_string);
         done();
       });
     });
@@ -241,7 +241,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.HasFilter = true;
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        expect(response.payload).to.deep.equal(expectedPayloadContains_S);
+        expect(response.payload).to.deep.equal(expectedPayloadContains_string);
         done();
       });
     });
@@ -255,7 +255,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.HasFilter = true;
       
       dataSource.getAllRecords(10, 0, '').then(response => {
-        expect(response.payload).to.deep.equal(expectedPayloadNotEquals_S);
+        expect(response.payload).to.deep.equal(expectedPayloadNotEquals_string);
         done();
       });
     });
@@ -269,7 +269,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.HasFilter = true;
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        expect(response.payload).to.deep.equal(expectedPayloadStartsWith_S);
+        expect(response.payload).to.deep.equal(expectedPayloadStartsWith_string);
         done();
       });
     });
@@ -283,7 +283,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.HasFilter = true;
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        expect(response.payload).to.deep.equal(expectedPayloadNotStartsWith_S);
+        expect(response.payload).to.deep.equal(expectedPayloadNotStartsWith_string);
         done();
       });
     });
@@ -297,7 +297,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.HasFilter = true;
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        expect(response.payload).to.deep.equal(expectedPayloadEndsWith_S);
+        expect(response.payload).to.deep.equal(expectedPayloadEndsWith_string);
         done();
       });
     });
@@ -311,7 +311,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.HasFilter = true;
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        expect(response.payload).to.deep.equal(expectedPayloadNotEndsWith_S);
+        expect(response.payload).to.deep.equal(expectedPayloadNotEndsWith_string);
         done();
       });
     });
