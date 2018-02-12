@@ -65,4 +65,30 @@ const invalidColumnsSample = [
   }
 ];
 
-export { validColumnsSample, invalidColumnsSample };
+const validColumnsSample_descending = [
+  {
+    Label: 'Order ID',
+    Name: 'OrderID',
+    Sortable: true,
+    SortOrder: 1,
+    SortDirection: 'Descending',
+    IsKey: true,
+    DataType: 'numeric',    
+    Filtering: true
+  },
+  {
+    Label: 'Customer Name',
+    Name: 'CustomerName',
+    Searchable: true,
+    Aggregate: 'Count',
+    Filtering: true
+  },
+  {
+    Label: 'Shipped Date',
+    Name: 'ShippedDate',
+    DataType: 'datetime',
+    Filtering: true
+  }
+];
+
+export { validColumnsSample, validColumnsSample_descending, invalidColumnsSample };

@@ -2,23 +2,25 @@ import RemoteDataSource from '../src/Grid/RemoteDataSource';
 import { expect } from 'chai';
 import { expected, expectedColumnStructure, expectedResponseStructure, fakeResponseStructure } from './utils/data.js';
 import { 
-  expectedPayloadNone_numeric,
-  expectedPayloadEquals_numeric,
   expectedPayloadBetween_numeric,
-  expectedPayloadGte_numeric,
-  expectedPayloadGt_numeric,
-  expectedPayloadLte_numeric,
-  expectedPayloadLt_numeric,
   expectedPayloadContains_string, 
+  expectedPayloadDescSortByOrderID,
   expectedPayloadEndsWith_string,
+  expectedPayloadEquals_numeric,
   expectedPayloadEquals_string, 
+  expectedPayloadGt_numeric,
+  expectedPayloadGte_numeric,
+  expectedPayloadLt_numeric,
+  expectedPayloadLte_numeric,
+  expectedPayloadNone_numeric,
   expectedPayloadNone_string,
   expectedPayloadNotEndsWith_string, 
   expectedPayloadNotEquals_string, 
   expectedPayloadNotStartsWith_string,
+  expectedPayloadPage2,
   expectedPayloadStartsWith_string 
 } from './utils/LocalDataSourceMocks';
-import { invalidColumnsSample, validColumnsSample } from './utils/columns.js';
+import { invalidColumnsSample, validColumnsSample, validColumnsSample_descending } from './utils/columns.js';
 
 describe('LocalDataSource', () => {
   describe('getAllRecords()', () => {
@@ -36,6 +38,27 @@ describe('LocalDataSource', () => {
       
       dataSource.getAllRecords(10, 0, '').then(response => {
         expect(response.payload).to.have.lengthOf(10);
+        done();
+      });
+    });
+
+    /** Pager */
+    it('should return a payload with the following 10 records when page is set to 1', done => {
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+      
+      dataSource.getAllRecords(10, 1, '').then(response => {
+        expect(response.payload).to.deep.equal(expectedPayloadPage2);
+        done();
+      });
+    });
+
+    /** Sorting */
+    it('should return a payload with records in descending order (sorting by \'OrderID\')', done => {
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample_descending);
+
+      dataSource.getAllRecords(10, 0, '').then(response => {
+        // console.log(response.payload);
+        expect(response.payload).to.deep.equal(expectedPayloadDescSortByOrderID);
         done();
       });
     });

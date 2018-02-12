@@ -1,3 +1,133 @@
+// Mock for unit test when page is set to 1 (Page 2)
+
+const expectedPayloadPage2 = [ 
+  { 
+    OrderID: 11,
+    CustomerName: 'Unosquare LLC',
+    ShippedDate: '2016-11-11T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 60 
+  },
+  { 
+    OrderID: 12,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-09T18:00:00',
+    ShipperCity: 'Leon, GTO, Mexico',
+    Amount: 174 
+  },
+  { 
+    OrderID: 13,
+    CustomerName: 'Super La Playa',
+    ShippedDate: '2016-11-04T18:00:00',
+    ShipperCity: 'Portland, OR, USA',
+    Amount: 16 
+  },
+  { 
+    OrderID: 14,
+    CustomerName: 'Advanced Technology Systems',
+    ShippedDate: '2016-11-09T18:00:00',
+    ShipperCity: 'Leon, GTO, Mexico',
+    Amount: undefined 
+  },
+  { 
+    OrderID: 15,
+    CustomerName: 'Unosquare LLC',
+    ShippedDate: '2016-11-08T18:00:00',
+    ShipperCity: 'Leon, GTO, Mexico',
+    Amount: 78 
+  },
+  { 
+    OrderID: 16,
+    CustomerName: 'Super La Playa',
+    ShippedDate: '2016-11-08T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 41 
+  },
+  { 
+    OrderID: 17,
+    CustomerName: 'Microsoft',
+    ShippedDate: '2016-11-07T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: undefined 
+  },
+  { 
+    OrderID: 18,
+    CustomerName: 'Microsoft',
+    ShippedDate: '2016-11-03T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 64 
+  },
+  { 
+    OrderID: 19,
+    CustomerName: 'Oxxo',
+    ShippedDate: '2016-11-10T18:00:00',
+    ShipperCity: 'Los Angeles, CA, USA',
+    Amount: 25 
+  },
+  { 
+    OrderID: 20,
+    CustomerName: 'Microsoft',
+    ShippedDate: '2016-11-08T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 3 
+  } 
+];
+
+// Mock for unit test when sorting is descending
+
+const expectedPayloadDescSortByOrderID = [ 
+  { 
+    OrderID: 500,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-02T18:00:00' 
+  },
+  { 
+    OrderID: 499,
+    CustomerName: 'Oxxo',
+    ShippedDate: '2016-11-11T18:00:00' 
+  },
+  { 
+    OrderID: 498,
+    CustomerName: 'Unosquare LLC',
+    ShippedDate: '2016-11-08T18:00:00' 
+  },
+  { 
+    OrderID: 497,
+    CustomerName: 'Microsoft',
+    ShippedDate: '2016-11-03T18:00:00' 
+  },
+  { 
+    OrderID: 496,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-05T18:00:00' 
+  },
+  { 
+    OrderID: 495,
+    CustomerName: 'Oxxo',
+    ShippedDate: '2016-11-10T18:00:00' 
+  },
+  { 
+    OrderID: 494,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-03T18:00:00' 
+  },
+  { 
+    OrderID: 493,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-11T18:00:00' 
+  },
+  { 
+    OrderID: 492,
+    CustomerName: 'Oxxo',
+    ShippedDate: '2016-11-09T18:00:00' 
+  },
+  { 
+    OrderID: 491,
+    CustomerName: 'Unosquare LLC',
+    ShippedDate: '2016-11-02T18:00:00' 
+  } 
+];
+
 // Mocks for unit tests for numeric columns
 
 const expectedPayloadNone_numeric = [ 
@@ -353,81 +483,6 @@ const expectedPayloadLt_numeric = [
     ShippedDate: '2016-02-01T18:00:00',
     ShipperCity: 'Los Angeles, CA, USA',
     Amount: undefined 
-  } 
-];
-
-// Mock for unit test when page is set to 1 (Page 2)
-
-const expectedPayloadPage2 = [ 
-  { 
-    OrderID: 11,
-    CustomerName: 'Unosquare LLC',
-    ShippedDate: '2016-11-11T18:00:00',
-    ShipperCity: 'Guadalajara, JAL, Mexico',
-    Amount: 60 
-  },
-  { 
-    OrderID: 12,
-    CustomerName: 'Vesta',
-    ShippedDate: '2016-11-09T18:00:00',
-    ShipperCity: 'Leon, GTO, Mexico',
-    Amount: 174 
-  },
-  { 
-    OrderID: 13,
-    CustomerName: 'Super La Playa',
-    ShippedDate: '2016-11-04T18:00:00',
-    ShipperCity: 'Portland, OR, USA',
-    Amount: 16 
-  },
-  { 
-    OrderID: 14,
-    CustomerName: 'Advanced Technology Systems',
-    ShippedDate: '2016-11-09T18:00:00',
-    ShipperCity: 'Leon, GTO, Mexico',
-    Amount: undefined 
-  },
-  { 
-    OrderID: 15,
-    CustomerName: 'Unosquare LLC',
-    ShippedDate: '2016-11-08T18:00:00',
-    ShipperCity: 'Leon, GTO, Mexico',
-    Amount: 78 
-  },
-  { 
-    OrderID: 16,
-    CustomerName: 'Super La Playa',
-    ShippedDate: '2016-11-08T18:00:00',
-    ShipperCity: 'Guadalajara, JAL, Mexico',
-    Amount: 41 
-  },
-  { 
-    OrderID: 17,
-    CustomerName: 'Microsoft',
-    ShippedDate: '2016-11-07T18:00:00',
-    ShipperCity: 'Guadalajara, JAL, Mexico',
-    Amount: undefined 
-  },
-  { 
-    OrderID: 18,
-    CustomerName: 'Microsoft',
-    ShippedDate: '2016-11-03T18:00:00',
-    ShipperCity: 'Guadalajara, JAL, Mexico',
-    Amount: 64 
-  },
-  { 
-    OrderID: 19,
-    CustomerName: 'Oxxo',
-    ShippedDate: '2016-11-10T18:00:00',
-    ShipperCity: 'Los Angeles, CA, USA',
-    Amount: 25 
-  },
-  { 
-    OrderID: 20,
-    CustomerName: 'Microsoft',
-    ShippedDate: '2016-11-08T18:00:00',
-    ShipperCity: 'Guadalajara, JAL, Mexico',
-    Amount: 3 
   } 
 ];
 
@@ -1018,6 +1073,7 @@ const expectedPayloadNotEndsWith_string = [
 ];
 
 export {
+  expectedPayloadDescSortByOrderID,
   expectedPayloadNone_numeric,
   expectedPayloadEquals_numeric,
   expectedPayloadBetween_numeric,
