@@ -301,7 +301,7 @@ class Grid extends React.Component <IProps & WithStyles<keyof typeof styleClasse
           onPrint={this.printTable}
           onExport={this.exportTable}
         />
-        <Table className={classes.table}>
+        <Table>
           <TableHead>
             {showTopPager && paginator}
             <GridHeader

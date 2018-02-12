@@ -1,5 +1,4 @@
 const gulp = require('gulp');
-const babel = require('gulp-babel');
 const del = require('del');
 const copy = require('gulp-copy');
 const mocha = require('gulp-mocha');
