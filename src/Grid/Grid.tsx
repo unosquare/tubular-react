@@ -1,6 +1,7 @@
+import { WithStyles, withStyles } from 'material-ui';
 import WarningIcon from 'material-ui-icons/Warning';
 import Paper from 'material-ui/Paper';
-import { StyleRules, Theme, withStyles } from 'material-ui/styles';
+import { StyleRules, Theme } from 'material-ui/styles';
 import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
 import Typography from 'material-ui/Typography';
 import * as moment from 'moment';
@@ -54,7 +55,6 @@ interface IState {
 }
 
 interface IProps {
-  classes: any;
   dataSource: any;
   gridName: string;
   page?: number;
@@ -68,7 +68,7 @@ interface IProps {
 
 }
 
-class Grid extends React.Component <IProps, IState> {
+class Grid extends React.Component <IProps & WithStyles<keyof typeof styleClasses>, IState> {
   public static defaultProps = {
     gridName: '',
     page: 0,
