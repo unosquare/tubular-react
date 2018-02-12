@@ -1,14 +1,14 @@
-import DateRangeIcon from 'material-ui-icons/DateRange';
 import LeftArrowIcon from 'material-ui-icons/ChevronLeft';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import PropTypes from 'prop-types';
-import React from 'react';
 import RightArrowIcon from 'material-ui-icons/ChevronRight';
+import DateRangeIcon from 'material-ui-icons/DateRange';
 import TimeIcon from 'material-ui-icons/Schedule';
+import { DatePicker, DateTimePicker } from 'material-ui-pickers';
+import { deepPurple } from 'material-ui/colors';
 import createMuiTheme from 'material-ui/styles/createMuiTheme';
 import createPalette from 'material-ui/styles/createPalette';
-import { deepPurple } from 'material-ui/colors';
-import { DatePicker, DateTimePicker } from 'material-ui-pickers';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
 
 const muiTheme = createMuiTheme({
   palette: createPalette({
@@ -17,11 +17,19 @@ const muiTheme = createMuiTheme({
   })
 });
 
-const DateInput = ({ columnType, disabled, value, mod, handleDatePicker }) => (
+interface IProps {
+  columnType: string;
+  disabled: boolean;
+  mod: string;
+  value: string;
+  handleDatePicker(mod: string): any;
+}
+
+const DateInput: React.SFC<IProps> = ({ columnType, disabled, value, mod, handleDatePicker }) => (
   <div style={{ padding: '15px 20px 5px 20px' }}>
     <MuiThemeProvider theme={muiTheme}>
       {
-        columnType === 'datetime' || columnType === 'datetimeutc' ? 
+        columnType === 'datetime' || columnType === 'datetimeutc' ?
           <DateTimePicker
             disabled={disabled}
             style={{ width: '100%' }}
@@ -33,7 +41,7 @@ const DateInput = ({ columnType, disabled, value, mod, handleDatePicker }) => (
             timeIcon={<TimeIcon/>}
             format={'MMMM Do YYYY hh:mm a'}
           />
-          : 
+          :
           <DatePicker
             disabled={disabled}
             style={{ width: '100%' }}
@@ -48,13 +56,5 @@ const DateInput = ({ columnType, disabled, value, mod, handleDatePicker }) => (
     <br />
   </div>
 );
-
-DateInput.propTypes = {
-  columnType: PropTypes.string.isRequired,
-  disabled: PropTypes.bool.isRequired,
-  handleDatePicker: PropTypes.func.isRequired,
-  mod: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired
-};
 
 export default DateInput;

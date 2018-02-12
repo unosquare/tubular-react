@@ -1,10 +1,18 @@
 import Input from 'material-ui/Input';
 import { MenuItem } from 'material-ui/Menu';
-import PropTypes from 'prop-types';
-import React from 'react';
 import Select from 'material-ui/Select';
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
+interface IProps {
+  activeFilter: string;
+  classes: any;
+  disabled: boolean;
+  operators: any[];
+  value: string;
+  handleChange(event: any): void;
+}
 
-const Dropdown = ({ classes, disabled, value, handleChange, activeFilter, operators }) => (
+const Dropdown: React.SFC<IProps> = ({ classes, disabled, value, handleChange, activeFilter, operators }) => (
   <div style={{ padding: '20px 20px 5px 20px' }}>
     <Select
       disabled={disabled}
@@ -14,20 +22,12 @@ const Dropdown = ({ classes, disabled, value, handleChange, activeFilter, operat
       input={<Input name={activeFilter} />}
     >
       {
-        operators.map( (row, i) => (
+        operators.map( (row: any, i: number) => (
           <MenuItem key={i} value={row.Value}>{row.Title}</MenuItem>
         ))
       }
     </Select>
   </div>
 );
-
-Dropdown.propTypes = {
-  activeFilter: PropTypes.string.isRequired,
-  classes: PropTypes.object.isRequired,
-  disabled: PropTypes.bool.isRequired,
-  operators: PropTypes.array.isRequired,
-  value: PropTypes.string.isRequired
-};
 
 export default Dropdown;
