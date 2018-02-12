@@ -2,24 +2,24 @@ import RemoteDataSource from '../src/Grid/RemoteDataSource';
 import { expect } from 'chai';
 import { expected, expectedColumnStructure, expectedResponseStructure, fakeResponseStructure } from './utils/data.js';
 import { 
-  expectedPayloadBetween_numeric,
-  expectedPayloadContains_string, 
+  expectedPayloadBetweenNumeric,
+  expectedPayloadContainsString, 
   expectedPayloadDescSortByOrderID,
-  expectedPayloadEndsWith_string,
-  expectedPayloadEquals_numeric,
-  expectedPayloadEquals_string, 
-  expectedPayloadGt_numeric,
-  expectedPayloadGte_numeric,
-  expectedPayloadLt_numeric,
-  expectedPayloadLte_numeric,
+  expectedPayloadEndsWithString,
+  expectedPayloadEqualsNumeric,
+  expectedPayloadEqualsString, 
+  expectedPayloadGtNumeric,
+  expectedPayloadGteNumeric,
+  expectedPayloadLtNumeric,
+  expectedPayloadLteNumeric,
   expectedPayloadMultipleSort,
-  expectedPayloadNone_numeric,
-  expectedPayloadNone_string,
-  expectedPayloadNotEndsWith_string, 
-  expectedPayloadNotEquals_string, 
-  expectedPayloadNotStartsWith_string,
+  expectedPayloadNoneNumeric,
+  expectedPayloadNoneString,
+  expectedPayloadNotEndsWithString, 
+  expectedPayloadNotEqualsString, 
+  expectedPayloadNotStartsWithString,
   expectedPayloadPage2,
-  expectedPayloadStartsWith_string 
+  expectedPayloadStartsWithString 
 } from './utils/LocalDataSourceMocks';
 import { 
   invalidColumnsSample, 
@@ -48,7 +48,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    /** Pager */
+    // Pager 
     it('should return a payload with the following 10 records when page is set to 1', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
       
@@ -58,7 +58,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    /** Sorting */
+    // Sorting
     it('should return a payload with records in descending order (sorting by \'OrderID\')', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample_descending);
 
@@ -114,7 +114,7 @@ describe('LocalDataSource', () => {
     });
   });
 
-  /** Unit tests for numeric columns */
+  // Unit tests for numeric columns
   describe('When numeric column has filters', () => {
     // None
     it('should return a payload without filters', done => {
@@ -127,7 +127,7 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then(response => {
         expect(response.payload).to.have.lengthOf(10);
-        expect(response.payload).to.deep.equal(expectedPayloadNone_numeric);
+        expect(response.payload).to.deep.equal(expectedPayloadNoneNumeric);
         
         done();     
       });      
@@ -144,7 +144,7 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then(response => {
         expect(response.payload).to.have.lengthOf(1);
-        expect(response.payload).to.deep.equal(expectedPayloadEquals_numeric);
+        expect(response.payload).to.deep.equal(expectedPayloadEqualsNumeric);
 
         done();
       });
@@ -161,7 +161,7 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then(response => {
         expect(response.payload).to.have.lengthOf(8);
-        expect(response.payload).to.deep.equal(expectedPayloadBetween_numeric);
+        expect(response.payload).to.deep.equal(expectedPayloadBetweenNumeric);
 
         done();
       });      
@@ -178,7 +178,7 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then(response => {
         expect(response.payload).to.have.lengthOf(10);
-        expect(response.payload).to.deep.equal(expectedPayloadGte_numeric);
+        expect(response.payload).to.deep.equal(expectedPayloadGteNumeric);
         
         done();
       });
@@ -199,7 +199,7 @@ describe('LocalDataSource', () => {
 
         expect(response.payload).to.have.lengthOf(10);
         expect(payloadResponse[0]['OrderID']).to.not.be.equal(9);
-        expect(response.payload).to.deep.equal(expectedPayloadGt_numeric);
+        expect(response.payload).to.deep.equal(expectedPayloadGtNumeric);
 
         done();
       });
@@ -216,7 +216,7 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then(response => {
         expect(response.payload).to.have.lengthOf(5);
-        expect(response.payload).to.deep.equal(expectedPayloadLte_numeric);
+        expect(response.payload).to.deep.equal(expectedPayloadLteNumeric);
 
         done();
       });
@@ -233,14 +233,14 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then(response => {
         expect(response.payload).to.have.lengthOf(4);
-        expect(response.payload).to.deep.equal(expectedPayloadLt_numeric);
+        expect(response.payload).to.deep.equal(expectedPayloadLtNumeric);
         
         done();
       });
     });
   });
 
-  /** Unit tests for string columns */
+  // Unit tests for string columns
   describe('When string column has filters', () => {
     // None
     it('should return a payload without filters', done => {
@@ -251,7 +251,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.HasFilter = false;
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        expect(response.payload).to.deep.equal(expectedPayloadNone_string);
+        expect(response.payload).to.deep.equal(expectedPayloadNoneString);
         done();
       });
     });
@@ -265,7 +265,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.HasFilter = true;
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        expect(response.payload).to.deep.equal(expectedPayloadEquals_string);
+        expect(response.payload).to.deep.equal(expectedPayloadEqualsString);
         done();
       });
     });
@@ -279,7 +279,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.HasFilter = true;
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        expect(response.payload).to.deep.equal(expectedPayloadContains_string);
+        expect(response.payload).to.deep.equal(expectedPayloadContainsString);
         done();
       });
     });
@@ -293,7 +293,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.HasFilter = true;
       
       dataSource.getAllRecords(10, 0, '').then(response => {
-        expect(response.payload).to.deep.equal(expectedPayloadNotEquals_string);
+        expect(response.payload).to.deep.equal(expectedPayloadNotEqualsString);
         done();
       });
     });
@@ -307,7 +307,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.HasFilter = true;
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        expect(response.payload).to.deep.equal(expectedPayloadStartsWith_string);
+        expect(response.payload).to.deep.equal(expectedPayloadStartsWithString);
         done();
       });
     });
@@ -321,7 +321,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.HasFilter = true;
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        expect(response.payload).to.deep.equal(expectedPayloadNotStartsWith_string);
+        expect(response.payload).to.deep.equal(expectedPayloadNotStartsWithString);
         done();
       });
     });
@@ -335,7 +335,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.HasFilter = true;
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        expect(response.payload).to.deep.equal(expectedPayloadEndsWith_string);
+        expect(response.payload).to.deep.equal(expectedPayloadEndsWithString);
         done();
       });
     });
@@ -349,7 +349,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.HasFilter = true;
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        expect(response.payload).to.deep.equal(expectedPayloadNotEndsWith_string);
+        expect(response.payload).to.deep.equal(expectedPayloadNotEndsWithString);
         done();
       });
     });

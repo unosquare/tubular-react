@@ -185,7 +185,7 @@ const expectedPayloadMultipleSort = [
 
 // Mocks for unit tests for numeric columns
 
-const expectedPayloadNone_numeric = [ 
+const expectedPayloadNoneNumeric = [ 
   { 
     OrderID: 1,
     CustomerName: 'Microsoft',
@@ -258,7 +258,7 @@ const expectedPayloadNone_numeric = [
   } 
 ];
 
-const expectedPayloadEquals_numeric = [ 
+const expectedPayloadEqualsNumeric = [ 
   { OrderID: 9,
     CustomerName: 'Vesta',
     ShippedDate: '2016-11-07T18:00:00',
@@ -267,7 +267,7 @@ const expectedPayloadEquals_numeric = [
   } 
 ];
 
-const expectedPayloadBetween_numeric = [ 
+const expectedPayloadBetweenNumeric = [ 
   { 
     OrderID: 2,
     CustomerName: 'Microsoft',
@@ -326,7 +326,7 @@ const expectedPayloadBetween_numeric = [
   } 
 ];
 
-const expectedPayloadGte_numeric = [ 
+const expectedPayloadGteNumeric = [ 
   { 
     OrderID: 9,
     CustomerName: 'Vesta',
@@ -399,7 +399,7 @@ const expectedPayloadGte_numeric = [
   } 
 ];
 
-const expectedPayloadGt_numeric = [ 
+const expectedPayloadGtNumeric = [ 
   { 
     OrderID: 10,
     CustomerName: 'Unosquare LLC',
@@ -472,7 +472,7 @@ const expectedPayloadGt_numeric = [
   } 
 ];
 
-const expectedPayloadLte_numeric = [ 
+const expectedPayloadLteNumeric = [ 
   { 
     OrderID: 1,
     CustomerName: 'Microsoft',
@@ -510,7 +510,7 @@ const expectedPayloadLte_numeric = [
   } 
 ];
 
-const expectedPayloadLt_numeric = [ 
+const expectedPayloadLtNumeric = [ 
   { 
     OrderID: 1,
     CustomerName: 'Microsoft',
@@ -543,7 +543,7 @@ const expectedPayloadLt_numeric = [
 
 // Mocks for unit tests for string columns
 
-const expectedPayloadNone_string = [ 
+const expectedPayloadNoneString = [ 
   { 
     OrderID: 1,
     CustomerName: 'Microsoft',
@@ -616,7 +616,7 @@ const expectedPayloadNone_string = [
   } 
 ];
 
-const expectedPayloadEquals_string = [ 
+const expectedPayloadEqualsString = [ 
   { 
     OrderID: 4,
     CustomerName: 'Unosquare LLC',
@@ -689,7 +689,7 @@ const expectedPayloadEquals_string = [
   } 
 ];
 
-const expectedPayloadContains_string = [ 
+const expectedPayloadContainsString = [ 
   { 
     OrderID: 9,
     CustomerName: 'Vesta',
@@ -762,7 +762,7 @@ const expectedPayloadContains_string = [
   } 
 ];
 
-const expectedPayloadNotEquals_string = [ 
+const expectedPayloadNotEqualsString = [ 
   { 
     OrderID: 4,
     CustomerName: 'Unosquare LLC',
@@ -835,7 +835,7 @@ const expectedPayloadNotEquals_string = [
   } 
 ];
 
-const expectedPayloadStartsWith_string = [ 
+const expectedPayloadStartsWithString = [ 
   { 
     OrderID: 1,
     CustomerName: 'Microsoft',
@@ -908,7 +908,7 @@ const expectedPayloadStartsWith_string = [
   } 
 ];
 
-const expectedPayloadNotStartsWith_string = [ 
+const expectedPayloadNotStartsWithString = [ 
   { 
     OrderID: 4,
     CustomerName: 'Unosquare LLC',
@@ -981,7 +981,7 @@ const expectedPayloadNotStartsWith_string = [
   } 
 ];
 
-const expectedPayloadEndsWith_string = [ 
+const expectedPayloadEndsWithString = [ 
   { 
     OrderID: 9,
     CustomerName: 'Vesta',
@@ -1054,7 +1054,7 @@ const expectedPayloadEndsWith_string = [
   } 
 ];
 
-const expectedPayloadNotEndsWith_string = [ 
+const expectedPayloadNotEndsWithString = [ 
   { 
     OrderID: 1,
     CustomerName: 'Microsoft',
@@ -1130,20 +1130,20 @@ const expectedPayloadNotEndsWith_string = [
 export {
   expectedPayloadMultipleSort,
   expectedPayloadDescSortByOrderID,
-  expectedPayloadNone_numeric,
-  expectedPayloadEquals_numeric,
-  expectedPayloadBetween_numeric,
-  expectedPayloadGte_numeric,
-  expectedPayloadGt_numeric,
-  expectedPayloadLte_numeric,
-  expectedPayloadLt_numeric,
+  expectedPayloadNoneNumeric,
+  expectedPayloadEqualsNumeric,
+  expectedPayloadBetweenNumeric,
+  expectedPayloadGteNumeric,
+  expectedPayloadGtNumeric,
+  expectedPayloadLteNumeric,
+  expectedPayloadLtNumeric,
   expectedPayloadPage2, 
-  expectedPayloadNone_string, 
-  expectedPayloadContains_string, 
-  expectedPayloadEquals_string, 
-  expectedPayloadNotEquals_string, 
-  expectedPayloadStartsWith_string,
-  expectedPayloadNotStartsWith_string,
-  expectedPayloadEndsWith_string,
-  expectedPayloadNotEndsWith_string
+  expectedPayloadNoneString, 
+  expectedPayloadContainsString, 
+  expectedPayloadEqualsString, 
+  expectedPayloadNotEqualsString, 
+  expectedPayloadStartsWithString,
+  expectedPayloadNotStartsWithString,
+  expectedPayloadEndsWithString,
+  expectedPayloadNotEndsWithString
 };
