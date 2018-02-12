@@ -1,51 +1,34 @@
-import Axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
+import axios from 'axios';
 import { expect }from 'chai';
-import { expected, invalidResponseStructure, validResponseStructure } from './utils/data.js';
-import { invalidColumnsSample, normalizedColumns, validColumnsSample } from './utils/columns.js';
+import { invalidColumnsSample, normalizedColumns, validColumnsSample, request } from './utils/columns.js';
+import { invalidResponseStructure, twentyRecordsExpected, validResponseStructure } from './utils/data.js';
 
 describe('RemoteDateSource', () => {
   let dataSource;
-  let mock;
-  let axiosInstance; 
+  const mock = new MockAdapter(axios);
+  const payload = twentyRecordsExpected;
 
-  describe('When columns structure is valid', () => {
+  describe('_normalizeColumns()', () => {
     beforeEach(() => {
       dataSource = 
         new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
     });
 
-    it('should return a payload', () => dataSource.getAllRecords(10, 0, '')
-      .then(r => {
-        expect(r.payload).to.deep.equal(expected.payload);
-        expect(r.filteredRecordCount).to.deep.equal(expected.filteredRecordCount);
-        expect(r.totalRecordCount).to.deep.equal(expected.totalRecordCount);
-        expect(r.aggregate).to.deep.equal(expected.aggregate);
-        expect(r.searchText).to.deep.equal(expected.searchText);
-        expect(r.rowsPerPage).to.deep.equal(expected.rowsPerPage);
-      })
-    );
-  });
-
-  describe('When columns structure is invalid', () => {
-    beforeEach(() => {
-      dataSource = 
-        new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', invalidColumnsSample);
+    it('should return normalizedColumns with a validColumnsSample', () => {
+      expect(dataSource._normalizeColumns(validColumnsSample)).to.deep.equal(normalizedColumns);
     });
 
-    it('throws an Internal Server Error', () => 
-      dataSource.getAllRecords(10, 0, '')
-        .catch( error => 
-          expect(error.response.statusText).to.be.equal('Internal Server Error')
-        )
-    );
+    it('should return invalidNormalizedColumns with a invalidColumnsSample', () => {
+      expect(dataSource._normalizeColumns(invalidColumnsSample)).to.not.deep.equal(normalizedColumns);
+    });
   });
 
   describe('isValidResponse()', () => {
     beforeEach(() => {
       dataSource = 
-        new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', invalidColumnsSample);
+        new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
     });
 
     it('should return true when expectedStructure is valid', () => {
@@ -57,54 +40,53 @@ describe('RemoteDateSource', () => {
     });
   });
 
-  describe('_normalizeColumns()', () => {
+  describe('When columns structure is valid', () => {
+    beforeEach( () => {
+      dataSource = 
+        new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+  
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', request).reply(200, {
+        Counter: payload.Counter,
+        Payload: payload.Payload,
+        TotalRecordCount: payload.TotalRecordCount, 
+        FilteredRecordCount: payload.FilteredRecordCount,
+        TotalPages: payload.TotalPages,
+        CurrentPage: payload.CurrentPage,
+        AggregationPayload: payload.AggregationPayload
+      });
+    });
+  
+    it('Should return a payload', done => {
+      dataSource.getAllRecords(20, 0, '')
+        .then(r => {
+          expect(r.payload).to.deep.equal(twentyRecordsExpected.Payload);
+          expect(r.filteredRecordCount).to.deep.equal(twentyRecordsExpected.FilteredRecordCount);
+          expect(r.totalRecordCount).to.deep.equal(twentyRecordsExpected.TotalRecordCount);
+        }).finally( done() );
+    });
+  });
+
+  describe('When columns structure is invalid', () => {
     beforeEach(() => {
       dataSource = 
         new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', invalidColumnsSample);
-    });
 
-    it('should return normalizedColumns with a validColumnsSample', () => {
-      expect(dataSource._normalizeColumns(validColumnsSample)).to.deep.equal(normalizedColumns);
-    });
-
-    it('should return invalidNormalizedColumns with a invalidColumnsSample', () => {
-      expect(dataSource._normalizeColumns(invalidColumnsSample)).to.not.deep.equal(normalizedColumns);
-    });
-  });
-  
-  describe('refresh()', () => {
-    beforeEach(done => setTimeout( () => {  
-      dataSource.refresh(100, 0, '');
-      done();
-    }, 300));
-
-    it('should return a payload with 100 records', done => setTimeout( () => {
-      expect(dataSource.dataStream.value.payload).to.have.lengthOf(100);
-      done();
-    }, 300));
-  });
-
-  describe('search()', () => {
-    beforeEach(done => setTimeout( () => {  
-      dataSource.search(10, 0, 'Microsoft');
-      done();
-    }, 300));
-
-    it('should return a payload with records where the CustomerName is equal to Microsoft', done => setTimeout( () => {
-      dataSource.dataStream.value.payload.forEach(element => {
-        expect(element.CustomerName).to.be.equal('Microsoft');
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', request).reply(200, {
+        Counter: payload.Counter,
+        Payload: payload.Payload,
+        TotalRecordCount: payload.TotalRecordCount, 
+        FilteredRecordCount: payload.FilteredRecordCount,
+        TotalPages: payload.TotalPages,
+        CurrentPage: payload.CurrentPage,
+        AggregationPayload: payload.AggregationPayload
       });
-      done();
-    }, 300));
-  });
+    });
 
-  beforeEach(() => {
-    axiosInstance = Axios.create();
-    mock = new MockAdapter(axiosInstance);
-    mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200);
-    dataSource = 
-      new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
-    dataSource.connect(10, 0, '')
-      .subscribe();
+    it('throws an Error 404', () => 
+      dataSource.getAllRecords(10, 0, '')
+        .catch( error => 
+          expect(error.response.status).to.be.equal(404)
+        )
+    );
   });
 });
