@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import * as Rx from 'rx';
 
-class RemoteDataSource {
+class RemoteDataSource implements DataSource {
   public static defaultColumnValues = {
     Aggregate: 'None',
     DataType: 'string',
