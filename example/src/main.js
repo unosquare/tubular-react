@@ -1,7 +1,7 @@
 import Grid from '../../src/Grid/Grid';
-import React from 'react';
-import RemoteDataSource from '../../src/Grid/RemoteDataSource';
-import moment from 'moment';
+import * as React from 'react';
+import * as RemoteDataSource from '../../src/Grid/RemoteDataSource';
+import * as moment from 'moment';
 import { TableCell, TableRow } from 'material-ui/Table';
 
 const columns = [
@@ -13,7 +13,8 @@ const columns = [
     SortDirection: 'Ascending',
     IsKey: true,
     DataType: 'numeric',    
-    Filtering: true
+    Filtering: true,
+    ssdasd: true
   },
   {
     Label: 'Customer Name',

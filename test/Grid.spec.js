@@ -1,13 +1,15 @@
-import Adapter from 'enzyme-adapter-react-16';
+import * as Adapter from 'enzyme-adapter-react-16';
 import Axios from 'axios';
-import Enzyme from 'enzyme';
+import { validColumnsSample, invalidColumnsSample } from './utils/columns.js';
+import data from './utils/data.js';
+import * as Enzyme from 'enzyme';
 import Grid from '../src/Grid/Grid';
 import GridHeader from '../src/Grid/GridHeader';
 import MockAdapter from 'axios-mock-adapter';
 import Paginator from '../src/Grid/Paginator';
 import Paper from 'material-ui/Paper';
-import React from 'react';
-import RemoteDataSource from '../src/Grid/RemoteDataSource';
+import * as React from 'react';
+import * as RemoteDataSource from '../src/Grid/RemoteDataSource';
 import Typography from 'material-ui/Typography';
 import bodyRenderer from './utils/bodyRenderer.js';
 import { createShallow } from 'material-ui/test-utils';
@@ -17,6 +19,17 @@ import footerRenderer from './utils/footerRenderer.js';
 import orders from './utils/orders.json';
 import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
 import { invalidColumnsSample, validColumnsSample } from './utils/columns.js';
+
+
+const footerRenderer = aggregates => 
+  <TableFooter>
+    <TableRow>
+      <TableCell>Total: </TableCell>
+      <TableCell> { aggregates && aggregates.CustomerName } </TableCell>
+      <TableCell> ~~~ </TableCell>
+      <TableCell> ~~~ </TableCell>
+    </TableRow>
+  </TableFooter>;
 
 Enzyme.configure({ adapter: new Adapter() });
 

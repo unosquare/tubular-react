@@ -1,5 +1,6 @@
+
 import MockAdapter from 'axios-mock-adapter';
-import RemoteDataSource from '../src/Grid/RemoteDataSource';
+import * as RemoteDataSource from '../src/Grid/RemoteDataSource';
 import axios from 'axios';
 import { expect }from 'chai';
 import { invalidColumnsSample, validColumnsSample } from './utils/columns.js';

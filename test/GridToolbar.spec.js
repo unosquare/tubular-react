@@ -1,10 +1,12 @@
-import Adapter from 'enzyme-adapter-react-16';
-import Enzyme from 'enzyme';
+import * as Adapter from 'enzyme-adapter-react-16';
+import Button from 'material-ui/Button';
+import DownloadIcon from 'material-ui-icons/FileDownload';
+import * as Enzyme from 'enzyme';
 import GridToolbar from '../src/Grid/GridToolbar';
 import IconButton from 'material-ui/IconButton';
 import Input from 'material-ui/Input';
 import PrintIcon from 'material-ui-icons/Print';
-import React from 'react';
+import * as React from 'react';
 import Toolbar from 'material-ui/Toolbar';
 import { expect } from 'chai';
 import { createMount, createShallow } from 'material-ui/test-utils';
