@@ -1,76 +1,107 @@
+import WarningIcon from 'material-ui-icons/Warning';
+import Paper from 'material-ui/Paper';
+import { StyleRules, Theme, withStyles } from 'material-ui/styles';
+import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
+import Typography from 'material-ui/Typography';
+import * as moment from 'moment';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import * as Rx from 'rx';
 import GridHeader from './GridHeader';
 import GridToolbar from './GridToolbar';
 import Paginator from './Paginator';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
-import WarningIcon from 'material-ui-icons/Warning';
-import * as moment from 'moment';
-import { withStyles } from 'material-ui/styles';
-import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
 
-const styles = theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing.unit * 3,
-    overflowX: 'auto'
-  },
+const styleClasses  = {
+  dialogButtonStyle: '',
+  dialogContentStyle: '',
+  dialogTitleStyle: '',
+  root: ''
+};
+
+const styles = (theme: Theme): StyleRules<keyof typeof styleClasses> => (
+  {
   dialogButtonStyle: {
-    background: '#28b62c', 
-    color: 'white', 
-    marginRight: '5px', 
-    marginBottom: '5px', 
+    background: '#28b62c',
+    color: 'white',
+    marginBottom: '5px',
+    marginRight: '5px',
     minWidth: '90px'
   },
-  dialogTitleStyle: {
-    minWidth: '300px', 
-    background: '#ececec' 
-  },
   dialogContentStyle: {
-    color: 'black', 
+    color: 'black',
     paddingTop: '25px'
+  },
+  dialogTitleStyle: {
+    background: '#ececec',
+    minWidth: '300px'
+  },
+  root: {
+    marginTop: theme.spacing.unit * 3,
+    overflowX: 'auto',
+    width: '100%'
   }
 });
 
-class Grid extends React.Component {
-  static defaultProps = {
-    rowsPerPage: 10,
+interface IState {
+  aggregate: any;
+  page: number;
+  rowsPerPage: number;
+  dataSource: any;
+  searchText: string;
+  data: any[];
+  totalRecordCount: number;
+  filteredRecordCount: number;
+}
+
+interface IProps {
+  classes: any;
+  dataSource: any;
+  gridName: string;
+  page?: number;
+  rowsPerPage: number;
+  showBottomPager?: boolean;
+  showTopPager?: boolean;
+  showPrintButton?: boolean;
+  showExportButton?: boolean;
+  bodyRenderer?(column: any, index: number): any;
+  footerRenderer?(aggregate: any): any;
+
+}
+
+class Grid extends React.Component <IProps, IState> {
+  public static defaultProps = {
+    gridName: '',
     page: 0,
-    gridName: ''
-  }
+    rowsPerPage: 10
+  };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      page: this.props.page,
-      rowsPerPage: this.props.rowsPerPage,
-      gridFooterDefinition: this.props.gridFooterDefinition,
-      dataSource: this.props.dataSource,
-      searchText: '',
-      data: [],
-      totalRecordCount: 0,
-      filteredRecordCount: 0,
-      aggregate: {}
-    };
+  public state = {
+    aggregate: {},
+    data: [] as any,
+    dataSource: this.props.dataSource,
+    filteredRecordCount: 0,
+    page: this.props.page,
+    rowsPerPage: this.props.rowsPerPage,
+    searchText: '',
+    totalRecordCount: 0,
+  };
 
+  private search: Rx.Subject<{}>;
+
+  public componentDidMount() {
     this.search = new Rx.Subject();
-  }
-
-  componentDidMount() {
-    const pageSize = parseInt(localStorage.getItem(`tubular.${this.props.gridName}_pageSize`)) || 10;
+    const pageSize = parseInt(localStorage.getItem(`tubular.${this.props.gridName}_pageSize`), 10) || 10;
     const searchText = localStorage.getItem(`tubular.${this.props.gridName}_searchText`) || '';
-    
+
     this.state.dataSource.connect(pageSize, this.state.page, searchText)
-      .subscribe(tbResponse => {
+      .subscribe((tbResponse: any) => {
         this.setState({
-          data: tbResponse.payload,
-          totalRecordCount: tbResponse.totalRecordCount || 0,
-          filteredRecordCount: tbResponse.filteredRecordCount || 0,
           aggregate: tbResponse.aggregate,
+          data: tbResponse.payload,
+          filteredRecordCount: tbResponse.filteredRecordCount || 0,
+          rowsPerPage: tbResponse.rowsPerPage || 10,
           searchText: tbResponse.searchText || '',
-          rowsPerPage: tbResponse.rowsPerPage || 10
+          totalRecordCount: tbResponse.totalRecordCount || 0
         });
       });
 
@@ -79,51 +110,53 @@ class Grid extends React.Component {
     });
   }
 
-  handleTextSearch = searchText => { 
-    this.setState({ searchText }, () => this.search.onNext());
+  public handleTextSearch = (searchText: string) => {
+    this.setState({ searchText }, () => this.search.onNext({}));
   }
 
-  handlePager = (rowsPerPage, page) => {
+  public handlePager = (rowsPerPage: number, page: number) => {
     this.setState({ rowsPerPage, page }, () => this.refreshGrid());
   }
 
-  refreshGrid = () => {
+  public refreshGrid = () => {
     const { dataSource, rowsPerPage, page, searchText } = this.state;
 
     dataSource.refresh(rowsPerPage, page, searchText);
 
     localStorage.setItem(`tubular.${this.props.gridName}`, JSON.stringify(dataSource.columns));
-    localStorage.setItem(`tubular.${this.props.gridName}_pageSize`, rowsPerPage);
+    localStorage.setItem(`tubular.${this.props.gridName}_pageSize`, String(rowsPerPage));
     localStorage.setItem(`tubular.${this.props.gridName}_searchText`, searchText);
   }
 
-  printTable = () => {
+  public printTable = () => {
     const { dataSource, filteredRecordCount, searchText } = this.state;
 
-    if(filteredRecordCount === 0)
+    if (filteredRecordCount === 0) {
       return;
+    }
 
     dataSource.getAllRecords(filteredRecordCount, 0, searchText)
-      .then(({ payload }) => {
+      .then(({ payload }: any) => {
         const popup = window.open('about:blank', 'Print', 'location=0,height=500,width=800');
-        popup.document.write('<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.min.css" />');
+        popup.document
+        .write('<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.min.css" />');
         const tableHtml = `<table class="table table-bordered table-striped"><thead><tr>${
           dataSource.columns
-            .filter(c => c.Visible)
-            .reduce((prev, el) => `${prev}<th>${el.Label || el.Name}</th>`, '')
+            .filter((c: any) => c.Visible)
+            .reduce((prev: any, el: any) => `${prev}<th>${el.Label || el.Name}</th>`, '')
         }</tr></thead><tbody>${
-          payload.map(row => {
+          payload.map((row: any) => {
             if (row instanceof Object) {
-              row = Object.keys(row).map(key => row[key]);
+              row = Object.keys(row).map((key: any) => row[key]);
             }
-            return `<tr>${row.map((cell, index) => {
+            return `<tr>${row.map((cell: any, index: number) => {
               if (dataSource.columns[index] && !dataSource.columns[index].Visible) {
                 return '';
               }
-              return `<td>${ dataSource.columns[index].DataType === 'datetime' || 
-              dataSource.columns[index].DataType === 'date' || 
-              dataSource.columns[index].DataType === 'datetimeutc' ? 
-                moment(cell).format('MMMM Do YYYY, h:mm:ss a') : 
+              return `<td>${ dataSource.columns[index].DataType === 'datetime' ||
+              dataSource.columns[index].DataType === 'date' ||
+              dataSource.columns[index].DataType === 'datetimeutc' ?
+                moment(cell).format('MMMM Do YYYY, h:mm:ss a') :
                 cell || 0}</td>`;
             }).join(' ')}</tr>`;
           }).join(' ')}</tbody></table>`;
@@ -135,15 +168,16 @@ class Grid extends React.Component {
         popup.document.close();
       });
   }
-  
-  exportTable = filtered => {
+
+  public exportTable = (filtered: any) => {
     const { dataSource, filteredRecordCount, totalRecordCount, searchText } = this.state;
-    const header = dataSource.columns.map(x => x.Label);
-    const visibility = dataSource.columns.map(x => x.Visible);
-    let count, search;
-    const processRow = row => {
+    const header = dataSource.columns.map((x: any) => x.Label);
+    const visibility = dataSource.columns.map((x: any) => x.Visible);
+    let count;
+    let search;
+    const processRow = (row: any) => {
       if (row instanceof Object) {
-        row = Object.keys(row).map(key => row[key]);
+        row = Object.keys(row).map((key: any) => row[key]);
       }
 
       let finalVal = '';
@@ -176,17 +210,16 @@ class Grid extends React.Component {
     if (header.length > 0) {
       csvFile += processRow(header);
     }
-    if(filtered){
+    if (filtered) {
       count = filteredRecordCount;
       search = searchText;
-    }
-    else{
+    } else {
       count = totalRecordCount;
       search = '';
     }
     dataSource.getAllRecords(count, 0, search)
-      .then(({ payload }) => {
-        payload.forEach(row => {
+      .then(({payload}: any) => {
+        payload.forEach((row: any) => {
           csvFile += processRow(row);
         });
       }).then(() => {
@@ -202,26 +235,29 @@ class Grid extends React.Component {
       });
   }
 
-  render() {
-    const { classes, bodyRenderer, footerRenderer, showBottomPager, showTopPager, showPrintButton, showExportButton } = this.props;
+  public render() {
+    const { classes, bodyRenderer, footerRenderer, showBottomPager,
+      showTopPager, showPrintButton, showExportButton } = this.props;
     const { data, rowsPerPage, page, dataSource, aggregate, filteredRecordCount, totalRecordCount } = this.state;
 
     const body = (
       <TableBody>
         {
-          data.map((row, rowIndex) => (
+          data.map((row: any, rowIndex: number) => (
             bodyRenderer
               ? bodyRenderer(row, rowIndex)
-              : <TableRow hover key={rowIndex}>
-                {                
-                  dataSource.columns.filter(col => col.Visible).map((column, colIndex) =>
+              : <TableRow hover={true} key={rowIndex}>
+                {
+                  dataSource.columns.filter((col: any) => col.Visible).map((column: any, colIndex: number) =>
                     <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
                       {
-                        column.DataType === 'numeric' ? 
-                          row[column.Name] || 0 : 
-                          column.DataType === 'datetime' || column.DataType === 'date' || column.DataType === 'datetimeutc' ? 
-                            moment(row[column.Name]).format('MMMM Do YYYY, h:mm:ss a') || '' : 
-                            row[column.Name]
+                        column.DataType === 'numeric' ?
+                          row[column.Name] || 0 :
+                          column.DataType === 'datetime'
+                          || column.DataType === 'date'
+                          || column.DataType === 'datetimeutc'
+                          ? moment(row[column.Name]).format('MMMM Do YYYY, h:mm:ss a') || ''
+                          : row[column.Name]
                       }
                     </TableCell>)
                 }
@@ -233,7 +269,7 @@ class Grid extends React.Component {
           (<TableRow>
             <TableCell style={{ display: 'flex', padding: '10px' }}>
               <WarningIcon />
-              <Typography style={{ paddingLeft: '15px' }} type='body2' gutterBottom>
+              <Typography style={{ paddingLeft: '15px' }} type='body2' gutterBottom={true}>
                 No records found
               </Typography>
             </TableCell>
@@ -245,58 +281,46 @@ class Grid extends React.Component {
     const paginator = (
       <TableRow>
         <Paginator
-          dataSource={dataSource}
           rowsPerPage={rowsPerPage}
           page={page}
           filteredRecordCount={filteredRecordCount}
           totalRecordCount={totalRecordCount}
-          handlePager={this.handlePager.bind(this)}
-          refreshGrid={this.refreshGrid.bind(this)}
+          handlePager={this.handlePager}
         />
       </TableRow>
     );
 
     return (
       <Paper className={classes.root}>
-        <GridToolbar 
+        <GridToolbar
           filteredRecordCount={filteredRecordCount}
-          gridName={this.props.gridName} 
-          onSearchTextChange={this.handleTextSearch} 
-          isPrintEnabled={showPrintButton} 
-          isExportEnabled={showExportButton} 
+          gridName={this.props.gridName}
+          onSearchTextChange={this.handleTextSearch}
+          isPrintEnabled={showPrintButton}
+          isExportEnabled={showExportButton}
           onPrint={this.printTable}
           onExport={this.exportTable}
         />
         <Table className={classes.table}>
           <TableHead>
             {showTopPager && paginator}
-
             <GridHeader
               gridName={this.props.gridName}
               dataSource={dataSource}
               page={page}
               rowsPerPage={rowsPerPage}
-              refreshGrid={this.refreshGrid.bind(this)}
+              refreshGrid={this.refreshGrid}
             />
           </TableHead>
-          { body }
+          {body}
           <TableFooter>
-            { footerRenderer && footerRenderer(aggregate) }
-            { showBottomPager && paginator }
+            {footerRenderer && footerRenderer(aggregate)}
+            {showBottomPager && paginator}
           </TableFooter>
         </Table>
       </Paper>
     );
   }
 }
-
-Grid.propTypes = {
-  bodyRenderer: PropTypes.func,
-  classes: PropTypes.object.isRequired,
-  dataSource: PropTypes.any.isRequired,
-  footerRenderer: PropTypes.func,
-  gridName: PropTypes.string.isRequired,
-  rowsPerPage: PropTypes.number
-};
 
 export default withStyles(styles)(Grid);

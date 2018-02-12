@@ -16,6 +16,7 @@ const muiTheme = createMuiTheme({
     type: 'light'
   })
 });
+
 interface IProps {
   columnType: string;
   disabled: boolean;

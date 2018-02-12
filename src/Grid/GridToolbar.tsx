@@ -1,4 +1,4 @@
-import { Button, WithStyles, withStyles } from 'material-ui';
+import { WithStyles, withStyles } from 'material-ui';
 import CloseIcon from 'material-ui-icons/Close';
 import DownloadIcon from 'material-ui-icons/FileDownload';
 import PrintIcon from 'material-ui-icons/Print';

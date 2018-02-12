@@ -1,9 +1,10 @@
+import { WithStyles, withStyles } from 'material-ui';
 import ArrowDownward from 'material-ui-icons/ArrowDownward';
 import ArrowUpward from 'material-ui-icons/ArrowUpward';
 import FilterListIcon from 'material-ui-icons/FilterList';
 import Dialog, { DialogTitle } from 'material-ui/Dialog';
 import IconButton from 'material-ui/IconButton';
-import { StyleRules, Theme, withStyles } from 'material-ui/styles';
+import { StyleRules, Theme } from 'material-ui/styles';
 import { TableCell, TableRow, TableSortLabel } from 'material-ui/Table';
 import Tooltip from 'material-ui/Tooltip';
 import * as moment from 'moment';
@@ -12,7 +13,6 @@ import * as React from 'react';
 import { KeyboardEvent } from 'react';
 import DialogContent from './DialogContent';
 import DialogDropdown from './DialogDropdown';
-
 const styleClasses  = {
   applyButton: '',
   arrowStyle: '',
@@ -66,14 +66,13 @@ interface IState {
 }
 interface IProps {
   dataSource: any;
-  classes: any;
   gridName: string;
   page?: number;
   rowsPerPage: number;
   refreshGrid(): void;
 }
 
-class GridHeader extends React.Component <IProps, IState> {
+class GridHeader extends React.Component <IProps & WithStyles<keyof typeof styleClasses>, IState> {
   public state = {
     activeFilter: '',
     activeFilterColumn: '',
@@ -293,7 +292,7 @@ class GridHeader extends React.Component <IProps, IState> {
   }
 
   public render() {
-    const { dataSource, classes } = this.props;
+    const {  classes, dataSource} = this.props;
     return (
       <TableRow>
         <Dialog open={this.state.open} onClose={this.handleClose} >
