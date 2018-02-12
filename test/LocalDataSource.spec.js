@@ -2,6 +2,13 @@ import RemoteDataSource from '../src/Grid/RemoteDataSource';
 import { expect } from 'chai';
 import { expected, expectedColumnStructure, expectedResponseStructure, fakeResponseStructure } from './utils/data.js';
 import { 
+  expectedPayloadNone_numeric,
+  expectedPayloadEquals_numeric,
+  expectedPayloadBetween_numeric,
+  expectedPayloadGte_numeric,
+  expectedPayloadGt_numeric,
+  expectedPayloadLte_numeric,
+  expectedPayloadLt_numeric,
   expectedPayloadContains_string, 
   expectedPayloadEndsWith_string,
   expectedPayloadEquals_string, 
@@ -83,10 +90,8 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then(response => {
         expect(response.payload).to.have.lengthOf(10);
-
-        response.payload.forEach((element, i) => {
-          expect(element.OrderID).to.be.equal(i + 1);
-        });
+        expect(response.payload).to.deep.equal(expectedPayloadNone_numeric);
+        
         done();     
       });      
     });
@@ -102,10 +107,8 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then(response => {
         expect(response.payload).to.have.lengthOf(1);
+        expect(response.payload).to.deep.equal(expectedPayloadEquals_numeric);
 
-        response.payload.forEach(element => {
-          expect(element.OrderID).to.be.equal(9);
-        });
         done();
       });
     });
@@ -121,9 +124,8 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then(response => {
         expect(response.payload).to.have.lengthOf(8);
-        response.payload.forEach((element, i) => {
-          expect(element.OrderID).to.be.equal(i + 2);
-        });
+        expect(response.payload).to.deep.equal(expectedPayloadBetween_numeric);
+
         done();
       });      
     });
@@ -139,9 +141,8 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then(response => {
         expect(response.payload).to.have.lengthOf(10);
-        response.payload.forEach((element, i) => {
-          expect(element.OrderID).to.be.equal(i + 9);
-        });
+        expect(response.payload).to.deep.equal(expectedPayloadGte_numeric);
+        
         done();
       });
     });
@@ -149,6 +150,7 @@ describe('LocalDataSource', () => {
     // >
     it('should return a payload with records where OrderID > 9', done => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+      let payloadResponse;
 
       dataSource.columns[0].Filter.Text = 9;
       dataSource.columns[0].Filter.Operator = 'Gt';
@@ -156,11 +158,12 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then(response => {
+        payloadResponse = response.payload;
+
         expect(response.payload).to.have.lengthOf(10);
-        response.payload.forEach((element, i) => {
-          expect(element.OrderID).to.not.be.equal(9);
-          expect(element.OrderID).to.be.equal(i + 10);
-        });
+        expect(payloadResponse[0]['OrderID']).to.not.be.equal(9);
+        expect(response.payload).to.deep.equal(expectedPayloadGt_numeric);
+
         done();
       });
     });
@@ -176,9 +179,8 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then(response => {
         expect(response.payload).to.have.lengthOf(5);
-        response.payload.forEach((element, i) => {
-          expect(element.OrderID).to.be.equal(i + 1);
-        });
+        expect(response.payload).to.deep.equal(expectedPayloadLte_numeric);
+
         done();
       });
     });
@@ -194,9 +196,8 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then(response => {
         expect(response.payload).to.have.lengthOf(4);
-        response.payload.forEach((element, i) => {
-          expect(element.OrderID).to.be.equal(i + 1);
-        });
+        expect(response.payload).to.deep.equal(expectedPayloadLt_numeric);
+        
         done();
       });
     });
