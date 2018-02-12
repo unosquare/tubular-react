@@ -251,6 +251,21 @@ describe('LocalDataSource', () => {
         done();
       });
     });
+
+    // No records
+    it('should return an empty array', done => {
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+
+      dataSource.columns[0].Filter.Text = 501;
+      dataSource.columns[0].Filter.Operator = 'Equals';
+      dataSource.columns[0].Filter.HasFilter = true;
+      dataSource.columns[0].Filter.Argument = [];
+
+      dataSource.getAllRecords(10, 0, '').then(response => {
+        expect(response.payload).to.be.empty;
+        done();
+      });
+    });
   });
 
   // Unit tests for string columns
@@ -363,6 +378,20 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then(response => {
         expect(response.payload).to.deep.equal(expectedPayloadNotEndsWithString);
+        done();
+      });
+    });
+
+    // No records
+    it('should return an empty array', done => {
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+
+      dataSource.columns[1].Filter.Text = 'Unosquares LLC';
+      dataSource.columns[1].Filter.Operator = 'Equals';
+      dataSource.columns[1].Filter.HasFilter = true;
+
+      dataSource.getAllRecords(10, 0, '').then(response => {
+        expect(response.payload).to.be.empty;
         done();
       });
     });
