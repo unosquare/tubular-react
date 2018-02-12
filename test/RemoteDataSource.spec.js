@@ -2,7 +2,7 @@ import MockAdapter from 'axios-mock-adapter';
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
 import axios from 'axios';
 import { expect }from 'chai';
-import { invalidColumnsSample, normalizedColumns, validColumnsSample } from './utils/columns.js';
+import { invalidColumnsSample, validColumnsSample } from './utils/columns.js';
 import { invalidResponseStructure, onlyMicrosoftExpected, simpleRecordsExpected, twentyRecordsExpected, validResponseStructure } from './utils/data.js';
 import { onlyMicrosoftRecordsRequest, simpleRequest, twentyRecordsRequest } from './utils/requests.js';
 
@@ -101,14 +101,33 @@ describe('RemoteDateSource', () => {
       });
     });
 
-    describe('When _normalizeColumns is called', () => {
-      beforeEach(() => {
+    describe('When connect is called', () => {
+      let response;
+
+      beforeEach( () => {
         dataSource = 
           new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+
+        mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', simpleRequest).reply(200, {
+          Counter: simpleRecordsExpected.Counter,
+          Payload: simpleRecordsExpected.Payload,
+          TotalRecordCount: simpleRecordsExpected.TotalRecordCount, 
+          FilteredRecordCount: simpleRecordsExpected.FilteredRecordCount,
+          TotalPages: simpleRecordsExpected.TotalPages,
+          CurrentPage: simpleRecordsExpected.CurrentPage,
+          AggregationPayload: simpleRecordsExpected.AggregationPayload
+        });
+
+        response = dataSource.connect(10, 0, '');
       });
-  
-      it('should return normalizedColumns', () => {
-        expect(dataSource._normalizeColumns(validColumnsSample)).to.deep.equal(normalizedColumns);
+
+      it('Should return a payload', done => {
+        setTimeout( () => {
+          expect(response.value.payload).to.deep.equal(simpleRecordsExpected.Payload);
+          expect(response.value.filteredRecordCount).to.deep.equal(simpleRecordsExpected.FilteredRecordCount);
+          expect(response.value.totalRecordCount).to.deep.equal(simpleRecordsExpected.TotalRecordCount);
+          done();
+        }, 0);
       });
     });
   });
@@ -136,12 +155,6 @@ describe('RemoteDateSource', () => {
             expect(error.response.status).to.be.equal(404)
           )
       );
-    });
-
-    describe('When _normalizeColumns is called', () => {
-      it('should return invalidNormalizedColumns with a invalidColumnsSample', () => {
-        expect(dataSource._normalizeColumns(invalidColumnsSample)).to.not.deep.equal(normalizedColumns);
-      });
     });
   });
 });
