@@ -75,7 +75,7 @@ const expectedPayloadPage2 = [
 
 // Mocks for unit tests for string columns
 
-const expectedPayloadNone_S = [ 
+const expectedPayloadNone_string = [ 
   { 
     OrderID: 1,
     CustomerName: 'Microsoft',
@@ -148,7 +148,7 @@ const expectedPayloadNone_S = [
   } 
 ];
 
-const expectedPayloadEquals_S = [ 
+const expectedPayloadEquals_string = [ 
   { 
     OrderID: 4,
     CustomerName: 'Unosquare LLC',
@@ -221,7 +221,7 @@ const expectedPayloadEquals_S = [
   } 
 ];
 
-const expectedPayloadContains_S = [ 
+const expectedPayloadContains_string = [ 
   { 
     OrderID: 9,
     CustomerName: 'Vesta',
@@ -294,7 +294,7 @@ const expectedPayloadContains_S = [
   } 
 ];
 
-const expectedPayloadNotEquals_S = [ 
+const expectedPayloadNotEquals_string = [ 
   { 
     OrderID: 4,
     CustomerName: 'Unosquare LLC',
@@ -367,7 +367,7 @@ const expectedPayloadNotEquals_S = [
   } 
 ];
 
-const expectedPayloadStartsWith_S = [ 
+const expectedPayloadStartsWith_string = [ 
   { 
     OrderID: 1,
     CustomerName: 'Microsoft',
@@ -440,7 +440,7 @@ const expectedPayloadStartsWith_S = [
   } 
 ];
 
-const expectedPayloadNotStartsWith_S = [ 
+const expectedPayloadNotStartsWith_string = [ 
   { 
     OrderID: 4,
     CustomerName: 'Unosquare LLC',
@@ -513,7 +513,7 @@ const expectedPayloadNotStartsWith_S = [
   } 
 ];
 
-const expectedPayloadEndsWith_S = [ 
+const expectedPayloadEndsWith_string = [ 
   { 
     OrderID: 9,
     CustomerName: 'Vesta',
@@ -586,7 +586,7 @@ const expectedPayloadEndsWith_S = [
   } 
 ];
 
-const expectedPayloadNotEndsWith_S = [ 
+const expectedPayloadNotEndsWith_string = [ 
   { 
     OrderID: 1,
     CustomerName: 'Microsoft',
@@ -661,12 +661,12 @@ const expectedPayloadNotEndsWith_S = [
 
 export {
   expectedPayloadPage2, 
-  expectedPayloadNone_S, 
-  expectedPayloadContains_S, 
-  expectedPayloadEquals_S, 
-  expectedPayloadNotEquals_S, 
-  expectedPayloadStartsWith_S,
-  expectedPayloadNotStartsWith_S,
-  expectedPayloadEndsWith_S,
-  expectedPayloadNotEndsWith_S
+  expectedPayloadNone_string, 
+  expectedPayloadContains_string, 
+  expectedPayloadEquals_string, 
+  expectedPayloadNotEquals_string, 
+  expectedPayloadStartsWith_string,
+  expectedPayloadNotStartsWith_string,
+  expectedPayloadEndsWith_string,
+  expectedPayloadNotEndsWith_string
 };
