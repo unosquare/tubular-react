@@ -37,7 +37,6 @@
     "@types/react-dom": "^16.0.3",
     "@types/rx": "^4.1.1",
     "axios-mock-adapter": "^1.12.0",
-    "babelify": "^8.0.0",
     "browser-sync": "^2.23.5",
     "browserify": "^15.2.0",
     "chai": "^4.1.2",
