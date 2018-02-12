@@ -183,6 +183,221 @@ const expectedPayloadMultipleSort = [
   } 
 ];
 
+// Mock for unit test when searchText is 'ves' ('Vesta')
+
+const expectedPayloadTextSearchVesta = [
+  {
+    OrderID: 9,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-07T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 108
+  },
+  {
+    OrderID: 12,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-09T18:00:00',
+    ShipperCity: 'Leon, GTO, Mexico',
+    Amount: 174
+  },
+  {
+    OrderID: 23,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-07T18:00:00',
+    ShipperCity: 'Leon, GTO, Mexico',
+    Amount: 95
+  },
+  {
+    OrderID: 28,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-08T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 60
+  },
+  {
+    OrderID: 49,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-09T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: undefined
+  },
+  {
+    OrderID: 51,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-11T18:00:00',
+    ShipperCity: 'Portland, OR, USA',
+    Amount: 18
+  },
+  {
+    OrderID: 55,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-02T18:00:00',
+    ShipperCity: 'Los Angeles, CA, USA',
+    Amount: 110
+  },
+  {
+    OrderID: 63,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-11T18:00:00',
+    ShipperCity: 'Los Angeles, CA, USA',
+    Amount: 49
+  },
+  {
+    OrderID: 65,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-06T18:00:00',
+    ShipperCity: 'Portland, OR, USA',
+    Amount: 2
+  },
+  {
+    OrderID: 85,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-06T18:00:00',
+    ShipperCity: 'Leon, GTO, Mexico',
+    Amount: 89
+  },
+  {
+    OrderID: 86,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-05T18:00:00',
+    ShipperCity: 'Portland, OR, USA',
+    Amount: 35
+  },
+  {
+    OrderID: 87,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-10T18:00:00',
+    ShipperCity: 'Leon, GTO, Mexico',
+    Amount: undefined
+  },
+  {
+    OrderID: 93,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-06T18:00:00',
+    ShipperCity: 'Portland, OR, USA',
+    Amount: 178
+  },
+  {
+    OrderID: 95,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-11T18:00:00',
+    ShipperCity: 'Los Angeles, CA, USA',
+    Amount: 40
+  },
+  {
+    OrderID: 100,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-02T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: undefined
+  },
+  {
+    OrderID: 107,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-03T18:00:00',
+    ShipperCity: 'Portland, OR, USA',
+    Amount: undefined
+  },
+  {
+    OrderID: 108,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-10T18:00:00',
+    ShipperCity: 'Leon, GTO, Mexico',
+    Amount: 17
+  },
+  {
+    OrderID: 109,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-10T18:00:00',
+    ShipperCity: 'Leon, GTO, Mexico',
+    Amount: undefined
+  },
+  {
+    OrderID: 112,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-08T18:00:00',
+    ShipperCity: 'Portland, OR, USA',
+    Amount: undefined
+  },
+  {
+    OrderID: 116,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-05T18:00:00',
+    ShipperCity: 'Leon, GTO, Mexico',
+    Amount: 117
+  },
+  {
+    OrderID: 119,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-08T18:00:00',
+    ShipperCity: 'Portland, OR, USA',
+    Amount: 146
+  },
+  {
+    OrderID: 122,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-10T18:00:00',
+    ShipperCity: 'Portland, OR, USA',
+    Amount: 6
+  },
+  {
+    OrderID: 141,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-11T18:00:00',
+    ShipperCity: 'Los Angeles, CA, USA',
+    Amount: 106
+  },
+  {
+    OrderID: 142,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-02T18:00:00',
+    ShipperCity: 'Los Angeles, CA, USA',
+    Amount: 104
+  },
+  {
+    OrderID: 146,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-05T18:00:00',
+    ShipperCity: 'Los Angeles, CA, USA',
+    Amount: 13
+  },
+  {
+    OrderID: 150,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-08T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 71
+  },
+  {
+    OrderID: 152,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-05T18:00:00',
+    ShipperCity: 'Leon, GTO, Mexico',
+    Amount: 120
+  },
+  {
+    OrderID: 164,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-03T18:00:00',
+    ShipperCity: 'Los Angeles, CA, USA',
+    Amount: undefined
+  },
+  {
+    OrderID: 171,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-04T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: undefined
+  },
+  {
+    OrderID: 173,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-04T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 17
+  }
+];
+
 // Mocks for unit tests for numeric columns
 
 const expectedPayloadNoneNumeric = [ 
@@ -1128,6 +1343,7 @@ const expectedPayloadNotEndsWithString = [
 ];
 
 export {
+  expectedPayloadTextSearchVesta,
   expectedPayloadMultipleSort,
   expectedPayloadDescSortByOrderID,
   expectedPayloadNoneNumeric,

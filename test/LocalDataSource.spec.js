@@ -19,13 +19,14 @@ import {
   expectedPayloadNotEqualsString, 
   expectedPayloadNotStartsWithString,
   expectedPayloadPage2,
-  expectedPayloadStartsWithString 
+  expectedPayloadStartsWithString,
+  expectedPayloadTextSearchVesta 
 } from './utils/LocalDataSourceMocks';
 import { 
   invalidColumnsSample, 
   validColumnsSample, 
-  validColumnsSample_descending,
-  validColumnsSample_multipleSorting
+  validColumnsSampleDescending,
+  validColumnsSampleMultipleSorting
 } from './utils/columns.js';
 
 describe('LocalDataSource', () => {
@@ -60,7 +61,7 @@ describe('LocalDataSource', () => {
 
     // Sorting
     it('should return a payload with records in descending order (sorting by \'OrderID\')', done => {
-      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample_descending);
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSampleDescending);
 
       dataSource.getAllRecords(10, 0, '').then(response => {
         expect(response.payload).to.deep.equal(expectedPayloadDescSortByOrderID);
@@ -69,10 +70,22 @@ describe('LocalDataSource', () => {
     });
 
     it('should return a payload with records that has multiple sorting (sorting by \'OrderID\' and \'CustomerName\')', done => {
-      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample_multipleSorting);
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSampleMultipleSorting);
       
       dataSource.getAllRecords(10, 0, '').then(response => {
         expect(response.payload).to.deep.equal(expectedPayloadMultipleSort);
+        done();
+      });
+    });
+
+    // Search
+    it('should return a payload when search by text is set (searching by \'CustomerName\')', done => {
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+
+      dataSource.getAllRecords(30, 0, 'ves').then(response => {
+        expect(response.payload).to.have.lengthOf(30);
+        expect(response.payload).to.deep.equal(expectedPayloadTextSearchVesta);
+
         done();
       });
     });

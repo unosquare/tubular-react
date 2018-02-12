@@ -65,7 +65,7 @@ const invalidColumnsSample = [
   }
 ];
 
-const validColumnsSample_descending = [
+const validColumnsSampleDescending = [
   {
     Label: 'Order ID',
     Name: 'OrderID',
@@ -91,7 +91,7 @@ const validColumnsSample_descending = [
   }
 ];
 
-const validColumnsSample_multipleSorting = [
+const validColumnsSampleMultipleSorting = [
   {
     Label: 'Order ID',
     Name: 'OrderID',
@@ -125,7 +125,7 @@ const validColumnsSample_multipleSorting = [
 
 export { 
   validColumnsSample, 
-  validColumnsSample_descending, 
-  validColumnsSample_multipleSorting,
+  validColumnsSampleDescending, 
+  validColumnsSampleMultipleSorting,
   invalidColumnsSample 
 };
