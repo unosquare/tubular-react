@@ -128,6 +128,61 @@ const expectedPayloadDescSortByOrderID = [
   } 
 ];
 
+// Mock for unit test when sorting is multiple
+
+const expectedPayloadMultipleSort = [ 
+  { 
+    OrderID: 485,
+    CustomerName: 'Advanced Technology Systems',
+    ShippedDate: '2016-11-04T18:00:00' 
+  },
+  { 
+    OrderID: 484,
+    CustomerName: 'Advanced Technology Systems',
+    ShippedDate: '2016-11-03T18:00:00' 
+  },
+  { 
+    OrderID: 476,
+    CustomerName: 'Advanced Technology Systems',
+    ShippedDate: '2016-11-10T18:00:00' 
+  },
+  { 
+    OrderID: 471,
+    CustomerName: 'Advanced Technology Systems',
+    ShippedDate: '2016-11-05T18:00:00' 
+  },
+  { 
+    OrderID: 468,
+    CustomerName: 'Advanced Technology Systems',
+    ShippedDate: '2016-11-02T18:00:00' 
+  },
+  { 
+    OrderID: 467,
+    CustomerName: 'Advanced Technology Systems',
+    ShippedDate: '2016-11-05T18:00:00' 
+  },
+  { 
+    OrderID: 461,
+    CustomerName: 'Advanced Technology Systems',
+    ShippedDate: '2016-11-03T18:00:00' 
+  },
+  { 
+    OrderID: 441,
+    CustomerName: 'Advanced Technology Systems',
+    ShippedDate: '2016-11-04T18:00:00' 
+  },
+  { 
+    OrderID: 437,
+    CustomerName: 'Advanced Technology Systems',
+    ShippedDate: '2016-11-05T18:00:00' 
+  },
+  { 
+    OrderID: 430,
+    CustomerName: 'Advanced Technology Systems',
+    ShippedDate: '2016-11-03T18:00:00' 
+  } 
+];
+
 // Mocks for unit tests for numeric columns
 
 const expectedPayloadNone_numeric = [ 
@@ -1073,6 +1128,7 @@ const expectedPayloadNotEndsWith_string = [
 ];
 
 export {
+  expectedPayloadMultipleSort,
   expectedPayloadDescSortByOrderID,
   expectedPayloadNone_numeric,
   expectedPayloadEquals_numeric,

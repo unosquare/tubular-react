@@ -91,4 +91,41 @@ const validColumnsSample_descending = [
   }
 ];
 
-export { validColumnsSample, validColumnsSample_descending, invalidColumnsSample };
+const validColumnsSample_multipleSorting = [
+  {
+    Label: 'Order ID',
+    Name: 'OrderID',
+    Sortable: true,
+    SortOrder: 2,
+    SortDirection: 'Descending',
+    IsKey: true,
+    DataType: 'numeric',    
+    Filtering: true
+  },
+  {
+    Label: 'Customer Name',
+    Name: 'CustomerName',
+    Sortable: true,
+    SortOrder: 1,
+    SortDirection: 'Ascending',
+    Searchable: true,
+    Aggregate: 'Count',
+    Filtering: true
+  },
+  {
+    Label: 'Shipped Date',
+    Name: 'ShippedDate',
+    Sortable: true,
+    SortOrder: -1,
+    SortDirection: 'None',
+    DataType: 'datetime',
+    Filtering: true
+  }
+];
+
+export { 
+  validColumnsSample, 
+  validColumnsSample_descending, 
+  validColumnsSample_multipleSorting,
+  invalidColumnsSample 
+};

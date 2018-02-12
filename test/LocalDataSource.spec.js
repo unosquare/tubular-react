@@ -12,6 +12,7 @@ import {
   expectedPayloadGte_numeric,
   expectedPayloadLt_numeric,
   expectedPayloadLte_numeric,
+  expectedPayloadMultipleSort,
   expectedPayloadNone_numeric,
   expectedPayloadNone_string,
   expectedPayloadNotEndsWith_string, 
@@ -20,7 +21,12 @@ import {
   expectedPayloadPage2,
   expectedPayloadStartsWith_string 
 } from './utils/LocalDataSourceMocks';
-import { invalidColumnsSample, validColumnsSample, validColumnsSample_descending } from './utils/columns.js';
+import { 
+  invalidColumnsSample, 
+  validColumnsSample, 
+  validColumnsSample_descending,
+  validColumnsSample_multipleSorting
+} from './utils/columns.js';
 
 describe('LocalDataSource', () => {
   describe('getAllRecords()', () => {
@@ -57,8 +63,16 @@ describe('LocalDataSource', () => {
       const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample_descending);
 
       dataSource.getAllRecords(10, 0, '').then(response => {
-        // console.log(response.payload);
         expect(response.payload).to.deep.equal(expectedPayloadDescSortByOrderID);
+        done();
+      });
+    });
+
+    it('should return a payload with records that has multiple sorting (sorting by \'OrderID\' and \'CustomerName\')', done => {
+      const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample_multipleSorting);
+      
+      dataSource.getAllRecords(10, 0, '').then(response => {
+        expect(response.payload).to.deep.equal(expectedPayloadMultipleSort);
         done();
       });
     });
