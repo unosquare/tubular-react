@@ -127,5 +127,3 @@ class RemoteDataSource implements IDataSource {
       return obj;
     })
 }
-
-module.exports = RemoteDataSource;
