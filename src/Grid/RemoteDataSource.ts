@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import * as Rx from 'rx';
 
-class RemoteDataSource implements IDataSource {
+export default class RemoteDataSource implements IDataSource {
   public static defaultColumnValues = {
     Aggregate: 'None',
     DataType: 'string',
@@ -128,4 +128,4 @@ class RemoteDataSource implements IDataSource {
     })
 }
 
-export = RemoteDataSource;
+// export = RemoteDataSource;

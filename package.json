@@ -22,7 +22,7 @@
   "homepage": "https://github.com/unosquare/tubular-react#readme",
   "dependencies": {
     "axios": "^0.17.1",
-    "material-ui": "^1.0.0-beta.33",
+    "material-ui": "next",
     "material-ui-icons": "^1.0.0-beta.17",
     "material-ui-pickers": "^1.0.0-beta.12",
     "moment": "^2.20.1",
@@ -32,6 +32,10 @@
     "typeface-roboto": "0.0.50"
   },
   "devDependencies": {
+    "@types/chai": "^4.1.2",
+    "@types/enzyme": "^3.1.9",
+    "@types/enzyme-adapter-react-16": "^1.0.2",
+    "@types/mocha": "^2.2.48",
     "@types/prop-types": "^15.5.2",
     "@types/react": "^16.0.36",
     "@types/react-dom": "^16.0.3",
