@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import * as Rx from 'rx';
 
-class RemoteDataSource {
+export default class RemoteDataSource {
   public static defaultColumnValues = {
     Aggregate: 'None',
     DataType: 'string',
@@ -127,5 +127,3 @@ class RemoteDataSource {
       return obj;
     })
 }
-
-module.exports = RemoteDataSource;

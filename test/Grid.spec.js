@@ -11,7 +11,7 @@ import Paginator from '../src/Grid/Paginator';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import * as React from 'react';
-import * as RemoteDataSource from '../src/Grid/RemoteDataSource';
+import RemoteDataSource from '../src/Grid/RemoteDataSource';
 import { expect } from 'chai';
 import Typography from 'material-ui/Typography';
 import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
