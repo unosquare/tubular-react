@@ -127,5 +127,3 @@ export default class RemoteDataSource implements IDataSource {
       return obj;
     })
 }
-
-// export = RemoteDataSource;
