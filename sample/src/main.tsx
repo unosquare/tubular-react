@@ -1,6 +1,6 @@
 import Grid from '../../src/Grid/Grid';
 import * as React from 'react';
-import * as RemoteDataSource from '../../src/Grid/RemoteDataSource';
+import RemoteDataSource from '../../src/Grid/RemoteDataSource';
 import * as moment from 'moment';
 import { TableCell, TableRow } from 'material-ui/Table';
 
@@ -13,8 +13,7 @@ const columns = [
     SortDirection: 'Ascending',
     IsKey: true,
     DataType: 'numeric',    
-    Filtering: true,
-    ssdasd: true
+    Filtering: true
   },
   {
     Label: 'Customer Name',
@@ -50,8 +49,8 @@ const columns = [
 ];
 
 export default class Main extends React.Component {
-  render() {
-    const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns);
+  public render() {
+    const dataSource =  new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns);
     
     return (
       <Grid dataSource={ dataSource } 
@@ -91,8 +90,7 @@ export default class Main extends React.Component {
               <TableCell> </TableCell>
             </TableRow>
         }
-      >
-      </Grid>
+      />
     );
   }
 }

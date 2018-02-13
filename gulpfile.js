@@ -21,11 +21,11 @@ function bundle_js(bundler) {
   return bundler.bundle()
     .on('error', map_error)
     .pipe(source('bundle.js'))
-    .pipe(gulp.dest('./example/app'));
+    .pipe(gulp.dest('./sample/app'));
 }
 
 gulp.task('watchify', () => {
-  const bundler = watchify(browserify('./example/src/app.js', Object.assign(watchify.args, { debug: true }))
+  const bundler = watchify(browserify('./sample/src/app.js', Object.assign(watchify.args, { debug: true }))
     .plugin(tsify));
   bundle_js(bundler);
   bundler.on('update', () => {
@@ -42,10 +42,10 @@ gulp.task('browserSync', () => {
     port: 3000,
     open: true,
     server: {
-      baseDir: ['example/app']
+      baseDir: ['sample/app']
     }
   });
-  gulp.watch('example/app/bundle.js').on('change', browserSync.reload);
+  gulp.watch('sample/app/bundle.js').on('change', browserSync.reload);
 });
 
 gulp.task('build', () => 
