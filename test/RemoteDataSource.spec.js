@@ -3,9 +3,9 @@ import MockAdapter from 'axios-mock-adapter';
 import * as RemoteDataSource from '../src/Grid/RemoteDataSource';
 import axios from 'axios';
 import { expect }from 'chai';
-import { invalidColumnsSample, validColumnsSample } from './utils/columns.js';
-import { invalidResponseStructure, onlyMicrosoftExpected, page2Expected, simpleRecordsExpected, twentyRecordsExpected, validResponseStructure } from './utils/data.js';
-import { onlyMicrosoftRecordsRequest, page2Request, simpleRequest, twentyRecordsRequest } from './utils/requests.js';
+import { invalidColumnsSample, validColumnsSample, validColumnsSampleDescending } from './utils/columns.js';
+import { descendingExpected, invalidResponseStructure, onlyMicrosoftExpected, page2Expected, simpleRecordsExpected, twentyRecordsExpected, validResponseStructure } from './utils/data.js';
+import { descendingRequest, onlyMicrosoftRecordsRequest, page2Request, simpleRequest, twentyRecordsRequest } from './utils/requests.js';
 
 describe('RemoteDateSource', () => {
   let dataSource;
@@ -128,6 +128,34 @@ describe('RemoteDateSource', () => {
             expect(dataSource.dataStream.value.payload).to.deep.equal(page2Expected.Payload);
             expect(dataSource.dataStream.value.filteredRecordCount).to.deep.equal(page2Expected.FilteredRecordCount);
             expect(dataSource.dataStream.value.totalRecordCount).to.deep.equal(page2Expected.TotalRecordCount);
+            done();
+          }, 0);
+        });
+      });
+      
+      describe('When sort order is descending', () => {
+        beforeEach( () => {
+          dataSource = 
+            new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSampleDescending);
+
+          mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', descendingRequest).reply(200, {
+            Counter: descendingExpected.Counter,
+            Payload: descendingExpected.Payload,
+            TotalRecordCount: descendingExpected.TotalRecordCount, 
+            FilteredRecordCount: descendingExpected.FilteredRecordCount,
+            TotalPages: descendingExpected.TotalPages,
+            CurrentPage: descendingExpected.CurrentPage,
+            AggregationPayload: descendingExpected.AggregationPayload
+          });
+          
+          dataSource.refresh(10, 0, '');
+        });
+
+        it('Should return a payload with records in descending order', done => {
+          setTimeout( () => {
+            expect(dataSource.dataStream.value.payload).to.deep.equal(descendingExpected.Payload);
+            expect(dataSource.dataStream.value.filteredRecordCount).to.deep.equal(descendingExpected.FilteredRecordCount);
+            expect(dataSource.dataStream.value.totalRecordCount).to.deep.equal(descendingExpected.TotalRecordCount);
             done();
           }, 0);
         });

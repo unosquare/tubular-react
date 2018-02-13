@@ -33,6 +33,41 @@ const validColumnsSample = [
   }
 ];
 
+const validColumnsSampleDescending = [
+  {
+    Label: 'Order ID',
+    Name: 'OrderID',
+    Sortable: true,
+    SortOrder: 1,
+    SortDirection: 'Descending',
+    IsKey: true,
+    DataType: 'numeric',    
+    Filtering: true
+  },
+  {
+    Label: 'Customer Name',
+    Name: 'CustomerName',
+    Searchable: true,
+    Aggregate: 'Count',
+    Filtering: true
+  },
+  {
+    Label: 'Shipped Date',
+    Name: 'ShippedDate',
+    DataType: 'datetime',
+    Filtering: true
+  },
+  {
+    Label: 'Shipper City',
+    Name: 'ShipperCity'
+  },
+  {
+    Label: 'Amount',
+    Name: 'Amount',
+    DataType: 'numeric'
+  }
+];
+
 const invalidColumnsSample = [
   {
     SortOrder: 1,
@@ -131,4 +166,4 @@ const normalizedColumns = [
     Name: 'Amount' } 
 ];
 
-export { validColumnsSample, invalidColumnsSample, normalizedColumns };
+export { invalidColumnsSample, normalizedColumns, validColumnsSample, validColumnsSampleDescending };
