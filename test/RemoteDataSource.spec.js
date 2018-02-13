@@ -4,8 +4,8 @@ import * as RemoteDataSource from '../src/Grid/RemoteDataSource';
 import axios from 'axios';
 import { expect }from 'chai';
 import { invalidColumnsSample, validColumnsSample } from './utils/columns.js';
-import { invalidResponseStructure, onlyMicrosoftExpected, simpleRecordsExpected, twentyRecordsExpected, validResponseStructure } from './utils/data.js';
-import { onlyMicrosoftRecordsRequest, simpleRequest, twentyRecordsRequest } from './utils/requests.js';
+import { invalidResponseStructure, onlyMicrosoftExpected, page2Expected, simpleRecordsExpected, twentyRecordsExpected, validResponseStructure } from './utils/data.js';
+import { onlyMicrosoftRecordsRequest, page2Request, simpleRequest, twentyRecordsRequest } from './utils/requests.js';
 
 describe('RemoteDateSource', () => {
   let dataSource;
@@ -48,6 +48,7 @@ describe('RemoteDateSource', () => {
           expect(r.payload).to.deep.equal(twentyRecordsExpected.Payload);
           expect(r.filteredRecordCount).to.deep.equal(twentyRecordsExpected.FilteredRecordCount);
           expect(r.totalRecordCount).to.deep.equal(twentyRecordsExpected.TotalRecordCount);
+          expect(r.payload).to.have.lengthOf(20);
         }));
     });
 
@@ -76,29 +77,60 @@ describe('RemoteDateSource', () => {
     });
 
     describe('When refresh is called', () => {
-      beforeEach( () => {
-        dataSource = 
-          new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+      describe('When 10 records are requested', () => {
+        beforeEach( () => {
+          dataSource = 
+            new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
-        mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', simpleRequest).reply(200, {
-          Counter: simpleRecordsExpected.Counter,
-          Payload: simpleRecordsExpected.Payload,
-          TotalRecordCount: simpleRecordsExpected.TotalRecordCount, 
-          FilteredRecordCount: simpleRecordsExpected.FilteredRecordCount,
-          TotalPages: simpleRecordsExpected.TotalPages,
-          CurrentPage: simpleRecordsExpected.CurrentPage,
-          AggregationPayload: simpleRecordsExpected.AggregationPayload
+          mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', simpleRequest).reply(200, {
+            Counter: simpleRecordsExpected.Counter,
+            Payload: simpleRecordsExpected.Payload,
+            TotalRecordCount: simpleRecordsExpected.TotalRecordCount, 
+            FilteredRecordCount: simpleRecordsExpected.FilteredRecordCount,
+            TotalPages: simpleRecordsExpected.TotalPages,
+            CurrentPage: simpleRecordsExpected.CurrentPage,
+            AggregationPayload: simpleRecordsExpected.AggregationPayload
+          });
+
+          dataSource.refresh(10, 0, '');
         });
 
-        dataSource.refresh(10, 0, '');
+        it('Should return a payload', done => {
+          setTimeout( () => {
+            expect(dataSource.dataStream.value.payload).to.deep.equal(simpleRecordsExpected.Payload);
+            expect(dataSource.dataStream.value.filteredRecordCount).to.deep.equal(simpleRecordsExpected.FilteredRecordCount);
+            expect(dataSource.dataStream.value.totalRecordCount).to.deep.equal(simpleRecordsExpected.TotalRecordCount);
+            done();
+          }, 0);
+        });
       });
 
-      it('Should return a payload', () => {
-        setTimeout( () => {
-          expect(dataSource.dataStream.value.payload).to.deep.equal(simpleRecordsExpected.Payload);
-          expect(dataSource.dataStream.value.filteredRecordCount).to.deep.equal(simpleRecordsExpected.FilteredRecordCount);
-          expect(dataSource.dataStream.value.totalRecordCount).to.deep.equal(simpleRecordsExpected.TotalRecordCount);
-        }, 0);
+      describe('When page 2 is requested', () => {
+        beforeEach( () => {
+          dataSource = 
+            new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
+
+          mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', page2Request).reply(200, {
+            Counter: page2Expected.Counter,
+            Payload: page2Expected.Payload,
+            TotalRecordCount: page2Expected.TotalRecordCount, 
+            FilteredRecordCount: page2Expected.FilteredRecordCount,
+            TotalPages: page2Expected.TotalPages,
+            CurrentPage: page2Expected.CurrentPage,
+            AggregationPayload: page2Expected.AggregationPayload
+          });
+
+          dataSource.refresh(10, 1, '');
+        });
+
+        it('Should return a payload with records 11 to 20', done => {
+          setTimeout( () => {
+            expect(dataSource.dataStream.value.payload).to.deep.equal(page2Expected.Payload);
+            expect(dataSource.dataStream.value.filteredRecordCount).to.deep.equal(page2Expected.FilteredRecordCount);
+            expect(dataSource.dataStream.value.totalRecordCount).to.deep.equal(page2Expected.TotalRecordCount);
+            done();
+          }, 0);
+        });
       });
     });
 

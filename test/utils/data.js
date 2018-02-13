@@ -264,6 +264,87 @@ const onlyMicrosoftExpected = {
   TotalRecordCount: 500
 };
 
+const page2Expected = {
+  AggregationPayload: { CustomerName: 500 },
+  Counter: 0,
+  CurrentPage: 2,
+  FilteredRecordCount: 500,
+  Payload:[ 
+    { 
+      OrderID: 11,
+      CustomerName: 'Unosquare LLC',
+      ShippedDate: '2016-11-11T18:00:00',
+      ShipperCity: 'Guadalajara, JAL, Mexico',
+      Amount: 60 
+    },
+    { 
+      OrderID: 12,
+      CustomerName: 'Vesta',
+      ShippedDate: '2016-11-09T18:00:00',
+      ShipperCity: 'Leon, GTO, Mexico',
+      Amount: 174 
+    },
+    { 
+      OrderID: 13,
+      CustomerName: 'Super La Playa',
+      ShippedDate: '2016-11-04T18:00:00',
+      ShipperCity: 'Portland, OR, USA',
+      Amount: 16 
+    },
+    { 
+      OrderID: 14,
+      CustomerName: 'Advanced Technology Systems',
+      ShippedDate: '2016-11-09T18:00:00',
+      ShipperCity: 'Leon, GTO, Mexico',
+      Amount: undefined 
+    },
+    { 
+      OrderID: 15,
+      CustomerName: 'Unosquare LLC',
+      ShippedDate: '2016-11-08T18:00:00',
+      ShipperCity: 'Leon, GTO, Mexico',
+      Amount: 78 
+    },
+    { 
+      OrderID: 16,
+      CustomerName: 'Super La Playa',
+      ShippedDate: '2016-11-08T18:00:00',
+      ShipperCity: 'Guadalajara, JAL, Mexico',
+      Amount: 41 
+    },
+    { 
+      OrderID: 17,
+      CustomerName: 'Microsoft',
+      ShippedDate: '2016-11-07T18:00:00',
+      ShipperCity: 'Guadalajara, JAL, Mexico',
+      Amount: undefined 
+    },
+    { 
+      OrderID: 18,
+      CustomerName: 'Microsoft',
+      ShippedDate: '2016-11-03T18:00:00',
+      ShipperCity: 'Guadalajara, JAL, Mexico',
+      Amount: 64 
+    },
+    { 
+      OrderID: 19,
+      CustomerName: 'Oxxo',
+      ShippedDate: '2016-11-10T18:00:00',
+      ShipperCity: 'Los Angeles, CA, USA',
+      Amount: 25 
+    },
+    { 
+      OrderID: 20,
+      CustomerName: 'Microsoft',
+      ShippedDate: '2016-11-08T18:00:00',
+      ShipperCity: 'Guadalajara, JAL, Mexico',
+      Amount: 3 
+    } 
+  ],
+  TotalPages: 50,
+  TotalRecordCount: 500
+};
+
 const expected = { 
   payload: [ 
     { 
@@ -363,4 +444,4 @@ const invalidResponseStructure = {
 };
 
 export default data;
-export { expected, validResponseStructure, invalidResponseStructure, onlyMicrosoftExpected, simpleRecordsExpected, twentyRecordsExpected };
+export { expected, validResponseStructure, invalidResponseStructure, onlyMicrosoftExpected, page2Expected, simpleRecordsExpected, twentyRecordsExpected };
