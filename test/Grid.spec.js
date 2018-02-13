@@ -9,7 +9,7 @@ import MockAdapter from 'axios-mock-adapter';
 import Paginator from '../src/Grid/Paginator';
 import Paper from 'material-ui/Paper';
 import * as React from 'react';
-import * as RemoteDataSource from '../src/Grid/RemoteDataSource';
+import RemoteDataSource from '../src/Grid/RemoteDataSource';
 import Typography from 'material-ui/Typography';
 import bodyRenderer from './utils/bodyRenderer.js';
 import { createShallow } from 'material-ui/test-utils';
