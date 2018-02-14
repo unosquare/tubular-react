@@ -26,16 +26,16 @@ export default class RemoteDataSource implements IDataSource {
     this.columns = this.normalizeColumns(columns);
   }
 
-  public connect(rowsPerPage: number, page: number, searchText: number) {
+  public connect(rowsPerPage: number, page: number, searchText: string) {
     this._updateDataStream(rowsPerPage, page, searchText);
     return this.dataStream;
   }
 
-  public refresh(rowsPerPage: number, page: number, searchText: number) {
+  public refresh(rowsPerPage: number, page: number, searchText: string) {
     this._updateDataStream(rowsPerPage, page, searchText);
   }
 
-  public getAllRecords = (rowsPerPage: number, page: number, searchText: number): Promise<object> =>
+  public getAllRecords = (rowsPerPage: number, page: number, searchText: string): Promise<object> =>
   new Promise((resolve, reject) => {
     const request = {
       Columns: this.columns,
@@ -100,7 +100,7 @@ export default class RemoteDataSource implements IDataSource {
     return JSON.stringify(expectedStructureKeys) === JSON.stringify(responseKeys);
   }
 
-  public _updateDataStream(rowsPerPage: number, page: number, searchText: number) {
+  public _updateDataStream(rowsPerPage: number, page: number, searchText: string) {
     this.getAllRecords(rowsPerPage, page, searchText)
       .then( (data) => {
         this.dataStream.onNext(data);

@@ -22,7 +22,7 @@ export default class LocalDataSource implements IDataSource {
     this.columns = this.normalizeColumns(columns);
   }
 
-  public connect(rowsPerPage: number, page: number, searchText: number) {
+  public connect(rowsPerPage: number, page: number, searchText: string) {
     this._updateDataStream();
     return this.dataStream;
   }
