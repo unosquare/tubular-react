@@ -47,7 +47,7 @@ interface IState {
   aggregate: any;
   page: number;
   rowsPerPage: number;
-  dataSource: any;
+  dataSource: IDataSource;
   searchText: string;
   data: any[];
   totalRecordCount: number;

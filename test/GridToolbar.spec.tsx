@@ -1,15 +1,15 @@
-import * as Adapter from 'enzyme-adapter-react-16';
-import Button from 'material-ui/Button';
-import DownloadIcon from 'material-ui-icons/FileDownload';
+import { expect } from 'chai';
 import * as Enzyme from 'enzyme';
-import GridToolbar from '../src/Grid/GridToolbar';
+import * as Adapter from 'enzyme-adapter-react-16';
+import DownloadIcon from 'material-ui-icons/FileDownload';
+import PrintIcon from 'material-ui-icons/Print';
+import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import Input from 'material-ui/Input';
-import PrintIcon from 'material-ui-icons/Print';
-import * as React from 'react';
-import Toolbar from 'material-ui/Toolbar';
-import { expect } from 'chai';
 import { createMount, createShallow } from 'material-ui/test-utils';
+import Toolbar from 'material-ui/Toolbar';
+import * as React from 'react';
+import GridToolbar from '../src/Grid/GridToolbar';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -18,14 +18,15 @@ describe('<GridToolbar/>', () => {
   let shallow;
   let mountedToolbar;
   let props;
+
   before(() => {
     mount = createMount();
     shallow = createShallow({ dive: true });
   });
 
   const toolbar = () => {
-    if(!mountedToolbar){
-      mountedToolbar = mount(<GridToolbar {...props} />);
+    if (!mountedToolbar) {
+      mountedToolbar = shallow(<GridToolbar {...props} />);
     }
     return mountedToolbar;
   };
