@@ -18,6 +18,7 @@ describe('<GridToolbar/>', () => {
   let shallow;
   let mountedToolbar;
   let props;
+
   before(() => {
     mount = createMount();
     shallow = createShallow({ dive: true });
@@ -25,7 +26,7 @@ describe('<GridToolbar/>', () => {
 
   const toolbar = () => {
     if (!mountedToolbar) {
-      mountedToolbar = mount(<GridToolbar {...props} />);
+      mountedToolbar = shallow(<GridToolbar {...props} />);
     }
     return mountedToolbar;
   };
