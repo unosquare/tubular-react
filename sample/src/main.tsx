@@ -1,51 +1,45 @@
 import { TableCell, TableRow } from 'material-ui/Table';
 import * as moment from 'moment';
 import * as React from 'react';
+import ColumnModel from '../../src/Grid/ColumnModel';
 import Grid from '../../src/Grid/Grid';
 import RemoteDataSource from '../../src/Grid/RemoteDataSource';
 
 const columns = [
-  {
-    DataType: 'numeric',
-    Filtering: true,
-    IsKey: true,
-    Label: 'Order ID',
-    Name: 'OrderID',
-    SortDirection: 'Ascending',
-    SortOrder: 1,
-    Sortable: true,
-  },
-  {
-    Aggregate: 'Count',
-    Filtering: true,
-    Label: 'Customer Name',
-    Name: 'CustomerName',
-    Searchable: true,
-    SortDirection: 'None',
-    SortOrder: -1,
-    Sortable: true,
-  },
-  {
-    DataType: 'datetime',
-    Filtering: true,
-    Label: 'Shipped Date',
-    Name: 'ShippedDate',
-    SortDirection: 'None',
-    SortOrder: -1,
-    Sortable: true,
-  },
-  {
-    Label: 'Shipper City',
-    Name: 'ShipperCity'
-  },
-  {
-    DataType: 'numeric',
-    Label: 'Amount',
-    Name: 'Amount',
-    SortDirection: 'None',
-    SortOrder: -1,
-    Sortable: true,
-  }
+  new ColumnModel( 'OrderID',
+    { DataType: 'numeric',
+      Filtering: true,
+      IsKey: true,
+      Label: 'Order ID',
+      SortDirection: 'Ascending',
+      SortOrder: 1,
+      Sortable: true
+    }
+  ),
+  new ColumnModel( 'CustomerName',
+    { Aggregate: 'Count',
+      Filtering: true,
+      Label: 'Customer Name',
+      Searchable: true,
+      SortDirection: 'None',
+      SortOrder: -1,
+      Sortable: true }
+  ),
+  new ColumnModel( 'ShippedDate',
+    { DataType: 'datetime',
+      Filtering: true,
+      Label: 'Shipped Date',
+      SortDirection: 'None',
+      SortOrder: -1,
+      Sortable: true }
+  ),
+  new ColumnModel( 'ShipperCity' ),
+  new ColumnModel( 'Amount',
+    { DataType: 'numeric',
+      SortDirection: 'None',
+      SortOrder: -1,
+      Sortable: true }
+  )
 ];
 
 export default class Main extends React.Component {
