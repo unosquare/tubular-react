@@ -15,17 +15,17 @@ export default class ColumnModel {
   public Sortable: boolean;
   public Visible: boolean;
 
-  constructor( name: string, params?: IColumnModel ) {
-    this.Aggregate = params && params.Aggregate || '';
-    this.DataType = params && params.DataType || 'string';
-    this.Filtering = params && params.Filtering || false;
-    this.IsKey = params && params.IsKey || false;
-    this.Label = params && params.Label || (name || '').replace(/([a-z])([A-Z])/g, '$1 $2');
+  constructor( name: string, options?: IColumnModel ) {
+    this.Aggregate = options && options.Aggregate || '';
+    this.DataType = options && options.DataType || 'string';
+    this.Filtering = options && options.Filtering || false;
+    this.IsKey = options && options.IsKey || false;
+    this.Label = options && options.Label || (name || '').replace(/([a-z])([A-Z])/g, '$1 $2');
     this.Name = name;
-    this.Searchable = params && params.Searchable || false;
-    this.SortDirection = params && params.SortDirection || 'None';
-    this.SortOrder = params && params.SortOrder || -1;
-    this.Sortable = params && params.Sortable || false;
-    this.Visible = params && params.Visible || true;
+    this.Searchable = options && options.Searchable || false;
+    this.SortDirection = options && options.SortDirection || 'None';
+    this.SortOrder = options && options.SortOrder || -1;
+    this.Sortable = options && options.Sortable || false;
+    this.Visible = options && options.Visible || true;
   }
 }
