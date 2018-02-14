@@ -5,16 +5,15 @@ import * as Enzyme from 'enzyme';
 import * as Adapter from 'enzyme-adapter-react-16';
 import Paper from 'material-ui/Paper';
 import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
-import { createMount, createShallow } from 'material-ui/test-utils';
+import { createShallow } from 'material-ui/test-utils';
 import Typography from 'material-ui/Typography';
-import PropTypes from 'prop-types';
 import * as React from 'react';
 import Grid from '../src/Grid/Grid';
+import GridHeader from '../src/Grid/GridHeader';
 import Paginator from '../src/Grid/Paginator';
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
-import bodyRenderer from './utils/bodyRenderer.js';
-import { invalidColumnsSample, validColumnsSample } from './utils/columns.js';
-import data from './utils/data.js';
+import { invalidColumnsSample, validColumnsSample } from './utils/columns';
+import data from './utils/data';
 import * as orders from './utils/orders';
 
 const footerRenderer = (aggregates) => (
@@ -28,63 +27,92 @@ const footerRenderer = (aggregates) => (
   </TableFooter>
 );
 
+const bodyRenderer = (row, index) => (
+  <TableRow hover={true} key={index}>
+    <TableCell padding={'default'}>
+      {row.OrderID}
+    </TableCell>
+    <TableCell padding={'default'}>
+      {row.CustomerName}
+    </TableCell>
+    <TableCell padding={'default'}>
+      {row.ShippedDate}
+    </TableCell>
+    <TableCell padding={'default'}>
+      {row.ShipperCity}
+    </TableCell>
+  </TableRow>
+);
+
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('<Grid />', () => {
-  let mountedGrid;
-  let props;
-  let mount;
   let shallow;
-
   let axiosInstance;
   let mock;
+  let grid;
 
   before(() => {
-    mount = createMount();
     shallow = createShallow({ dive: true });
+    grid = (
+      <Grid
+        gridName='Motorhead'
+        rowsPerPage={10}
+        showTopPager={true}
+        dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
+      />
+    );
   });
 
   const aggregate = { CustomerName: 500 };
 
-  const grid = () => {
-    if (!mountedGrid) {
-      mountedGrid = mount(<Grid {...props} />);
-    }
-    return mountedGrid;
-  };
-
   it('should render a Paper', () => {
-    const wrapper = grid().find(Paper);
+    const wrapper = shallow(grid).find(Paper);
     expect(wrapper).to.have.lengthOf(1);
   });
 
   it('should render a Table', () => {
-    const wrapper = grid().find(Table);
+    const wrapper = shallow(grid).find(Table);
+    expect(wrapper).to.have.lengthOf(1);
+  });
+
+  it('should have 1 rows at first', () => {
+    const wrapper = shallow(grid).find(Table).find(TableBody);
     expect(wrapper).to.have.lengthOf(1);
   });
 
   it('should render n columns', () => {
-    const columns = grid().find(TableHead).find(TableRow).find(TableCell);
-    expect(columns).to.have.lengthOf(5);
+    const gridHeader = (
+      <GridHeader
+        gridName='Motorhead'
+        dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
+        page={0}
+        rowsPerPage={10}
+        refreshGrid={null}
+      />
+    );
+
+    const wrapper = shallow(gridHeader);
+    wrapper.setState({ data });
+    const cols = wrapper.find(TableRow).find(TableCell);
+
+    expect(cols).to.have.lengthOf(5);
   });
 
-  it('should have 1 rows at first', () => {
-    const rows = grid().find(TableBody).find(TableRow);
-    expect(rows).to.have.lengthOf(1);
-  });
-
-  describe('when data is retrieved', () => {
+  describe('When data is retrieved', () => {
     it('should render all rows', () => {
-      const wrapper = shallow(<Grid {...props} />);
+      const wrapper = shallow(grid);
       wrapper.setState({ data });
-      expect(wrapper.find(TableRow)).to.have.lengthOf(11);
+      expect(wrapper.find(TableBody).find(TableRow)).to.have.lengthOf(11);
     });
   });
 
-  /** Unit test for default/custom body */
+  // Unit test for default/custom body
   describe('When custom body is not defined', () => {
     it('should render the default body', () => {
-      const body = grid().find(Table).find(TableBody);
+      const wrapper = shallow(grid);
+
+      const body = wrapper.find(Table).find(TableBody);
       expect(body).to.have.lengthOf(1);
     });
   });
@@ -95,11 +123,11 @@ describe('<Grid />', () => {
         orders
       });
 
-      const grid = (
+      grid = (
         <Grid
-          dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
           gridName='Motorhead'
           rowsPerPage={10}
+          dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
           bodyRenderer={bodyRenderer}
         />
       );
@@ -115,11 +143,11 @@ describe('<Grid />', () => {
     it('should render a row in the body with the warning message', () => {
       mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { invalidColumnsSample });
 
-      const grid = (
+      grid = (
         <Grid
-          dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', invalidColumnsSample)}
           gridName='Motorhead'
           rowsPerPage={10}
+          dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', invalidColumnsSample)}
         />
       );
 
@@ -130,20 +158,12 @@ describe('<Grid />', () => {
     });
   });
 
-  /** Unit tests for custom footer */
+  // Unit tests for custom footer
   describe('When footer has no rows', () => {
     it('should not render any row', () => {
       mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200, {
         orders
       });
-
-      const grid = (
-        <Grid
-          dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
-          gridName='Motorhead'
-          rowsPerPage={10}
-        />
-      );
 
       const wrapper = shallow(grid);
       const rowFooter = wrapper.find(Table).find(TableFooter).find(TableRow);
@@ -160,11 +180,11 @@ describe('<Grid />', () => {
     });
 
     it('should render the row with the aggregate operation', () => {
-      const grid = (
+      grid = (
         <Grid
-          dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
           gridName='Motorhead'
           rowsPerPage={10}
+          dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
           footerRenderer={footerRenderer}
         />
       );
@@ -177,11 +197,11 @@ describe('<Grid />', () => {
     });
 
     it('should render the row with the bottom pager', () => {
-      const grid = (
+      grid = (
         <Grid
-          dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
           gridName='Motorhead'
           rowsPerPage={10}
+          dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
           showBottomPager={true}
         />
       );
@@ -193,11 +213,11 @@ describe('<Grid />', () => {
     });
 
     it('should render the rows with the aggregate operation and the bottom pager', () => {
-      const grid = (
+      grid = (
         <Grid
-          dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
           gridName='Motorhead'
           rowsPerPage={10}
+          dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
           showBottomPager={true}
           footerRenderer={footerRenderer}
         />
@@ -219,11 +239,11 @@ describe('<Grid />', () => {
     });
 
     it('should have a paginator', () => {
-      const grid = (
+      grid = (
         <Grid
-          dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
           gridName='Motorhead'
           rowsPerPage={10}
+          dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
           showBottomPager={true}
         />
       );
@@ -244,11 +264,11 @@ describe('<Grid />', () => {
     });
 
     it('Should have a paginator', () => {
-      const grid = (
+      grid = (
         <Grid
-          dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
           gridName='Motorhead'
           rowsPerPage={10}
+          dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
           showTopPager={true}
         />
       );
@@ -261,9 +281,6 @@ describe('<Grid />', () => {
   });
 
   beforeEach(() => {
-    props = {
-      dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)
-    };
     axiosInstance = Axios.create();
     mock = new MockAdapter(axiosInstance);
   });

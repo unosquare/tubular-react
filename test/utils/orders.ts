@@ -1,5 +1,10 @@
 export const aux = {
+  AggregationPayload: {
+    CustomerName: 500
+  },
   Counter: 0,
+  CurrentPage: 1,
+  FilteredRecordCount: 500,
   Payload: [
      [
         1,
@@ -62,11 +67,6 @@ export const aux = {
         'Portland, OR, USA'
      ]
   ],
-  TotalRecordCount: 500,
-  FilteredRecordCount: 500,
   TotalPages: 20,
-  CurrentPage: 1,
-  AggregationPayload: {
-     CustomerName: 500
-  }
+  TotalRecordCount: 500
 };
