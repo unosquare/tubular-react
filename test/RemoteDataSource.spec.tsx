@@ -1,11 +1,25 @@
 
-import MockAdapter from 'axios-mock-adapter';
-import RemoteDataSource from '../src/Grid/RemoteDataSource';
 import axios from 'axios';
-import { expect }from 'chai';
-import { invalidColumnsSample, validColumnsSample, validColumnsSampleDescending } from './utils/columns.js';
-import { descendingExpected, invalidResponseStructure, onlyMicrosoftExpected, page2Expected, simpleRecordsExpected, twentyRecordsExpected, validResponseStructure } from './utils/data.js';
-import { descendingRequest, onlyMicrosoftRecordsRequest, page2Request, simpleRequest, twentyRecordsRequest } from './utils/requests.js';
+import MockAdapter from 'axios-mock-adapter';
+import { expect } from 'chai';
+import RemoteDataSource from '../src/Grid/RemoteDataSource';
+import { invalidColumnsSample, validColumnsSample, validColumnsSampleDescending } from './utils/columns';
+import {
+  descendingExpected,
+  invalidResponseStructure,
+  onlyMicrosoftExpected,
+  page2Expected,
+  simpleRecordsExpected,
+  twentyRecordsExpected,
+  validResponseStructure
+} from './utils/data';
+import {
+  descendingRequest,
+  onlyMicrosoftRecordsRequest,
+  page2Request,
+  simpleRequest,
+  twentyRecordsRequest
+} from './utils/requests';
 
 describe('RemoteDateSource', () => {
   let dataSource;
@@ -13,63 +27,65 @@ describe('RemoteDateSource', () => {
 
   describe('isValidResponse()', () => {
     beforeEach(() => {
-      dataSource = 
+      dataSource =
         new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
     });
 
     it('should return true when expectedStructure is valid', () => {
-      expect(dataSource.isValidResponse(validResponseStructure)).to.be.true;
+      expect(dataSource.isValidResponse(validResponseStructure)).to.be.equal(true);
     });
 
     it('should return false when expectedStructure is invalid', () => {
-      expect(dataSource.isValidResponse(invalidResponseStructure)).to.be.false;
+      expect(dataSource.isValidResponse(invalidResponseStructure)).to.be.equal(false);
     });
   });
 
   describe('When columns structure is valid', () => {
     describe('When 20 records are requested', () => {
       beforeEach( () => {
-        dataSource = 
+        dataSource =
           new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
         mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', twentyRecordsRequest).reply(200, {
+          AggregationPayload: twentyRecordsExpected.AggregationPayload,
           Counter: twentyRecordsExpected.Counter,
-          Payload: twentyRecordsExpected.Payload,
-          TotalRecordCount: twentyRecordsExpected.TotalRecordCount, 
-          FilteredRecordCount: twentyRecordsExpected.FilteredRecordCount,
-          TotalPages: twentyRecordsExpected.TotalPages,
           CurrentPage: twentyRecordsExpected.CurrentPage,
-          AggregationPayload: twentyRecordsExpected.AggregationPayload
+          FilteredRecordCount: twentyRecordsExpected.FilteredRecordCount,
+          Payload: twentyRecordsExpected.Payload,
+          TotalPages: twentyRecordsExpected.TotalPages,
+          TotalRecordCount: twentyRecordsExpected.TotalRecordCount
         });
       });
 
-      it('Should return a payload with 20 records', () => dataSource.getAllRecords(20, 0, '')
-        .then(r => {
-          expect(r.payload).to.deep.equal(twentyRecordsExpected.Payload);
-          expect(r.filteredRecordCount).to.deep.equal(twentyRecordsExpected.FilteredRecordCount);
-          expect(r.totalRecordCount).to.deep.equal(twentyRecordsExpected.TotalRecordCount);
-          expect(r.payload).to.have.lengthOf(20);
-        }));
+      it('Should return a payload with 20 records', () => {
+        return dataSource.getAllRecords(20, 0, '')
+          .then((r) => {
+            expect(r.payload).to.deep.equal(twentyRecordsExpected.Payload);
+            expect(r.filteredRecordCount).to.deep.equal(twentyRecordsExpected.FilteredRecordCount);
+            expect(r.totalRecordCount).to.deep.equal(twentyRecordsExpected.TotalRecordCount);
+            expect(r.payload).to.have.lengthOf(20);
+          });
+      });
     });
 
     describe('When search input is Microsoft', () => {
       beforeEach( () => {
-        dataSource = 
+        dataSource =
           new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
         mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', onlyMicrosoftRecordsRequest).reply(200, {
+          AggregationPayload: onlyMicrosoftExpected.AggregationPayload,
           Counter: onlyMicrosoftExpected.Counter,
-          Payload: onlyMicrosoftExpected.Payload,
-          TotalRecordCount: onlyMicrosoftExpected.TotalRecordCount, 
-          FilteredRecordCount: onlyMicrosoftExpected.FilteredRecordCount,
-          TotalPages: onlyMicrosoftExpected.TotalPages,
           CurrentPage: onlyMicrosoftExpected.CurrentPage,
-          AggregationPayload: onlyMicrosoftExpected.AggregationPayload
+          FilteredRecordCount: onlyMicrosoftExpected.FilteredRecordCount,
+          Payload: onlyMicrosoftExpected.Payload,
+          TotalPages: onlyMicrosoftExpected.TotalPages,
+          TotalRecordCount: onlyMicrosoftExpected.TotalRecordCount
         });
       });
 
       it('Should return a payload with only Microsoft records', () => dataSource.getAllRecords(10, 0, 'Microsoft')
-        .then(r => {
+        .then((r) => {
           expect(r.payload).to.deep.equal(onlyMicrosoftExpected.Payload);
           expect(r.filteredRecordCount).to.deep.equal(onlyMicrosoftExpected.FilteredRecordCount);
           expect(r.totalRecordCount).to.deep.equal(onlyMicrosoftExpected.TotalRecordCount);
@@ -80,27 +96,27 @@ describe('RemoteDateSource', () => {
       let response;
 
       beforeEach( () => {
-        dataSource = 
+        dataSource =
           new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
 
         mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', simpleRequest).reply(200, {
+          AggregationPayload: simpleRecordsExpected.AggregationPayload,
           Counter: simpleRecordsExpected.Counter,
-          Payload: simpleRecordsExpected.Payload,
-          TotalRecordCount: simpleRecordsExpected.TotalRecordCount, 
-          FilteredRecordCount: simpleRecordsExpected.FilteredRecordCount,
-          TotalPages: simpleRecordsExpected.TotalPages,
           CurrentPage: simpleRecordsExpected.CurrentPage,
-          AggregationPayload: simpleRecordsExpected.AggregationPayload
+          FilteredRecordCount: simpleRecordsExpected.FilteredRecordCount,
+          Payload: simpleRecordsExpected.Payload,
+          TotalPages: simpleRecordsExpected.TotalPages,
+          TotalRecordCount: simpleRecordsExpected.TotalRecordCount
         });
 
-        dataSource.connect(10, 0, '').subscribe(r => response = r);
+        dataSource.connect(10, 0, '').subscribe((r) => { response = r; });
       });
 
       afterEach(() => {
-        mock.reset()
-      })
+        mock.reset();
+      });
 
-      it('Should return a payload', done => {
+      it('Should return a payload', (done) => {
         setTimeout( () => {
           expect(response.payload).to.deep.equal(simpleRecordsExpected.Payload);
           expect(response.filteredRecordCount).to.deep.equal(simpleRecordsExpected.FilteredRecordCount);
@@ -112,20 +128,20 @@ describe('RemoteDateSource', () => {
       describe('When refresh is called', () => {
         describe('When page 2 is requested', () => {
           beforeEach( () => {
-              mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', page2Request).reply(200, {
+            mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', page2Request).reply(200, {
+              AggregationPayload: page2Expected.AggregationPayload,
               Counter: page2Expected.Counter,
-              Payload: page2Expected.Payload,
-              TotalRecordCount: page2Expected.TotalRecordCount, 
-              FilteredRecordCount: page2Expected.FilteredRecordCount,
-              TotalPages: page2Expected.TotalPages,
               CurrentPage: page2Expected.CurrentPage,
-              AggregationPayload: page2Expected.AggregationPayload
+              FilteredRecordCount: page2Expected.FilteredRecordCount,
+              Payload: page2Expected.Payload,
+              TotalPages: page2Expected.TotalPages,
+              TotalRecordCount: page2Expected.TotalRecordCount
             });
 
             dataSource.refresh(10, 1, '');
           });
 
-          it('Should return a payload with records 11 to 20', done => {
+          it('Should return a payload with records 11 to 20', (done) => {
             setTimeout( () => {
               expect(response.payload).to.deep.equal(page2Expected.Payload);
               expect(response.filteredRecordCount).to.deep.equal(page2Expected.FilteredRecordCount);
@@ -138,20 +154,19 @@ describe('RemoteDateSource', () => {
         describe('When sort order is descending', () => {
           beforeEach( () => {
             mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', descendingRequest).reply(200, {
+              AggregationPayload: descendingExpected.AggregationPayload,
               Counter: descendingExpected.Counter,
-              Payload: descendingExpected.Payload,
-              TotalRecordCount: descendingExpected.TotalRecordCount, 
-              FilteredRecordCount: descendingExpected.FilteredRecordCount,
-              TotalPages: descendingExpected.TotalPages,
               CurrentPage: descendingExpected.CurrentPage,
-              AggregationPayload: descendingExpected.AggregationPayload
+              FilteredRecordCount: descendingExpected.FilteredRecordCount,
+              Payload: descendingExpected.Payload,
+              TotalPages: descendingExpected.TotalPages,
+              TotalRecordCount: descendingExpected.TotalRecordCount,
             });
-            
             dataSource.columns[0].SortDirection = 'Descending';
             dataSource.refresh(10, 0, '');
           });
-  
-          it('Should return a payload with records in descending order', done => {
+
+          it('Should return a payload with records in descending order', (done) => {
             setTimeout( () => {
               expect(response.payload).to.deep.equal(descendingExpected.Payload);
               expect(response.filteredRecordCount).to.deep.equal(descendingExpected.FilteredRecordCount);
@@ -166,26 +181,27 @@ describe('RemoteDateSource', () => {
 
   describe('When columns structure is invalid', () => {
     beforeEach(() => {
-      dataSource = 
-      new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', invalidColumnsSample);
+      dataSource =
+        new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', invalidColumnsSample);
 
       mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', twentyRecordsRequest).reply(200, {
+        AggregationPayload: twentyRecordsExpected.AggregationPayload,
         Counter: twentyRecordsExpected.Counter,
-        Payload: twentyRecordsExpected.Payload,
-        TotalRecordCount: twentyRecordsExpected.TotalRecordCount, 
-        FilteredRecordCount: twentyRecordsExpected.FilteredRecordCount,
-        TotalPages: twentyRecordsExpected.TotalPages,
         CurrentPage: twentyRecordsExpected.CurrentPage,
-        AggregationPayload: twentyRecordsExpected.AggregationPayload
+        FilteredRecordCount: twentyRecordsExpected.FilteredRecordCount,
+        Payload: twentyRecordsExpected.Payload,
+        TotalPages: twentyRecordsExpected.TotalPages,
+        TotalRecordCount: twentyRecordsExpected.TotalRecordCount
       });
     });
 
     describe('When records are requested', () => {
-      it('throws an Error 404', () => 
-        dataSource.getAllRecords(20, 0, '')
-          .catch( error => 
+      it('throws an Error 404', () => {
+        return dataSource.getAllRecords(20, 0, '')
+          .catch( (error) =>
             expect(error.response.status).to.be.equal(404)
-          )
+          );
+        }
       );
     });
   });
