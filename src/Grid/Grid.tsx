@@ -8,10 +8,10 @@ import * as moment from 'moment';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import * as Rx from 'rx';
+import { ColumnDataType } from './Column';
 import GridHeader from './GridHeader';
 import GridToolbar from './GridToolbar';
 import Paginator from './Paginator';
-import { ColumnDataType } from './Column';
 
 const styleClasses  = {
   dialogButtonStyle: '',

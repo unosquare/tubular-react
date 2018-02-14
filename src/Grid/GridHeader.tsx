@@ -11,9 +11,9 @@ import * as moment from 'moment';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import { KeyboardEvent } from 'react';
+import { ColumnSortDirection } from './Column';
 import DialogContent from './DialogContent';
 import DialogDropdown from './DialogDropdown';
-import { ColumnSortDirection } from './Column';
 
 const styleClasses  = {
   applyButton: '',
