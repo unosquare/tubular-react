@@ -1,17 +1,19 @@
 import Axios from 'axios';
 import * as Rx from 'rx';
+import { AggregateFunctions, ColumnDataType, CompareOperators } from './Column';
+import ColumnModel from './ColumnModel';
 
 export default class RemoteDataSource implements IDataSource {
   public static defaultColumnValues = {
-    Aggregate: 'None',
-    DataType: 'string',
+    Aggregate: AggregateFunctions.NONE,
+    DataType: ColumnDataType.STRING,
     IsKey: false,
     Searchable: false,
     Sortable: false,
     Visible: true
   };
 
-  public columns: any[];
+  public columns: ColumnModel[];
 
   public dataStream: any;
 
@@ -19,23 +21,23 @@ export default class RemoteDataSource implements IDataSource {
 
   public counter: number;
 
-  constructor(url: string, columns: any[]) {
+  constructor(url: string, columns: ColumnModel[]) {
     this.url = url;
     this.counter = 0;
     this.dataStream = new Rx.BehaviorSubject({ payload: [] });
     this.columns = this.normalizeColumns(columns);
   }
 
-  public connect(rowsPerPage: number, page: number, searchText: number) {
+  public connect(rowsPerPage: number, page: number, searchText: string) {
     this._updateDataStream(rowsPerPage, page, searchText);
     return this.dataStream;
   }
 
-  public refresh(rowsPerPage: number, page: number, searchText: number) {
+  public refresh(rowsPerPage: number, page: number, searchText: string) {
     this._updateDataStream(rowsPerPage, page, searchText);
   }
 
-  public getAllRecords = (rowsPerPage: number, page: number, searchText: number): Promise<object> =>
+  public getAllRecords = (rowsPerPage: number, page: number, searchText: string): Promise<object> =>
   new Promise((resolve, reject) => {
     const request = {
       Columns: this.columns,
@@ -100,7 +102,7 @@ export default class RemoteDataSource implements IDataSource {
     return JSON.stringify(expectedStructureKeys) === JSON.stringify(responseKeys);
   }
 
-  public _updateDataStream(rowsPerPage: number, page: number, searchText: number) {
+  public _updateDataStream(rowsPerPage: number, page: number, searchText: string) {
     this.getAllRecords(rowsPerPage, page, searchText)
       .then( (data) => {
         this.dataStream.onNext(data);
@@ -110,7 +112,7 @@ export default class RemoteDataSource implements IDataSource {
       }) ;
   }
 
-  private normalizeColumns = (columns: any[]) =>
+  private normalizeColumns = (columns: ColumnModel[]) =>
     columns.map((column) => {
       const obj = Object.assign({}, RemoteDataSource.defaultColumnValues, column);
       if (column.Filtering) {
@@ -118,7 +120,7 @@ export default class RemoteDataSource implements IDataSource {
           Argument: [],
           HasFilter: false,
           Name: obj.Name,
-          Operator: 'None',
+          Operator: CompareOperators.NONE,
           OptionsUrl: null,
           Text: null
         };

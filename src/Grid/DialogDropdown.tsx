@@ -1,32 +1,33 @@
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
+import { ColumnDataType, CompareOperators } from './Column';
 import Dropdown from './Dropdown';
 
 const NumericOperators = [
-  { Value: 'None', Title: 'None' },
-  { Value: 'Equals', Title: 'Equals' },
-  { Value: 'Between', Title: 'Between' },
-  { Value: 'Gte', Title: '>=' },
-  { Value: 'Gt', Title: '>' },
-  { Value: 'Lte', Title: '<=' },
-  { Value: 'Lt', Title: '<' }
+  { Value: CompareOperators.NONE, Title: 'None' },
+  { Value: CompareOperators.EQUALS, Title: 'Equals' },
+  { Value: CompareOperators.BETWEEN, Title: 'Between' },
+  { Value: CompareOperators.GTE, Title: '>=' },
+  { Value: CompareOperators.GT, Title: '>' },
+  { Value: CompareOperators.LTE, Title: '<=' },
+  { Value: CompareOperators.LT, Title: '<' }
 ];
 
 const StringOperators = [
-  { Value: 'None', Title: 'None' },
-  { Value: 'Equals', Title: 'Equals' },
-  { Value: 'NotEquals', Title: 'Not Equals' },
-  { Value: 'Contains', Title: 'Contains' },
-  { Value: 'StartsWith', Title: 'Starts With' },
-  { Value: 'NotStartsWith', Title: 'Not Starts With' },
-  { Value: 'EndsWith', Title: 'Ends With' },
-  { Value: 'NotEndsWith', Title: 'Not Ends With' }
+  { Value: CompareOperators.NONE, Title: 'None' },
+  { Value: CompareOperators.EQUALS, Title: 'Equals' },
+  { Value: CompareOperators.NOT_EQUALS, Title: 'Not Equals' },
+  { Value: CompareOperators.CONTAINS, Title: 'Contains' },
+  { Value: CompareOperators.STARTS_WITH, Title: 'Starts With' },
+  { Value: CompareOperators.NOT_STARTS_WITH, Title: 'Not Starts With' },
+  { Value: CompareOperators.ENDS_WITH, Title: 'Ends With' },
+  { Value: CompareOperators.NOT_ENDS_WITH, Title: 'Not Ends With' }
 ];
 
 const BooleanOperators = [
-  { Value: 'None', Title: 'None' },
-  { Value: 'Equals', Title: 'Equals' },
-  { Value: 'NotEquals', Title: 'Not Equals' }
+  { Value: CompareOperators.NONE, Title: 'None' },
+  { Value: CompareOperators.EQUALS, Title: 'Equals' },
+  { Value: CompareOperators.NOT_EQUALS, Title: 'Not Equals' }
 ];
 
 interface IProps {
@@ -44,7 +45,7 @@ const DialogDropdown: React.SFC<IProps> = ({ classes, value, columnType, activeF
   const dropdownValue = value === undefined ? 'None' : value;
   let component;
   switch (columnType) {
-  case 'string':
+  case ColumnDataType.STRING:
     return(
     <Dropdown
       disabled={false}
@@ -54,22 +55,22 @@ const DialogDropdown: React.SFC<IProps> = ({ classes, value, columnType, activeF
       activeFilter={activeFilter}
       handleChange={handleDropdownChange}
     />);
-  case 'numeric':
-  case 'datetime':
-  case 'date':
-  case 'datetimeutc':
+  case ColumnDataType.NUMERIC:
+  case ColumnDataType.DATE:
+  case ColumnDataType.DATE_TIME:
+  case ColumnDataType.DATE_TIME_UTC:
     component = (
-    <Dropdown
-      disabled={false}
-      operators={NumericOperators}
-      classes={classes}
-      value={dropdownValue}
-      activeFilter={activeFilter}
-      handleChange={handleDropdownChange}
-    />
-  );
+      <Dropdown
+        disabled={false}
+        operators={NumericOperators}
+        classes={classes}
+        value={dropdownValue}
+        activeFilter={activeFilter}
+        handleChange={handleDropdownChange}
+      />
+    );
     break;
-  case 'boolean':
+  case ColumnDataType.BOOLEAN:
     component =
     (
       <Dropdown

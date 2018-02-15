@@ -154,9 +154,9 @@ class Grid extends React.Component <IProps & WithStyles<keyof typeof styleClasse
               if (dataSource.columns[index] && !dataSource.columns[index].Visible) {
                 return '';
               }
-              return `<td>${ dataSource.columns[index].DataType === ColumnDataType.DateTime ||
-              dataSource.columns[index].DataType === ColumnDataType.Date ||
-              dataSource.columns[index].DataType === ColumnDataType.DateTimeUtc ?
+              return `<td>${ dataSource.columns[index].DataType === ColumnDataType.DATE ||
+              dataSource.columns[index].DataType === ColumnDataType.DATE_TIME ||
+              dataSource.columns[index].DataType === ColumnDataType.DATE_TIME_UTC ?
                 moment(cell).format('MMMM Do YYYY, h:mm:ss a') :
                 cell || 0}</td>`;
             }).join(' ')}</tr>`;
@@ -243,8 +243,7 @@ class Grid extends React.Component <IProps & WithStyles<keyof typeof styleClasse
 
     const body = (
       <TableBody>
-        {
-          data.map((row: any, rowIndex: number) => (
+        { data.map((row: any, rowIndex: number) => (
             bodyRenderer
               ? bodyRenderer(row, rowIndex)
               : <TableRow hover={true} key={rowIndex}>
@@ -252,21 +251,19 @@ class Grid extends React.Component <IProps & WithStyles<keyof typeof styleClasse
                   dataSource.columns.filter((col: any) => col.Visible).map((column: any, colIndex: number) =>
                     <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
                       {
-                        column.DataType === ColumnDataType.Number ?
+                        column.DataType === ColumnDataType.NUMERIC ?
                           row[column.Name] || 0 :
-                          column.DataType === ColumnDataType.DateTime
-                          || column.DataType === ColumnDataType.Date
-                          || column.DataType === ColumnDataType.DateTimeUtc
+                          column.DataType === ColumnDataType.DATE
+                          || column.DataType === ColumnDataType.DATE_TIME
+                          || column.DataType === ColumnDataType.DATE_TIME_UTC
                           ? moment(row[column.Name]).format('MMMM Do YYYY, h:mm:ss a') || ''
                           : row[column.Name]
                       }
                     </TableCell>)
                 }
               </TableRow>
-          ))
-        }
-        {
-          filteredRecordCount === 0 &&
+          )) }
+        { filteredRecordCount === 0 &&
           (<TableRow>
             <TableCell style={{ display: 'flex', padding: '10px' }}>
               <WarningIcon />
@@ -274,8 +271,7 @@ class Grid extends React.Component <IProps & WithStyles<keyof typeof styleClasse
                 No records found
               </Typography>
             </TableCell>
-          </TableRow>)
-        }
+          </TableRow>) }
       </TableBody>
     );
 

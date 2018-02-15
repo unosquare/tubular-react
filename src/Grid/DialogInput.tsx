@@ -1,5 +1,6 @@
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
+import { ColumnDataType } from './Column';
 import DateInput from './DateInput';
 import Dropdown from './Dropdown';
 import TextInput from './TextInput';
@@ -28,40 +29,42 @@ const DialogInput: React.SFC<IProps> = ({ classes, disabled, value, columnType, 
   mod, handleApply, handleBooleanDropDown, handleDatePicker, handleTextFieldChange }) => {
 
     return (
-      columnType === 'datetime' || columnType === 'date' || columnType === 'datetimeutc' ?
-    (
-      <DateInput
-        disabled={disabled}
-        value={value}
-        mod={mod}
-        columnType={columnType}
-        handleDatePicker={handleDatePicker}
-      />
-    )
-    :
-    columnType === 'boolean' ?
-    (
-      <Dropdown
-        disabled={disabled}
-        value={value}
-        operators={BooleanInputOperators}
-        classes={classes}
-        activeFilter={activeFilter}
-        handleChange={handleBooleanDropDown}
-      />
-    )
-      :
+      columnType === ColumnDataType.DATE ||
+      columnType === ColumnDataType.DATE_TIME ||
+      columnType === ColumnDataType.DATE_TIME_UTC ?
       (
-      <TextInput
-        disabled={disabled}
-        value={value}
-        label={label}
-        mod={mod}
-        activeFilter={activeFilter}
-        handleApply={handleApply}
-        handleTextFieldChange={handleTextFieldChange}
-      />
+        <DateInput
+          disabled={disabled}
+          value={value}
+          mod={mod}
+          columnType={columnType}
+          handleDatePicker={handleDatePicker}
+        />
       )
+      :
+      columnType === ColumnDataType.BOOLEAN ?
+      (
+        <Dropdown
+          disabled={disabled}
+          value={value}
+          operators={BooleanInputOperators}
+          classes={classes}
+          activeFilter={activeFilter}
+          handleChange={handleBooleanDropDown}
+        />
+      )
+        :
+        (
+        <TextInput
+          disabled={disabled}
+          value={value}
+          label={label}
+          mod={mod}
+          activeFilter={activeFilter}
+          handleApply={handleApply}
+          handleTextFieldChange={handleTextFieldChange}
+        />
+        )
     );
   };
 

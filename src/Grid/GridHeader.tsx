@@ -11,7 +11,7 @@ import * as moment from 'moment';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import { KeyboardEvent } from 'react';
-import { ColumnSortDirection } from './Column';
+import { ColumnDataType, ColumnSortDirection, CompareOperators } from './Column';
 import DialogContent from './DialogContent';
 import DialogDropdown from './DialogDropdown';
 
@@ -108,9 +108,9 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
     let secondValue = '';
 
     switch (this.state.columnType) {
-    case 'datetime':
-    case 'date':
-    case 'datetimeutc':
+    case ColumnDataType.DATE:
+    case ColumnDataType.DATE_TIME:
+    case ColumnDataType.DATE_TIME_UTC:
       firstValue = moment().format();
       secondValue = moment().format();
       break;
@@ -118,27 +118,27 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
     }
 
     this.setState({
-      activeFilter: 'None',
+      activeFilter: CompareOperators.NONE,
       firstFilterValue: '',
       secondFilterValue: ''
-    },
-    () => {
-    this.filterHandler(firstValue, secondValue, false);
-  });
+    }, () => {
+      this.filterHandler(firstValue, secondValue, false);
+    });
   }
 
   public handleApply = () => {
     const firstValue = this.state.firstFilterValue;
     const secondValue = this.state.secondFilterValue;
+
     switch (this.state.columnType) {
-    case 'numeric':
+    case ColumnDataType.NUMERIC:
       this.filterHandler(parseFloat(firstValue), parseFloat(secondValue), true);
       break;
-    case 'boolean':
+    case ColumnDataType.BOOLEAN:
       this.filterHandler((firstValue === 'true'), 1, true);
       break;
     default:
-    this.filterHandler(firstValue, secondValue, true);
+      this.filterHandler(firstValue, secondValue, true);
     }
   }
 
@@ -163,9 +163,9 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
     let secondValue = '';
 
     switch (dataSource.columns[count].DataType ) {
-    case 'date':
-    case 'datetime':
-    case 'datetimeutc':
+    case ColumnDataType.DATE:
+    case ColumnDataType.DATE_TIME:
+    case ColumnDataType.DATE_TIME_UTC:
       firstValue = moment().format();
       secondValue = moment().format();
       break;
@@ -238,11 +238,13 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
 
     array.columns.forEach( (column: any) => {
       if (column.Name === property) {
-        column.SortDirection = column.SortDirection === ColumnSortDirection.None
-          ? 'Ascending'
-          : column.SortDirection === ColumnSortDirection.Asc ? ColumnSortDirection.Desc : ColumnSortDirection.None;
+        column.SortDirection = column.SortDirection === ColumnSortDirection.NONE
+          ? ColumnSortDirection.ASCENDING
+          : column.SortDirection === ColumnSortDirection.ASCENDING ?
+            ColumnSortDirection.DESCENDING :
+            ColumnSortDirection.NONE;
 
-        if (column.SortDirection === ColumnSortDirection.None) {
+        if (column.SortDirection === ColumnSortDirection.NONE) {
           column.SortOrder = -1;
         } else {
           column.SortOrder = Number.MAX_VALUE;
@@ -251,7 +253,7 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
         if (this.state.sorting === 'Single') {
           array.columns.filter((col: any) => col.Name !== property).forEach( ($column: any) => {
             $column.SortOrder = -1;
-            $column.SortDirection = ColumnSortDirection.None;
+            $column.SortDirection = ColumnSortDirection.NONE;
           });
         }
 
@@ -268,9 +270,15 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
   }
 
   public handleDatePicker = (name: string) => (event: any) => {
-    this.setState({
-      firstFilterValue: event.format()
-    });
+    if (name === 'Value') {
+      this.setState({
+        firstFilterValue: event.format()
+      });
+    } else {
+      this.setState({
+        secondFilterValue: event.format()
+      });
+    }
   }
 
   public handleChange = (name: any, value: any) => {
@@ -334,9 +342,9 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
             >
               <TableSortLabel onClick={(event: any) => this.sortHandler(event, column.Name)} >
                 {column.Label}
-                {column.SortDirection === ColumnSortDirection.Asc ?
+                {column.SortDirection === ColumnSortDirection.ASCENDING ?
                   <ArrowUpward className={classes.arrowStyle} />
-                  : column.SortDirection === ColumnSortDirection.Desc ?
+                  : column.SortDirection === ColumnSortDirection.DESCENDING ?
                     <ArrowDownward className={classes.arrowStyle} />
                     :
                     <div className={classes.arrowStyle} />
@@ -346,7 +354,7 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
             : (column.Label);
           const filter = column.Filter &&
               (<IconButton id={column.Name} onClick={() => this.handleOpen(column)} >
-                {column.Filter.HasFilter && column.Filter.Operator !== 'None' ?
+                {column.Filter.HasFilter && column.Filter.Operator !== CompareOperators.NONE ?
                   <FilterListIcon style={{ background: '#28b62c', color: 'white', borderRadius: '50%' }}/>
                   :
                   <FilterListIcon/>}

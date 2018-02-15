@@ -9,6 +9,7 @@ import createPalette from 'material-ui/styles/createPalette';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
+import { ColumnDataType } from './Column';
 
 const muiTheme = createMuiTheme({
   palette: createPalette({
@@ -29,7 +30,7 @@ const DateInput: React.SFC<IProps> = ({ columnType, disabled, value, mod, handle
   <div style={{ padding: '15px 20px 5px 20px' }}>
     <MuiThemeProvider theme={muiTheme}>
       {
-        columnType === 'datetime' || columnType === 'datetimeutc' ?
+        columnType === ColumnDataType.DATE_TIME || columnType === ColumnDataType.DATE_TIME_UTC ?
           <DateTimePicker
             disabled={disabled}
             style={{ width: '100%' }}
