@@ -17,23 +17,24 @@ const columns = [
       IsKey: true,
       Label: 'ID',
       SortDirection: ColumnSortDirection.ASCENDING,
-      SortOrder: 1 }
+      SortOrder: 1,
+      Sortable: true }
   ),
   new ColumnModel( 'CustomerName',
     { Aggregate: AggregateFunctions.COUNT,
       Filtering: true,
       Searchable: true,
-      SortDirection: ColumnSortDirection.NONE }
+      Sortable: true }
   ),
   new ColumnModel( 'ShippedDate',
     { DataType: ColumnDataType.DATE_TIME,
       Filtering: true,
-      SortDirection: ColumnSortDirection.NONE }
+      Sortable: true }
   ),
   new ColumnModel( 'ShipperCity' ),
   new ColumnModel( 'Amount',
     { DataType: ColumnDataType.NUMERIC,
-      SortDirection: ColumnSortDirection.NONE }
+      Sortable: true }
   )
 ];
 

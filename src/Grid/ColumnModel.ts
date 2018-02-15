@@ -23,9 +23,9 @@ export default class ColumnModel {
     this.Label = options && options.Label || (name || '').replace(/([a-z])([A-Z])/g, '$1 $2');
     this.Name = name;
     this.Searchable = options && options.Searchable || false;
-    this.SortDirection = options && options.SortDirection || ColumnSortDirection.NONE;
-    this.SortOrder = options && options.SortDirection !== ColumnSortDirection.NONE && options.SortOrder || -1;
-    this.Sortable = options && options.SortDirection ? true : false;
+    this.SortDirection = options && options.Sortable && options.SortDirection || ColumnSortDirection.NONE;
+    this.SortOrder = options && this.SortDirection !== ColumnSortDirection.NONE && options.SortOrder || -1;
+    this.Sortable = options && options.Sortable || false;
     this.Visible = options && options.Visible || true;
   }
 }
