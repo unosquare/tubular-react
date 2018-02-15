@@ -3,6 +3,7 @@ import { MenuItem } from 'material-ui/Menu';
 import Select from 'material-ui/Select';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
+
 interface IProps {
   activeFilter: string;
   classes: any;

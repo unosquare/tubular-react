@@ -1,11 +1,12 @@
 import Axios from 'axios';
 import * as Rx from 'rx';
-import ColumnModel from '../../src/Grid/ColumnModel';
+import { AggregateFunctions, ColumnDataType, CompareOperators } from './Column';
+import ColumnModel from './ColumnModel';
 
 export default class RemoteDataSource implements IDataSource {
   public static defaultColumnValues = {
-    Aggregate: 'None',
-    DataType: 'string',
+    Aggregate: AggregateFunctions.NONE,
+    DataType: ColumnDataType.STRING,
     IsKey: false,
     Searchable: false,
     Sortable: false,
@@ -119,7 +120,7 @@ export default class RemoteDataSource implements IDataSource {
           Argument: [],
           HasFilter: false,
           Name: obj.Name,
-          Operator: 'None',
+          Operator: CompareOperators.NONE,
           OptionsUrl: null,
           Text: null
         };
