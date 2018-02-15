@@ -2,45 +2,38 @@
 import { TableCell, TableRow } from 'material-ui/Table';
 import * as moment from 'moment';
 import * as React from 'react';
-import { AggregateFunctions, ColumnDataType, ColumnSortDirection } from '../../src/Grid/Column';
-import ColumnModel from '../../src/Grid/ColumnModel';
-import Grid from '../../src/Grid/Grid';
-import RemoteDataSource from '../../src/Grid/RemoteDataSource';
+import Grid, {
+  AggregateFunctions,
+  ColumnDataType,
+  ColumnModel,
+  ColumnSortDirection,
+  RemoteDataSource
+} from '../../src/Grid';
 
 const columns = [
   new ColumnModel( 'OrderID',
     { DataType: ColumnDataType.NUMERIC,
       Filtering: true,
       IsKey: true,
-      Label: 'Order ID',
+      Label: 'ID',
       SortDirection: ColumnSortDirection.ASCENDING,
-      SortOrder: 1,
-      Sortable: true
-    }
+      SortOrder: 1 }
   ),
   new ColumnModel( 'CustomerName',
     { Aggregate: AggregateFunctions.COUNT,
       Filtering: true,
-      Label: 'Customer Name',
       Searchable: true,
-      SortDirection: ColumnSortDirection.NONE,
-      SortOrder: -1,
-      Sortable: true }
+      SortDirection: ColumnSortDirection.NONE }
   ),
   new ColumnModel( 'ShippedDate',
     { DataType: ColumnDataType.DATE_TIME,
       Filtering: true,
-      Label: 'Shipped Date',
-      SortDirection: ColumnSortDirection.NONE,
-      SortOrder: -1,
-      Sortable: true }
+      SortDirection: ColumnSortDirection.NONE }
   ),
   new ColumnModel( 'ShipperCity' ),
   new ColumnModel( 'Amount',
     { DataType: ColumnDataType.NUMERIC,
-      SortDirection: ColumnSortDirection.NONE,
-      SortOrder: -1,
-      Sortable: true }
+      SortDirection: ColumnSortDirection.NONE }
   )
 ];
 

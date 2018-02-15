@@ -24,8 +24,8 @@ export default class ColumnModel {
     this.Name = name;
     this.Searchable = options && options.Searchable || false;
     this.SortDirection = options && options.SortDirection || ColumnSortDirection.NONE;
-    this.SortOrder = options && options.SortOrder || -1;
-    this.Sortable = options && options.Sortable || false;
+    this.SortOrder = options && options.SortDirection !== ColumnSortDirection.NONE && options.SortOrder || -1;
+    this.Sortable = options && options.SortDirection ? true : false;
     this.Visible = options && options.Visible || true;
   }
 }
