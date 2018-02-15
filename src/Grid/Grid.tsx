@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import * as Rx from 'rx';
+import { ColumnDataType } from './Column';
 import GridHeader from './GridHeader';
 import GridToolbar from './GridToolbar';
 import Paginator from './Paginator';
@@ -153,9 +154,9 @@ class Grid extends React.Component <IProps & WithStyles<keyof typeof styleClasse
               if (dataSource.columns[index] && !dataSource.columns[index].Visible) {
                 return '';
               }
-              return `<td>${ dataSource.columns[index].DataType === 'datetime' ||
-              dataSource.columns[index].DataType === 'date' ||
-              dataSource.columns[index].DataType === 'datetimeutc' ?
+              return `<td>${ dataSource.columns[index].DataType === ColumnDataType.DateTime ||
+              dataSource.columns[index].DataType === ColumnDataType.Date ||
+              dataSource.columns[index].DataType === ColumnDataType.DateTimeUtc ?
                 moment(cell).format('MMMM Do YYYY, h:mm:ss a') :
                 cell || 0}</td>`;
             }).join(' ')}</tr>`;
@@ -251,11 +252,11 @@ class Grid extends React.Component <IProps & WithStyles<keyof typeof styleClasse
                   dataSource.columns.filter((col: any) => col.Visible).map((column: any, colIndex: number) =>
                     <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
                       {
-                        column.DataType === 'numeric' ?
+                        column.DataType === ColumnDataType.Number ?
                           row[column.Name] || 0 :
-                          column.DataType === 'datetime'
-                          || column.DataType === 'date'
-                          || column.DataType === 'datetimeutc'
+                          column.DataType === ColumnDataType.DateTime
+                          || column.DataType === ColumnDataType.Date
+                          || column.DataType === ColumnDataType.DateTimeUtc
                           ? moment(row[column.Name]).format('MMMM Do YYYY, h:mm:ss a') || ''
                           : row[column.Name]
                       }
