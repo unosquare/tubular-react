@@ -8,6 +8,7 @@
     "build": "gulp",
     "lint": "tslint src/**/*.ts src/**/*.tsx",
     "test": "gulp test",
+    "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov"
   },
   "repository": {
@@ -45,6 +46,7 @@
     "browser-sync": "^2.23.5",
     "browserify": "^15.2.0",
     "chai": "^4.1.2",
+    "coveralls": "^3.0.0",
     "del": "^3.0.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
