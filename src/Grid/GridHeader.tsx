@@ -11,8 +11,10 @@ import * as moment from 'moment';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import { KeyboardEvent } from 'react';
+import { ColumnSortDirection } from './Column';
 import DialogContent from './DialogContent';
 import DialogDropdown from './DialogDropdown';
+
 const styleClasses  = {
   applyButton: '',
   arrowStyle: '',
@@ -236,11 +238,11 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
 
     array.columns.forEach( (column: any) => {
       if (column.Name === property) {
-        column.SortDirection = column.SortDirection === 'None'
+        column.SortDirection = column.SortDirection === ColumnSortDirection.None
           ? 'Ascending'
-          : column.SortDirection === 'Ascending' ? 'Descending' : 'None';
+          : column.SortDirection === ColumnSortDirection.Asc ? ColumnSortDirection.Desc : ColumnSortDirection.None;
 
-        if (column.SortDirection === 'None') {
+        if (column.SortDirection === ColumnSortDirection.None) {
           column.SortOrder = -1;
         } else {
           column.SortOrder = Number.MAX_VALUE;
@@ -249,7 +251,7 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
         if (this.state.sorting === 'Single') {
           array.columns.filter((col: any) => col.Name !== property).forEach( ($column: any) => {
             $column.SortOrder = -1;
-            $column.SortDirection = 'None';
+            $column.SortDirection = ColumnSortDirection.None;
           });
         }
 
@@ -332,9 +334,9 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
             >
               <TableSortLabel onClick={(event: any) => this.sortHandler(event, column.Name)} >
                 {column.Label}
-                {column.SortDirection === 'Ascending' ?
+                {column.SortDirection === ColumnSortDirection.Asc ?
                   <ArrowUpward className={classes.arrowStyle} />
-                  : column.SortDirection === 'Descending' ?
+                  : column.SortDirection === ColumnSortDirection.Desc ?
                     <ArrowDownward className={classes.arrowStyle} />
                     :
                     <div className={classes.arrowStyle} />
