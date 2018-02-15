@@ -1,4 +1,4 @@
-export default interface IColumnModel {
+export default interface IColumnModelOptions {
     Aggregate?: string;
     DataType?: string;
     Filter?: object;

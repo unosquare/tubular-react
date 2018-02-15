@@ -1,5 +1,5 @@
 
-import IColumnModel from '../../src/Grid/IColumnModel';
+import IColumnModelOptions from '../../src/Grid/IColumnModelOptions';
 
 export default class ColumnModel {
   public Aggregate: string;
@@ -15,7 +15,7 @@ export default class ColumnModel {
   public Sortable: boolean;
   public Visible: boolean;
 
-  constructor( name: string, options?: IColumnModel ) {
+  constructor( name: string, options?: IColumnModelOptions ) {
     this.Aggregate = options && options.Aggregate || '';
     this.DataType = options && options.DataType || 'string';
     this.Filtering = options && options.Filtering || false;
