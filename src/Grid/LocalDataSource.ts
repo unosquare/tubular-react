@@ -55,7 +55,7 @@ export default class LocalDataSource implements IDataSource {
       };
 
       const response = new GridDataResponse({
-        Counter: request.Count,   // Counter or Count?
+        Counter: request.Count,
         CurrentPage: 1,
         TotalRecordCount: data.length
       });
@@ -116,12 +116,14 @@ export default class LocalDataSource implements IDataSource {
 
   public applyFreeTextSearch(request: any, subset: any[]) {
     if (request.Search && request.Search.Operator.toLowerCase() === CompareOperators.auto) {
-      let searchableColumns = _.filter(request.Columns, 'Searchable');
+      const searchableColumns = _.filter(request.Columns, 'Searchable');
 
       if (searchableColumns.length > 0) {
-        let filter = request.Search.Text.toLowerCase();
+        const filter = request.Search.Text.toLowerCase();
 
-        return _.filter(subset, item => _.some(searchableColumns, x => item[x.Name].toLowerCase().indexOf(filter) > -1));
+        return _.filter(subset, (item) =>
+          _.some(searchableColumns, (x) =>
+            item[x.Name].toLowerCase().indexOf(filter) > -1));
       }
     }
 
@@ -244,7 +246,7 @@ export default class LocalDataSource implements IDataSource {
 
       _.forEachRight(sortedColumns, (column) => {
         columns.push(column.Name);
-        orders.push((column.SortDirection == SortDirection.ascending ? 'asc' : 'desc'));
+        orders.push((column.SortDirection === SortDirection.ascending ? 'asc' : 'desc'));
       });
 
       subset = _.orderBy(subset, columns, orders);
@@ -257,7 +259,7 @@ export default class LocalDataSource implements IDataSource {
 
   public getAggregatePayload(request: any, subset: any[]) {
     const aggregateColumns = _.filter(request.Columns, (column) =>
-      column.Aggregate && column.Aggregate.toLowerCase() != AggregateFunctions.none);
+      column.Aggregate && column.Aggregate.toLowerCase() !== AggregateFunctions.none);
 
     const results = _.map(aggregateColumns, (column) => {
       let value;
@@ -280,7 +282,7 @@ export default class LocalDataSource implements IDataSource {
           break;
         case AggregateFunctions.distinctCount:
           value = _.uniqWith(subset, (a, b) => {
-            return a[column.Name] == b[column.Name];
+            return a[column.Name] === b[column.Name];
           }).length;
           break;
         default:
