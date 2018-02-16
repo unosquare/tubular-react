@@ -20,7 +20,8 @@
       "gulpfile.js",
       "test/**/*.*",
       "build/**/*.*",
-      "sample/**/*.*"
+      "sample/**/*.*",
+      "src/Util/index.js"
     ],
     "all": true  
   },
