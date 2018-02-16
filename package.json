@@ -11,6 +11,17 @@
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov"
   },
+  "nyc": {
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "exclude": [
+      "gulpfile.js",
+      "test/**/*.*"
+    ],
+    "all": true  
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/unosquare/tubular-react.git"
