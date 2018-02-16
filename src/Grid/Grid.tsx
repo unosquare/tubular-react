@@ -8,7 +8,9 @@ import * as moment from 'moment';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import * as Rx from 'rx';
+import { ColumnDataType } from './Column';
 import GridHeader from './GridHeader';
+import GridResponse from './GridResponse';
 import GridToolbar from './GridToolbar';
 import Paginator from './Paginator';
 
@@ -94,14 +96,14 @@ class Grid extends React.Component <IProps & WithStyles<keyof typeof styleClasse
     const searchText = localStorage.getItem(`tubular.${this.props.gridName}_searchText`) || '';
 
     this.state.dataSource.connect(pageSize, this.state.page, searchText)
-      .subscribe((tbResponse: any) => {
+      .subscribe((tbResponse: GridResponse) => {
         this.setState({
-          aggregate: tbResponse.aggregate,
-          data: tbResponse.payload,
-          filteredRecordCount: tbResponse.filteredRecordCount || 0,
-          rowsPerPage: tbResponse.rowsPerPage || 10,
-          searchText: tbResponse.searchText || '',
-          totalRecordCount: tbResponse.totalRecordCount || 0
+          aggregate: tbResponse.Aggregate,
+          data: tbResponse.Payload,
+          filteredRecordCount: tbResponse.FilteredRecordCount || 0,
+          rowsPerPage: tbResponse.RowsPerPage || 10,
+          searchText: tbResponse.SearchText || '',
+          totalRecordCount: tbResponse.TotalRecordCount || 0
         });
       });
 
@@ -153,9 +155,9 @@ class Grid extends React.Component <IProps & WithStyles<keyof typeof styleClasse
               if (dataSource.columns[index] && !dataSource.columns[index].Visible) {
                 return '';
               }
-              return `<td>${ dataSource.columns[index].DataType === 'datetime' ||
-              dataSource.columns[index].DataType === 'date' ||
-              dataSource.columns[index].DataType === 'datetimeutc' ?
+              return `<td>${ dataSource.columns[index].DataType === ColumnDataType.DATE ||
+              dataSource.columns[index].DataType === ColumnDataType.DATE_TIME ||
+              dataSource.columns[index].DataType === ColumnDataType.DATE_TIME_UTC ?
                 moment(cell).format('MMMM Do YYYY, h:mm:ss a') :
                 cell || 0}</td>`;
             }).join(' ')}</tr>`;
@@ -242,8 +244,7 @@ class Grid extends React.Component <IProps & WithStyles<keyof typeof styleClasse
 
     const body = (
       <TableBody>
-        {
-          data.map((row: any, rowIndex: number) => (
+        { data.map((row: any, rowIndex: number) => (
             bodyRenderer
               ? bodyRenderer(row, rowIndex)
               : <TableRow hover={true} key={rowIndex}>
@@ -251,21 +252,19 @@ class Grid extends React.Component <IProps & WithStyles<keyof typeof styleClasse
                   dataSource.columns.filter((col: any) => col.Visible).map((column: any, colIndex: number) =>
                     <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
                       {
-                        column.DataType === 'numeric' ?
+                        column.DataType === ColumnDataType.NUMERIC ?
                           row[column.Name] || 0 :
-                          column.DataType === 'datetime'
-                          || column.DataType === 'date'
-                          || column.DataType === 'datetimeutc'
+                          column.DataType === ColumnDataType.DATE
+                          || column.DataType === ColumnDataType.DATE_TIME
+                          || column.DataType === ColumnDataType.DATE_TIME_UTC
                           ? moment(row[column.Name]).format('MMMM Do YYYY, h:mm:ss a') || ''
                           : row[column.Name]
                       }
                     </TableCell>)
                 }
               </TableRow>
-          ))
-        }
-        {
-          filteredRecordCount === 0 &&
+          )) }
+        { filteredRecordCount === 0 &&
           (<TableRow>
             <TableCell style={{ display: 'flex', padding: '10px' }}>
               <WarningIcon />
@@ -273,8 +272,7 @@ class Grid extends React.Component <IProps & WithStyles<keyof typeof styleClasse
                 No records found
               </Typography>
             </TableCell>
-          </TableRow>)
-        }
+          </TableRow>) }
       </TableBody>
     );
 

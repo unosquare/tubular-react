@@ -2,6 +2,7 @@ import Button from 'material-ui/Button';
 import * as moment from 'moment';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
+import { ColumnDataType, CompareOperators } from './Column';
 import DialogInput from './DialogInput';
 
 interface IProps {
@@ -27,24 +28,24 @@ const DialogContent: React.SFC<IProps> = ({
   let secondValue = '';
 
   switch (columnType) {
-  case 'datetime':
-  case 'date':
-  case 'datetimeutc':
+  case ColumnDataType.DATE:
+  case ColumnDataType.DATE_TIME:
+  case ColumnDataType.DATE_TIME_UTC:
     firstValue = value ? value : moment().format();
     secondValue = value2 ? value2 : moment().format();
     break;
-  case 'boolean':
-    firstValue = operator === 'None' ? '' : value || '';
+  case ColumnDataType.BOOLEAN:
+    firstValue = operator === CompareOperators.NONE ? '' : value || '';
     break;
   default:
-    firstValue = operator === 'None' ? '' : value || '';
+    firstValue = operator === CompareOperators.NONE ? '' : value || '';
     secondValue = value2 || '';
   }
 
   return (
     <div >
       <DialogInput
-        disabled={operator === 'None'}
+        disabled={operator === CompareOperators.NONE}
         value={firstValue}
         handleApply={handleApply}
         mod={'Value'}
@@ -57,7 +58,7 @@ const DialogContent: React.SFC<IProps> = ({
         handleTextFieldChange={handleTextFieldChange}
       />
 
-      {operator === 'Between' &&
+      {operator === CompareOperators.BETWEEN &&
         <DialogInput
           disabled={false}
           value={secondValue}
@@ -76,8 +77,8 @@ const DialogContent: React.SFC<IProps> = ({
         <Button
           className={classes.applyButton}
           onClick={() => handleApply()}
-          disabled={operator === 'None'}
-          style={operator === 'None' ? { background: 'grey' } : {}}
+          disabled={operator === CompareOperators.NONE}
+          style={operator === CompareOperators.NONE ? { background: 'grey' } : {}}
         >
           Apply
         </Button>
