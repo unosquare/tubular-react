@@ -149,16 +149,16 @@ export default class LocalDataSource implements IDataSource {
           subset = subset.filter((row) => row[filterableColumn.Name].indexOf(filterableColumn.Filter.Text) < 0);
           break;
         case CompareOperators.startsWith:
-          subset = subset.filter((row) => row[filterableColumn.Name].toLowerCase().startsWith(filterableColumn.Filter.Text));
+          subset = subset.filter((row) => row[filterableColumn.Name].toLowerCase().startsWith(filterableColumn.Filter.Text.toLowerCase()));
           break;
         case CompareOperators.notStartsWith:
-          subset = subset.filter((row) => !row[filterableColumn.Name].toLowerCase().startsWith(filterableColumn.Filter.Text));
+          subset = subset.filter((row) => !row[filterableColumn.Name].toLowerCase().startsWith(filterableColumn.Filter.Text.toLowerCase()));
           break;
         case CompareOperators.endsWith:
-          subset = subset.filter((row) => row[filterableColumn.Name].toLowerCase().endsWith(filterableColumn.Filter.Text));
+          subset = subset.filter((row) => row[filterableColumn.Name].toLowerCase().endsWith(filterableColumn.Filter.Text.toLowerCase()));
           break;
         case CompareOperators.notEndsWith:
-          subset = subset.filter((row) => !row[filterableColumn.Name].toLowerCase().endsWith(filterableColumn.Filter.Text));
+          subset = subset.filter((row) => !row[filterableColumn.Name].toLowerCase().endsWith(filterableColumn.Filter.Text.toLowerCase()));
           break;
         case CompareOperators.gt:
           subset = subset.filter((row) => row[filterableColumn.Name] > filterableColumn.Filter.Text);
