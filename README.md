@@ -1,5 +1,6 @@
   [![Analytics](https://ga-beacon.appspot.com/UA-8535255-2/unosquare/tubular-react/)](https://github.com/igrigorik/ga-beacon)
  [![Build Status](https://travis-ci.org/unosquare/tubular-react.svg?branch=master)](https://travis-ci.org/unosquare/tubular-react)
+ [![Coverage Status](https://coveralls.io/repos/github/unosquare/tubular-react/badge.svg?branch=Issue78-AddAppVeyor)](https://coveralls.io/github/unosquare/tubular-react?branch=Issue78-AddAppVeyor)
  
  ![Tubular](http://unosquare.github.io/tubular/assets/tubular.png)
  
