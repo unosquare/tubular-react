@@ -240,8 +240,6 @@ class Grid extends React.Component <IProps & WithStyles<keyof typeof styleClasse
       showTopPager, showPrintButton, showExportButton } = this.props;
     const { data, rowsPerPage, page, dataSource, aggregate, filteredRecordCount, totalRecordCount } = this.state;
 
-    // console.log('sdsdsdsd');
-    // console.log(data);
     const body = (
       <TableBody>
         {

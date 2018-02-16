@@ -130,10 +130,10 @@ export default class LocalDataSource implements IDataSource {
   public applyFiltering(request: any, subset: any[]) {
     const filteredColumns  = request.Columns.filter((column: any) =>
       column.Filter && (column.Filter.Text || column.Filter.Argument) &&
-      column.Filter && column.Filter.Operator.toLowerCase() != CompareOperators.none);
+      column.Filter && column.Filter.Operator.toLowerCase() !== CompareOperators.none);
 
     filteredColumns.forEach((filterableColumn: any) => {
-      request.Columns.find((column: any) => column.Name == filterableColumn.Name).HasFilter = true;
+      request.Columns.find((column: any) => column.Name === filterableColumn.Name).HasFilter = true;
 
       switch (filterableColumn.Filter.Operator.toLowerCase()) {
         case CompareOperators.equals:
@@ -173,13 +173,14 @@ export default class LocalDataSource implements IDataSource {
           subset = subset.filter((row) => row[filterableColumn.Name] <= filterableColumn.Filter.Text);
           break;
         case CompareOperators.between:
-          subset = subset.filter(row => row[filterableColumn.Name] > filterableColumn.Filter.Text && row[filterableColumn.Name] < filterableColumn.Filter.Argument[0]);
+          subset = subset.filter(row => row[filterableColumn.Name] >= filterableColumn.Filter.Text && row[filterableColumn.Name] <= filterableColumn.Filter.Argument[0]);
           break;
         default:
           throw new Error('Unsupported Compare Operator');
       }
     });
 
+    console.log(subset);
     return subset;
   }
 
