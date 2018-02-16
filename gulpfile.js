@@ -65,7 +65,6 @@ gulp.task('clean:build', ['build:clean', 'build', 'build:copy']);
 
 gulp.task('test', () => gulp.src(['test/**/*.spec.tsx'])
   .pipe(mocha({
-    reporter: 'nyan',
     require: ['ts-node/register', 'test/helpers/browser.js']
   })));
 
