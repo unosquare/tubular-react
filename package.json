@@ -18,7 +18,9 @@
     ],
     "exclude": [
       "gulpfile.js",
-      "test/**/*.*"
+      "test/**/*.*",
+      "build/**/*.*",
+      "sample/**/*.*"
     ],
     "all": true  
   },
