@@ -114,11 +114,11 @@ export default class LocalDataSource implements IDataSource {
   }
 
   public applyFreeTextSearch(request: any, subset: any[]) {
-    if (request.Search && request.Search.Operator === CompareOperators.auto) {
-      const searchableColumns = _.filter(request.Columns, 'Searchable');
+    if (request.Search && request.Search.Operator.toLowerCase() === CompareOperators.auto) {
+      let searchableColumns = _.filter(request.Columns, 'Searchable');
 
       if (searchableColumns.length > 0) {
-        const filter = request.Search.Text.toLowerCase();
+        let filter = request.Search.Text.toLowerCase();
 
         return _.filter(subset, item => _.some(searchableColumns, x => item[x.Name].toLowerCase().indexOf(filter) > -1));
       }
@@ -180,7 +180,6 @@ export default class LocalDataSource implements IDataSource {
       }
     });
 
-    console.log(subset);
     return subset;
   }
 

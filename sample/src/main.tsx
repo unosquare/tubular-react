@@ -55,7 +55,6 @@ export default class Main extends React.Component {
     // const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns);
     const dataSource =  new LocalDataSource(localData, columns);
 
-    console.log(dataSource);
     return (
       <Grid
         dataSource={dataSource}
