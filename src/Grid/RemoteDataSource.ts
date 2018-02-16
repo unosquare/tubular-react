@@ -2,6 +2,8 @@ import Axios from 'axios';
 import * as Rx from 'rx';
 import { AggregateFunctions, ColumnDataType, CompareOperators } from './Column';
 import ColumnModel from './ColumnModel';
+import GridRequest from './GridRequest';
+import GridResponse from './GridResponse';
 
 export default class RemoteDataSource implements IDataSource {
   public static defaultColumnValues = {
@@ -24,7 +26,7 @@ export default class RemoteDataSource implements IDataSource {
   constructor(url: string, columns: ColumnModel[]) {
     this.url = url;
     this.counter = 0;
-    this.dataStream = new Rx.BehaviorSubject({ payload: [] });
+    this.dataStream = new Rx.BehaviorSubject({ Payload: [] });
     this.columns = this.normalizeColumns(columns);
   }
 
@@ -39,14 +41,14 @@ export default class RemoteDataSource implements IDataSource {
 
   public getAllRecords = (rowsPerPage: number, page: number, searchText: string): Promise<object> =>
   new Promise((resolve, reject) => {
-    const request = {
+    const request = new GridRequest({
       Columns: this.columns,
       Count: this.counter++,
       Search: { Text: searchText ? searchText : '', Operator: 'Auto' },
       Skip: page * rowsPerPage,
       Take: rowsPerPage,
       TimezoneOffset: 360
-    };
+    });
 
     Axios.post(this.url, request).then((response) => {
       if (response.data === undefined || !this.isValidResponse(response.data)) {
@@ -64,14 +66,14 @@ export default class RemoteDataSource implements IDataSource {
         return obj;
       });
 
-      resolve({
-        aggregate: response.data.AggregationPayload,
-        filteredRecordCount: response.data.FilteredRecordCount,
-        payload: rows,
-        rowsPerPage,
-        searchText,
-        totalRecordCount: response.data.TotalRecordCount
-      });
+      resolve(new GridResponse({
+        Aggregate: response.data.AggregationPayload,
+        FilteredRecordCount: response.data.FilteredRecordCount,
+        Payload: rows,
+        RowsPerPage: rowsPerPage,
+        SearchText: searchText,
+        TotalRecordCount: response.data.TotalRecordCount
+      }));
     }).catch((error) => {
       reject(error);
     });

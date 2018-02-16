@@ -139,25 +139,6 @@ describe('<Grid />', () => {
     });
   });
 
-  describe('When the column structure defined by the user is wrong', () => {
-    it('should render a row in the body with the warning message', () => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { invalidColumnsSample });
-
-      grid = (
-        <Grid
-          gridName='Motorhead'
-          rowsPerPage={10}
-          dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', invalidColumnsSample)}
-        />
-      );
-
-      const wrapper = shallow(grid);
-      const rowBody = wrapper.find(Table).find(TableBody).find(TableRow).find(TableCell).find(Typography);
-
-      expect(rowBody).to.have.lengthOf(1);
-    });
-  });
-
   // Unit tests for custom footer
   describe('When footer has no rows', () => {
     it('should not render any row', () => {
