@@ -3,7 +3,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
-import { invalidColumnsSample, validColumnsSample, validColumnsSampleDescending } from './utils/columns';
+import { validColumnsSample } from './utils/columns';
 import {
   descendingExpected,
   invalidResponseStructure,
@@ -60,10 +60,10 @@ describe('RemoteDateSource', () => {
       it('Should return a payload with 20 records', () => {
         return dataSource.getAllRecords(20, 0, '')
           .then((r) => {
-            expect(r.payload).to.deep.equal(twentyRecordsExpected.Payload);
-            expect(r.filteredRecordCount).to.deep.equal(twentyRecordsExpected.FilteredRecordCount);
-            expect(r.totalRecordCount).to.deep.equal(twentyRecordsExpected.TotalRecordCount);
-            expect(r.payload).to.have.lengthOf(20);
+            expect(r.Payload).to.deep.equal(twentyRecordsExpected.Payload);
+            expect(r.FilteredRecordCount).to.deep.equal(twentyRecordsExpected.FilteredRecordCount);
+            expect(r.TotalRecordCount).to.deep.equal(twentyRecordsExpected.TotalRecordCount);
+            expect(r.Payload).to.have.lengthOf(20);
           });
       });
     });
@@ -86,9 +86,9 @@ describe('RemoteDateSource', () => {
 
       it('Should return a payload with only Microsoft records', () => dataSource.getAllRecords(10, 0, 'Microsoft')
         .then((r) => {
-          expect(r.payload).to.deep.equal(onlyMicrosoftExpected.Payload);
-          expect(r.filteredRecordCount).to.deep.equal(onlyMicrosoftExpected.FilteredRecordCount);
-          expect(r.totalRecordCount).to.deep.equal(onlyMicrosoftExpected.TotalRecordCount);
+          expect(r.Payload).to.deep.equal(onlyMicrosoftExpected.Payload);
+          expect(r.FilteredRecordCount).to.deep.equal(onlyMicrosoftExpected.FilteredRecordCount);
+          expect(r.TotalRecordCount).to.deep.equal(onlyMicrosoftExpected.TotalRecordCount);
         }));
     });
 
@@ -118,9 +118,9 @@ describe('RemoteDateSource', () => {
 
       it('Should return a payload', (done) => {
         setTimeout( () => {
-          expect(response.payload).to.deep.equal(simpleRecordsExpected.Payload);
-          expect(response.filteredRecordCount).to.deep.equal(simpleRecordsExpected.FilteredRecordCount);
-          expect(response.totalRecordCount).to.deep.equal(simpleRecordsExpected.TotalRecordCount);
+          expect(response.Payload).to.deep.equal(simpleRecordsExpected.Payload);
+          expect(response.FilteredRecordCount).to.deep.equal(simpleRecordsExpected.FilteredRecordCount);
+          expect(response.TotalRecordCount).to.deep.equal(simpleRecordsExpected.TotalRecordCount);
           done();
         }, 0);
       });
@@ -143,9 +143,9 @@ describe('RemoteDateSource', () => {
 
           it('Should return a payload with records 11 to 20', (done) => {
             setTimeout( () => {
-              expect(response.payload).to.deep.equal(page2Expected.Payload);
-              expect(response.filteredRecordCount).to.deep.equal(page2Expected.FilteredRecordCount);
-              expect(response.totalRecordCount).to.deep.equal(page2Expected.TotalRecordCount);
+              expect(response.Payload).to.deep.equal(page2Expected.Payload);
+              expect(response.FilteredRecordCount).to.deep.equal(page2Expected.FilteredRecordCount);
+              expect(response.TotalRecordCount).to.deep.equal(page2Expected.TotalRecordCount);
               done();
             }, 0);
           });
@@ -168,41 +168,14 @@ describe('RemoteDateSource', () => {
 
           it('Should return a payload with records in descending order', (done) => {
             setTimeout( () => {
-              expect(response.payload).to.deep.equal(descendingExpected.Payload);
-              expect(response.filteredRecordCount).to.deep.equal(descendingExpected.FilteredRecordCount);
-              expect(response.totalRecordCount).to.deep.equal(descendingExpected.TotalRecordCount);
+              expect(response.Payload).to.deep.equal(descendingExpected.Payload);
+              expect(response.FilteredRecordCount).to.deep.equal(descendingExpected.FilteredRecordCount);
+              expect(response.TotalRecordCount).to.deep.equal(descendingExpected.TotalRecordCount);
               done();
             }, 0);
           });
         });
       });
-    });
-  });
-
-  describe('When columns structure is invalid', () => {
-    beforeEach(() => {
-      dataSource =
-        new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', invalidColumnsSample);
-
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', twentyRecordsRequest).reply(200, {
-        AggregationPayload: twentyRecordsExpected.AggregationPayload,
-        Counter: twentyRecordsExpected.Counter,
-        CurrentPage: twentyRecordsExpected.CurrentPage,
-        FilteredRecordCount: twentyRecordsExpected.FilteredRecordCount,
-        Payload: twentyRecordsExpected.Payload,
-        TotalPages: twentyRecordsExpected.TotalPages,
-        TotalRecordCount: twentyRecordsExpected.TotalRecordCount
-      });
-    });
-
-    describe('When records are requested', () => {
-      it('throws an Error 404', () => {
-        return dataSource.getAllRecords(20, 0, '')
-          .catch( (error) =>
-            expect(error.response.status).to.be.equal(404)
-          );
-        }
-      );
     });
   });
 });

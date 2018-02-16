@@ -10,6 +10,7 @@ import * as React from 'react';
 import * as Rx from 'rx';
 import { ColumnDataType } from './Column';
 import GridHeader from './GridHeader';
+import GridResponse from './GridResponse';
 import GridToolbar from './GridToolbar';
 import Paginator from './Paginator';
 
@@ -95,14 +96,14 @@ class Grid extends React.Component <IProps & WithStyles<keyof typeof styleClasse
     const searchText = localStorage.getItem(`tubular.${this.props.gridName}_searchText`) || '';
 
     this.state.dataSource.connect(pageSize, this.state.page, searchText)
-      .subscribe((tbResponse: any) => {
+      .subscribe((tbResponse: GridResponse) => {
         this.setState({
-          aggregate: tbResponse.aggregate,
-          data: tbResponse.payload,
-          filteredRecordCount: tbResponse.filteredRecordCount || 0,
-          rowsPerPage: tbResponse.rowsPerPage || 10,
-          searchText: tbResponse.searchText || '',
-          totalRecordCount: tbResponse.totalRecordCount || 0
+          aggregate: tbResponse.Aggregate,
+          data: tbResponse.Payload,
+          filteredRecordCount: tbResponse.FilteredRecordCount || 0,
+          rowsPerPage: tbResponse.RowsPerPage || 10,
+          searchText: tbResponse.SearchText || '',
+          totalRecordCount: tbResponse.TotalRecordCount || 0
         });
       });
 
