@@ -138,6 +138,20 @@ const localData = [
     ShippedDate: '2016-11-04T18:00:00',
     ShipperCity: 'Portland, OR, USA',
     Amount: 78.00
+  },
+  {
+    OrderID: 21,
+    CustomerName: 'Wizeline',
+    ShippedDate: '2015-11-04T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 100.00
+  },
+  {
+    OrderID: 22,
+    CustomerName: 'Tiempo Development',
+    ShippedDate: '2016-01-04T18:00:00',
+    ShipperCity: 'Monterrey, NL, Mexico',
+    Amount: 150.00
   }
 ];
 

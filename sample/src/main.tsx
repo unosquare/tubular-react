@@ -59,41 +59,41 @@ export default class Main extends React.Component {
       <Grid
         dataSource={dataSource}
         gridName='Motorhead'
-        // bodyRenderer={
-        //   (row, index) =>
-        //     <TableRow hover={true} key={index}>
-        //       <TableCell padding={'default'}>
-        //         {row.OrderID}
-        //       </TableCell>
-        //       <TableCell padding={'default'}>
-        //         {row.CustomerName}
-        //       </TableCell>
-        //       <TableCell padding={'default'}>
-        //         {moment(row.ShippedDate).format('MMMM Do YYYY, h:mm:ss a')}
-        //       </TableCell>
-        //       <TableCell padding={'default'}>
-        //         {row.ShipperCity}
-        //       </TableCell>
-        //       <TableCell padding={'default'}>
-        //         {row.Amount || 0}
-        //       </TableCell>
-        //     </TableRow>
-        // }
+        bodyRenderer={
+          (row, index) =>
+            <TableRow hover={true} key={index}>
+              <TableCell padding={'default'}>
+                {row.OrderID}
+              </TableCell>
+              <TableCell padding={'default'}>
+                {row.CustomerName}
+              </TableCell>
+              <TableCell padding={'default'}>
+                {moment(row.ShippedDate).format('MMMM Do YYYY, h:mm:ss a')}
+              </TableCell>
+              <TableCell padding={'default'}>
+                {row.ShipperCity}
+              </TableCell>
+              <TableCell padding={'default'}>
+                {row.Amount || 0}
+              </TableCell>
+            </TableRow>
+        }
         rowsPerPage={10}
         showTopPager={true}
         showBottomPager={true}
         showPrintButton={true}
         showExportButton={true}
-        // footerRenderer={
-        //   (aggregates) =>
-        //     <TableRow>
-        //       <TableCell>Total: </TableCell>
-        //       <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
-        //       <TableCell />
-        //       <TableCell />
-        //       <TableCell />
-        //     </TableRow>
-        // }
+        footerRenderer={
+          (aggregates) =>
+            <TableRow>
+              <TableCell>Total: </TableCell>
+              <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
+              <TableCell />
+              <TableCell />
+              <TableCell />
+            </TableRow>
+        }
       />
     );
   }

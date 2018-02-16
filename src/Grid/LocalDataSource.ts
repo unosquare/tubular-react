@@ -1,5 +1,6 @@
 import Axios from 'axios';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 import * as Rx from 'rx';
 import AggregateFunctions from './utils/AggregateFunctions';
 import CompareOperators from './utils/CompareOperators';
@@ -137,7 +138,14 @@ export default class LocalDataSource implements IDataSource {
 
       switch (filterableColumn.Filter.Operator.toLowerCase()) {
         case CompareOperators.equals:
-          subset = subset.filter((row) => row[filterableColumn.Name] === filterableColumn.Filter.Text);
+          if (filterableColumn.DataType === 'datetime' ||
+            filterableColumn.DataType === 'date' ||
+            filterableColumn.DataType === 'datetimeutc') {
+              subset = subset.filter((row) =>
+                moment(row[filterableColumn.Name]).isSame(moment(filterableColumn.Filter.Text)));
+            } else {
+              subset = subset.filter((row) => row[filterableColumn.Name] === filterableColumn.Filter.Text);
+            }
           break;
         case CompareOperators.notEquals:
           subset = subset.filter((row) => row[filterableColumn.Name] !== filterableColumn.Filter.Text);
@@ -149,31 +157,72 @@ export default class LocalDataSource implements IDataSource {
           subset = subset.filter((row) => row[filterableColumn.Name].indexOf(filterableColumn.Filter.Text) < 0);
           break;
         case CompareOperators.startsWith:
-          subset = subset.filter((row) => row[filterableColumn.Name].toLowerCase().startsWith(filterableColumn.Filter.Text.toLowerCase()));
+          subset = subset.filter((row) =>
+            row[filterableColumn.Name].toLowerCase().startsWith(filterableColumn.Filter.Text.toLowerCase()));
           break;
         case CompareOperators.notStartsWith:
-          subset = subset.filter((row) => !row[filterableColumn.Name].toLowerCase().startsWith(filterableColumn.Filter.Text.toLowerCase()));
+          subset = subset.filter((row) =>
+            !row[filterableColumn.Name].toLowerCase().startsWith(filterableColumn.Filter.Text.toLowerCase()));
           break;
         case CompareOperators.endsWith:
-          subset = subset.filter((row) => row[filterableColumn.Name].toLowerCase().endsWith(filterableColumn.Filter.Text.toLowerCase()));
+          subset = subset.filter((row) =>
+            row[filterableColumn.Name].toLowerCase().endsWith(filterableColumn.Filter.Text.toLowerCase()));
           break;
         case CompareOperators.notEndsWith:
-          subset = subset.filter((row) => !row[filterableColumn.Name].toLowerCase().endsWith(filterableColumn.Filter.Text.toLowerCase()));
+          subset = subset.filter((row) =>
+            !row[filterableColumn.Name].toLowerCase().endsWith(filterableColumn.Filter.Text.toLowerCase()));
           break;
         case CompareOperators.gt:
-          subset = subset.filter((row) => row[filterableColumn.Name] > filterableColumn.Filter.Text);
+          if (filterableColumn.DataType === 'datetime' ||
+              filterableColumn.DataType === 'date' ||
+              filterableColumn.DataType === 'datetimeutc') {
+                subset = subset.filter((row) =>
+                  moment(row[filterableColumn.Name]).isAfter(moment(filterableColumn.Filter.Text)));
+            } else {
+              subset = subset.filter((row) => row[filterableColumn.Name] > filterableColumn.Filter.Text);
+            }
           break;
         case CompareOperators.gte:
-          subset = subset.filter((row) => row[filterableColumn.Name] >= filterableColumn.Filter.Text);
+          if (filterableColumn.DataType === 'datetime' ||
+              filterableColumn.DataType === 'date' ||
+              filterableColumn.DataType === 'datetimeutc') {
+                subset = subset.filter((row) =>
+                  moment(row[filterableColumn.Name]).isSameOrAfter(moment(filterableColumn.Filter.Text)));
+            } else {
+              subset = subset.filter((row) => row[filterableColumn.Name] >= filterableColumn.Filter.Text);
+            }
           break;
         case CompareOperators.lt:
-          subset = subset.filter((row) => row[filterableColumn.Name] < filterableColumn.Filter.Text);
+          if (filterableColumn.DataType === 'datetime' ||
+              filterableColumn.DataType === 'date' ||
+              filterableColumn.DataType === 'datetimeutc') {
+                subset = subset.filter((row) =>
+                  moment(row[filterableColumn.Name]).isBefore(moment(filterableColumn.Filter.Text)));
+            } else {
+              subset = subset.filter((row) => row[filterableColumn.Name] < filterableColumn.Filter.Text);
+            }
           break;
         case CompareOperators.lte:
-          subset = subset.filter((row) => row[filterableColumn.Name] <= filterableColumn.Filter.Text);
+          if (filterableColumn.DataType === 'datetime' ||
+              filterableColumn.DataType === 'date' ||
+              filterableColumn.DataType === 'datetimeutc') {
+                subset = subset.filter((row) =>
+                  moment(row[filterableColumn.Name]).isSameOrBefore(moment(filterableColumn.Filter.Text)));
+            } else {
+              subset = subset.filter((row) => row[filterableColumn.Name] <= filterableColumn.Filter.Text);
+            }
           break;
         case CompareOperators.between:
-          subset = subset.filter(row => row[filterableColumn.Name] >= filterableColumn.Filter.Text && row[filterableColumn.Name] <= filterableColumn.Filter.Argument[0]);
+          if (filterableColumn.DataType === 'datetime' ||
+              filterableColumn.DataType === 'date' ||
+              filterableColumn.DataType === 'datetimeutc') {
+                subset = subset.filter((row) =>
+                  moment(row[filterableColumn.Name]).isSameOrAfter(moment(filterableColumn.Filter.Text)) &&
+                  moment(row[filterableColumn.Name]).isSameOrBefore(moment(filterableColumn.Filter.Argument[0])));
+            } else {
+              subset = subset.filter((row) => row[filterableColumn.Name] >= filterableColumn.Filter.Text &&
+                  row[filterableColumn.Name] <= filterableColumn.Filter.Argument[0]);
+            }
           break;
         default:
           throw new Error('Unsupported Compare Operator');

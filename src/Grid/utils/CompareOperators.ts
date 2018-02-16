@@ -15,6 +15,6 @@ const CompareOperators = {
   lt: 'lt',
   multiple: 'multiple',
   between: 'between'
-}
+};
 
 export default CompareOperators;
