@@ -100,14 +100,18 @@ export default class LocalDataSource implements IDataSource {
 
       response.Payload = rows;
 
-      resolve(new GridResponse({
-        Aggregate: response.AggregationPayload,
-        FilteredRecordCount: response.FilteredRecordCount,
-        Payload: response.Payload,
-        RowsPerPage: rowsPerPage,
-        SearchText: searchText,
-        TotalRecordCount: response.TotalRecordCount
-      }));
+      try {
+        resolve(new GridResponse({
+          Aggregate: response.AggregationPayload,
+          FilteredRecordCount: response.FilteredRecordCount,
+          Payload: response.Payload,
+          RowsPerPage: rowsPerPage,
+          SearchText: searchText,
+          TotalRecordCount: response.TotalRecordCount
+        }));
+      } catch (error) {
+        reject(error);
+      }
     })
 
   public handleError(error: any) {
@@ -118,6 +122,8 @@ export default class LocalDataSource implements IDataSource {
     this.getAllRecords(rowsPerPage, page, searchText)
       .then((data) => {
         this.dataStream.onNext(data);
+      }).catch((error) => {
+        this.handleError(error);
       });
   }
 

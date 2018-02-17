@@ -42,8 +42,8 @@ const columns = [
 
 export default class Main extends React.Component {
   public render() {
-    // const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns);
-    const dataSource =  new LocalDataSource(localData, columns);
+    const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns);
+    // const dataSource =  new LocalDataSource(localData, columns);
 
     return (
       <Grid

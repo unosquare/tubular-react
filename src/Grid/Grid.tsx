@@ -138,7 +138,7 @@ class Grid extends React.Component <IProps & WithStyles<keyof typeof styleClasse
     }
 
     dataSource.getAllRecords(filteredRecordCount, 0, searchText)
-      .then(({ payload }: any) => {
+      .then(({ Payload }: any) => {
         const popup = window.open('about:blank', 'Print', 'location=0,height=500,width=800');
         popup.document
         .write('<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.min.css" />');
@@ -147,7 +147,7 @@ class Grid extends React.Component <IProps & WithStyles<keyof typeof styleClasse
             .filter((c: any) => c.Visible)
             .reduce((prev: any, el: any) => `${prev}<th>${el.Label || el.Name}</th>`, '')
         }</tr></thead><tbody>${
-          payload.map((row: any) => {
+          Payload.map((row: any) => {
             if (row instanceof Object) {
               row = Object.keys(row).map((key: any) => row[key]);
             }
@@ -219,9 +219,10 @@ class Grid extends React.Component <IProps & WithStyles<keyof typeof styleClasse
       count = totalRecordCount;
       search = '';
     }
+
     dataSource.getAllRecords(count, 0, search)
-      .then(({payload}: any) => {
-        payload.forEach((row: any) => {
+      .then(({ Payload }: any) => {
+        Payload.forEach((row: any) => {
           csvFile += processRow(row);
         });
       }).then(() => {
