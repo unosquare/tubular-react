@@ -2,30 +2,36 @@ import Axios from 'axios';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as Rx from 'rx';
-import AggregateFunctions from './utils/AggregateFunctions';
-import CompareOperators from './utils/CompareOperators';
+import { ColumnModel } from '.';
+import {
+  AggregateFunctions,
+  ColumnDataType,
+  ColumnSortDirection,
+  CompareOperators,
+} from './Column';
+import GridRequest from './GridRequest';
+import GridResponse from './GridResponse';
 import GridDataResponse from './utils/GridDataResponse';
-import SortDirection from './utils/SortDirection';
 
 export default class LocalDataSource implements IDataSource {
 
   public static defaultColumnValues = {
-    Aggregate: 'None',
-    DataType: 'string',
+    Aggregate: AggregateFunctions.NONE,
+    DataType: ColumnDataType.STRING,
     IsKey: false,
     Searchable: false,
     Sortable: false,
     Visible: true
   };
 
-  public columns: any[];
+  public columns: ColumnModel[];
   public dataStream: any;
   public localData: any[];
   public counter: number;
 
-  constructor(localData: any[], columns: any[]) {
+  constructor(localData: any[], columns: ColumnModel[]) {
     this.localData = localData;
-    this.dataStream = new Rx.BehaviorSubject({ payload: [] });
+    this.dataStream = new Rx.BehaviorSubject({ Payload: [] });
     this.columns = this.normalizeColumns(columns);
     this.counter = 0;
   }
@@ -42,9 +48,10 @@ export default class LocalDataSource implements IDataSource {
   public getAllRecords = (rowsPerPage: number, page: number, searchText: string): Promise<object> =>
     new Promise((resolve, reject) => {
       let data = this.localData;
-      const request = {
+
+      const request = new GridRequest({
         Columns: this.columns,
-        Count: this.counter ++,
+        Count: this.counter++,
         Search: {
           Operator: 'Auto',
           Text: searchText ? searchText : ''
@@ -52,7 +59,7 @@ export default class LocalDataSource implements IDataSource {
         Skip: page * rowsPerPage,
         Take: rowsPerPage,
         TimezoneOffset: 360
-      };
+      });
 
       const response = new GridDataResponse({
         Counter: request.Count,
@@ -93,14 +100,14 @@ export default class LocalDataSource implements IDataSource {
 
       response.Payload = rows;
 
-      resolve({
-        aggregate: response.AggregationPayload,
-        filteredRecordCount: response.FilteredRecordCount,
-        payload: response.Payload,
-        rowsPerPage,
-        searchText,
-        totalRecordCount: response.TotalRecordCount
-      });
+      resolve(new GridResponse({
+        Aggregate: response.AggregationPayload,
+        FilteredRecordCount: response.FilteredRecordCount,
+        Payload: response.Payload,
+        RowsPerPage: rowsPerPage,
+        SearchText: searchText,
+        TotalRecordCount: response.TotalRecordCount
+      }));
     })
 
   public handleError(error: any) {
@@ -115,7 +122,7 @@ export default class LocalDataSource implements IDataSource {
   }
 
   public applyFreeTextSearch(request: any, subset: any[]) {
-    if (request.Search && request.Search.Operator.toLowerCase() === CompareOperators.auto) {
+    if (request.Search && request.Search.Operator.toLowerCase() === CompareOperators.AUTO.toLowerCase()) {
       const searchableColumns = _.filter(request.Columns, 'Searchable');
 
       if (searchableColumns.length > 0) {
@@ -133,13 +140,13 @@ export default class LocalDataSource implements IDataSource {
   public applyFiltering(request: any, subset: any[]) {
     const filteredColumns  = request.Columns.filter((column: any) =>
       column.Filter && (column.Filter.Text || column.Filter.Argument) &&
-      column.Filter && column.Filter.Operator.toLowerCase() !== CompareOperators.none);
+      column.Filter && column.Filter.Operator.toLowerCase() !== CompareOperators.NONE.toLowerCase());
 
     filteredColumns.forEach((filterableColumn: any) => {
       request.Columns.find((column: any) => column.Name === filterableColumn.Name).HasFilter = true;
 
       switch (filterableColumn.Filter.Operator.toLowerCase()) {
-        case CompareOperators.equals:
+        case CompareOperators.EQUALS.toLowerCase():
           if (filterableColumn.DataType === 'datetime' ||
             filterableColumn.DataType === 'date' ||
             filterableColumn.DataType === 'datetimeutc') {
@@ -149,32 +156,32 @@ export default class LocalDataSource implements IDataSource {
               subset = subset.filter((row) => row[filterableColumn.Name] === filterableColumn.Filter.Text);
             }
           break;
-        case CompareOperators.notEquals:
+        case CompareOperators.NOT_EQUALS.toLowerCase():
           subset = subset.filter((row) => row[filterableColumn.Name] !== filterableColumn.Filter.Text);
           break;
-        case CompareOperators.contains:
+        case CompareOperators.CONTAINS.toLowerCase():
           subset = subset.filter((row) => row[filterableColumn.Name].indexOf(filterableColumn.Filter.Text) >= 0);
           break;
-        case CompareOperators.notContains:
+        case CompareOperators.NOT_CONTAINS.toLowerCase():
           subset = subset.filter((row) => row[filterableColumn.Name].indexOf(filterableColumn.Filter.Text) < 0);
           break;
-        case CompareOperators.startsWith:
+        case CompareOperators.STARTS_WITH.toLowerCase():
           subset = subset.filter((row) =>
             row[filterableColumn.Name].toLowerCase().startsWith(filterableColumn.Filter.Text.toLowerCase()));
           break;
-        case CompareOperators.notStartsWith:
+        case CompareOperators.NOT_STARTS_WITH.toLowerCase():
           subset = subset.filter((row) =>
             !row[filterableColumn.Name].toLowerCase().startsWith(filterableColumn.Filter.Text.toLowerCase()));
           break;
-        case CompareOperators.endsWith:
+        case CompareOperators.ENDS_WITH.toLowerCase():
           subset = subset.filter((row) =>
             row[filterableColumn.Name].toLowerCase().endsWith(filterableColumn.Filter.Text.toLowerCase()));
           break;
-        case CompareOperators.notEndsWith:
+        case CompareOperators.NOT_ENDS_WITH.toLowerCase():
           subset = subset.filter((row) =>
             !row[filterableColumn.Name].toLowerCase().endsWith(filterableColumn.Filter.Text.toLowerCase()));
           break;
-        case CompareOperators.gt:
+        case CompareOperators.GT.toLowerCase():
           if (filterableColumn.DataType === 'datetime' ||
               filterableColumn.DataType === 'date' ||
               filterableColumn.DataType === 'datetimeutc') {
@@ -184,7 +191,7 @@ export default class LocalDataSource implements IDataSource {
               subset = subset.filter((row) => row[filterableColumn.Name] > filterableColumn.Filter.Text);
             }
           break;
-        case CompareOperators.gte:
+        case CompareOperators.GTE.toLowerCase():
           if (filterableColumn.DataType === 'datetime' ||
               filterableColumn.DataType === 'date' ||
               filterableColumn.DataType === 'datetimeutc') {
@@ -194,7 +201,7 @@ export default class LocalDataSource implements IDataSource {
               subset = subset.filter((row) => row[filterableColumn.Name] >= filterableColumn.Filter.Text);
             }
           break;
-        case CompareOperators.lt:
+        case CompareOperators.LT.toLowerCase():
           if (filterableColumn.DataType === 'datetime' ||
               filterableColumn.DataType === 'date' ||
               filterableColumn.DataType === 'datetimeutc') {
@@ -204,7 +211,7 @@ export default class LocalDataSource implements IDataSource {
               subset = subset.filter((row) => row[filterableColumn.Name] < filterableColumn.Filter.Text);
             }
           break;
-        case CompareOperators.lte:
+        case CompareOperators.LTE.toLowerCase():
           if (filterableColumn.DataType === 'datetime' ||
               filterableColumn.DataType === 'date' ||
               filterableColumn.DataType === 'datetimeutc') {
@@ -214,7 +221,7 @@ export default class LocalDataSource implements IDataSource {
               subset = subset.filter((row) => row[filterableColumn.Name] <= filterableColumn.Filter.Text);
             }
           break;
-        case CompareOperators.between:
+        case CompareOperators.BETWEEN.toLowerCase():
           if (filterableColumn.DataType === 'datetime' ||
               filterableColumn.DataType === 'date' ||
               filterableColumn.DataType === 'datetimeutc') {
@@ -246,7 +253,8 @@ export default class LocalDataSource implements IDataSource {
 
       _.forEachRight(sortedColumns, (column) => {
         columns.push(column.Name);
-        orders.push((column.SortDirection === SortDirection.ascending ? 'asc' : 'desc'));
+
+        orders.push((column.SortDirection === ColumnSortDirection.ASCENDING ? 'asc' : 'desc'));
       });
 
       subset = _.orderBy(subset, columns, orders);
@@ -259,28 +267,28 @@ export default class LocalDataSource implements IDataSource {
 
   public getAggregatePayload(request: any, subset: any[]) {
     const aggregateColumns = _.filter(request.Columns, (column) =>
-      column.Aggregate && column.Aggregate.toLowerCase() !== AggregateFunctions.none);
+      column.Aggregate && column.Aggregate.toLowerCase() !== AggregateFunctions.NONE.toLowerCase());
 
     const results = _.map(aggregateColumns, (column) => {
       let value;
 
       switch (column.Aggregate.toLowerCase()) {
-        case AggregateFunctions.sum:
+        case AggregateFunctions.SUM.toLowerCase():
           value = _.sumBy(subset, column.Name);
           break;
-        case AggregateFunctions.average:
+        case AggregateFunctions.AVERAGE.toLowerCase():
           value = _.meanBy(subset, column.Name);
           break;
-        case AggregateFunctions.max:
+        case AggregateFunctions.MAX.toLowerCase():
           value = _.maxBy(subset, column.Name)[column.Name];
           break;
-        case AggregateFunctions.min:
+        case AggregateFunctions.MIN.toLowerCase():
           value = _.minBy(subset, column.Name)[column.Name];
           break;
-        case AggregateFunctions.count:
+        case AggregateFunctions.COUNT.toLowerCase():
           value = subset.length;
           break;
-        case AggregateFunctions.distinctCount:
+        case AggregateFunctions.DISTINCT_COUNT.toLowerCase():
           value = _.uniqWith(subset, (a, b) => {
             return a[column.Name] === b[column.Name];
           }).length;
@@ -297,7 +305,7 @@ export default class LocalDataSource implements IDataSource {
 
   /** Private methods */
 
-  private normalizeColumns = (columns: any[]) =>
+  private normalizeColumns = (columns: ColumnModel[]) =>
     columns.map((column) => {
       const obj = Object.assign({}, LocalDataSource.defaultColumnValues, column);
 
@@ -306,7 +314,7 @@ export default class LocalDataSource implements IDataSource {
           Argument: [],
           HasFilter: false,
           Name: obj.Name,
-          Operator: 'None',
+          Operator: CompareOperators.NONE,
           OptionsUrl: null,
           Text: null
         };

@@ -2,8 +2,6 @@
 import { TableCell, TableRow } from 'material-ui/Table';
 import * as moment from 'moment';
 import * as React from 'react';
-import LocalDataSource from '../../src/Grid/LocalDataSource';
-import localData from './localData';
 import Grid, {
   AggregateFunctions,
   ColumnDataType,
@@ -11,6 +9,8 @@ import Grid, {
   ColumnSortDirection,
   RemoteDataSource
 } from '../../src/Grid';
+import LocalDataSource from '../../src/Grid/LocalDataSource';
+import localData from './localData';
 
 const columns = [
   new ColumnModel( 'OrderID',
