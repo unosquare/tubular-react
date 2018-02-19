@@ -15,25 +15,16 @@ import GridDataResponse from './utils/GridDataResponse';
 
 export default class LocalDataSource implements IDataSource {
 
-  public static defaultColumnValues = {
-    Aggregate: AggregateFunctions.NONE,
-    DataType: ColumnDataType.STRING,
-    IsKey: false,
-    Searchable: false,
-    Sortable: false,
-    Visible: true
-  };
-
+  public static counter: number;
   public columns: ColumnModel[];
   public dataStream: any;
   public localData: any[];
-  public counter: number;
 
   constructor(localData: any[], columns: ColumnModel[]) {
     this.localData = localData;
     this.dataStream = new Rx.BehaviorSubject({ Payload: [] });
     this.columns = columns;
-    this.counter = 0;
+    LocalDataSource.counter = 0;
   }
 
   public connect(rowsPerPage: number, page: number, searchText: string) {
@@ -51,7 +42,7 @@ export default class LocalDataSource implements IDataSource {
 
       const request = new GridRequest({
         Columns: this.columns,
-        Count: this.counter++,
+        Count: LocalDataSource.counter++,
         Search: {
           Operator: 'Auto',
           Text: searchText ? searchText : ''

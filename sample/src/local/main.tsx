@@ -7,9 +7,8 @@ import Grid, {
   ColumnDataType,
   ColumnModel,
   ColumnSortDirection,
-  RemoteDataSource
+  LocalDataSource
 } from '../../../src/Grid';
-import LocalDataSource from '../../../src/Grid/LocalDataSource';
 import localData from './localData';
 
 const columns = [
@@ -42,7 +41,7 @@ const columns = [
 
 export default class Main extends React.Component {
   public render() {
-    const dataSource =  new LocalDataSource(localData, columns);
+    const dataSource = new LocalDataSource(localData, columns);
 
     return (
       <Grid
