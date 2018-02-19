@@ -54,7 +54,6 @@ export default class RemoteDataSource implements IDataSource {
       if (response.data === undefined || !this.isValidResponse(response.data)) {
         throw new Error('It\'s not a valid Tubular response object');
       }
-
       const data = response.data.Payload;
       const rows = data.map((row: any) => {
         const obj: any = {};
@@ -78,14 +77,6 @@ export default class RemoteDataSource implements IDataSource {
       reject(error);
     });
   })
-
-  public handleError(error: any) {
-    if (error.status === 404) {
-      throw new Error('Keys were not found');
-    } else if (error.status === 500) {
-      throw new Error('Internal server error');
-    }
-  }
 
   public isValidResponse(response: object) {
     const expectedStructure: any = {
@@ -112,6 +103,14 @@ export default class RemoteDataSource implements IDataSource {
       .catch( (error) => {
         this.handleError(error);
       }) ;
+  }
+
+  public handleError(error: any) {
+    if (error.response.status === 404) {
+      throw new Error('Keys were not found');
+    } else if (error.response.status === 500) {
+      throw new Error('Internal server error');
+    }
   }
 
   private normalizeColumns = (columns: ColumnModel[]) =>

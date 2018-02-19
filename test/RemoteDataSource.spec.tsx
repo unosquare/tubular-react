@@ -1,9 +1,9 @@
 
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { expect } from 'chai';
+import { assert, expect } from 'chai';
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
-import { validColumnsSample } from './utils/columns';
+import { invalidColumnsSample, validColumnsSample } from './utils/columns';
 import {
   descendingExpected,
   invalidResponseStructure,
@@ -176,6 +176,36 @@ describe('RemoteDateSource', () => {
           });
         });
       });
+    });
+  });
+
+  describe('When columns structure is invalid', () => {
+    beforeEach(() => {
+      dataSource =
+        new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', invalidColumnsSample);
+    });
+
+    afterEach(() => {
+      mock.reset();
+    });
+
+    describe('With an invalid response', () => {
+      beforeEach(() => {
+        mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', twentyRecordsRequest).reply(200, {
+          AggregationPayload: twentyRecordsExpected.AggregationPayload,
+          Counter: twentyRecordsExpected.Counter,
+          CurrentPage: twentyRecordsExpected.CurrentPage,
+          FilteredRecordCount: twentyRecordsExpected.FilteredRecordCount
+        });
+      });
+
+      it('throws an Error', () => {
+        return dataSource.getAllRecords(20, 0, '')
+          .catch((error) =>
+            expect(error instanceof Error).to.be.equal(true)
+          );
+        }
+      );
     });
   });
 });
