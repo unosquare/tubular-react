@@ -24,7 +24,7 @@ export default class RemoteDataSource implements IDataSource {
     this.url = url;
     this.counter = 0;
     this.dataStream = new Rx.BehaviorSubject({ Payload: [] });
-    this.columns = columns.map((x) => x.normalizeColumns());
+    this.columns = columns;
   }
 
   public connect(rowsPerPage: number, page: number, searchText: string) {

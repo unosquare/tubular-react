@@ -32,7 +32,7 @@ export default class LocalDataSource implements IDataSource {
   constructor(localData: any[], columns: ColumnModel[]) {
     this.localData = localData;
     this.dataStream = new Rx.BehaviorSubject({ Payload: [] });
-    this.columns = columns.map((x) => x.normalizeColumns());
+    this.columns = columns;
     this.counter = 0;
   }
 
