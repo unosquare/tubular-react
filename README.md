@@ -29,27 +29,31 @@ $ npm install tubular-react --save
 ```
 ## Example
 ```js
-import Grid, { RemoteDataSource } from 'tubular-react';
+import Grid, {
+  AggregateFunctions,
+  ColumnDataType,
+  ColumnModel,
+  ColumnSortDirection,
+  RemoteDataSource
+} from 'tubular-react';
 import React from 'react';
 
 const columns = [
-   {
-    Label: 'Order ID',
-    Name: 'OrderID',
-    Sortable: true,
-    SortOrder: 1,
-    SortDirection: 'Ascending',
-    IsKey: true,
-    Searchable: false,
-    DataType: 'numeric',
-  },
-  {
-    Label: 'Customer Name',
-    Name: 'CustomerName',
-    IsKey: false,
-    Filtering: true,
-    Aggregate: 'Count'
-  }
+  new ColumnModel( 'OrderID',
+    { DataType: ColumnDataType.NUMERIC,
+      Filtering: true,
+      IsKey: true,
+      Label: 'ID',
+      SortDirection: ColumnSortDirection.ASCENDING,
+      SortOrder: 1,
+      Sortable: true }
+  ),
+  new ColumnModel( 'CustomerName',
+    { Aggregate: AggregateFunctions.COUNT,
+      Filtering: true,
+      Searchable: true,
+      Sortable: true }
+  )
 ];
 
 class CustomComponent extends React.Component {
@@ -111,23 +115,26 @@ These are all the available props (and their default values) for the `<Grid />` 
 
 ```
 
-### DataSource
-`<Grid/>` requires a dataSource prop which is an instance of the `RemoteDataSource` class, that deals with data retrieval among other things. At the same time, `RemoteDataSource` needs both a URL and a columns variable in its constructor. The expected `column` structure (and the default values) is the following:
+### `DataSource`
+`<Grid/>` requires a dataSource prop which is an instance of the `RemoteDataSource` class, that deals with data retrieval among other things. At the same time, `RemoteDataSource` needs both a URL and a `ColumnModel` array.
 
+### `ColumnModel` 
+It represents a `Grid` column and its constructor requires an identifier as well as an object of column options with this properties and default values:
 ```js
 {
-  Name: undefined, // required
-  Label: undefined, //required
-  Sortable: false,
-  SortOrder: undefined, //required only if Sortable is true
-  SortDirection: undefined, //required only if Sortable is true
-  Searchable: true,
-  Visible: true,
-  IsKey: false,
-  DataType: 'string',
-  Filtering: false
+    Aggregate: AggregateFunctions.NONE;
+    DataType: ColumnDataType.STRING;
+    Filtering: false;
+    IsKey: boolean;
+    Label: string;
+    Searchable: false;
+    SortDirection: ColumnSortDirection.NONE;
+    SortOrder: number;
+    Sortable: false;
+    Visible: true;
 }
 ```
+
 
 
 ## Run integrated sample
@@ -137,6 +144,6 @@ There is a sample included in this project, you can run it just by doing the fol
 ```
 // Install all the dependencies
 npm install
-// Runs the sample project
+// Run the sample project
 npm start
 ```
