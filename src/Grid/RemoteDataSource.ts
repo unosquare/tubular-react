@@ -100,16 +100,25 @@ export default class RemoteDataSource implements IDataSource {
       .then( (data) => {
         this.dataStream.onNext(data);
       })
-      .catch( (error) => {
-        this.handleError(error);
+      .catch( (e) => {
+        this.handleError(e);
       }) ;
   }
 
   public handleError(error: any) {
-    if (error.response.status === 404) {
-      throw new Error('Keys were not found');
-    } else if (error.response.status === 500) {
-      throw new Error('Internal server error');
+    switch (error.response.status) {
+      case 400:
+        throw new Error('There was a client error');
+      case 401:
+        throw new Error('Authentication is required');
+      case 403:
+        throw new Error('Access Denied/Forbidden');
+      case 404:
+        throw new Error('Keys were not found');
+      case 500:
+        throw new Error('Internal server error');
+      default:
+        throw new Error('There was an Error ' + error.response.status );
     }
   }
 
