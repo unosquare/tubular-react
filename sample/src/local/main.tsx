@@ -47,7 +47,7 @@ export default class Main extends React.Component {
     return (
       <Grid
         dataSource={dataSource}
-        gridName='Motorhead'
+        gridName='Tubular-React'
         bodyRenderer={
           (row, index) =>
             <TableRow hover={true} key={index}>

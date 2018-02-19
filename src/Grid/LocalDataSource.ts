@@ -12,6 +12,7 @@ import {
 import GridRequest from './GridRequest';
 import GridResponse from './GridResponse';
 import GridDataResponse from './utils/GridDataResponse';
+import Utils from './utils/Utils';
 
 export default class LocalDataSource implements IDataSource {
 
@@ -28,11 +29,12 @@ export default class LocalDataSource implements IDataSource {
   public dataStream: any;
   public localData: any[];
   public counter: number;
+  public utilsObj: Utils = new Utils();
 
   constructor(localData: any[], columns: ColumnModel[]) {
     this.localData = localData;
     this.dataStream = new Rx.BehaviorSubject({ Payload: [] });
-    this.columns = this.normalizeColumns(columns);
+    this.columns = this.utilsObj.normalizeColumns(columns);
     this.counter = 0;
   }
 
@@ -308,25 +310,4 @@ export default class LocalDataSource implements IDataSource {
 
     return _.reduce(results, _.merge, {});
   }
-
-  /** Private methods */
-
-  private normalizeColumns = (columns: ColumnModel[]) =>
-    columns.map((column) => {
-      const obj = Object.assign({}, LocalDataSource.defaultColumnValues, column);
-
-      if (column.Filtering) {
-        obj.Filter = {
-          Argument: [],
-          HasFilter: false,
-          Name: obj.Name,
-          Operator: CompareOperators.NONE,
-          OptionsUrl: null,
-          Text: null
-        };
-      }
-      delete obj.Filtering;
-
-      return obj;
-    })
 }

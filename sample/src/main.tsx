@@ -9,8 +9,6 @@ import Grid, {
   ColumnSortDirection,
   RemoteDataSource
 } from '../../src/Grid';
-import LocalDataSource from '../../src/Grid/LocalDataSource';
-import localData from './localData';
 
 const columns = [
   new ColumnModel( 'OrderID',
@@ -47,7 +45,7 @@ export default class Main extends React.Component {
     return (
       <Grid
         dataSource={dataSource}
-        gridName='Motorhead'
+        gridName='Tubular-React'
         bodyRenderer={
           (row, index) =>
             <TableRow hover={true} key={index}>
