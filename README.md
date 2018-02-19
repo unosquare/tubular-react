@@ -119,7 +119,7 @@ These are all the available props (and their default values) for the `<Grid />` 
 `<Grid/>` requires a dataSource prop which is an instance of the `RemoteDataSource` class, that deals with data retrieval among other things. At the same time, `RemoteDataSource` needs both a URL and a `ColumnModel` array.
 
 ### `ColumnModel` 
-It represents a `Grid` column and its constructor requires an identifier as well as an object of column options with this properties and default values:
+It represents a `Grid` column and its constructor requires an identifier as well as an object of column options with these properties and default values:
 ```js
 {
     Aggregate: AggregateFunctions.NONE;
