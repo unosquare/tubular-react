@@ -122,21 +122,54 @@ These are all the available props (and their default values) for the `<Grid />` 
 It represents a `Grid` column and its constructor requires an identifier as well as an object of column options with these properties and default values:
 ```js
 {
-    Aggregate: AggregateFunctions.NONE;
-    DataType: ColumnDataType.STRING;
-    Filtering: false;
-    IsKey: boolean;
-    Label: string;
-    Searchable: false;
-    SortDirection: ColumnSortDirection.NONE;
-    SortOrder: number;
-    Sortable: false;
-    Visible: true;
+    Aggregate: AggregateFunctions.NONE,
+    DataType: ColumnDataType.STRING,
+    Filtering: false,
+    IsKey: boolean,
+    Label: string,
+    Searchable: false,
+    SortDirection: ColumnSortDirection.NONE,
+    SortOrder: number,
+    Sortable: false,
+    Visible: true,
 }
 ```
 
+### AggregateFunctions
 
+```js
+{
+  NONE,
+  SUM,
+  AVERAGE,
+  COUNT,
+  DISTINCT_COUNT,
+  MAX,
+  MIN
+}
+```
+### ColumnDataType
 
+```js
+{
+    STRING,
+    NUMERIC,
+    BOOLEAN,
+    DATE,
+    DATE_TIME,
+    DATE_TIME_UTC
+}
+```
+
+### ColumnSortDirection
+
+```js
+{
+    NONE,
+    ASCENDING,
+    DESCENDING
+}
+```
 ## Run integrated sample
 
 There is a sample included in this project, you can run it just by doing the following.
