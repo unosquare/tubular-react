@@ -40,4 +40,22 @@ export default class ColumnModel {
     this.Sortable = options && options.Sortable || false;
     this.Visible = options && options.Visible || true;
   }
+
+  public normalizeColumns() {
+    const obj = Object.assign({}, ColumnModel.defaultColumnValues, this);
+
+    if (this.Filtering) {
+      obj.Filter = {
+        Argument: [],
+        HasFilter: false,
+        Name: obj.Name,
+        Operator: 'None',
+        OptionsUrl: null,
+        Text: null
+      };
+    }
+    delete obj.Filtering;
+
+    return obj;
+  }
 }

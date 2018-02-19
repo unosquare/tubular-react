@@ -12,7 +12,6 @@ import {
 import GridRequest from './GridRequest';
 import GridResponse from './GridResponse';
 import GridDataResponse from './utils/GridDataResponse';
-import Utils from './utils/Utils';
 
 export default class LocalDataSource implements IDataSource {
 
@@ -29,12 +28,11 @@ export default class LocalDataSource implements IDataSource {
   public dataStream: any;
   public localData: any[];
   public counter: number;
-  public utilsObj: Utils = new Utils();
 
   constructor(localData: any[], columns: ColumnModel[]) {
     this.localData = localData;
     this.dataStream = new Rx.BehaviorSubject({ Payload: [] });
-    this.columns = this.utilsObj.normalizeColumns(columns);
+    this.columns = columns.map((x) => x.normalizeColumns());
     this.counter = 0;
   }
 

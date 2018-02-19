@@ -4,7 +4,6 @@ import { AggregateFunctions, ColumnDataType, CompareOperators } from './Column';
 import ColumnModel from './ColumnModel';
 import GridRequest from './GridRequest';
 import GridResponse from './GridResponse';
-import Utils from './utils/Utils';
 
 export default class RemoteDataSource implements IDataSource {
   public static defaultColumnValues = {
@@ -20,13 +19,12 @@ export default class RemoteDataSource implements IDataSource {
   public dataStream: any;
   public url: string;
   public counter: number;
-  public utilsObj: Utils = new Utils();
 
   constructor(url: string, columns: ColumnModel[]) {
     this.url = url;
     this.counter = 0;
     this.dataStream = new Rx.BehaviorSubject({ Payload: [] });
-    this.columns = this.utilsObj.normalizeColumns(columns);
+    this.columns = columns.map((x) => x.normalizeColumns());
   }
 
   public connect(rowsPerPage: number, page: number, searchText: string) {
