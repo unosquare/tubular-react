@@ -135,41 +135,6 @@ It represents a `Grid` column and its constructor requires an identifier as well
 }
 ```
 
-### AggregateFunctions
-
-```js
-{
-  NONE,
-  SUM,
-  AVERAGE,
-  COUNT,
-  DISTINCT_COUNT,
-  MAX,
-  MIN
-}
-```
-### ColumnDataType
-
-```js
-{
-    STRING,
-    NUMERIC,
-    BOOLEAN,
-    DATE,
-    DATE_TIME,
-    DATE_TIME_UTC
-}
-```
-
-### ColumnSortDirection
-
-```js
-{
-    NONE,
-    ASCENDING,
-    DESCENDING
-}
-```
 ## Run integrated sample
 
 There is a sample included in this project, you can run it just by doing the following.
