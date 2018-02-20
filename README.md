@@ -19,9 +19,7 @@ If you are looking for Angular2 components, check [Tubular2](https://github.com/
 Please visit the [Tubular GitHub Page](http://unosquare.github.io/tubular) to learn how quickly you can start coding. Don't forget to check out the Tubular Generator which quickly turns models into an awesome UIs!
 
 ## Dependencies
-* [React](https://reactjs.org/) - 15.x or 16.x
 * [Material-UI](https://material-ui-next.com/) - Next
-* [ReactDOM](https://reactjs.org/docs/react-dom.html) - 15.x or 16.x
 
 ## npm Installation 
 ```
