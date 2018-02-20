@@ -7,8 +7,9 @@ import Grid, {
   ColumnDataType,
   ColumnModel,
   ColumnSortDirection,
-  RemoteDataSource
-} from '../../src/Grid';
+  LocalDataSource
+} from '../../../src/Grid';
+import localData from './localData';
 
 const columns = [
   new ColumnModel( 'OrderID',
@@ -40,7 +41,7 @@ const columns = [
 
 export default class Main extends React.Component {
   public render() {
-    const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns);
+    const dataSource = new LocalDataSource(localData, columns);
 
     return (
       <Grid

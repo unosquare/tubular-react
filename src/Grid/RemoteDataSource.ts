@@ -6,28 +6,17 @@ import GridRequest from './GridRequest';
 import GridResponse from './GridResponse';
 
 export default class RemoteDataSource implements IDataSource {
-  public static defaultColumnValues = {
-    Aggregate: AggregateFunctions.NONE,
-    DataType: ColumnDataType.STRING,
-    IsKey: false,
-    Searchable: false,
-    Sortable: false,
-    Visible: true
-  };
 
   public columns: ColumnModel[];
-
   public dataStream: any;
-
   public url: string;
-
   public counter: number;
 
   constructor(url: string, columns: ColumnModel[]) {
     this.url = url;
     this.counter = 0;
     this.dataStream = new Rx.BehaviorSubject({ Payload: [] });
-    this.columns = this.normalizeColumns(columns);
+    this.columns = columns;
   }
 
   public connect(rowsPerPage: number, page: number, searchText: string) {
@@ -113,21 +102,4 @@ export default class RemoteDataSource implements IDataSource {
         this.handleError(error);
       }) ;
   }
-
-  private normalizeColumns = (columns: ColumnModel[]) =>
-    columns.map((column) => {
-      const obj = Object.assign({}, RemoteDataSource.defaultColumnValues, column);
-      if (column.Filtering) {
-        obj.Filter = {
-          Argument: [],
-          HasFilter: false,
-          Name: obj.Name,
-          Operator: CompareOperators.NONE,
-          OptionsUrl: null,
-          Text: null
-        };
-      }
-      delete obj.Filtering;
-      return obj;
-    })
 }
