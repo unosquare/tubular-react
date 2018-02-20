@@ -117,19 +117,19 @@ These are all the available props (and their default values) for the `<Grid />` 
 
 ### `ColumnModel` 
 It represents a `Grid` column and its constructor requires an identifier as well as an object of column options with these properties and default values:
-```js
-{
-    Aggregate: AggregateFunctions.NONE,
-    DataType: ColumnDataType.STRING,
-    Filtering: false,
-    IsKey: boolean,
-    Label: string,
-    Searchable: false,
-    SortDirection: ColumnSortDirection.NONE,
-    SortOrder: number,
-    Sortable: false,
-    Visible: true,
-}
+
+| Name          | Type             | Default           | Description                                  |
+|---------------|------------------|-------------------|----------------------------------------------|
+| Aggregate     |AggregateFunctions|     NONE          |                                              |
+| DataType      | ColumnDataType   |       STRING      |                                              |
+| Filtering     | bool             | false             |                                              |
+| IsKey         | bool             |  false            |                                              |
+| Label         | string           |                   |                                              |
+| Searchable    | bool             |     true          |                                              |
+| SortDirection |ColumnSortDirection|       NONE       |                                              |
+| SortOrder     | number           |                   |                                              |
+| Sortable      | bool             |                   |                                              |
+| Visible       | boool            |     true          |                                              |
 ```
 
 ## Run integrated sample
