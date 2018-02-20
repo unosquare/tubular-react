@@ -130,7 +130,7 @@ It represents a `Grid` column and its constructor requires an identifier as well
 | SortOrder     | number           |                   |                                              |
 | Sortable      | bool             |                   |                                              |
 | Visible       | boool            |     true          |                                              |
-```
+
 
 ## Run integrated sample
 
