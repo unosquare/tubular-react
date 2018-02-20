@@ -120,12 +120,12 @@ It represents a `Grid` column and its constructor requires an identifier as well
 
 | Name          | Type             | Default           | Description                                  |
 |---------------|------------------|-------------------|----------------------------------------------|
-| Aggregate     |AggregateFunctions|     NONE          |                                              |
+| Aggregate     |AggregateFunctions|     NONE          | The aggregation function that will be applied to this column|
 | DataType      | ColumnDataType   |       STRING      |        the column type                       |
 | Filtering     | bool             | false             |        activates filtering                   |
 | IsKey         | bool             |  false            |   defines if a column is an identifier or not|
 | Label         | string           |                   |     column label that will be shown          |
-| Searchable    | bool             |     true          |indicates that this column can be used to search upon|
+| Searchable    | bool             |     true          |indicates that a column can be used to search upon|
 | SortDirection |ColumnSortDirection|       NONE       |                                              |
 | SortOrder     | number           |                   |                                              |
 | Sortable      | bool             |                   |   determines if a column can be sorted       |
