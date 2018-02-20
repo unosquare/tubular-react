@@ -1,9 +1,9 @@
 
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { assert, expect } from 'chai';
+import { expect } from 'chai';
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
-import { invalidColumnsSample, validColumnsSample } from './utils/columns';
+import { validColumnsSample } from './Mocks/columns';
 import {
   descendingExpected,
   invalidResponseStructure,
@@ -12,14 +12,14 @@ import {
   simpleRecordsExpected,
   twentyRecordsExpected,
   validResponseStructure
-} from './utils/data';
+} from './Mocks/data';
 import {
   descendingRequest,
   onlyMicrosoftRecordsRequest,
   page2Request,
   simpleRequest,
   twentyRecordsRequest
-} from './utils/requests';
+} from './Mocks/requests';
 
 describe('RemoteDateSource', () => {
   let dataSource;
@@ -182,7 +182,7 @@ describe('RemoteDateSource', () => {
   describe('When columns structure is invalid', () => {
     beforeEach(() => {
       dataSource =
-        new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', invalidColumnsSample);
+        new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
     });
 
     afterEach(() => {
@@ -191,7 +191,7 @@ describe('RemoteDateSource', () => {
 
     describe('With an invalid response', () => {
       beforeEach(() => {
-        mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', twentyRecordsRequest).reply(200, {
+        mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(200, {
           AggregationPayload: twentyRecordsExpected.AggregationPayload,
           Counter: twentyRecordsExpected.Counter,
           CurrentPage: twentyRecordsExpected.CurrentPage,
@@ -206,6 +206,56 @@ describe('RemoteDateSource', () => {
           );
         }
       );
+    });
+
+    it('throws an Error 400', (done) => {
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(400);
+      dataSource.refresh(20, 0, '');
+
+      setTimeout( () => {
+        expect(dataSource.message).to.be.equal('There was a client error');
+        done();
+      }, 0);
+    });
+
+    it('throws an Error 401', (done) => {
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(401);
+      dataSource.refresh(20, 0, '');
+
+      setTimeout( () => {
+        expect(dataSource.message).to.be.equal('Authentication is required');
+        done();
+      }, 0);
+    });
+
+    it('throws an Error 403', (done) => {
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(403);
+      dataSource.refresh(20, 0, '');
+
+      setTimeout( () => {
+        expect(dataSource.message).to.be.equal('Access Denied/Forbidden');
+        done();
+      }, 0);
+    });
+
+    it('throws an Error 404', (done) => {
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(404);
+      dataSource.refresh(20, 0, '');
+
+      setTimeout( () => {
+        expect(dataSource.message).to.be.equal('Keys were not found');
+        done();
+      }, 0);
+    });
+
+    it('throws an Error 500', (done) => {
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(500);
+      dataSource.refresh(20, 0, '');
+
+      setTimeout( () => {
+        expect(dataSource.message).to.be.equal('Internal server error');
+        done();
+      }, 0);
     });
   });
 });

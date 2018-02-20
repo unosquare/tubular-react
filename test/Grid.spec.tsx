@@ -12,9 +12,9 @@ import Grid from '../src/Grid/Grid';
 import GridHeader from '../src/Grid/GridHeader';
 import Paginator from '../src/Grid/Paginator';
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
-import { validColumnsSample } from './utils/columns';
-import data from './utils/data';
-import * as orders from './utils/orders';
+import { validColumnsSample } from './Mocks/columns';
+import data from './Mocks/data';
+import * as orders from './Mocks/orders';
 
 const footerRenderer = (aggregates) => (
   <TableFooter>

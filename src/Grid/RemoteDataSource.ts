@@ -23,9 +23,12 @@ export default class RemoteDataSource implements IDataSource {
 
   public counter: number;
 
+  public message: string;
+
   constructor(url: string, columns: ColumnModel[]) {
     this.url = url;
     this.counter = 0;
+    this.message = '';
     this.dataStream = new Rx.BehaviorSubject({ Payload: [] });
     this.columns = this.normalizeColumns(columns);
   }
@@ -99,26 +102,27 @@ export default class RemoteDataSource implements IDataSource {
     this.getAllRecords(rowsPerPage, page, searchText)
       .then( (data) => {
         this.dataStream.onNext(data);
+        this.message = '';
       })
       .catch( (e) => {
-        this.handleError(e);
-      }) ;
+        this.message = this.handleError(e);
+      });
   }
 
-  public handleError(error: any) {
+  public handleError(error: any): string {
     switch (error.response.status) {
       case 400:
-        throw new Error('There was a client error');
+        return 'There was a client error';
       case 401:
-        throw new Error('Authentication is required');
+        return 'Authentication is required';
       case 403:
-        throw new Error('Access Denied/Forbidden');
+        return 'Access Denied/Forbidden';
       case 404:
-        throw new Error('Keys were not found');
+        return 'Keys were not found';
       case 500:
-        throw new Error('Internal server error');
+        return 'Internal server error';
       default:
-        throw new Error('There was an Error ' + error.response.status );
+        return 'There was an Error ' + error.response.status ;
     }
   }
 
