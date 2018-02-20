@@ -25,7 +25,7 @@ Please visit the [Tubular GitHub Page](http://unosquare.github.io/tubular) to le
 ```
 $ npm install tubular-react --save
 ```
-## Example
+## Using the *`<Grid/>`* component
 ```js
 import Grid, {
   AggregateFunctions,
@@ -98,20 +98,19 @@ Using a custom body and footer renderer
 
 ### Props 
 These are all the available props (and their default values) for the `<Grid />` component.
-```js
-{
-  bodyRenderer: undefined,
-  dataSource: undefined, //required
-  footerRenderer: undefined,  
-  gridName: undefined, // required
-  rowsPerpage: 10,
-  showPrintButton: false,
-  showExportButton: false,
-  showTopPager: false,
-  showBottomPager: false,
-}
 
-```
+| Name                 | Type                               | Default           | Description                                  |
+|----------------------|------------------------------------|-------------------|----------------------------------------------|
+| datasource           | RemoteDataSource or LocalDataSource|                   |                         |
+| gridName             | string                             | ''                |                               |      
+| rowsPerPage          | number                             |     10            |                                              |
+| showBottomPager      | bool                               | false             |                                              |
+| showTopPager         | bool                               | false             |                                              |
+| showPrintButton      | bool                               | false             |                                              |
+| showExportButton     | bool                               | false             |                                              |
+| bodyRenderer         | function                           |                   |                                              |
+| footerRenderer       | function                           |                   |                                              |
+
 
 ### `DataSource`
 `<Grid/>` requires a dataSource prop which is an instance of the `RemoteDataSource` class, that deals with data retrieval among other things. At the same time, `RemoteDataSource` needs both a URL and a `ColumnModel` array.
