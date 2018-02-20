@@ -121,15 +121,15 @@ It represents a `Grid` column and its constructor requires an identifier as well
 | Name          | Type             | Default           | Description                                  |
 |---------------|------------------|-------------------|----------------------------------------------|
 | Aggregate     |AggregateFunctions|     NONE          |                                              |
-| DataType      | ColumnDataType   |       STRING      |                                              |
-| Filtering     | bool             | false             |                                              |
-| IsKey         | bool             |  false            |                                              |
-| Label         | string           |                   |                                              |
-| Searchable    | bool             |     true          |                                              |
+| DataType      | ColumnDataType   |       STRING      |        the column type                       |
+| Filtering     | bool             | false             |        activates filtering                   |
+| IsKey         | bool             |  false            |   defines if a column is an identifier or not|
+| Label         | string           |                   |     column label that will be shown          |
+| Searchable    | bool             |     true          |indicates that this column can be used to search upon|
 | SortDirection |ColumnSortDirection|       NONE       |                                              |
 | SortOrder     | number           |                   |                                              |
-| Sortable      | bool             |                   |                                              |
-| Visible       | boool            |     true          |                                              |
+| Sortable      | bool             |                   |   determines if a column can be sorted       |
+| Visible       | bool             |     true          |  specifies if a column should be shown       |
 
 
 ## Run integrated sample
