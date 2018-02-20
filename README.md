@@ -1,4 +1,5 @@
-  [![Analytics](https://ga-beacon.appspot.com/UA-8535255-2/unosquare/tubular-react/)](https://github.com/igrigorik/ga-beacon)
+ [![Analytics](https://ga-beacon.appspot.com/UA-8535255-2/unosquare/tubular-react/)](https://github.com/igrigorik/ga-beacon)
+ [![npm version](https://badge.fury.io/js/tubular-react.svg)](https://badge.fury.io/js/tubular-react)
  [![Build Status](https://travis-ci.org/unosquare/tubular-react.svg?branch=master)](https://travis-ci.org/unosquare/tubular-react)
  [![Coverage Status](https://coveralls.io/repos/github/unosquare/tubular-react/badge.svg?branch=master)](https://coveralls.io/github/unosquare/tubular-react?branch=master)
  
@@ -99,17 +100,17 @@ Using a custom body and footer renderer
 ### Props 
 These are all the available props (and their default values) for the `<Grid />` component.
 
-| Name           | Type                               | Default   | Description                                  |
-|----------------|------------------------------------|-----------|----------------------------------------------|
-| datasource     | RemoteDataSource or LocalDataSource|           |    **Required**                              |
-| gridName       | string                             | ''        |                                              |      
-| rowsPerPage    | number                             |     10    |                                              |
-| showBottomPager| bool                               | false     |                                              |
-| showTopPager   | bool                               | false     |                                              |
-| showPrintButton| bool                               | false     |                                              |
-|showExportButton| bool                               | false     |                                              |
-| bodyRenderer   | function                           |           |                                              |
-| footerRenderer | function                           |           |                                              |
+| Name           | Type                                   | Default   | Description                                  |
+|----------------|----------------------------------------|-----------|----------------------------------------------|
+| datasource     | `RemoteDataSource` or `LocalDataSource`|           |    **Required**                              |
+| gridName       | `string`                               | ''        |                                              |      
+| rowsPerPage    | `number`                               |     10    |                                              |
+| showBottomPager| `bool`                                 | `false`   |                                              |
+| showTopPager   | `bool`                                 |` false`   |                                              |
+| showPrintButton| `bool`                                 | `false`   |                                              |
+|showExportButton| `bool`                                 | `false`   |                                              |
+| bodyRenderer   | `function`                             |           |                                              |
+| footerRenderer | `function`                             |           |                                              |
 
 
 ### `DataSource`
