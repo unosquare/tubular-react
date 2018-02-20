@@ -99,17 +99,17 @@ Using a custom body and footer renderer
 ### Props 
 These are all the available props (and their default values) for the `<Grid />` component.
 
-| Name                 | Type                               | Default           | Description                                  |
-|----------------------|------------------------------------|-------------------|----------------------------------------------|
-| datasource           | RemoteDataSource or LocalDataSource|                   |                         |
-| gridName             | string                             | ''                |                               |      
-| rowsPerPage          | number                             |     10            |                                              |
-| showBottomPager      | bool                               | false             |                                              |
-| showTopPager         | bool                               | false             |                                              |
-| showPrintButton      | bool                               | false             |                                              |
-| showExportButton     | bool                               | false             |                                              |
-| bodyRenderer         | function                           |                   |                                              |
-| footerRenderer       | function                           |                   |                                              |
+| Name           | Type                               | Default   | Description                                  |
+|----------------|------------------------------------|-----------|----------------------------------------------|
+| datasource     | RemoteDataSource or LocalDataSource|           |    **Required**                              |
+| gridName       | string                             | ''        |                                              |      
+| rowsPerPage    | number                             |     10    |                                              |
+| showBottomPager| bool                               | false     |                                              |
+| showTopPager   | bool                               | false     |                                              |
+| showPrintButton| bool                               | false     |                                              |
+|showExportButton| bool                               | false     |                                              |
+| bodyRenderer   | function                           |           |                                              |
+| footerRenderer | function                           |           |                                              |
 
 
 ### `DataSource`
