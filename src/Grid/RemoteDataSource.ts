@@ -12,9 +12,12 @@ export default class RemoteDataSource implements IDataSource {
   public url: string;
   public counter: number;
 
+  public message: string;
+
   constructor(url: string, columns: ColumnModel[]) {
     this.url = url;
     this.counter = 0;
+    this.message = '';
     this.dataStream = new Rx.BehaviorSubject({ Payload: [] });
     this.columns = columns;
   }
@@ -43,7 +46,6 @@ export default class RemoteDataSource implements IDataSource {
       if (response.data === undefined || !this.isValidResponse(response.data)) {
         throw new Error('It\'s not a valid Tubular response object');
       }
-
       const data = response.data.Payload;
       const rows = data.map((row: any) => {
         const obj: any = {};
@@ -68,14 +70,6 @@ export default class RemoteDataSource implements IDataSource {
     });
   })
 
-  public handleError(error: any) {
-    if (error.status === 404) {
-      throw new Error('Keys were not found');
-    } else if (error.status === 500) {
-      throw new Error('Internal server error');
-    }
-  }
-
   public isValidResponse(response: object) {
     const expectedStructure: any = {
       AggregationPayload: null,
@@ -97,9 +91,27 @@ export default class RemoteDataSource implements IDataSource {
     this.getAllRecords(rowsPerPage, page, searchText)
       .then( (data) => {
         this.dataStream.onNext(data);
+        this.message = '';
       })
-      .catch( (error) => {
-        this.handleError(error);
-      }) ;
+      .catch( (e) => {
+        this.message = this.handleError(e);
+      });
+  }
+
+  public handleError(error: any): string {
+    switch (error.response.status) {
+      case 400:
+        return 'There was a client error';
+      case 401:
+        return 'Authentication is required';
+      case 403:
+        return 'Access Denied/Forbidden';
+      case 404:
+        return 'Keys were not found';
+      case 500:
+        return 'Internal server error';
+      default:
+        return 'There was an Error ' + error.response.status ;
+    }
   }
 }
