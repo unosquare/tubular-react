@@ -2,6 +2,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
+import { ColumnSortDirection } from '../src/Grid';
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
 import { validColumnsSample } from './utils/columns';
 import {
@@ -22,15 +23,10 @@ import {
 } from './utils/requests';
 
 describe('RemoteDateSource', () => {
-  let dataSource;
+  const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
   const mock = new MockAdapter(axios);
 
   describe('isValidResponse()', () => {
-    beforeEach(() => {
-      dataSource =
-        new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
-    });
-
     it('should return true when expectedStructure is valid', () => {
       expect(dataSource.isValidResponse(validResponseStructure)).to.be.equal(true);
     });
@@ -43,49 +39,29 @@ describe('RemoteDateSource', () => {
   describe('When columns structure is valid', () => {
     describe('When 20 records are requested', () => {
       beforeEach( () => {
-        dataSource =
-          new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
-
-        mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', twentyRecordsRequest).reply(200, {
-          AggregationPayload: twentyRecordsExpected.AggregationPayload,
-          Counter: twentyRecordsExpected.Counter,
-          CurrentPage: twentyRecordsExpected.CurrentPage,
-          FilteredRecordCount: twentyRecordsExpected.FilteredRecordCount,
-          Payload: twentyRecordsExpected.Payload,
-          TotalPages: twentyRecordsExpected.TotalPages,
-          TotalRecordCount: twentyRecordsExpected.TotalRecordCount
+        mock.reset();
+        mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(200, {
+          ...twentyRecordsExpected
         });
       });
 
       it('Should return a payload with 20 records', () => {
-        return dataSource.getAllRecords(20, 0, '')
-          .then((r) => {
-            expect(r.Payload).to.deep.equal(twentyRecordsExpected.Payload);
-            expect(r.FilteredRecordCount).to.deep.equal(twentyRecordsExpected.FilteredRecordCount);
-            expect(r.TotalRecordCount).to.deep.equal(twentyRecordsExpected.TotalRecordCount);
-            expect(r.Payload).to.have.lengthOf(20);
-          });
+         return dataSource.getAllRecords(20, 0, '').then((e: any) => {
+            expect(e.Payload).to.have.lengthOf(20);
+         });
       });
     });
 
     describe('When search input is Microsoft', () => {
       beforeEach( () => {
-        dataSource =
-          new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
-
-        mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', onlyMicrosoftRecordsRequest).reply(200, {
-          AggregationPayload: onlyMicrosoftExpected.AggregationPayload,
-          Counter: onlyMicrosoftExpected.Counter,
-          CurrentPage: onlyMicrosoftExpected.CurrentPage,
-          FilteredRecordCount: onlyMicrosoftExpected.FilteredRecordCount,
-          Payload: onlyMicrosoftExpected.Payload,
-          TotalPages: onlyMicrosoftExpected.TotalPages,
-          TotalRecordCount: onlyMicrosoftExpected.TotalRecordCount
+        mock.reset();
+        mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(200, {
+          ...onlyMicrosoftExpected
         });
       });
 
       it('Should return a payload with only Microsoft records', () => dataSource.getAllRecords(10, 0, 'Microsoft')
-        .then((r) => {
+        .then((r: any) => {
           expect(r.Payload).to.deep.equal(onlyMicrosoftExpected.Payload);
           expect(r.FilteredRecordCount).to.deep.equal(onlyMicrosoftExpected.FilteredRecordCount);
           expect(r.TotalRecordCount).to.deep.equal(onlyMicrosoftExpected.TotalRecordCount);
@@ -95,25 +71,13 @@ describe('RemoteDateSource', () => {
     describe('When connect is called', () => {
       let response;
 
-      beforeEach( () => {
-        dataSource =
-          new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
-
-        mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', simpleRequest).reply(200, {
-          AggregationPayload: simpleRecordsExpected.AggregationPayload,
-          Counter: simpleRecordsExpected.Counter,
-          CurrentPage: simpleRecordsExpected.CurrentPage,
-          FilteredRecordCount: simpleRecordsExpected.FilteredRecordCount,
-          Payload: simpleRecordsExpected.Payload,
-          TotalPages: simpleRecordsExpected.TotalPages,
-          TotalRecordCount: simpleRecordsExpected.TotalRecordCount
+      before( () => {
+        mock.reset();
+        mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(200, {
+          ...simpleRecordsExpected
         });
 
         dataSource.connect(10, 0, '').subscribe((r) => { response = r; });
-      });
-
-      afterEach(() => {
-        mock.reset();
       });
 
       it('Should return a payload', (done) => {
@@ -128,14 +92,9 @@ describe('RemoteDateSource', () => {
       describe('When refresh is called', () => {
         describe('When page 2 is requested', () => {
           beforeEach( () => {
-            mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', page2Request).reply(200, {
-              AggregationPayload: page2Expected.AggregationPayload,
-              Counter: page2Expected.Counter,
-              CurrentPage: page2Expected.CurrentPage,
-              FilteredRecordCount: page2Expected.FilteredRecordCount,
-              Payload: page2Expected.Payload,
-              TotalPages: page2Expected.TotalPages,
-              TotalRecordCount: page2Expected.TotalRecordCount
+            mock.reset();
+            mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(200, {
+              ...page2Expected
             });
 
             dataSource.refresh(10, 1, '');
@@ -153,16 +112,11 @@ describe('RemoteDateSource', () => {
 
         describe('When sort order is descending', () => {
           beforeEach( () => {
-            mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', descendingRequest).reply(200, {
-              AggregationPayload: descendingExpected.AggregationPayload,
-              Counter: descendingExpected.Counter,
-              CurrentPage: descendingExpected.CurrentPage,
-              FilteredRecordCount: descendingExpected.FilteredRecordCount,
-              Payload: descendingExpected.Payload,
-              TotalPages: descendingExpected.TotalPages,
-              TotalRecordCount: descendingExpected.TotalRecordCount,
+            mock.reset();
+            mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(200, {
+              ...descendingExpected
             });
-            dataSource.columns[0].SortDirection = 'Descending';
+            dataSource.columns[0].SortDirection = ColumnSortDirection.DESCENDING;
             dataSource.refresh(10, 0, '');
           });
 
