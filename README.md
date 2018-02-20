@@ -16,7 +16,7 @@ Do you want to use AngularJS? check out [Tubular](https://github.com/unosquare/t
 
 If you are looking for Angular2 components, check [Tubular2](https://github.com/unosquare/tubular2) beta project.
 
-Please visit the <a href="http://unosquare.github.io/tubular" target="_blank">Tubular GitHub Page</a> to learn how quickly you can start coding. Don't forget to check out the Tubular Generator which quickly turns models into an awesome UIs!
+Please visit the [Tubular GitHub Page](http://unosquare.github.io/tubular) to learn how quickly you can start coding. Don't forget to check out the Tubular Generator which quickly turns models into an awesome UIs!
 
 ## Dependencies
 * [React](https://reactjs.org/) - 15.x or 16.x
