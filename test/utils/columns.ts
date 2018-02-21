@@ -30,4 +30,72 @@ const validColumnsSample = [
   )
 ];
 
-export { validColumnsSample };
+const validColumnsSampleDescending = [
+  new ColumnModel('OrderID',
+    {
+      DataType: ColumnDataType.NUMERIC,
+      Filtering: true,
+      IsKey: true,
+      Label: 'ID',
+      SortDirection: ColumnSortDirection.DESCENDING,
+      SortOrder: 1,
+      Sortable: true
+    }
+  ),
+  new ColumnModel('CustomerName',
+    {
+      Aggregate: AggregateFunctions.COUNT,
+      Filtering: true,
+      Searchable: true,
+      Sortable: true
+    }
+  ),
+  new ColumnModel('ShippedDate',
+    {
+      DataType: ColumnDataType.DATE_TIME,
+      Filtering: true,
+      Sortable: true
+    }
+  ),
+];
+
+const validColumnsSampleMultipleSorting = [
+  new ColumnModel('OrderID',
+    {
+      DataType: ColumnDataType.NUMERIC,
+      Filtering: true,
+      IsKey: true,
+      Label: 'ID',
+      SortDirection: ColumnSortDirection.DESCENDING,
+      SortOrder: 1,
+      Sortable: true
+    }
+  ),
+  new ColumnModel('CustomerName',
+    {
+      Aggregate: AggregateFunctions.COUNT,
+      Filtering: true,
+      Label: 'Customer Name',
+      Searchable: true,
+      SortDirection: ColumnSortDirection.ASCENDING,
+      SortOrder: 2,
+      Sortable: true
+    }
+  ),
+  new ColumnModel('ShippedDate',
+    {
+      DataType: ColumnDataType.DATE_TIME,
+      Filtering: true,
+      Label: 'Shipped Date',
+      SortDirection: ColumnSortDirection.NONE,
+      SortOrder: -1,
+      Sortable: true
+    }
+  ),
+];
+
+export {
+  validColumnsSample,
+  validColumnsSampleDescending,
+  validColumnsSampleMultipleSorting
+};
