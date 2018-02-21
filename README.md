@@ -26,9 +26,9 @@ Please visit the [Tubular GitHub Page](http://unosquare.github.io/tubular) to le
 ```
 $ npm install tubular-react --save
 ```
-## Using the *`<Grid/>`* component
+## Using the *`<DataGrid/>`* component
 ```js
-import Grid, {
+import DataGrid, {
   AggregateFunctions,
   ColumnDataType,
   ColumnModel,
@@ -64,7 +64,7 @@ dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/pa
     const { dataSource } = this.state; 
 
     return (
-      <Grid dataSource={dataSource} rowsPerPage = { 10 } gridName = 'table' />
+      <DataGrid dataSource={dataSource} rowsPerPage = { 10 } gridName = 'table' />
     );
   }
 }
@@ -73,7 +73,7 @@ dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/pa
 
 Using a custom body and footer renderer
 ```js
-<Grid dataSource={ dataSource } 
+<DataGrid dataSource={ dataSource } 
         gridName = 'table'
         bodyRenderer = {
           (row, index) => 
@@ -98,7 +98,7 @@ Using a custom body and footer renderer
 ```
 
 ### Props 
-These are all the available props (and their default values) for the `<Grid />` component.
+These are all the available props (and their default values) for the `<DataGrid />` component.
 
 | Name           | Type                                   | Default   | Description                                  |
 |----------------|----------------------------------------|-----------|----------------------------------------------|
@@ -114,10 +114,10 @@ These are all the available props (and their default values) for the `<Grid />` 
 
 
 ### `DataSource`
-`<Grid/>` requires a dataSource prop which is an instance of the `RemoteDataSource` class, that deals with data retrieval among other things. At the same time, `RemoteDataSource` needs both a URL and a `ColumnModel` array.
+`<DataGrid/>` requires a dataSource prop which is an instance of the `RemoteDataSource` class, that deals with data retrieval among other things. At the same time, `RemoteDataSource` needs both a URL and a `ColumnModel` array.
 
 ### `ColumnModel` 
-It represents a `Grid` column and its constructor requires an identifier as well as an object of column options with these properties and default values:
+It represents a `DataGrid` column and its constructor requires an identifier as well as an object of column options with these properties and default values:
 
 | Name          | Type             | Default           | Description                                  |
 |---------------|------------------|-------------------|----------------------------------------------|
