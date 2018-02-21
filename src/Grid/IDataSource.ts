@@ -1,5 +1,3 @@
-import * as Promise from 'bluebird';
-
 export default interface IDataSource {
   connect(rowsPerPage?: number, page?: number, searchText?: string): any;
 
