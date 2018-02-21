@@ -68,14 +68,6 @@ export default class RemoteDataSource implements IDataSource {
     });
   })
 
-  public handleError(error: any) {
-    if (error.status === 404) {
-      throw new Error('Keys were not found');
-    } else if (error.status === 500) {
-      throw new Error('Internal server error');
-    }
-  }
-
   public isValidResponse(response: object) {
     const expectedStructure: any = {
       AggregationPayload: null,
@@ -99,7 +91,7 @@ export default class RemoteDataSource implements IDataSource {
         this.dataStream.onNext(data);
       })
       .catch( (error) => {
-        this.handleError(error);
-      }) ;
+        this.dataStream.onError(error);
+      });
   }
 }
