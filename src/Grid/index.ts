@@ -1,10 +1,10 @@
 import { AggregateFunctions, ColumnDataType, ColumnSortDirection } from '../../src/Grid/Column';
 import ColumnModel from '../../src/Grid/ColumnModel';
-import Grid from '../../src/Grid/Grid';
+import DataGrid from '../../src/Grid/DataGrid';
 import LocalDataSource from '../../src/Grid/LocalDataSource';
 import RemoteDataSource from '../../src/Grid/RemoteDataSource';
 
-export default Grid;
+export default DataGrid;
 export {
   AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection, LocalDataSource, RemoteDataSource
 };
