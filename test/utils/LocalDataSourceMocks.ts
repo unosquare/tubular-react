@@ -745,6 +745,37 @@ const expectedPayloadEqualsString = [
   }
 ];
 
+const expectedPayloadContainsString = [
+  {
+    OrderID: 4,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-03-19T19:00:00',
+    ShipperCity: 'Portland, OR, USA',
+    Amount: 300
+  },
+  {
+    OrderID: 10,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-03-19T19:00:00',
+    ShipperCity: 'Portland, OR, USA',
+    Amount: 300
+  },
+  {
+    OrderID: 14,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-04-23T10:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 60
+  },
+  {
+    OrderID: 19,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-08T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 300
+  }
+];
+
 export {
   expectedPayloadTextSearchVesta,
   expectedPayloadMultipleSort,
@@ -757,6 +788,7 @@ export {
   expectedPayloadLteNumeric,
   expectedPayloadLtNumeric,
   expectedPayloadPage2,
+  expectedPayloadContainsString,
   expectedPayloadNoneString,
   expectedPayloadEqualsString,
   expectedLocaDataSourcelResponse

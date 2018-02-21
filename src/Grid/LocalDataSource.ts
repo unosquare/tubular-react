@@ -153,10 +153,12 @@ export default class LocalDataSource implements IDataSource {
           subset = subset.filter((row) => row[filterableColumn.Name] !== filterableColumn.Filter.Text);
           break;
         case CompareOperators.CONTAINS.toLowerCase():
-          subset = subset.filter((row) => row[filterableColumn.Name].indexOf(filterableColumn.Filter.Text) >= 0);
+          subset = subset.filter((row) => row[filterableColumn.Name].toLowerCase()
+            .indexOf(filterableColumn.Filter.Text.toLowerCase()) >= 0);
           break;
         case CompareOperators.NOT_CONTAINS.toLowerCase():
-          subset = subset.filter((row) => row[filterableColumn.Name].indexOf(filterableColumn.Filter.Text) < 0);
+          subset = subset.filter((row) => row[filterableColumn.Name].toLowerCase()
+            .indexOf(filterableColumn.Filter.Text.toLowerCase()) < 0);
           break;
         case CompareOperators.STARTS_WITH.toLowerCase():
           subset = subset.filter((row) =>
