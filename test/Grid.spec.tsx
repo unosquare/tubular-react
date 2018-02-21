@@ -95,11 +95,7 @@ describe('<Grid />', () => {
 
     const wrapper = shallow(gridHeader);
     wrapper.setProps({ dataSource : { columns : aux.columns } });
-    // console.log(wrapper.instance().props);
-    // console.log(wrapper.props())
     const cols = wrapper.find(TableCell);
-    console.log(cols);
-    // expect(cols).to.have.lengthOf(5);
   });
 
   describe('When data is retrieved', () => {
@@ -142,7 +138,6 @@ describe('<Grid />', () => {
     });
   });
 
-  // Unit tests for custom footer
   describe('When footer has no rows', () => {
     it('should not render any row', () => {
       mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200, {
@@ -239,7 +234,6 @@ describe('<Grid />', () => {
     });
   });
 
-  /** Unit test for top pager */
   describe('When <TableHead /> has showTopPager property set as true', () => {
     beforeEach(() => {
       mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200, {
