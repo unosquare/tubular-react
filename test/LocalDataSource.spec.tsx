@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import GridResponse from '../src/Grid/GridResponse';
 import LocalDataSource from '../src/Grid/LocalDataSource';
 import {
   validColumnsSample,
@@ -32,14 +33,14 @@ describe('LocalDataSource', () => {
     const dataSource = new LocalDataSource(localData, validColumnsSample);
     it('should return a payload', (done) => {
 
-      dataSource.getAllRecords(10, 0, '').then((response: any) => {
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.deep.equal(expectedLocaDataSourcelResponse.Payload);
         done();
       });
     });
 
     it('should return 10 records', (done) => {
-      dataSource.getAllRecords(10, 0, '').then((response: any) => {
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.have.lengthOf(10);
         done();
       });
@@ -47,7 +48,7 @@ describe('LocalDataSource', () => {
 
     // Pager
     it('should return a payload with the following 10 records when page is set to 1', (done) => {
-       dataSource.getAllRecords(10, 1, '').then((response: any) => {
+       dataSource.getAllRecords(10, 1, '').then((response: GridResponse) => {
         expect(response.Payload).to.deep.equal(expectedPayloadPage2);
         done();
       });
@@ -57,7 +58,7 @@ describe('LocalDataSource', () => {
     it('should return a payload with records in descending order (sorting by \'OrderID\')', (done) => {
       const $dataSource = new LocalDataSource(localData, validColumnsSampleDescending);
 
-      $dataSource.getAllRecords(10, 0, '').then((response: any) => {
+      $dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.deep.equal(expectedPayloadDescSortByOrderID);
         done();
       });
@@ -67,7 +68,7 @@ describe('LocalDataSource', () => {
     , (done) => {
       const $dataSource = new LocalDataSource(localData, validColumnsSampleMultipleSorting);
 
-      $dataSource.getAllRecords(10, 0, '').then((response: any) => {
+      $dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.deep.equal(expectedPayloadMultipleSort);
         done();
       });
@@ -77,7 +78,7 @@ describe('LocalDataSource', () => {
     it('should return a payload when search by text is set (searching by \'CustomerName\')', (done) => {
       const $dataSource = new LocalDataSource(localData, validColumnsSample);
 
-      $dataSource.getAllRecords(4, 0, 'ves').then((response: any) => {
+      $dataSource.getAllRecords(4, 0, 'ves').then((response: GridResponse) => {
         expect(response.Payload).to.have.lengthOf(4);
         expect(response.Payload).to.deep.equal(expectedPayloadTextSearchVesta);
 
@@ -104,7 +105,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.HasFilter = false;
       dataSource.columns[0].Filter.Argument = [];
 
-      dataSource.getAllRecords(10, 0, '').then((response: any) => {
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.have.lengthOf(10);
         expect(response.Payload).to.deep.equal(expectedPayloadNoneNumeric);
 
@@ -119,7 +120,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.HasFilter = true;
       dataSource.columns[0].Filter.Argument = [];
 
-      dataSource.getAllRecords(10, 0, '').then((response: any) => {
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.have.lengthOf(1);
         expect(response.Payload).to.deep.equal(expectedPayloadEqualsNumeric);
 
@@ -134,7 +135,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.HasFilter = true;
       dataSource.columns[0].Filter.Argument = [9];
 
-      dataSource.getAllRecords(10, 0, '').then((response: any) => {
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.have.lengthOf(8);
         expect(response.Payload).to.deep.equal(expectedPayloadBetweenNumeric);
 
@@ -149,7 +150,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.HasFilter = true;
       dataSource.columns[0].Filter.Argument = [];
 
-      dataSource.getAllRecords(10, 0, '').then((response: any) => {
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.have.lengthOf(10);
         expect(response.Payload).to.deep.equal(expectedPayloadGteNumeric);
 
@@ -166,7 +167,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.HasFilter = true;
       dataSource.columns[0].Filter.Argument = [];
 
-      dataSource.getAllRecords(10, 0, '').then((response: any) => {
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         payloadResponse = response.Payload;
 
         expect(response.Payload).to.have.lengthOf(10);
@@ -184,7 +185,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.HasFilter = true;
       dataSource.columns[0].Filter.Argument = [];
 
-      dataSource.getAllRecords(10, 0, '').then((response: any) => {
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.have.lengthOf(5);
         expect(response.Payload).to.deep.equal(expectedPayloadLteNumeric);
 
@@ -199,7 +200,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.HasFilter = true;
       dataSource.columns[0].Filter.Argument = [];
 
-      dataSource.getAllRecords(10, 0, '').then((response: any) => {
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.have.lengthOf(4);
         expect(response.Payload).to.deep.equal(expectedPayloadLtNumeric);
 
@@ -214,7 +215,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.HasFilter = true;
       dataSource.columns[0].Filter.Argument = [];
 
-      dataSource.getAllRecords(10, 0, '').then((response: any) => {
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.have.lengthOf(0);
         done();
       });
@@ -237,7 +238,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.HasFilter = true;
       dataSource.columns[1].Filter.Argument = [];
 
-      dataSource.getAllRecords(10, 0, '').then((response: any) => {
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.deep.equal(expectedPayloadEqualsString);
         done();
       });
