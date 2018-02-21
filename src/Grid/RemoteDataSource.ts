@@ -1,5 +1,4 @@
 import Axios from 'axios';
-import * as Promise from 'bluebird';
 import * as Rx from 'rx';
 import { AggregateFunctions, ColumnDataType, CompareOperators } from './Column';
 import ColumnModel from './ColumnModel';
