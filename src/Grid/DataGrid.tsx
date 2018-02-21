@@ -70,7 +70,7 @@ interface IProps {
 
 }
 
-class Grid extends React.Component <IProps & WithStyles<keyof typeof styleClasses>, IState> {
+class DataGrid extends React.Component <IProps & WithStyles<keyof typeof styleClasses>, IState> {
   public static defaultProps = {
     gridName: '',
     page: 0,
@@ -322,4 +322,4 @@ class Grid extends React.Component <IProps & WithStyles<keyof typeof styleClasse
   }
 }
 
-export default withStyles(styles)(Grid);
+export default withStyles(styles)(DataGrid);
