@@ -23,7 +23,7 @@
       "sample/**/*.*",
       "src/Util/index.js"
     ],
-    "all": true  
+    "all": true
   },
   "repository": {
     "type": "git",

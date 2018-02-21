@@ -8,7 +8,7 @@ import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'm
 import { createShallow } from 'material-ui/test-utils';
 import Typography from 'material-ui/Typography';
 import * as React from 'react';
-import Grid from '../src/Grid/Grid';
+import DataGrid from '../src/Grid/DataGrid';
 import GridHeader from '../src/Grid/GridHeader';
 import Paginator from '../src/Grid/Paginator';
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
@@ -46,7 +46,7 @@ const bodyRenderer = (row, index) => (
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('<Grid />', () => {
+describe('<DataGrid />', () => {
   let shallow;
   let axiosInstance;
   let mock;
@@ -55,7 +55,7 @@ describe('<Grid />', () => {
   before(() => {
     shallow = createShallow({ dive: true });
     grid = (
-      <Grid
+      <DataGrid
         gridName='Motorhead'
         rowsPerPage={10}
         showTopPager={true}
@@ -82,10 +82,11 @@ describe('<Grid />', () => {
   });
 
   it('should render n columns', () => {
+     const aux = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
     const gridHeader = (
       <GridHeader
         gridName='Motorhead'
-        dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
+        dataSource={aux}
         page={0}
         rowsPerPage={10}
         refreshGrid={null}
@@ -95,8 +96,8 @@ describe('<Grid />', () => {
     const wrapper = shallow(gridHeader);
     wrapper.setState({ data });
     const cols = wrapper.find(TableRow).find(TableCell);
-
-    expect(cols).to.have.lengthOf(5);
+    wrapper.setProps({ dataSource : { columns : aux.columns } });
+    const cols = wrapper.find(TableCell);
   });
 
   describe('When data is retrieved', () => {
@@ -124,7 +125,7 @@ describe('<Grid />', () => {
       });
 
       grid = (
-        <Grid
+        <DataGrid
           gridName='Motorhead'
           rowsPerPage={10}
           dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
@@ -162,7 +163,7 @@ describe('<Grid />', () => {
 
     it('should render the row with the aggregate operation', () => {
       grid = (
-        <Grid
+        <DataGrid
           gridName='Motorhead'
           rowsPerPage={10}
           dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
@@ -179,7 +180,7 @@ describe('<Grid />', () => {
 
     it('should render the row with the bottom pager', () => {
       grid = (
-        <Grid
+        <DataGrid
           gridName='Motorhead'
           rowsPerPage={10}
           dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
@@ -195,7 +196,7 @@ describe('<Grid />', () => {
 
     it('should render the rows with the aggregate operation and the bottom pager', () => {
       grid = (
-        <Grid
+        <DataGrid
           gridName='Motorhead'
           rowsPerPage={10}
           dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
@@ -221,7 +222,7 @@ describe('<Grid />', () => {
 
     it('should have a paginator', () => {
       grid = (
-        <Grid
+        <DataGrid
           gridName='Motorhead'
           rowsPerPage={10}
           dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
@@ -246,7 +247,7 @@ describe('<Grid />', () => {
 
     it('Should have a paginator', () => {
       grid = (
-        <Grid
+        <DataGrid
           gridName='Motorhead'
           rowsPerPage={10}
           dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
