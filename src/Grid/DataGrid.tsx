@@ -106,16 +106,16 @@ class DataGrid extends React.Component <IProps & WithStyles<keyof typeof styleCl
           totalRecordCount: tbResponse.TotalRecordCount || 0
         });
       }, (error: any) => {
-        this.props.errorHandler ? this.props.errorHandler(error) : this.throwError(error);
+        if (!this.props.errorHandler) {
+          throw error;
+        }
+
+        this.props.errorHandler(error);
       });
 
     this.search.debounce(600).subscribe(() => {
       this.refreshGrid();
     });
-  }
-
-  public throwError = (error: any) => {
-    throw error;
   }
 
   public handleTextSearch = (searchText: string) => {
