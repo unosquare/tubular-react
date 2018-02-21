@@ -2,7 +2,7 @@
 import { TableCell, TableRow } from 'material-ui/Table';
 import * as moment from 'moment';
 import * as React from 'react';
-import Grid, {
+import DataGrid, {
   AggregateFunctions,
   ColumnDataType,
   ColumnModel,
@@ -43,7 +43,7 @@ export default class Main extends React.Component {
     const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns);
 
     return (
-      <Grid
+      <DataGrid
         dataSource={dataSource}
         gridName='Tubular-React'
         bodyRenderer={

@@ -1,6 +1,6 @@
-import Grid from './Grid';
+import DataGrid from './DataGrid';
 import RemoteDataSource from './Grid/RemoteDataSource';
-export default Grid;
+export default DataGrid;
 
 export {
   RemoteDataSource
