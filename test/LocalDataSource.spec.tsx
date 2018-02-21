@@ -86,7 +86,6 @@ describe('LocalDataSource', () => {
     });
   });
 
-  // Unit tests for numeric columns
   describe('When numeric column has filters', () => {
     const dataSource = new LocalDataSource(localData, validColumnsSample);
 
@@ -222,7 +221,6 @@ describe('LocalDataSource', () => {
     });
   });
 
-  // Unit test for string columns
   describe('When string column has filters', () => {
     const dataSource = new LocalDataSource(localData, validColumnsSample);
 
