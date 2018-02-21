@@ -21,7 +21,7 @@ import {
   twentyRecordsRequest
 } from './Mocks/requests';
 
-describe('RemoteDateSource', () => {
+describe('RemoteDataSource', () => {
   let dataSource;
   const mock = new MockAdapter(axios);
 
@@ -45,8 +45,8 @@ describe('RemoteDateSource', () => {
       beforeEach( () => {
         dataSource =
           new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
-
-        mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', twentyRecordsRequest).reply(200, {
+        mock.reset();
+        mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(200, {
           AggregationPayload: twentyRecordsExpected.AggregationPayload,
           Counter: twentyRecordsExpected.Counter,
           CurrentPage: twentyRecordsExpected.CurrentPage,
@@ -72,8 +72,8 @@ describe('RemoteDateSource', () => {
       beforeEach( () => {
         dataSource =
           new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
-
-        mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', onlyMicrosoftRecordsRequest).reply(200, {
+        mock.reset();
+        mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(200, {
           AggregationPayload: onlyMicrosoftExpected.AggregationPayload,
           Counter: onlyMicrosoftExpected.Counter,
           CurrentPage: onlyMicrosoftExpected.CurrentPage,
@@ -98,8 +98,8 @@ describe('RemoteDateSource', () => {
       beforeEach( () => {
         dataSource =
           new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
-
-        mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', simpleRequest).reply(200, {
+        mock.reset();
+        mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(200, {
           AggregationPayload: simpleRecordsExpected.AggregationPayload,
           Counter: simpleRecordsExpected.Counter,
           CurrentPage: simpleRecordsExpected.CurrentPage,
@@ -117,18 +117,19 @@ describe('RemoteDateSource', () => {
       });
 
       it('Should return a payload', (done) => {
-        setTimeout( () => {
+        return setTimeout( () => {
           expect(response.Payload).to.deep.equal(simpleRecordsExpected.Payload);
           expect(response.FilteredRecordCount).to.deep.equal(simpleRecordsExpected.FilteredRecordCount);
           expect(response.TotalRecordCount).to.deep.equal(simpleRecordsExpected.TotalRecordCount);
           done();
-        }, 0);
+        }, 100);
       });
 
       describe('When refresh is called', () => {
         describe('When page 2 is requested', () => {
           beforeEach( () => {
-            mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', page2Request).reply(200, {
+            mock.reset();
+            mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(200, {
               AggregationPayload: page2Expected.AggregationPayload,
               Counter: page2Expected.Counter,
               CurrentPage: page2Expected.CurrentPage,
@@ -142,18 +143,19 @@ describe('RemoteDateSource', () => {
           });
 
           it('Should return a payload with records 11 to 20', (done) => {
-            setTimeout( () => {
+            return setTimeout( () => {
               expect(response.Payload).to.deep.equal(page2Expected.Payload);
               expect(response.FilteredRecordCount).to.deep.equal(page2Expected.FilteredRecordCount);
               expect(response.TotalRecordCount).to.deep.equal(page2Expected.TotalRecordCount);
               done();
-            }, 0);
+            }, 100);
           });
         });
 
         describe('When sort order is descending', () => {
           beforeEach( () => {
-            mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', descendingRequest).reply(200, {
+            mock.reset();
+            mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(200, {
               AggregationPayload: descendingExpected.AggregationPayload,
               Counter: descendingExpected.Counter,
               CurrentPage: descendingExpected.CurrentPage,
@@ -167,12 +169,12 @@ describe('RemoteDateSource', () => {
           });
 
           it('Should return a payload with records in descending order', (done) => {
-            setTimeout( () => {
+            return setTimeout( () => {
               expect(response.Payload).to.deep.equal(descendingExpected.Payload);
               expect(response.FilteredRecordCount).to.deep.equal(descendingExpected.FilteredRecordCount);
               expect(response.TotalRecordCount).to.deep.equal(descendingExpected.TotalRecordCount);
               done();
-            }, 0);
+            }, 100);
           });
         });
       });
@@ -208,54 +210,31 @@ describe('RemoteDateSource', () => {
       );
     });
 
-    it('throws an Error 400', (done) => {
+    it('throws an Error 400', (/* done */) => {
       mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(400);
-      dataSource.refresh(20, 0, '');
 
-      setTimeout( () => {
-        expect(dataSource.message).to.be.equal('There was a client error');
-        done();
-      }, 0);
+      dataSource._updateDataStream(20, 0, '')
+      .catch((error) => {
+        expect(error.response.status).to.be.equal(400);
+      })/* .finally(done()) */;
     });
 
-    it('throws an Error 401', (done) => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(401);
-      dataSource.refresh(20, 0, '');
-
-      setTimeout( () => {
-        expect(dataSource.message).to.be.equal('Authentication is required');
-        done();
-      }, 0);
-    });
-
-    it('throws an Error 403', (done) => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(403);
-      dataSource.refresh(20, 0, '');
-
-      setTimeout( () => {
-        expect(dataSource.message).to.be.equal('Access Denied/Forbidden');
-        done();
-      }, 0);
-    });
-
-    it('throws an Error 404', (done) => {
+    it('throws an Error 404', (/* done */) => {
       mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(404);
-      dataSource.refresh(20, 0, '');
 
-      setTimeout( () => {
-        expect(dataSource.message).to.be.equal('Keys were not found');
-        done();
-      }, 0);
+      dataSource._updateDataStream(20, 0, '')
+      .catch((error) => {
+        expect(error.response.status).to.be.equal(404);
+      })/* .finally(done()) */;
     });
 
-    it('throws an Error 500', (done) => {
+    it('throws an Error 500', (/* done */) => {
       mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(500);
-      dataSource.refresh(20, 0, '');
 
-      setTimeout( () => {
-        expect(dataSource.message).to.be.equal('Internal server error');
-        done();
-      }, 0);
+      dataSource._updateDataStream(20, 0, '')
+      .catch((error) => {
+        expect(error.response.status).to.be.equal(500);
+      })/* .finally(done()) */;
     });
   });
 });

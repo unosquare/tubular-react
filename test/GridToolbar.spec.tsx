@@ -34,6 +34,7 @@ describe('<GridToolbar/>', () => {
   it('should render a Toolbar', () => {
     expect(toolbar().find(Toolbar)).to.have.lengthOf(1);
   });
+
   describe('when isPrintEnabled is true', () => {
     it('should render a print button', () => {
       props.isPrintEnabled = true;

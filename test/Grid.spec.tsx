@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 import * as Enzyme from 'enzyme';
@@ -6,15 +6,17 @@ import * as Adapter from 'enzyme-adapter-react-16';
 import Paper from 'material-ui/Paper';
 import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
 import { createShallow } from 'material-ui/test-utils';
-import Typography from 'material-ui/Typography';
+/* import Typography from 'material-ui/Typography'; */
 import * as React from 'react';
 import Grid from '../src/Grid/Grid';
 import GridHeader from '../src/Grid/GridHeader';
 import Paginator from '../src/Grid/Paginator';
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
 import { validColumnsSample } from './Mocks/columns';
-import data from './Mocks/data';
-import * as orders from './Mocks/orders';
+import data, {
+  simpleRecordsExpected
+} from './Mocks/data';
+/* import * as orders from './Mocks/orders'; */
 
 const footerRenderer = (aggregates) => (
   <TableFooter>
@@ -48,11 +50,10 @@ Enzyme.configure({ adapter: new Adapter() });
 
 describe('<Grid />', () => {
   let shallow;
-  let axiosInstance;
-  let mock;
+  const mock = new MockAdapter(axios);
   let grid;
 
-  before(() => {
+  beforeEach(() => {
     shallow = createShallow({ dive: true });
     grid = (
       <Grid
@@ -63,6 +64,18 @@ describe('<Grid />', () => {
       />
     );
   });
+
+  /* before(() => {
+    shallow = createShallow({ dive: true });
+    grid = (
+      <Grid
+        gridName='Motorhead'
+        rowsPerPage={10}
+        showTopPager={true}
+        dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
+      />
+    );
+  }); */
 
   const aggregate = { CustomerName: 500 };
 
@@ -119,8 +132,9 @@ describe('<Grid />', () => {
 
   describe('When custom body is defined', () => {
     it('should render the custom body', () => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200, {
-        orders
+      mock.reset();
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(200, {
+        ...simpleRecordsExpected
       });
 
       grid = (
@@ -142,8 +156,9 @@ describe('<Grid />', () => {
   // Unit tests for custom footer
   describe('When footer has no rows', () => {
     it('should not render any row', () => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200, {
-        orders
+      mock.reset();
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(200, {
+        ...simpleRecordsExpected
       });
 
       const wrapper = shallow(grid);
@@ -155,8 +170,9 @@ describe('<Grid />', () => {
 
   describe('When footer has n rows', () => {
     beforeEach(() => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200, {
-        orders
+      mock.reset();
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(200, {
+        ...simpleRecordsExpected
       });
     });
 
@@ -214,8 +230,9 @@ describe('<Grid />', () => {
 
   describe('When footer has showBottomPager property set as true', () => {
     beforeEach(() => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200, {
-        orders
+      mock.reset();
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(200, {
+        ...simpleRecordsExpected
       });
     });
 
@@ -239,8 +256,9 @@ describe('<Grid />', () => {
   /** Unit test for top pager */
   describe('When <TableHead /> has showTopPager property set as true', () => {
     beforeEach(() => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200, {
-        orders
+      mock.reset();
+      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(200, {
+        ...simpleRecordsExpected
       });
     });
 
@@ -259,10 +277,5 @@ describe('<Grid />', () => {
 
       expect(rowHeader).to.have.lengthOf(1);
     });
-  });
-
-  beforeEach(() => {
-    axiosInstance = Axios.create();
-    mock = new MockAdapter(axiosInstance);
   });
 });

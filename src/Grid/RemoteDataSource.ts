@@ -1,9 +1,11 @@
 import Axios from 'axios';
+import * as Promise from 'bluebird';
 import * as Rx from 'rx';
 import { AggregateFunctions, ColumnDataType, CompareOperators } from './Column';
 import ColumnModel from './ColumnModel';
 import GridRequest from './GridRequest';
 import GridResponse from './GridResponse';
+import IDataSource from './IDataSource';
 
 export default class RemoteDataSource implements IDataSource {
   public static defaultColumnValues = {
@@ -28,13 +30,17 @@ export default class RemoteDataSource implements IDataSource {
   constructor(url: string, columns: ColumnModel[]) {
     this.url = url;
     this.counter = 0;
-    this.message = '';
     this.dataStream = new Rx.BehaviorSubject({ Payload: [] });
     this.columns = this.normalizeColumns(columns);
+
+    Promise.onPossiblyUnhandledRejection((error) => {
+      throw error;
+    });
   }
 
   public connect(rowsPerPage: number, page: number, searchText: string) {
     this._updateDataStream(rowsPerPage, page, searchText);
+
     return this.dataStream;
   }
 
@@ -57,6 +63,7 @@ export default class RemoteDataSource implements IDataSource {
       if (response.data === undefined || !this.isValidResponse(response.data)) {
         throw new Error('It\'s not a valid Tubular response object');
       }
+
       const data = response.data.Payload;
       const rows = data.map((row: any) => {
         const obj: any = {};
@@ -99,31 +106,13 @@ export default class RemoteDataSource implements IDataSource {
   }
 
   public _updateDataStream(rowsPerPage: number, page: number, searchText: string) {
-    this.getAllRecords(rowsPerPage, page, searchText)
+    return this.getAllRecords(rowsPerPage, page, searchText)
       .then( (data) => {
         this.dataStream.onNext(data);
-        this.message = '';
       })
-      .catch( (e) => {
-        this.message = this.handleError(e);
+      .catch((error) => {
+        throw error;
       });
-  }
-
-  public handleError(error: any): string {
-    switch (error.response.status) {
-      case 400:
-        return 'There was a client error';
-      case 401:
-        return 'Authentication is required';
-      case 403:
-        return 'Access Denied/Forbidden';
-      case 404:
-        return 'Keys were not found';
-      case 500:
-        return 'Internal server error';
-      default:
-        return 'There was an Error ' + error.response.status ;
-    }
   }
 
   private normalizeColumns = (columns: ColumnModel[]) =>

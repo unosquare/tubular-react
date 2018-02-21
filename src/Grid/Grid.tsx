@@ -12,6 +12,7 @@ import { ColumnDataType } from './Column';
 import GridHeader from './GridHeader';
 import GridResponse from './GridResponse';
 import GridToolbar from './GridToolbar';
+import IDataSource from './IDataSource';
 import Paginator from './Paginator';
 
 const styleClasses  = {
@@ -67,7 +68,6 @@ interface IProps {
   showExportButton?: boolean;
   bodyRenderer?(column: any, index: number): any;
   footerRenderer?(aggregate: any): any;
-
 }
 
 class Grid extends React.Component <IProps & WithStyles<keyof typeof styleClasses>, IState> {
@@ -91,6 +91,8 @@ class Grid extends React.Component <IProps & WithStyles<keyof typeof styleClasse
   private search: Rx.Subject<{}>;
 
   public componentDidMount() {
+    window.onerror = () => null;
+
     this.search = new Rx.Subject();
     const pageSize = parseInt(localStorage.getItem(`tubular.${this.props.gridName}_pageSize`), 10) || 10;
     const searchText = localStorage.getItem(`tubular.${this.props.gridName}_searchText`) || '';
