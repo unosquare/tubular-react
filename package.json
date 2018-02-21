@@ -36,11 +36,8 @@
   },
   "homepage": "https://github.com/unosquare/tubular-react#readme",
   "dependencies": {
-    "@types/bluebird": "^3.5.20",
     "axios": "^0.17.1",
-    "bluebird": "^3.5.1",
-    "expect.js": "^0.3.1",
-    "material-ui": "^1.0.0-beta.33",
+    "material-ui": "next",
     "material-ui-icons": "^1.0.0-beta.17",
     "material-ui-pickers": "^1.0.0-beta.12",
     "moment": "^2.20.1",
@@ -50,7 +47,6 @@
     "typeface-roboto": "0.0.50"
   },
   "devDependencies": {
-    "@types/bluebird": "^3.5.20",
     "@types/chai": "^4.1.2",
     "@types/enzyme": "^3.1.9",
     "@types/enzyme-adapter-react-16": "^1.0.2",
@@ -67,6 +63,7 @@
     "del": "^3.0.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
+    "expect.js": "^0.3.1",
     "gulp": "^3.9.1",
     "gulp-copy": "^1.1.0",
     "gulp-mocha": "^5.0.0",
