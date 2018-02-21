@@ -38,6 +38,7 @@ export default class LocalDataSource implements IDataSource {
 
   public getAllRecords = (rowsPerPage: number, page: number, searchText: string): Promise<object> =>
     new Promise((resolve, reject) => {
+      try {
       let data = this.localData;
 
       const request = new GridRequest({
@@ -91,30 +92,25 @@ export default class LocalDataSource implements IDataSource {
 
       response.Payload = rows;
 
-      try {
-        resolve(new GridResponse({
-          Aggregate: response.AggregationPayload,
-          FilteredRecordCount: response.FilteredRecordCount,
-          Payload: response.Payload,
-          RowsPerPage: rowsPerPage,
-          SearchText: searchText,
-          TotalRecordCount: response.TotalRecordCount
-        }));
+      resolve(new GridResponse({
+        Aggregate: response.AggregationPayload,
+        FilteredRecordCount: response.FilteredRecordCount,
+        Payload: response.Payload,
+        RowsPerPage: rowsPerPage,
+        SearchText: searchText,
+        TotalRecordCount: response.TotalRecordCount
+      }));
       } catch (error) {
         reject(error);
       }
     })
-
-  public handleError(error: any) {
-    throw new Error(`Something wrong happened: ${error}`);
-  }
 
   public _updateDataStream(rowsPerPage: number, page: number, searchText: string) {
     this.getAllRecords(rowsPerPage, page, searchText)
       .then((data) => {
         this.dataStream.onNext(data);
       }).catch((error) => {
-        this.handleError(error);
+        this.dataStream.onError(error);
       });
   }
 

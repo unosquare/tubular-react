@@ -65,9 +65,9 @@ interface IProps {
   showTopPager?: boolean;
   showPrintButton?: boolean;
   showExportButton?: boolean;
+  errorHandler?(error: any): any;
   bodyRenderer?(column: any, index: number): any;
   footerRenderer?(aggregate: any): any;
-
 }
 
 class DataGrid extends React.Component <IProps & WithStyles<keyof typeof styleClasses>, IState> {
@@ -85,7 +85,7 @@ class DataGrid extends React.Component <IProps & WithStyles<keyof typeof styleCl
     page: this.props.page,
     rowsPerPage: this.props.rowsPerPage,
     searchText: '',
-    totalRecordCount: 0,
+    totalRecordCount: 0
   };
 
   private search: Rx.Subject<{}>;
@@ -105,11 +105,17 @@ class DataGrid extends React.Component <IProps & WithStyles<keyof typeof styleCl
           searchText: tbResponse.SearchText || '',
           totalRecordCount: tbResponse.TotalRecordCount || 0
         });
+      }, (error: any) => {
+        this.props.errorHandler ? this.props.errorHandler(error) : this.throwError(error);
       });
 
     this.search.debounce(600).subscribe(() => {
       this.refreshGrid();
     });
+  }
+
+  public throwError = (error: any) => {
+    throw error;
   }
 
   public handleTextSearch = (searchText: string) => {

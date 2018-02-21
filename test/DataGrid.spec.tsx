@@ -13,7 +13,7 @@ import GridHeader from '../src/Grid/GridHeader';
 import Paginator from '../src/Grid/Paginator';
 import RemoteDataSource from '../src/Grid/RemoteDataSource';
 import { validColumnsSample } from './utils/columns';
-import data from './utils/data';
+import { data } from './utils/data';
 import * as orders from './utils/orders';
 
 const footerRenderer = (aggregates) => (
@@ -52,7 +52,10 @@ describe('<DataGrid />', () => {
   let mock;
   let grid;
 
-  before(() => {
+  beforeEach(() => {
+    axiosInstance = Axios.create();
+    mock = new MockAdapter(axiosInstance);
+
     shallow = createShallow({ dive: true });
     grid = (
       <DataGrid
@@ -79,25 +82,6 @@ describe('<DataGrid />', () => {
   it('should have 1 rows at first', () => {
     const wrapper = shallow(grid).find(Table).find(TableBody);
     expect(wrapper).to.have.lengthOf(1);
-  });
-
-  it('should render n columns', () => {
-     const aux = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
-    const gridHeader = (
-      <GridHeader
-        gridName='Motorhead'
-        dataSource={aux}
-        page={0}
-        rowsPerPage={10}
-        refreshGrid={null}
-      />
-    );
-
-    const wrapper = shallow(gridHeader);
-    wrapper.setState({ data });
-    const cols = wrapper.find(TableRow).find(TableCell);
-    wrapper.setProps({ dataSource : { columns : aux.columns } });
-    const cols = wrapper.find(TableCell);
   });
 
   describe('When data is retrieved', () => {
@@ -237,7 +221,7 @@ describe('<DataGrid />', () => {
     });
   });
 
-  /** Unit test for top pager */
+  // Unit test for top pager
   describe('When <TableHead /> has showTopPager property set as true', () => {
     beforeEach(() => {
       mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200, {
@@ -260,10 +244,5 @@ describe('<DataGrid />', () => {
 
       expect(rowHeader).to.have.lengthOf(1);
     });
-  });
-
-  beforeEach(() => {
-    axiosInstance = Axios.create();
-    mock = new MockAdapter(axiosInstance);
   });
 });
