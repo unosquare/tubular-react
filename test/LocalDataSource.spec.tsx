@@ -23,6 +23,7 @@ import {
   expectedPayloadLteNumeric,
   expectedPayloadLtNumeric,
   expectedPayloadMultipleSort,
+  expectedPayloadNoneDate,
   expectedPayloadNoneNumeric,
   expectedPayloadNoneString,
   expectedPayloadNotEndsWithString,
@@ -226,6 +227,11 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.Operator = CompareOperators.NONE;
       dataSource.columns[0].Filter.HasFilter = false;
       dataSource.columns[0].Filter.Argument = [];
+
+      dataSource.columns[1].Filter.Text = null;
+      dataSource.columns[1].Filter.Operator = CompareOperators.NONE;
+      dataSource.columns[1].Filter.HasFilter = false;
+      dataSource.columns[1].Filter.Argument = [];
     });
 
     it('should return a payload without filters', (done) => {
@@ -320,6 +326,39 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.deep.equal(expectedPayloadNotEndsWithString);
+        done();
+      });
+    });
+  });
+
+  describe('When date column has filters', () => {
+    const dataSource = new LocalDataSource(localData, validColumnsSample);
+
+    beforeEach(() => {
+      dataSource.columns[0].Filter.Text = null;
+      dataSource.columns[0].Filter.Operator = CompareOperators.NONE;
+      dataSource.columns[0].Filter.HasFilter = false;
+      dataSource.columns[0].Filter.Argument = [];
+
+      dataSource.columns[1].Filter.Text = null;
+      dataSource.columns[1].Filter.Operator = CompareOperators.NONE;
+      dataSource.columns[1].Filter.HasFilter = false;
+      dataSource.columns[1].Filter.Argument = [];
+
+      dataSource.columns[2].Filter.Text = null;
+      dataSource.columns[2].Filter.Operator = CompareOperators.NONE;
+      dataSource.columns[2].Filter.HasFilter = false;
+      dataSource.columns[2].Filter.Argument = [];
+    });
+
+    it('should return a payload without filters', (done) => {
+      dataSource.columns[2].Filter.Text = null;
+      dataSource.columns[2].Filter.Operator = CompareOperators.NONE;
+      dataSource.columns[2].Filter.HasFilter = false;
+      dataSource.columns[2].Filter.Argument = [];
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Payload).to.deep.equal(expectedPayloadNoneDate);
         done();
       });
     });
