@@ -78,7 +78,12 @@ describe('RemoteDateSource', () => {
           ...simpleRecordsExpected
         });
 
-        dataSource.connect(10, 0, '').subscribe((r) => { response = r; });
+        dataSource.connect(10, 0, '')
+          .subscribe((r) => {
+            response = r;
+          }, (error: any) => {
+            response = error;
+          });
       });
 
       it('Should return a payload', (done) => {
@@ -126,6 +131,27 @@ describe('RemoteDateSource', () => {
               expect(response.Payload).to.deep.equal(descendingExpected.Payload);
               expect(response.FilteredRecordCount).to.deep.equal(descendingExpected.FilteredRecordCount);
               expect(response.TotalRecordCount).to.deep.equal(descendingExpected.TotalRecordCount);
+              done();
+            }, 0);
+          });
+        });
+
+        describe('When the response is invalid', () => {
+          before( () => {
+            mock.reset();
+            mock.onPost('url').reply(200, {
+              AggregationPayload: simpleRecordsExpected.AggregationPayload,
+              Counter: simpleRecordsExpected.Counter,
+              CurrentPage: simpleRecordsExpected.CurrentPage,
+              FilteredRecordCount: simpleRecordsExpected.FilteredRecordCount
+            });
+
+            dataSource.refresh(10, 0, '');
+          });
+
+          it('Should throw an error', (done) => {
+            setTimeout( () => {
+              expect(response.message).to.deep.equal('It\'s not a valid Tubular response object');
               done();
             }, 0);
           });
