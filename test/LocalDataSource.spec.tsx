@@ -223,6 +223,19 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.Argument = [];
     });
 
+    // None
+    it('should return a payload without filters', (done) => {
+      dataSource.columns[1].Filter.Text = null;
+      dataSource.columns[1].Filter.Operator = 'None';
+      dataSource.columns[1].Filter.HasFilter = false;
+      dataSource.columns[1].Filter.Argument = [];
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Payload).to.deep.equal(expectedPayloadNoneString);
+        done();
+      });
+    });
+
     // Equals
     it('should return a payload with records where CustomerName equals \'Unosquare LLC\'', (done) => {
       dataSource.columns[1].Filter.Text = 'Unosquare LLC';
