@@ -25,6 +25,7 @@ import {
   expectedPayloadNoneNumeric,
   expectedPayloadNoneString,
   expectedPayloadNotEqualsString,
+  expectedPayloadNotStartsWithString,
   expectedPayloadPage2,
   expectedPayloadStartsWithString,
   expectedPayloadTextSearchVesta
@@ -280,6 +281,18 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.deep.equal(expectedPayloadStartsWithString);
+        done();
+      });
+    });
+
+    it('should return a payload with records where CustomerName starts with \'M\'', (done) => {
+      dataSource.columns[1].Filter.Text = 'M';
+      dataSource.columns[1].Filter.Operator = 'NotStartsWith';
+      dataSource.columns[1].Filter.HasFilter = true;
+      dataSource.columns[1].Filter.Argument = [];
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Payload).to.deep.equal(expectedPayloadNotStartsWithString);
         done();
       });
     });
