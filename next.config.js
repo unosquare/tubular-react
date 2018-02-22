@@ -10,5 +10,5 @@ module.exports = {
       '/Documentation/Props': { page: '/Documentation/Props' },
     }
   },
-  assetPrefix: !debug ? 'https://unosquare.github.io/tubular-react/':''
+  assetPrefix: debug ? 'https://unosquare.github.io/tubular-react/':''
 }
