@@ -26,6 +26,7 @@ import {
   expectedPayloadNoneString,
   expectedPayloadNotEqualsString,
   expectedPayloadPage2,
+  expectedPayloadStartsWithString,
   expectedPayloadTextSearchVesta
 } from './utils/LocalDataSourceMocks';
 
@@ -267,6 +268,18 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.deep.equal(expectedPayloadContainsString);
+        done();
+      });
+    });
+
+    it('should return a payload with records where CustomerName starts with \'M\'', (done) => {
+      dataSource.columns[1].Filter.Text = 'M';
+      dataSource.columns[1].Filter.Operator = 'StartsWith';
+      dataSource.columns[1].Filter.HasFilter = true;
+      dataSource.columns[1].Filter.Argument = [];
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Payload).to.deep.equal(expectedPayloadStartsWithString);
         done();
       });
     });
