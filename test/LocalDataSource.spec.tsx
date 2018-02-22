@@ -24,6 +24,7 @@ import {
   expectedPayloadMultipleSort,
   expectedPayloadNoneNumeric,
   expectedPayloadNoneString,
+  expectedPayloadNotEndsWithString,
   expectedPayloadNotEqualsString,
   expectedPayloadNotStartsWithString,
   expectedPayloadPage2,
@@ -285,7 +286,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload with records where CustomerName starts with \'M\'', (done) => {
+    it('should return a payload with records where CustomerName does not starts with \'M\'', (done) => {
       dataSource.columns[1].Filter.Text = 'M';
       dataSource.columns[1].Filter.Operator = 'NotStartsWith';
       dataSource.columns[1].Filter.HasFilter = true;
@@ -293,6 +294,18 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.deep.equal(expectedPayloadNotStartsWithString);
+        done();
+      });
+    });
+
+    it('should return a payload with records where CustomerName does not ends with \'a\'', (done) => {
+      dataSource.columns[1].Filter.Text = 'a';
+      dataSource.columns[1].Filter.Operator = 'NotEndsWith';
+      dataSource.columns[1].Filter.HasFilter = true;
+      dataSource.columns[1].Filter.Argument = [];
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Payload).to.deep.equal(expectedPayloadNotEndsWithString);
         done();
       });
     });
