@@ -32,6 +32,7 @@ import {
   expectedPayloadStartsWithString,
   expectedPayloadTextSearchVesta
 } from './utils/LocalDataSourceMocks';
+import { CompareOperators } from '../src/DataGrid/Column';
 
 describe('LocalDataSource', () => {
 
@@ -95,7 +96,7 @@ describe('LocalDataSource', () => {
 
     beforeEach(() => {
       dataSource.columns[0].Filter.Text = null;
-      dataSource.columns[0].Filter.Operator = 'None';
+      dataSource.columns[0].Filter.Operator = CompareOperators.NONE;
       dataSource.columns[0].Filter.HasFilter = false;
       dataSource.columns[0].Filter.Argument = [];
     });
@@ -103,7 +104,7 @@ describe('LocalDataSource', () => {
     it('should return a payload without filters', (done) => {
 
       dataSource.columns[0].Filter.Text = null;
-      dataSource.columns[0].Filter.Operator = 'None';
+      dataSource.columns[0].Filter.Operator = CompareOperators.NONE;
       dataSource.columns[0].Filter.HasFilter = false;
       dataSource.columns[0].Filter.Argument = [];
 
@@ -117,7 +118,7 @@ describe('LocalDataSource', () => {
 
     it('should return a payload with one record', (done) => {
       dataSource.columns[0].Filter.Text = 9;
-      dataSource.columns[0].Filter.Operator = 'Equals';
+      dataSource.columns[0].Filter.Operator = CompareOperators.EQUALS;
       dataSource.columns[0].Filter.HasFilter = true;
       dataSource.columns[0].Filter.Argument = [];
 
@@ -131,7 +132,7 @@ describe('LocalDataSource', () => {
 
     it('should return a payload with records 2 to 9', (done) => {
       dataSource.columns[0].Filter.Text = 2;
-      dataSource.columns[0].Filter.Operator = 'Between';
+      dataSource.columns[0].Filter.Operator = CompareOperators.BETWEEN;
       dataSource.columns[0].Filter.HasFilter = true;
       dataSource.columns[0].Filter.Argument = [9];
 
@@ -145,7 +146,7 @@ describe('LocalDataSource', () => {
 
     it('should return a payload with records where OrderID >= 9', (done) => {
       dataSource.columns[0].Filter.Text = 9;
-      dataSource.columns[0].Filter.Operator = 'Gte';
+      dataSource.columns[0].Filter.Operator = CompareOperators.GTE;
       dataSource.columns[0].Filter.HasFilter = true;
       dataSource.columns[0].Filter.Argument = [];
 
@@ -161,7 +162,7 @@ describe('LocalDataSource', () => {
       let payloadResponse;
 
       dataSource.columns[0].Filter.Text = 9;
-      dataSource.columns[0].Filter.Operator = 'Gt';
+      dataSource.columns[0].Filter.Operator = CompareOperators.GT;
       dataSource.columns[0].Filter.HasFilter = true;
       dataSource.columns[0].Filter.Argument = [];
 
@@ -178,7 +179,7 @@ describe('LocalDataSource', () => {
 
     it('should return a payload with records where OrderID <= 5', (done) => {
       dataSource.columns[0].Filter.Text = 5;
-      dataSource.columns[0].Filter.Operator = 'Lte';
+      dataSource.columns[0].Filter.Operator = CompareOperators.LTE;
       dataSource.columns[0].Filter.HasFilter = true;
       dataSource.columns[0].Filter.Argument = [];
 
@@ -192,7 +193,7 @@ describe('LocalDataSource', () => {
 
     it('should return a payload with records where OrderId < 5', (done) => {
       dataSource.columns[0].Filter.Text = 5;
-      dataSource.columns[0].Filter.Operator = 'Lt';
+      dataSource.columns[0].Filter.Operator = CompareOperators.LT;
       dataSource.columns[0].Filter.HasFilter = true;
       dataSource.columns[0].Filter.Argument = [];
 
@@ -206,7 +207,7 @@ describe('LocalDataSource', () => {
 
     it('should return an empty array', (done) => {
       dataSource.columns[0].Filter.Text = 501;
-      dataSource.columns[0].Filter.Operator = 'Equals';
+      dataSource.columns[0].Filter.Operator = CompareOperators.EQUALS;
       dataSource.columns[0].Filter.HasFilter = true;
       dataSource.columns[0].Filter.Argument = [];
 
@@ -222,14 +223,14 @@ describe('LocalDataSource', () => {
 
     beforeEach(() => {
       dataSource.columns[0].Filter.Text = null;
-      dataSource.columns[0].Filter.Operator = 'None';
+      dataSource.columns[0].Filter.Operator = CompareOperators.NONE;
       dataSource.columns[0].Filter.HasFilter = false;
       dataSource.columns[0].Filter.Argument = [];
     });
 
     it('should return a payload without filters', (done) => {
       dataSource.columns[1].Filter.Text = null;
-      dataSource.columns[1].Filter.Operator = 'None';
+      dataSource.columns[1].Filter.Operator = CompareOperators.NONE;
       dataSource.columns[1].Filter.HasFilter = false;
       dataSource.columns[1].Filter.Argument = [];
 
@@ -241,7 +242,7 @@ describe('LocalDataSource', () => {
 
     it('should return a payload with records where CustomerName equals \'Unosquare LLC\'', (done) => {
       dataSource.columns[1].Filter.Text = 'Unosquare LLC';
-      dataSource.columns[1].Filter.Operator = 'Equals';
+      dataSource.columns[1].Filter.Operator = CompareOperators.EQUALS;
       dataSource.columns[1].Filter.HasFilter = true;
       dataSource.columns[1].Filter.Argument = [];
 
@@ -253,7 +254,7 @@ describe('LocalDataSource', () => {
 
     it('should return a payload with records where CustomerName isn\'t equals to \'Microsoft\'', (done) => {
       dataSource.columns[1].Filter.Text = 'Microsoft';
-      dataSource.columns[1].Filter.Operator = 'NotEquals';
+      dataSource.columns[1].Filter.Operator = CompareOperators.NOT_EQUALS;
       dataSource.columns[1].Filter.HasFilter = true;
       dataSource.columns[1].Filter.Argument = [];
 
@@ -265,7 +266,7 @@ describe('LocalDataSource', () => {
 
     it('should return a payload with records where CustomerName contains \'ves\'', (done) => {
       dataSource.columns[1].Filter.Text = 'ves';
-      dataSource.columns[1].Filter.Operator = 'Contains';
+      dataSource.columns[1].Filter.Operator = CompareOperators.CONTAINS;
       dataSource.columns[1].Filter.HasFilter = true;
       dataSource.columns[1].Filter.Argument = [];
 
@@ -277,7 +278,7 @@ describe('LocalDataSource', () => {
 
     it('should return a payload with records where CustomerName starts with \'M\'', (done) => {
       dataSource.columns[1].Filter.Text = 'M';
-      dataSource.columns[1].Filter.Operator = 'StartsWith';
+      dataSource.columns[1].Filter.Operator = CompareOperators.STARTS_WITH;
       dataSource.columns[1].Filter.HasFilter = true;
       dataSource.columns[1].Filter.Argument = [];
 
@@ -289,7 +290,7 @@ describe('LocalDataSource', () => {
 
     it('should return a payload with records where CustomerName does not starts with \'M\'', (done) => {
       dataSource.columns[1].Filter.Text = 'M';
-      dataSource.columns[1].Filter.Operator = 'NotStartsWith';
+      dataSource.columns[1].Filter.Operator = CompareOperators.NOT_STARTS_WITH;
       dataSource.columns[1].Filter.HasFilter = true;
       dataSource.columns[1].Filter.Argument = [];
 
@@ -301,7 +302,7 @@ describe('LocalDataSource', () => {
 
     it('should return a payload with records where CustomerName ends with \'a\'', (done) => {
       dataSource.columns[1].Filter.Text = 'a';
-      dataSource.columns[1].Filter.Operator = 'EndsWith';
+      dataSource.columns[1].Filter.Operator = CompareOperators.ENDS_WITH;
       dataSource.columns[1].Filter.HasFilter = true;
       dataSource.columns[1].Filter.Argument = [];
 
@@ -311,10 +312,9 @@ describe('LocalDataSource', () => {
       });
     });
 
-    // Not Ends With
     it('should return a payload with records where CustomerName not ends with \'a\'', (done) => {
       dataSource.columns[1].Filter.Text = 'a';
-      dataSource.columns[1].Filter.Operator = 'NotEndsWith';
+      dataSource.columns[1].Filter.Operator = CompareOperators.NOT_ENDS_WITH;
       dataSource.columns[1].Filter.HasFilter = true;
       dataSource.columns[1].Filter.Argument = [];
 
