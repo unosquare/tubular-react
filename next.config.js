@@ -1,4 +1,5 @@
-const debug = process.env.NODE_ENV !== "prod";
+const dev = process.env.NODE_ENV.trim() === 'development';
+
 module.exports = {
   exportPathMap: function() {
     return {
@@ -10,5 +11,5 @@ module.exports = {
       '/Documentation/Props': { page: '/Documentation/Props' },
     }
   },
-  assetPrefix: debug ? '/tubular-react':''
+  assetPrefix: !dev ? '/tubular-react':''
 }

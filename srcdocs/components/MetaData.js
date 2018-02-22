@@ -13,12 +13,12 @@ const MetaData = (props) => {
             <meta name="description" content="Tubular React" />
             <meta name="keywords" content="application, html5, reactJS, responsive, web api" />
             <meta name="author" content="Unosquare Labs" />
-            <link rel="shortcut icon" href="../../static/favicon.ico" />
+            <link rel="shortcut icon" href="./static/favicon.ico" />
             <title>Tubular React</title>
         </Head>
         <style jsx global>{`
         body { 
-          background-image: url("../../static/background.jpg");
+          background-image: url("./static/background.jpg");
           width: 98%;
         }
       `}</style>

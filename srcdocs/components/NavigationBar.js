@@ -49,7 +49,7 @@ class NavigationBar extends React.Component {
                                 <MenuIcon />
                             </IconButton>
                         </Tooltip>
-                        <img className={classes.logo} src="../static/tubular.png" alt="Tubular" />
+                        <img className={classes.logo} src="./static/tubular.png" alt="Tubular" />
                     </Toolbar>
                 </AppBar>
                 <Drawer variant='persistent' open={this.state.openDrawer} onClose={this.toggleDrawer(false)}>
@@ -77,10 +77,10 @@ class NavigationBar extends React.Component {
                         </ListItem>
                         <Divider />
                         <ListItem button component='a' href='https://www.unosquare.com/' target='_blank' onClick={this.toggleDrawer(false)}>
-                                <img className={classes.image} src="../static/logoUnosquare.png" alt="Unosquare" />
+                                <img className={classes.image} src="./static/logoUnosquare.png" alt="Unosquare" />
                         </ListItem>
                         <ListItem button component='a' href='https://github.com/unosquare/tubular-react' target='_blank' onClick={this.toggleDrawer(false)}>
-                                <img className={classes.image} src="../static/GitHub-Logo.png" alt="Github" />
+                                <img className={classes.image} src="./static/GitHub-Logo.png" alt="Github" />
                         </ListItem>
                     </List>
                     <Divider />
