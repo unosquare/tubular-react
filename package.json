@@ -9,7 +9,9 @@
     "lint": "tslint src/**/*.ts src/**/*.tsx",
     "test": "gulp test",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
-    "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov"
+    "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov",
+    "docs:dev": "next",
+    "docs": "next build && next export -o docs"
   },
   "nyc": {
     "extension": [
@@ -53,10 +55,12 @@
     "@types/enzyme-adapter-react-16": "^1.0.2",
     "@types/lodash": "^4.14.102",
     "@types/mocha": "^2.2.48",
+    "@types/next": "^2.4.8",
     "@types/prop-types": "^15.5.2",
     "@types/react": "^16.0.36",
     "@types/react-dom": "^16.0.3",
     "@types/rx": "^4.1.1",
+    "@zeit/next-typescript": "0.0.10",
     "axios-mock-adapter": "^1.12.0",
     "browser-sync": "^2.23.5",
     "browserify": "^15.2.0",
@@ -71,7 +75,9 @@
     "gulp-typescript": "^3.2.4",
     "jsdom": "^11.5.1",
     "mock-local-storage": "^1.0.5",
+    "next": "^5.0.0",
     "nyc": "^11.4.1",
+    "react-syntax-highlighter": "^7.0.0",
     "sinon": "^4.1.6",
     "ts-node": "^4.1.0",
     "tsify": "^3.0.4",
