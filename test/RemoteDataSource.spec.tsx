@@ -63,83 +63,50 @@ describe('RemoteDateSource', () => {
     });
 
     describe('When connect is called', () => {
-      let response;
+      describe('When the response is invalid', () => {
+        let response;
 
-      before( () => {
-        mock.reset();
-        mock.onPost('url').reply(200, {
-          ...simpleRecordsExpected
+        before( () => {
+          mock.reset();
+          mock.onPost('url').reply(200, {
+            ...simpleRecordsExpected
+          });
         });
 
-        dataSource.connect(10, 0, '')
-          .subscribe((r) => {
-            response = r;
-          }, (error: any) => {
-            response = error;
-          });
+        it('Should return a payload', (done) => {
+          dataSource.connect(10, 0, '')
+            .skip(1).subscribe((r) => {
+              expect(r.Payload).to.deep.equal(simpleRecordsExpected.Payload);
+              expect(r.FilteredRecordCount).to.deep.equal(simpleRecordsExpected.FilteredRecordCount);
+              expect(r.TotalRecordCount).to.deep.equal(simpleRecordsExpected.TotalRecordCount);
+              /* console.log(dataSource.dataStream); */
+              done();
+            }, (error: any) => {
+              response = error;
+              done();
+            });
+        });
       });
 
-      it('Should return a payload', (done) => {
-        expect(response.Payload).to.deep.equal(simpleRecordsExpected.Payload);
-        expect(response.FilteredRecordCount).to.deep.equal(simpleRecordsExpected.FilteredRecordCount);
-        expect(response.TotalRecordCount).to.deep.equal(simpleRecordsExpected.TotalRecordCount);
-        done();
-      });
+      describe('When the response is invalid', () => {
+        const dtSource = new RemoteDataSource('url', validColumnsSample);
 
-      describe('When refresh is called', () => {
-        describe('When page 2 is requested', () => {
-          before( () => {
-            mock.reset();
-            mock.onPost('url').reply(200, {
-              ...page2Expected
-            });
-
-            dataSource.refresh(10, 1, '');
-          });
-
-          it('Should return a payload with records 11 to 20', (done) => {
-            expect(response.Payload).to.deep.equal(page2Expected.Payload);
-            expect(response.FilteredRecordCount).to.deep.equal(page2Expected.FilteredRecordCount);
-            expect(response.TotalRecordCount).to.deep.equal(page2Expected.TotalRecordCount);
-            done();
+        before( () => {
+          mock.reset();
+          mock.onPost('url').reply(200, {
+            AggregationPayload: simpleRecordsExpected.AggregationPayload,
+            Counter: simpleRecordsExpected.Counter,
+            CurrentPage: simpleRecordsExpected.CurrentPage,
+            FilteredRecordCount: simpleRecordsExpected.FilteredRecordCount
           });
         });
 
-        describe('When sort order is descending', () => {
-          before( () => {
-            mock.reset();
-            mock.onPost('url').reply(200, {
-              ...descendingExpected
+        it('Should throw an error', (done) => {
+          dtSource.connect(10, 0, '')
+            .subscribe((r) => r, (error: any) => {
+              expect(error.message).to.be.equal('It\'s not a valid Tubular response object');
+              done();
             });
-            dataSource.columns[0].SortDirection = ColumnSortDirection.DESCENDING;
-            dataSource.refresh(10, 0, '');
-          });
-
-          it('Should return a payload with records in descending order', (done) => {
-            expect(response.Payload).to.deep.equal(descendingExpected.Payload);
-            expect(response.FilteredRecordCount).to.deep.equal(descendingExpected.FilteredRecordCount);
-            expect(response.TotalRecordCount).to.deep.equal(descendingExpected.TotalRecordCount);
-            done();
-          });
-        });
-
-        describe('When the response is invalid', () => {
-          before( () => {
-            mock.reset();
-            mock.onPost('url').reply(200, {
-              AggregationPayload: simpleRecordsExpected.AggregationPayload,
-              Counter: simpleRecordsExpected.Counter,
-              CurrentPage: simpleRecordsExpected.CurrentPage,
-              FilteredRecordCount: simpleRecordsExpected.FilteredRecordCount
-            });
-
-            dataSource.refresh(10, 0, '');
-          });
-
-          it('Should throw an error', (done) => {
-            expect(response.message).to.deep.equal('It\'s not a valid Tubular response object');
-            done();
-          });
         });
       });
     });
