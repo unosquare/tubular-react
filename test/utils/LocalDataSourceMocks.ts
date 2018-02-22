@@ -865,5 +865,5 @@ export {
   expectedPayloadNoneString,
   expectedPayloadEqualsString,
   expectedPayloadNotEqualsString,
-  expectedLocaDataSourcelResponse,
+  expectedLocaDataSourcelResponse
 };
