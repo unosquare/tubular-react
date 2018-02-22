@@ -14,13 +14,6 @@ import {
   twentyRecordsExpected,
   validResponseStructure
 } from './utils/data';
-import {
-  descendingRequest,
-  onlyMicrosoftRecordsRequest,
-  page2Request,
-  simpleRequest,
-  twentyRecordsRequest
-} from './utils/requests';
 
 const mock = new MockAdapter(axios);
 
@@ -78,16 +71,19 @@ describe('RemoteDateSource', () => {
           ...simpleRecordsExpected
         });
 
-        dataSource.connect(10, 0, '').subscribe((r) => { response = r; });
+        dataSource.connect(10, 0, '')
+          .subscribe((r) => {
+            response = r;
+          }, (error: any) => {
+            response = error;
+          });
       });
 
       it('Should return a payload', (done) => {
-        setTimeout( () => {
-          expect(response.Payload).to.deep.equal(simpleRecordsExpected.Payload);
-          expect(response.FilteredRecordCount).to.deep.equal(simpleRecordsExpected.FilteredRecordCount);
-          expect(response.TotalRecordCount).to.deep.equal(simpleRecordsExpected.TotalRecordCount);
-          done();
-        }, 0);
+        expect(response.Payload).to.deep.equal(simpleRecordsExpected.Payload);
+        expect(response.FilteredRecordCount).to.deep.equal(simpleRecordsExpected.FilteredRecordCount);
+        expect(response.TotalRecordCount).to.deep.equal(simpleRecordsExpected.TotalRecordCount);
+        done();
       });
 
       describe('When refresh is called', () => {
@@ -102,12 +98,10 @@ describe('RemoteDateSource', () => {
           });
 
           it('Should return a payload with records 11 to 20', (done) => {
-            setTimeout( () => {
-              expect(response.Payload).to.deep.equal(page2Expected.Payload);
-              expect(response.FilteredRecordCount).to.deep.equal(page2Expected.FilteredRecordCount);
-              expect(response.TotalRecordCount).to.deep.equal(page2Expected.TotalRecordCount);
-              done();
-            }, 0);
+            expect(response.Payload).to.deep.equal(page2Expected.Payload);
+            expect(response.FilteredRecordCount).to.deep.equal(page2Expected.FilteredRecordCount);
+            expect(response.TotalRecordCount).to.deep.equal(page2Expected.TotalRecordCount);
+            done();
           });
         });
 
@@ -122,12 +116,29 @@ describe('RemoteDateSource', () => {
           });
 
           it('Should return a payload with records in descending order', (done) => {
-            setTimeout( () => {
-              expect(response.Payload).to.deep.equal(descendingExpected.Payload);
-              expect(response.FilteredRecordCount).to.deep.equal(descendingExpected.FilteredRecordCount);
-              expect(response.TotalRecordCount).to.deep.equal(descendingExpected.TotalRecordCount);
-              done();
-            }, 0);
+            expect(response.Payload).to.deep.equal(descendingExpected.Payload);
+            expect(response.FilteredRecordCount).to.deep.equal(descendingExpected.FilteredRecordCount);
+            expect(response.TotalRecordCount).to.deep.equal(descendingExpected.TotalRecordCount);
+            done();
+          });
+        });
+
+        describe('When the response is invalid', () => {
+          before( () => {
+            mock.reset();
+            mock.onPost('url').reply(200, {
+              AggregationPayload: simpleRecordsExpected.AggregationPayload,
+              Counter: simpleRecordsExpected.Counter,
+              CurrentPage: simpleRecordsExpected.CurrentPage,
+              FilteredRecordCount: simpleRecordsExpected.FilteredRecordCount
+            });
+
+            dataSource.refresh(10, 0, '');
+          });
+
+          it('Should throw an error', (done) => {
+            expect(response.message).to.deep.equal('It\'s not a valid Tubular response object');
+            done();
           });
         });
       });
