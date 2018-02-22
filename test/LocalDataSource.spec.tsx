@@ -13,6 +13,7 @@ import localData from './utils/localData';
 import {
   expectedLocaDataSourcelResponse,
   expectedPayloadBetweenNumeric,
+  expectedPayloadContainsString,
   expectedPayloadDescSortByOrderID,
   expectedPayloadEqualsNumeric,
   expectedPayloadEqualsString,
@@ -229,6 +230,18 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.deep.equal(expectedPayloadEqualsString);
+        done();
+      });
+    });
+
+    it('should return a payload with records where CustomerName contains \'ves\'', (done) => {
+      dataSource.columns[1].Filter.Text = 'ves';
+      dataSource.columns[1].Filter.Operator = 'Contains';
+      dataSource.columns[1].Filter.HasFilter = true;
+      dataSource.columns[1].Filter.Argument = [];
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Payload).to.deep.equal(expectedPayloadContainsString);
         done();
       });
     });
