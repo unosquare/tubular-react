@@ -15,6 +15,7 @@ import {
   expectedPayloadBetweenNumeric,
   expectedPayloadContainsString,
   expectedPayloadDescSortByOrderID,
+  expectedPayloadEndsWithString,
   expectedPayloadEqualsNumeric,
   expectedPayloadEqualsString,
   expectedPayloadGteNumeric,
@@ -298,7 +299,20 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload with records where CustomerName does not ends with \'a\'', (done) => {
+    it('should return a payload with records where CustomerName ends with \'a\'', (done) => {
+      dataSource.columns[1].Filter.Text = 'a';
+      dataSource.columns[1].Filter.Operator = 'EndsWith';
+      dataSource.columns[1].Filter.HasFilter = true;
+      dataSource.columns[1].Filter.Argument = [];
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Payload).to.deep.equal(expectedPayloadEndsWithString);
+        done();
+      });
+    });
+
+    // Not Ends With
+    it('should return a payload with records where CustomerName not ends with \'a\'', (done) => {
       dataSource.columns[1].Filter.Text = 'a';
       dataSource.columns[1].Filter.Operator = 'NotEndsWith';
       dataSource.columns[1].Filter.HasFilter = true;

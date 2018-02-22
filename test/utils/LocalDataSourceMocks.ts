@@ -960,6 +960,65 @@ const expectedPayloadNotStartsWithString = [
   }
 ];
 
+const expectedPayloadEndsWithString = [
+  {
+    OrderID: 4,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-03-19T19:00:00',
+    ShipperCity: 'Portland, OR, USA',
+    Amount: 300
+  },
+  {
+    OrderID: 5,
+    CustomerName: 'Super La Playa',
+    ShippedDate: '2016-04-23T10:00:00',
+    ShipperCity: 'Leon, GTO, Mexico',
+    Amount: 174
+  },
+  {
+    OrderID: 7,
+    CustomerName: 'Super La Playa',
+    ShippedDate: '2016-03-19T19:00:00',
+    ShipperCity: 'Portland, OR, USA',
+    Amount: 300
+  },
+  {
+    OrderID: 8,
+    CustomerName: 'Super La Playa',
+    ShippedDate: '2016-04-23T10:00:00',
+    ShipperCity: 'Leon, GTO, Mexico',
+    Amount: 15
+  },
+  {
+    OrderID: 10,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-03-19T19:00:00',
+    ShipperCity: 'Portland, OR, USA',
+    Amount: 300
+  },
+  {
+    OrderID: 14,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-04-23T10:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 60
+  },
+  {
+    OrderID: 15,
+    CustomerName: 'Super La Playa',
+    ShippedDate: '2016-12-22T08:00:00',
+    ShipperCity: 'Portland, OR, US',
+    Amount: 192
+  },
+  {
+    OrderID: 19,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-11-08T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 300
+  }
+];
+
 const expectedPayloadNotEndsWithString = [
   {
     OrderID: 1,
@@ -1052,5 +1111,6 @@ export {
   expectedLocaDataSourcelResponse,
   expectedPayloadStartsWithString,
   expectedPayloadNotStartsWithString,
+  expectedPayloadEndsWithString,
   expectedPayloadNotEndsWithString
 };
