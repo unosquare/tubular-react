@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import GridResponse from '../src/Grid/GridResponse';
-import LocalDataSource from '../src/Grid/LocalDataSource';
+import GridResponse from '../src/DataGrid/GridResponse';
+import LocalDataSource from '../src/DataGrid/LocalDataSource';
 import {
   validColumnsSample,
   validColumnsSampleDescending,
@@ -46,7 +46,6 @@ describe('LocalDataSource', () => {
       });
     });
 
-    // Pager
     it('should return a payload with the following 10 records when page is set to 1', (done) => {
        dataSource.getAllRecords(10, 1, '').then((response: GridResponse) => {
         expect(response.Payload).to.deep.equal(expectedPayloadPage2);
@@ -54,7 +53,6 @@ describe('LocalDataSource', () => {
       });
     });
 
-    // Sorting
     it('should return a payload with records in descending order (sorting by \'OrderID\')', (done) => {
       const $dataSource = new LocalDataSource(localData, validColumnsSampleDescending);
 
@@ -74,7 +72,6 @@ describe('LocalDataSource', () => {
       });
     });
 
-    // Search
     it('should return a payload when search by text is set (searching by \'CustomerName\')', (done) => {
       const $dataSource = new LocalDataSource(localData, validColumnsSample);
 
@@ -97,7 +94,6 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.Argument = [];
     });
 
-    // None
     it('should return a payload without filters', (done) => {
 
       dataSource.columns[0].Filter.Text = null;
@@ -113,7 +109,6 @@ describe('LocalDataSource', () => {
       });
     });
 
-    // Equals
     it('should return a payload with one record', (done) => {
       dataSource.columns[0].Filter.Text = 9;
       dataSource.columns[0].Filter.Operator = 'Equals';
@@ -128,7 +123,6 @@ describe('LocalDataSource', () => {
       });
     });
 
-    // Between
     it('should return a payload with records 2 to 9', (done) => {
       dataSource.columns[0].Filter.Text = 2;
       dataSource.columns[0].Filter.Operator = 'Between';
@@ -143,7 +137,6 @@ describe('LocalDataSource', () => {
       });
     });
 
-    // >=
     it('should return a payload with records where OrderID >= 9', (done) => {
       dataSource.columns[0].Filter.Text = 9;
       dataSource.columns[0].Filter.Operator = 'Gte';
@@ -158,7 +151,6 @@ describe('LocalDataSource', () => {
       });
     });
 
-    // >
     it('should return a payload with records where OrderID > 9', (done) => {
       let payloadResponse;
 
@@ -178,7 +170,6 @@ describe('LocalDataSource', () => {
       });
     });
 
-    // <=
     it('should return a payload with records where OrderID <= 5', (done) => {
       dataSource.columns[0].Filter.Text = 5;
       dataSource.columns[0].Filter.Operator = 'Lte';
@@ -193,7 +184,6 @@ describe('LocalDataSource', () => {
       });
     });
 
-    // <
     it('should return a payload with records where OrderId < 5', (done) => {
       dataSource.columns[0].Filter.Text = 5;
       dataSource.columns[0].Filter.Operator = 'Lt';
@@ -208,7 +198,6 @@ describe('LocalDataSource', () => {
       });
     });
 
-    // No records
     it('should return an empty array', (done) => {
       dataSource.columns[0].Filter.Text = 501;
       dataSource.columns[0].Filter.Operator = 'Equals';

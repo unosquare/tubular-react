@@ -3,7 +3,7 @@ import {
   ColumnDataType,
   ColumnModel,
   ColumnSortDirection
-} from '../../src/Grid';
+} from '../../src/DataGrid';
 
 const simpleRequest = {
   Columns:

@@ -2,8 +2,8 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
-import { ColumnSortDirection } from '../src/Grid';
-import RemoteDataSource from '../src/Grid/RemoteDataSource';
+import { ColumnSortDirection } from '../src/DataGrid';
+import RemoteDataSource from '../src/DataGrid/RemoteDataSource';
 import { validColumnsSample } from './utils/columns';
 import {
   descendingExpected,
@@ -22,9 +22,10 @@ import {
   twentyRecordsRequest
 } from './utils/requests';
 
+const mock = new MockAdapter(axios);
+
 describe('RemoteDateSource', () => {
-  const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample);
-  const mock = new MockAdapter(axios);
+  const dataSource = new RemoteDataSource('url', validColumnsSample);
 
   describe('isValidResponse()', () => {
     it('should return true when expectedStructure is valid', () => {
@@ -38,9 +39,9 @@ describe('RemoteDateSource', () => {
 
   describe('When columns structure is valid', () => {
     describe('When 20 records are requested', () => {
-      beforeEach( () => {
+      before( () => {
         mock.reset();
-        mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(200, {
+        mock.onPost('url').reply(200, {
           ...twentyRecordsExpected
         });
       });
@@ -53,9 +54,9 @@ describe('RemoteDateSource', () => {
     });
 
     describe('When search input is Microsoft', () => {
-      beforeEach( () => {
+      before( () => {
         mock.reset();
-        mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(200, {
+        mock.onPost('url').reply(200, {
           ...onlyMicrosoftExpected
         });
       });
@@ -73,7 +74,7 @@ describe('RemoteDateSource', () => {
 
       before( () => {
         mock.reset();
-        mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(200, {
+        mock.onPost('url').reply(200, {
           ...simpleRecordsExpected
         });
 
@@ -91,9 +92,9 @@ describe('RemoteDateSource', () => {
 
       describe('When refresh is called', () => {
         describe('When page 2 is requested', () => {
-          beforeEach( () => {
+          before( () => {
             mock.reset();
-            mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(200, {
+            mock.onPost('url').reply(200, {
               ...page2Expected
             });
 
@@ -111,9 +112,9 @@ describe('RemoteDateSource', () => {
         });
 
         describe('When sort order is descending', () => {
-          beforeEach( () => {
+          before( () => {
             mock.reset();
-            mock.onPost('http://tubular.azurewebsites.net/api/orders/paged').reply(200, {
+            mock.onPost('url').reply(200, {
               ...descendingExpected
             });
             dataSource.columns[0].SortDirection = ColumnSortDirection.DESCENDING;
