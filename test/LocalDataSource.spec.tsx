@@ -223,7 +223,18 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.Argument = [];
     });
 
-    // Equals
+    it('should return a payload without filters', (done) => {
+      dataSource.columns[1].Filter.Text = null;
+      dataSource.columns[1].Filter.Operator = 'None';
+      dataSource.columns[1].Filter.HasFilter = false;
+      dataSource.columns[1].Filter.Argument = [];
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Payload).to.deep.equal(expectedPayloadNoneString);
+        done();
+      });
+    });
+
     it('should return a payload with records where CustomerName equals \'Unosquare LLC\'', (done) => {
       dataSource.columns[1].Filter.Text = 'Unosquare LLC';
       dataSource.columns[1].Filter.Operator = 'Equals';
@@ -236,7 +247,6 @@ describe('LocalDataSource', () => {
       });
     });
 
-    // Not Equals
     it('should return a payload with records where CustomerName isn\'t equals to \'Microsoft\'', (done) => {
       dataSource.columns[1].Filter.Text = 'Microsoft';
       dataSource.columns[1].Filter.Operator = 'NotEquals';
@@ -249,7 +259,6 @@ describe('LocalDataSource', () => {
       });
     });
 
-    // Contains
     it('should return a payload with records where CustomerName contains \'ves\'', (done) => {
       dataSource.columns[1].Filter.Text = 'ves';
       dataSource.columns[1].Filter.Operator = 'Contains';
