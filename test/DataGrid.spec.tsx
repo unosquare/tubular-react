@@ -5,15 +5,15 @@ import * as Enzyme from 'enzyme';
 import * as Adapter from 'enzyme-adapter-react-16';
 import Paper from 'material-ui/Paper';
 import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
-import { createShallow } from 'material-ui/test-utils';
+import { createMount, createShallow } from 'material-ui/test-utils';
 import Typography from 'material-ui/Typography';
 import * as React from 'react';
-import DataGrid from '../src/Grid/DataGrid';
-import GridHeader from '../src/Grid/GridHeader';
-import Paginator from '../src/Grid/Paginator';
-import RemoteDataSource from '../src/Grid/RemoteDataSource';
+import DataGrid from '../src';
+import GridHeader from '../src/DataGrid/GridHeader';
+import Paginator from '../src/DataGrid/Paginator';
+import RemoteDataSource from '../src/DataGrid/RemoteDataSource';
 import { validColumnsSample } from './utils/columns';
-import { data } from './utils/data';
+import { data, simpleRecordsExpected } from './utils/data';
 import * as orders from './utils/orders';
 
 const footerRenderer = (aggregates) => (
@@ -45,24 +45,25 @@ const bodyRenderer = (row, index) => (
 );
 
 Enzyme.configure({ adapter: new Adapter() });
+const mock = new MockAdapter(Axios);
+mock.onPost().reply(200, {...simpleRecordsExpected});
 
 describe('<DataGrid />', () => {
   let shallow;
-  let axiosInstance;
-  let mock;
   let grid;
-
+  let mount;
+  let dataSource;
   beforeEach(() => {
-    axiosInstance = Axios.create();
-    mock = new MockAdapter(axiosInstance);
-
-    shallow = createShallow({ dive: true });
+    dataSource = new RemoteDataSource('url', validColumnsSample);
+    shallow = createShallow({dive: true});
+    mount = createMount();
     grid = (
       <DataGrid
+        onError={(x: any) => x}
         gridName='Motorhead'
         rowsPerPage={10}
         showTopPager={true}
-        dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
+        dataSource={dataSource}
       />
     );
   });
@@ -92,7 +93,6 @@ describe('<DataGrid />', () => {
     });
   });
 
-  // Unit test for default/custom body
   describe('When custom body is not defined', () => {
     it('should render the default body', () => {
       const wrapper = shallow(grid);
@@ -104,15 +104,12 @@ describe('<DataGrid />', () => {
 
   describe('When custom body is defined', () => {
     it('should render the custom body', () => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200, {
-        orders
-      });
-
       grid = (
         <DataGrid
+          onError={(x: any) => x}
           gridName='Motorhead'
           rowsPerPage={10}
-          dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
+          dataSource={new RemoteDataSource('url', validColumnsSample)}
           bodyRenderer={bodyRenderer}
         />
       );
@@ -124,13 +121,8 @@ describe('<DataGrid />', () => {
     });
   });
 
-  // Unit tests for custom footer
   describe('When footer has no rows', () => {
     it('should not render any row', () => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200, {
-        orders
-      });
-
       const wrapper = shallow(grid);
       const rowFooter = wrapper.find(Table).find(TableFooter).find(TableRow);
 
@@ -139,18 +131,13 @@ describe('<DataGrid />', () => {
   });
 
   describe('When footer has n rows', () => {
-    beforeEach(() => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200, {
-        orders
-      });
-    });
-
     it('should render the row with the aggregate operation', () => {
       grid = (
         <DataGrid
+          onError={(x: any) => x}
           gridName='Motorhead'
           rowsPerPage={10}
-          dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
+          dataSource={new RemoteDataSource('url', validColumnsSample)}
           footerRenderer={footerRenderer}
         />
       );
@@ -165,9 +152,10 @@ describe('<DataGrid />', () => {
     it('should render the row with the bottom pager', () => {
       grid = (
         <DataGrid
+          onError={(x: any) => x}
           gridName='Motorhead'
           rowsPerPage={10}
-          dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
+          dataSource={new RemoteDataSource('url', validColumnsSample)}
           showBottomPager={true}
         />
       );
@@ -181,9 +169,10 @@ describe('<DataGrid />', () => {
     it('should render the rows with the aggregate operation and the bottom pager', () => {
       grid = (
         <DataGrid
+          onError={(x: any) => x}
           gridName='Motorhead'
           rowsPerPage={10}
-          dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
+          dataSource={new RemoteDataSource('url', validColumnsSample)}
           showBottomPager={true}
           footerRenderer={footerRenderer}
         />
@@ -198,18 +187,14 @@ describe('<DataGrid />', () => {
   });
 
   describe('When footer has showBottomPager property set as true', () => {
-    beforeEach(() => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200, {
-        orders
-      });
-    });
 
     it('should have a paginator', () => {
       grid = (
         <DataGrid
+          onError={(x: any) => x}
           gridName='Motorhead'
           rowsPerPage={10}
-          dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
+          dataSource={new RemoteDataSource('url', validColumnsSample)}
           showBottomPager={true}
         />
       );
@@ -221,20 +206,15 @@ describe('<DataGrid />', () => {
     });
   });
 
-  // Unit test for top pager
   describe('When <TableHead /> has showTopPager property set as true', () => {
-    beforeEach(() => {
-      mock.onPost('http://tubular.azurewebsites.net/api/orders/paged', { validColumnsSample }).reply(200, {
-        orders
-      });
-    });
 
     it('Should have a paginator', () => {
       grid = (
         <DataGrid
+          onError={(x: any) => x}
           gridName='Motorhead'
           rowsPerPage={10}
-          dataSource={new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', validColumnsSample)}
+          dataSource={new RemoteDataSource('url', validColumnsSample)}
           showTopPager={true}
         />
       );

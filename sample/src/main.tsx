@@ -8,7 +8,7 @@ import DataGrid, {
   ColumnModel,
   ColumnSortDirection,
   RemoteDataSource
-} from '../../src/Grid';
+} from '../../src/DataGrid';
 
 const columns = [
   new ColumnModel( 'OrderID',
@@ -47,7 +47,7 @@ export default class Main extends React.Component {
         dataSource={dataSource}
         gridName='Tubular-React'
         bodyRenderer={
-          (row, index) =>
+          (row: any, index: any) =>
             <TableRow hover={true} key={index}>
               <TableCell padding={'default'}>
                 {row.OrderID}
@@ -72,7 +72,7 @@ export default class Main extends React.Component {
         showPrintButton={true}
         showExportButton={true}
         footerRenderer={
-          (aggregates) =>
+          (aggregates: any) =>
             <TableRow>
               <TableCell>Total: </TableCell>
               <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
