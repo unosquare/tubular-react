@@ -1358,6 +1358,79 @@ const expectedPayloadGteDate = [
   }
 ];
 
+const expectedPayloadGtDate = [
+  {
+    OrderID: 2,
+    CustomerName: 'Microsoft',
+    ShippedDate: '2016-11-08T18:00:00',
+    ShipperCity: 'Los Angeles, CA, USA',
+    Amount: 9
+  },
+  {
+    OrderID: 3,
+    CustomerName: 'Unosquare LLC',
+    ShippedDate: '2016-11-08T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 92
+  },
+  {
+    OrderID: 5,
+    CustomerName: 'Super La Playa',
+    ShippedDate: '2016-04-23T10:00:00',
+    ShipperCity: 'Leon, GTO, Mexico',
+    Amount: 174
+  },
+  {
+    OrderID: 6,
+    CustomerName: 'OXXO',
+    ShippedDate: '2016-12-22T08:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 92
+  },
+  {
+    OrderID: 8,
+    CustomerName: 'Super La Playa',
+    ShippedDate: '2016-04-23T10:00:00',
+    ShipperCity: 'Leon, GTO, Mexico',
+    Amount: 15
+  },
+  {
+    OrderID: 9,
+    CustomerName: 'OXXO',
+    ShippedDate: '2016-12-22T08:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 92
+  },
+  {
+    OrderID: 11,
+    CustomerName: 'Microsoft',
+    ShippedDate: '2016-04-23T10:00:00',
+    ShipperCity: 'Leon, GTO, Mexico',
+    Amount: 16
+  },
+  {
+    OrderID: 12,
+    CustomerName: 'OXXO',
+    ShippedDate: '2016-11-08T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 92
+  },
+  {
+    OrderID: 14,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-04-23T10:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 60
+  },
+  {
+    OrderID: 15,
+    CustomerName: 'Super La Playa',
+    ShippedDate: '2016-12-22T08:00:00',
+    ShipperCity: 'Portland, OR, US',
+    Amount: 192
+  }
+];
+
 export {
   expectedPayloadTextSearchVesta,
   expectedPayloadMultipleSort,
@@ -1382,5 +1455,6 @@ export {
   expectedPayloadNoneDate,
   expectedPayloadEqualsDate,
   expectedPayloadBetweenDate,
-  expectedPayloadGteDate
+  expectedPayloadGteDate,
+  expectedPayloadGtDate
 };

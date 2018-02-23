@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { CompareOperators } from '../src/DataGrid/Column';
 import GridResponse from '../src/DataGrid/GridResponse';
 import LocalDataSource from '../src/DataGrid/LocalDataSource';
 import {
@@ -20,6 +21,7 @@ import {
   expectedPayloadEqualsDate,
   expectedPayloadEqualsNumeric,
   expectedPayloadEqualsString,
+  expectedPayloadGtDate,
   expectedPayloadGteDate,
   expectedPayloadGteNumeric,
   expectedPayloadGtNumeric,
@@ -34,9 +36,8 @@ import {
   expectedPayloadNotStartsWithString,
   expectedPayloadPage2,
   expectedPayloadStartsWithString,
-  expectedPayloadTextSearchVesta,
+  expectedPayloadTextSearchVesta
 } from './utils/LocalDataSourceMocks';
-import { CompareOperators } from '../src/DataGrid/Column';
 
 describe('LocalDataSource', () => {
 
@@ -400,6 +401,19 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.deep.equal(expectedPayloadGteDate);
+        done();
+      });
+    });
+
+    it('should return a payload with records where \'Shipped Date\' are greater than to March 19th 2016',
+        (done) => {
+      dataSource.columns[2].Filter.Text = '2016-03-19T19:00:00';
+      dataSource.columns[2].Filter.Operator = CompareOperators.GT;
+      dataSource.columns[2].Filter.HasFilter = true;
+      dataSource.columns[2].Filter.Argument = [];
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Payload).to.deep.equal(expectedPayloadGtDate);
         done();
       });
     });
