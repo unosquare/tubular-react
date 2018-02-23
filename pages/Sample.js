@@ -1,4 +1,8 @@
 import MetaData from '../srcdocs/components/MetaData';
+import SampleExport from '../srcdocs/components/SampleExport';
+import SampleFeatures from '../srcdocs/components/SampleFeatures';
+import SamplePagination from '../srcdocs/components/SamplePagination';
+import SampleSearch from '../srcdocs/components/SampleSearch';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
@@ -8,24 +12,6 @@ import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
 import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
-
-/* const columns = [
-   new ColumnModel( 'OrderID',
-     { DataType: ColumnDataType.NUMERIC,
-       Filtering: true,
-       IsKey: true,
-       Label: 'ID',
-       SortDirection: ColumnSortDirection.ASCENDING,
-       SortOrder: 1,
-       Sortable: true }
-   ),
-   new ColumnModel( 'CustomerName',
-     { Aggregate: AggregateFunctions.COUNT,
-       Filtering: true,
-       Searchable: true,
-       Sortable: true }
-   )
- ];*/
 
 const styles = {
     root: {
@@ -47,7 +33,7 @@ const styles = {
 
 class Sample extends React.Component {
     state = {
-        //dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns)
+        dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns),
         value: 'one'
     };
 
@@ -56,7 +42,7 @@ class Sample extends React.Component {
     };
 
     render() {
-        //  const { dataSource } = this.state; 
+        const { dataSource } = this.state; 
         const { classes } = this.props;
         const { value } = this.state;
         return (
@@ -82,9 +68,10 @@ class Sample extends React.Component {
                                     <Typography variant='subheading' gutterBottom>Grid with Paginations</Typography>
                                     <Typography variant='body1'>Adding a new feature: the pagination.
                                     You can move across the pages and change the size.
-                        </Typography>
+                                    </Typography>
                                 </Grid>
                                 <Grid item xs>
+                                    <SamplePagination />
                                 </Grid>
                         </Grid>
                     }
@@ -93,7 +80,10 @@ class Sample extends React.Component {
                             <Grid item xs={3}>
                                 <Typography variant='subheading' gutterBottom>Grid with Common Features</Typography>
                                 <Typography variant='body1'>The grid can be extended to include features like sorting and filtering.
-                        </Typography>
+                                </Typography>
+                            </Grid>
+                            <Grid item xs>
+                                <SampleFeatures />
                             </Grid>
                     </Grid>
                     }
@@ -104,6 +94,9 @@ class Sample extends React.Component {
                                 <Typography variant='body1'>Adding a "searchable" attribute to your columns and you can perform free-text searches.
                             </Typography>
                             </Grid>
+                            <Grid item xs>
+                                    <SampleSearch />
+                            </Grid>
                     </Grid>
                     }
                     {value === 'four' &&
@@ -111,9 +104,11 @@ class Sample extends React.Component {
                             <Grid item xs={3}>
                                 <Typography variant='subheading' gutterBottom>Print and Export to CSV</Typography>
                                 <Typography variant='body1'>Easily you can print or export the current view or entire dataset to CSV using client-side only.
-                            </Typography>
+                                </Typography>
                             </Grid>
-
+                            <Grid item xs>
+                                    <SampleExport/>
+                            </Grid>
                     </Grid>
                     }
                     </Paper>
@@ -127,6 +122,5 @@ class Sample extends React.Component {
 Sample.propTypes = {
     classes: PropTypes.object.isRequired,
 };
-
 
 export default withStyles(styles)(Sample);

@@ -11,7 +11,10 @@
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov",
     "dev": "next",
+    "nextbuild": "next build",
+    "nextstart": "next start",
     "docs": "set NODE_ENV=production && next build && next export -o docs"
+    
   },
   "nyc": {
     "extension": [
@@ -83,14 +86,15 @@
     "tsify": "^3.0.4",
     "tslint": "^5.9.1",
     "tslint-react": "^3.4.0",
+    "tubular-react": "^0.1.5",
     "typescript": "^2.7.1",
     "vinyl-source-stream": "^2.0.0",
-    "watchify": "^3.9.0"
+    "watchify": "^3.9.0",
+    "webpack": "^3.11.0"
   },
   "peerDependencies": {
     "material-ui": "next",
     "react": "^15.0.0 || ^16.0.0",
-    "react-dom": "^15.0.0 || ^16.0.0",
-    "webpack": "^3.11.0"
+    "react-dom": "^15.0.0 || ^16.0.0"
   }
 }
