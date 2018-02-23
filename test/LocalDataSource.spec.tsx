@@ -12,6 +12,7 @@ import {
 import localData from './utils/localData';
 import {
   expectedLocaDataSourcelResponse,
+  expectedPayloadBetweenDate,
   expectedPayloadBetweenNumeric,
   expectedPayloadContainsString,
   expectedPayloadDescSortByOrderID,
@@ -32,7 +33,7 @@ import {
   expectedPayloadNotStartsWithString,
   expectedPayloadPage2,
   expectedPayloadStartsWithString,
-  expectedPayloadTextSearchVesta
+  expectedPayloadTextSearchVesta,
 } from './utils/LocalDataSourceMocks';
 import { CompareOperators } from '../src/DataGrid/Column';
 
@@ -372,6 +373,18 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.deep.equal(expectedPayloadEqualsDate);
+        done();
+      });
+    });
+
+    it('should return a payload without filters', (done) => {
+      dataSource.columns[2].Filter.Text = '2016-03-19T19:00:00';
+      dataSource.columns[2].Filter.Operator = CompareOperators.BETWEEN;
+      dataSource.columns[2].Filter.HasFilter = true;
+      dataSource.columns[2].Filter.Argument = ['2016-11-08T18:00:00'];
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Payload).to.deep.equal(expectedPayloadBetweenDate);
         done();
       });
     });
