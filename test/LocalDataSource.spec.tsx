@@ -413,7 +413,15 @@ describe('LocalDataSource', () => {
       dataSource.columns[2].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        const shippedDate = response.Payload;
+
+        shippedDate.forEach((x) => {
+          expect(x.ShippedDate).to.not.equals('2016-03-19T19:00:00');
+        });
+
+        expect(response.Payload).to.have.lengthOf(10);
         expect(response.Payload).to.deep.equal(expectedPayloadGtDate);
+
         done();
       });
     });
