@@ -174,8 +174,11 @@ describe('LocalDataSource', () => {
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         payloadResponse = response.Payload;
 
+        payloadResponse.forEach((x) => {
+          expect(x.OrderID).to.not.be.equal(9);
+        });
+
         expect(response.Payload).to.have.lengthOf(10);
-        expect(payloadResponse[0]['OrderID']).to.not.be.equal(9);
         expect(response.Payload).to.deep.equal(expectedPayloadGtNumeric);
 
         done();
@@ -203,6 +206,12 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        const payloadResponse = response.Payload;
+
+        payloadResponse.forEach((x) => {
+          expect(x.OrderID).to.not.be.equal(5);
+        });
+
         expect(response.Payload).to.have.lengthOf(4);
         expect(response.Payload).to.deep.equal(expectedPayloadLtNumeric);
 
