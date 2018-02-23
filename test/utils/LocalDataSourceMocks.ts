@@ -1167,6 +1167,51 @@ const expectedPayloadNoneDate = [
   }
 ];
 
+const expectedPayloadEqualsDate = [
+  {
+    OrderID: 1,
+    CustomerName: 'Microsoft',
+    ShippedDate: '2016-03-19T19:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 300
+  },
+  {
+    OrderID: 4,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-03-19T19:00:00',
+    ShipperCity: 'Portland, OR, USA',
+    Amount: 300
+  },
+  {
+    OrderID: 7,
+    CustomerName: 'Super La Playa',
+    ShippedDate: '2016-03-19T19:00:00',
+    ShipperCity: 'Portland, OR, USA',
+    Amount: 300
+  },
+  {
+    OrderID: 10,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-03-19T19:00:00',
+    ShipperCity: 'Portland, OR, USA',
+    Amount: 300
+  },
+  {
+    OrderID: 13,
+    CustomerName: 'Unosquare LLC',
+    ShippedDate: '2016-03-19T19:00:00',
+    ShipperCity: 'Portland, OR, USA',
+    Amount: 300
+  },
+  {
+    OrderID: 16,
+    CustomerName: 'Microsoft',
+    ShippedDate: '2016-03-19T19:00:00',
+    ShipperCity: 'Leon, GTO, Mexico',
+    Amount: 300
+  }
+];
+
 export {
   expectedPayloadTextSearchVesta,
   expectedPayloadMultipleSort,
@@ -1188,5 +1233,6 @@ export {
   expectedPayloadNotStartsWithString,
   expectedPayloadEndsWithString,
   expectedPayloadNotEndsWithString,
-  expectedPayloadNoneDate
+  expectedPayloadNoneDate,
+  expectedPayloadEqualsDate
 };
