@@ -20,6 +20,7 @@ import {
   expectedPayloadEqualsDate,
   expectedPayloadEqualsNumeric,
   expectedPayloadEqualsString,
+  expectedPayloadGteDate,
   expectedPayloadGteNumeric,
   expectedPayloadGtNumeric,
   expectedPayloadLteNumeric,
@@ -365,7 +366,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload without filters', (done) => {
+    it('should return a payload with records where \'Shipped Date\' are equals to March 19th 2016', (done) => {
       dataSource.columns[2].Filter.Text = '2016-03-19T19:00:00';
       dataSource.columns[2].Filter.Operator = CompareOperators.EQUALS;
       dataSource.columns[2].Filter.HasFilter = true;
@@ -377,7 +378,8 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload without filters', (done) => {
+    it('should return a payload with records where \'Shipped Date\' are between March 19th 2016 and November 11th 2016',
+        (done) => {
       dataSource.columns[2].Filter.Text = '2016-03-19T19:00:00';
       dataSource.columns[2].Filter.Operator = CompareOperators.BETWEEN;
       dataSource.columns[2].Filter.HasFilter = true;
@@ -385,6 +387,19 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.deep.equal(expectedPayloadBetweenDate);
+        done();
+      });
+    });
+
+    it('should return a payload with records where \'Shipped Date\' are greater than or equal to March 19th 2016',
+        (done) => {
+      dataSource.columns[2].Filter.Text = '2016-03-19T19:00:00';
+      dataSource.columns[2].Filter.Operator = CompareOperators.GTE;
+      dataSource.columns[2].Filter.HasFilter = true;
+      dataSource.columns[2].Filter.Argument = [];
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Payload).to.deep.equal(expectedPayloadGteDate);
         done();
       });
     });
