@@ -83,7 +83,7 @@ describe('RemoteDateSource', () => {
             });
         });
 
-        describe('When page 2 is requested', () => {
+        describe('When refresh is called', () => {
           const dtSource = new RemoteDataSource('url', validColumnsSample);
 
           before( () => {
@@ -93,39 +93,15 @@ describe('RemoteDateSource', () => {
             });
           });
 
-          it('Should return a payload with records 11 to 20', (done) => {
+          it('Should refresh the DataStream', (done) => {
             dtSource.connect(10, 0, '');
             dtSource.refresh(10, 1, '');
             dtSource.dataStream.skip(2).subscribe((r) => {
-                expect(r.Payload).to.deep.equal(page2Expected.Payload);
-                expect(r.FilteredRecordCount).to.deep.equal(page2Expected.FilteredRecordCount);
-                expect(r.TotalRecordCount).to.deep.equal(page2Expected.TotalRecordCount);
-                done();
-              });
-          });
-        });
-
-        describe('When sort order is descending', () => {
-          const dtSource = new RemoteDataSource('url', validColumnsSample);
-
-          before( () => {
-            mock.reset();
-            mock.onPost('url').reply(200, {
-              ...descendingExpected
+              expect(r.Payload).to.deep.equal(page2Expected.Payload);
+              expect(r.FilteredRecordCount).to.deep.equal(page2Expected.FilteredRecordCount);
+              expect(r.TotalRecordCount).to.deep.equal(page2Expected.TotalRecordCount);
+              done();
             });
-
-            dataSource.columns[0].SortDirection = ColumnSortDirection.DESCENDING;
-          });
-
-          it('Should return a payload with records in descending order', (done) => {
-            dtSource.connect(10, 0, '');
-            dtSource.refresh(10, 0, '');
-            dtSource.dataStream.skip(2).subscribe((r) => {
-                expect(r.Payload).to.deep.equal(descendingExpected.Payload);
-                expect(r.FilteredRecordCount).to.deep.equal(descendingExpected.FilteredRecordCount);
-                expect(r.TotalRecordCount).to.deep.equal(descendingExpected.TotalRecordCount);
-                done();
-              });
           });
         });
       });
