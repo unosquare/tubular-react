@@ -18,6 +18,7 @@ const StringOperators = [
   { Value: CompareOperators.EQUALS, Title: 'Equals' },
   { Value: CompareOperators.NOT_EQUALS, Title: 'Not Equals' },
   { Value: CompareOperators.CONTAINS, Title: 'Contains' },
+  { Value: CompareOperators.NOT_CONTAINS, Title: 'Not Contains' },
   { Value: CompareOperators.STARTS_WITH, Title: 'Starts With' },
   { Value: CompareOperators.NOT_STARTS_WITH, Title: 'Not Starts With' },
   { Value: CompareOperators.ENDS_WITH, Title: 'Ends With' },
