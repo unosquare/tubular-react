@@ -1,22 +1,19 @@
 import MetaData from '../srcdocs/components/MetaData';
+import NavigationBar from '../srcdocs/components/NavigationBar';
 import SampleExport from '../srcdocs/components/SampleExport';
 import SampleFeatures from '../srcdocs/components/SampleFeatures';
 import SamplePagination from '../srcdocs/components/SamplePagination';
 import SampleSearch from '../srcdocs/components/SampleSearch';
-import React from 'react';
-import PropTypes from 'prop-types';
+import Divider from 'material-ui/Divider';
+import Grid from 'material-ui/Grid';
+import Paper from 'material-ui/Paper';
 import { withStyles } from 'material-ui/styles';
-import NavigationBar from '../srcdocs/components/NavigationBar';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import Typography from 'material-ui/Typography';
-import Grid from 'material-ui/Grid';
-import Divider from 'material-ui/Divider';
-import Paper from 'material-ui/Paper';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 const styles = {
-    root: {
-        width: '100%',
-    },
     container: {
         padding: 30,
     },
