@@ -20,6 +20,7 @@ import {
   expectedPayloadEqualsDate,
   expectedPayloadEqualsNumeric,
   expectedPayloadEqualsString,
+  expectedPayloadGteDate,
   expectedPayloadGteNumeric,
   expectedPayloadGtNumeric,
   expectedPayloadLteNumeric,
@@ -385,6 +386,18 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.deep.equal(expectedPayloadBetweenDate);
+        done();
+      });
+    });
+
+    it('should return a payload without filters', (done) => {
+      dataSource.columns[2].Filter.Text = '2016-03-19T19:00:00';
+      dataSource.columns[2].Filter.Operator = CompareOperators.GTE;
+      dataSource.columns[2].Filter.HasFilter = true;
+      dataSource.columns[2].Filter.Argument = [];
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Payload).to.deep.equal(expectedPayloadGteDate);
         done();
       });
     });
