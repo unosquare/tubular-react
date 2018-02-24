@@ -30,7 +30,6 @@ const styles = {
 
 class Sample extends React.Component {
     state = {
-        dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns),
         value: 'one'
     };
 
@@ -53,7 +52,7 @@ class Sample extends React.Component {
                             Samples
                     </Typography>
                     <Divider />
-                    <Tabs value={value} onChange={this.handleChange} centered>
+                    <Tabs value={value} onChange={this.handleChange} scrollable centered>
                         <Tab value="one" label="Grid with Paginations" />
                         <Tab value="two" label="Grid with Common Features" />
                         <Tab value="three" label="Free-Text Search" />
@@ -61,49 +60,52 @@ class Sample extends React.Component {
                     </Tabs>
                     {value === 'one' &&
                         <Grid item xs={12} className={classes.paper}>
-                                <Grid item xs={3}>
-                                    <Typography variant='subheading' gutterBottom>Grid with Paginations</Typography>
-                                    <Typography variant='body1'>Adding a new feature: the pagination.
-                                    You can move across the pages and change the size.
+                                <Grid item xs={12}>
+                                    <Typography variant='headline' gutterBottom>Grid with Paginations</Typography>
+                                    <Typography variant='subheading'>
+                                        You can move across the pages and change the size.
                                     </Typography>
                                 </Grid>
-                                <Grid item xs>
+                                <Grid item xs={12}>
                                     <SamplePagination />
                                 </Grid>
                         </Grid>
                     }
                     {value === 'two' &&
                     <Grid item xs={12} className={classes.paper}>
-                            <Grid item xs={3}>
-                                <Typography variant='subheading' gutterBottom>Grid with Common Features</Typography>
-                                <Typography variant='body1'>The grid can be extended to include features like sorting and filtering.
+                            <Grid item xs={12}>
+                                <Typography variant='headline' gutterBottom>Grid with Common Features</Typography>
+                                <Typography variant='subheading'>
+                                    The grid can be extended to include features like sorting and filtering.
                                 </Typography>
                             </Grid>
-                            <Grid item xs>
+                            <Grid item xs={12}>
                                 <SampleFeatures />
                             </Grid>
                     </Grid>
                     }
                     {value === 'three' &&
                     <Grid item xs={12} className={classes.paper}>
-                            <Grid item xs={3}>
-                                <Typography variant='subheading' gutterBottom>Free-Text Search</Typography>
-                                <Typography variant='body1'>Adding a "searchable" attribute to your columns and you can perform free-text searches.
-                            </Typography>
+                            <Grid item xs={12}>
+                                <Typography variant='headline' gutterBottom>Free-Text Search</Typography>
+                                <Typography variant='subheading'>
+                                    Adding a "searchable" attribute to your columns and you can perform free-text searches.
+                                </Typography>
                             </Grid>
-                            <Grid item xs>
+                            <Grid item xs={12}>
                                     <SampleSearch />
                             </Grid>
                     </Grid>
                     }
                     {value === 'four' &&
                     <Grid item xs={12} className={classes.paper}>
-                            <Grid item xs={3}>
-                                <Typography variant='subheading' gutterBottom>Print and Export to CSV</Typography>
-                                <Typography variant='body1'>Easily you can print or export the current view or entire dataset to CSV using client-side only.
+                            <Grid item xs={12}>
+                                <Typography variant='headline' gutterBottom>Print and Export to CSV</Typography>
+                                <Typography variant='subheading'>
+                                    Easily you can print or export the current view or entire dataset to CSV using client-side only.
                                 </Typography>
                             </Grid>
-                            <Grid item xs>
+                            <Grid item xs={12}>
                                     <SampleExport/>
                             </Grid>
                     </Grid>

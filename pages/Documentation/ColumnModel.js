@@ -1,10 +1,11 @@
 import ColumnModelList from '../../srcdocs/components/ColumnModelTable';
 import DocumentationList from '../../srcdocs/components/DocumentationList';
 import MetaData from '../../srcdocs/components/MetaData';
-import NavigationBar from '../../srcdocs/components/NavigationBar';
+import NavigationBar from '../../srcdocs/components/SubNavigationBar';
 import Divider from 'material-ui/Divider';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
+import Hidden from 'material-ui/Hidden';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
@@ -26,10 +27,12 @@ const ColumnModel = (props) => {
             <MetaData />
             <NavigationBar />
             <Grid container spacing={24} className={classes.container}>
-                <Grid item xs={2}>
+                <Hidden smDown>
+                <Grid item xs={3}>
                     <DocumentationList />
                 </Grid>
-                <Grid item xs={10}>
+                </Hidden>
+                <Grid item xs={12} md={9}>
                     <Paper className={classes.paper}>
                     <Typography variant="display1" paragraph> Column Model </Typography>
                     <Divider />
