@@ -13,7 +13,7 @@
     "dev": "next",
     "export": "next build && next export",
     "nextstart": "next start",
-    "docs": "set NODE_ENV=production && next build && next export"
+    "docs": "set NODE_ENV=production && next build && next export -o docs"
   },
   "nyc": {
     "extension": [
