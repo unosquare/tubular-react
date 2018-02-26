@@ -1,4 +1,5 @@
-import { expect } from 'chai';
+import { assert, expect } from 'chai';
+import * as moment from 'moment';
 import { CompareOperators } from '../src/DataGrid/Column';
 import GridResponse from '../src/DataGrid/GridResponse';
 import LocalDataSource from '../src/DataGrid/LocalDataSource';
@@ -174,11 +175,9 @@ describe('LocalDataSource', () => {
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         payloadResponse = response.Payload;
 
-        const orderID = payloadResponse.find((x) => {
-          return x.OrderID !== 9;
-        });
+        const areAllRecordsValid = payloadResponse.every((x) => x.OrderID > 9);
 
-        expect(orderID).to.not.equal(9);
+        assert.isTrue(areAllRecordsValid);
         expect(response.Payload).to.have.lengthOf(10);
         expect(response.Payload).to.deep.equal(expectedPayloadGtNumeric);
 
@@ -201,19 +200,19 @@ describe('LocalDataSource', () => {
     });
 
     it('should return a payload with records where OrderId < 5', (done) => {
+      let payloadResponse;
+
       dataSource.columns[0].Filter.Text = 5;
       dataSource.columns[0].Filter.Operator = CompareOperators.LT;
       dataSource.columns[0].Filter.HasFilter = true;
       dataSource.columns[0].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        const payloadResponse = response.Payload;
+        payloadResponse = response.Payload;
 
-        const orderID = payloadResponse.find((x) => {
-          return x.OrderID !== 5;
-        });
+        const areAllRecordsValid = payloadResponse.every((x) => x.OrderID < 5);
 
-        expect(orderID).to.not.equal(5);
+        assert.isTrue(areAllRecordsValid);
         expect(response.Payload).to.have.lengthOf(4);
         expect(response.Payload).to.deep.equal(expectedPayloadLtNumeric);
 
@@ -426,11 +425,10 @@ describe('LocalDataSource', () => {
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         const payloadResponse = response.Payload;
 
-        const shippedDate = payloadResponse.find((x) => {
-          return x.ShippedDate !== '2016-03-19T19:00:00';
-        });
+        const areAllRecordsValid = payloadResponse.every((x) =>
+          moment(x.ShippedDate).isAfter(moment('2016-03-19T19:00:00')));
 
-        expect(shippedDate).to.not.equal('2016-03-19T19:00:00');
+        assert.isTrue(areAllRecordsValid);
         expect(response.Payload).to.have.lengthOf(10);
         expect(response.Payload).to.deep.equal(expectedPayloadGtDate);
 
