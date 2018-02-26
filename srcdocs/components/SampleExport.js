@@ -4,7 +4,7 @@ import DataGrid, {
     ColumnModel,
     ColumnSortDirection,
     RemoteDataSource
-} from 'tubular-react';
+} from '../../build/';
 import React from 'react';
 
 const columns = [
