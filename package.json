@@ -1,6 +1,6 @@
 {
   "name": "tubular-react",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "description": "Tubular React",
   "main": "./src/index",
   "scripts": {
@@ -86,7 +86,7 @@
     "tsify": "^3.0.4",
     "tslint": "^5.9.1",
     "tslint-react": "^3.4.0",
-    "tubular-react": "^0.1.5",
+    "tubular-react": "^0.1.6",
     "typescript": "^2.7.2",
     "vinyl-source-stream": "^2.0.0",
     "watchify": "^3.9.0",
