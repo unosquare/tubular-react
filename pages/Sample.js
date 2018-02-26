@@ -22,97 +22,96 @@ const styles = {
     },
     content: {
         marginTop: 10,
-    },
-    code: {
-        fontSize: 15,
     }
 };
 
 class Sample extends React.Component {
     state = {
-        value: 'one'
+        value: 'one',
+        showCode: false
     };
 
     handleChange = (event, value) => {
-        this.setState({ value });
+        this.setState({ value })
+        this.setState({ showCode: false });
     };
 
     render() {
-        const { dataSource } = this.state; 
+        const { dataSource } = this.state;
         const { classes } = this.props;
-        const { value } = this.state;
+        const { value, showCode } = this.state;
         return (
             <div>
                 <MetaData />
                 <NavigationBar />
                 <Grid container spacing={24} className={classes.container}>
-                <Grid item xs={12} className={classes.paper}>
-                <Paper className={classes.paper}>
-                        <Typography variant='display1'>
-                            Samples
-                    </Typography>
-                    <Divider />
-                    <Tabs value={value} onChange={this.handleChange} scrollable centered>
-                        <Tab value="one" label="Grid with Paginations" />
-                        <Tab value="two" label="Grid with Common Features" />
-                        <Tab value="three" label="Free-Text Search" />
-                        <Tab value="four" label="Print and Export to CSV" />
-                    </Tabs>
-                    {value === 'one' &&
-                        <Grid item xs={12} className={classes.paper}>
-                                <Grid item xs={12}>
-                                    <Typography variant='headline' gutterBottom>Grid with Paginations</Typography>
-                                    <Typography variant='subheading'>
-                                        You can move across the pages and change the size.
-                                    </Typography>
+                    <Grid item xs={12} className={classes.paper}>
+                        <Paper className={classes.paper}>
+                            <Typography variant='display1'>
+                                Samples
+                            </Typography>
+                            <Divider />
+                            <Tabs value={value} onChange={this.handleChange} scrollable centered>
+                                <Tab value="one" label="Grid with Paginations" />
+                                <Tab value="two" label="Grid with Common Features" />
+                                <Tab value="three" label="Free-Text Search" />
+                                <Tab value="four" label="Print and Export to CSV" />
+                            </Tabs>
+                            {value === 'one' &&
+                                <Grid item xs={12} className={classes.paper}>
+                                    <Grid item xs={8}>
+                                        <Typography variant='headline' gutterBottom>Grid with Paginations</Typography>
+                                        <Typography variant='subheading'>
+                                            You can move across the pages and change the size.
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <SamplePagination />
+                                    </Grid>
                                 </Grid>
-                                <Grid item xs={12}>
-                                    <SamplePagination />
+                            }
+                            {value === 'two' &&
+                                <Grid item xs={12} className={classes.paper}>
+                                    <Grid item xs={12}>
+                                        <Typography variant='headline' gutterBottom>Grid with Common Features</Typography>
+                                        <Typography variant='subheading'>
+                                            The grid can be extended to include features like sorting and filtering.
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <SampleFeatures />
+                                    </Grid>
                                 </Grid>
-                        </Grid>
-                    }
-                    {value === 'two' &&
-                    <Grid item xs={12} className={classes.paper}>
-                            <Grid item xs={12}>
-                                <Typography variant='headline' gutterBottom>Grid with Common Features</Typography>
-                                <Typography variant='subheading'>
-                                    The grid can be extended to include features like sorting and filtering.
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <SampleFeatures />
-                            </Grid>
+                            }
+                            {value === 'three' &&
+                                <Grid item xs={12} className={classes.paper}>
+                                    <Grid item xs={12}>
+                                        <Typography variant='headline' gutterBottom>Free-Text Search</Typography>
+                                        <Typography variant='subheading'>
+                                            Adding a "searchable" attribute to your columns and you can perform free-text searches.
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <SampleSearch />
+                                    </Grid>
+                                </Grid>
+                            }
+                            {value === 'four' &&
+                                <Grid item xs={12} className={classes.paper}>
+                                    <Grid item xs={12}>
+                                        <Typography variant='headline' gutterBottom>Print and Export to CSV</Typography>
+                                        <Typography variant='subheading'>
+                                            Easily you can print or export the current view or entire dataset to CSV using client-side only.
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <SampleExport />
+                                    </Grid>
+                                </Grid>
+                            }
+                        </Paper>
                     </Grid>
-                    }
-                    {value === 'three' &&
-                    <Grid item xs={12} className={classes.paper}>
-                            <Grid item xs={12}>
-                                <Typography variant='headline' gutterBottom>Free-Text Search</Typography>
-                                <Typography variant='subheading'>
-                                    Adding a "searchable" attribute to your columns and you can perform free-text searches.
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12}>
-                                    <SampleSearch />
-                            </Grid>
-                    </Grid>
-                    }
-                    {value === 'four' &&
-                    <Grid item xs={12} className={classes.paper}>
-                            <Grid item xs={12}>
-                                <Typography variant='headline' gutterBottom>Print and Export to CSV</Typography>
-                                <Typography variant='subheading'>
-                                    Easily you can print or export the current view or entire dataset to CSV using client-side only.
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12}>
-                                    <SampleExport/>
-                            </Grid>
-                    </Grid>
-                    }
-                    </Paper>
-                    </Grid>
-                </Grid>  
+                </Grid>
             </div>
         )
     }

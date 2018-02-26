@@ -11,7 +11,6 @@
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov",
     "dev": "next",
-    "export": "next build && next export",
     "nextstart": "next start",
     "docs": "set NODE_ENV=production && next build && next export -o docs"
   },
