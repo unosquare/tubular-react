@@ -2,7 +2,7 @@
   "name": "tubular-react",
   "version": "0.1.4",
   "description": "Tubular React",
-  "main": "index.js",
+  "main": "./src/index",
   "scripts": {
     "start": "gulp watch",
     "build": "gulp",
