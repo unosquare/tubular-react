@@ -1,4 +1,6 @@
-import { expect } from 'chai';
+import { assert, expect } from 'chai';
+import * as moment from 'moment';
+import { CompareOperators } from '../src/DataGrid/Column';
 import GridResponse from '../src/DataGrid/GridResponse';
 import LocalDataSource from '../src/DataGrid/LocalDataSource';
 import {
@@ -20,6 +22,7 @@ import {
   expectedPayloadEqualsDate,
   expectedPayloadEqualsNumeric,
   expectedPayloadEqualsString,
+  expectedPayloadGtDate,
   expectedPayloadGteDate,
   expectedPayloadGteNumeric,
   expectedPayloadGtNumeric,
@@ -34,9 +37,8 @@ import {
   expectedPayloadNotStartsWithString,
   expectedPayloadPage2,
   expectedPayloadStartsWithString,
-  expectedPayloadTextSearchVesta,
+  expectedPayloadTextSearchVesta
 } from './utils/LocalDataSourceMocks';
-import { CompareOperators } from '../src/DataGrid/Column';
 
 describe('LocalDataSource', () => {
 
@@ -173,8 +175,10 @@ describe('LocalDataSource', () => {
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         payloadResponse = response.Payload;
 
+        const areAllRecordsValid = payloadResponse.every((x) => x.OrderID > 9);
+
+        assert.isTrue(areAllRecordsValid);
         expect(response.Payload).to.have.lengthOf(10);
-        expect(payloadResponse[0]['OrderID']).to.not.be.equal(9);
         expect(response.Payload).to.deep.equal(expectedPayloadGtNumeric);
 
         done();
@@ -196,12 +200,19 @@ describe('LocalDataSource', () => {
     });
 
     it('should return a payload with records where OrderId < 5', (done) => {
+      let payloadResponse;
+
       dataSource.columns[0].Filter.Text = 5;
       dataSource.columns[0].Filter.Operator = CompareOperators.LT;
       dataSource.columns[0].Filter.HasFilter = true;
       dataSource.columns[0].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        payloadResponse = response.Payload;
+
+        const areAllRecordsValid = payloadResponse.every((x) => x.OrderID < 5);
+
+        assert.isTrue(areAllRecordsValid);
         expect(response.Payload).to.have.lengthOf(4);
         expect(response.Payload).to.deep.equal(expectedPayloadLtNumeric);
 
@@ -400,6 +411,27 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.deep.equal(expectedPayloadGteDate);
+        done();
+      });
+    });
+
+    it('should return a payload with records where \'Shipped Date\' are greater than to March 19th 2016',
+        (done) => {
+      dataSource.columns[2].Filter.Text = '2016-03-19T19:00:00';
+      dataSource.columns[2].Filter.Operator = CompareOperators.GT;
+      dataSource.columns[2].Filter.HasFilter = true;
+      dataSource.columns[2].Filter.Argument = [];
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        const payloadResponse = response.Payload;
+
+        const areAllRecordsValid = payloadResponse.every((x) =>
+          moment(x.ShippedDate).isAfter(moment('2016-03-19T19:00:00')));
+
+        assert.isTrue(areAllRecordsValid);
+        expect(response.Payload).to.have.lengthOf(10);
+        expect(response.Payload).to.deep.equal(expectedPayloadGtDate);
+
         done();
       });
     });
