@@ -166,19 +166,12 @@ describe('LocalDataSource', () => {
     });
 
     it('should return a payload with records where OrderID > 9', (done) => {
-      let payloadResponse;
-
       dataSource.columns[0].Filter.Text = 9;
       dataSource.columns[0].Filter.Operator = CompareOperators.GT;
       dataSource.columns[0].Filter.HasFilter = true;
       dataSource.columns[0].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        payloadResponse = response.Payload;
-
-        const areAllRecordsValid = payloadResponse.every((x) => x.OrderID > 9);
-
-        assert.isTrue(areAllRecordsValid);
         expect(response.Payload).to.have.lengthOf(10);
         expect(response.Payload).to.deep.equal(expectedPayloadGtNumeric);
 
@@ -201,19 +194,12 @@ describe('LocalDataSource', () => {
     });
 
     it('should return a payload with records where OrderId < 5', (done) => {
-      let payloadResponse;
-
       dataSource.columns[0].Filter.Text = 5;
       dataSource.columns[0].Filter.Operator = CompareOperators.LT;
       dataSource.columns[0].Filter.HasFilter = true;
       dataSource.columns[0].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        payloadResponse = response.Payload;
-
-        const areAllRecordsValid = payloadResponse.every((x) => x.OrderID < 5);
-
-        assert.isTrue(areAllRecordsValid);
         expect(response.Payload).to.have.lengthOf(4);
         expect(response.Payload).to.deep.equal(expectedPayloadLtNumeric);
 
@@ -424,12 +410,6 @@ describe('LocalDataSource', () => {
       dataSource.columns[2].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        const payloadResponse = response.Payload;
-
-        const areAllRecordsValid = payloadResponse.every((x) =>
-          moment(x.ShippedDate).isAfter(moment('2016-03-19T19:00:00')));
-
-        assert.isTrue(areAllRecordsValid);
         expect(response.Payload).to.have.lengthOf(10);
         expect(response.Payload).to.deep.equal(expectedPayloadGtDate);
 
@@ -437,7 +417,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload with records where \'Shipped Date\' are greater than to March 19th 2016',
+    it('should return a payload with records where \'Shipped Date\' are less than or equal than to March 19th 2016',
         (done) => {
       dataSource.columns[2].Filter.Text = '2016-03-19T19:00:00';
       dataSource.columns[2].Filter.Operator = CompareOperators.LTE;
