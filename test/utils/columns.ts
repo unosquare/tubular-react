@@ -30,6 +30,29 @@ const validColumnsSample = [
   )
 ];
 
+const simpleColumnsSample = [
+  new ColumnModel( 'OrderID',
+    { DataType: ColumnDataType.NUMERIC,
+      IsKey: true,
+      Label: 'Order ID',
+      SortDirection: ColumnSortDirection.ASCENDING,
+      SortOrder: 1,
+      Sortable: true }
+  ),
+  new ColumnModel( 'CustomerName',
+    { Aggregate: AggregateFunctions.COUNT,
+      Searchable: true }
+  ),
+  new ColumnModel( 'ShippedDate',
+    { DataType: ColumnDataType.DATE_TIME,
+      Filtering: true }
+  ),
+  new ColumnModel( 'ShipperCity' ),
+  new ColumnModel( 'Amount',
+    { DataType: ColumnDataType.NUMERIC  }
+  )
+];
+
 const validColumnsSampleDescending = [
   new ColumnModel('OrderID',
     {
@@ -95,6 +118,7 @@ const validColumnsSampleMultipleSorting = [
 ];
 
 export {
+  simpleColumnsSample,
   validColumnsSample,
   validColumnsSampleDescending,
   validColumnsSampleMultipleSorting

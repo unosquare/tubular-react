@@ -4,7 +4,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 import { ColumnSortDirection } from '../src/DataGrid';
 import RemoteDataSource from '../src/DataGrid/RemoteDataSource';
-import { validColumnsSample } from './utils/columns';
+import { simpleColumnsSample, validColumnsSample } from './utils/columns';
 import {
   descendingExpected,
   invalidResponseStructure,
@@ -14,6 +14,7 @@ import {
   twentyRecordsExpected,
   validResponseStructure
 } from './utils/data';
+import { page2Request, simpleRequest } from './utils/requests';
 
 const mock = new MockAdapter(axios);
 
@@ -84,11 +85,14 @@ describe('RemoteDateSource', () => {
         });
 
         describe('When refresh is called', () => {
-          const dtSource = new RemoteDataSource('url', validColumnsSample);
+          const dtSource = new RemoteDataSource('url', simpleColumnsSample);
 
           before( () => {
             mock.reset();
-            mock.onPost('url').reply(200, {
+            mock.onPost('url', { ...simpleRequest }).reply(200, {
+              ...simpleRecordsExpected
+            });
+            mock.onPost('url', { ...page2Request }).reply(200, {
               ...page2Expected
             });
           });

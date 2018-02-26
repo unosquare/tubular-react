@@ -48,6 +48,6 @@ export default class ColumnModel {
     this.SortOrder = options && this.SortDirection !== ColumnSortDirection.NONE && options.SortOrder || -1;
     this.Sortable = options && options.Sortable || false;
     this.Visible = options && options.Visible || true;
-    this.Filter = (options && options.Filtering) ? ColumnModel.filterProps(name) : null;
+    this.Filter = options && options.Filtering ? ColumnModel.filterProps(name) : null;
   }
 }
