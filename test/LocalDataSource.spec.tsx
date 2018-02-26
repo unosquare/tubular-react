@@ -34,6 +34,7 @@ import {
   expectedPayloadNoneDate,
   expectedPayloadNoneNumeric,
   expectedPayloadNoneString,
+  expectedPayloadNotContainsString,
   expectedPayloadNotEndsWithString,
   expectedPayloadNotEqualsString,
   expectedPayloadNotStartsWithString,
@@ -280,6 +281,18 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.deep.equal(expectedPayloadContainsString);
+        done();
+      });
+    });
+
+    it('should return a payload with records where CustomerName not contains \'a\'', (done) => {
+      dataSource.columns[1].Filter.Text = 'a';
+      dataSource.columns[1].Filter.Operator = CompareOperators.NOT_CONTAINS;
+      dataSource.columns[1].Filter.HasFilter = true;
+      dataSource.columns[1].Filter.Argument = [];
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Payload).to.deep.equal(expectedPayloadNotContainsString);
         done();
       });
     });
