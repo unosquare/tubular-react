@@ -1431,6 +1431,65 @@ const expectedPayloadGtDate = [
   }
 ];
 
+const expectedPayloadLteDate = [
+  {
+    OrderID: 1,
+    CustomerName: 'Microsoft',
+    ShippedDate: '2016-03-19T19:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 300
+  },
+  {
+    OrderID: 4,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-03-19T19:00:00',
+    ShipperCity: 'Portland, OR, USA',
+    Amount: 300
+  },
+  {
+    OrderID: 7,
+    CustomerName: 'Super La Playa',
+    ShippedDate: '2016-03-19T19:00:00',
+    ShipperCity: 'Portland, OR, USA',
+    Amount: 300
+  },
+  {
+    OrderID: 10,
+    CustomerName: 'Vesta',
+    ShippedDate: '2016-03-19T19:00:00',
+    ShipperCity: 'Portland, OR, USA',
+    Amount: 300
+  },
+  {
+    OrderID: 13,
+    CustomerName: 'Unosquare LLC',
+    ShippedDate: '2016-03-19T19:00:00',
+    ShipperCity: 'Portland, OR, USA',
+    Amount: 300
+  },
+  {
+    OrderID: 16,
+    CustomerName: 'Microsoft',
+    ShippedDate: '2016-03-19T19:00:00',
+    ShipperCity: 'Leon, GTO, Mexico',
+    Amount: 300
+  },
+  {
+    OrderID: 21,
+    CustomerName: 'Wizeline',
+    ShippedDate: '2015-11-04T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 100
+  },
+  {
+    OrderID: 22,
+    CustomerName: 'Tiempo Development',
+    ShippedDate: '2016-01-04T18:00:00',
+    ShipperCity: 'Monterrey, NL, Mexico',
+    Amount: 150
+  }
+];
+
 export {
   expectedPayloadTextSearchVesta,
   expectedPayloadMultipleSort,
@@ -1456,5 +1515,6 @@ export {
   expectedPayloadEqualsDate,
   expectedPayloadBetweenDate,
   expectedPayloadGteDate,
-  expectedPayloadGtDate
+  expectedPayloadGtDate,
+  expectedPayloadLteDate
 };
