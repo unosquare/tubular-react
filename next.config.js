@@ -1,4 +1,4 @@
-const withTypescript = require('@zeit/next-typescript')
+const withTypescript = require('@zeit/next-typescript');
 
 module.exports = withTypescript({
   webpack: (config, { dev }) => {
@@ -15,4 +15,4 @@ module.exports = withTypescript({
       '/Documentation/Props': { page: '/Documentation/Props' },
     }
   }
-})
+});

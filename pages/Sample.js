@@ -32,7 +32,7 @@ class Sample extends React.Component {
     };
 
     handleChange = (event, value) => {
-        this.setState({ value })
+        this.setState({ value });
         this.setState({ showCode: false });
     };
 
