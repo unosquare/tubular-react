@@ -26,6 +26,7 @@ import {
   expectedPayloadGteDate,
   expectedPayloadGteNumeric,
   expectedPayloadGtNumeric,
+  expectedPayloadLtDate,
   expectedPayloadLteDate,
   expectedPayloadLteNumeric,
   expectedPayloadLtNumeric,
@@ -426,6 +427,20 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.deep.equal(expectedPayloadLteDate);
+
+        done();
+      });
+    });
+
+    it('should return a payload with records where \'Shipped Date\' are less than or equal than to March 19th 2016',
+        (done) => {
+      dataSource.columns[2].Filter.Text = '2016-03-19T19:00:00';
+      dataSource.columns[2].Filter.Operator = CompareOperators.LT;
+      dataSource.columns[2].Filter.HasFilter = true;
+      dataSource.columns[2].Filter.Argument = [];
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Payload).to.deep.equal(expectedPayloadLtDate);
 
         done();
       });
