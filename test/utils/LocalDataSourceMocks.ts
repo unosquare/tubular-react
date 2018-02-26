@@ -1490,6 +1490,23 @@ const expectedPayloadLteDate = [
   }
 ];
 
+const expectedPayloadLtDate = [
+  {
+    OrderID: 21,
+    CustomerName: 'Wizeline',
+    ShippedDate: '2015-11-04T18:00:00',
+    ShipperCity: 'Guadalajara, JAL, Mexico',
+    Amount: 100
+  },
+  {
+    OrderID: 22,
+    CustomerName: 'Tiempo Development',
+    ShippedDate: '2016-01-04T18:00:00',
+    ShipperCity: 'Monterrey, NL, Mexico',
+    Amount: 150
+  }
+];
+
 export {
   expectedPayloadTextSearchVesta,
   expectedPayloadMultipleSort,
@@ -1516,5 +1533,6 @@ export {
   expectedPayloadBetweenDate,
   expectedPayloadGteDate,
   expectedPayloadGtDate,
-  expectedPayloadLteDate
+  expectedPayloadLteDate,
+  expectedPayloadLtDate
 };
