@@ -174,10 +174,11 @@ describe('LocalDataSource', () => {
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         payloadResponse = response.Payload;
 
-        payloadResponse.forEach((x) => {
-          expect(x.OrderID).to.not.be.equal(9);
+        const orderID = payloadResponse.find((x) => {
+          return x.OrderID !== 9;
         });
 
+        expect(orderID).to.not.equal(9);
         expect(response.Payload).to.have.lengthOf(10);
         expect(response.Payload).to.deep.equal(expectedPayloadGtNumeric);
 
@@ -208,10 +209,11 @@ describe('LocalDataSource', () => {
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         const payloadResponse = response.Payload;
 
-        payloadResponse.forEach((x) => {
-          expect(x.OrderID).to.not.be.equal(5);
+        const orderID = payloadResponse.find((x) => {
+          return x.OrderID !== 5;
         });
 
+        expect(orderID).to.not.equal(5);
         expect(response.Payload).to.have.lengthOf(4);
         expect(response.Payload).to.deep.equal(expectedPayloadLtNumeric);
 
@@ -422,12 +424,13 @@ describe('LocalDataSource', () => {
       dataSource.columns[2].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        const shippedDate = response.Payload;
+        const payloadResponse = response.Payload;
 
-        shippedDate.forEach((x) => {
-          expect(x.ShippedDate).to.not.equals('2016-03-19T19:00:00');
+        const shippedDate = payloadResponse.find((x) => {
+          return x.ShippedDate !== '2016-03-19T19:00:00';
         });
 
+        expect(shippedDate).to.not.equal('2016-03-19T19:00:00');
         expect(response.Payload).to.have.lengthOf(10);
         expect(response.Payload).to.deep.equal(expectedPayloadGtDate);
 
