@@ -3,7 +3,7 @@
         "src/**/*.*"
     ],
     "compilerOptions": {
-        "outDir": "./out",
+        "outDir": "./build/",
         "sourceMap": true,
         "noImplicitAny": true,
         "target": "es5",
