@@ -3,17 +3,6 @@ import IColumnModelOptions from './IColumnModelOptions';
 
 export default class ColumnModel {
 
-  public static defaultColumnValues(): object {
-    return {
-      Aggregate: AggregateFunctions.NONE,
-      DataType: ColumnDataType.STRING,
-      IsKey: false,
-      Searchable: false,
-      Sortable: false,
-      Visible: true
-    };
-  }
-
   public static filterProps(name: string): object {
     return {
       Argument: [],
