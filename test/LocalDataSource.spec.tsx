@@ -440,6 +440,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[2].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Payload).to.have.lengthOf(2);
         expect(response.Payload).to.deep.equal(expectedPayloadLtDate);
 
         done();
