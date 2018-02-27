@@ -6,6 +6,7 @@ import LocalDataSource from '../src/DataGrid/LocalDataSource';
 import {
   validColumnsSample,
   validColumnsSampleAggAverage,
+  validColumnsSampleAggSum,
   validColumnsSampleDescending,
   validColumnsSampleMultipleSorting
 } from './utils/columns';
@@ -468,6 +469,15 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Aggregate.Amount).to.be.closeTo(157.363, 0.001);
+        done();
+      });
+    });
+
+    it('should return the sum of the \'Amount\' column', (done) => {
+      const dataSource = new LocalDataSource(localData, validColumnsSampleAggSum);
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Aggregate.Amount).to.be.equal(3462);
         done();
       });
     });
