@@ -21,6 +21,7 @@
     ],
     "exclude": [
       "gulpfile.js",
+      "next.config.js",
       "test/**/*.*",
       "build/**/*.*",
       "sample/**/*.*",

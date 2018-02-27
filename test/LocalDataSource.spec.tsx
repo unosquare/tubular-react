@@ -499,6 +499,16 @@ describe('LocalDataSource', () => {
         done();
       });
     });
+
+    it('should return the min of the \'Amount\' column', (done) => {
+      customAmountCol.Aggregate = AggregateFunctions.MIN;
+      const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Aggregate.Amount).to.be.equal(9);
+        done();
+      });
+    });
   });
 
 });
