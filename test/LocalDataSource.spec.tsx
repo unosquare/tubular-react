@@ -5,6 +5,7 @@ import GridResponse from '../src/DataGrid/GridResponse';
 import LocalDataSource from '../src/DataGrid/LocalDataSource';
 import {
   validColumnsSample,
+  validColumnsSampleAggAverage,
   validColumnsSampleDescending,
   validColumnsSampleMultipleSorting
 } from './utils/columns';
@@ -456,6 +457,17 @@ describe('LocalDataSource', () => {
         expect(response.Payload).to.have.lengthOf(2);
         expect(response.Payload).to.deep.equal(expectedPayloadLtDate);
 
+        done();
+      });
+    });
+  });
+
+  describe('When column has aggregate function', () => {
+    it('should return the average of the \'Amount\' column', (done) => {
+      const dataSource = new LocalDataSource(localData, validColumnsSampleAggAverage);
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Aggregate.Amount).to.be.closeTo(157.363, 0.001);
         done();
       });
     });
