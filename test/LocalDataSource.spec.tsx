@@ -467,7 +467,7 @@ describe('LocalDataSource', () => {
       const dataSource = new LocalDataSource(localData, validColumnsSampleAggAverage);
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Aggregate.Amount).to.be.equal(157.36363636363637);
+        expect(response.Aggregate.Amount).to.be.closeTo(157.36363636363637, 0.36363636363637);
         done();
       });
     });
