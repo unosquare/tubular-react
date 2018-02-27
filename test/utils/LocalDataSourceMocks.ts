@@ -156,52 +156,62 @@ const expectedPayloadDescSortByOrderID = [
   {
     OrderID: 22,
     CustomerName: 'Tiempo Development',
-    ShippedDate: '2016-01-04T18:00:00'
+    ShippedDate: '2016-01-04T18:00:00',
+    Amount: 150
   },
   {
     OrderID: 21,
     CustomerName: 'Wizeline',
-    ShippedDate: '2015-11-04T18:00:00'
+    ShippedDate: '2015-11-04T18:00:00',
+    Amount: 100
   },
   {
     OrderID: 20,
     CustomerName: 'OXXO',
-    ShippedDate: '2016-11-04T18:00:00'
+    ShippedDate: '2016-11-04T18:00:00',
+    Amount: 78
   },
   {
     OrderID: 19,
     CustomerName: 'Vesta',
-    ShippedDate: '2016-11-08T18:00:00'
+    ShippedDate: '2016-11-08T18:00:00',
+    Amount: 300
   },
   {
     OrderID: 18,
     CustomerName: 'Microsoft',
-    ShippedDate: '2016-12-22T08:00:00'
+    ShippedDate: '2016-12-22T08:00:00',
+    Amount: 92
   },
   {
     OrderID: 17,
     CustomerName: 'Unosquare LLC',
-    ShippedDate: '2016-04-23T10:00:00'
+    ShippedDate: '2016-04-23T10:00:00',
+    Amount: 108
   },
   {
     OrderID: 16,
     CustomerName: 'Microsoft',
-    ShippedDate: '2016-03-19T19:00:00'
+    ShippedDate: '2016-03-19T19:00:00',
+    Amount: 300
   },
   {
     OrderID: 15,
     CustomerName: 'Super La Playa',
-    ShippedDate: '2016-12-22T08:00:00'
+    ShippedDate: '2016-12-22T08:00:00',
+    Amount: 192
   },
   {
     OrderID: 14,
     CustomerName: 'Vesta',
-    ShippedDate: '2016-04-23T10:00:00'
+    ShippedDate: '2016-04-23T10:00:00',
+    Amount: 60
   },
   {
     OrderID: 13,
     CustomerName: 'Unosquare LLC',
-    ShippedDate: '2016-03-19T19:00:00'
+    ShippedDate: '2016-03-19T19:00:00',
+    Amount: 300
   }
 ];
 

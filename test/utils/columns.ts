@@ -5,16 +5,29 @@ import {
   ColumnSortDirection
 } from '../../src/DataGrid';
 
+const regularOrderIdCol = new ColumnModel('OrderID',
+  {
+    DataType: ColumnDataType.NUMERIC,
+    Filtering: true,
+    IsKey: true,
+    Label: 'Order ID',
+    SortDirection: ColumnSortDirection.ASCENDING,
+    SortOrder: 1,
+    Sortable: true
+  }
+);
+
+const customAmountCol = new ColumnModel('Amount',
+  {
+    Aggregate: AggregateFunctions.NONE,
+    DataType: ColumnDataType.NUMERIC
+  }
+);
+
+// Column samples
+
 const validColumnsSample = [
-  new ColumnModel( 'OrderID',
-    { DataType: ColumnDataType.NUMERIC,
-      Filtering: true,
-      IsKey: true,
-      Label: 'Order ID',
-      SortDirection: ColumnSortDirection.ASCENDING,
-      SortOrder: 1,
-      Sortable: true }
-  ),
+  regularOrderIdCol,
   new ColumnModel( 'CustomerName',
     { Aggregate: AggregateFunctions.COUNT,
       Filtering: true,
@@ -27,60 +40,6 @@ const validColumnsSample = [
   new ColumnModel( 'ShipperCity' ),
   new ColumnModel( 'Amount',
     { DataType: ColumnDataType.NUMERIC  }
-  )
-];
-
-const validColumnsSampleAggAverage = [
-  new ColumnModel( 'OrderID',
-    { DataType: ColumnDataType.NUMERIC,
-      Filtering: true,
-      IsKey: true,
-      Label: 'Order ID',
-      SortDirection: ColumnSortDirection.ASCENDING,
-      SortOrder: 1,
-      Sortable: true }
-  ),
-  new ColumnModel( 'CustomerName',
-    {
-      Filtering: true,
-      Searchable: true }
-  ),
-  new ColumnModel( 'ShippedDate',
-    { DataType: ColumnDataType.DATE_TIME,
-      Filtering: true }
-  ),
-  new ColumnModel( 'ShipperCity' ),
-  new ColumnModel( 'Amount',
-    {
-      Aggregate: AggregateFunctions.AVERAGE,
-      DataType: ColumnDataType.NUMERIC  }
-  )
-];
-
-const validColumnsSampleAggSum = [
-  new ColumnModel( 'OrderID',
-    { DataType: ColumnDataType.NUMERIC,
-      Filtering: true,
-      IsKey: true,
-      Label: 'Order ID',
-      SortDirection: ColumnSortDirection.ASCENDING,
-      SortOrder: 1,
-      Sortable: true }
-  ),
-  new ColumnModel( 'CustomerName',
-    {
-      Filtering: true,
-      Searchable: true }
-  ),
-  new ColumnModel( 'ShippedDate',
-    { DataType: ColumnDataType.DATE_TIME,
-      Filtering: true }
-  ),
-  new ColumnModel( 'ShipperCity' ),
-  new ColumnModel( 'Amount',
-    {
-      Aggregate: AggregateFunctions.SUM,
-      DataType: ColumnDataType.NUMERIC  }
   )
 ];
 
@@ -107,6 +66,8 @@ const simpleColumnsSample = [
   )
 ];
 
+// Columns for sorting
+
 const validColumnsSampleDescending = [
   new ColumnModel('OrderID',
     {
@@ -132,6 +93,12 @@ const validColumnsSampleDescending = [
       DataType: ColumnDataType.DATE_TIME,
       Filtering: true,
       Sortable: true
+    }
+  ),
+  new ColumnModel('Amount',
+    {
+      Aggregate: AggregateFunctions.MAX,
+      DataType: ColumnDataType.NUMERIC
     }
   ),
 ];
@@ -171,11 +138,29 @@ const validColumnsSampleMultipleSorting = [
   ),
 ];
 
+// Columns for aggregate functions
+
+const aggregateColumnsSample = [
+  regularOrderIdCol,
+  new ColumnModel( 'CustomerName',
+    { Aggregate: AggregateFunctions.COUNT,
+      Filtering: true,
+      Searchable: true }
+  ),
+  new ColumnModel( 'ShippedDate',
+    { Aggregate: AggregateFunctions.DISTINCT_COUNT,
+      DataType: ColumnDataType.DATE_TIME,
+      Filtering: true }
+  ),
+  new ColumnModel( 'ShipperCity' ),
+  customAmountCol
+];
+
 export {
+  customAmountCol,
+  aggregateColumnsSample,
   simpleColumnsSample,
   validColumnsSample,
   validColumnsSampleDescending,
   validColumnsSampleMultipleSorting,
-  validColumnsSampleAggAverage,
-  validColumnsSampleAggSum
 };
