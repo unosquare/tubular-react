@@ -7,6 +7,7 @@ import LocalDataSource from '../src/DataGrid/LocalDataSource';
 import {
   aggregateColumnsSample,
   customAmountCol,
+  customCustomerNameCol,
   simpleColumnsSample,
   validColumnsSample,
   validColumnsSampleDescending,
@@ -506,6 +507,16 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Aggregate.Amount).to.be.equal(9);
+        done();
+      });
+    });
+
+    it('should return the total of records in \'Customer Name\' eliminating duplicates', (done) => {
+      customCustomerNameCol.Aggregate = AggregateFunctions.DISTINCT_COUNT;
+      const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Aggregate.CustomerName).to.be.equal(7);
         done();
       });
     });
