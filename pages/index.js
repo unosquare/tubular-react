@@ -38,7 +38,7 @@ const Home = (props) => {
             <MetaData />
             <NavigationBar />
             <Grid container spacing={24} className={classes.container}>
-                <Grid item xs={6}>
+                <Grid item xs={12} md={6}>
                  <Paper className={classes.paper}>
                     <Typography variant='display1'>
                         What is it?
@@ -49,7 +49,7 @@ const Home = (props) => {
                     </Typography>
                     </Paper>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} md={6}>
                     <Paper className={classes.paper}>
                         <Typography variant='display1'>
                             Features
@@ -64,7 +64,7 @@ const Home = (props) => {
                         </Typography>
                     </Paper>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} md={6}>
                     <Paper className={classes.paper}>
                         <Typography variant='display1'>
                             Dependencies
@@ -79,14 +79,14 @@ const Home = (props) => {
                         </Typography>
                     </Paper>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} md={6}>
                     <Paper className={classes.paper}>
                         <Typography variant='display1'>
                             npm Installation
                         </Typography>
                         <Divider />
                         <Typography paragraph variant='subheading' className={classes.content}>
-                            <SyntaxHighligther style={docco} className={classes.code}>$ npm install tubular-react --save</SyntaxHighligther>
+                            <SyntaxHighligther language='tsx' style={docco} className={classes.code}>$ npm install tubular-react --save</SyntaxHighligther>
                         </Typography>
                     </Paper>
                 </Grid>

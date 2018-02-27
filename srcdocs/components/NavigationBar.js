@@ -8,35 +8,44 @@ import Link from 'next/link';
 import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
+import Collapse from 'material-ui/transitions/Collapse';
 import Tooltip from 'material-ui/Tooltip';
 import Divider from 'material-ui/Divider';
 import MenuIcon from 'material-ui-icons/Menu';
 import IconButton from 'material-ui/IconButton';
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
-import { teal } from 'material-ui/colors/teal';
+import ExpandLess from 'material-ui-icons/ExpandLess';
+import ExpandMore from 'material-ui-icons/ExpandMore';
 
 const styles = {
-    root: {
-        width: '100%',
-    },
     flex: {
         flex: 1,
         textAlign: 'center'
     },
     image: {
-        maxWidth: 100,
+        maxWidth: 100
     },
     logo: {
-        maxWidth: 150,
+        maxWidth: 150
+    },
+    nested: {
+        marginLeft: 10
     }
 };
 
 class NavigationBar extends React.Component {
     state = {
         openDrawer: false,
+        openList: false
     }
     toggleDrawer = (open) => () => {
         this.setState({ openDrawer: open });
+        if(this.state.openList){
+            this.setState({ openList: open})
+        }
+    };
+    toggleList = (open) => () => {
+        this.setState({ openList: open });
     };
     render() {
         const { classes } = this.props;
@@ -53,13 +62,13 @@ class NavigationBar extends React.Component {
                     </Toolbar>
                 </AppBar>
                 <Drawer variant='persistent' open={this.state.openDrawer} onClose={this.toggleDrawer(false)}>
-                <List>
-                    <Tooltip title="Close">
-                        <ListItem button className={classes.closeButton} onClick={this.toggleDrawer(false)}>
-                            <ListItemIcon><ChevronLeftIcon /></ListItemIcon>
-                        </ListItem>
-                    </Tooltip>
-                    <Divider />
+                    <List>
+                        <Tooltip title="Close">
+                            <ListItem button className={classes.closeButton} onClick={this.toggleDrawer(false)}>
+                                <ListItemIcon><ChevronLeftIcon /></ListItemIcon>
+                            </ListItem>
+                        </Tooltip>
+                        <Divider />
                         <ListItem button onClick={this.toggleDrawer(false)}>
                             <Link href="/">
                                 <ListItemText primary="Home" />
@@ -70,22 +79,45 @@ class NavigationBar extends React.Component {
                                 <ListItemText primary="Grid Samples" />
                             </Link>
                         </ListItem>
-                        <ListItem button onClick={this.toggleDrawer(false)}>
-                            <Link href="/Documentation/Getting-Started">
-                                <ListItemText primary="Documentation" />
-                            </Link>
+                        <ListItem button onClick={this.toggleList(!this.state.openList)}>
+                            <ListItemText primary="Documentation" />
+                            {this.state.openList ? <ExpandLess /> : <ExpandMore />}
                         </ListItem>
+                        <Collapse in={this.state.openList} timeout="auto" unmountOnExit>
+                            <List component="div" disablePadding>
+                                <ListItem button className={classes.nested} onClick={this.toggleDrawer(false)}>
+                                    <Link href="/Documentation/Getting-Started">
+                                        <ListItemText primary="Getting Started" />
+                                    </Link>
+                                </ListItem>
+                                <ListItem button className={classes.nested} onClick={this.toggleDrawer(false)}>
+                                    <Link href="/Documentation/ColumnModel">
+                                        <ListItemText primary="Column Model" />
+                                    </Link>
+                                </ListItem>
+                                <ListItem button className={classes.nested} onClick={this.toggleDrawer(false)}>
+                                    <Link href="/Documentation/DataSource">
+                                        <ListItemText primary="Data Source" />
+                                    </Link>
+                                </ListItem>
+                                <ListItem button className={classes.nested} onClick={this.toggleDrawer(false)}>
+                                    <Link href="/Documentation/Props">
+                                        <ListItemText primary="Props" />
+                                    </Link>
+                                </ListItem>
+                            </List>
+                        </Collapse>
                         <Divider />
                         <ListItem button component='a' href='https://www.unosquare.com/' target='_blank' onClick={this.toggleDrawer(false)}>
-                                <img className={classes.image} src="./static/logoUnosquare.png" alt="Unosquare" />
+                            <img className={classes.image} src="./static/logoUnosquare.png" alt="Unosquare" />
                         </ListItem>
                         <ListItem button component='a' href='https://github.com/unosquare/tubular-react' target='_blank' onClick={this.toggleDrawer(false)}>
-                                <img className={classes.image} src="./static/GitHub-Logo.png" alt="Github" />
+                            <img className={classes.image} src="./static/GitHub-Logo.png" alt="Github" />
                         </ListItem>
                     </List>
                     <Divider />
                 </Drawer>
-            </div>
+            </div >
         )
     }
 }

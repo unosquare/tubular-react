@@ -1,6 +1,11 @@
 const dev = process.env.NODE_ENV.trim() === 'development';
+const withTypescript = require('@zeit/next-typescript');
 
-module.exports = {
+module.exports = withTypescript({
+  webpack: (config, { dev }) => {
+    config.module.rules.push({ test: /\.ts|\.tsx$/, loader: ['ts-loader'], include: __dirname });
+    return config;
+  },
   exportPathMap: function() {
     return {
       '/': { page: '/' },
@@ -11,5 +16,5 @@ module.exports = {
       '/Documentation/Props': { page: '/Documentation/Props' },
     }
   },
-  assetPrefix: !dev ? '/tubular-react':''
-}
+  assetPrefix: dev ? '' : '/tubular-react'
+});

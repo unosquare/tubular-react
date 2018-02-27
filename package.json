@@ -1,8 +1,8 @@
 {
   "name": "tubular-react",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "description": "Tubular React",
-  "main": "index.js",
+  "main": "./src/index",
   "scripts": {
     "start": "gulp watch",
     "build": "gulp",
@@ -11,6 +11,7 @@
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov",
     "docs:dev": "next",
+    "docs:start": "next start",
     "docs": "set NODE_ENV=production && next build && next export -o docs"
   },
   "nyc": {
@@ -61,6 +62,7 @@
     "@types/react-dom": "^16.0.3",
     "@types/rx": "^4.1.1",
     "@zeit/next-typescript": "0.0.10",
+    "awesome-typescript-loader": "^3.4.1",
     "axios-mock-adapter": "^1.12.0",
     "browser-sync": "^2.23.5",
     "browserify": "^15.2.0",
@@ -79,13 +81,15 @@
     "nyc": "^11.4.1",
     "react-syntax-highlighter": "^7.0.0",
     "sinon": "^4.1.6",
+    "ts-loader": "^3.5.0",
     "ts-node": "^4.1.0",
     "tsify": "^3.0.4",
     "tslint": "^5.9.1",
     "tslint-react": "^3.4.0",
-    "typescript": "^2.7.1",
+    "typescript": "^2.7.2",
     "vinyl-source-stream": "^2.0.0",
-    "watchify": "^3.9.0"
+    "watchify": "^3.9.0",
+    "webpack": "^3.11.0"
   },
   "peerDependencies": {
     "material-ui": "next",

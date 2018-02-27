@@ -18,7 +18,7 @@ const MetaData = (props) => {
         </Head>
         <style jsx global>{`
         body { 
-          background-image: url("./static/background.jpg");
+          background-image: url("./static/background.png");
           width: 98%;
         }
       `}</style>
