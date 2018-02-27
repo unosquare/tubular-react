@@ -84,6 +84,33 @@ const validColumnsSampleAggSum = [
   )
 ];
 
+const validColumnsSampleAggMax = [
+  new ColumnModel( 'OrderID',
+    { DataType: ColumnDataType.NUMERIC,
+      Filtering: true,
+      IsKey: true,
+      Label: 'Order ID',
+      SortDirection: ColumnSortDirection.ASCENDING,
+      SortOrder: 1,
+      Sortable: true }
+  ),
+  new ColumnModel( 'CustomerName',
+    {
+      Filtering: true,
+      Searchable: true }
+  ),
+  new ColumnModel( 'ShippedDate',
+    { DataType: ColumnDataType.DATE_TIME,
+      Filtering: true }
+  ),
+  new ColumnModel( 'ShipperCity' ),
+  new ColumnModel( 'Amount',
+    {
+      Aggregate: AggregateFunctions.MAX,
+      DataType: ColumnDataType.NUMERIC  }
+  )
+];
+
 const simpleColumnsSample = [
   new ColumnModel( 'OrderID',
     { DataType: ColumnDataType.NUMERIC,
@@ -177,5 +204,6 @@ export {
   validColumnsSampleDescending,
   validColumnsSampleMultipleSorting,
   validColumnsSampleAggAverage,
-  validColumnsSampleAggSum
+  validColumnsSampleAggSum,
+  validColumnsSampleAggMax
 };

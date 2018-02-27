@@ -6,6 +6,7 @@ import LocalDataSource from '../src/DataGrid/LocalDataSource';
 import {
   validColumnsSample,
   validColumnsSampleAggAverage,
+  validColumnsSampleAggMax,
   validColumnsSampleAggSum,
   validColumnsSampleDescending,
   validColumnsSampleMultipleSorting
@@ -478,6 +479,15 @@ describe('LocalDataSource', () => {
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Aggregate.Amount).to.be.equal(3462);
+        done();
+      });
+    });
+
+    it('should return the max of the \'Amount\' column', (done) => {
+      const dataSource = new LocalDataSource(localData, validColumnsSampleAggMax);
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Aggregate.Amount).to.be.equal(300);
         done();
       });
     });
