@@ -1,10 +1,12 @@
 import { assert, expect } from 'chai';
 import * as moment from 'moment';
+import { AggregateFunctions } from '../src/DataGrid';
 import { CompareOperators } from '../src/DataGrid/Column';
 import GridResponse from '../src/DataGrid/GridResponse';
 import LocalDataSource from '../src/DataGrid/LocalDataSource';
 import {
   aggregateColumnsSample,
+  customAmountCol,
   simpleColumnsSample,
   validColumnsSample,
   validColumnsSampleDescending,
@@ -464,7 +466,12 @@ describe('LocalDataSource', () => {
   });
 
   describe('When column has aggregate function', () => {
+    beforeEach(() => {
+      customAmountCol.Aggregate = null;
+    });
+
     it('should return the average of the \'Amount\' column', (done) => {
+      customAmountCol.Aggregate = AggregateFunctions.AVERAGE;
       const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
@@ -474,7 +481,8 @@ describe('LocalDataSource', () => {
     });
 
     it('should return the sum of the \'Amount\' column', (done) => {
-      const dataSource = new LocalDataSource(localData, simpleColumnsSample);
+      customAmountCol.Aggregate = AggregateFunctions.SUM;
+      const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Aggregate.Amount).to.be.equal(3462);
@@ -483,7 +491,8 @@ describe('LocalDataSource', () => {
     });
 
     it('should return the max of the \'Amount\' column', (done) => {
-      const dataSource = new LocalDataSource(localData, validColumnsSampleDescending);
+      customAmountCol.Aggregate = AggregateFunctions.MAX;
+      const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Aggregate.Amount).to.be.equal(300);

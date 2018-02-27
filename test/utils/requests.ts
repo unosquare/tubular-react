@@ -24,8 +24,7 @@ const simpleRequest = new GridRequest({
         ),
         new ColumnModel( 'ShipperCity' ),
         new ColumnModel( 'Amount',
-          { Aggregate: AggregateFunctions.SUM,
-            DataType: ColumnDataType.NUMERIC,
+          { DataType: ColumnDataType.NUMERIC,
             Sortable: false }
         )
       ],
@@ -58,8 +57,7 @@ const page2Request = new GridRequest({
       ),
       new ColumnModel( 'ShipperCity' ),
       new ColumnModel( 'Amount',
-        { Aggregate: AggregateFunctions.SUM,
-          DataType: ColumnDataType.NUMERIC,
+        { DataType: ColumnDataType.NUMERIC,
           Sortable: false }
       )
     ],

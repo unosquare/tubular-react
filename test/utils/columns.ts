@@ -5,16 +5,29 @@ import {
   ColumnSortDirection
 } from '../../src/DataGrid';
 
+const regularOrderIdCol = new ColumnModel('OrderID',
+  {
+    DataType: ColumnDataType.NUMERIC,
+    Filtering: true,
+    IsKey: true,
+    Label: 'Order ID',
+    SortDirection: ColumnSortDirection.ASCENDING,
+    SortOrder: 1,
+    Sortable: true
+  }
+);
+
+const customAmountCol = new ColumnModel('Amount',
+  {
+    Aggregate: AggregateFunctions.NONE,
+    DataType: ColumnDataType.NUMERIC
+  }
+);
+
+// Column samples
+
 const validColumnsSample = [
-  new ColumnModel( 'OrderID',
-    { DataType: ColumnDataType.NUMERIC,
-      Filtering: true,
-      IsKey: true,
-      Label: 'Order ID',
-      SortDirection: ColumnSortDirection.ASCENDING,
-      SortOrder: 1,
-      Sortable: true }
-  ),
+  regularOrderIdCol,
   new ColumnModel( 'CustomerName',
     { Aggregate: AggregateFunctions.COUNT,
       Filtering: true,
@@ -49,8 +62,7 @@ const simpleColumnsSample = [
   ),
   new ColumnModel( 'ShipperCity' ),
   new ColumnModel( 'Amount',
-    { Aggregate: AggregateFunctions.SUM,
-      DataType: ColumnDataType.NUMERIC  }
+    { DataType: ColumnDataType.NUMERIC  }
   )
 ];
 
@@ -129,16 +141,7 @@ const validColumnsSampleMultipleSorting = [
 // Columns for aggregate functions
 
 const aggregateColumnsSample = [
-  new ColumnModel( 'OrderID',
-    { Aggregate: AggregateFunctions.MIN,
-      DataType: ColumnDataType.NUMERIC,
-      Filtering: true,
-      IsKey: true,
-      Label: 'Order ID',
-      SortDirection: ColumnSortDirection.ASCENDING,
-      SortOrder: 1,
-      Sortable: true }
-  ),
+  regularOrderIdCol,
   new ColumnModel( 'CustomerName',
     { Aggregate: AggregateFunctions.COUNT,
       Filtering: true,
@@ -150,13 +153,11 @@ const aggregateColumnsSample = [
       Filtering: true }
   ),
   new ColumnModel( 'ShipperCity' ),
-  new ColumnModel( 'Amount',
-    { Aggregate: AggregateFunctions.AVERAGE,
-      DataType: ColumnDataType.NUMERIC  }
-  )
+  customAmountCol
 ];
 
 export {
+  customAmountCol,
   aggregateColumnsSample,
   simpleColumnsSample,
   validColumnsSample,
