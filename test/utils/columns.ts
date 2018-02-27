@@ -24,6 +24,13 @@ const customAmountCol = new ColumnModel('Amount',
   }
 );
 
+const customCustomerNameCol = new ColumnModel('CustomerName',
+  {
+    Aggregate: AggregateFunctions.NONE,
+    DataType: ColumnDataType.STRING
+  }
+);
+
 // Column samples
 
 const validColumnsSample = [
@@ -142,14 +149,9 @@ const validColumnsSampleMultipleSorting = [
 
 const aggregateColumnsSample = [
   regularOrderIdCol,
-  new ColumnModel( 'CustomerName',
-    { Aggregate: AggregateFunctions.COUNT,
-      Filtering: true,
-      Searchable: true }
-  ),
+  customCustomerNameCol,
   new ColumnModel( 'ShippedDate',
-    { Aggregate: AggregateFunctions.DISTINCT_COUNT,
-      DataType: ColumnDataType.DATE_TIME,
+    { DataType: ColumnDataType.DATE_TIME,
       Filtering: true }
   ),
   new ColumnModel( 'ShipperCity' ),
@@ -158,6 +160,7 @@ const aggregateColumnsSample = [
 
 export {
   customAmountCol,
+  customCustomerNameCol,
   aggregateColumnsSample,
   simpleColumnsSample,
   validColumnsSample,
