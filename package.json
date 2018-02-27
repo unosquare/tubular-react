@@ -10,8 +10,8 @@
     "test": "gulp test",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov",
-    "dev": "next",
-    "nextstart": "next start",
+    "docs:dev": "next",
+    "docs:start": "next start",
     "docs": "set NODE_ENV=production && next build && next export -o docs"
   },
   "nyc": {
