@@ -1,30 +1,27 @@
-import Axios from 'axios';
+import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 import * as Enzyme from 'enzyme';
 import * as Adapter from 'enzyme-adapter-react-16';
 import Paper from 'material-ui/Paper';
 import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
-import { createMount, createShallow } from 'material-ui/test-utils';
-import Typography from 'material-ui/Typography';
+import { createShallow } from 'material-ui/test-utils';
 import * as React from 'react';
 import DataGrid from '../src';
-import GridHeader from '../src/DataGrid/GridHeader';
 import Paginator from '../src/DataGrid/Paginator';
 import RemoteDataSource from '../src/DataGrid/RemoteDataSource';
-import { validColumnsSample } from './utils/columns';
-import { data, simpleRecordsExpected } from './utils/data';
-import * as orders from './utils/orders';
+import { simpleColumnsSample, validColumnsSample } from './utils/columns';
+import { data, page2Expected, simpleRecordsExpected } from './utils/data';
+import { page2Request, simpleRequest } from './utils/requests';
 
 const footerRenderer = (aggregates) => (
-  <TableFooter>
-    <TableRow>
-      <TableCell>Total: </TableCell>
-      <TableCell> {aggregates && aggregates.CustomerName} </TableCell>
-      <TableCell> ~~~ </TableCell>
-      <TableCell> ~~~ </TableCell>
-    </TableRow>
-  </TableFooter>
+  <TableRow>
+    <TableCell>Total: </TableCell>
+    <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
+    <TableCell />
+    <TableCell />
+    <TableCell />
+  </TableRow>
 );
 
 const bodyRenderer = (row, index) => (
@@ -45,18 +42,26 @@ const bodyRenderer = (row, index) => (
 );
 
 Enzyme.configure({ adapter: new Adapter() });
-const mock = new MockAdapter(Axios);
-mock.onPost().reply(200, {...simpleRecordsExpected});
 
 describe('<DataGrid />', () => {
   let shallow;
   let grid;
-  let mount;
   let dataSource;
+  let mock;
+
+  before(() => {
+    mock = new MockAdapter(axios);
+  });
+
+  after(() => {
+    mock.reset();
+  });
+
   beforeEach(() => {
+    mock.onPost().reply(200, {...simpleRecordsExpected});
     dataSource = new RemoteDataSource('url', validColumnsSample);
     shallow = createShallow({dive: true});
-    mount = createMount();
+
     grid = (
       <DataGrid
         onError={(x: any) => x}
@@ -130,6 +135,40 @@ describe('<DataGrid />', () => {
     });
   });
 
+  describe('When refreshGrid() is called', () => {
+    let dataGrid;
+
+    before( () => {
+      mock.reset();
+      mock.onPost('url', { ...simpleRequest }).reply(200, {
+        ...simpleRecordsExpected
+      });
+      mock.onPost('url', { ...page2Request }).reply(200, {
+        ...page2Expected
+      });
+
+      dataGrid = (
+        <DataGrid
+          onError={(x: any) => x}
+          gridName='Motorhead'
+          rowsPerPage={10}
+          dataSource={new RemoteDataSource('url', simpleColumnsSample)}
+        />
+      );
+    });
+
+    it('Should refresh the DataGrid DataStream', (done) => {
+      const wrapper = shallow(dataGrid);
+      wrapper.setState({ page: 1 });
+      wrapper.instance().refreshGrid();
+
+      wrapper.state().dataSource.dataStream.skip(2).subscribe((r) => {
+        expect(wrapper.state().dataSource.dataStream.value.Payload).to.deep.equal(page2Expected.Payload);
+        done();
+      });
+    });
+  });
+
   describe('When footer has n rows', () => {
     it('should render the row with the aggregate operation', () => {
       grid = (
@@ -187,7 +226,6 @@ describe('<DataGrid />', () => {
   });
 
   describe('When footer has showBottomPager property set as true', () => {
-
     it('should have a paginator', () => {
       grid = (
         <DataGrid
