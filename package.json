@@ -24,6 +24,9 @@
       "test/**/*.*",
       "build/**/*.*",
       "sample/**/*.*",
+      "docs/**/*.*",
+      "pages/**/*.*",
+      "srcdocs/**/*.*",
       "src/Util/index.js"
     ],
     "all": true
