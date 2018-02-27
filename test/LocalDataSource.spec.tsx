@@ -4,10 +4,9 @@ import { CompareOperators } from '../src/DataGrid/Column';
 import GridResponse from '../src/DataGrid/GridResponse';
 import LocalDataSource from '../src/DataGrid/LocalDataSource';
 import {
+  aggregateColumnsSample,
+  simpleColumnsSample,
   validColumnsSample,
-  validColumnsSampleAggAverage,
-  validColumnsSampleAggMax,
-  validColumnsSampleAggSum,
   validColumnsSampleDescending,
   validColumnsSampleMultipleSorting
 } from './utils/columns';
@@ -466,7 +465,7 @@ describe('LocalDataSource', () => {
 
   describe('When column has aggregate function', () => {
     it('should return the average of the \'Amount\' column', (done) => {
-      const dataSource = new LocalDataSource(localData, validColumnsSampleAggAverage);
+      const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Aggregate.Amount).to.be.closeTo(157.363, 0.001);
@@ -475,7 +474,7 @@ describe('LocalDataSource', () => {
     });
 
     it('should return the sum of the \'Amount\' column', (done) => {
-      const dataSource = new LocalDataSource(localData, validColumnsSampleAggSum);
+      const dataSource = new LocalDataSource(localData, simpleColumnsSample);
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Aggregate.Amount).to.be.equal(3462);
@@ -484,7 +483,7 @@ describe('LocalDataSource', () => {
     });
 
     it('should return the max of the \'Amount\' column', (done) => {
-      const dataSource = new LocalDataSource(localData, validColumnsSampleAggMax);
+      const dataSource = new LocalDataSource(localData, validColumnsSampleDescending);
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Aggregate.Amount).to.be.equal(300);

@@ -30,32 +30,6 @@ const validColumnsSample = [
   )
 ];
 
-// Columns for aggregate functions
-
-const validColumnsSampleAggAverage = [
-  new ColumnModel( 'Amount',
-    {
-      Aggregate: AggregateFunctions.AVERAGE,
-      DataType: ColumnDataType.NUMERIC  }
-  )
-];
-
-const validColumnsSampleAggSum = [
-  new ColumnModel( 'Amount',
-    {
-      Aggregate: AggregateFunctions.SUM,
-      DataType: ColumnDataType.NUMERIC  }
-  )
-];
-
-const validColumnsSampleAggMax = [
-  new ColumnModel( 'Amount',
-    {
-      Aggregate: AggregateFunctions.MAX,
-      DataType: ColumnDataType.NUMERIC  }
-  )
-];
-
 const simpleColumnsSample = [
   new ColumnModel( 'OrderID',
     { DataType: ColumnDataType.NUMERIC,
@@ -75,7 +49,8 @@ const simpleColumnsSample = [
   ),
   new ColumnModel( 'ShipperCity' ),
   new ColumnModel( 'Amount',
-    { DataType: ColumnDataType.NUMERIC  }
+    { Aggregate: AggregateFunctions.SUM,
+      DataType: ColumnDataType.NUMERIC  }
   )
 ];
 
@@ -106,6 +81,12 @@ const validColumnsSampleDescending = [
       DataType: ColumnDataType.DATE_TIME,
       Filtering: true,
       Sortable: true
+    }
+  ),
+  new ColumnModel('Amount',
+    {
+      Aggregate: AggregateFunctions.MAX,
+      DataType: ColumnDataType.NUMERIC
     }
   ),
 ];
@@ -145,12 +126,40 @@ const validColumnsSampleMultipleSorting = [
   ),
 ];
 
+// Columns for aggregate functions
+
+const aggregateColumnsSample = [
+  new ColumnModel( 'OrderID',
+    { Aggregate: AggregateFunctions.MIN,
+      DataType: ColumnDataType.NUMERIC,
+      Filtering: true,
+      IsKey: true,
+      Label: 'Order ID',
+      SortDirection: ColumnSortDirection.ASCENDING,
+      SortOrder: 1,
+      Sortable: true }
+  ),
+  new ColumnModel( 'CustomerName',
+    { Aggregate: AggregateFunctions.COUNT,
+      Filtering: true,
+      Searchable: true }
+  ),
+  new ColumnModel( 'ShippedDate',
+    { Aggregate: AggregateFunctions.DISTINCT_COUNT,
+      DataType: ColumnDataType.DATE_TIME,
+      Filtering: true }
+  ),
+  new ColumnModel( 'ShipperCity' ),
+  new ColumnModel( 'Amount',
+    { Aggregate: AggregateFunctions.AVERAGE,
+      DataType: ColumnDataType.NUMERIC  }
+  )
+];
+
 export {
+  aggregateColumnsSample,
   simpleColumnsSample,
   validColumnsSample,
   validColumnsSampleDescending,
   validColumnsSampleMultipleSorting,
-  validColumnsSampleAggAverage,
-  validColumnsSampleAggSum,
-  validColumnsSampleAggMax
 };
