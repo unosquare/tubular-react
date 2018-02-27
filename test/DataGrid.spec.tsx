@@ -135,7 +135,7 @@ describe('<DataGrid />', () => {
     });
   });
 
-  describe('When refreshGrid() is called', () => {
+  describe('When handlePager() is called', () => {
     let dataGrid;
 
     before( () => {
@@ -159,9 +159,7 @@ describe('<DataGrid />', () => {
 
     it('Should refresh the DataGrid DataStream', (done) => {
       const wrapper = shallow(dataGrid);
-      wrapper.setState({ page: 1 });
-      wrapper.instance().refreshGrid();
-
+      wrapper.instance().handlePager(10, 1);
       wrapper.state().dataSource.dataStream.skip(2).subscribe((r) => {
         expect(r.Payload).to.deep.equal(page2Expected.Payload);
         done();
