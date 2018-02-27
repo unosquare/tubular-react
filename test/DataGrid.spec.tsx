@@ -161,7 +161,10 @@ describe('<DataGrid />', () => {
       const wrapper = shallow(dataGrid);
       wrapper.instance().handlePager(10, 1);
       wrapper.state().dataSource.dataStream.skip(2).subscribe((r) => {
-        expect(r.Payload).to.deep.equal(page2Expected.Payload);
+        wrapper.setState({ data: r.Payload });
+
+        expect(wrapper.find(TableBody).find(TableRow)).to.have.lengthOf(10);
+        expect(wrapper.state().data).to.deep.equal(page2Expected.Payload);
         done();
       });
     });
