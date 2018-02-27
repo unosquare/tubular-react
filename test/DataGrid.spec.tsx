@@ -163,7 +163,7 @@ describe('<DataGrid />', () => {
       wrapper.instance().refreshGrid();
 
       wrapper.state().dataSource.dataStream.skip(2).subscribe((r) => {
-        expect(wrapper.state().dataSource.dataStream.value.Payload).to.deep.equal(page2Expected.Payload);
+        expect(r.Payload).to.deep.equal(page2Expected.Payload);
         done();
       });
     });
