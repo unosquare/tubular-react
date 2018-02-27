@@ -520,6 +520,16 @@ describe('LocalDataSource', () => {
         done();
       });
     });
+
+    it('should return the total of records in \'Customer Name\' eliminating duplicates', (done) => {
+      customCustomerNameCol.Aggregate = AggregateFunctions.COUNT;
+      const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Aggregate.CustomerName).to.be.equal(22);
+        done();
+      });
+    });
   });
 
 });
