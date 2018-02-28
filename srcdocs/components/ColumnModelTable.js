@@ -16,7 +16,7 @@ const ColumnModelTable = (props) => {
                 </TableRow>
             </TableHead>
             <TableBody>
-                <TableRow hover='true'>
+                <TableRow hover={true}>
                     <TableCell>Aggregate</TableCell>
                     <TableCell>AggregateFunctions</TableCell>
                     <TableCell>NONE</TableCell>
@@ -24,7 +24,7 @@ const ColumnModelTable = (props) => {
                     <TableCell>The aggregation function that will be applied to this column</TableCell>
                     </Hidden>
                 </TableRow>
-                <TableRow hover='true'>
+                <TableRow hover={true}>
                     <TableCell>DataType</TableCell>
                     <TableCell>ColumnDataType</TableCell>
                     <TableCell>string</TableCell>
@@ -32,7 +32,7 @@ const ColumnModelTable = (props) => {
                     <TableCell>The column type</TableCell>
                     </Hidden>
                 </TableRow>
-                <TableRow hover='true'>
+                <TableRow hover={true}>
                     <TableCell>Filtering</TableCell>
                     <TableCell>bool</TableCell>
                     <TableCell>false</TableCell>
@@ -40,7 +40,7 @@ const ColumnModelTable = (props) => {
                     <TableCell>Activates filtering</TableCell>
                     </Hidden>
                 </TableRow>
-                <TableRow hover='true'>
+                <TableRow hover={true}>
                     <TableCell>IsKey</TableCell>
                     <TableCell>bool</TableCell>
                     <TableCell>false</TableCell>
@@ -48,7 +48,7 @@ const ColumnModelTable = (props) => {
                     <TableCell>Defines if a column is an identifier or not</TableCell>
                     </Hidden>
                 </TableRow>
-                <TableRow hover='true'>
+                <TableRow hover={true}>
                     <TableCell>Label</TableCell>
                     <TableCell>string</TableCell>
                     <TableCell></TableCell>
@@ -56,7 +56,7 @@ const ColumnModelTable = (props) => {
                     <TableCell>Column label that will be shown</TableCell>
                     </Hidden>
                 </TableRow>
-                <TableRow hover='true'>
+                <TableRow hover={true}>
                     <TableCell>Searchable</TableCell>
                     <TableCell>bool</TableCell>
                     <TableCell>true</TableCell>
@@ -64,7 +64,7 @@ const ColumnModelTable = (props) => {
                     <TableCell>Indicates that a column can be used to search upon</TableCell>
                     </Hidden>
                 </TableRow>
-                <TableRow hover='true'>
+                <TableRow hover={true}>
                     <TableCell>SortDirection</TableCell>
                     <TableCell>ColumnSortDirection</TableCell>
                     <TableCell>NONE</TableCell>
@@ -72,7 +72,7 @@ const ColumnModelTable = (props) => {
                     <TableCell></TableCell>
                     </Hidden>
                 </TableRow>
-                <TableRow hover='true'>
+                <TableRow hover={true}>
                     <TableCell>SortOrder</TableCell>
                     <TableCell>number</TableCell>
                     <TableCell></TableCell>
@@ -80,7 +80,7 @@ const ColumnModelTable = (props) => {
                     <TableCell></TableCell>
                     </Hidden>
                 </TableRow>
-                <TableRow hover='true'>
+                <TableRow hover={true}>
                     <TableCell>Sortable</TableCell>
                     <TableCell>bool</TableCell>
                     <TableCell></TableCell>
@@ -88,7 +88,7 @@ const ColumnModelTable = (props) => {
                     <TableCell>Determines if a column can be sorted</TableCell>
                     </Hidden>
                 </TableRow>
-                <TableRow hover='true'>
+                <TableRow hover={true}>
                     <TableCell>Visible</TableCell>
                     <TableCell>bool</TableCell>
                     <TableCell>true</TableCell>

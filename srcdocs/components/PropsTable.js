@@ -16,7 +16,7 @@ const PropsTable = (props) => {
                 </TableRow>
             </TableHead>
             <TableBody>
-                <TableRow hover='true'>
+                <TableRow hover={true}>
                     <TableCell>datasource</TableCell>
                     <TableCell>RemoteDataSource or LocalDataSource</TableCell>
                     <TableCell></TableCell>
@@ -24,7 +24,7 @@ const PropsTable = (props) => {
                     <TableCell>Required</TableCell>
                     </Hidden>
                 </TableRow>
-                <TableRow hover='true'>
+                <TableRow hover={true}>
                     <TableCell>gridName</TableCell>
                     <TableCell>string</TableCell>
                     <TableCell>''</TableCell>
@@ -32,7 +32,7 @@ const PropsTable = (props) => {
                     <TableCell></TableCell>
                     </Hidden>
                 </TableRow>
-                <TableRow hover='true'>
+                <TableRow hover={true}>
                     <TableCell>rowsPerPage</TableCell>
                     <TableCell>number</TableCell>
                     <TableCell>10</TableCell>
@@ -40,7 +40,7 @@ const PropsTable = (props) => {
                     <TableCell></TableCell>
                     </Hidden>
                 </TableRow>
-                <TableRow hover='true'>
+                <TableRow hover={true}>
                     <TableCell>showBottomPager</TableCell>
                     <TableCell>bool</TableCell>
                     <TableCell>false</TableCell>
@@ -48,7 +48,7 @@ const PropsTable = (props) => {
                     <TableCell></TableCell>
                     </Hidden>
                 </TableRow>
-                <TableRow hover='true'>
+                <TableRow hover={true}>
                     <TableCell>showTopPager</TableCell>
                     <TableCell>bool</TableCell>
                     <TableCell>false</TableCell>
@@ -56,7 +56,7 @@ const PropsTable = (props) => {
                     <TableCell></TableCell>
                     </Hidden>
                 </TableRow>
-                <TableRow hover='true'>
+                <TableRow hover={true}>
                     <TableCell>showPrintButton</TableCell>
                     <TableCell>bool</TableCell>
                     <TableCell>false</TableCell>
@@ -64,7 +64,7 @@ const PropsTable = (props) => {
                     <TableCell></TableCell>
                     </Hidden>
                 </TableRow>
-                <TableRow hover='true'>
+                <TableRow hover={true}>
                     <TableCell>showExportButton</TableCell>
                     <TableCell>bool</TableCell>
                     <TableCell>false</TableCell>
@@ -72,7 +72,7 @@ const PropsTable = (props) => {
                     <TableCell></TableCell>
                     </Hidden>
                 </TableRow>
-                <TableRow hover='true'>
+                <TableRow hover={true}>
                     <TableCell>bodyRenderer</TableCell>
                     <TableCell>function</TableCell>
                     <TableCell></TableCell>
@@ -80,7 +80,7 @@ const PropsTable = (props) => {
                     <TableCell></TableCell>
                     </Hidden>
                 </TableRow>
-                <TableRow hover='true'>
+                <TableRow hover={true}>
                     <TableCell>footerRenderer</TableCell>
                     <TableCell>function</TableCell>
                     <TableCell></TableCell>
