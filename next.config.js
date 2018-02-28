@@ -1,3 +1,4 @@
+const isProd = process.env.NODE_ENV === 'production'
 const withTypescript = require('@zeit/next-typescript');
 
 module.exports = withTypescript({
@@ -7,12 +8,13 @@ module.exports = withTypescript({
   },
   exportPathMap: function() {
     return {
-      '/': { page: '/' },
-      '/Sample': { page: '/Sample' },
-      '/Documentation/ColumnModel': { page: '/Documentation/ColumnModel' },
-      '/Documentation/DataSource': { page: '/Documentation/DataSource' },
-      '/Documentation/Getting-Started': { page: '/Documentation/Getting-Started' },
-      '/Documentation/Props': { page: '/Documentation/Props' },
+      '/src/docs/modules/pages/': { page: '/tubular-react' },
+      '/src/docs/modules/pages/Sample': { page: '/tubular-react/Sample' },
+      '/src/docs/modules/pages/Documentation/ColumnModel': { page: '/tubular-react/Documentation/ColumnModel' },
+      '/src/docs/modules/pages/Documentation/DataSource': { page: '/tubular-react/Documentation/DataSource' },
+      '/src/docs/modules/pages/Documentation/Getting-Started': { page: '/tubular-react/Documentation/Getting-Started' },
+      '/src/docs/modules/pages/Documentation/Props': { page: '/tubular-react/Documentation/Props' },
     }
+    assetPrefix: isProd ? 'https://unosquare.github.io/tubular-react/' : ''
   },
 });

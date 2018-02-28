@@ -27,22 +27,22 @@ const DocumentationList = (props) => {
                         </Typography>
                 <Divider />
                 <ListItem button>
-                    <Link href="/Documentation/Getting-Started">
+                    <Link href="/tubular-react/Documentation/Getting-Started">
                         <ListItemText primary="Getting Started" />
                     </Link>
                 </ListItem>
                 <ListItem button>
-                    <Link href="/Documentation/ColumnModel">
+                    <Link href="/tubular-react/Documentation/ColumnModel">
                         <ListItemText primary="Column Model" />
                     </Link>
                 </ListItem>
                 <ListItem button>
-                    <Link href="/Documentation/DataSource">
+                    <Link href="/tubular-react/Documentation/DataSource">
                         <ListItemText primary="Data Source" />
                     </Link>
                 </ListItem>
                 <ListItem button>
-                    <Link href="/Documentation/Props">
+                    <Link href="/tubular-react/Documentation/Props">
                         <ListItemText primary="Props" />
                     </Link>
                 </ListItem>
