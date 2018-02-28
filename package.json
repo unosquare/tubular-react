@@ -12,7 +12,7 @@
     "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov",
     "docs:dev": "next",
     "docs:start": "next start",
-    "docs": "set NODE_ENV=production && next build && next export -o docs"
+    "docs": "set NODE_ENV=production && gulp && next build && next export -o docs"
   },
   "nyc": {
     "extension": [

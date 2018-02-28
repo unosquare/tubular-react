@@ -8,13 +8,14 @@ import * as moment from 'moment';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import * as Rx from 'rx';
+import BaseDataSource from './BaseDataSource';
 import { ColumnDataType } from './Column';
 import GridHeader from './GridHeader';
 import GridResponse from './GridResponse';
 import GridToolbar from './GridToolbar';
 import Paginator from './Paginator';
 
-const styleClasses  = {
+const styleClasses = {
   dialogButtonStyle: '',
   dialogContentStyle: '',
   dialogTitleStyle: '',
@@ -23,33 +24,33 @@ const styleClasses  = {
 
 const styles = (theme: Theme): StyleRules<keyof typeof styleClasses> => (
   {
-  dialogButtonStyle: {
-    background: '#28b62c',
-    color: 'white',
-    marginBottom: '5px',
-    marginRight: '5px',
-    minWidth: '90px'
-  },
-  dialogContentStyle: {
-    color: 'black',
-    paddingTop: '25px'
-  },
-  dialogTitleStyle: {
-    background: '#ececec',
-    minWidth: '300px'
-  },
-  root: {
-    marginTop: theme.spacing.unit * 3,
-    overflowX: 'auto',
-    width: '100%'
-  }
-});
+    dialogButtonStyle: {
+      background: '#28b62c',
+      color: 'white',
+      marginBottom: '5px',
+      marginRight: '5px',
+      minWidth: '90px'
+    },
+    dialogContentStyle: {
+      color: 'black',
+      paddingTop: '25px'
+    },
+    dialogTitleStyle: {
+      background: '#ececec',
+      minWidth: '300px'
+    },
+    root: {
+      marginTop: theme.spacing.unit * 3,
+      overflowX: 'auto',
+      width: '100%'
+    }
+  });
 
 interface IState {
   aggregate: any;
   page: number;
   rowsPerPage: number;
-  dataSource: IDataSource;
+  dataSource: BaseDataSource;
   searchText: string;
   data: any[];
   totalRecordCount: number;
@@ -57,7 +58,7 @@ interface IState {
 }
 
 interface IProps {
-  dataSource: any;
+  dataSource: BaseDataSource;
   gridName: string;
   page?: number;
   rowsPerPage: number;
@@ -70,7 +71,7 @@ interface IProps {
   footerRenderer?(aggregate: any): any;
 }
 
-class DataGrid extends React.Component <IProps & WithStyles<keyof typeof styleClasses>, IState> {
+class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleClasses>, IState> {
   public static defaultProps = {
     gridName: '',
     page: 0,
@@ -95,7 +96,7 @@ class DataGrid extends React.Component <IProps & WithStyles<keyof typeof styleCl
     const pageSize = parseInt(localStorage.getItem(`tubular.${this.props.gridName}_pageSize`), 10) || 10;
     const searchText = localStorage.getItem(`tubular.${this.props.gridName}_searchText`) || '';
 
-    this.state.dataSource.connect(pageSize, this.state.page, searchText)
+    this.state.dataSource.retrieveData(pageSize, this.state.page, searchText)
       .subscribe((tbResponse: GridResponse) => {
         this.setState({
           aggregate: tbResponse.Aggregate,
@@ -129,7 +130,7 @@ class DataGrid extends React.Component <IProps & WithStyles<keyof typeof styleCl
   public refreshGrid = () => {
     const { dataSource, rowsPerPage, page, searchText } = this.state;
 
-    dataSource.refresh(rowsPerPage, page, searchText);
+    dataSource.retrieveData(rowsPerPage, page, searchText);
 
     localStorage.setItem(`tubular.${this.props.gridName}`, JSON.stringify(dataSource.columns));
     localStorage.setItem(`tubular.${this.props.gridName}_pageSize`, String(rowsPerPage));
@@ -147,12 +148,12 @@ class DataGrid extends React.Component <IProps & WithStyles<keyof typeof styleCl
       .then(({ Payload }: any) => {
         const popup = window.open('about:blank', 'Print', 'location=0,height=500,width=800');
         popup.document
-        .write('<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.min.css" />');
+          .write('<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.min.css" />');
         const tableHtml = `<table class="table table-bordered table-striped"><thead><tr>${
           dataSource.columns
             .filter((c: any) => c.Visible)
             .reduce((prev: any, el: any) => `${prev}<th>${el.Label || el.Name}</th>`, '')
-        }</tr></thead><tbody>${
+          }</tr></thead><tbody>${
           Payload.map((row: any) => {
             if (row instanceof Object) {
               row = Object.keys(row).map((key: any) => row[key]);
@@ -161,9 +162,9 @@ class DataGrid extends React.Component <IProps & WithStyles<keyof typeof styleCl
               if (dataSource.columns[index] && !dataSource.columns[index].Visible) {
                 return '';
               }
-              return `<td>${ dataSource.columns[index].DataType === ColumnDataType.DATE ||
-              dataSource.columns[index].DataType === ColumnDataType.DATE_TIME ||
-              dataSource.columns[index].DataType === ColumnDataType.DATE_TIME_UTC ?
+              return `<td>${dataSource.columns[index].DataType === ColumnDataType.DATE ||
+                dataSource.columns[index].DataType === ColumnDataType.DATE_TIME ||
+                dataSource.columns[index].DataType === ColumnDataType.DATE_TIME_UTC ?
                 moment(cell).format('MMMM Do YYYY, h:mm:ss a') :
                 cell || 0}</td>`;
             }).join(' ')}</tr>`;
@@ -251,27 +252,27 @@ class DataGrid extends React.Component <IProps & WithStyles<keyof typeof styleCl
 
     const body = (
       <TableBody>
-        { data.map((row: any, rowIndex: number) => (
-            bodyRenderer
-              ? bodyRenderer(row, rowIndex)
-              : <TableRow hover={true} key={rowIndex}>
-                {
-                  dataSource.columns.filter((col: any) => col.Visible).map((column: any, colIndex: number) =>
-                    <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
-                      {
-                        column.DataType === ColumnDataType.NUMERIC ?
-                          row[column.Name] || 0 :
-                          column.DataType === ColumnDataType.DATE
+        {data.map((row: any, rowIndex: number) => (
+          bodyRenderer
+            ? bodyRenderer(row, rowIndex)
+            : <TableRow hover={true} key={rowIndex}>
+              {
+                dataSource.columns.filter((col: any) => col.Visible).map((column: any, colIndex: number) =>
+                  <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
+                    {
+                      column.DataType === ColumnDataType.NUMERIC ?
+                        row[column.Name] || 0 :
+                        column.DataType === ColumnDataType.DATE
                           || column.DataType === ColumnDataType.DATE_TIME
                           || column.DataType === ColumnDataType.DATE_TIME_UTC
                           ? moment(row[column.Name]).format('MMMM Do YYYY, h:mm:ss a') || ''
                           : row[column.Name]
-                      }
-                    </TableCell>)
-                }
-              </TableRow>
-          )) }
-        { filteredRecordCount === 0 &&
+                    }
+                  </TableCell>)
+              }
+            </TableRow>
+        ))}
+        {filteredRecordCount === 0 &&
           (<TableRow>
             <TableCell style={{ display: 'flex', padding: '10px' }}>
               <WarningIcon />
@@ -279,7 +280,7 @@ class DataGrid extends React.Component <IProps & WithStyles<keyof typeof styleCl
                 No records found
               </Typography>
             </TableCell>
-          </TableRow>) }
+          </TableRow>)}
       </TableBody>
     );
 
