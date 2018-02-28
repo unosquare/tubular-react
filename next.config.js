@@ -1,4 +1,3 @@
-const dev = process.env.NODE_ENV.trim() === 'development';
 const withTypescript = require('@zeit/next-typescript');
 
 module.exports = withTypescript({
@@ -16,5 +15,4 @@ module.exports = withTypescript({
       '/Documentation/Props': { page: '/Documentation/Props' },
     }
   },
-  assetPrefix: dev ? '' : '/tubular-react'
 });
