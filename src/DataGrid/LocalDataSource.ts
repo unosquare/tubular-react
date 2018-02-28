@@ -2,17 +2,17 @@ import Axios from 'axios';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as Rx from 'rx';
-import { ColumnModel } from '.';
+import BaseDataSource from './BaseDataSource';
 import {
   AggregateFunctions,
   ColumnDataType,
   ColumnSortDirection,
   CompareOperators,
 } from './Column';
+import ColumnModel from './ColumnModel';
 import GridRequest from './GridRequest';
 import GridResponse from './GridResponse';
 import GridDataResponse from './utils/GridDataResponse';
-import BaseDataSource from './BaseDataSource';
 
 export default class LocalDataSource extends BaseDataSource {
 

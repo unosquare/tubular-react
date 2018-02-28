@@ -1,18 +1,18 @@
-import ColumnModel from './ColumnModel';
 import * as Rx from 'rx';
+import ColumnModel from './ColumnModel';
 
 export default abstract class BaseDataSource {
 
-    public columns: ColumnModel[];
     protected static counter: number;
+
+    public columns: ColumnModel[];
+    public dataStream: any;
 
     constructor(columns: ColumnModel[]) {
         this.columns = columns;
         this.dataStream = new Rx.BehaviorSubject({ Payload: [] });
         BaseDataSource.counter = 0;
     }
-
-    public dataStream: any;
 
     public retrieveData(rowsPerPage: number, page: number, searchText: string) {
 

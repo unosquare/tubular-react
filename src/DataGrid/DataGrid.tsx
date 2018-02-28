@@ -8,12 +8,12 @@ import * as moment from 'moment';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import * as Rx from 'rx';
+import BaseDataSource from './BaseDataSource';
 import { ColumnDataType } from './Column';
 import GridHeader from './GridHeader';
 import GridResponse from './GridResponse';
 import GridToolbar from './GridToolbar';
 import Paginator from './Paginator';
-import BaseDataSource from './BaseDataSource';
 
 const styleClasses = {
   dialogButtonStyle: '',
