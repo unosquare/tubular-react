@@ -522,7 +522,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return the total of records in \'Customer Name\' eliminating duplicates', (done) => {
+    it('should return the total of records in \'Customer Name\'', (done) => {
       customCustomerNameCol.Aggregate = AggregateFunctions.COUNT;
       const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
 
@@ -533,11 +533,11 @@ describe('LocalDataSource', () => {
     });
   });
 
-  describe('When connect is called', () => {
+  describe('When retrieveData() is called', () => {
     const dataSource = new LocalDataSource(localData, simpleColumnsSample);
 
     it('should return a payload', (done) => {
-      dataSource.connect(10, 0, '').skip(1).subscribe((response: GridResponse) => {
+      dataSource.retrieveData(10, 0, '').skip(1).subscribe((response: GridResponse) => {
         expect(response.Payload).to.deep.equal(expectedLocalDataSourceResponseConnect.Payload);
         expect(response.FilteredRecordCount).to.deep.equal(expectedLocalDataSourceResponseConnect.FilteredRecordCount);
         expect(response.TotalRecordCount).to.deep.equal(expectedLocalDataSourceResponseConnect.TotalRecordCount);
