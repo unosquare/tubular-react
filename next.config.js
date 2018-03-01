@@ -9,7 +9,7 @@ module.exports = withTypescript({
   },
   exportPathMap: function() {
     return {
-      '/src/docs/modules/pages/': { page: '/tubular-react' },
+      '/': { page: '/tubular-react' },
       '/src/docs/modules/pages/Sample': { page: '/tubular-react/Sample' },
       '/src/docs/modules/pages/Documentation/ColumnModel': { page: '/tubular-react/Documentation/ColumnModel' },
       '/src/docs/modules/pages/Documentation/DataSource': { page: '/tubular-react/Documentation/DataSource' },
