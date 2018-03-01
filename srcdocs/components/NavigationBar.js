@@ -87,12 +87,12 @@ class NavigationBar extends React.Component {
                         </Tooltip>
                         <Divider />
                         <ListItem button onClick={this.toggleDrawer(false)}>
-                            <Link href="/">
+                            <Link href="/tubular-react">
                                 <ListItemText primary="Home" />
                             </Link>
                         </ListItem>
                         <ListItem button onClick={this.toggleDrawer(false)}>
-                            <Link href="/Sample">
+                            <Link href="/tubular-react/Sample">
                                 <ListItemText primary="Grid Samples" />
                             </Link>
                         </ListItem>
@@ -103,22 +103,22 @@ class NavigationBar extends React.Component {
                         <Collapse in={this.state.openList} timeout="auto" unmountOnExit>
                             <List component="div" disablePadding>
                                 <ListItem button className={classes.nested} onClick={this.toggleDrawer(false)}>
-                                    <Link href="/Documentation/Getting-Started">
+                                    <Link href="/tubular-react/Documentation/Getting-Started">
                                         <ListItemText primary="Getting Started" />
                                     </Link>
                                 </ListItem>
                                 <ListItem button className={classes.nested} onClick={this.toggleDrawer(false)}>
-                                    <Link href="/Documentation/ColumnModel">
+                                    <Link href="/tubular-react/Documentation/ColumnModel">
                                         <ListItemText primary="Column Model" />
                                     </Link>
                                 </ListItem>
                                 <ListItem button className={classes.nested} onClick={this.toggleDrawer(false)}>
-                                    <Link href="/Documentation/DataSource">
+                                    <Link href="/tubular-react/Documentation/DataSource">
                                         <ListItemText primary="Data Source" />
                                     </Link>
                                 </ListItem>
                                 <ListItem button className={classes.nested} onClick={this.toggleDrawer(false)}>
-                                    <Link href="/Documentation/Props">
+                                    <Link href="/tubular-react/Documentation/Props">
                                         <ListItemText primary="Props" />
                                     </Link>
                                 </ListItem>
