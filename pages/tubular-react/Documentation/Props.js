@@ -1,6 +1,6 @@
 import DocumentationList from '../../../srcdocs/components/DocumentationList';
 import MetaData from '../../../srcdocs/components/MetaData';
-import NavigationBar from '../../../srcdocs/components/SubNavigationBar';
+import NavigationBar from '../../../srcdocs/components/NavigationBar';
 import PropsTable from '../../../srcdocs/components/PropsTable';
 import Divider from 'material-ui/Divider';
 import Grid from 'material-ui/Grid';

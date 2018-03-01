@@ -1,7 +1,7 @@
 const withTypescript = require('@zeit/next-typescript');
 
 module.exports = withTypescript({
-  assetPrefix: 'https://unosquare.github.io/tubular-react/',
+  assetPrefix: '/tubular-react/',
   webpack: (config, { dev }) => {
     config.module.rules.push({ test: /\.ts|\.tsx$/, loader: ['ts-loader'], include: __dirname });
     return config;
