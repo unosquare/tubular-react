@@ -61,6 +61,40 @@ describe('TablePaginationActions', () => {
     expect(firstPage.props().disabled).to.be.false;
   });
 
+  it('should have the disable props from \'Last Page\' as true', () => {
+    const wrapper = shallow(
+      <TablePaginationActions
+        classes={}
+        count={500}
+        page={49}
+        rowsPerPage={10}
+        onChangePage={noop}
+      />
+    );
+
+    const lastPage = wrapper.find(IconButton).at(8);
+
+    lastPage.simulate('click');
+    expect(lastPage.props().disabled).to.be.true;
+  });
+
+  it('should have the disable props from \'Last Page\' as true', () => {
+    const wrapper = shallow(
+      <TablePaginationActions
+        classes={}
+        count={500}
+        page={47}
+        rowsPerPage={10}
+        onChangePage={noop}
+      />
+    );
+
+    const lastPage = wrapper.find(IconButton).at(8);
+
+    lastPage.simulate('click');
+    expect(lastPage.props().disabled).to.be.false;
+  });
+
   beforeEach( () => {
     props = {};
   });
