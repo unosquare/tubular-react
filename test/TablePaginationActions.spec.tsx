@@ -126,6 +126,23 @@ describe('TablePaginationActions', () => {
     expect(previousPage.props().disabled).to.be.false;
   });
 
+  it('should have the disabled prop from \'Previous Page\' as true', () => {
+    const wrapper = shallow(
+      <TablePaginationActions
+        classes={}
+        count={500}
+        page={0}
+        rowsPerPage={10}
+        onChangePage={noop}
+      />
+    );
+
+    const previousPage = wrapper.find(IconButton).at(1);
+
+    previousPage.simulate('click');
+    expect(previousPage.props().disabled).to.be.true;
+  });
+
   beforeEach( () => {
     props = {};
   });
