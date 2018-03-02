@@ -30,7 +30,7 @@ const columns = [
 ];
 class SamplePagination extends React.Component {
     state = {
-        dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns),
+        dataSource: new RemoteDataSource('https://tubular.azurewebsites.net/api/orders/paged', columns),
     };
     render() {
         const { dataSource } = this.state;
