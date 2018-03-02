@@ -1,3 +1,4 @@
+import { debounce } from 'lodash';
 import { WithStyles, withStyles } from 'material-ui';
 import WarningIcon from 'material-ui-icons/Warning';
 import Paper from 'material-ui/Paper';
@@ -7,7 +8,6 @@ import Typography from 'material-ui/Typography';
 import * as moment from 'moment';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
-import * as Rx from 'rx';
 import { ColumnDataType } from './Column';
 import GridHeader from './GridHeader';
 import GridResponse from './GridResponse';
@@ -88,10 +88,7 @@ class DataGrid extends React.Component <IProps & WithStyles<keyof typeof styleCl
     totalRecordCount: 0
   };
 
-  private search: Rx.Subject<{}>;
-
   public componentDidMount() {
-    this.search = new Rx.Subject();
     const pageSize = parseInt(localStorage.getItem(`tubular.${this.props.gridName}_pageSize`), 10) || 10;
     const searchText = localStorage.getItem(`tubular.${this.props.gridName}_searchText`) || '';
 
@@ -112,14 +109,14 @@ class DataGrid extends React.Component <IProps & WithStyles<keyof typeof styleCl
 
         this.props.onError(error);
       });
+  }
 
-    this.search.debounce(600).subscribe(() => {
-      this.refreshGrid();
-    });
+  public componentWillMount() {
+    this.handleTextSearch = debounce(this.handleTextSearch, 600);
   }
 
   public handleTextSearch = (searchText: string) => {
-    this.setState({ searchText }, () => this.search.onNext({}));
+    this.setState({ searchText }, () => this.refreshGrid());
   }
 
   public handlePager = (rowsPerPage: number, page: number) => {
@@ -148,6 +145,7 @@ class DataGrid extends React.Component <IProps & WithStyles<keyof typeof styleCl
         const popup = window.open('about:blank', 'Print', 'location=0,height=500,width=800');
         popup.document
         .write('<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.min.css" />');
+
         const tableHtml = `<table class="table table-bordered table-striped"><thead><tr>${
           dataSource.columns
             .filter((c: any) => c.Visible)

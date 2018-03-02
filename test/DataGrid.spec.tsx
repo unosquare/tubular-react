@@ -11,8 +11,8 @@ import DataGrid from '../src';
 import Paginator from '../src/DataGrid/Paginator';
 import RemoteDataSource from '../src/DataGrid/RemoteDataSource';
 import { simpleColumnsSample, validColumnsSample } from './utils/columns';
-import { data, page2Expected, simpleRecordsExpected } from './utils/data';
-import { page2Request, simpleRequest } from './utils/requests';
+import { data, onlyMicrosoftExpected, page2Expected, simpleRecordsExpected } from './utils/data';
+import { microsoftSearchRequest, page2Request, simpleRequest } from './utils/requests';
 
 const footerRenderer = (aggregates) => (
   <TableRow>
@@ -161,10 +161,43 @@ describe('<DataGrid />', () => {
       const wrapper = shallow(dataGrid);
       wrapper.instance().handlePager(10, 1);
       wrapper.state().dataSource.dataStream.skip(2).subscribe((r) => {
-        wrapper.setState({ data: r.Payload });
+        wrapper.update();
 
         expect(wrapper.find(TableBody).find(TableRow)).to.have.lengthOf(10);
         expect(wrapper.state().data).to.deep.equal(page2Expected.Payload);
+        done();
+      });
+    });
+  });
+
+  describe('When handleTextSearch() is called', () => {
+    let dataGrid;
+
+    before( () => {
+      mock.reset();
+      mock.onPost('url', { ...simpleRequest }).reply(200, {
+        ...simpleRecordsExpected
+      });
+      mock.onPost('url', { ...microsoftSearchRequest }).reply(200, {
+        ...onlyMicrosoftExpected
+      });
+
+      dataGrid = (
+        <DataGrid
+          onError={(x: any) => x}
+          gridName='Motorhead'
+          rowsPerPage={10}
+          dataSource={new RemoteDataSource('url', simpleColumnsSample)}
+        />
+      );
+    });
+
+    it('Should refresh the DataStream with only records that match the search text', (done) => {
+      const wrapper = shallow(dataGrid);
+
+      wrapper.instance().handleTextSearch('Microsoft');
+      wrapper.state().dataSource.dataStream.skip(2).subscribe((r) => {
+        expect(r.Payload).to.deep.equal(onlyMicrosoftExpected.Payload);
         done();
       });
     });
