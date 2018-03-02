@@ -32,11 +32,32 @@ describe('<GridToolbar/>', () => {
   it('should render a Toolbar', () => {
     expect(toolbar().find(Toolbar)).to.have.lengthOf(1);
   });
-  describe('when isPrintEnabled is true', () => {
-    it('should render a print button', () => {
+
+  describe('isExportEnabled', () => {
+    it('should render a export button when is set to true', () => {
+      props.isExportEnabled = true;
+      const wrapper = shallow(<GridToolbar {...props}/>);
+      expect(wrapper.find(IconButton).find(DownloadIcon)).to.have.lengthOf(1);
+    });
+
+    it('should not render a export button when is set to false', () => {
+      props.isExportEnabled = false;
+      const wrapper = shallow(<GridToolbar {...props}/>);
+      expect(wrapper.find(IconButton).find(DownloadIcon)).to.have.lengthOf(0);
+    });
+  });
+
+  describe('isPrintEnabled', () => {
+    it('should render a print button when is set to true', () => {
       props.isPrintEnabled = true;
       const wrapper = shallow(<GridToolbar {...props}/>);
       expect(wrapper.find(IconButton).find(PrintIcon)).to.have.lengthOf(1);
+    });
+
+    it('should not render a print button when is set to false', () => {
+      props.isPrintEnabled = false;
+      const wrapper = shallow(<GridToolbar {...props}/>);
+      expect(wrapper.find(IconButton).find(PrintIcon)).to.have.lengthOf(0);
     });
   });
 
