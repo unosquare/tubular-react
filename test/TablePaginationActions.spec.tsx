@@ -143,6 +143,40 @@ describe('TablePaginationActions', () => {
     assert.isTrue(previousPage.props().disabled);
   });
 
+  it('should have the disable prop from \'Next Page\' as true', () => {
+    const wrapper = shallow(
+      <TablePaginationActions
+        classes={{}}
+        count={500}
+        page={49}
+        rowsPerPage={10}
+        onChangePage={noop}
+      />
+    );
+
+    const nextPage = wrapper.find(IconButton).at(7);
+
+    nextPage.simulate('click');
+    assert.isTrue(nextPage.props().disabled);
+  });
+
+  it('should have the disable prop from \'Next Page\' as false', () => {
+    const wrapper = shallow(
+      <TablePaginationActions
+        classes={{}}
+        count={500}
+        page={34}
+        rowsPerPage={10}
+        onChangePage={noop}
+      />
+    );
+
+    const nextPage = wrapper.find(IconButton).at(7);
+
+    nextPage.simulate('click');
+    assert.isFalse(nextPage.props().disabled);
+  });
+
   beforeEach( () => {
     props = {};
   });
