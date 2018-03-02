@@ -177,6 +177,24 @@ describe('TablePaginationActions', () => {
     assert.isFalse(nextPage.props().disabled);
   });
 
+  it('should trigger the onClick event when \'Page#\' is clicked', () => {
+    const handleClickStub = sinon.spy();
+    const wrapper = shallow(
+      <TablePaginationActions
+        classes={{}}
+        count={500}
+        page={33}
+        rowsPerPage={10}
+        onChangePage={handleClickStub}
+      />
+    );
+
+    const page = wrapper.find(IconButton).at(4);
+    page.simulate('click');
+
+    assert.isTrue(handleClickStub.calledOnce);
+  });
+
   beforeEach( () => {
     props = {};
   });

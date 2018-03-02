@@ -85,6 +85,7 @@
     "next": "^5.0.0",
     "nyc": "^11.4.1",
     "react-syntax-highlighter": "^7.0.0",
+    "sinon": "^4.4.2",
     "ts-loader": "^3.5.0",
     "ts-node": "^4.1.0",
     "tsify": "^3.0.4",
