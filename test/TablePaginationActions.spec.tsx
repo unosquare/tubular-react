@@ -27,7 +27,21 @@ describe('TablePaginationActions', () => {
     return mountedTablePaginationActions;
   };
 
-  it('should have the disable prop from \'First Page\' as true', () => {
+  it('should render 9 \'<IconButton />\' when has 10 of 500 records to show by page', ()=> {
+    const wrapper = shallow(
+      <TablePaginationActions
+        classes={}
+        count={500}
+        page={0}
+        rowsPerPage={10}
+        onChangePage={noop}
+      />
+    );
+
+    expect(wrapper.find(IconButton)).to.have.lengthOf(9);
+  });
+
+  it('should have the disabled prop from \'First Page\' as true', () => {
     const wrapper = shallow(
       <TablePaginationActions
         classes={}
@@ -44,7 +58,7 @@ describe('TablePaginationActions', () => {
     expect(firstPage.props().disabled).to.be.true;
   });
 
-  it('should have the disable prop from \'First Page\' as false', () => {
+  it('should have the disabled prop from \'First Page\' as false', () => {
     const wrapper = shallow(
       <TablePaginationActions
         classes={}
@@ -61,7 +75,7 @@ describe('TablePaginationActions', () => {
     expect(firstPage.props().disabled).to.be.false;
   });
 
-  it('should have the disable props from \'Last Page\' as true', () => {
+  it('should have the disabled prop from \'Last Page\' as true', () => {
     const wrapper = shallow(
       <TablePaginationActions
         classes={}
@@ -78,7 +92,7 @@ describe('TablePaginationActions', () => {
     expect(lastPage.props().disabled).to.be.true;
   });
 
-  it('should have the disable props from \'Last Page\' as true', () => {
+  it('should have the disabled prop from \'Last Page\' as false', () => {
     const wrapper = shallow(
       <TablePaginationActions
         classes={}
@@ -93,6 +107,23 @@ describe('TablePaginationActions', () => {
 
     lastPage.simulate('click');
     expect(lastPage.props().disabled).to.be.false;
+  });
+
+  it('should have the disabled prop from \'Previous Page\' as false', () => {
+    const wrapper = shallow(
+      <TablePaginationActions
+        classes={}
+        count={500}
+        page={49}
+        rowsPerPage={10}
+        onChangePage={noop}
+      />
+    );
+
+    const previousPage = wrapper.find(IconButton).at(1);
+
+    previousPage.simulate('click');
+    expect(previousPage.props().disabled).to.be.false;
   });
 
   beforeEach( () => {
