@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { assert, expect } from 'chai';
 import * as Enzyme from 'enzyme';
 import * as Adapter from 'enzyme-adapter-react-16';
 import DownloadIcon from 'material-ui-icons/FileDownload';
@@ -71,7 +71,7 @@ describe('<GridToolbar/>', () => {
     it('should update state of search text as \'\'', () => {
       const wrapper = shallow(<GridToolbar {...props}/>);
       wrapper.find(Input).simulate('change', { target: { name: 'search', value: '' } });
-      wrapper.setState({ searchText: '' });
+      wrapper.update();
       expect(wrapper.state().searchText).to.equal('');
     });
   });
@@ -81,8 +81,16 @@ describe('<GridToolbar/>', () => {
       props.isExportEnabled = true;
       const wrapper = shallow(<GridToolbar {...props}/>);
       wrapper.setState({ anchorEl: null});
+      wrapper.update();
+      assert.isNull(wrapper.state().anchorEl);
+    });
 
-      expect(wrapper.state().anchorEl).to.equal(null);
+    it('should update the state of anchorEl as something', () => {
+      props.isExportEnabled = true;
+      const wrapper = shallow(<GridToolbar {...props}/>);
+      wrapper.find(IconButton).simulate('click', { currentTarget: document.createElement('button') });
+      wrapper.update();
+      assert.isNotNull(wrapper.state().anchorEl);
     });
   });
 
