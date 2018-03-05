@@ -77,15 +77,15 @@ describe('<GridToolbar/>', () => {
   });
 
   describe('When menu has been clicked', () => {
-    it('should update the state of anchorEl as null when is closed', () => {
+    it('should update the state of \'anchorEl\' as \'null\' when is closed', () => {
       props.isExportEnabled = true;
       const wrapper = shallow(<GridToolbar {...props}/>);
-      wrapper.setState({ anchorEl: null});
+      wrapper.setState({ anchorEl: null as HTMLElement});
       wrapper.update();
       assert.isNull(wrapper.state().anchorEl);
     });
 
-    it('should update the state of anchorEl as something', () => {
+    it('should update the state of \'anchorEl\' with non \'null\' value', () => {
       props.isExportEnabled = true;
       const wrapper = shallow(<GridToolbar {...props}/>);
       wrapper.find(IconButton).simulate('click', { currentTarget: document.createElement('button') });
