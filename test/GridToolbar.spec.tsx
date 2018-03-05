@@ -61,7 +61,7 @@ describe('<GridToolbar/>', () => {
     });
   });
 
-  describe('when input text changes', () => {
+  describe('When input text changes', () => {
     it('should update state search text', () => {
       const wrapper = shallow(<GridToolbar {...props}/>);
       wrapper.find(Input).simulate('change', { target: { name: 'search', value: 'search' } });
@@ -71,7 +71,18 @@ describe('<GridToolbar/>', () => {
     it('should update state of search text as \'\'', () => {
       const wrapper = shallow(<GridToolbar {...props}/>);
       wrapper.find(Input).simulate('change', { target: { name: 'search', value: '' } });
+      wrapper.setState({ searchText: '' });
       expect(wrapper.state().searchText).to.equal('');
+    });
+  });
+
+  describe('When menu has been clicked', () => {
+    it('should update the state of anchorEl as null when is closed', () => {
+      props.isExportEnabled = true;
+      const wrapper = shallow(<GridToolbar {...props}/>);
+      wrapper.setState({ anchorEl: null});
+
+      expect(wrapper.state().anchorEl).to.equal(null);
     });
   });
 
