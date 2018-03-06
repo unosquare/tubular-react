@@ -20,7 +20,6 @@ mock.onPost().reply(200, {...simpleRecordsExpected});
 describe('<GridHeader />', () => {
   let shallow;
   let mount;
-  // let mountedHeader;
   let gridHeader;
   let props;
   let dataSource;
@@ -39,13 +38,6 @@ describe('<GridHeader />', () => {
       />
     );
   });
-
-  // const gridHeader = () => {
-  //   if (!mountedHeader) {
-  //     mountedHeader = shallow(<GridHeader {...props} />);
-  //   }
-  //   return mountedHeader;
-  // };
 
   it('should render a row', () => {
     const wrapper = shallow(gridHeader).find(TableRow);
