@@ -70,8 +70,14 @@ describe('<GridToolbar/>', () => {
 
     it('should update state of search text as \'\'', () => {
       const wrapper = shallow(<GridToolbar {...props}/>);
-      wrapper.find(Input).simulate('change', { target: { name: 'search', value: '' } });
+
+      wrapper.setState({
+        searchText: 'Wizeline'
+      });
+
+      wrapper.instance().clearSearchText();
       wrapper.update();
+
       expect(wrapper.state().searchText).to.equal('');
     });
   });
