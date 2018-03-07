@@ -15,7 +15,7 @@ interface IProps {
   handleApply(): void;
   handleBooleanDropDown(event: any): void;
   handleClear(): void;
-  handleDatePicker(name: string): (event: any) => void;
+  handleDatePicker(event: any, name: string): void;
   handleTextFieldChange(event: any, name: string): void;
   handleSecondTextFieldChange(event: any, name: string): void;
 }

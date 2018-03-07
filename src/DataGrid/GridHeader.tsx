@@ -269,7 +269,7 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
     this.props.refreshGrid();
   }
 
-  public handleDatePicker = (name: string) => (event: any) => {
+  public handleDatePicker = (event: any, name: string) => {
     if (name === 'Value') {
       this.setState({
         firstFilterValue: event.format()
