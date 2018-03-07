@@ -19,7 +19,7 @@ const Dropdown: React.SFC<IProps> = ({ classes, disabled, value, handleChange, a
       disabled={disabled}
       className={classes.dropdown}
       value={value}
-      onChange={handleChange}
+      onChange={(event) => handleChange(event.target.value)}
       input={<Input name={activeFilter} />}
     >
       {

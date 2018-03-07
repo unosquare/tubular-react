@@ -281,24 +281,20 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
     }
   }
 
-  public handleChange = (event: any) => {
-    this.setState({activeFilter: event.target.value });
-  }
-
   public handleTextFieldChange = (event: any) => {
     this.setState({
-      firstFilterValue: event.target.value
+      firstFilterValue: event
     });
   }
 
   public handleSecondTextFieldChange = (event: any) => {
     this.setState({
-      secondFilterValue: event.target.value
+      secondFilterValue: event
     });
   }
 
-  public handleBooleanDropDown = (event: any) => {
-    this.setState({ activeFilter: event.target.value });
+  public handleChange = (event: any) => {
+    this.setState({activeFilter: event });
   }
 
   public render() {
@@ -326,7 +322,6 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
             value={this.state.firstFilterValue}
             value2={this.state.secondFilterValue}
             handleDatePicker={this.handleDatePicker}
-            handleBooleanDropDown={this.handleBooleanDropDown}
             handleTextFieldChange={this.handleTextFieldChange}
             handleSecondTextFieldChange={this.handleSecondTextFieldChange}
             handleApply={this.handleApply}

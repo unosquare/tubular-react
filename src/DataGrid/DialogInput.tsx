@@ -20,13 +20,12 @@ interface IProps {
   mod: string;
   value: string;
   handleApply(): void;
-  handleBooleanDropDown(event: any): void;
   handleDatePicker(event: any, name: string): void;
   handleTextFieldChange(event: any): void;
 }
 
 const DialogInput: React.SFC<IProps> = ({ classes, disabled, value, columnType, activeFilter, label,
-  mod, handleApply, handleBooleanDropDown, handleDatePicker, handleTextFieldChange }) => {
+  mod, handleApply, handleDatePicker, handleTextFieldChange }) => {
 
     return (
       columnType === ColumnDataType.DATE ||
@@ -50,7 +49,7 @@ const DialogInput: React.SFC<IProps> = ({ classes, disabled, value, columnType, 
           operators={BooleanInputOperators}
           classes={classes}
           activeFilter={activeFilter}
-          handleChange={handleBooleanDropDown}
+          handleChange={handleTextFieldChange}
         />
       )
         :

@@ -25,7 +25,7 @@ const TextInput: React.SFC<IProps> =
         placeholder={label}
         value={value}
         onKeyUp={(e) => e.key === 'Enter' && handleApply()}
-        onChange={handleTextFieldChange}
+        onChange={(event) => handleTextFieldChange(event.target.value)}
       />
       <br />
     </div>

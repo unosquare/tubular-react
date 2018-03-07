@@ -13,7 +13,6 @@ interface IProps {
   value: any;
   value2: any;
   handleApply(): void;
-  handleBooleanDropDown(event: any): void;
   handleClear(): void;
   handleDatePicker(event: any, name: string): void;
   handleTextFieldChange(event: any): void;
@@ -22,7 +21,7 @@ interface IProps {
 
 const DialogContent: React.SFC<IProps> = ({
   classes, value, value2, columnType, activeFilter, operator,
-  handleDatePicker, handleBooleanDropDown, handleTextFieldChange,
+  handleDatePicker, handleTextFieldChange,
    handleApply, handleClear, handleSecondTextFieldChange }) => {
   let firstValue = '';
   let secondValue = '';
@@ -54,7 +53,6 @@ const DialogContent: React.SFC<IProps> = ({
         columnType={columnType}
         activeFilter={activeFilter}
         handleDatePicker={handleDatePicker}
-        handleBooleanDropDown={handleBooleanDropDown}
         handleTextFieldChange={handleTextFieldChange}
       />
 
@@ -69,7 +67,6 @@ const DialogContent: React.SFC<IProps> = ({
           columnType={columnType}
           activeFilter={activeFilter}
           handleDatePicker={handleDatePicker}
-          handleBooleanDropDown={handleBooleanDropDown}
           handleTextFieldChange={handleSecondTextFieldChange}
         />}
 

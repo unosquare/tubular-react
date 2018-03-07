@@ -268,7 +268,7 @@ describe('<GridHeader />', () => {
 
       expect(wrapper.state().activeFilter).to.be.equal('None');
 
-      wrapper.instance().handleChange('CustomerName', 'Contains');
+      wrapper.instance().handleChange('Contains');
       wrapper.update();
 
       expect(wrapper.state().activeFilter).to.be.equal('Contains');
@@ -288,7 +288,7 @@ describe('<GridHeader />', () => {
         secondFilterValue: ''
       });
 
-      wrapper.instance().handleTextFieldChange('4', 'Unosquare Labs');
+      wrapper.instance().handleTextFieldChange('4');
       wrapper.update();
 
       expect(wrapper.state().firstFilterValue).to.be.equal('4');
@@ -308,30 +308,10 @@ describe('<GridHeader />', () => {
         secondFilterValue: ''
       });
 
-      wrapper.instance().handleSecondTextFieldChange('4', 'Unosquare Labs');
+      wrapper.instance().handleSecondTextFieldChange('4');
       wrapper.update();
 
       expect(wrapper.state().secondFilterValue).to.be.equal('4');
-    });
-  });
-
-  describe('handleBooleanDropDown()', () => {
-    it('should update the state of \'activeFilter\' to \'true\'', () => {
-      const wrapper = shallow(gridHeader);
-
-      wrapper.setState({
-        activeFilter: '',
-        activeFilterColumn: 'OrderID',
-        columnType: 'boolean',
-        firstFilterValue: '',
-        open: true,
-        secondFilterValue: ''
-      });
-
-      wrapper.instance().handleBooleanDropDown({target: {value: 'true'}});
-      wrapper.update();
-
-      expect(wrapper.state().activeFilter).to.be.equals('true');
     });
   });
 });
