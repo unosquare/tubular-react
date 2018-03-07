@@ -9,14 +9,8 @@ import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'm
 import { createMount, createShallow } from 'material-ui/test-utils';
 import * as React from 'react';
 import * as sinon from 'sinon';
-import DataGrid, {
-  AggregateFunctions,
-  ColumnDataType,
-  ColumnModel,
-  ColumnSortDirection,
-  LocalDataSource
-} from '../src/DataGrid';
 import GridHeader from '../src/DataGrid/GridHeader';
+import LocalDataSource from '../src/DataGrid/LocalDataSource';
 import RemoteDataSource from '../src/DataGrid/RemoteDataSource';
 import { validColumnsSample } from './utils/columns';
 import { data, simpleRecordsExpected } from './utils/data';
@@ -48,6 +42,10 @@ describe('<GridHeader />', () => {
     );
   });
 
+  afterEach(() => {
+    mount.cleanUp();
+  });
+
   it('should render a row', () => {
     const wrapper = shallow(gridHeader).find(TableRow);
 
@@ -66,7 +64,7 @@ describe('<GridHeader />', () => {
     expect(wrapper).to.have.lengthOf(1);
   });
 
-  it('componentDidMount', () => {
+  it('should trigger \'componentDidMount()\' once time', () => {
     sinon.spy(GridHeader.prototype, 'componentDidMount');
     const wrapper = mount(
       <Table>
@@ -83,6 +81,26 @@ describe('<GridHeader />', () => {
     );
 
     expect(GridHeader.prototype.componentDidMount.calledOnce).to.equal(true);
+  });
+
+  it('should trigger \'componentWillUnmount()\' once time', () => {
+    sinon.spy(GridHeader.prototype, 'componentWillUnmount');
+    const wrapper = mount(
+      <Table>
+        <TableHead>
+          <GridHeader
+            dataSource={new LocalDataSource(localData, validColumnsSample)}
+            gridName={'Tubular-React'}
+            page={0}
+            refreshGrid={() => { return; }}
+            rowsPerPage={10}
+          />
+        </TableHead>
+      </Table>
+    );
+
+    wrapper.unmount();
+    expect(GridHeader.prototype.componentWillUnmount.calledOnce).to.equal(true);
   });
 
   describe('When filter dialog has been clicked', () => {
@@ -138,7 +156,7 @@ describe('<GridHeader />', () => {
     });
   });
 
-  describe('handleKeyDown', () => {
+  describe('handleKeyDown()', () => {
     it('should update the state of \'sorting\' to ', () => {
       const wrapper = shallow(gridHeader);
 
@@ -153,7 +171,7 @@ describe('<GridHeader />', () => {
     });
   });
 
-  describe('handleKeyUp', () => {
+  describe('handleKeyUp()', () => {
     it('should update the state of \'sorting\' to ', () => {
       const wrapper = shallow(gridHeader);
 
