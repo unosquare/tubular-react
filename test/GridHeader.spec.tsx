@@ -334,10 +334,4 @@ describe('<GridHeader />', () => {
       expect(wrapper.state().activeFilter).to.be.equals('true');
     });
   });
-
-  beforeEach( () => {
-    props = {
-
-    };
-  });
 });
