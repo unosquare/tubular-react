@@ -5,7 +5,7 @@ import * as Enzyme from 'enzyme';
 import * as Adapter from 'enzyme-adapter-react-16';
 import Dialog from 'material-ui/Dialog';
 import IconButton from 'material-ui/IconButton';
-import Table, { TableCell, TableHead, TableRow } from 'material-ui/Table';
+import Table, { TableCell, TableHead, TableRow, TableSortLabel } from 'material-ui/Table';
 import { createMount, createShallow } from 'material-ui/test-utils';
 import * as React from 'react';
 import * as sinon from 'sinon';
@@ -196,6 +196,30 @@ describe('<GridHeader />', () => {
       expect(wrapper.instance().props.dataSource.columns[4].Filter.Argument).deep.equal([15]);
       expect(wrapper.instance().props.dataSource.columns[4].Filter.HasFilter).to.equal(true);
       expect(wrapper.instance().props.dataSource.columns[4].Filter.Operator).to.equal('Between');
+    });
+  });
+
+  describe('sortHandler()', () => {
+    it('Should change the SortDirection value of the CustomerName column', () => {
+      const gridHeaderDataSource = new RemoteDataSource('url', amountFilterColumnsSample);
+
+      const gridHeader2 = (
+        <GridHeader
+          dataSource={gridHeaderDataSource}
+          gridName='Tubular-React'
+          page={0}
+          rowsPerPage={10}
+          refreshGrid={() => { return; }}
+        />
+      );
+
+      const wrapper = shallow(gridHeader2);
+
+      expect(wrapper.instance().props.dataSource.columns[1].SortDirection).to.equal('None');
+      wrapper.instance().sortHandler('CustomerName');
+      expect(wrapper.instance().props.dataSource.columns[1].SortDirection).to.equal('Ascending');
+      wrapper.instance().sortHandler('CustomerName');
+      expect(wrapper.instance().props.dataSource.columns[1].SortDirection).to.equal('Descending');
     });
   });
 

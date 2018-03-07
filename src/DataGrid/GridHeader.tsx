@@ -233,7 +233,7 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
     document.removeEventListener('keyup', (event) => this.handleKeyUp(event));
   }
 
-  public sortHandler = (event: React.MouseEvent<HTMLElement>, property: any) => {
+  public sortHandler = (property: any) => {
     const array = Object.assign({}, this.props.dataSource);
 
     array.columns.forEach( (column: any) => {
@@ -258,7 +258,7 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
         }
 
         const currentlySortedColumns = array.columns.filter((col: any) => col.SortOrder > 0)
-        .sort((a: any, b: any) => a.SortOrder === b.SortOrder ? 0 : a.SortOrder > b.SortOrder );
+          .sort((a: any, b: any) => a.SortOrder === b.SortOrder ? 0 : a.SortOrder > b.SortOrder );
 
         currentlySortedColumns.forEach( ($column: any, i: number) => {
           $column.SortOrder = i + 1;
@@ -340,7 +340,7 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
               placement='bottom-start'
               enterDelay={300}
             >
-              <TableSortLabel onClick={(event: any) => this.sortHandler(event, column.Name)} >
+              <TableSortLabel onClick={(event: any) => this.sortHandler(column.Name)} >
                 {column.Label}
                 {column.SortDirection === ColumnSortDirection.ASCENDING ?
                   <ArrowUpward className={classes.arrowStyle} />
