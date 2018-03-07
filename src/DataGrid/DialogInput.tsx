@@ -22,7 +22,7 @@ interface IProps {
   handleApply(): void;
   handleBooleanDropDown(event: any): void;
   handleDatePicker(event: any, name: string): void;
-  handleTextFieldChange(event: any, name: string): void;
+  handleTextFieldChange(event: any): void;
 }
 
 const DialogInput: React.SFC<IProps> = ({ classes, disabled, value, columnType, activeFilter, label,

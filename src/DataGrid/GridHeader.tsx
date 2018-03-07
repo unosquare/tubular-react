@@ -281,19 +281,19 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
     }
   }
 
-  public handleChange = (name: any, value: any) => {
-    this.setState({activeFilter: value });
+  public handleChange = (event: any) => {
+    this.setState({activeFilter: event.target.value });
   }
 
-  public handleTextFieldChange = (event: any, name: string) => {
+  public handleTextFieldChange = (event: any) => {
     this.setState({
-      firstFilterValue: event
+      firstFilterValue: event.target.value
     });
   }
 
-  public handleSecondTextFieldChange = (event: any, name: string) => {
+  public handleSecondTextFieldChange = (event: any) => {
     this.setState({
-      secondFilterValue: event
+      secondFilterValue: event.target.value
     });
   }
 

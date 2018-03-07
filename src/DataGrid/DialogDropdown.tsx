@@ -36,13 +36,10 @@ interface IProps {
   classes: any;
   columnType: string;
   value: string;
-  handleChange(event: any, value: any): void;
+  handleChange(value: any): void;
 }
 
 const DialogDropdown: React.SFC<IProps> = ({ classes, value, columnType, activeFilter, handleChange }) => {
-  const handleDropdownChange = (ev: any) => {
-    handleChange(ev.target.name, ev.target.value);
-  };
   const dropdownValue = value === undefined ? 'None' : value;
   let component;
   switch (columnType) {
@@ -54,7 +51,7 @@ const DialogDropdown: React.SFC<IProps> = ({ classes, value, columnType, activeF
       classes={classes}
       value={dropdownValue}
       activeFilter={activeFilter}
-      handleChange={handleDropdownChange}
+      handleChange={handleChange}
     />);
   case ColumnDataType.NUMERIC:
   case ColumnDataType.DATE:
@@ -67,7 +64,7 @@ const DialogDropdown: React.SFC<IProps> = ({ classes, value, columnType, activeF
         classes={classes}
         value={dropdownValue}
         activeFilter={activeFilter}
-        handleChange={handleDropdownChange}
+        handleChange={handleChange}
       />
     );
     break;
@@ -80,7 +77,7 @@ const DialogDropdown: React.SFC<IProps> = ({ classes, value, columnType, activeF
         classes={classes}
         value={dropdownValue}
         activeFilter={activeFilter}
-        handleChange={handleDropdownChange}
+        handleChange={handleChange}
       />
     );
     break;

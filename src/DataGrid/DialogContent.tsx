@@ -16,8 +16,8 @@ interface IProps {
   handleBooleanDropDown(event: any): void;
   handleClear(): void;
   handleDatePicker(event: any, name: string): void;
-  handleTextFieldChange(event: any, name: string): void;
-  handleSecondTextFieldChange(event: any, name: string): void;
+  handleTextFieldChange(event: any): void;
+  handleSecondTextFieldChange(event: any): void;
 }
 
 const DialogContent: React.SFC<IProps> = ({
