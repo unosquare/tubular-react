@@ -3,17 +3,18 @@ import MockAdapter from 'axios-mock-adapter';
 import { assert, expect } from 'chai';
 import * as Enzyme from 'enzyme';
 import * as Adapter from 'enzyme-adapter-react-16';
-import Dialog, { DialogTitle } from 'material-ui/Dialog';
+import Dialog from 'material-ui/Dialog';
 import IconButton from 'material-ui/IconButton';
-import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
+import Table, { TableCell, TableHead, TableRow } from 'material-ui/Table';
 import { createMount, createShallow } from 'material-ui/test-utils';
 import * as React from 'react';
 import * as sinon from 'sinon';
+import { ColumnDataType, CompareOperators } from '../src/DataGrid/Column';
 import GridHeader from '../src/DataGrid/GridHeader';
 import LocalDataSource from '../src/DataGrid/LocalDataSource';
 import RemoteDataSource from '../src/DataGrid/RemoteDataSource';
 import { amountFilterColumnsSample, validColumnsSample } from './utils/columns';
-import { data, simpleRecordsExpected } from './utils/data';
+import { simpleRecordsExpected } from './utils/data';
 import localData from './utils/localData';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -44,6 +45,7 @@ describe('<GridHeader />', () => {
 
   afterEach(() => {
     mount.cleanUp();
+    window.localStorage.removeItem('tubular.Tubular-React');
   });
 
   it('should render a row', () => {
@@ -162,6 +164,38 @@ describe('<GridHeader />', () => {
       expect(wrapper.state().activeFilter).to.equal('None');
       expect(wrapper.instance().props.dataSource.columns[4].Filter.Text).to.equal(2);
       expect(GridHeader.prototype.componentDidMount.calledOnce).to.equal(true);
+    });
+  });
+
+  describe('handleApply()', () => {
+    it('Should change the filter values of the Amount column', () => {
+      const gridHeaderDataSource = new RemoteDataSource('url', amountFilterColumnsSample);
+
+      const gridHeader2 = (
+        <GridHeader
+          dataSource={gridHeaderDataSource}
+          gridName='Tubular-React'
+          page={0}
+          rowsPerPage={10}
+          refreshGrid={() => { return; }}
+        />
+      );
+
+      const wrapper = shallow(gridHeader2);
+      wrapper.setState({
+        activeFilter: CompareOperators.BETWEEN,
+        activeFilterColumn: 'Amount',
+        columnType: ColumnDataType.NUMERIC,
+        firstFilterValue: 4,
+        secondFilterValue: 15
+      });
+
+      wrapper.instance().handleApply();
+
+      expect(wrapper.instance().props.dataSource.columns[4].Filter.Text).to.equal(4);
+      expect(wrapper.instance().props.dataSource.columns[4].Filter.Argument).deep.equal([15]);
+      expect(wrapper.instance().props.dataSource.columns[4].Filter.HasFilter).to.equal(true);
+      expect(wrapper.instance().props.dataSource.columns[4].Filter.Operator).to.equal('Between');
     });
   });
 
