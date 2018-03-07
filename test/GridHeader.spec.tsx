@@ -275,6 +275,66 @@ describe('<GridHeader />', () => {
     });
   });
 
+  describe('handleTextFieldChange()', () => {
+    it('should update the state of \'firstFilterValue\' to \'4\'', () => {
+      const wrapper = shallow(gridHeader);
+
+      wrapper.setState({
+        activeFilter: 'Equals',
+        activeFilterColumn: 'OrderID',
+        columnType: 'numeric',
+        firstFilterValue: '',
+        open: true,
+        secondFilterValue: ''
+      });
+
+      wrapper.instance().handleTextFieldChange('4', 'Unosquare Labs');
+      wrapper.update();
+
+      expect(wrapper.state().firstFilterValue).to.be.equal('4');
+    });
+  });
+
+  describe('handleSecondTextFieldChange()', () => {
+    it('should update the state of \'secondFilterValue\' to \'4\'', () => {
+      const wrapper = shallow(gridHeader);
+
+      wrapper.setState({
+        activeFilter: 'Equals',
+        activeFilterColumn: 'OrderID',
+        columnType: 'numeric',
+        firstFilterValue: '',
+        open: true,
+        secondFilterValue: ''
+      });
+
+      wrapper.instance().handleSecondTextFieldChange('4', 'Unosquare Labs');
+      wrapper.update();
+
+      expect(wrapper.state().secondFilterValue).to.be.equal('4');
+    });
+  });
+
+  describe('handleBooleanDropDown()', () => {
+    it('should update the state of \'activeFilter\' to \'true\'', () => {
+      const wrapper = shallow(gridHeader);
+
+      wrapper.setState({
+        activeFilter: '',
+        activeFilterColumn: 'OrderID',
+        columnType: 'boolean',
+        firstFilterValue: '',
+        open: true,
+        secondFilterValue: ''
+      });
+
+      wrapper.instance().handleBooleanDropDown({target: {value: 'true'}});
+      wrapper.update();
+
+      expect(wrapper.state().activeFilter).to.be.equals('true');
+    });
+  });
+
   beforeEach( () => {
     props = {
 
