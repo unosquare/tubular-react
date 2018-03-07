@@ -8,6 +8,7 @@ import IconButton from 'material-ui/IconButton';
 import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
 import { createMount, createShallow } from 'material-ui/test-utils';
 import * as React from 'react';
+import * as sinon from 'sinon';
 import GridHeader from '../src/DataGrid/GridHeader';
 import LocalDataSource from '../src/DataGrid/LocalDataSource';
 import RemoteDataSource from '../src/DataGrid/RemoteDataSource';
@@ -88,6 +89,25 @@ describe('<GridHeader />', () => {
       expect(wrapper.state().activeFilterColumn).to.be.equal('OrderID');
       expect(wrapper.state().columnType).to.be.equal('numeric');
       expect(wrapper.state().firstFilterValue).to.be.equal('6');
+      assert.isEmpty(wrapper.state().secondFilterValue);
+    });
+  });
+
+  describe('handleClear()', () => {
+    it('should set the state props \'activeFilter\', \'firstFilterValue\' ' +
+        'and \'secondFilterValue\' at its initial values', () => {
+      const wrapper = shallow(gridHeader);
+
+      wrapper.setState({
+        columnType: 'datetime',
+        firstFilterValue: '2018-03-06T15:40:30-06:00',
+        secondFilterValue: '2018-03-06T15:40:30-06:00'
+      });
+
+      wrapper.instance().handleClear();
+
+      expect(wrapper.state().activeFilter).to.be.equal('None');
+      assert.isEmpty(wrapper.state().firstFilterValue);
       assert.isEmpty(wrapper.state().secondFilterValue);
     });
   });
