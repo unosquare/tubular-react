@@ -195,6 +195,28 @@ describe('<GridHeader />', () => {
     });
   });
 
+  describe('handleChange()', () => {
+    it('should assa', () => {
+      const wrapper = shallow(gridHeader);
+
+      wrapper.setState({
+        activeFilter: 'None',
+        activeFilterColumn: 'CustomerName',
+        columnType: 'string',
+        firstFilterValue: '',
+        open: true,
+        secondFilterValue: ''
+      });
+
+      expect(wrapper.state().activeFilter).to.be.equal('None');
+
+      wrapper.instance().handleChange('CustomerName', 'Contains');
+      wrapper.update();
+
+      expect(wrapper.state().activeFilter).to.be.equal('Contains');
+    });
+  });
+
   beforeEach( () => {
     props = {
 
