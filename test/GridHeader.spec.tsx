@@ -9,11 +9,18 @@ import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'm
 import { createMount, createShallow } from 'material-ui/test-utils';
 import * as React from 'react';
 import * as sinon from 'sinon';
+import DataGrid, {
+  AggregateFunctions,
+  ColumnDataType,
+  ColumnModel,
+  ColumnSortDirection,
+  LocalDataSource
+} from '../src/DataGrid';
 import GridHeader from '../src/DataGrid/GridHeader';
-import LocalDataSource from '../src/DataGrid/LocalDataSource';
 import RemoteDataSource from '../src/DataGrid/RemoteDataSource';
 import { validColumnsSample } from './utils/columns';
 import { data, simpleRecordsExpected } from './utils/data';
+import localData from './utils/localData';
 
 Enzyme.configure({ adapter: new Adapter() });
 const mock = new MockAdapter(Axios);
@@ -59,8 +66,27 @@ describe('<GridHeader />', () => {
     expect(wrapper).to.have.lengthOf(1);
   });
 
+  it('componentDidMount', () => {
+    sinon.spy(GridHeader.prototype, 'componentDidMount');
+    const wrapper = mount(
+      <Table>
+        <TableHead>
+          <GridHeader
+            dataSource={new LocalDataSource(localData, validColumnsSample)}
+            gridName={'Tubular-React'}
+            page={0}
+            refreshGrid={() => { return; }}
+            rowsPerPage={10}
+          />
+        </TableHead>
+      </Table>
+    );
+
+    expect(GridHeader.prototype.componentDidMount.calledOnce).to.equal(true);
+  });
+
   describe('When filter dialog has been clicked', () => {
-    it('should update the state of \'open\' to false when is closed', () => {
+    it('should update the state of \'open\' to \'false\' when is closed', () => {
       const wrapper = shallow(gridHeader);
       wrapper.setState({ open: false });
       wrapper.update();
@@ -68,7 +94,7 @@ describe('<GridHeader />', () => {
       assert.isFalse(wrapper.state().open);
     });
 
-    it('should update the state of \'open\' to true when is open', () => {
+    it('should update the state of \'open\' to \'true\' when is open', () => {
       const wrapper = shallow(gridHeader);
       const firstCell = wrapper.find(TableRow).find(TableCell);
       const firstIconButton = wrapper.find(TableRow).find(TableCell).find(IconButton).at(0);
@@ -109,6 +135,36 @@ describe('<GridHeader />', () => {
       expect(wrapper.state().activeFilter).to.be.equal('None');
       assert.isEmpty(wrapper.state().firstFilterValue);
       assert.isEmpty(wrapper.state().secondFilterValue);
+    });
+  });
+
+  describe('handleKeyDown', () => {
+    it('should update the state of \'sorting\' to ', () => {
+      const wrapper = shallow(gridHeader);
+
+      wrapper.setState({
+        sorting: 'Single'
+      });
+
+      wrapper.instance().handleKeyDown({ key: 'Control' });
+      wrapper.update();
+
+      expect(wrapper.state().sorting).to.equal('Multiple');
+    });
+  });
+
+  describe('handleKeyUp', () => {
+    it('should update the state of \'sorting\' to ', () => {
+      const wrapper = shallow(gridHeader);
+
+      wrapper.setState({
+        sorting: 'Multiple'
+      });
+
+      wrapper.instance().handleKeyUp({ key: 'Control' });
+      wrapper.update();
+
+      expect(wrapper.state().sorting).to.equal('Single');
     });
   });
 
