@@ -217,6 +217,26 @@ describe('<GridHeader />', () => {
     });
   });
 
+  describe('handleTextFieldChange()', () => {
+    it('should update the state of \'firstFilterValue\' to \'4\'', () => {
+      const wrapper = shallow(gridHeader);
+
+      wrapper.setState({
+        activeFilter: 'Equals',
+        activeFilterColumn: 'OrderID',
+        columnType: 'numeric',
+        firstFilterValue: '',
+        open: true,
+        secondFilterValue: ''
+      });
+
+      wrapper.instance().handleTextFieldChange('4', 'Unosquare Labs');
+      wrapper.update();
+
+      expect(wrapper.state().firstFilterValue).to.be.equal('4');
+    });
+  });
+
   beforeEach( () => {
     props = {
 
