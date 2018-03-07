@@ -73,6 +73,24 @@ const simpleColumnsSample = [
   )
 ];
 
+const amountFilterColumnsSample = [
+  regularOrderIdCol,
+  new ColumnModel( 'CustomerName',
+    { Aggregate: AggregateFunctions.COUNT,
+      Filtering: true,
+      Searchable: true }
+  ),
+  new ColumnModel( 'ShippedDate',
+    { DataType: ColumnDataType.DATE_TIME,
+      Filtering: true }
+  ),
+  new ColumnModel( 'ShipperCity' ),
+  new ColumnModel( 'Amount',
+    { DataType: ColumnDataType.NUMERIC,
+      Filtering: true  }
+  )
+];
+
 // Columns for sorting
 
 const validColumnsSampleDescending = [
@@ -159,6 +177,7 @@ const aggregateColumnsSample = [
 ];
 
 export {
+  amountFilterColumnsSample,
   customAmountCol,
   customCustomerNameCol,
   aggregateColumnsSample,

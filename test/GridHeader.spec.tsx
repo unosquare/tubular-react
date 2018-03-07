@@ -12,7 +12,7 @@ import * as sinon from 'sinon';
 import GridHeader from '../src/DataGrid/GridHeader';
 import LocalDataSource from '../src/DataGrid/LocalDataSource';
 import RemoteDataSource from '../src/DataGrid/RemoteDataSource';
-import { validColumnsSample } from './utils/columns';
+import { amountFilterColumnsSample, validColumnsSample } from './utils/columns';
 import { data, simpleRecordsExpected } from './utils/data';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -39,6 +39,10 @@ describe('<GridHeader />', () => {
         refreshGrid={() => { return; }}
       />
     );
+  });
+
+  afterEach(() => {
+    mount.cleanUp();
   });
 
   it('should render a row', () => {
@@ -109,6 +113,34 @@ describe('<GridHeader />', () => {
       expect(wrapper.state().activeFilter).to.be.equal('None');
       assert.isEmpty(wrapper.state().firstFilterValue);
       assert.isEmpty(wrapper.state().secondFilterValue);
+    });
+  });
+
+  describe('With localStorage', () => {
+    it('should update the state and the dataSource', () => {
+      sinon.spy(GridHeader.prototype, 'componentDidMount');
+      const gridHeaderDataSource = new RemoteDataSource('url', amountFilterColumnsSample);
+      const localStorage = new RemoteDataSource('url', amountFilterColumnsSample);
+
+      localStorage.columns[4].Filter.Text = 2;
+      localStorage.columns[4].Filter.Argument = [10];
+      window.localStorage.setItem('tubular.Tubular-React', JSON.stringify(localStorage.columns));
+
+      const gridHeader2 = (
+        <GridHeader
+          dataSource={gridHeaderDataSource}
+          gridName='Tubular-React'
+          page={0}
+          rowsPerPage={10}
+          refreshGrid={() => { return; }}
+        />
+      );
+
+      const wrapper = shallow(gridHeader2);
+
+      expect(wrapper.state().activeFilter).to.equal('None');
+      expect(wrapper.instance().props.dataSource.columns[4].Filter.Text).to.equal(2);
+      expect(GridHeader.prototype.componentDidMount.calledOnce).to.equal(true);
     });
   });
 
