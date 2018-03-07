@@ -196,7 +196,7 @@ describe('<GridHeader />', () => {
   });
 
   describe('handleChange()', () => {
-    it('should assa', () => {
+    it('should update the state of \'activeFilter\' to \'Contains\'', () => {
       const wrapper = shallow(gridHeader);
 
       wrapper.setState({
