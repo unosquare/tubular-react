@@ -164,11 +164,13 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
               if (dataSource.columns[index] && !dataSource.columns[index].Visible) {
                 return '';
               }
-              return `<td>${dataSource.columns[index].DataType === ColumnDataType.DATE ||
+              return `<td>${
+                dataSource.columns[index].DataType === ColumnDataType.DATE ||
                 dataSource.columns[index].DataType === ColumnDataType.DATE_TIME ||
                 dataSource.columns[index].DataType === ColumnDataType.DATE_TIME_UTC ?
-                moment(cell).format('MMMM Do YYYY, h:mm:ss a') :
-                cell || 0}</td>`;
+                  moment(cell).format('MMMM Do YYYY, h:mm:ss a') :
+                dataSource.columns[index].DataType === ColumnDataType.BOOLEAN ? (cell === true ? 'Yes' : 'No') :
+                  cell || 0}</td>`;
             }).join(' ')}</tr>`;
           }).join(' ')}</tbody></table>`;
         popup.document.title = this.props.gridName;
@@ -195,7 +197,10 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
 
       for (let i = 0; i < row.length; i++) {
         if (visibility[i]) {
-          let innerValue = row[i] === null || row[i] === undefined ? '' : row[i].toString();
+          let innerValue = row[i] === null || row[i] === undefined ? '' :
+            (typeof(row[i]) === 'boolean') ? (row[i] === true && 'Yes') :
+            row[i].toString();
+
           if (moment(row[i], moment.ISO_8601, true).isValid()) {
             innerValue = moment(row[i]).format('MMMM Do YYYY, h:mm:ss a');
           }
