@@ -9,7 +9,7 @@ interface IProps {
   classes: any;
   disabled: boolean;
   operators: any[];
-  value: string;
+  value: any;
   handleChange(event: any): void;
 }
 

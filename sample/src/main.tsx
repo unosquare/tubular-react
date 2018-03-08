@@ -35,6 +35,11 @@ const columns = [
   new ColumnModel( 'Amount',
     { DataType: ColumnDataType.NUMERIC,
       Sortable: true }
+  ),
+  new ColumnModel( 'IsShipped',
+    { DataType: ColumnDataType.BOOLEAN,
+      Filtering: true,
+      Sortable: true }
   )
 ];
 
@@ -63,6 +68,9 @@ export default class Main extends React.Component {
               </TableCell>
               <TableCell padding={'default'}>
                 {row.Amount || 0}
+              </TableCell>
+              <TableCell padding={'default'}>
+                {row.IsShipped ? 'true' : 'false'}
               </TableCell>
             </TableRow>
         }

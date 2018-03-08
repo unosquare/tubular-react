@@ -21,10 +21,10 @@ interface IProps {
 
 const DialogContent: React.SFC<IProps> = ({
   classes, value, value2, columnType, activeFilter, operator,
-  handleDatePicker, handleTextFieldChange,
-   handleApply, handleClear, handleSecondTextFieldChange }) => {
-  let firstValue = '';
-  let secondValue = '';
+  handleDatePicker, handleTextFieldChange, handleApply,
+  handleClear, handleSecondTextFieldChange }) => {
+  let firstValue;
+  let secondValue;
 
   switch (columnType) {
   case ColumnDataType.DATE:
@@ -34,7 +34,7 @@ const DialogContent: React.SFC<IProps> = ({
     secondValue = value2 ? value2 : moment().format();
     break;
   case ColumnDataType.BOOLEAN:
-    firstValue = operator === CompareOperators.NONE ? '' : value || '';
+    firstValue = operator === CompareOperators.NONE ? '' : value;
     break;
   default:
     firstValue = operator === CompareOperators.NONE ? '' : value || '';

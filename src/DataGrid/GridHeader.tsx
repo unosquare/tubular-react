@@ -62,7 +62,7 @@ interface IState {
   columnType: any;
   activeFilter: string;
   sorting: string;
-  firstFilterValue: string;
+  firstFilterValue: any;
   secondFilterValue: string;
   activeFilterColumn: string;
 }
@@ -135,7 +135,7 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
       this.filterHandler(parseFloat(firstValue), parseFloat(secondValue), true);
       break;
     case ColumnDataType.BOOLEAN:
-      this.filterHandler((firstValue === 'true'), 1, true);
+      this.filterHandler(firstValue === 'true', '', true);
       break;
     default:
       this.filterHandler(firstValue, secondValue, true);
@@ -163,17 +163,20 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
     let secondValue = '';
 
     switch (dataSource.columns[count].DataType ) {
-    case ColumnDataType.DATE:
-    case ColumnDataType.DATE_TIME:
-    case ColumnDataType.DATE_TIME_UTC:
-      firstValue = moment().format();
-      secondValue = moment().format();
-      break;
-    default:
-      firstValue = dataSource.columns[count].Filter &&
-        dataSource.columns[count].Filter.Text && dataSource.columns[count].Filter.Text.toString();
-      secondValue = dataSource.columns[count].Filter &&
-        dataSource.columns[count].Filter.Argument[0] && dataSource.columns[count].Filter.Argument[0].toString();
+      case ColumnDataType.DATE:
+      case ColumnDataType.DATE_TIME:
+      case ColumnDataType.DATE_TIME_UTC:
+        firstValue = moment().format();
+        secondValue = moment().format();
+        break;
+      case ColumnDataType.BOOLEAN:
+        firstValue = dataSource.columns[count].Filter && dataSource.columns[count].Filter.Text;
+        break;
+      default:
+        firstValue = dataSource.columns[count].Filter &&
+          dataSource.columns[count].Filter.Text && dataSource.columns[count].Filter.Text.toString();
+        secondValue = dataSource.columns[count].Filter &&
+          dataSource.columns[count].Filter.Argument[0] && dataSource.columns[count].Filter.Argument[0].toString();
     }
 
     this.setState({
@@ -199,7 +202,10 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
           if (dataSource.columns[i].Filter && element.Filter) {
             dataSource.columns[i].Filter.HasFilter = element.Filter.HasFilter;
             dataSource.columns[i].Filter.Operator = element.Filter.Operator;
-            dataSource.columns[i].Filter.Text = element.Filter.Text || '';
+            dataSource.columns[i].Filter.Text =
+              dataSource.columns[i].DataType === ColumnDataType.BOOLEAN ?
+                element.Filter.Text :
+                element.Filter.Text || '';
             dataSource.columns[i].Filter.Argument[0] = element.Filter.Argument[0] || '';
           }
         }
