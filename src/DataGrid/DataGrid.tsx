@@ -1,4 +1,6 @@
 import { WithStyles, withStyles } from 'material-ui';
+import CheckBox from 'material-ui-icons/CheckBox';
+import CheckBoxOutlineBlank from 'material-ui-icons/CheckBoxOutlineBlank';
 import WarningIcon from 'material-ui-icons/Warning';
 import Paper from 'material-ui/Paper';
 import { StyleRules, Theme } from 'material-ui/styles';
@@ -245,6 +247,24 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
       });
   }
 
+  public columnRendering = (column: any, row: any) => {
+    if (column.DataType === ColumnDataType.NUMERIC) {
+      return row[column.Name] || 0;
+    } else if (column.DataType === ColumnDataType.DATE ||
+        column.DataType === ColumnDataType.DATE_TIME ||
+        column.DataType === ColumnDataType.DATE_TIME_UTC) {
+      return moment(row[column.Name]).format('MMMM Do YYYY, h:mm:ss a') || '';
+    } else if (column.DataType === ColumnDataType.BOOLEAN) {
+      if ((row[column.Name]) === true) {
+        return <CheckBox />;
+      } else {
+        return <CheckBoxOutlineBlank />;
+      }
+    } else {
+      return row[column.Name];
+    }
+  }
+
   public render() {
     const { classes, bodyRenderer, footerRenderer, showBottomPager,
       showTopPager, showPrintButton, showExportButton } = this.props;
@@ -260,13 +280,7 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
                 dataSource.columns.filter((col: any) => col.Visible).map((column: any, colIndex: number) =>
                   <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
                     {
-                      column.DataType === ColumnDataType.NUMERIC ?
-                        row[column.Name] || 0 :
-                        column.DataType === ColumnDataType.DATE
-                          || column.DataType === ColumnDataType.DATE_TIME
-                          || column.DataType === ColumnDataType.DATE_TIME_UTC
-                          ? moment(row[column.Name]).format('MMMM Do YYYY, h:mm:ss a') || ''
-                          : row[column.Name]
+                      this.columnRendering(column, row)
                     }
                   </TableCell>)
               }

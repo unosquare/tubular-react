@@ -1,4 +1,6 @@
 
+import CheckBox from 'material-ui-icons/CheckBox';
+import CheckBoxOutlineBlank from 'material-ui-icons/CheckBoxOutlineBlank';
 import { TableCell, TableRow } from 'material-ui/Table';
 import * as moment from 'moment';
 import * as React from 'react';
@@ -35,6 +37,10 @@ const columns = [
   new ColumnModel( 'Amount',
     { DataType: ColumnDataType.NUMERIC,
       Sortable: true }
+  ),
+  new ColumnModel( 'IsShipped',
+    { DataType: ColumnDataType.BOOLEAN,
+      Sortable: true }
   )
 ];
 
@@ -63,6 +69,10 @@ export default class Main extends React.Component {
               </TableCell>
               <TableCell padding={'default'}>
                 {row.Amount || 0}
+              </TableCell>
+              <TableCell padding={'default'}>
+                {row.IsShipped === true ? <CheckBox />
+                  : <CheckBoxOutlineBlank />}
               </TableCell>
             </TableRow>
         }
