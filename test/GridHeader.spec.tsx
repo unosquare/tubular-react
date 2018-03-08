@@ -13,7 +13,7 @@ import { ColumnDataType, CompareOperators } from '../src/DataGrid/Column';
 import GridHeader from '../src/DataGrid/GridHeader';
 import LocalDataSource from '../src/DataGrid/LocalDataSource';
 import RemoteDataSource from '../src/DataGrid/RemoteDataSource';
-import { amountFilterColumnsSample, validColumnsSample } from './utils/columns';
+import { amountFilterColumnsSample, isShippedFilterColumnsSample, validColumnsSample } from './utils/columns';
 import { simpleRecordsExpected } from './utils/data';
 import localData from './utils/localData';
 
@@ -195,6 +195,35 @@ describe('<GridHeader />', () => {
       expect(wrapper.instance().props.dataSource.columns[4].Filter.Argument).deep.equal([15]);
       expect(wrapper.instance().props.dataSource.columns[4].Filter.HasFilter).to.equal(true);
       expect(wrapper.instance().props.dataSource.columns[4].Filter.Operator).to.equal('Between');
+    });
+
+    it('Should change the filter values of the IsShipped column', () => {
+      const gridHeaderDataSource = new RemoteDataSource('url', isShippedFilterColumnsSample);
+
+      const gridHeader2 = (
+        <GridHeader
+          dataSource={gridHeaderDataSource}
+          gridName='Tubular-React'
+          page={0}
+          rowsPerPage={10}
+          refreshGrid={() => { return; }}
+        />
+      );
+
+      const wrapper = shallow(gridHeader2);
+      wrapper.setState({
+        activeFilter: CompareOperators.EQUALS,
+        activeFilterColumn: 'IsShipped',
+        columnType: ColumnDataType.BOOLEAN,
+        firstFilterValue: 'true',
+        secondFilterValue: ''
+      });
+
+      wrapper.instance().handleApply();
+
+      expect(wrapper.instance().props.dataSource.columns[5].Filter.Text).to.equal(true);
+      expect(wrapper.instance().props.dataSource.columns[5].Filter.HasFilter).to.equal(true);
+      expect(wrapper.instance().props.dataSource.columns[5].Filter.Operator).to.equal('Equals');
     });
   });
 
