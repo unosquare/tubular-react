@@ -248,21 +248,26 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
   }
 
   public columnRendering = (column: any, row: any) => {
-    if (column.DataType === ColumnDataType.NUMERIC) {
-      return row[column.Name] || 0;
-    } else if (column.DataType === ColumnDataType.DATE ||
-        column.DataType === ColumnDataType.DATE_TIME ||
-        column.DataType === ColumnDataType.DATE_TIME_UTC) {
-      return moment(row[column.Name]).format('MMMM Do YYYY, h:mm:ss a') || '';
-    } else if (column.DataType === ColumnDataType.BOOLEAN) {
-      if ((row[column.Name]) === true) {
-        return <CheckBox />;
-      } else {
-        return <CheckBoxOutlineBlank />;
-      }
-    } else {
-      return row[column.Name];
+    let rows = null;
+
+    switch (column.DataType) {
+      case ColumnDataType.NUMERIC:
+        rows = row[column.Name] || 0;
+        break;
+      case ColumnDataType.DATE:
+      case ColumnDataType.DATE_TIME:
+      case ColumnDataType.DATE_TIME_UTC:
+        rows = moment(row[column.Name]).format('MMMM Do YYYY, h:mm:ss a') || '';
+        break;
+      case ColumnDataType.BOOLEAN:
+        rows =  (row[column.Name]) === true ? <CheckBox /> : <CheckBoxOutlineBlank />;
+        break;
+      default:
+        rows =  row[column.Name];
+        break;
     }
+
+    return rows;
   }
 
   public render() {
