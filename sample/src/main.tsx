@@ -1,4 +1,5 @@
-
+import CheckBox from 'material-ui-icons/CheckBox';
+import CheckBoxOutlineBlank from 'material-ui-icons/CheckBoxOutlineBlank';
 import { TableCell, TableRow } from 'material-ui/Table';
 import * as moment from 'moment';
 import * as React from 'react';
@@ -70,7 +71,8 @@ export default class Main extends React.Component {
                 {row.Amount || 0}
               </TableCell>
               <TableCell padding={'default'}>
-                {row.IsShipped ? 'true' : 'false'}
+                {row.IsShipped === true ? <CheckBox />
+                  : <CheckBoxOutlineBlank />}
               </TableCell>
             </TableRow>
         }
