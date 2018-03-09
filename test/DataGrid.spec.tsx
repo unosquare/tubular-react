@@ -253,6 +253,62 @@ describe('<DataGrid />', () => {
     });
   });
 
+  describe('When printTable() is called', () => {
+    let dataGrid;
+
+    before( () => {
+      mock.reset();
+      mock.onPost('url', { ...simpleRequest }).reply(200, {
+        ...simpleRecordsExpected
+      });
+
+      dataGrid = (
+        <DataGrid
+          onError={(x: any) => x}
+          gridName='Motorhead'
+          rowsPerPage={10}
+          dataSource={new RemoteDataSource('url', simpleColumnsSample)}
+        />
+      );
+    });
+
+    it('Should create a window with the data to print', (done) => {
+      const wrapper = shallow(dataGrid);
+
+      wrapper.state().dataSource.dataStream.skip(1).subscribe((r) => {
+        wrapper.instance().printTable(false);
+
+        setTimeout(() => {
+          const csvFile = '<html>\n' +
+          '<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.min.css" />\n' +
+          '<body onload="window.print();">\n' +
+          '<h1>Motorhead</h1>\n' +
+          '<table class="table table-bordered table-striped"><thead><tr><th>Order ID</th><th>Customer Name</th>' +
+          '<th>Shipped Date</th><th>Shipper City</th><th>Amount</th></tr></thead><tbody><tr><td>1</td> ' +
+          '<td>Microsoft</td> <td>March 19th 2016, 7:00:00 pm</td> <td>Guadalajara, JAL, Mexico</td> <td>300</td>' +
+          '</tr> <tr><td>2</td> <td>Microsoft</td> <td>April 23rd 2016, 10:00:00 am</td> ' +
+          '<td>Guadalajara, JAL, Mexico</td> <td>0</td></tr> <tr><td>3</td> <td>Microsoft</td> ' +
+          '<td>December 22nd 2016, 8:00:00 am</td> <td>Guadalajara, JAL, Mexico</td> <td>300</td></tr> <tr><td>4' +
+          '</td> <td>Unosquare LLC</td> <td>February 1st 2016, 6:00:00 pm</td> <td>Los Angeles, CA, USA</td> ' +
+          '<td>0</td></tr> <tr><td>5</td> <td>Microsoft</td> <td>November 10th 2016, 6:00:00 pm</td> ' +
+          '<td>Guadalajara, JAL, Mexico</td> <td>92</td></tr> <tr><td>6</td> <td>Unosquare LLC</td> ' +
+          '<td>November 6th 2016, 6:00:00 pm</td> <td>Los Angeles, CA, USA</td> <td>18</td></tr> <tr><td>7</td> ' +
+          '<td>Unosquare LLC</td> <td>November 11th 2016, 6:00:00 pm</td> <td>Leon, GTO, Mexico</td> <td>50</td>' +
+          '</tr> <tr><td>8</td> <td>Unosquare LLC</td> <td>November 8th 2016, 6:00:00 pm</td> ' +
+          '<td>Portland, OR, USA</td> <td>9</td></tr> <tr><td>9</td> <td>Vesta</td> ' +
+          '<td>November 7th 2016, 6:00:00 pm</td> <td>Guadalajara, JAL, Mexico</td> <td>108</td></tr> <tr><td>10' +
+          '</td> <td>Unosquare LLC</td> <td>November 5th 2016, 6:00:00 pm</td> <td>Portland, OR, USA</td> ' +
+          '<td>15</td></tr></tbody></table>\n' +
+          '</body>\n' +
+          '</html>';
+
+          expect(csvFile).to.be.equal(global.popupWindow);
+          done();
+        }, 0);
+      });
+    });
+  });
+
   describe('When footer has n rows', () => {
     it('should render the row with the aggregate operation', () => {
       grid = (
