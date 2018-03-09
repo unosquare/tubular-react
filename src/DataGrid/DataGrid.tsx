@@ -144,7 +144,7 @@ class DataGrid extends React.Component <IProps & WithStyles<keyof typeof styleCl
       .then(({ Payload }: any) => {
         const popup = window.open('about:blank', 'Print', 'location=0,height=500,width=800');
         popup.document
-        .write('<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.min.css" />');
+          .write('<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.min.css" />');
 
         const tableHtml = `<table class="table table-bordered table-striped"><thead><tr>${
           dataSource.columns
@@ -181,6 +181,7 @@ class DataGrid extends React.Component <IProps & WithStyles<keyof typeof styleCl
     const visibility = dataSource.columns.map((x: any) => x.Visible);
     let count;
     let search;
+
     const processRow = (row: any) => {
       if (row instanceof Object) {
         row = Object.keys(row).map((key: any) => row[key]);
@@ -233,10 +234,15 @@ class DataGrid extends React.Component <IProps & WithStyles<keyof typeof styleCl
         const blob = new Blob([`\uFEFF${csvFile}`], {
           type: 'text/csv;charset=utf-8;'
         });
+
         const fileURL = URL.createObjectURL(blob);
         const downloadLink = document.createElement('a');
+
         downloadLink.setAttribute('href', fileURL);
+        downloadLink.setAttribute('id', 'download');
         downloadLink.setAttribute('download', 'data.csv');
+        document.body.appendChild(downloadLink);
+
         downloadLink.click();
         URL.revokeObjectURL(fileURL);
       });

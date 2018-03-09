@@ -5,7 +5,7 @@ import * as Enzyme from 'enzyme';
 import * as Adapter from 'enzyme-adapter-react-16';
 import Paper from 'material-ui/Paper';
 import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
-import { createShallow } from 'material-ui/test-utils';
+import { createMount, createShallow } from 'material-ui/test-utils';
 import * as React from 'react';
 import DataGrid from '../src';
 import Paginator from '../src/DataGrid/Paginator';
@@ -48,13 +48,16 @@ describe('<DataGrid />', () => {
   let grid;
   let dataSource;
   let mock;
+  let mount;
 
   before(() => {
     mock = new MockAdapter(axios);
+    mount = createMount();
   });
 
   after(() => {
     mock.reset();
+    mount.cleanUp();
   });
 
   beforeEach(() => {
@@ -199,6 +202,53 @@ describe('<DataGrid />', () => {
       wrapper.state().dataSource.dataStream.skip(2).subscribe((r) => {
         expect(r.Payload).to.deep.equal(onlyMicrosoftExpected.Payload);
         done();
+      });
+    });
+  });
+
+  describe('When exportTable() is called', () => {
+    let dataGrid;
+
+    before( () => {
+      mock.reset();
+      mock.onPost('url', { ...simpleRequest }).reply(200, {
+        ...simpleRecordsExpected
+      });
+
+      dataGrid = (
+        <DataGrid
+          onError={(x: any) => x}
+          gridName='Motorhead'
+          rowsPerPage={10}
+          dataSource={new RemoteDataSource('url', simpleColumnsSample)}
+        />
+      );
+    });
+
+    it('Should create a link element to download the csv', (done) => {
+      const wrapper = shallow(dataGrid);
+
+      wrapper.state().dataSource.dataStream.skip(1).subscribe((r) => {
+        wrapper.instance().exportTable(false);
+
+        setTimeout(() => {
+          const csvFile = '\uFEFFOrder ID,Customer Name,Shipped Date,Shipper City,Amount\n' +
+          '1,Microsoft,\"March 19th 2016, 7:00:00 pm\",\"Guadalajara, JAL, Mexico\",300\n' +
+          '2,Microsoft,\"April 23rd 2016, 10:00:00 am\",\"Guadalajara, JAL, Mexico\",\n' +
+          '3,Microsoft,\"December 22nd 2016, 8:00:00 am\",\"Guadalajara, JAL, Mexico\",300\n' +
+          '4,Unosquare LLC,\"February 1st 2016, 6:00:00 pm\",\"Los Angeles, CA, USA\",\n' +
+          '5,Microsoft,\"November 10th 2016, 6:00:00 pm\",\"Guadalajara, JAL, Mexico\",92\n' +
+          '6,Unosquare LLC,\"November 6th 2016, 6:00:00 pm\",\"Los Angeles, CA, USA\",18\n' +
+          '7,Unosquare LLC,\"November 11th 2016, 6:00:00 pm\",\"Leon, GTO, Mexico\",50\n' +
+          '8,Unosquare LLC,\"November 8th 2016, 6:00:00 pm\",\"Portland, OR, USA\",9\n' +
+          '9,Vesta,\"November 7th 2016, 6:00:00 pm\",\"Guadalajara, JAL, Mexico\",108\n' +
+          '10,Unosquare LLC,\"November 5th 2016, 6:00:00 pm\",\"Portland, OR, USA\",15\n';
+
+          const file = window.document.getElementById('download').getAttribute('href');
+
+          expect(csvFile).to.be.equal(file);
+          done();
+        }, 0);
       });
     });
   });

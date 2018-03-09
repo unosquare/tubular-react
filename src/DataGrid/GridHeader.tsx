@@ -154,39 +154,6 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
     }
   }
 
-  public localStorageHandler = (count: number, dataSource: any) => {
-    if (count >= dataSource.columns.length) {
-      return;
-    }
-
-    let firstValue = '';
-    let secondValue = '';
-
-    switch (dataSource.columns[count].DataType ) {
-    case ColumnDataType.DATE:
-    case ColumnDataType.DATE_TIME:
-    case ColumnDataType.DATE_TIME_UTC:
-      firstValue = moment().format();
-      secondValue = moment().format();
-      break;
-    default:
-      firstValue = dataSource.columns[count].Filter &&
-        dataSource.columns[count].Filter.Text && dataSource.columns[count].Filter.Text.toString();
-      secondValue = dataSource.columns[count].Filter &&
-        dataSource.columns[count].Filter.Argument[0] && dataSource.columns[count].Filter.Argument[0].toString();
-    }
-
-    this.setState({
-      activeFilter: dataSource.columns[count].Filter && dataSource.columns[count].Filter.Operator as string,
-      activeFilterColumn: dataSource.columns[count].Name,
-      columnType: dataSource.columns[count].DataType as any,
-      firstFilterValue: firstValue,
-      secondFilterValue: secondValue,
-    }, () => {
-      this.localStorageHandler(count + 1, dataSource);
-    });
-  }
-
   public componentDidMount() {
     if (localStorage.getItem(`tubular.${this.props.gridName}`)) {
       const storage = JSON.parse(localStorage.getItem(`tubular.${this.props.gridName}`));
@@ -204,8 +171,6 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
           }
         }
       });
-
-      this.localStorageHandler(0, dataSource);
     }
 
     document.addEventListener('keydown', (event) => this.handleKeyDown(event));
