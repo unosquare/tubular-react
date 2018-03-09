@@ -9,6 +9,7 @@ import Input from 'material-ui/Input';
 import { createShallow } from 'material-ui/test-utils';
 import Toolbar from 'material-ui/Toolbar';
 import * as React from 'react';
+import * as sinon from 'sinon';
 import GridToolbar from '../src/DataGrid/GridToolbar';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -31,6 +32,16 @@ describe('<GridToolbar/>', () => {
 
   it('should render a Toolbar', () => {
     expect(toolbar().find(Toolbar)).to.have.lengthOf(1);
+  });
+
+  it('should trigger \'componentDidMount()\' once time', () => {
+    sinon.spy(GridToolbar.prototype, 'componentDidMount');
+    window.localStorage.setItem('tubular.Tubular-React_searchText', 'micros');
+
+    const wrapper = shallow(<GridToolbar {...props}/>);
+
+    expect(wrapper.state().searchText).to.equal('micros');
+    expect(GridToolbar.prototype.componentDidMount.calledOnce).to.equal(true);
   });
 
   describe('isExportEnabled', () => {
@@ -86,8 +97,13 @@ describe('<GridToolbar/>', () => {
     it('should update the state of \'anchorEl\' as \'null\' when is closed', () => {
       props.isExportEnabled = true;
       const wrapper = shallow(<GridToolbar {...props}/>);
-      wrapper.setState({ anchorEl: null as HTMLElement});
+
+      wrapper.setState({
+        anchorEl: document.createElement('button')
+      });
+      wrapper.instance().handleMenuClose();
       wrapper.update();
+
       assert.isNull(wrapper.state().anchorEl);
     });
 
@@ -102,7 +118,7 @@ describe('<GridToolbar/>', () => {
 
   beforeEach( () => {
     props = {
-
+      gridName: 'Tubular-React'
     };
   });
 });
