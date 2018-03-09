@@ -65,7 +65,7 @@ describe('<GridHeader />', () => {
     expect(wrapper).to.have.lengthOf(1);
   });
 
-  it('should trigger \'componentWillUnmount()\' once time', () => {
+  it('should trigger \'componentWillUnmount()\' one time', () => {
     sinon.spy(GridHeader.prototype, 'componentWillUnmount');
     const wrapper = mount(
       <Table>
@@ -83,6 +83,35 @@ describe('<GridHeader />', () => {
 
     wrapper.unmount();
     expect(GridHeader.prototype.componentWillUnmount.calledOnce).to.equal(true);
+  });
+
+  it('should trigger \'componentDidMount()\' one time and update the dataSource with the localStorage values', () => {
+    sinon.spy(GridHeader.prototype, 'componentDidMount');
+    const gridHeaderDataSource = new RemoteDataSource('url', amountFilterColumnsSample);
+    const localStorage = new RemoteDataSource('url', amountFilterColumnsSample);
+
+    localStorage.columns[4].Filter.Text = 2;
+    localStorage.columns[4].Filter.HasFilter = true;
+    localStorage.columns[4].Filter.Operator = 'Between';
+    localStorage.columns[4].Filter.Argument = [10];
+    window.localStorage.setItem('tubular.Tubular-React', JSON.stringify(localStorage.columns));
+
+    const gridHeader2 = (
+      <GridHeader
+        dataSource={gridHeaderDataSource}
+        gridName='Tubular-React'
+        page={0}
+        rowsPerPage={10}
+        refreshGrid={() => { return; }}
+      />
+    );
+
+    const wrapper = shallow(gridHeader2);
+
+    expect(wrapper.instance().props.dataSource.columns[4].Filter.Text).to.equal(2);
+    expect(wrapper.instance().props.dataSource.columns[4].Filter.HasFilter).to.equal(true);
+    expect(wrapper.instance().props.dataSource.columns[4].Filter.Operator).to.equal('Between');
+    expect(GridHeader.prototype.componentDidMount.calledOnce).to.equal(true);
   });
 
   describe('When filter dialog has been clicked', () => {
@@ -135,34 +164,6 @@ describe('<GridHeader />', () => {
       expect(wrapper.state().activeFilter).to.be.equal('None');
       assert.isEmpty(wrapper.state().firstFilterValue);
       assert.isEmpty(wrapper.state().secondFilterValue);
-    });
-  });
-
-  describe('With localStorage', () => {
-    it('should update the state and the dataSource', () => {
-      sinon.spy(GridHeader.prototype, 'componentDidMount');
-      const gridHeaderDataSource = new RemoteDataSource('url', amountFilterColumnsSample);
-      const localStorage = new RemoteDataSource('url', amountFilterColumnsSample);
-
-      localStorage.columns[4].Filter.Text = 2;
-      localStorage.columns[4].Filter.Argument = [10];
-      window.localStorage.setItem('tubular.Tubular-React', JSON.stringify(localStorage.columns));
-
-      const gridHeader2 = (
-        <GridHeader
-          dataSource={gridHeaderDataSource}
-          gridName='Tubular-React'
-          page={0}
-          rowsPerPage={10}
-          refreshGrid={() => { return; }}
-        />
-      );
-
-      const wrapper = shallow(gridHeader2);
-
-      expect(wrapper.state().activeFilter).to.equal('None');
-      expect(wrapper.instance().props.dataSource.columns[4].Filter.Text).to.equal(2);
-      expect(GridHeader.prototype.componentDidMount.calledOnce).to.equal(true);
     });
   });
 
