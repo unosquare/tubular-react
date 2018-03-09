@@ -1,9 +1,14 @@
 import { assert, expect } from 'chai';
 import * as moment from 'moment';
+import { AggregateFunctions } from '../src/DataGrid';
 import { CompareOperators } from '../src/DataGrid/Column';
 import GridResponse from '../src/DataGrid/GridResponse';
 import LocalDataSource from '../src/DataGrid/LocalDataSource';
 import {
+  aggregateColumnsSample,
+  customAmountCol,
+  customCustomerNameCol,
+  simpleColumnsSample,
   validColumnsSample,
   validColumnsSampleDescending,
   validColumnsSampleMultipleSorting
@@ -14,6 +19,7 @@ import {
 import localData from './utils/localData';
 import {
   expectedLocaDataSourcelResponse,
+  expectedLocalDataSourceResponseConnect,
   expectedPayloadBetweenDate,
   expectedPayloadBetweenNumeric,
   expectedPayloadContainsString,
@@ -26,6 +32,7 @@ import {
   expectedPayloadGteDate,
   expectedPayloadGteNumeric,
   expectedPayloadGtNumeric,
+  expectedPayloadLtDate,
   expectedPayloadLteDate,
   expectedPayloadLteNumeric,
   expectedPayloadLtNumeric,
@@ -33,6 +40,7 @@ import {
   expectedPayloadNoneDate,
   expectedPayloadNoneNumeric,
   expectedPayloadNoneString,
+  expectedPayloadNotContainsString,
   expectedPayloadNotEndsWithString,
   expectedPayloadNotEqualsString,
   expectedPayloadNotStartsWithString,
@@ -283,6 +291,18 @@ describe('LocalDataSource', () => {
       });
     });
 
+    it('should return a payload with records where CustomerName not contains \'a\'', (done) => {
+      dataSource.columns[1].Filter.Text = 'a';
+      dataSource.columns[1].Filter.Operator = CompareOperators.NOT_CONTAINS;
+      dataSource.columns[1].Filter.HasFilter = true;
+      dataSource.columns[1].Filter.Argument = [];
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Payload).to.deep.equal(expectedPayloadNotContainsString);
+        done();
+      });
+    });
+
     it('should return a payload with records where CustomerName starts with \'M\'', (done) => {
       dataSource.columns[1].Filter.Text = 'M';
       dataSource.columns[1].Filter.Operator = CompareOperators.STARTS_WITH;
@@ -427,6 +447,102 @@ describe('LocalDataSource', () => {
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.deep.equal(expectedPayloadLteDate);
 
+        done();
+      });
+    });
+
+    it('should return a payload with records where \'Shipped Date\' are less than or equal than to March 19th 2016',
+        (done) => {
+      dataSource.columns[2].Filter.Text = '2016-03-19T19:00:00';
+      dataSource.columns[2].Filter.Operator = CompareOperators.LT;
+      dataSource.columns[2].Filter.HasFilter = true;
+      dataSource.columns[2].Filter.Argument = [];
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Payload).to.have.lengthOf(2);
+        expect(response.Payload).to.deep.equal(expectedPayloadLtDate);
+
+        done();
+      });
+    });
+  });
+
+  describe('When column has aggregate function', () => {
+    beforeEach(() => {
+      customAmountCol.Aggregate = null;
+    });
+
+    it('should return the average of the \'Amount\' column', (done) => {
+      customAmountCol.Aggregate = AggregateFunctions.AVERAGE;
+      const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Aggregate.Amount).to.be.closeTo(157.363, 0.001);
+        done();
+      });
+    });
+
+    it('should return the sum of the \'Amount\' column', (done) => {
+      customAmountCol.Aggregate = AggregateFunctions.SUM;
+      const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Aggregate.Amount).to.be.equal(3462);
+        done();
+      });
+    });
+
+    it('should return the max of the \'Amount\' column', (done) => {
+      customAmountCol.Aggregate = AggregateFunctions.MAX;
+      const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Aggregate.Amount).to.be.equal(300);
+        done();
+      });
+    });
+
+    it('should return the min of the \'Amount\' column', (done) => {
+      customAmountCol.Aggregate = AggregateFunctions.MIN;
+      const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Aggregate.Amount).to.be.equal(9);
+        done();
+      });
+    });
+
+    it('should return the total of records in \'Customer Name\' eliminating duplicates', (done) => {
+      customCustomerNameCol.Aggregate = AggregateFunctions.DISTINCT_COUNT;
+      const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Aggregate.CustomerName).to.be.equal(7);
+        done();
+      });
+    });
+
+    it('should return the total of records in \'Customer Name\'', (done) => {
+      customCustomerNameCol.Aggregate = AggregateFunctions.COUNT;
+      const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
+
+      dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
+        expect(response.Aggregate.CustomerName).to.be.equal(22);
+        done();
+      });
+    });
+  });
+
+  describe('When retrieveData() is called', () => {
+    const dataSource = new LocalDataSource(localData, simpleColumnsSample);
+
+    it('should return a payload', (done) => {
+      dataSource.retrieveData(10, 0, '').skip(1).subscribe((response: GridResponse) => {
+        expect(response.Payload).to.deep.equal(expectedLocalDataSourceResponseConnect.Payload);
+        expect(response.FilteredRecordCount).to.deep.equal(expectedLocalDataSourceResponseConnect.FilteredRecordCount);
+        expect(response.TotalRecordCount).to.deep.equal(expectedLocalDataSourceResponseConnect.TotalRecordCount);
+        done();
+      }, (error: any) => {
         done();
       });
     });

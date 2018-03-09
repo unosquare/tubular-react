@@ -1,8 +1,8 @@
 {
   "name": "tubular-react",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "description": "Tubular React",
-  "main": "index.js",
+  "main": "./src/index",
   "scripts": {
     "start": "gulp watch",
     "build": "gulp",
@@ -10,8 +10,8 @@
     "test": "gulp test",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov",
-    "docs:dev": "next",
-    "docs": "set NODE_ENV=production && next build && next export -o docs"
+    "docs:run": "webpack -d",
+    "docs": "webpack -p"
   },
   "nyc": {
     "extension": [
@@ -20,9 +20,13 @@
     ],
     "exclude": [
       "gulpfile.js",
+      "next.config.js",
       "test/**/*.*",
       "build/**/*.*",
       "sample/**/*.*",
+      "docs/**/*.*",
+      "pages/**/*.*",
+      "srcdocs/**/*.*",
       "src/Util/index.js"
     ],
     "all": true
@@ -55,12 +59,16 @@
     "@types/enzyme-adapter-react-16": "^1.0.2",
     "@types/lodash": "^4.14.102",
     "@types/mocha": "^2.2.48",
-    "@types/next": "^2.4.8",
     "@types/prop-types": "^15.5.2",
     "@types/react": "^16.0.36",
     "@types/react-dom": "^16.0.3",
+    "@types/react-router": "^4.0.22",
+    "@types/react-router-dom": "^4.2.4",
+    "@types/react-syntax-highlighter": "0.0.5",
     "@types/rx": "^4.1.1",
+    "@types/sinon": "^4.3.0",
     "@zeit/next-typescript": "0.0.10",
+    "awesome-typescript-loader": "^3.5.0",
     "axios-mock-adapter": "^1.12.0",
     "browser-sync": "^2.23.5",
     "browserify": "^15.2.0",
@@ -75,17 +83,21 @@
     "gulp-typescript": "^3.2.4",
     "jsdom": "^11.5.1",
     "mock-local-storage": "^1.0.5",
-    "next": "^5.0.0",
     "nyc": "^11.4.1",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
     "react-syntax-highlighter": "^7.0.0",
-    "sinon": "^4.1.6",
+    "router5": "^5.8.3",
+    "sinon": "^4.4.2",
+    "ts-loader": "^3.5.0",
     "ts-node": "^4.1.0",
     "tsify": "^3.0.4",
     "tslint": "^5.9.1",
     "tslint-react": "^3.4.0",
-    "typescript": "^2.7.1",
+    "typescript": "^2.7.2",
     "vinyl-source-stream": "^2.0.0",
-    "watchify": "^3.9.0"
+    "watchify": "^3.9.0",
+    "webpack": "^3.11.0"
   },
   "peerDependencies": {
     "material-ui": "next",

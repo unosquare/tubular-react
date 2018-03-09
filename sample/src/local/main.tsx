@@ -8,7 +8,7 @@ import Grid, {
   ColumnModel,
   ColumnSortDirection,
   LocalDataSource
-} from '../../../src/Grid';
+} from '../../../src/DataGrid';
 import localData from './localData';
 
 const columns = [

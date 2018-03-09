@@ -5,16 +5,36 @@ import {
   ColumnSortDirection
 } from '../../src/DataGrid';
 
+const regularOrderIdCol = new ColumnModel('OrderID',
+  {
+    DataType: ColumnDataType.NUMERIC,
+    Filtering: true,
+    IsKey: true,
+    Label: 'Order ID',
+    SortDirection: ColumnSortDirection.ASCENDING,
+    SortOrder: 1,
+    Sortable: true
+  }
+);
+
+const customAmountCol = new ColumnModel('Amount',
+  {
+    Aggregate: AggregateFunctions.NONE,
+    DataType: ColumnDataType.NUMERIC
+  }
+);
+
+const customCustomerNameCol = new ColumnModel('CustomerName',
+  {
+    Aggregate: AggregateFunctions.NONE,
+    DataType: ColumnDataType.STRING
+  }
+);
+
+// Column samples
+
 const validColumnsSample = [
-  new ColumnModel( 'OrderID',
-    { DataType: ColumnDataType.NUMERIC,
-      Filtering: true,
-      IsKey: true,
-      Label: 'Order ID',
-      SortDirection: ColumnSortDirection.ASCENDING,
-      SortOrder: 1,
-      Sortable: true }
-  ),
+  regularOrderIdCol,
   new ColumnModel( 'CustomerName',
     { Aggregate: AggregateFunctions.COUNT,
       Filtering: true,
@@ -53,6 +73,8 @@ const simpleColumnsSample = [
   )
 ];
 
+// Columns for sorting
+
 const validColumnsSampleDescending = [
   new ColumnModel('OrderID',
     {
@@ -78,6 +100,12 @@ const validColumnsSampleDescending = [
       DataType: ColumnDataType.DATE_TIME,
       Filtering: true,
       Sortable: true
+    }
+  ),
+  new ColumnModel('Amount',
+    {
+      Aggregate: AggregateFunctions.MAX,
+      DataType: ColumnDataType.NUMERIC
     }
   ),
 ];
@@ -117,9 +145,25 @@ const validColumnsSampleMultipleSorting = [
   ),
 ];
 
+// Columns for aggregate functions
+
+const aggregateColumnsSample = [
+  regularOrderIdCol,
+  customCustomerNameCol,
+  new ColumnModel( 'ShippedDate',
+    { DataType: ColumnDataType.DATE_TIME,
+      Filtering: true }
+  ),
+  new ColumnModel( 'ShipperCity' ),
+  customAmountCol
+];
+
 export {
+  customAmountCol,
+  customCustomerNameCol,
+  aggregateColumnsSample,
   simpleColumnsSample,
   validColumnsSample,
   validColumnsSampleDescending,
-  validColumnsSampleMultipleSorting
+  validColumnsSampleMultipleSorting,
 };

@@ -2,116 +2,95 @@ import Axios from 'axios';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as Rx from 'rx';
-import { ColumnModel } from '.';
+import BaseDataSource from './BaseDataSource';
 import {
   AggregateFunctions,
   ColumnDataType,
   ColumnSortDirection,
   CompareOperators,
 } from './Column';
+import ColumnModel from './ColumnModel';
 import GridRequest from './GridRequest';
 import GridResponse from './GridResponse';
 import GridDataResponse from './utils/GridDataResponse';
 
-export default class LocalDataSource implements IDataSource {
+export default class LocalDataSource extends BaseDataSource {
 
-  public static counter: number;
-  public columns: ColumnModel[];
-  public dataStream: any;
   public localData: any[];
 
   constructor(localData: any[], columns: ColumnModel[]) {
+    super(columns);
     this.localData = localData;
-    this.dataStream = new Rx.BehaviorSubject({ Payload: [] });
-    this.columns = columns;
-    LocalDataSource.counter = 0;
   }
 
-  public connect(rowsPerPage: number, page: number, searchText: string) {
-    this._updateDataStream(rowsPerPage, page, searchText);
-    return this.dataStream;
-  }
-
-  public refresh(rowsPerPage: number, page: number, searchText: string) {
-    this._updateDataStream(rowsPerPage, page, searchText);
-  }
-
-  public getAllRecords = (rowsPerPage: number, page: number, searchText: string): Promise<object> =>
-    new Promise((resolve, reject) => {
+  public getAllRecords(rowsPerPage: number, page: number, searchText: string): Promise<object> {
+    return new Promise((resolve, reject) => {
       try {
-      let data = this.localData;
+        let data = this.localData;
 
-      const request = new GridRequest({
-        Columns: this.columns,
-        Count: LocalDataSource.counter++,
-        Search: {
-          Operator: 'Auto',
-          Text: searchText ? searchText : ''
-        },
-        Skip: page * rowsPerPage,
-        Take: rowsPerPage,
-        TimezoneOffset: 360
-      });
-
-      const response = new GridDataResponse({
-        Counter: request.Count,
-        CurrentPage: 1,
-        TotalRecordCount: data.length
-      });
-
-      data = this.applyFreeTextSearch(request, data);
-      data = this.applyFiltering(request, data);
-      data = this.applySorting(request, data);
-
-      response.FilteredRecordCount = data.length;
-
-      const offset = request.Skip;
-      const limit = request.Take;
-
-      if (request.Take > -1) {
-        response.TotalPages = Math.ceil(response.FilteredRecordCount / request.Take);
-
-        if (response.TotalPages > 0) {
-          response.CurrentPage = request.Skip / request.Take + 1;
-        }
-      }
-
-      response.AggregationPayload = this.getAggregatePayload(request, data);
-
-      data = _.slice(data, offset, offset + limit);
-
-      const rows = data.map((row: any) => {
-        const obj: any = {};
-
-        this.columns.forEach((column: any, key: any) => {
-          obj[column.Name] = row[key] || row[column.Name];
+        const request = new GridRequest({
+          Columns: this.columns,
+          Count: BaseDataSource.counter++,
+          Search: {
+            Operator: 'Auto',
+            Text: searchText ? searchText : ''
+          },
+          Skip: page * rowsPerPage,
+          Take: rowsPerPage,
+          TimezoneOffset: 360
         });
 
-        return obj;
-      });
+        const response = new GridDataResponse({
+          Counter: request.Count,
+          CurrentPage: 1,
+          TotalRecordCount: data.length
+        });
 
-      response.Payload = rows;
+        data = this.applyFreeTextSearch(request, data);
+        data = this.applyFiltering(request, data);
+        data = this.applySorting(request, data);
 
-      resolve(new GridResponse({
-        Aggregate: response.AggregationPayload,
-        FilteredRecordCount: response.FilteredRecordCount,
-        Payload: response.Payload,
-        RowsPerPage: rowsPerPage,
-        SearchText: searchText,
-        TotalRecordCount: response.TotalRecordCount
-      }));
+        response.FilteredRecordCount = data.length;
+
+        const offset = request.Skip;
+        const limit = request.Take;
+
+        if (request.Take > -1) {
+          response.TotalPages = Math.ceil(response.FilteredRecordCount / request.Take);
+
+          if (response.TotalPages > 0) {
+            response.CurrentPage = request.Skip / request.Take + 1;
+          }
+        }
+
+        response.AggregationPayload = this.getAggregatePayload(request, data);
+
+        data = _.slice(data, offset, offset + limit);
+
+        const rows = data.map((row: any) => {
+          const obj: any = {};
+
+          this.columns.forEach((column: any, key: any) => {
+            obj[column.Name] = row[key] || row[column.Name];
+          });
+
+          return obj;
+        });
+
+        response.Payload = rows;
+
+        resolve(new GridResponse({
+          Aggregate: response.AggregationPayload,
+          FilteredRecordCount: response.FilteredRecordCount,
+          Payload: response.Payload,
+          RowsPerPage: rowsPerPage,
+          SearchText: searchText,
+          TotalRecordCount: response.TotalRecordCount
+        }));
       } catch (error) {
         reject(error);
       }
-    })
-
-  public _updateDataStream(rowsPerPage: number, page: number, searchText: string) {
-    this.getAllRecords(rowsPerPage, page, searchText)
-      .then((data) => {
-        this.dataStream.onNext(data);
-      }).catch((error) => {
-        this.dataStream.onError(error);
-      });
+    });
   }
 
   public applyFreeTextSearch(request: any, subset: any[]) {
@@ -131,7 +110,7 @@ export default class LocalDataSource implements IDataSource {
   }
 
   public applyFiltering(request: any, subset: any[]) {
-    const filteredColumns  = request.Columns.filter((column: any) =>
+    const filteredColumns = request.Columns.filter((column: any) =>
       column.Filter && (column.Filter.Text || column.Filter.Argument) &&
       column.Filter && column.Filter.Operator.toLowerCase() !== CompareOperators.NONE.toLowerCase());
 
@@ -143,11 +122,11 @@ export default class LocalDataSource implements IDataSource {
           if (filterableColumn.DataType === 'datetime' ||
             filterableColumn.DataType === 'date' ||
             filterableColumn.DataType === 'datetimeutc') {
-              subset = subset.filter((row) =>
-                moment(row[filterableColumn.Name]).isSame(moment(filterableColumn.Filter.Text)));
-            } else {
-              subset = subset.filter((row) => row[filterableColumn.Name] === filterableColumn.Filter.Text);
-            }
+            subset = subset.filter((row) =>
+              moment(row[filterableColumn.Name]).isSame(moment(filterableColumn.Filter.Text)));
+          } else {
+            subset = subset.filter((row) => row[filterableColumn.Name] === filterableColumn.Filter.Text);
+          }
           break;
         case CompareOperators.NOT_EQUALS.toLowerCase():
           subset = subset.filter((row) => row[filterableColumn.Name] !== filterableColumn.Filter.Text);
@@ -178,55 +157,55 @@ export default class LocalDataSource implements IDataSource {
           break;
         case CompareOperators.GT.toLowerCase():
           if (filterableColumn.DataType === 'datetime' ||
-              filterableColumn.DataType === 'date' ||
-              filterableColumn.DataType === 'datetimeutc') {
-                subset = subset.filter((row) =>
-                  moment(row[filterableColumn.Name]).isAfter(moment(filterableColumn.Filter.Text)));
-            } else {
-              subset = subset.filter((row) => row[filterableColumn.Name] > filterableColumn.Filter.Text);
-            }
+            filterableColumn.DataType === 'date' ||
+            filterableColumn.DataType === 'datetimeutc') {
+            subset = subset.filter((row) =>
+              moment(row[filterableColumn.Name]).isAfter(moment(filterableColumn.Filter.Text)));
+          } else {
+            subset = subset.filter((row) => row[filterableColumn.Name] > filterableColumn.Filter.Text);
+          }
           break;
         case CompareOperators.GTE.toLowerCase():
           if (filterableColumn.DataType === 'datetime' ||
-              filterableColumn.DataType === 'date' ||
-              filterableColumn.DataType === 'datetimeutc') {
-                subset = subset.filter((row) =>
-                  moment(row[filterableColumn.Name]).isSameOrAfter(moment(filterableColumn.Filter.Text)));
-            } else {
-              subset = subset.filter((row) => row[filterableColumn.Name] >= filterableColumn.Filter.Text);
-            }
+            filterableColumn.DataType === 'date' ||
+            filterableColumn.DataType === 'datetimeutc') {
+            subset = subset.filter((row) =>
+              moment(row[filterableColumn.Name]).isSameOrAfter(moment(filterableColumn.Filter.Text)));
+          } else {
+            subset = subset.filter((row) => row[filterableColumn.Name] >= filterableColumn.Filter.Text);
+          }
           break;
         case CompareOperators.LT.toLowerCase():
           if (filterableColumn.DataType === 'datetime' ||
-              filterableColumn.DataType === 'date' ||
-              filterableColumn.DataType === 'datetimeutc') {
-                subset = subset.filter((row) =>
-                  moment(row[filterableColumn.Name]).isBefore(moment(filterableColumn.Filter.Text)));
-            } else {
-              subset = subset.filter((row) => row[filterableColumn.Name] < filterableColumn.Filter.Text);
-            }
+            filterableColumn.DataType === 'date' ||
+            filterableColumn.DataType === 'datetimeutc') {
+            subset = subset.filter((row) =>
+              moment(row[filterableColumn.Name]).isBefore(moment(filterableColumn.Filter.Text)));
+          } else {
+            subset = subset.filter((row) => row[filterableColumn.Name] < filterableColumn.Filter.Text);
+          }
           break;
         case CompareOperators.LTE.toLowerCase():
           if (filterableColumn.DataType === 'datetime' ||
-              filterableColumn.DataType === 'date' ||
-              filterableColumn.DataType === 'datetimeutc') {
-                subset = subset.filter((row) =>
-                  moment(row[filterableColumn.Name]).isSameOrBefore(moment(filterableColumn.Filter.Text)));
-            } else {
-              subset = subset.filter((row) => row[filterableColumn.Name] <= filterableColumn.Filter.Text);
-            }
+            filterableColumn.DataType === 'date' ||
+            filterableColumn.DataType === 'datetimeutc') {
+            subset = subset.filter((row) =>
+              moment(row[filterableColumn.Name]).isSameOrBefore(moment(filterableColumn.Filter.Text)));
+          } else {
+            subset = subset.filter((row) => row[filterableColumn.Name] <= filterableColumn.Filter.Text);
+          }
           break;
         case CompareOperators.BETWEEN.toLowerCase():
           if (filterableColumn.DataType === 'datetime' ||
-              filterableColumn.DataType === 'date' ||
-              filterableColumn.DataType === 'datetimeutc') {
-                subset = subset.filter((row) =>
-                  moment(row[filterableColumn.Name]).isSameOrAfter(moment(filterableColumn.Filter.Text)) &&
-                  moment(row[filterableColumn.Name]).isSameOrBefore(moment(filterableColumn.Filter.Argument[0])));
-            } else {
-              subset = subset.filter((row) => row[filterableColumn.Name] >= filterableColumn.Filter.Text &&
-                  row[filterableColumn.Name] <= filterableColumn.Filter.Argument[0]);
-            }
+            filterableColumn.DataType === 'date' ||
+            filterableColumn.DataType === 'datetimeutc') {
+            subset = subset.filter((row) =>
+              moment(row[filterableColumn.Name]).isSameOrAfter(moment(filterableColumn.Filter.Text)) &&
+              moment(row[filterableColumn.Name]).isSameOrBefore(moment(filterableColumn.Filter.Argument[0])));
+          } else {
+            subset = subset.filter((row) => row[filterableColumn.Name] >= filterableColumn.Filter.Text &&
+              row[filterableColumn.Name] <= filterableColumn.Filter.Argument[0]);
+          }
           break;
         default:
           throw new Error('Unsupported Compare Operator');

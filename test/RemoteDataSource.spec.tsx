@@ -69,7 +69,7 @@ describe('RemoteDataSource', () => {
         }));
     });
 
-    describe('When connect is called', () => {
+    describe('When retrieveData() is called', () => {
       describe('When the response is invalid', () => {
         before( () => {
           mock.reset();
@@ -79,7 +79,7 @@ describe('RemoteDataSource', () => {
         });
 
         it('Should return a payload', (done) => {
-          dataSource.connect(10, 0, '')
+          dataSource.retrieveData(10, 0, '')
             .skip(1).subscribe((r) => {
               expect(r.Payload).to.deep.equal(simpleRecordsExpected.Payload);
               expect(r.FilteredRecordCount).to.deep.equal(simpleRecordsExpected.FilteredRecordCount);
@@ -88,31 +88,6 @@ describe('RemoteDataSource', () => {
             }, (error: any) => {
               done();
             });
-        });
-
-        describe('When refresh is called', () => {
-          const dtSource = new RemoteDataSource('url', simpleColumnsSample);
-
-          before( () => {
-            mock.reset();
-            mock.onPost('url', { ...simpleRequest }).reply(200, {
-              ...simpleRecordsExpected
-            });
-            mock.onPost('url', { ...page2Request }).reply(200, {
-              ...page2Expected
-            });
-          });
-
-          it('Should refresh the DataStream', (done) => {
-            dtSource.connect(10, 0, '');
-            dtSource.refresh(10, 1, '');
-            dtSource.dataStream.skip(2).subscribe((r) => {
-              expect(r.Payload).to.deep.equal(page2Expected.Payload);
-              expect(r.FilteredRecordCount).to.deep.equal(page2Expected.FilteredRecordCount);
-              expect(r.TotalRecordCount).to.deep.equal(page2Expected.TotalRecordCount);
-              done();
-            });
-          });
         });
       });
 
@@ -130,7 +105,7 @@ describe('RemoteDataSource', () => {
         });
 
         it('Should throw an error', (done) => {
-          dtSource.connect(10, 0, '')
+          dtSource.retrieveData(10, 0, '')
             .subscribe((r) => r, (error: any) => {
               expect(error.message).to.be.equal('It\'s not a valid Tubular response object');
               done();
