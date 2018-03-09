@@ -20,8 +20,9 @@ function copyProps(src, target) {
   Object.defineProperties(target, props);
 }
 
-global.Blob = function Blob(params) {global.arc = params; return params}
-window.URL.createObjectURL = () => {return arc}
+global.Blob = function Blob(params) {global.blobValue = params; return params}
+window.URL.createObjectURL = () => {return blobValue}
+window.URL.revokeObjectURL = () => {return}
 window.localStorage = global.localStorage;
 global.window = window;
 
