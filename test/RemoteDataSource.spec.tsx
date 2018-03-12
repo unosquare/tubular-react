@@ -2,17 +2,14 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 import RemoteDataSource from '../src/DataGrid/RemoteDataSource';
-import { simpleColumnsSample, validColumnsSample } from './utils/columns';
+import { validColumnsSample } from './utils/columns';
 import {
-  descendingExpected,
   invalidResponseStructure,
   onlyMicrosoftExpected,
-  page2Expected,
   simpleRecordsExpected,
   twentyRecordsExpected,
   validResponseStructure
 } from './utils/data';
-import { page2Request, simpleRequest } from './utils/requests';
 
 describe('RemoteDataSource', () => {
   const dataSource = new RemoteDataSource('url', validColumnsSample);

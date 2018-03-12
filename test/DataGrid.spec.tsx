@@ -276,7 +276,7 @@ describe('<DataGrid />', () => {
       const wrapper = shallow(dataGrid);
 
       wrapper.state().dataSource.dataStream.skip(1).subscribe((r) => {
-        wrapper.instance().printTable(false);
+        wrapper.instance().printTable();
 
         setTimeout(() => {
           const csvFile = '<html>\n' +

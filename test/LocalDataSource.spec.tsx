@@ -1,5 +1,4 @@
-import { assert, expect } from 'chai';
-import * as moment from 'moment';
+import { expect } from 'chai';
 import { AggregateFunctions } from '../src/DataGrid';
 import { CompareOperators } from '../src/DataGrid/Column';
 import GridResponse from '../src/DataGrid/GridResponse';
@@ -13,9 +12,6 @@ import {
   validColumnsSampleDescending,
   validColumnsSampleMultipleSorting
 } from './utils/columns';
-import {
-  expected
-} from './utils/data';
 import localData from './utils/localData';
 import {
   expectedLocaDataSourcelResponse,
