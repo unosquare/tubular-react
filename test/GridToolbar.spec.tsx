@@ -19,8 +19,12 @@ describe('<GridToolbar/>', () => {
   let mountedToolbar;
   let props;
 
-  before(() => {
+  beforeEach(() => {
     shallow = createShallow({ dive: true });
+  });
+
+  afterEach(() => {
+    window.localStorage.removeItem('tubular.Tubular-React_searchText');
   });
 
   const toolbar = () => {
@@ -113,6 +117,25 @@ describe('<GridToolbar/>', () => {
       wrapper.find(IconButton).simulate('click', { currentTarget: document.createElement('button') });
       wrapper.update();
       assert.isNotNull(wrapper.state().anchorEl);
+    });
+  });
+
+  describe('exportCSV()', () => {
+    it('should update the state of \'anchorEl\' to \'null\'', () => {
+      props.isExportEnabled = true;
+      props.onExport = () => { return; };
+
+      const wrapper = shallow(<GridToolbar {...props}/>);
+      wrapper.setState({
+        anchorEl: document.createElement('button')
+      });
+
+      assert.isNotNull(wrapper.state().anchorEl);
+
+      wrapper.instance().exportCSV(true, { preventDefault: () => { return; } });
+      wrapper.update();
+
+      assert.isNull(wrapper.state().anchorEl);
     });
   });
 
