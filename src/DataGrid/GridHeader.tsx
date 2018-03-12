@@ -12,6 +12,7 @@ import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import { KeyboardEvent } from 'react';
 import { ColumnDataType, ColumnSortDirection, CompareOperators } from './Column';
+import ColumnModel from './ColumnModel';
 import DialogContent from './DialogContent';
 import DialogDropdown from './DialogDropdown';
 
@@ -62,7 +63,7 @@ interface IState {
   columnType: any;
   activeFilter: string;
   sorting: string;
-  firstFilterValue: string;
+  firstFilterValue: any;
   secondFilterValue: string;
   activeFilterColumn: string;
 }
@@ -135,7 +136,7 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
       this.filterHandler(parseFloat(firstValue), parseFloat(secondValue), true);
       break;
     case ColumnDataType.BOOLEAN:
-      this.filterHandler((firstValue === 'true'), 1, true);
+      this.filterHandler(firstValue === 'true', '', true);
       break;
     default:
       this.filterHandler(firstValue, secondValue, true);
@@ -154,39 +155,6 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
     }
   }
 
-  public localStorageHandler = (count: number, dataSource: any) => {
-    if (count >= dataSource.columns.length) {
-      return;
-    }
-
-    let firstValue = '';
-    let secondValue = '';
-
-    switch (dataSource.columns[count].DataType ) {
-    case ColumnDataType.DATE:
-    case ColumnDataType.DATE_TIME:
-    case ColumnDataType.DATE_TIME_UTC:
-      firstValue = moment().format();
-      secondValue = moment().format();
-      break;
-    default:
-      firstValue = dataSource.columns[count].Filter &&
-        dataSource.columns[count].Filter.Text && dataSource.columns[count].Filter.Text.toString();
-      secondValue = dataSource.columns[count].Filter &&
-        dataSource.columns[count].Filter.Argument[0] && dataSource.columns[count].Filter.Argument[0].toString();
-    }
-
-    this.setState({
-      activeFilter: dataSource.columns[count].Filter && dataSource.columns[count].Filter.Operator as string,
-      activeFilterColumn: dataSource.columns[count].Name,
-      columnType: dataSource.columns[count].DataType as any,
-      firstFilterValue: firstValue,
-      secondFilterValue: secondValue,
-    }, () => {
-      this.localStorageHandler(count + 1, dataSource);
-    });
-  }
-
   public componentDidMount() {
     if (localStorage.getItem(`tubular.${this.props.gridName}`)) {
       const storage = JSON.parse(localStorage.getItem(`tubular.${this.props.gridName}`));
@@ -199,13 +167,14 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
           if (dataSource.columns[i].Filter && element.Filter) {
             dataSource.columns[i].Filter.HasFilter = element.Filter.HasFilter;
             dataSource.columns[i].Filter.Operator = element.Filter.Operator;
-            dataSource.columns[i].Filter.Text = element.Filter.Text || '';
+            dataSource.columns[i].Filter.Text =
+              dataSource.columns[i].DataType === ColumnDataType.BOOLEAN ?
+                element.Filter.Text :
+                element.Filter.Text || '';
             dataSource.columns[i].Filter.Argument[0] = element.Filter.Argument[0] || '';
           }
         }
       });
-
-      this.localStorageHandler(0, dataSource);
     }
 
     document.addEventListener('keydown', (event) => this.handleKeyDown(event));
@@ -233,7 +202,7 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
     document.removeEventListener('keyup', (event) => this.handleKeyUp(event));
   }
 
-  public sortHandler = (event: React.MouseEvent<HTMLElement>, property: any) => {
+  public sortHandler = (property: string) => {
     const array = Object.assign({}, this.props.dataSource);
 
     array.columns.forEach( (column: any) => {
@@ -257,8 +226,8 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
           });
         }
 
-        const currentlySortedColumns = array.columns.filter((col: any) => col.SortOrder > 0)
-        .sort((a: any, b: any) => a.SortOrder === b.SortOrder ? 0 : a.SortOrder > b.SortOrder );
+        const currentlySortedColumns = array.columns.filter((col: ColumnModel) => col.SortOrder > 0)
+          .sort((a: ColumnModel, b: ColumnModel) => a.SortOrder === b.SortOrder ? 0 : a.SortOrder > b.SortOrder );
 
         currentlySortedColumns.forEach( ($column: any, i: number) => {
           $column.SortOrder = i + 1;
@@ -269,7 +238,7 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
     this.props.refreshGrid();
   }
 
-  public handleDatePicker = (name: string) => (event: any) => {
+  public handleDatePicker = (event: any, name: string) => {
     if (name === 'Value') {
       this.setState({
         firstFilterValue: event.format()
@@ -281,24 +250,20 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
     }
   }
 
-  public handleChange = (name: any, value: any) => {
-    this.setState({activeFilter: value });
-  }
-
-  public handleTextFieldChange = (event: any, name: string) => {
+  public handleTextFieldChange = (event: any) => {
     this.setState({
       firstFilterValue: event
     });
   }
 
-  public handleSecondTextFieldChange = (event: any, name: string) => {
+  public handleSecondTextFieldChange = (event: any) => {
     this.setState({
       secondFilterValue: event
     });
   }
 
-  public handleBooleanDropDown = (event: any) => {
-    this.setState({ activeFilter: event.target.value });
+  public handleChange = (event: any) => {
+    this.setState({activeFilter: event });
   }
 
   public render() {
@@ -326,7 +291,6 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
             value={this.state.firstFilterValue}
             value2={this.state.secondFilterValue}
             handleDatePicker={this.handleDatePicker}
-            handleBooleanDropDown={this.handleBooleanDropDown}
             handleTextFieldChange={this.handleTextFieldChange}
             handleSecondTextFieldChange={this.handleSecondTextFieldChange}
             handleApply={this.handleApply}
@@ -340,7 +304,7 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
               placement='bottom-start'
               enterDelay={300}
             >
-              <TableSortLabel onClick={(event: any) => this.sortHandler(event, column.Name)} >
+              <TableSortLabel onClick={(event: any) => this.sortHandler(column.Name)} >
                 {column.Label}
                 {column.SortDirection === ColumnSortDirection.ASCENDING ?
                   <ArrowUpward className={classes.arrowStyle} />

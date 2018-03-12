@@ -73,6 +73,46 @@ const simpleColumnsSample = [
   )
 ];
 
+const amountFilterColumnsSample = [
+  regularOrderIdCol,
+  new ColumnModel( 'CustomerName',
+    { Aggregate: AggregateFunctions.COUNT,
+      Filtering: true,
+      Searchable: true }
+  ),
+  new ColumnModel( 'ShippedDate',
+    { DataType: ColumnDataType.DATE_TIME,
+      Filtering: true }
+  ),
+  new ColumnModel( 'ShipperCity' ),
+  new ColumnModel( 'Amount',
+    { DataType: ColumnDataType.NUMERIC,
+      Filtering: true  }
+  )
+];
+
+const isShippedFilterColumnsSample = [
+  regularOrderIdCol,
+  new ColumnModel( 'CustomerName',
+    { Aggregate: AggregateFunctions.COUNT,
+      Filtering: true,
+      Searchable: true }
+  ),
+  new ColumnModel( 'ShippedDate',
+    { DataType: ColumnDataType.DATE_TIME,
+      Filtering: true }
+  ),
+  new ColumnModel( 'ShipperCity' ),
+  new ColumnModel( 'Amount',
+    { DataType: ColumnDataType.NUMERIC,
+      Filtering: true  }
+  ),
+  new ColumnModel( 'IsShipped',
+    { DataType: ColumnDataType.BOOLEAN,
+      Filtering: true }
+  )
+];
+
 // Columns for sorting
 
 const validColumnsSampleDescending = [
@@ -159,9 +199,11 @@ const aggregateColumnsSample = [
 ];
 
 export {
+  aggregateColumnsSample,
+  amountFilterColumnsSample,
   customAmountCol,
   customCustomerNameCol,
-  aggregateColumnsSample,
+  isShippedFilterColumnsSample,
   simpleColumnsSample,
   validColumnsSample,
   validColumnsSampleDescending,

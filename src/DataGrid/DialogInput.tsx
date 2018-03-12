@@ -6,7 +6,6 @@ import Dropdown from './Dropdown';
 import TextInput from './TextInput';
 
 const BooleanInputOperators = [
-  { Value: '', Title: '' },
   { Value: 'true', Title: 'True' },
   { Value: 'false', Title: 'False' }
 ];
@@ -18,15 +17,14 @@ interface IProps {
   disabled: boolean;
   label: string;
   mod: string;
-  value: string;
+  value: any;
   handleApply(): void;
-  handleBooleanDropDown(event: any): void;
-  handleDatePicker(name: string): (event: any) => void;
-  handleTextFieldChange(event: any, name: string): void;
+  handleDatePicker(event: any, name: string): void;
+  handleTextFieldChange(event: any): void;
 }
 
 const DialogInput: React.SFC<IProps> = ({ classes, disabled, value, columnType, activeFilter, label,
-  mod, handleApply, handleBooleanDropDown, handleDatePicker, handleTextFieldChange }) => {
+  mod, handleApply, handleDatePicker, handleTextFieldChange }) => {
 
     return (
       columnType === ColumnDataType.DATE ||
@@ -46,11 +44,11 @@ const DialogInput: React.SFC<IProps> = ({ classes, disabled, value, columnType, 
       (
         <Dropdown
           disabled={disabled}
-          value={value}
+          value={typeof(value) === 'boolean' ? value === true ? 'true' : 'false' : value}
           operators={BooleanInputOperators}
           classes={classes}
           activeFilter={activeFilter}
-          handleChange={handleBooleanDropDown}
+          handleChange={handleTextFieldChange}
         />
       )
         :

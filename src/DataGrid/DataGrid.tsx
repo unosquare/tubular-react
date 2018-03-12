@@ -1,4 +1,6 @@
 import { WithStyles, withStyles } from 'material-ui';
+import CheckBox from 'material-ui-icons/CheckBox';
+import CheckBoxOutlineBlank from 'material-ui-icons/CheckBoxOutlineBlank';
 import WarningIcon from 'material-ui-icons/Warning';
 import Paper from 'material-ui/Paper';
 import { StyleRules, Theme } from 'material-ui/styles';
@@ -10,6 +12,7 @@ import * as React from 'react';
 import * as Rx from 'rx';
 import BaseDataSource from './BaseDataSource';
 import { ColumnDataType } from './Column';
+import ColumnModel from './ColumnModel';
 import GridHeader from './GridHeader';
 import GridResponse from './GridResponse';
 import GridToolbar from './GridToolbar';
@@ -162,11 +165,13 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
               if (dataSource.columns[index] && !dataSource.columns[index].Visible) {
                 return '';
               }
-              return `<td>${dataSource.columns[index].DataType === ColumnDataType.DATE ||
+              return `<td>${
+                dataSource.columns[index].DataType === ColumnDataType.DATE ||
                 dataSource.columns[index].DataType === ColumnDataType.DATE_TIME ||
                 dataSource.columns[index].DataType === ColumnDataType.DATE_TIME_UTC ?
-                moment(cell).format('MMMM Do YYYY, h:mm:ss a') :
-                cell || 0}</td>`;
+                  moment(cell).format('MMMM Do YYYY, h:mm:ss a') :
+                dataSource.columns[index].DataType === ColumnDataType.BOOLEAN ? (cell === true ? 'Yes' : 'No') :
+                  cell || 0}</td>`;
             }).join(' ')}</tr>`;
           }).join(' ')}</tbody></table>`;
         popup.document.title = this.props.gridName;
@@ -193,7 +198,10 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
 
       for (let i = 0; i < row.length; i++) {
         if (visibility[i]) {
-          let innerValue = row[i] === null || row[i] === undefined ? '' : row[i].toString();
+          let innerValue = row[i] === null || row[i] === undefined ? '' :
+            (typeof(row[i]) === 'boolean') ? (row[i] === true && 'Yes') :
+            row[i].toString();
+
           if (moment(row[i], moment.ISO_8601, true).isValid()) {
             innerValue = moment(row[i]).format('MMMM Do YYYY, h:mm:ss a');
           }
@@ -245,6 +253,29 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
       });
   }
 
+  public renderCell = (column: ColumnModel, row: any) => {
+    let rows = null;
+
+    switch (column.DataType) {
+      case ColumnDataType.NUMERIC:
+        rows = row[column.Name] || 0;
+        break;
+      case ColumnDataType.DATE:
+      case ColumnDataType.DATE_TIME:
+      case ColumnDataType.DATE_TIME_UTC:
+        rows = moment(row[column.Name]).format('MMMM Do YYYY, h:mm:ss a') || '';
+        break;
+      case ColumnDataType.BOOLEAN:
+        rows =  (row[column.Name]) === true ? <CheckBox /> : <CheckBoxOutlineBlank />;
+        break;
+      default:
+        rows =  row[column.Name];
+        break;
+    }
+
+    return rows;
+  }
+
   public render() {
     const { classes, bodyRenderer, footerRenderer, showBottomPager,
       showTopPager, showPrintButton, showExportButton } = this.props;
@@ -257,16 +288,10 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
             ? bodyRenderer(row, rowIndex)
             : <TableRow hover={true} key={rowIndex}>
               {
-                dataSource.columns.filter((col: any) => col.Visible).map((column: any, colIndex: number) =>
-                  <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
+                dataSource.columns.filter((col: any) => col.Visible).map((column: ColumnModel, colIndex: number) =>
+                  <TableCell key={colIndex} padding={column.Label === '' ? 'none' : 'default'}>
                     {
-                      column.DataType === ColumnDataType.NUMERIC ?
-                        row[column.Name] || 0 :
-                        column.DataType === ColumnDataType.DATE
-                          || column.DataType === ColumnDataType.DATE_TIME
-                          || column.DataType === ColumnDataType.DATE_TIME_UTC
-                          ? moment(row[column.Name]).format('MMMM Do YYYY, h:mm:ss a') || ''
-                          : row[column.Name]
+                      this.renderCell(column, row)
                     }
                   </TableCell>)
               }

@@ -23,7 +23,7 @@ interface IProps {
   disabled: boolean;
   mod: string;
   value: string;
-  handleDatePicker(mod: string): any;
+  handleDatePicker(event: any, name: string): void;
 }
 
 const DateInput: React.SFC<IProps> = ({ columnType, disabled, value, mod, handleDatePicker }) => (
@@ -35,7 +35,7 @@ const DateInput: React.SFC<IProps> = ({ columnType, disabled, value, mod, handle
             disabled={disabled}
             style={{ width: '100%' }}
             value={value}
-            onChange={handleDatePicker(mod)}
+            onChange={(event) => handleDatePicker(event, mod)}
             leftArrowIcon={<LeftArrowIcon />}
             rightArrowIcon={<RightArrowIcon />}
             dateRangeIcon={<DateRangeIcon/>}
@@ -47,7 +47,7 @@ const DateInput: React.SFC<IProps> = ({ columnType, disabled, value, mod, handle
             disabled={disabled}
             style={{ width: '100%' }}
             value={value}
-            onChange={handleDatePicker(mod)}
+            onChange={(event) => handleDatePicker(event, mod)}
             leftArrowIcon={<LeftArrowIcon />}
             rightArrowIcon={<RightArrowIcon />}
             format={'MMMM Do YYYY'}
