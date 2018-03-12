@@ -60,6 +60,9 @@ typings/
 #Build directory
 build
 
+# Examples bundle	
+sample/app/bundle.js
+
 package-lock.json
 
 .vscode/*
