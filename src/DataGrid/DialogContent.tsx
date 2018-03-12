@@ -13,19 +13,18 @@ interface IProps {
   value: any;
   value2: any;
   handleApply(): void;
-  handleBooleanDropDown(event: any): void;
   handleClear(): void;
-  handleDatePicker(name: string): (event: any) => void;
-  handleTextFieldChange(event: any, name: string): void;
-  handleSecondTextFieldChange(event: any, name: string): void;
+  handleDatePicker(event: any, name: string): void;
+  handleTextFieldChange(event: any): void;
+  handleSecondTextFieldChange(event: any): void;
 }
 
 const DialogContent: React.SFC<IProps> = ({
   classes, value, value2, columnType, activeFilter, operator,
-  handleDatePicker, handleBooleanDropDown, handleTextFieldChange,
-   handleApply, handleClear, handleSecondTextFieldChange }) => {
-  let firstValue = '';
-  let secondValue = '';
+  handleDatePicker, handleTextFieldChange, handleApply,
+  handleClear, handleSecondTextFieldChange }) => {
+  let firstValue;
+  let secondValue;
 
   switch (columnType) {
   case ColumnDataType.DATE:
@@ -35,7 +34,7 @@ const DialogContent: React.SFC<IProps> = ({
     secondValue = value2 ? value2 : moment().format();
     break;
   case ColumnDataType.BOOLEAN:
-    firstValue = operator === CompareOperators.NONE ? '' : value || '';
+    firstValue = operator === CompareOperators.NONE ? '' : value;
     break;
   default:
     firstValue = operator === CompareOperators.NONE ? '' : value || '';
@@ -54,7 +53,6 @@ const DialogContent: React.SFC<IProps> = ({
         columnType={columnType}
         activeFilter={activeFilter}
         handleDatePicker={handleDatePicker}
-        handleBooleanDropDown={handleBooleanDropDown}
         handleTextFieldChange={handleTextFieldChange}
       />
 
@@ -69,7 +67,6 @@ const DialogContent: React.SFC<IProps> = ({
           columnType={columnType}
           activeFilter={activeFilter}
           handleDatePicker={handleDatePicker}
-          handleBooleanDropDown={handleBooleanDropDown}
           handleTextFieldChange={handleSecondTextFieldChange}
         />}
 

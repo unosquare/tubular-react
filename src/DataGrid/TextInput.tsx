@@ -10,15 +10,11 @@ interface IProps {
   mod: string;
   value: string;
   handleApply(): void;
-  handleTextFieldChange(event: any, mod: string): void;
+  handleTextFieldChange(event: any): void;
 }
 
 const TextInput: React.SFC<IProps> =
   ({ activeFilter, disabled, handleApply, handleTextFieldChange, label, mod, value }) => {
-
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    handleTextFieldChange(event.target.value, mod);
-  };
 
   return(
     <div style={{ padding: '15px 20px 5px 20px' }}>
@@ -29,7 +25,7 @@ const TextInput: React.SFC<IProps> =
         placeholder={label}
         value={value}
         onKeyUp={(e) => e.key === 'Enter' && handleApply()}
-        onChange={handleInputChange}
+        onChange={(event) => handleTextFieldChange(event.target.value)}
       />
       <br />
     </div>
