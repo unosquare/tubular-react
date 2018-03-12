@@ -12,6 +12,7 @@ import * as React from 'react';
 import * as Rx from 'rx';
 import BaseDataSource from './BaseDataSource';
 import { ColumnDataType } from './Column';
+import ColumnModel from './ColumnModel';
 import GridHeader from './GridHeader';
 import GridResponse from './GridResponse';
 import GridToolbar from './GridToolbar';
@@ -252,7 +253,7 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
       });
   }
 
-  public renderCell = (column: any, row: any) => {
+  public renderCell = (column: ColumnModel, row: any) => {
     let rows = null;
 
     switch (column.DataType) {
@@ -287,8 +288,8 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
             ? bodyRenderer(row, rowIndex)
             : <TableRow hover={true} key={rowIndex}>
               {
-                dataSource.columns.filter((col: any) => col.Visible).map((column: any, colIndex: number) =>
-                  <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
+                dataSource.columns.filter((col: any) => col.Visible).map((column: ColumnModel, colIndex: number) =>
+                  <TableCell key={colIndex} padding={column.Label === '' ? 'none' : 'default'}>
                     {
                       this.renderCell(column, row)
                     }
