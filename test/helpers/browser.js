@@ -20,9 +20,9 @@ function copyProps(src, target) {
   Object.defineProperties(target, props);
 }
 
-global.Blob = function Blob(params) {global.blobValue = params; return params};
-window.URL.createObjectURL = () => {return global.blobValue};
-window.URL.revokeObjectURL = () => {return};
+global.Blob = function Blob(params) {global.blobValue = params; return params;};
+window.URL.createObjectURL = () => {return global.blobValue;};
+window.URL.revokeObjectURL = () => {return;};
 
 window.open = (URL, name, specs) => {
   global.popupWindow = '<html>';
