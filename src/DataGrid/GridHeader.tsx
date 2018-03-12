@@ -202,7 +202,7 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
     document.removeEventListener('keyup', (event) => this.handleKeyUp(event));
   }
 
-  public sortHandler = (property: any) => {
+  public sortHandler = (property: string) => {
     const array = Object.assign({}, this.props.dataSource);
 
     array.columns.forEach( (column: any) => {
