@@ -252,7 +252,7 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
       });
   }
 
-  public columnRendering = (column: any, row: any) => {
+  public renderCell = (column: any, row: any) => {
     let rows = null;
 
     switch (column.DataType) {
@@ -290,7 +290,7 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
                 dataSource.columns.filter((col: any) => col.Visible).map((column: any, colIndex: number) =>
                   <TableCell key={colIndex} padding={column.label === '' ? 'none' : 'default'}>
                     {
-                      this.columnRendering(column, row)
+                      this.renderCell(column, row)
                     }
                   </TableCell>)
               }
