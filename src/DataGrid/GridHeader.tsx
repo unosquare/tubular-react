@@ -12,6 +12,7 @@ import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import { KeyboardEvent } from 'react';
 import { ColumnDataType, ColumnSortDirection, CompareOperators } from './Column';
+import ColumnModel from './ColumnModel';
 import DialogContent from './DialogContent';
 import DialogDropdown from './DialogDropdown';
 
@@ -225,8 +226,8 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
           });
         }
 
-        const currentlySortedColumns = array.columns.filter((col: any) => col.SortOrder > 0)
-          .sort((a: any, b: any) => a.SortOrder === b.SortOrder ? 0 : a.SortOrder > b.SortOrder );
+        const currentlySortedColumns = array.columns.filter((col: ColumnModel) => col.SortOrder > 0)
+          .sort((a: ColumnModel, b: ColumnModel) => a.SortOrder === b.SortOrder ? 0 : a.SortOrder > b.SortOrder );
 
         currentlySortedColumns.forEach( ($column: any, i: number) => {
           $column.SortOrder = i + 1;
