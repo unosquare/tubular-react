@@ -129,6 +129,45 @@ describe('<DataGrid />', () => {
     });
   });
 
+  describe('When rowsPerPageOptions is not defined and rowsPerPage is invalid', () => {
+    it('should set an error Message, and open a Snackbar', () => {
+      grid = (
+        <DataGrid
+          onError={(x: any) => x}
+          gridName='Motorhead'
+          rowsPerPage={15}
+          dataSource={new RemoteDataSource('url', validColumnsSample)}
+          bodyRenderer={bodyRenderer}
+        />
+      );
+
+      const wrapper = shallow(grid);
+
+      expect(wrapper.state().message).to.be.equal('The rowsPerPage value should be: 10,20,50,100');
+      expect(wrapper.state().open).to.be.equal(true);
+    });
+  });
+
+  describe('When rowsPerPageOptions is defined and rowsPerPage is invalid', () => {
+    it('should set an error Message, and open a Snackbar', () => {
+      grid = (
+        <DataGrid
+          onError={(x: any) => x}
+          gridName='Motorhead'
+          rowsPerPage={20}
+          rowsPerPageOptions={[10, 25, 50]}
+          dataSource={new RemoteDataSource('url', validColumnsSample)}
+          bodyRenderer={bodyRenderer}
+        />
+      );
+
+      const wrapper = shallow(grid);
+
+      expect(wrapper.state().message).to.be.equal('The rowsPerPage value should be: 10,25,50');
+      expect(wrapper.state().open).to.be.equal(true);
+    });
+  });
+
   describe('When footer has no rows', () => {
     it('should not render any row', () => {
       const wrapper = shallow(grid);
