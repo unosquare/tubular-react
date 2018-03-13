@@ -101,17 +101,18 @@ Using a custom body and footer renderer
 ### Props 
 These are all the available props (and their default values) for the `<DataGrid />` component.
 
-| Name           | Type                                   | Default Value | Description                                  |
-|----------------|----------------------------------------|---------------|----------------------------------------------|
-| datasource     | `RemoteDataSource` or `LocalDataSource`|               |    **Required**                              |
-| gridName       | `string`                               |       ''      |                                              |      
-| rowsPerPage    | `number`                               |       10      |                                              |
-| showBottomPager| `bool`                                 |    `false`    |                                              |
-| showTopPager   | `bool`                                 |    `false`    |                                              |
-| showPrintButton| `bool`                                 |    `false`    |                                              |
-|showExportButton| `bool`                                 |    `false`    |                                              |
-| bodyRenderer   | `function`                             |   undefined   |                                              |
-| footerRenderer | `function`                             |   undefined   |                                              |
+| Name             | Type                                   | Default Value   | Description                                  |
+|------------------|----------------------------------------|-----------------|----------------------------------------------|
+| datasource       | `RemoteDataSource` or `LocalDataSource`|                 |    **Required**                              |
+| gridName         | `string`                               |       ''        |                                              |      
+| rowsPerPage      | `number`                               |       10        | It should be 10, 20, 50 or 100 if rowsPerPageOptions is not defined, and if rowsPerPageOptions its defined it should be a number thats inside the rowsPerPageOptions array|
+|rowsPerPageOptions| `array`                                |[10, 20, 50, 100]|                                              |
+| showBottomPager  | `bool`                                 |     `false`     |                                              |
+| showTopPager     | `bool`                                 |     `false`     |                                              |
+| showPrintButton  | `bool`                                 |     `false`     |                                              |
+| showExportButton | `bool`                                 |     `false`     |                                              |
+| bodyRenderer     | `function`                             |    undefined    |                                              |
+| footerRenderer   | `function`                             |    undefined    |                                              |
 
 
 ### `DataSource`
