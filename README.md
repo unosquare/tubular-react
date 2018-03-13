@@ -20,7 +20,7 @@ If you are looking for Angular2 components, check [Tubular2](https://github.com/
 Please visit the [Tubular GitHub Page](http://unosquare.github.io/tubular) to learn how quickly you can start coding. Don't forget to check out the Tubular Generator which quickly turns models into an awesome UIs!
 
 ## Dependencies
-* [Material-UI](https://material-ui-next.com/) - Next
+* [Material-UI](https://material-ui-next.com/) - Next Version: Beta 34
 
 ## npm Installation 
 ```
@@ -52,7 +52,8 @@ const columns = [
       Filtering: true,
       Searchable: true,
       Sortable: true }
-  )
+  ),
+  new ColumnModel( 'ShipperCity' )
 ];
 
 class CustomComponent extends React.Component {
@@ -103,18 +104,24 @@ These are all the available props (and their default values) for the `<DataGrid 
 | Name           | Type                                   | Default   | Description                                  |
 |----------------|----------------------------------------|-----------|----------------------------------------------|
 | datasource     | `RemoteDataSource` or `LocalDataSource`|           |    **Required**                              |
-| gridName       | `string`                               | ''        |                                              |      
+| gridName       | `string`                               |     ''    |                                              |      
 | rowsPerPage    | `number`                               |     10    |                                              |
-| showBottomPager| `bool`                                 | `false`   |                                              |
-| showTopPager   | `bool`                                 |` false`   |                                              |
-| showPrintButton| `bool`                                 | `false`   |                                              |
-|showExportButton| `bool`                                 | `false`   |                                              |
-| bodyRenderer   | `function`                             |           |                                              |
-| footerRenderer | `function`                             |           |                                              |
+| showBottomPager| `bool`                                 |  `false`  |                                              |
+| showTopPager   | `bool`                                 |  `false`  |                                              |
+| showPrintButton| `bool`                                 |  `false`  |                                              |
+|showExportButton| `bool`                                 |  `false`  |                                              |
+| bodyRenderer   | `function`                             | undefined |                                              |
+| footerRenderer | `function`                             | undefined |                                              |
 
 
 ### `DataSource`
-`<DataGrid/>` requires a dataSource prop which is an instance of the `RemoteDataSource` class, that deals with data retrieval among other things. At the same time, `RemoteDataSource` needs both a URL and a `ColumnModel` array.
+`<DataGrid/>` requires a dataSource prop which can be an instance of the `RemoteDataSource` class or the `LocalDataSource` class, that deals with data retrieval among other things. 
+
+### `RemoteDataSource`
+`RemoteDataSource` needs both a URL and a `ColumnModel` array.
+
+### `LocalDataSource`
+`LocalDataSource` needs both an array of data and a `ColumnModel` array.
 
 ### `ColumnModel` 
 It represents a `DataGrid` column and its constructor requires an identifier as well as an object of column options with these properties and default values:
@@ -122,15 +129,16 @@ It represents a `DataGrid` column and its constructor requires an identifier as 
 | Name          | Type             | Default           | Description                                  |
 |---------------|------------------|-------------------|----------------------------------------------|
 | Aggregate     |AggregateFunctions|     NONE          | The aggregation function that will be applied to this column|
-| DataType      | ColumnDataType   |       STRING      |        the column type                       |
-| Filtering     | bool             | false             |        activates filtering                   |
-| IsKey         | bool             |  false            |   defines if a column is an identifier or not|
-| Label         | string           |                   |     column label that will be shown          |
-| Searchable    | bool             |     true          |indicates that a column can be used to search upon|
+| DataType      | ColumnDataType   |       STRING      |        The column type                       |
+| Filtering     | bool             | false             |        Activates filtering                   |
+| IsKey         | bool             |  false            |   Defines if a column is an identifier or not|
+| Label         | string           |    Name           |     Column label that will be shown          |
+| Name          | string           |                   | This field is required to crete a new column |
+| Searchable    | bool             |     true          |Indicates that a column can be used to search upon|
 | SortDirection |ColumnSortDirection|       NONE       |                                              |
-| SortOrder     | number           |                   |                                              |
-| Sortable      | bool             |                   |   determines if a column can be sorted       |
-| Visible       | bool             |     true          |  specifies if a column should be shown       |
+| SortOrder     | number           |         -1        |                                              |
+| Sortable      | bool             |      false        |   Determines if a column can be sorted       |
+| Visible       | bool             |     true          |  Specifies if a column should be shown       |
 
 
 ## Run integrated sample
