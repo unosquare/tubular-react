@@ -121,10 +121,10 @@ These are all the available props (and their default values) for the `<DataGrid 
 `RemoteDataSource` needs both a URL and a `ColumnModel` array.
 
 ### `LocalDataSource`
-`LocalDataSource` needs both an array of data and a `ColumnModel` array.
+`LocalDataSource` needs both an array of data objects and a `ColumnModel` array.
 
 ### `ColumnModel` 
-It represents a `DataGrid` column and its constructor requires an identifier as well as an object of column options with these properties and default values:
+It represents a `DataGrid` column and its constructor requires a name identifier as well as an object of column options with these properties and default values:
 
 | Name          | Type             | Default           | Description                                  |
 |---------------|------------------|-------------------|----------------------------------------------|
@@ -133,7 +133,6 @@ It represents a `DataGrid` column and its constructor requires an identifier as 
 | Filtering     | bool             | false             |        Activates filtering                   |
 | IsKey         | bool             |  false            |   Defines if a column is an identifier or not|
 | Label         | string           |    Name           |     Column label that will be shown          |
-| Name          | string           |                   | This field is required to crete a new column |
 | Searchable    | bool             |     true          |Indicates that a column can be used to search upon|
 | SortDirection |ColumnSortDirection|       NONE       |                                              |
 | SortOrder     | number           |         -1        |                                              |
