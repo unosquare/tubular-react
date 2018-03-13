@@ -105,8 +105,8 @@ These are all the available props (and their default values) for the `<DataGrid 
 |------------------|----------------------------------------|-----------------|----------------------------------------------|
 | datasource       | `RemoteDataSource` or `LocalDataSource`|                 |    **Required**                              |
 | gridName         | `string`                               |       ''        |                                              |      
-| rowsPerPage      | `number`                               |       10        | It should be 10, 20, 50 or 100 if rowsPerPageOptions is not defined, and if rowsPerPageOptions its defined it should be a number thats inside the rowsPerPageOptions array|
-|rowsPerPageOptions| `array`                                |[10, 20, 50, 100]|                                              |
+| rowsPerPage      | `number`                               |       10        |It should be a number thats inside the rowsPerPageOptions array|
+|rowsPerPageOptions| `array`                                |[10, 20, 50, 100]| The options that are going to be shown in the Page Size dropdown|
 | showBottomPager  | `bool`                                 |     `false`     |                                              |
 | showTopPager     | `bool`                                 |     `false`     |                                              |
 | showPrintButton  | `bool`                                 |     `false`     |                                              |
@@ -129,16 +129,16 @@ It represents a `DataGrid` column and its constructor requires a name identifier
 
 | Name          | Type              | Default Value     | Description                                                  |Options   |
 |---------------|-------------------|-------------------|--------------------------------------------------------------|----------|
-| Aggregate     | AggregateFunctions|        NONE       | The aggregation function that will be applied to this column |NONE, SUM, AVERAGE, COUNT, DISTINCT_COUNT, MAX, MIN|
-| DataType      | ColumnDataType    |      STRING       |                        The column type                       |STRING, NUMERIC, BOOLEAN, DATE, DATE_TIME, DATE_TIME_UTC|
-| Filtering     | bool              |       false       |                       Enables filtering                      |          |
-| IsKey         | bool              |       false       |         Defines if a column is an identifier or not          |          |
-| Label         | string            |     Name value    |               Column label that will be shown                |          |
-| Searchable    | bool              |       true        |     Indicates that a column can be used to search upon       |          |
-| SortDirection |ColumnSortDirection|       NONE        |                                                              |NONE, ASCENDING, DESCENDING|
-| SortOrder     | number            |         -1        |                                                              |          |
-| Sortable      | bool              |       false       |            Determines if a column can be sorted              |          |
-| Visible       | bool              |       true        |            Specifies if a column should be shown             |          |
+| Aggregate     | AggregateFunctions|         NONE         | The aggregation function that will be applied to this column |NONE, SUM, AVERAGE, COUNT, DISTINCT_COUNT, MAX, MIN|
+| DataType      | ColumnDataType    |       STRING         |                        The column type                       |STRING, NUMERIC, BOOLEAN, DATE, DATE_TIME, DATE_TIME_UTC|
+| Filtering     | bool              |        false         |                       Enables filtering                      |          |
+| IsKey         | bool              |        false         |         Defines if a column is an identifier or not          |          |
+| Label         | string            |The name of the column|               Column label that will be shown                |          |
+| Searchable    | bool              |        true          |     Indicates that a column can be used to search upon       |          |
+| SortDirection |ColumnSortDirection|        NONE          |                                                              |NONE, ASCENDING, DESCENDING|
+| SortOrder     | number            |         -1           |                                                              |          |
+| Sortable      | bool              |        false         |            Determines if a column can be sorted              |          |
+| Visible       | bool              |        true          |            Specifies if a column should be shown             |          |
 
 ## Run integrated sample
 
