@@ -20,7 +20,7 @@ If you are looking for Angular2 components, check [Tubular2](https://github.com/
 Please visit the [Tubular GitHub Page](http://unosquare.github.io/tubular) to learn how quickly you can start coding. Don't forget to check out the Tubular Generator which quickly turns models into an awesome UIs!
 
 ## Dependencies
-* [Material-UI](https://material-ui-next.com/) - Next Version: Beta 34
+* [Material-UI Next](https://material-ui-next.com/) - Version: Beta 34
 
 ## npm Installation 
 ```
@@ -101,21 +101,21 @@ Using a custom body and footer renderer
 ### Props 
 These are all the available props (and their default values) for the `<DataGrid />` component.
 
-| Name           | Type                                   | Default   | Description                                  |
-|----------------|----------------------------------------|-----------|----------------------------------------------|
-| datasource     | `RemoteDataSource` or `LocalDataSource`|           |    **Required**                              |
-| gridName       | `string`                               |     ''    |                                              |      
-| rowsPerPage    | `number`                               |     10    |                                              |
-| showBottomPager| `bool`                                 |  `false`  |                                              |
-| showTopPager   | `bool`                                 |  `false`  |                                              |
-| showPrintButton| `bool`                                 |  `false`  |                                              |
-|showExportButton| `bool`                                 |  `false`  |                                              |
-| bodyRenderer   | `function`                             | undefined |                                              |
-| footerRenderer | `function`                             | undefined |                                              |
+| Name           | Type                                   | Default Value | Description                                  |
+|----------------|----------------------------------------|---------------|----------------------------------------------|
+| datasource     | `RemoteDataSource` or `LocalDataSource`|               |    **Required**                              |
+| gridName       | `string`                               |       ''      |                                              |      
+| rowsPerPage    | `number`                               |       10      |                                              |
+| showBottomPager| `bool`                                 |    `false`    |                                              |
+| showTopPager   | `bool`                                 |    `false`    |                                              |
+| showPrintButton| `bool`                                 |    `false`    |                                              |
+|showExportButton| `bool`                                 |    `false`    |                                              |
+| bodyRenderer   | `function`                             |   undefined   |                                              |
+| footerRenderer | `function`                             |   undefined   |                                              |
 
 
 ### `DataSource`
-`<DataGrid/>` requires a dataSource prop which can be an instance of the `RemoteDataSource` class or the `LocalDataSource` class, that deals with data retrieval among other things. 
+`<DataGrid/>` requires a dataSource which can be an instance of the `RemoteDataSource` class or the `LocalDataSource` class, that deals with data retrieval among other things. 
 
 ### `RemoteDataSource`
 `RemoteDataSource` needs both a URL and a `ColumnModel` array.
@@ -124,21 +124,20 @@ These are all the available props (and their default values) for the `<DataGrid 
 `LocalDataSource` needs both an array of data objects and a `ColumnModel` array.
 
 ### `ColumnModel` 
-It represents a `DataGrid` column and its constructor requires a name identifier as well as an object of column options with these properties and default values:
+It represents a `DataGrid` column and its constructor requires a name identifier as well as an object of column options with the following properties:
 
-| Name          | Type             | Default           | Description                                  |
-|---------------|------------------|-------------------|----------------------------------------------|
-| Aggregate     |AggregateFunctions|     NONE          | The aggregation function that will be applied to this column|
-| DataType      | ColumnDataType   |       STRING      |        The column type                       |
-| Filtering     | bool             | false             |        Activates filtering                   |
-| IsKey         | bool             |  false            |   Defines if a column is an identifier or not|
-| Label         | string           |    Name           |     Column label that will be shown          |
-| Searchable    | bool             |     true          |Indicates that a column can be used to search upon|
-| SortDirection |ColumnSortDirection|       NONE       |                                              |
-| SortOrder     | number           |         -1        |                                              |
-| Sortable      | bool             |      false        |   Determines if a column can be sorted       |
-| Visible       | bool             |     true          |  Specifies if a column should be shown       |
-
+| Name          | Type              | Default Value     | Description                                                  |Options   |
+|---------------|-------------------|-------------------|--------------------------------------------------------------|----------|
+| Aggregate     | AggregateFunctions|        NONE       | The aggregation function that will be applied to this column |NONE, SUM, AVERAGE, COUNT, DISTINCT_COUNT, MAX, MIN|
+| DataType      | ColumnDataType    |      STRING       |                        The column type                       |STRING, NUMERIC, BOOLEAN, DATE, DATE_TIME, DATE_TIME_UTC|
+| Filtering     | bool              |       false       |                       Enables filtering                      |          |
+| IsKey         | bool              |       false       |         Defines if a column is an identifier or not          |          |
+| Label         | string            |     Name value    |               Column label that will be shown                |          |
+| Searchable    | bool              |       true        |     Indicates that a column can be used to search upon       |          |
+| SortDirection |ColumnSortDirection|       NONE        |                                                              |NONE, ASCENDING, DESCENDING|
+| SortOrder     | number            |         -1        |                                                              |          |
+| Sortable      | bool              |       false       |            Determines if a column can be sorted              |          |
+| Visible       | bool              |       true        |            Specifies if a column should be shown             |          |
 
 ## Run integrated sample
 
