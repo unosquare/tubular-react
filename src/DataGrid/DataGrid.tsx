@@ -262,10 +262,10 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
       csvFile += processRow(header);
     }
     if (filtered) {
-      count = filteredRecordCount;
+      count = this.state.rowsPerPage;
       search = searchText;
     } else {
-      count = totalRecordCount;
+      count = filteredRecordCount;
       search = '';
     }
 
