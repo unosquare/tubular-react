@@ -4,6 +4,7 @@ import CheckBox from 'material-ui-icons/CheckBox';
 import CheckBoxOutlineBlank from 'material-ui-icons/CheckBoxOutlineBlank';
 import WarningIcon from 'material-ui-icons/Warning';
 import Paper from 'material-ui/Paper';
+import Snackbar from 'material-ui/Snackbar';
 import { StyleRules, Theme } from 'material-ui/styles';
 import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
 import Typography from 'material-ui/Typography';
@@ -52,13 +53,15 @@ const styles = (theme: Theme): StyleRules<keyof typeof styleClasses> => (
 
 interface IState {
   aggregate: any;
+  data: any[];
+  dataSource: BaseDataSource;
+  filteredRecordCount: number;
+  message: string;
+  open: boolean;
   page: number;
   rowsPerPage: number;
-  dataSource: BaseDataSource;
   searchText: string;
-  data: any[];
   totalRecordCount: number;
-  filteredRecordCount: number;
 }
 
 interface IProps {
@@ -66,6 +69,7 @@ interface IProps {
   gridName: string;
   page?: number;
   rowsPerPage: number;
+  rowsPerPageOptions?: number[];
   showBottomPager?: boolean;
   showTopPager?: boolean;
   showPrintButton?: boolean;
@@ -87,6 +91,8 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
     data: [] as any,
     dataSource: this.props.dataSource,
     filteredRecordCount: 0,
+    message: '',
+    open: false,
     page: this.props.page,
     rowsPerPage: this.props.rowsPerPage,
     searchText: '',
@@ -94,7 +100,10 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
   };
 
   public componentDidMount() {
-    const pageSize = parseInt(localStorage.getItem(`tubular.${this.props.gridName}_pageSize`), 10) || 10;
+    this.rowsPerPageChecker();
+
+    const pageSize = parseInt(localStorage.getItem(`tubular.${this.props.gridName}_pageSize`), 10) ||
+      this.props.rowsPerPage;
     const searchText = localStorage.getItem(`tubular.${this.props.gridName}_searchText`) || '';
 
     this.state.dataSource.retrieveData(pageSize, this.state.page, searchText)
@@ -118,6 +127,31 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
 
   public componentWillMount() {
     this.handleTextSearch = debounce(this.handleTextSearch, 600);
+  }
+
+  public rowsPerPageChecker = () => {
+    if (this.props.rowsPerPageOptions) {
+      const index = this.props.rowsPerPageOptions.indexOf(this.props.rowsPerPage);
+
+      if (index === -1) {
+        this.setState({
+          message: 'The rowsPerPage value should be: ' + this.props.rowsPerPageOptions.toString()
+        },
+          () => this.handleOpen()
+        );
+      }
+    } else {
+      const rowsPerPageOptions = [10, 20, 50, 100];
+      const index = rowsPerPageOptions.indexOf(this.props.rowsPerPage);
+
+      if (index === -1) {
+        this.setState({
+          message: 'The rowsPerPage value should be: ' + rowsPerPageOptions.toString()
+        },
+          () => this.handleOpen()
+        );
+      }
+    }
   }
 
   public handleTextSearch = (searchText: string) => {
@@ -281,8 +315,16 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
     return rows;
   }
 
+  public handleClose = () => {
+    this.setState({ open: false });
+  }
+
+  public handleOpen = () => {
+    this.setState({ open: true });
+  }
+
   public render() {
-    const { classes, bodyRenderer, footerRenderer, showBottomPager,
+    const { classes, bodyRenderer, footerRenderer, showBottomPager, rowsPerPageOptions,
       showTopPager, showPrintButton, showExportButton } = this.props;
     const { data, rowsPerPage, page, dataSource, aggregate, filteredRecordCount, totalRecordCount } = this.state;
 
@@ -318,6 +360,7 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
       <TableRow>
         <Paginator
           rowsPerPage={rowsPerPage}
+          rowsPerPageOptions={rowsPerPageOptions}
           page={page}
           filteredRecordCount={filteredRecordCount}
           totalRecordCount={totalRecordCount}
@@ -326,8 +369,23 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
       </TableRow>
     );
 
+    const snackbar = (
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={4000}
+        style={{ paddingTop: '10px' }}
+        open={this.state.open}
+        onClose={this.handleClose}
+        SnackbarContentProps={{
+          'aria-describedby': 'message-id',
+        }}
+        message={<span id='message-id'>{this.state.message}</span>}
+      />
+    );
+
     return (
       <Paper className={classes.root}>
+        {snackbar}
         <GridToolbar
           filteredRecordCount={filteredRecordCount}
           gridName={this.props.gridName}
