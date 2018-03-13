@@ -5,7 +5,7 @@ import * as Enzyme from 'enzyme';
 import * as Adapter from 'enzyme-adapter-react-16';
 import Dialog from 'material-ui/Dialog';
 import IconButton from 'material-ui/IconButton';
-import Table, { TableCell, TableHead, TableRow, TableSortLabel } from 'material-ui/Table';
+import Table, { TableCell, TableHead, TableRow } from 'material-ui/Table';
 import { createMount, createShallow } from 'material-ui/test-utils';
 import * as React from 'react';
 import * as sinon from 'sinon';

@@ -1,3 +1,4 @@
+import { debounce } from 'lodash';
 import { WithStyles, withStyles } from 'material-ui';
 import CheckBox from 'material-ui-icons/CheckBox';
 import CheckBoxOutlineBlank from 'material-ui-icons/CheckBoxOutlineBlank';
@@ -92,10 +93,7 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
     totalRecordCount: 0
   };
 
-  private search: Rx.Subject<{}>;
-
   public componentDidMount() {
-    this.search = new Rx.Subject();
     const pageSize = parseInt(localStorage.getItem(`tubular.${this.props.gridName}_pageSize`), 10) || 10;
     const searchText = localStorage.getItem(`tubular.${this.props.gridName}_searchText`) || '';
 
@@ -116,14 +114,14 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
 
         this.props.onError(error);
       });
+  }
 
-    this.search.debounce(600).subscribe(() => {
-      this.refreshGrid();
-    });
+  public componentWillMount() {
+    this.handleTextSearch = debounce(this.handleTextSearch, 600);
   }
 
   public handleTextSearch = (searchText: string) => {
-    this.setState({ searchText }, () => this.search.onNext({}));
+    this.setState({ searchText }, () => this.refreshGrid());
   }
 
   public handlePager = (rowsPerPage: number, page: number) => {
@@ -152,6 +150,7 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
         const popup = window.open('about:blank', 'Print', 'location=0,height=500,width=800');
         popup.document
           .write('<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.min.css" />');
+
         const tableHtml = `<table class="table table-bordered table-striped"><thead><tr>${
           dataSource.columns
             .filter((c: any) => c.Visible)
@@ -189,6 +188,7 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
     const visibility = dataSource.columns.map((x: any) => x.Visible);
     let count;
     let search;
+
     const processRow = (row: any) => {
       if (row instanceof Object) {
         row = Object.keys(row).map((key: any) => row[key]);
@@ -244,10 +244,15 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
         const blob = new Blob([`\uFEFF${csvFile}`], {
           type: 'text/csv;charset=utf-8;'
         });
+
         const fileURL = URL.createObjectURL(blob);
         const downloadLink = document.createElement('a');
+
         downloadLink.setAttribute('href', fileURL);
+        downloadLink.setAttribute('id', 'download');
         downloadLink.setAttribute('download', 'data.csv');
+        document.body.appendChild(downloadLink);
+
         downloadLink.click();
         URL.revokeObjectURL(fileURL);
       });

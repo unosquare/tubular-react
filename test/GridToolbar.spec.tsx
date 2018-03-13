@@ -3,7 +3,6 @@ import * as Enzyme from 'enzyme';
 import * as Adapter from 'enzyme-adapter-react-16';
 import DownloadIcon from 'material-ui-icons/FileDownload';
 import PrintIcon from 'material-ui-icons/Print';
-import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import Input from 'material-ui/Input';
 import { createShallow } from 'material-ui/test-utils';

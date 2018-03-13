@@ -1,24 +1,17 @@
-
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
-import { ColumnSortDirection } from '../src/DataGrid';
 import RemoteDataSource from '../src/DataGrid/RemoteDataSource';
-import { simpleColumnsSample, validColumnsSample } from './utils/columns';
+import { validColumnsSample } from './utils/columns';
 import {
-  descendingExpected,
   invalidResponseStructure,
   onlyMicrosoftExpected,
-  page2Expected,
   simpleRecordsExpected,
   twentyRecordsExpected,
   validResponseStructure
 } from './utils/data';
-import { page2Request, simpleRequest } from './utils/requests';
 
-const mock = new MockAdapter(axios);
-
-describe('RemoteDateSource', () => {
+describe('RemoteDataSource', () => {
   const dataSource = new RemoteDataSource('url', validColumnsSample);
 
   describe('isValidResponse()', () => {
@@ -32,6 +25,16 @@ describe('RemoteDateSource', () => {
   });
 
   describe('When columns structure is valid', () => {
+    let mock;
+
+    before(() => {
+        mock = new MockAdapter(axios);
+    });
+
+    after(() => {
+        mock.reset();
+    });
+
     describe('When 20 records are requested', () => {
       before( () => {
         mock.reset();
