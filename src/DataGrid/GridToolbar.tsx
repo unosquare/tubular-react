@@ -34,6 +34,7 @@ const styles = (theme: Theme): StyleRules<keyof typeof styleClasses> => (
 
 interface IState {
   anchorEl?: HTMLElement;
+  anchorPrint?: HTMLElement;
   searchText: string;
 }
 
@@ -54,6 +55,7 @@ class GridToolbar extends React.Component <IProps & WithStyles<keyof typeof styl
 
   public state = {
     anchorEl: null as HTMLElement,
+    anchorPrint: null as HTMLElement,
     searchText: '',
   };
 
@@ -90,6 +92,18 @@ class GridToolbar extends React.Component <IProps & WithStyles<keyof typeof styl
     });
   }
 
+  public handlePrintMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
+    this.setState({
+      anchorPrint: event.currentTarget
+    });
+  }
+
+  public handlePrintMenuClose = (): void => {
+    this.setState({
+      anchorPrint: null as HTMLElement
+    });
+  }
+
   public exportCSV = (filtered: boolean, e: React.MouseEvent<HTMLElement>) => {
     const { onExport } = this.props;
     e.preventDefault();
@@ -103,14 +117,14 @@ class GridToolbar extends React.Component <IProps & WithStyles<keyof typeof styl
     const { onPrint } = this.props;
     e.preventDefault();
     this.setState({
-      anchorEl: null as HTMLElement
+      anchorPrint: null as HTMLElement
     });
     onPrint(filtered);
   }
 
   public render() {
     const { classes, filteredRecordCount, isPrintEnabled, isExportEnabled, onPrint} = this.props;
-    const { searchText, anchorEl } = this.state;
+    const { searchText, anchorEl, anchorPrint } = this.state;
 
     return(
       <Toolbar>
@@ -123,7 +137,7 @@ class GridToolbar extends React.Component <IProps & WithStyles<keyof typeof styl
         }
         {
           isPrintEnabled &&
-          <IconButton onClick={this.handleMenuOpen} disabled={filteredRecordCount === 0}>
+          <IconButton disabled={filteredRecordCount === 0} onClick={this.handlePrintMenuOpen} >
             <PrintIcon/>
           </IconButton>
         }
@@ -150,14 +164,14 @@ class GridToolbar extends React.Component <IProps & WithStyles<keyof typeof styl
             }
           />
         </FormControl>
-        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleMenuClose}>
+        {isExportEnabled && <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleMenuClose}>
           <MenuItem onClick={(e) => this.exportCSV(false, e)}> All rows</MenuItem>
           <MenuItem onClick={(e) => this.exportCSV(true, e)}> Current rows</MenuItem>
-        </Menu>
-        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleMenuClose}>
+        </Menu>}
+        {isPrintEnabled && <Menu anchorEl={anchorPrint} open={Boolean(anchorPrint)} onClose={this.handlePrintMenuClose}>
           <MenuItem onClick={(e) => this.printTable(false, e)}> All rows</MenuItem>
           <MenuItem onClick={(e) => this.printTable(true, e)}> Current rows</MenuItem>
-        </Menu>
+        </Menu>}
       </Toolbar>
     );
   }
