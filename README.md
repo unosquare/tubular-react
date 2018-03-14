@@ -107,10 +107,10 @@ These are all the available props (and their default values) for the `<DataGrid 
 | gridName         | `string`                               |        -        |**Required.**                                 |
 | rowsPerPage      | `number`                               |        -        |**Required.** It should be a number thats inside the rowsPerPageOptions array.|
 |rowsPerPageOptions| `array`                                |[10, 20, 50, 100]| The options that are going to be shown in the Page Size dropdown.|
-| showBottomPager  | `bool`                                 |     `false`     |                                              |
-| showTopPager     | `bool`                                 |     `false`     |                                              |
-| showPrintButton  | `bool`                                 |     `false`     |                                              |
-| showExportButton | `bool`                                 |     `false`     |                                              |
+| showBottomPager  | `bool`                                 |      `true`     |**Optional.** If it's not defined, the BottomPager will not be shown.|
+| showTopPager     | `bool`                                 |      `true`     |**Optional.** If it's not defined, the TopPager will not be shown.|
+| showPrintButton  | `bool`                                 |      `true`     |**Optional.** If it's not defined, the PrintButton will not be shown.|
+| showExportButton | `bool`                                 |      `true`     |**Optional.** If it's not defined, the ExportButton will not be shown.|
 | bodyRenderer     | `function`                             |        -        |                                              |
 | footerRenderer   | `function`                             |        -        |                                              |
 
@@ -127,8 +127,8 @@ These are all the available props (and their default values) for the `<DataGrid 
 ### `ColumnModel` 
 It represents a `DataGrid` column and its constructor requires a name identifier as well as an object of column options with the following properties:
 
-| Name          | Type              | Default Value     | Description                                                  |Options   |
-|---------------|-------------------|-------------------|--------------------------------------------------------------|----------|
+| Name          | Type              | Default Value        | Description                                                  |Options   |
+|---------------|-------------------|----------------------|--------------------------------------------------------------|----------|
 | Aggregate     | AggregateFunctions|         NONE         | The aggregation function that will be applied to this column.|NONE, SUM, AVERAGE, COUNT, DISTINCT_COUNT, MAX, MIN.|
 | DataType      | ColumnDataType    |       STRING         |                        The column type.                      |STRING, NUMERIC, BOOLEAN, DATE, DATE_TIME, DATE_TIME_UTC.|
 | Filtering     | bool              |        false         |                       Enables filtering.                     |          |
