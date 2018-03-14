@@ -77,10 +77,10 @@ export default class Main extends React.Component {
             </TableRow>
         }
         rowsPerPage={10}
-        showTopPager={true}
-        showBottomPager={true}
-        showPrintButton={true}
-        showExportButton={true}
+        showTopPager
+        showBottomPager
+        showPrintButton
+        showExportButton
         footerRenderer={
           (aggregates: any) =>
             <TableRow>
