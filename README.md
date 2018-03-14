@@ -115,7 +115,7 @@ These are all the available props (and their default values) for the `<DataGrid 
 | `footerRenderer`   | `function`                             |        -        |**Optional**                                                  |
 
 
-_If you don't define some of the optional props described above, these will not be shown._
+_If you don't define some of the optional props described above, these will not be shown. In the case of `bodyRenderer`, the grid will display its default body; if the `footerRenderer` is not defined, the footer will not be displayed_
 
 ### `DataSource`
 `<DataGrid/>` requires a `dataSource` which can be an instance of the `RemoteDataSource` class or the `LocalDataSource` class, that deals with data retrieval among other things. 
