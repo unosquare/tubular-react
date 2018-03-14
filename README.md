@@ -13,14 +13,14 @@ Developing with .NET as backend? check [Tubular DotNet](https://github.com/unosq
 
 Developing with Node.js as backend? check [Tubular Node.js](https://github.com/unosquare/tubular-nodejs) project.
 
-Do you want to use AngularJS? check out [Tubular](https://github.com/unosquare/tubular)
+Do you want to use AngularJS? check out [Tubular](https://github.com/unosquare/tubular) project.
 
 If you are looking for Angular2 components, check [Tubular2](https://github.com/unosquare/tubular2) beta project.
 
 Please visit the [Tubular GitHub Page](http://unosquare.github.io/tubular) to learn how quickly you can start coding. Don't forget to check out the Tubular Generator which quickly turns models into an awesome UIs!
 
 ## Dependencies
-* [Material-UI Next](https://material-ui-next.com/) - Version: Beta 34
+* [Material-UI Next](https://material-ui-next.com/) - Version: Beta 34.
 
 ## npm Installation 
 ```
@@ -103,10 +103,10 @@ These are all the available props (and their default values) for the `<DataGrid 
 
 | Name             | Type                                   | Default Value   | Description                                  |
 |------------------|----------------------------------------|-----------------|----------------------------------------------|
-| datasource       | `RemoteDataSource` or `LocalDataSource`|                 |    **Required**                              |
-| gridName         | `string`                               |       ''        |                                              |      
-| rowsPerPage      | `number`                               |       10        |It should be a number thats inside the rowsPerPageOptions array|
-|rowsPerPageOptions| `array`                                |[10, 20, 50, 100]| The options that are going to be shown in the Page Size dropdown|
+| datasource       | `RemoteDataSource` or `LocalDataSource`|                 |    **Required.**                             |
+| gridName         | `string`                               |       ''        |    **Required.**                             |
+| rowsPerPage      | `number`                               |       10        |**Required.** It should be a number thats inside the rowsPerPageOptions array.|
+|rowsPerPageOptions| `array`                                |[10, 20, 50, 100]| The options that are going to be shown in the Page Size dropdown.|
 | showBottomPager  | `bool`                                 |     `false`     |                                              |
 | showTopPager     | `bool`                                 |     `false`     |                                              |
 | showPrintButton  | `bool`                                 |     `false`     |                                              |
@@ -129,16 +129,16 @@ It represents a `DataGrid` column and its constructor requires a name identifier
 
 | Name          | Type              | Default Value     | Description                                                  |Options   |
 |---------------|-------------------|-------------------|--------------------------------------------------------------|----------|
-| Aggregate     | AggregateFunctions|         NONE         | The aggregation function that will be applied to this column |NONE, SUM, AVERAGE, COUNT, DISTINCT_COUNT, MAX, MIN|
-| DataType      | ColumnDataType    |       STRING         |                        The column type                       |STRING, NUMERIC, BOOLEAN, DATE, DATE_TIME, DATE_TIME_UTC|
-| Filtering     | bool              |        false         |                       Enables filtering                      |          |
-| IsKey         | bool              |        false         |         Defines if a column is an identifier or not          |          |
-| Label         | string            |The name of the column|               Column label that will be shown                |          |
-| Searchable    | bool              |        true          |     Indicates that a column can be used to search upon       |          |
-| SortDirection |ColumnSortDirection|        NONE          |                                                              |NONE, ASCENDING, DESCENDING|
+| Aggregate     | AggregateFunctions|         NONE         | The aggregation function that will be applied to this column.|NONE, SUM, AVERAGE, COUNT, DISTINCT_COUNT, MAX, MIN.|
+| DataType      | ColumnDataType    |       STRING         |                        The column type.                      |STRING, NUMERIC, BOOLEAN, DATE, DATE_TIME, DATE_TIME_UTC.|
+| Filtering     | bool              |        false         |                       Enables filtering.                     |          |
+| IsKey         | bool              |        false         |         Defines if a column is an identifier or not.         |          |
+| Label         | string            |The name of the column|               Column label that will be shown.               |          |
+| Searchable    | bool              |        true          |     Indicates that a column can be used to search upon.      |          |
+| SortDirection |ColumnSortDirection|        NONE          |                                                              |NONE, ASCENDING, DESCENDING.|
 | SortOrder     | number            |         -1           |                                                              |          |
-| Sortable      | bool              |        false         |            Determines if a column can be sorted              |          |
-| Visible       | bool              |        true          |            Specifies if a column should be shown             |          |
+| Sortable      | bool              |        false         |            Determines if a column can be sorted.             |          |
+| Visible       | bool              |        true          |            Specifies if a column should be shown.            |          |
 
 ## Run integrated sample
 
