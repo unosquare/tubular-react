@@ -5,7 +5,7 @@ import * as Enzyme from 'enzyme';
 import * as Adapter from 'enzyme-adapter-react-16';
 import Paper from 'material-ui/Paper';
 import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
-import { createMount, createShallow } from 'material-ui/test-utils';
+import { createShallow } from 'material-ui/test-utils';
 import * as React from 'react';
 import DataGrid from '../src';
 import Paginator from '../src/DataGrid/Paginator';
@@ -48,16 +48,9 @@ describe('<DataGrid />', () => {
   let grid;
   let dataSource;
   let mock;
-  let mount;
 
   before(() => {
     mock = new MockAdapter(axios);
-    mount = createMount();
-  });
-
-  after(() => {
-    mock.reset();
-    mount.cleanUp();
   });
 
   beforeEach(() => {

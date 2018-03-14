@@ -9,10 +9,7 @@ import Input, { InputAdornment } from 'material-ui/Input';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import { StyleRules, Theme } from 'material-ui/styles';
 import Toolbar from 'material-ui/Toolbar';
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
-
-import { MouseEvent } from 'react';
 
 const styleClasses  = {
   button: '',
@@ -46,7 +43,7 @@ interface IProps {
   isPrintEnabled: boolean;
   filteredRecordCount: number;
   onSearchTextChange(text: string): void;
-  onPrint(): void;
+  onPrint(condition: boolean): void;
   onExport(condition: boolean): void;
 }
 
@@ -102,9 +99,19 @@ class GridToolbar extends React.Component <IProps & WithStyles<keyof typeof styl
     onExport(filtered);
   }
 
+  public printTable = (filtered: boolean, e: React.MouseEvent<HTMLElement>) => {
+    const { onPrint } = this.props;
+    e.preventDefault();
+    this.setState({
+      anchorEl: null as HTMLElement
+    });
+    onPrint(filtered);
+  }
+
   public render() {
     const { classes, filteredRecordCount, isPrintEnabled, isExportEnabled, onPrint} = this.props;
     const { searchText, anchorEl } = this.state;
+
     return(
       <Toolbar>
         <div className={classes.spacer}/>
@@ -116,7 +123,7 @@ class GridToolbar extends React.Component <IProps & WithStyles<keyof typeof styl
         }
         {
           isPrintEnabled &&
-          <IconButton onClick={onPrint} disabled={filteredRecordCount === 0}>
+          <IconButton onClick={this.handleMenuOpen} disabled={filteredRecordCount === 0}>
             <PrintIcon/>
           </IconButton>
         }
@@ -143,9 +150,13 @@ class GridToolbar extends React.Component <IProps & WithStyles<keyof typeof styl
             }
           />
         </FormControl>
-        <Menu anchorEl={anchorEl}  open={Boolean(anchorEl)} onClose={this.handleMenuClose}>
+        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleMenuClose}>
           <MenuItem onClick={(e) => this.exportCSV(false, e)}> All rows</MenuItem>
           <MenuItem onClick={(e) => this.exportCSV(true, e)}> Current rows</MenuItem>
+        </Menu>
+        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleMenuClose}>
+          <MenuItem onClick={(e) => this.printTable(false, e)}> All rows</MenuItem>
+          <MenuItem onClick={(e) => this.printTable(true, e)}> Current rows</MenuItem>
         </Menu>
       </Toolbar>
     );

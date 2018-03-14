@@ -1,11 +1,8 @@
-import Axios from 'axios';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import * as Rx from 'rx';
 import BaseDataSource from './BaseDataSource';
 import {
   AggregateFunctions,
-  ColumnDataType,
   ColumnSortDirection,
   CompareOperators,
 } from './Column';

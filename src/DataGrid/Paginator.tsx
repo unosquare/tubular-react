@@ -1,5 +1,4 @@
 import { TablePagination } from 'material-ui/Table';
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import TablePaginationActions from './TablePaginationActions';
 

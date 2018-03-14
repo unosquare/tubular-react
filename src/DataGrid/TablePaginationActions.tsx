@@ -4,7 +4,6 @@ import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
 import LastPageIcon from 'material-ui-icons/LastPage';
 import IconButton from 'material-ui/IconButton';
 import { StyleRules, Theme, withStyles } from 'material-ui/styles';
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
 const styleClasses  = {

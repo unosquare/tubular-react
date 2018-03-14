@@ -9,9 +9,7 @@ import { StyleRules, Theme } from 'material-ui/styles';
 import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
 import Typography from 'material-ui/Typography';
 import * as moment from 'moment';
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
-import * as Rx from 'rx';
 import BaseDataSource from './BaseDataSource';
 import { ColumnDataType } from './Column';
 import ColumnModel from './ColumnModel';
@@ -67,7 +65,6 @@ interface IState {
 interface IProps {
   dataSource: BaseDataSource;
   gridName: string;
-  page?: number;
   rowsPerPage: number;
   rowsPerPageOptions?: number[];
   showBottomPager?: boolean;
@@ -80,12 +77,6 @@ interface IProps {
 }
 
 class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleClasses>, IState> {
-  public static defaultProps = {
-    gridName: '',
-    page: 0,
-    rowsPerPage: 10
-  };
-
   public state = {
     aggregate: {},
     data: [] as any,
@@ -93,7 +84,7 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
     filteredRecordCount: 0,
     message: '',
     open: false,
-    page: this.props.page,
+    page: 0,
     rowsPerPage: this.props.rowsPerPage,
     searchText: '',
     totalRecordCount: 0
@@ -172,14 +163,21 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
     localStorage.setItem(`tubular.${this.props.gridName}_searchText`, searchText);
   }
 
-  public printTable = () => {
+  public printTable = (filtered: boolean) => {
     const { dataSource, filteredRecordCount, searchText } = this.state;
+    let count;
 
     if (filteredRecordCount === 0) {
       return;
     }
 
-    dataSource.getAllRecords(filteredRecordCount, 0, searchText)
+    if (filtered) {
+      count = this.state.rowsPerPage;
+    } else {
+      count = filteredRecordCount;
+    }
+
+    dataSource.getAllRecords(count, 0, searchText)
       .then(({ Payload }: any) => {
         const popup = window.open('about:blank', 'Print', 'location=0,height=500,width=800');
         popup.document
@@ -216,12 +214,11 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
       });
   }
 
-  public exportTable = (filtered: any) => {
+  public exportTable = (filtered: boolean) => {
     const { dataSource, filteredRecordCount, totalRecordCount, searchText } = this.state;
     const header = dataSource.columns.map((x: any) => x.Label);
     const visibility = dataSource.columns.map((x: any) => x.Visible);
     let count;
-    let search;
 
     const processRow = (row: any) => {
       if (row instanceof Object) {
@@ -263,13 +260,11 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
     }
     if (filtered) {
       count = this.state.rowsPerPage;
-      search = searchText;
     } else {
       count = filteredRecordCount;
-      search = '';
     }
 
-    dataSource.getAllRecords(count, 0, search)
+    dataSource.getAllRecords(count, 0, searchText)
       .then(({ Payload }: any) => {
         Payload.forEach((row: any) => {
           csvFile += processRow(row);
@@ -300,15 +295,17 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
         rows = row[column.Name] || 0;
         break;
       case ColumnDataType.DATE:
+        rows = moment(row[column.Name]).format('MMMM Do YYYY') || '';
+        break;
       case ColumnDataType.DATE_TIME:
       case ColumnDataType.DATE_TIME_UTC:
         rows = moment(row[column.Name]).format('MMMM Do YYYY, h:mm:ss a') || '';
         break;
       case ColumnDataType.BOOLEAN:
-        rows =  (row[column.Name]) === true ? <CheckBox /> : <CheckBoxOutlineBlank />;
+        rows = row[column.Name] === true ? <CheckBox /> : <CheckBoxOutlineBlank />;
         break;
       default:
-        rows =  row[column.Name];
+        rows = row[column.Name];
         break;
     }
 

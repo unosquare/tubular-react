@@ -1,5 +1,3 @@
-import ColumnModel from './ColumnModel';
-
 export default class GridResponse {
   public Aggregate: object;
   public FilteredRecordCount: number;

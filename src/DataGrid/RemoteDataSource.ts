@@ -1,8 +1,5 @@
-import * as Rx from 'rx';
-
 import Axios from 'axios';
 import BaseDataSource from './BaseDataSource';
-import { AggregateFunctions, ColumnDataType, CompareOperators } from './Column';
 import ColumnModel from './ColumnModel';
 import GridRequest from './GridRequest';
 import GridResponse from './GridResponse';
