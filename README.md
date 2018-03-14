@@ -103,16 +103,16 @@ These are all the available props (and their default values) for the `<DataGrid 
 
 | Name             | Type                                   | Default Value   | Description                                  |
 |------------------|----------------------------------------|-----------------|----------------------------------------------|
-| datasource       | `RemoteDataSource` or `LocalDataSource`|       -          |    **Required.**                             |
-| gridName         | `string`                               |       ''        |    **Required.**                             |
-| rowsPerPage      | `number`                               |       10        |**Required.** It should be a number thats inside the rowsPerPageOptions array.|
+| datasource       | `RemoteDataSource` or `LocalDataSource`|        -        |**Required.**                                 |
+| gridName         | `string`                               |        -        |**Required.**                                 |
+| rowsPerPage      | `number`                               |        -        |**Required.** It should be a number thats inside the rowsPerPageOptions array.|
 |rowsPerPageOptions| `array`                                |[10, 20, 50, 100]| The options that are going to be shown in the Page Size dropdown.|
-| showBottomPager  | `bool`                                 |     `true`     |                                              |
-| showTopPager     | `bool`                                 |     `true`     |                                              |
-| showPrintButton  | `bool`                                 |     `true`     |                                              |
-| showExportButton | `bool`                                 |     `true`     |                                              |
-| bodyRenderer     | `function`                             |    -    |                                              |
-| footerRenderer   | `function`                             |    -    |                                              |
+| showBottomPager  | `bool`                                 |     `false`     |                                              |
+| showTopPager     | `bool`                                 |     `false`     |                                              |
+| showPrintButton  | `bool`                                 |     `false`     |                                              |
+| showExportButton | `bool`                                 |     `false`     |                                              |
+| bodyRenderer     | `function`                             |        -        |                                              |
+| footerRenderer   | `function`                             |        -        |                                              |
 
 
 ### `DataSource`
