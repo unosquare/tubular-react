@@ -57,9 +57,9 @@ const columns = [
 ];
 
 class CustomComponent extends React.Component {
-state={
-dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns)
-}
+  state={
+    dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns)
+  }
 
   render() {
     const { dataSource } = this.state; 
@@ -72,7 +72,7 @@ dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/pa
 
 ```
 
-Using a custom body and footer renderer
+Using a custom body and a custom footer
 ```js
 <DataGrid dataSource={ dataSource } 
         gridName = 'table'
@@ -95,7 +95,7 @@ Using a custom body and footer renderer
               <TableCell> { aggregates && aggregates.CustomerName } </TableCell>
             </TableRow>
         }
-      />
+/>
 ```
 
 ### Props 
@@ -103,26 +103,26 @@ These are all the available props (and their default values) for the `<DataGrid 
 
 | Name             | Type                                   | Default Value   | Description                                  |
 |------------------|----------------------------------------|-----------------|----------------------------------------------|
-| datasource       | `RemoteDataSource` or `LocalDataSource`|                 |    **Required.**                             |
+| datasource       | `RemoteDataSource` or `LocalDataSource`|       -          |    **Required.**                             |
 | gridName         | `string`                               |       ''        |    **Required.**                             |
 | rowsPerPage      | `number`                               |       10        |**Required.** It should be a number thats inside the rowsPerPageOptions array.|
 |rowsPerPageOptions| `array`                                |[10, 20, 50, 100]| The options that are going to be shown in the Page Size dropdown.|
-| showBottomPager  | `bool`                                 |     `false`     |                                              |
-| showTopPager     | `bool`                                 |     `false`     |                                              |
-| showPrintButton  | `bool`                                 |     `false`     |                                              |
-| showExportButton | `bool`                                 |     `false`     |                                              |
-| bodyRenderer     | `function`                             |    undefined    |                                              |
-| footerRenderer   | `function`                             |    undefined    |                                              |
+| showBottomPager  | `bool`                                 |     `true`     |                                              |
+| showTopPager     | `bool`                                 |     `true`     |                                              |
+| showPrintButton  | `bool`                                 |     `true`     |                                              |
+| showExportButton | `bool`                                 |     `true`     |                                              |
+| bodyRenderer     | `function`                             |    -    |                                              |
+| footerRenderer   | `function`                             |    -    |                                              |
 
 
 ### `DataSource`
-`<DataGrid/>` requires a dataSource which can be an instance of the `RemoteDataSource` class or the `LocalDataSource` class, that deals with data retrieval among other things. 
+`<DataGrid/>` requires a `dataSource` which can be an instance of the `RemoteDataSource` class or the `LocalDataSource` class, that deals with data retrieval among other things. 
 
 ### `RemoteDataSource`
 `RemoteDataSource` needs both a URL and a `ColumnModel` array.
 
 ### `LocalDataSource`
-`LocalDataSource` needs both an array of data objects and a `ColumnModel` array.
+`LocalDataSource` needs both an array of data objects and a `ColumnModel` array. See this [example](https://github.com/unosquare/tubular-react/blob/master/sample/src/local/localData.ts) of how to define the array of objects.
 
 ### `ColumnModel` 
 It represents a `DataGrid` column and its constructor requires a name identifier as well as an object of column options with the following properties:
