@@ -114,45 +114,55 @@ export default class LocalDataSource extends BaseDataSource {
     filteredColumns.forEach((filterableColumn: any) => {
       request.Columns.find((column: any) => column.Name === filterableColumn.Name).HasFilter = true;
 
-      switch (filterableColumn.Filter.Operator.toLowerCase()) {
-        case CompareOperators.EQUALS.toLowerCase():
+      switch (filterableColumn.Filter.Operator) {
+        case CompareOperators.EQUALS:
           if (filterableColumn.DataType === 'datetime' ||
             filterableColumn.DataType === 'date' ||
             filterableColumn.DataType === 'datetimeutc') {
             subset = subset.filter((row) =>
               moment(row[filterableColumn.Name]).isSame(moment(filterableColumn.Filter.Text)));
+          } else if (filterableColumn.DataType === 'string') {
+            subset = subset.filter((row) =>
+              row[filterableColumn.Name].toLowerCase() === filterableColumn.Filter.Text.toLowerCase());
           } else {
-            subset = subset.filter((row) => row[filterableColumn.Name] === filterableColumn.Filter.Text);
+            subset = subset.filter((row) =>
+              row[filterableColumn.Name] === filterableColumn.Filter.Text);
           }
           break;
-        case CompareOperators.NOT_EQUALS.toLowerCase():
-          subset = subset.filter((row) => row[filterableColumn.Name] !== filterableColumn.Filter.Text);
+        case CompareOperators.NOT_EQUALS:
+          if (filterableColumn.DataType === 'string') {
+            subset = subset.filter((row) =>
+              row[filterableColumn.Name].toLowerCase() !== filterableColumn.Filter.Text.toLowerCase());
+          } else {
+            subset = subset.filter((row) =>
+              row[filterableColumn.Name] !== filterableColumn.Filter.Text);
+          }
           break;
-        case CompareOperators.CONTAINS.toLowerCase():
+        case CompareOperators.CONTAINS:
           subset = subset.filter((row) => row[filterableColumn.Name].toLowerCase()
             .indexOf(filterableColumn.Filter.Text.toLowerCase()) >= 0);
           break;
-        case CompareOperators.NOT_CONTAINS.toLowerCase():
+        case CompareOperators.NOT_CONTAINS:
           subset = subset.filter((row) => row[filterableColumn.Name].toLowerCase()
             .indexOf(filterableColumn.Filter.Text.toLowerCase()) < 0);
           break;
-        case CompareOperators.STARTS_WITH.toLowerCase():
+        case CompareOperators.STARTS_WITH:
           subset = subset.filter((row) =>
             row[filterableColumn.Name].toLowerCase().startsWith(filterableColumn.Filter.Text.toLowerCase()));
           break;
-        case CompareOperators.NOT_STARTS_WITH.toLowerCase():
+        case CompareOperators.NOT_STARTS_WITH:
           subset = subset.filter((row) =>
             !row[filterableColumn.Name].toLowerCase().startsWith(filterableColumn.Filter.Text.toLowerCase()));
           break;
-        case CompareOperators.ENDS_WITH.toLowerCase():
+        case CompareOperators.ENDS_WITH:
           subset = subset.filter((row) =>
             row[filterableColumn.Name].toLowerCase().endsWith(filterableColumn.Filter.Text.toLowerCase()));
           break;
-        case CompareOperators.NOT_ENDS_WITH.toLowerCase():
+        case CompareOperators.NOT_ENDS_WITH:
           subset = subset.filter((row) =>
             !row[filterableColumn.Name].toLowerCase().endsWith(filterableColumn.Filter.Text.toLowerCase()));
           break;
-        case CompareOperators.GT.toLowerCase():
+        case CompareOperators.GT:
           if (filterableColumn.DataType === 'datetime' ||
             filterableColumn.DataType === 'date' ||
             filterableColumn.DataType === 'datetimeutc') {
@@ -162,7 +172,7 @@ export default class LocalDataSource extends BaseDataSource {
             subset = subset.filter((row) => row[filterableColumn.Name] > filterableColumn.Filter.Text);
           }
           break;
-        case CompareOperators.GTE.toLowerCase():
+        case CompareOperators.GTE:
           if (filterableColumn.DataType === 'datetime' ||
             filterableColumn.DataType === 'date' ||
             filterableColumn.DataType === 'datetimeutc') {
@@ -172,7 +182,7 @@ export default class LocalDataSource extends BaseDataSource {
             subset = subset.filter((row) => row[filterableColumn.Name] >= filterableColumn.Filter.Text);
           }
           break;
-        case CompareOperators.LT.toLowerCase():
+        case CompareOperators.LT:
           if (filterableColumn.DataType === 'datetime' ||
             filterableColumn.DataType === 'date' ||
             filterableColumn.DataType === 'datetimeutc') {
@@ -182,7 +192,7 @@ export default class LocalDataSource extends BaseDataSource {
             subset = subset.filter((row) => row[filterableColumn.Name] < filterableColumn.Filter.Text);
           }
           break;
-        case CompareOperators.LTE.toLowerCase():
+        case CompareOperators.LTE:
           if (filterableColumn.DataType === 'datetime' ||
             filterableColumn.DataType === 'date' ||
             filterableColumn.DataType === 'datetimeutc') {
@@ -192,7 +202,7 @@ export default class LocalDataSource extends BaseDataSource {
             subset = subset.filter((row) => row[filterableColumn.Name] <= filterableColumn.Filter.Text);
           }
           break;
-        case CompareOperators.BETWEEN.toLowerCase():
+        case CompareOperators.BETWEEN:
           if (filterableColumn.DataType === 'datetime' ||
             filterableColumn.DataType === 'date' ||
             filterableColumn.DataType === 'datetimeutc') {
@@ -222,7 +232,7 @@ export default class LocalDataSource extends BaseDataSource {
       const columns: any[] = [];
       const orders: any[] = [];
 
-      _.forEachRight(sortedColumns, (column) => {
+      _.forEach(sortedColumns, (column) => {
         columns.push(column.Name);
 
         orders.push((column.SortDirection === ColumnSortDirection.ASCENDING ? 'asc' : 'desc'));

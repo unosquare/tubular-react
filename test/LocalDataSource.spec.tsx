@@ -80,7 +80,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload with records that has multiple sorting (sorting by \'OrderID\' and \'CustomerName\')'
+    it('should return a payload with records that has multiple sorting (sorting by \'CustomerName\' and \'OrderID\')'
     , (done) => {
       const $dataSource = new LocalDataSource(localData, validColumnsSampleMultipleSorting);
 
@@ -136,7 +136,6 @@ describe('LocalDataSource', () => {
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.have.lengthOf(1);
         expect(response.Payload).to.deep.equal(expectedPayloadEqualsNumeric);
-
         done();
       });
     });

@@ -166,6 +166,7 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
   public printTable = (filtered: boolean) => {
     const { dataSource, filteredRecordCount, searchText } = this.state;
     let count;
+    let page;
 
     if (filteredRecordCount === 0) {
       return;
@@ -173,11 +174,13 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
 
     if (filtered) {
       count = this.state.rowsPerPage;
+      page = this.state.page;
     } else {
       count = filteredRecordCount;
+      page = 0;
     }
 
-    dataSource.getAllRecords(count, 0, searchText)
+    dataSource.getAllRecords(count, page, searchText)
       .then(({ Payload }: any) => {
         const popup = window.open('about:blank', 'Print', 'location=0,height=500,width=800');
         popup.document
@@ -219,6 +222,7 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
     const header = dataSource.columns.map((x: any) => x.Label);
     const visibility = dataSource.columns.map((x: any) => x.Visible);
     let count;
+    let page;
 
     const processRow = (row: any) => {
       if (row instanceof Object) {
@@ -260,11 +264,13 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
     }
     if (filtered) {
       count = this.state.rowsPerPage;
+      page = this.state.page;
     } else {
       count = filteredRecordCount;
+      page = 0;
     }
 
-    dataSource.getAllRecords(count, 0, searchText)
+    dataSource.getAllRecords(count, page, searchText)
       .then(({ Payload }: any) => {
         Payload.forEach((row: any) => {
           csvFile += processRow(row);
