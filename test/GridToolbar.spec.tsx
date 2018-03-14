@@ -111,6 +111,18 @@ describe('<GridToolbar/>', () => {
       assert.isNull(wrapper.state().anchorEl);
     });
 
+    it('should update the state of \'anchorPrint\' as \'null\' when is closed', () => {
+      props.isPrintEnabled = true;
+
+      const wrapper = shallow(<GridToolbar {...props}/>);
+
+      wrapper.find(IconButton).simulate('click', { currentTarget: document.createElement('button') });
+      assert.isNotNull(wrapper.state().anchorPrint);
+
+      wrapper.instance().handlePrintMenuClose();
+      assert.isNull(wrapper.state().anchorPrint);
+    });
+
     it('should update the state of \'anchorEl\' with non \'null\' value', () => {
       props.isExportEnabled = true;
       const wrapper = shallow(<GridToolbar {...props}/>);
