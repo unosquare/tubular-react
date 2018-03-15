@@ -158,7 +158,7 @@ const validColumnsSampleMultipleSorting = [
       IsKey: true,
       Label: 'ID',
       SortDirection: ColumnSortDirection.DESCENDING,
-      SortOrder: 1,
+      SortOrder: 2,
       Sortable: true
     }
   ),
@@ -169,7 +169,7 @@ const validColumnsSampleMultipleSorting = [
       Label: 'Customer Name',
       Searchable: true,
       SortDirection: ColumnSortDirection.ASCENDING,
-      SortOrder: 2,
+      SortOrder: 1,
       Sortable: true
     }
   ),

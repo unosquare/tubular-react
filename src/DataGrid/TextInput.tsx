@@ -1,7 +1,5 @@
 import Input from 'material-ui/Input';
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
-import { ChangeEvent } from 'react';
 
 interface IProps {
   activeFilter: string;

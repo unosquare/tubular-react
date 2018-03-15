@@ -1,6 +1,5 @@
 import Button from 'material-ui/Button';
 import * as moment from 'moment';
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import { ColumnDataType, CompareOperators } from './Column';
 import DialogInput from './DialogInput';

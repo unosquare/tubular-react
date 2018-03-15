@@ -1,4 +1,3 @@
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import { ColumnDataType } from './Column';
 import DateInput from './DateInput';
@@ -25,44 +24,43 @@ interface IProps {
 
 const DialogInput: React.SFC<IProps> = ({ classes, disabled, value, columnType, activeFilter, label,
   mod, handleApply, handleDatePicker, handleTextFieldChange }) => {
-
     return (
       columnType === ColumnDataType.DATE ||
       columnType === ColumnDataType.DATE_TIME ||
       columnType === ColumnDataType.DATE_TIME_UTC ?
-      (
-        <DateInput
-          disabled={disabled}
-          value={value}
-          mod={mod}
-          columnType={columnType}
-          handleDatePicker={handleDatePicker}
-        />
-      )
-      :
-      columnType === ColumnDataType.BOOLEAN ?
-      (
-        <Dropdown
-          disabled={disabled}
-          value={typeof(value) === 'boolean' ? value === true ? 'true' : 'false' : value}
-          operators={BooleanInputOperators}
-          classes={classes}
-          activeFilter={activeFilter}
-          handleChange={handleTextFieldChange}
-        />
-      )
-        :
         (
-        <TextInput
-          disabled={disabled}
-          value={value}
-          label={label}
-          mod={mod}
-          activeFilter={activeFilter}
-          handleApply={handleApply}
-          handleTextFieldChange={handleTextFieldChange}
-        />
+          <DateInput
+            disabled={disabled}
+            value={value}
+            mod={mod}
+            columnType={columnType}
+            handleDatePicker={handleDatePicker}
+          />
         )
+        :
+        columnType === ColumnDataType.BOOLEAN ?
+          (
+            <Dropdown
+              disabled={disabled}
+              value={typeof(value) === 'boolean' ? value === true ? 'true' : 'false' : value}
+              operators={BooleanInputOperators}
+              classes={classes}
+              activeFilter={activeFilter}
+              handleChange={handleTextFieldChange}
+            />
+          )
+          :
+          (
+          <TextInput
+            disabled={disabled}
+            value={value}
+            label={label}
+            mod={mod}
+            activeFilter={activeFilter}
+            handleApply={handleApply}
+            handleTextFieldChange={handleTextFieldChange}
+          />
+          )
     );
   };
 

@@ -27,7 +27,8 @@
       "docs/**/*.*",
       "pages/**/*.*",
       "srcdocs/**/*.*",
-      "src/Util/index.js"
+      "src/Util/index.js",
+      "webpack.config.js"
     ],
     "all": true
   },

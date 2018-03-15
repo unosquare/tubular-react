@@ -1,5 +1,4 @@
 import { TablePagination } from 'material-ui/Table';
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import TablePaginationActions from './TablePaginationActions';
 
@@ -7,11 +6,14 @@ interface IProps {
   filteredRecordCount: number;
   page: number;
   rowsPerPage: number;
+  rowsPerPageOptions?: number[];
   totalRecordCount: number;
   handlePager(rowsPerPage: number, page: number): void;
 }
 
-const Paginator: React.SFC<IProps> = ({ handlePager, rowsPerPage, page, filteredRecordCount, totalRecordCount }) => {
+const Paginator: React.SFC<IProps> = ({ handlePager, rowsPerPage, rowsPerPageOptions, page,
+  filteredRecordCount, totalRecordCount }) => {
+
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> , Page: number) => {
     handlePager(rowsPerPage, Page);
   };
@@ -33,7 +35,7 @@ const Paginator: React.SFC<IProps> = ({ handlePager, rowsPerPage, page, filtered
       count={filteredRecordCount}
       rowsPerPage={rowsPerPage}
       page={page}
-      rowsPerPageOptions={[10, 20, 50, 100]}
+      rowsPerPageOptions={rowsPerPageOptions ? rowsPerPageOptions : [10, 20, 50, 100]}
       onChangePage={handleChangePage}
       onChangeRowsPerPage={handleChangeRowsPerPage}
       Actions={TablePaginationActions}

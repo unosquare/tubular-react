@@ -1,7 +1,6 @@
 import Input from 'material-ui/Input';
 import { MenuItem } from 'material-ui/Menu';
 import Select from 'material-ui/Select';
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
 interface IProps {

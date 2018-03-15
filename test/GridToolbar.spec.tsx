@@ -5,6 +5,7 @@ import DownloadIcon from 'material-ui-icons/FileDownload';
 import PrintIcon from 'material-ui-icons/Print';
 import IconButton from 'material-ui/IconButton';
 import Input from 'material-ui/Input';
+import Menu, { MenuItem } from 'material-ui/Menu';
 import { createShallow } from 'material-ui/test-utils';
 import Toolbar from 'material-ui/Toolbar';
 import * as React from 'react';
@@ -110,6 +111,18 @@ describe('<GridToolbar/>', () => {
       assert.isNull(wrapper.state().anchorEl);
     });
 
+    it('should update the state of \'anchorPrint\' as \'null\' when is closed', () => {
+      props.isPrintEnabled = true;
+
+      const wrapper = shallow(<GridToolbar {...props}/>);
+
+      wrapper.find(IconButton).simulate('click', { currentTarget: document.createElement('button') });
+      assert.isNotNull(wrapper.state().anchorPrint);
+
+      wrapper.instance().handlePrintMenuClose();
+      assert.isNull(wrapper.state().anchorPrint);
+    });
+
     it('should update the state of \'anchorEl\' with non \'null\' value', () => {
       props.isExportEnabled = true;
       const wrapper = shallow(<GridToolbar {...props}/>);
@@ -122,7 +135,7 @@ describe('<GridToolbar/>', () => {
   describe('exportCSV()', () => {
     it('should update the state of \'anchorEl\' to \'null\'', () => {
       props.isExportEnabled = true;
-      props.onExport = () => { return; };
+      props.onExport = (filtered: boolean) => { return; };
 
       const wrapper = shallow(<GridToolbar {...props}/>);
       wrapper.setState({
@@ -135,6 +148,64 @@ describe('<GridToolbar/>', () => {
       wrapper.update();
 
       assert.isNull(wrapper.state().anchorEl);
+    });
+
+    it('Using simulate (\'All rows\'): should update the state of \'anchorEl\' to \'null\'', () => {
+      props.isExportEnabled = true;
+      props.onExport = (filtered: boolean) => { return; };
+
+      // Setting the state before the change
+      const wrapper = shallow(<GridToolbar {...props}/>);
+      wrapper.setState({
+        anchorEl: document.createElement('button')
+      });
+      assert.isNotNull(wrapper.state().anchorEl);
+
+      // Checking 'anchorEl' updated to 'null' when 'All rows' is clicked
+      const exportIcon = wrapper.find(IconButton).simulate('click', { currentTarget: null });
+      wrapper.update();
+
+      const menuItems = wrapper.find(Menu).find(MenuItem);
+      const menuItemAllCSV = menuItems.at(0).simulate('click', { preventDefault: () => { return; } });
+
+      assert.isNull(wrapper.state().anchorEl);
+    });
+
+    it('Using simulate (\'Current rows\'): should update the state of \'anchorEl\' to \'null\'', () => {
+      props.isExportEnabled = true;
+      props.onExport = (filtered: boolean) => { return; };
+
+      // Setting the state before the change
+      const wrapper = shallow(<GridToolbar {...props}/>);
+      wrapper.setState({
+        anchorEl: document.createElement('button')
+      });
+      assert.isNotNull(wrapper.state().anchorEl);
+
+      // Checking 'anchorEl' updated to 'null' when 'Current rows' is clicked
+      const exportIcon = wrapper.find(IconButton).simulate('click', { currentTarget: null });
+      wrapper.update();
+
+      const menuItems = wrapper.find(Menu).find(MenuItem);
+      const menuItemAllCSV = menuItems.at(1).simulate('click', { preventDefault: () => { return; } });
+
+      assert.isNull(wrapper.state().anchorEl);
+    });
+  });
+
+  describe('printTable()', () => {
+    it('should update the state of \'anchorPrint\' to \'null\'', () => {
+      props.isPrintEnabled = true;
+      props.onPrint = () => { return; };
+
+      const wrapper = shallow(<GridToolbar {...props}/>);
+      wrapper.find(IconButton).simulate('click', { currentTarget: document.createElement('button') });
+
+      const menuItems = wrapper.find(Menu).find(MenuItem);
+      assert.isNotNull(wrapper.state().anchorPrint);
+
+      menuItems.at(1).simulate('click', { preventDefault: () => { return; } });
+      assert.isNull(wrapper.state().anchorPrint);
     });
   });
 
