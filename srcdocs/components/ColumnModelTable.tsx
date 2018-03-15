@@ -13,6 +13,7 @@ const ColumnModelTable = (props: any) => {
                     <Hidden smDown={true}>
                     <TableCell>Description</TableCell>
                     </Hidden>
+                    <TableCell>Options</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
@@ -23,6 +24,7 @@ const ColumnModelTable = (props: any) => {
                     <Hidden smDown={true}>
                     <TableCell>The aggregation function that will be applied to this column</TableCell>
                     </Hidden>
+                    <TableCell>NONE, SUM, AVERAGE, COUNT, DISTINCT_COUNT, MAX, MIN</TableCell>
                 </TableRow>
                 <TableRow hover={true}>
                     <TableCell>DataType</TableCell>
@@ -31,14 +33,16 @@ const ColumnModelTable = (props: any) => {
                     <Hidden smDown={true}>
                     <TableCell>The column type</TableCell>
                     </Hidden>
+                    <TableCell>STRING, NUMERIC, BOOLEAN, DATE, DATE_TIME, DATE_TIME_UTC</TableCell>
                 </TableRow>
                 <TableRow hover={true}>
                     <TableCell>Filtering</TableCell>
                     <TableCell>bool</TableCell>
                     <TableCell>false</TableCell>
                     <Hidden smDown={true}>
-                    <TableCell>Activates filtering</TableCell>
+                    <TableCell>Enables filtering</TableCell>
                     </Hidden>
+                    <TableCell/>
                 </TableRow>
                 <TableRow hover={true}>
                     <TableCell>IsKey</TableCell>
@@ -47,14 +51,16 @@ const ColumnModelTable = (props: any) => {
                     <Hidden smDown={true}>
                     <TableCell>Defines if a column is an identifier or not</TableCell>
                     </Hidden>
+                    <TableCell/>
                 </TableRow>
                 <TableRow hover={true}>
                     <TableCell>Label</TableCell>
-                    <TableCell>string</TableCell>
-                    <TableCell/>
+                    <TableCell>STRING</TableCell>
+                    <TableCell>The name of the column</TableCell>
                     <Hidden smDown={true}>
                     <TableCell>Column label that will be shown</TableCell>
                     </Hidden>
+                    <TableCell/>
                 </TableRow>
                 <TableRow hover={true}>
                     <TableCell>Searchable</TableCell>
@@ -63,6 +69,7 @@ const ColumnModelTable = (props: any) => {
                     <Hidden smDown={true}>
                     <TableCell>Indicates that a column can be used to search upon</TableCell>
                     </Hidden>
+                    <TableCell/>
                 </TableRow>
                 <TableRow hover={true}>
                     <TableCell>SortDirection</TableCell>
@@ -71,22 +78,25 @@ const ColumnModelTable = (props: any) => {
                     <Hidden smDown={true}>
                     <TableCell/>
                     </Hidden>
+                    <TableCell>NONE, ASCENDING, DESCENDING</TableCell>
                 </TableRow>
                 <TableRow hover={true}>
                     <TableCell>SortOrder</TableCell>
                     <TableCell>number</TableCell>
-                    <TableCell/>
+                    <TableCell>-1</TableCell>
                     <Hidden smDown={true}>
                     <TableCell/>
                     </Hidden>
+                    <TableCell/>
                 </TableRow>
                 <TableRow hover={true}>
                     <TableCell>Sortable</TableCell>
                     <TableCell>bool</TableCell>
-                    <TableCell/>
+                    <TableCell>false</TableCell>
                     <Hidden smDown={true}>
                     <TableCell>Determines if a column can be sorted</TableCell>
                     </Hidden>
+                    <TableCell/>
                 </TableRow>
                 <TableRow hover={true}>
                     <TableCell>Visible</TableCell>
@@ -95,6 +105,7 @@ const ColumnModelTable = (props: any) => {
                     <Hidden smDown={true}>
                     <TableCell>Specifies if a column should be shown</TableCell>
                     </Hidden>
+                    <TableCell/>
                 </TableRow>
             </TableBody>
         </Table>
