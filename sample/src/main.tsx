@@ -77,6 +77,7 @@ export default class Main extends React.Component {
             </TableRow>
         }
         rowsPerPage={10}
+        rowsPerPageOptions={[10, 20, 50, 100]}
         showTopPager={true}
         showBottomPager={true}
         showPrintButton={true}

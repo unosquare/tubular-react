@@ -5,7 +5,7 @@ import * as Enzyme from 'enzyme';
 import * as Adapter from 'enzyme-adapter-react-16';
 import Paper from 'material-ui/Paper';
 import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
-import { createMount, createShallow } from 'material-ui/test-utils';
+import { createShallow } from 'material-ui/test-utils';
 import * as React from 'react';
 import DataGrid from '../src';
 import Paginator from '../src/DataGrid/Paginator';
@@ -48,16 +48,9 @@ describe('<DataGrid />', () => {
   let grid;
   let dataSource;
   let mock;
-  let mount;
 
   before(() => {
     mock = new MockAdapter(axios);
-    mount = createMount();
-  });
-
-  after(() => {
-    mock.reset();
-    mount.cleanUp();
   });
 
   beforeEach(() => {
@@ -126,6 +119,45 @@ describe('<DataGrid />', () => {
       const body = wrapper.find(Table).find(TableBody);
 
       expect(body).to.have.lengthOf(1);
+    });
+  });
+
+  describe('When rowsPerPageOptions is not defined and rowsPerPage is invalid', () => {
+    it('should set an error Message, and open a Snackbar', () => {
+      grid = (
+        <DataGrid
+          onError={(x: any) => x}
+          gridName='Motorhead'
+          rowsPerPage={15}
+          dataSource={new RemoteDataSource('url', validColumnsSample)}
+          bodyRenderer={bodyRenderer}
+        />
+      );
+
+      const wrapper = shallow(grid);
+
+      expect(wrapper.state().errorMessage).to.be.equal('The rowsPerPage value should be: 10,20,50,100');
+      expect(wrapper.state().open).to.be.equal(true);
+    });
+  });
+
+  describe('When rowsPerPageOptions is defined and rowsPerPage is invalid', () => {
+    it('should set an error Message, and open a Snackbar', () => {
+      grid = (
+        <DataGrid
+          onError={(x: any) => x}
+          gridName='Motorhead'
+          rowsPerPage={20}
+          rowsPerPageOptions={[10, 25, 50]}
+          dataSource={new RemoteDataSource('url', validColumnsSample)}
+          bodyRenderer={bodyRenderer}
+        />
+      );
+
+      const wrapper = shallow(grid);
+
+      expect(wrapper.state().errorMessage).to.be.equal('The rowsPerPage value should be: 10,25,50');
+      expect(wrapper.state().open).to.be.equal(true);
     });
   });
 
