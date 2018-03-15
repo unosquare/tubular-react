@@ -7,7 +7,7 @@
  
 :star: *Please star this project if you find it useful!*
 
-**Tubular-React** is a DataGrid component using [MaterialUI](https://material-ui-next.com/). The DataGrid component can display tabular data including the following features.
+**Tubular-React** is a DataGrid component using [MaterialUI](https://material-ui-next.com/). The DataGrid component can display tabular data including the following features:
 
 * Define a custom layout for columns and cells using `render` methods.
 * Use a remote or local datasource. Remote datasource use a specific Request and Response format.
