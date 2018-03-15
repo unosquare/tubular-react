@@ -53,8 +53,8 @@ interface IState {
   aggregate: any;
   data: any[];
   dataSource: BaseDataSource;
+  errorMessage: string;
   filteredRecordCount: number;
-  message: string;
   open: boolean;
   page: number;
   rowsPerPage: number;
@@ -81,8 +81,8 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
     aggregate: {},
     data: [] as any,
     dataSource: this.props.dataSource,
+    errorMessage: '',
     filteredRecordCount: 0,
-    message: '',
     open: false,
     page: 0,
     rowsPerPage: this.props.rowsPerPage,
@@ -91,7 +91,11 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
   };
 
   public componentDidMount() {
-    this.rowsPerPageChecker();
+    if (this.props.rowsPerPageOptions) {
+      this.rowsPerPageChecker(this.props.rowsPerPageOptions);
+    } else {
+      this.rowsPerPageChecker([10, 20, 50, 100]);
+    }
 
     const pageSize = parseInt(localStorage.getItem(`tubular.${this.props.gridName}_pageSize`), 10) ||
       this.props.rowsPerPage;
@@ -120,28 +124,15 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
     this.handleTextSearch = debounce(this.handleTextSearch, 600);
   }
 
-  public rowsPerPageChecker = () => {
-    if (this.props.rowsPerPageOptions) {
-      const index = this.props.rowsPerPageOptions.indexOf(this.props.rowsPerPage);
+  public rowsPerPageChecker = (rowsPerPageOptions: number[]) => {
+    const index = rowsPerPageOptions.indexOf(this.props.rowsPerPage);
 
-      if (index === -1) {
-        this.setState({
-          message: 'The rowsPerPage value should be: ' + this.props.rowsPerPageOptions.toString()
-        },
-          () => this.handleOpen()
-        );
-      }
-    } else {
-      const rowsPerPageOptions = [10, 20, 50, 100];
-      const index = rowsPerPageOptions.indexOf(this.props.rowsPerPage);
-
-      if (index === -1) {
-        this.setState({
-          message: 'The rowsPerPage value should be: ' + rowsPerPageOptions.toString()
-        },
-          () => this.handleOpen()
-        );
-      }
+    if (index === -1) {
+      this.setState({
+        errorMessage: 'The rowsPerPage value should be: ' + rowsPerPageOptions.toString()
+      },
+        () => this.handleOpen()
+      );
     }
   }
 
@@ -382,7 +373,7 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
         SnackbarContentProps={{
           'aria-describedby': 'message-id',
         }}
-        message={<span id='message-id'>{this.state.message}</span>}
+        message={<span id='message-id'>{this.state.errorMessage}</span>}
       />
     );
 
