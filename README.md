@@ -116,7 +116,7 @@ These are all the available props (and their default values) for the `<DataGrid 
 |------------------|----------------------------------------|-----------------|----------------------------------------------|
 | `datasource`       | `RemoteDataSource` or `LocalDataSource`|        -        |**Required**                                 |
 | `gridName`         | `string`                               |        -        |**Required**                                 |
-| `rowsPerPage`      | `number`                               |        -        |**Required.** It should be a number thats inside the rowsPerPageOptions array.|
+| `rowsPerPage`      | `number`                               |        -        |**Required.** It should be a number thats inside the `rowsPerPageOptions` array.|
 |`rowsPerPageOptions`| `array`                                |[10, 20, 50, 100]| The options that are going to be shown in the Page Size dropdown.|
 | `showBottomPager`  | `bool`                                 |     `true`     |**Optional**                                              |
 | `showTopPager`     | `bool`                                 |     `true`     |**Optional**                                                 |

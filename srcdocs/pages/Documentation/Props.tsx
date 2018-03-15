@@ -10,6 +10,10 @@ import NavigationBar from '../../components/NavigationBar';
 import PropsTable from '../../components/PropsTable';
 
 const styles = {
+    code: {
+        background: '#F8F8FF',
+        padding: '6px'
+    },
     container: {
         padding: 30,
     },
@@ -32,9 +36,10 @@ export default withStyles(styles)((props) => {
                     <Paper className={classes.paper}>
                         <Typography variant='display1' paragraph={true}>Props</Typography>
                         <Divider />
+                        <br />
                         <Typography variant='subheading'>
                             These are all the available props
-                            (and their default values) for the {'<DataGrid />'} component.
+                            (and their default values) for the <code className={classes.code}>{'<DataGrid />'}</code> component.
                         </Typography>
                         <PropsTable />
                     </Paper>
