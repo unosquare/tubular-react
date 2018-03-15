@@ -14,6 +14,8 @@
 * Sort and filter multiple columns.
 * Free-text search of string columns.
 * Page data. Remote data is paged in the server side.
+* Export data to a CSV file.
+* Print data.
 
 For more information how to implement a remote datasource, check [Tubular DotNet](https://github.com/unosquare/tubular-dotnet) project or [Tubular Node.js](https://github.com/unosquare/tubular-nodejs) project. Depending in your backend.
 
