@@ -136,7 +136,7 @@ describe('<DataGrid />', () => {
 
       const wrapper = shallow(grid);
 
-      expect(wrapper.state().message).to.be.equal('The rowsPerPage value should be: 10,20,50,100');
+      expect(wrapper.state().errorMessage).to.be.equal('The rowsPerPage value should be: 10,20,50,100');
       expect(wrapper.state().open).to.be.equal(true);
     });
   });
@@ -156,7 +156,7 @@ describe('<DataGrid />', () => {
 
       const wrapper = shallow(grid);
 
-      expect(wrapper.state().message).to.be.equal('The rowsPerPage value should be: 10,25,50');
+      expect(wrapper.state().errorMessage).to.be.equal('The rowsPerPage value should be: 10,25,50');
       expect(wrapper.state().open).to.be.equal(true);
     });
   });
