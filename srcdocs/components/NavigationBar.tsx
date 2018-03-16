@@ -94,12 +94,12 @@ const NavigationBar =
                         </Tooltip>
                         <Divider />
                         <Link to='/' className={classes.link}>
-                            <ListItem button={true}>
+                            <ListItem button={true} onClick={this.toggleDrawer(false)}>
                                 <ListItemText primary='Home'/>
                             </ListItem>
                         </Link>
                         <Link to='/sample' className={classes.link}>
-                            <ListItem button={true}>
+                            <ListItem button={true} onClick={this.toggleDrawer(false)}>
                                 <ListItemText primary='Samples'/>
                             </ListItem>
                         </Link>
@@ -111,22 +111,22 @@ const NavigationBar =
                         <Collapse in={this.state.openList} timeout='auto' unmountOnExit={true}>
                             <List component='div' disablePadding={true}>
                                 <Link to='/documentation/getting-started' className={classes.link}>
-                                    <ListItem button={true}>
+                                    <ListItem button={true} onClick={this.toggleDrawer(false)}>
                                         <ListItemText primary='Getting Started'/>
                                     </ListItem>
                                 </Link>
                                 <Link to='/documentation/columnmodel' className={classes.link}>
-                                    <ListItem button={true}>
+                                    <ListItem button={true} onClick={this.toggleDrawer(false)}>
                                         <ListItemText primary='Column Model'/>
                                     </ListItem>
                                 </Link>
                                 <Link to='/documentation/datasource' className={classes.link}>
-                                    <ListItem button={true}>
+                                    <ListItem button={true} onClick={this.toggleDrawer(false)}>
                                         <ListItemText primary='Data Source'/>
                                     </ListItem>
                                 </Link>
                                 <Link to='/documentation/props' className={classes.link}>
-                                    <ListItem button={true}>
+                                    <ListItem button={true} onClick={this.toggleDrawer(false)}>
                                         <ListItemText primary='Props'/>
                                     </ListItem>
                                 </Link>
