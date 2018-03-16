@@ -13,6 +13,7 @@ const styles = (theme: Theme): StyleRules<keyof typeof styleClasses> => (
     {
         code: {
             background: '#F8F8FF',
+            fontSize: 14
         },
         root: {
             marginTop: theme.spacing.unit * 3,
