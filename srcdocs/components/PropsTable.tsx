@@ -43,7 +43,7 @@ export default withStyles(styles)((props) => {
                         <TableCell><code className={classes.code}>datasource</code></TableCell>
                         <TableCell><code className={classes.code}>RemoteDataSource</code>
                             or <code className={classes.code}>LocalDataSource</code></TableCell>
-                        <TableCell/>
+                        <TableCell>-</TableCell>
                         <TableCell><strong>Required</strong></TableCell>
                     </TableRow>
                     <TableRow hover={true}>
