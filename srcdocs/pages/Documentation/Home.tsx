@@ -11,6 +11,10 @@ const styles = {
     code: {
         fontSize: 15,
     },
+    codeTag: {
+        background: '#F8F8FF',
+        padding: '6px'
+    },
     container: {
         margin: '0',
         padding: 30,
@@ -111,7 +115,7 @@ export default withStyles(styles)((props) => {
                 <Grid item={true} xs={12}>
                     <Paper className={classes.paper}>
                         <Typography variant='display1'>
-                            Using the {'</DataGrid>'} component
+                            Using the <code className={classes.code}>{'</DataGrid>'}</code> component
                         </Typography>
                         <Divider />
                         <Typography paragraph={true} variant='body1' className={classes.content}>
