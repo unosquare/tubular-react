@@ -24,6 +24,12 @@ const styles = {
         maxWidth: 300
     },
     paper: {
+        minHeight: '300px',
+        padding: 30,
+    }
+    ,
+    paperSmall: {
+        minHeight: '115px',
         padding: 30,
     }
 };
@@ -37,16 +43,18 @@ export default withStyles(styles)((props) => {
         <div>
             <Grid container={true} spacing={24} className={classes.container}>
                 <Grid item={true} xs={12} md={6}>
-                 <Paper className={classes.paper}>
-                    <Typography variant='display1'>
-                        What is it?
-                    </Typography>
-                    <Divider />
-                    <Typography paragraph={true} variant='subheading' className={classes.content}>
-                        Tubular React is a set of ReactJS components designed to rapidly build modern web applications.
-                        The centerpiece of Tubular is its fully templateable grid with lots of features
-                        such as server-side pagination, multi-column sorting and filtering, and built-in export to CSV.
-                    </Typography>
+                    <Paper className={classes.paper}>
+                        <Typography variant='display1'>
+                            What is it?
+                        </Typography>
+                        <Divider />
+                        <Typography paragraph={true} variant='subheading' className={classes.content}>
+                            Tubular React is a set of ReactJS components designed to rapidly build
+                            modern web applications.
+                            The centerpiece of Tubular is its fully templateable grid with lots of features
+                            such as server-side pagination, multi-column sorting and filtering, and
+                            built-in export to CSV.
+                        </Typography>
                     </Paper>
                 </Grid>
                 <Grid item={true} xs={12} md={6}>
@@ -73,7 +81,7 @@ export default withStyles(styles)((props) => {
                     </Paper>
                 </Grid>
                 <Grid item={true} xs={12} md={6}>
-                    <Paper className={classes.paper}>
+                    <Paper className={classes.paperSmall}>
                         <Typography variant='display1'>
                             Dependencies
                         </Typography>
@@ -88,7 +96,7 @@ export default withStyles(styles)((props) => {
                     </Paper>
                 </Grid>
                 <Grid item={true} xs={12} md={6}>
-                    <Paper className={classes.paper}>
+                    <Paper className={classes.paperSmall}>
                         <Typography variant='display1'>
                             npm Installation
                         </Typography>
