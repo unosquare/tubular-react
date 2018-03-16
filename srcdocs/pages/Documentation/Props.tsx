@@ -43,6 +43,14 @@ export default withStyles(styles)((props) => {
                             <code className={classes.code}>{'<DataGrid />'}</code> component.
                         </Typography>
                         <PropsTable />
+                        <br />
+                        <Typography variant='subheading'>
+                            <i>If you don't define some of the optional props described above, 
+                            these will not be shown. In the case of <code className={classes.code}>bodyRenderer</code>, 
+                            the grid will display its default body; if the 
+                            <code className={classes.code}>footerRenderer</code> 
+                            is not defined, the footer will not be displayed.</i>
+                        </Typography>
                     </Paper>
                 </Grid>
             </Grid>

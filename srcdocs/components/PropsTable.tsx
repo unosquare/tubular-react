@@ -65,7 +65,8 @@ export default withStyles(styles)((props) => {
                         <TableCell><code className={classes.code}>rowsPerPageOptions</code></TableCell>
                         <TableCell><code className={classes.code}>array</code></TableCell>
                         <TableCell>[10, 20, 50, 100]</TableCell>
-                        <TableCell>The options that are going to be shown in the Page Size dropdown.</TableCell>
+                        <TableCell>The options that are going to be shown in the 
+                            <code className={classes.code}>Page size</code> dropdown.</TableCell>
                     </TableRow>
                     <TableRow hover={true}>
                         <TableCell><code className={classes.code}>showBottomPager</code></TableCell>

@@ -117,7 +117,7 @@ These are all the available props (and their default values) for the `<DataGrid 
 | `datasource`       | `RemoteDataSource` or `LocalDataSource`|        -        |**Required**                                 |
 | `gridName`         | `string`                               |        -        |**Required**                                 |
 | `rowsPerPage`      | `number`                               |        -        |**Required.** It should be a number that is inside the `rowsPerPageOptions` array.|
-|`rowsPerPageOptions`| `array`                                |[10, 20, 50, 100]| The options that are going to be shown in the Page Size dropdown.|
+|`rowsPerPageOptions`| `array`                                |[10, 20, 50, 100]| The options that are going to be shown in the `Page size` dropdown.|
 | `showBottomPager`  | `bool`                                 |     `true`     |**Optional**                                              |
 | `showTopPager`     | `bool`                                 |     `true`     |**Optional**                                                 |
 | `showPrintButton`  | `bool`                                 |     `true`     |**Optional**                                                  |
@@ -125,10 +125,10 @@ These are all the available props (and their default values) for the `<DataGrid 
 | `bodyRenderer`     | `function`                             |        -        |**Optional**                                                  |
 | `footerRenderer`   | `function`                             |        -        |**Optional**                                                  |
 
-_If you don't define some of the optional props described above, these will not be shown. In the case of `bodyRenderer`, the grid will display its default body; if the `footerRenderer` is not defined, the footer will not be displayed_
+_If you don't define some of the optional props described above, these will not be shown. In the case of `bodyRenderer`, the grid will display its default body; if the `footerRenderer` is not defined, the footer will not be displayed._
 
 ### `DataSource`
-`<DataGrid/>` requires a `dataSource` which can be an instance of the `RemoteDataSource` class or the `LocalDataSource` class, that deals with data retrieval among other things. 
+`<DataGrid/>` requires a `dataSource` prop which can be an instance of the `RemoteDataSource` class or the `LocalDataSource` class, that deals with data retrieval among other things. 
 
 ### `RemoteDataSource`
 `RemoteDataSource` needs both a URL and a `ColumnModel` array.
@@ -143,14 +143,14 @@ It represents a `DataGrid` column and its constructor requires a name identifier
 |---------------|-------------------|-------------------|--------------------------------------------------------------|----------|
 | `Aggregate`     | `AggregateFunctions`|         `NONE`         | The aggregation function that will be applied to this column.|`NONE`, `SUM`, `AVERAGE`, `COUNT`, `DISTINCT_COUNT`, `MAX`, `MIN`|
 | `DataType`      | `ColumnDataType`    |       `STRING`         |                        The column type.                      |`STRING`, `NUMERIC`, `BOOLEAN`, `DATE`, `DATE_TIME`, `DATE_TIME_UTC`|
-| `Filtering`     | `bool`              |        `false`         |                       Enables filtering.                     |          |
-| `IsKey`         | `bool`              |        `false`         |         Defines if a column is an identifier or not.         |          |
-| `Label`         | `string`            |The name of the column|               Column label that will be shown.               |          |
-| `Searchable`    | `bool`              |        `true`          |     Indicates that a column can be used to search upon.      |          |
-| `SortDirection` |`ColumnSortDirection`|        `NONE`          |                                                              |`NONE`, `ASCENDING`, `DESCENDING`|
-| `SortOrder`     | `number`            |         `-1`          |                                                              |          |
-| `Sortable`      | `bool`              |        `false`         |            Determines if a column can be sorted.             |          |
-| `Visible`       | `bool`              |        `true`          |            Specifies if a column should be shown.            |          |
+| `Filtering`     | `bool`              |        `false`         |                       Enables filtering.                     |-          |
+| `IsKey`         | `bool`              |        `false`         |         Defines if a column is an identifier or not.         |-          |
+| `Label`         | `string`            |The name of the column|               Column label that will be shown.               |-          |
+| `Searchable`    | `bool`              |        `true`          |     Indicates that a column can be used to search upon.      |-          |
+| `SortDirection` |`ColumnSortDirection`|        `NONE`          |                                    -                          |`NONE`, `ASCENDING`, `DESCENDING`|
+| `SortOrder`     | `number`            |         `-1`          |                                     -                       |-          |
+| `Sortable`      | `bool`              |        `false`         |            Determines if a column can be sorted.             |-          |
+| `Visible`       | `bool`              |        `true`          |            Specifies if a column should be shown.            |-          |
 
 ## Run integrated sample
 

@@ -1,3 +1,4 @@
+import Button from 'material-ui/Button';
 import Divider from 'material-ui/Divider';
 import Grid from 'material-ui/Grid';
 import Hidden from 'material-ui/Hidden';
@@ -8,6 +9,10 @@ import * as React from 'react';
 import DocumentationList from '../../components/DocumentationList';
 
 const styles = {
+    code: {
+        background: '#F8F8FF',
+        padding: '6px'
+    },
     container: {
         padding: 30,
     },
@@ -30,10 +35,38 @@ export default withStyles(styles)((props) => {
                     <Paper className={classes.paper}>
                         <Typography variant='display1' paragraph={true}> Data Source </Typography>
                         <Divider />
-                        <Typography variant='subheading'>{'<DataGrid/>'}
-                            requires a dataSource prop which is an instance of the RemoteDataSource class,
-                            that deals with data retrieval among other things.<br />At the same time,
-                            RemoteDataSource needs both a URL and a ColumnModel array.
+                        <br />
+                        <Typography variant='subheading'>
+                            <code className={classes.code}>{'<DataGrid />'}</code> requires a 
+                            <code className={classes.code}>dataSource</code> prop which can be 
+                            an instance of the <code className={classes.code}>RemoteDataSource</code> class or 
+                            the <code className={classes.code}>LocalDataSource</code> class, 
+                            that deals with data retrieval among other things. 
+
+                            <br /><br />
+                            <Typography variant='headline' gutterBottom={true}>
+                                <code className={classes.code}>RemoteDataSource</code>
+                            </Typography>
+
+                            <code className={classes.code}>RemoteDataSource</code>
+                            needs both a URL and a <code className={classes.code}>ColumnModel</code> array.
+
+                            <br /><br />
+                            <Typography variant='headline' gutterBottom={true}>
+                                <code className={classes.code}>LocalDataSource</code>
+                            </Typography>
+
+                            <code className={classes.code}>LocalDataSource</code> 
+                            needs both an array of data objects and a 
+                            <code className={classes.code}>ColumnModel</code> array. See this
+                            <Button
+                                color='primary'
+                                href='https://github.com/unosquare/tubular-react/blob/master/sample/src/local/localData.ts'
+                                target='_blank'
+                            >
+                                example
+                            </Button>
+                            of how to define the array of objects.
                         </Typography>
                     </Paper>
                 </Grid>
