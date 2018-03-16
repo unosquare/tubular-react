@@ -72,25 +72,31 @@ export default withStyles(styles)((props) => {
                     <TableRow hover={true}>
                         <TableCell><code className={classes.code}>showBottomPager</code></TableCell>
                         <TableCell><code className={classes.code}>bool</code></TableCell>
-                        <TableCell><code className={classes.code}>false</code></TableCell>
-                        <TableCell><strong>Optional</strong></TableCell>
-                    </TableRow>
-                    <TableRow hover={true}>
-                        <TableCell><code className={classes.code}>showTopPager</code></TableCell>
-                        <TableCell><code className={classes.code}>bool</code></TableCell>
-                        <TableCell><code className={classes.code}>false</code></TableCell>
-                        <TableCell><strong>Optional</strong></TableCell>
-                    </TableRow>
-                    <TableRow hover={true}>
-                        <TableCell><code className={classes.code}>showPrintButton</code></TableCell>
-                        <TableCell><code className={classes.code}>bool</code></TableCell>
-                        <TableCell><code className={classes.code}>false</code></TableCell>
+                        <TableCell><code className={classes.code}>true</code></TableCell>
                         <TableCell><strong>Optional</strong></TableCell>
                     </TableRow>
                     <TableRow hover={true}>
                         <TableCell><code className={classes.code}>showExportButton</code></TableCell>
                         <TableCell><code className={classes.code}>bool</code></TableCell>
-                        <TableCell><code className={classes.code}>false</code></TableCell>
+                        <TableCell><code className={classes.code}>true</code></TableCell>
+                        <TableCell><strong>Optional</strong></TableCell>
+                    </TableRow>
+                    <TableRow hover={true}>
+                        <TableCell><code className={classes.code}>showSearchText</code></TableCell>
+                        <TableCell><code className={classes.code}>bool</code></TableCell>
+                        <TableCell><code className={classes.code}>true</code></TableCell>
+                        <TableCell><strong>Optional</strong></TableCell>
+                    </TableRow>
+                    <TableRow hover={true}>
+                        <TableCell><code className={classes.code}>showTopPager</code></TableCell>
+                        <TableCell><code className={classes.code}>bool</code></TableCell>
+                        <TableCell><code className={classes.code}>true</code></TableCell>
+                        <TableCell><strong>Optional</strong></TableCell>
+                    </TableRow>
+                    <TableRow hover={true}>
+                        <TableCell><code className={classes.code}>showPrintButton</code></TableCell>
+                        <TableCell><code className={classes.code}>bool</code></TableCell>
+                        <TableCell><code className={classes.code}>true</code></TableCell>
                         <TableCell><strong>Optional</strong></TableCell>
                     </TableRow>
                     <TableRow hover={true}>

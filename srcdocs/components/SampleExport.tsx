@@ -53,6 +53,7 @@ class SamplePagination extends React.Component {
                 showExportButton={true}
                 showBottomPager={true}
                 showTopPager={true}
+                showSearchText={false}
                 rowsPerPage={10}
                 gridName='table'
             />

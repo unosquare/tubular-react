@@ -51,6 +51,7 @@ class SamplePagination extends React.Component {
                 dataSource={dataSource}
                 rowsPerPage={10}
                 showBottomPager={true}
+                showSearchText={true}
                 showTopPager={true}
                 gridName='table'
             />
