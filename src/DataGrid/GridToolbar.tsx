@@ -43,6 +43,7 @@ interface IProps {
   isExportEnabled: boolean;
   isPrintEnabled: boolean;
   filteredRecordCount: number;
+  showSearchText?: boolean;
   onSearchTextChange(text: string): void;
   onPrint(condition: boolean): void;
   onExport(condition: boolean): void;
@@ -123,7 +124,7 @@ class GridToolbar extends React.Component <IProps & WithStyles<keyof typeof styl
   }
 
   public render() {
-    const { classes, filteredRecordCount, isPrintEnabled, isExportEnabled, onPrint} = this.props;
+    const { classes, filteredRecordCount, isPrintEnabled, isExportEnabled, onPrint, showSearchText} = this.props;
     const { searchText, anchorEl, anchorPrint } = this.state;
 
     return(
@@ -141,29 +142,31 @@ class GridToolbar extends React.Component <IProps & WithStyles<keyof typeof styl
             <PrintIcon/>
           </IconButton>
         }
-        <FormControl className={classes.formControl}>
-          <Input
-            fullWidth={true}
-            type='text'
-            value={this.state.searchText}
-            onChange={this.handleInputChange}
-            startAdornment={
-              <InputAdornment position='end'>
-                <IconButton>
-                  <SearchIcon />
-                </IconButton>
-              </InputAdornment>
-            }
-            endAdornment={
-              searchText !== '' &&
-              <InputAdornment position='end'>
-                <IconButton onClick={this.clearSearchText}>
-                  <CloseIcon />
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </FormControl>
+        { showSearchText &&
+          <FormControl className={classes.formControl}>
+            <Input
+              fullWidth={true}
+              type='text'
+              value={this.state.searchText}
+              onChange={this.handleInputChange}
+              startAdornment={
+                <InputAdornment position='end'>
+                  <IconButton>
+                    <SearchIcon />
+                  </IconButton>
+                </InputAdornment>
+              }
+              endAdornment={
+                searchText !== '' &&
+                <InputAdornment position='end'>
+                  <IconButton onClick={this.clearSearchText}>
+                    <CloseIcon />
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+          </FormControl>
+        }
         {isExportEnabled && <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleMenuClose}>
           <MenuItem onClick={(e) => this.exportCSV(false, e)}> All rows</MenuItem>
           <MenuItem onClick={(e) => this.exportCSV(true, e)}> Current rows</MenuItem>

@@ -82,6 +82,7 @@ export default class Main extends React.Component {
         showBottomPager={true}
         showPrintButton={true}
         showExportButton={true}
+        showSearchText={true}
         footerRenderer={
           (aggregates: any) =>
             <TableRow>

@@ -71,6 +71,7 @@ interface IProps {
   showTopPager?: boolean;
   showPrintButton?: boolean;
   showExportButton?: boolean;
+  showSearchText?: boolean;
   onError?(error: any): any;
   bodyRenderer?(column: any, index: number): any;
   footerRenderer?(aggregate: any): any;
@@ -383,6 +384,7 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
         <GridToolbar
           filteredRecordCount={filteredRecordCount}
           gridName={this.props.gridName}
+          showSearchText={this.props.showSearchText}
           onSearchTextChange={this.handleTextSearch}
           isPrintEnabled={showPrintButton}
           isExportEnabled={showExportButton}
