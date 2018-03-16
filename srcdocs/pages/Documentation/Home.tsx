@@ -12,7 +12,9 @@ const styles = {
         fontSize: 15,
     },
     container: {
+        margin: '0',
         padding: 30,
+        width: '100%'
     },
     content: {
         marginTop: 10,

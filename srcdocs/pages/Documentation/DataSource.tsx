@@ -14,7 +14,9 @@ const styles = {
         padding: '6px'
     },
     container: {
+        margin: '0',
         padding: 30,
+        width: '100%'
     },
     paper: {
         padding: 10,
@@ -37,11 +39,11 @@ export default withStyles(styles)((props) => {
                         <Divider />
                         <br />
                         <Typography variant='subheading'>
-                            <code className={classes.code}>{'<DataGrid />'}</code> requires a 
-                            <code className={classes.code}>dataSource</code> prop which can be 
-                            an instance of the <code className={classes.code}>RemoteDataSource</code> class or 
-                            the <code className={classes.code}>LocalDataSource</code> class, 
-                            that deals with data retrieval among other things. 
+                            <code className={classes.code}>{'<DataGrid />'}</code> requires a
+                            <code className={classes.code}>dataSource</code> prop which can be
+                            an instance of the <code className={classes.code}>RemoteDataSource</code> class or
+                            the <code className={classes.code}>LocalDataSource</code> class,
+                            that deals with data retrieval among other things.
 
                             <br /><br />
                             <Typography variant='headline' gutterBottom={true}>
@@ -56,8 +58,8 @@ export default withStyles(styles)((props) => {
                                 <code className={classes.code}>LocalDataSource</code>
                             </Typography>
 
-                            <code className={classes.code}>LocalDataSource</code> 
-                            needs both an array of data objects and a 
+                            <code className={classes.code}>LocalDataSource</code>
+                            needs both an array of data objects and a
                             <code className={classes.code}>ColumnModel</code> array. See this
                             <Button
                                 color='primary'

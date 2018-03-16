@@ -15,7 +15,9 @@ const styles = {
         padding: '6px'
     },
     container: {
+        margin: '0',
         padding: 30,
+        width: '100%'
     },
     paper: {
         padding: 10,
@@ -38,17 +40,17 @@ export default withStyles(styles)((props) => {
                         <Divider />
                         <br />
                         <Typography variant='subheading'>
-                            These are all the available props 
-                            (and their default values) for the 
+                            These are all the available props
+                            (and their default values) for the
                             <code className={classes.code}>{'<DataGrid />'}</code> component.
                         </Typography>
                         <PropsTable />
                         <br />
                         <Typography variant='subheading'>
-                            <i>If you don't define some of the optional props described above, 
+                            <i>If you don't define some of the optional props described above,
                             these will not be shown. In the case of <code className={classes.code}>bodyRenderer</code>, 
-                            the grid will display its default body; if the 
-                            <code className={classes.code}>footerRenderer</code> 
+                            the grid will display its default body; if the
+                            <code className={classes.code}>footerRenderer</code>
                             is not defined, the footer will not be displayed.</i>
                         </Typography>
                     </Paper>

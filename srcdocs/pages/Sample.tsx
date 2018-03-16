@@ -9,7 +9,9 @@ import SamplePagination from '../../srcdocs/components/SamplePagination';
 import SampleSearch from '../../srcdocs/components/SampleSearch';
 const styles = {
     container: {
+        margin: '0',
         padding: 30,
+        width: '100%'
     },
     content: {
         marginTop: 10,

@@ -10,7 +10,9 @@ import DocumentationList from '../../components/DocumentationList';
 
 const styles = {
     container: {
+        margin: '0',
         padding: 30,
+        width: '100%'
     },
     paper: {
         padding: 10
