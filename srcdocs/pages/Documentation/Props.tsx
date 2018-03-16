@@ -38,8 +38,9 @@ export default withStyles(styles)((props) => {
                         <Divider />
                         <br />
                         <Typography variant='subheading'>
-                            These are all the available props
-                            (and their default values) for the <code className={classes.code}>{'<DataGrid />'}</code> component.
+                            These are all the available props 
+                            (and their default values) for the 
+                            <code className={classes.code}>{'<DataGrid />'}</code> component.
                         </Typography>
                         <PropsTable />
                     </Paper>
