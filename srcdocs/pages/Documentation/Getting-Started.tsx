@@ -13,6 +13,10 @@ const styles = {
     code: {
         fontSize: 15,
     },
+    codeTag: {
+        background: '#F8F8FF',
+        padding: '6px'
+    },
     container: {
         margin: '0',
         padding: 30,
@@ -42,11 +46,12 @@ export default withStyles(styles)((props) => {
                             Getting Started
                         </Typography>
                         <Divider />
+                        <br />
                         <Typography variant='headline' paragraph={true}>
                             Installation
                         </Typography>
                         <Typography variant='subheading' paragraph={true}>
-                            Tubular React is available as an npm package.
+                            Tubular-React is available as an npm package.
                         </Typography>
                         <Typography variant='headline' paragraph={true}>
                             Dependencies
@@ -62,7 +67,8 @@ export default withStyles(styles)((props) => {
                             npm
                         </Typography>
                         <Typography variant='body1' paragraph={true}>
-                            To install and save in your package.json dependencies, run:
+                            To install and save in your 
+                            <code className={classes.codeTag}>package.json</code> dependencies, run:
                         </Typography>
                         <SyntaxHighligther language='tsx' style={docco} className={classes.code}>
                             {'npm install tubular-react --save'}

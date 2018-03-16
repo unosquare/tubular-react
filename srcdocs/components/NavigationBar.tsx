@@ -103,7 +103,7 @@ const NavigationBar =
                                 <ListItemText primary='Samples'/>
                             </ListItem>
                         </Link>
-                        <ListItem button={true} onClick={this.toggleDrawer(false)}/>
+                        {/* <ListItem button={true} onClick={this.toggleDrawer(false)}/> */}
                         <ListItem button={true} onClick={this.toggleList(!this.state.openList)}>
                             <ListItemText primary='Documentation' />
                             {this.state.openList ? <ExpandLess /> : <ExpandMore />}

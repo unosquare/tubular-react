@@ -48,8 +48,9 @@ export default withStyles(styles)((props) => {
                         <br />
                         <Typography variant='subheading'>
                             <i>If you don't define some of the optional props described above,
-                            these will not be shown. In the case of <code className={classes.code}>bodyRenderer</code>, 
-                            the grid will display its default body; if the
+                            these will not be shown. In the case of </i>
+                            <code className={classes.code}>bodyRenderer</code>, 
+                            <i>the grid will display its default body; if the 
                             <code className={classes.code}>footerRenderer</code>
                             is not defined, the footer will not be displayed.</i>
                         </Typography>

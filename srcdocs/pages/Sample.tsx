@@ -49,6 +49,7 @@ export default withStyles(styles)(class extends React.Component<WithStyles<keyof
                                 Samples
                             </Typography>
                             <Divider />
+                            <br />
                             <Grid item={true} xs={12} className={classes.paper}>
                                 <Typography variant='headline' gutterBottom={true}>Grid with Paginations</Typography>
                                 <Typography variant='subheading'>
