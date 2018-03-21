@@ -8,19 +8,25 @@ import DataGrid, {
 } from '../../src/';
 
 const columns = [
-    new ColumnModel('OrderID',
-        {
-            DataType: ColumnDataType.NUMERIC,
-            IsKey: true,
-            Label: 'ID',
-            SortDirection: ColumnSortDirection.ASCENDING,
-            SortOrder: 1
-        }
+    new ColumnModel( 'OrderID',
+      { DataType: ColumnDataType.NUMERIC,
+        IsKey: true,
+        Label: 'ID', }
     ),
-    new ColumnModel('CustomerName',
-        { Aggregate: AggregateFunctions.COUNT }
+    new ColumnModel( 'CustomerName',
+      { Aggregate: AggregateFunctions.COUNT }
+    ),
+    new ColumnModel( 'ShippedDate',
+      { DataType: ColumnDataType.DATE_TIME }
+    ),
+    new ColumnModel( 'ShipperCity' ),
+    new ColumnModel( 'Amount',
+      { DataType: ColumnDataType.NUMERIC }
+    ),
+    new ColumnModel( 'IsShipped',
+      { DataType: ColumnDataType.BOOLEAN }
     )
-];
+  ];
 
 class SamplePagination extends React.Component {
     public state = {
@@ -33,8 +39,9 @@ class SamplePagination extends React.Component {
                 dataSource={dataSource}
                 rowsPerPage={10}
                 showBottomPager={true}
+                showSearchText={false}
                 showTopPager={true}
-                gridName='table'
+                gridName='Tubular-React'
             />
         );
     }

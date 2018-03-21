@@ -10,10 +10,12 @@ import DocumentationList from '../../components/DocumentationList';
 
 const styles = {
     container: {
+        margin: '0',
         padding: 30,
+        width: '100%'
     },
     paper: {
-        padding: 10,
+        padding: 10
     }
 };
 
@@ -28,9 +30,9 @@ export default withStyles(styles)((props) => {
                 </Grid>
                 </Hidden>
                 <Grid item={true} xs={12} md={9}>
-                    <Paper className={classes.paper}>
-                    <Typography variant='display1' paragraph={true}> Column Model </Typography>
-                    <Divider />
+                    <Paper className={classes.paper} style={{ overflowX: 'auto'}}>
+                        <Typography variant='display1' paragraph={true}> Column Model </Typography>
+                        <Divider />
                         <ColumnModelList />
                     </Paper>
                 </Grid>

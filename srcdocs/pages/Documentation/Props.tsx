@@ -10,8 +10,14 @@ import NavigationBar from '../../components/NavigationBar';
 import PropsTable from '../../components/PropsTable';
 
 const styles = {
+    code: {
+        background: '#F8F8FF',
+        padding: '6px'
+    },
     container: {
+        margin: '0',
         padding: 30,
+        width: '100%'
     },
     paper: {
         padding: 10,
@@ -32,11 +38,22 @@ export default withStyles(styles)((props) => {
                     <Paper className={classes.paper}>
                         <Typography variant='display1' paragraph={true}>Props</Typography>
                         <Divider />
+                        <br />
                         <Typography variant='subheading'>
                             These are all the available props
-                            (and their default values) for the {'<DataGrid />'} component.
+                            (and their default values) for the
+                            <code className={classes.code}>{'<DataGrid />'}</code> component.
                         </Typography>
                         <PropsTable />
+                        <br />
+                        <Typography variant='subheading'>
+                            <i>If you don't define some of the optional props described above,
+                            these will not be shown. In the case of </i>
+                            <code className={classes.code}>bodyRenderer</code>, 
+                            <i>the grid will display its default body; if the 
+                            <code className={classes.code}>footerRenderer</code>
+                            is not defined, the footer will not be displayed.</i>
+                        </Typography>
                     </Paper>
                 </Grid>
             </Grid>

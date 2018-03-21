@@ -9,7 +9,9 @@ import SamplePagination from '../../srcdocs/components/SamplePagination';
 import SampleSearch from '../../srcdocs/components/SampleSearch';
 const styles = {
     container: {
+        margin: '0',
         padding: 30,
+        width: '100%'
     },
     content: {
         marginTop: 10,
@@ -47,6 +49,7 @@ export default withStyles(styles)(class extends React.Component<WithStyles<keyof
                                 Samples
                             </Typography>
                             <Divider />
+                            <br />
                             <Grid item={true} xs={12} className={classes.paper}>
                                 <Typography variant='headline' gutterBottom={true}>Grid with Paginations</Typography>
                                 <Typography variant='subheading'>
