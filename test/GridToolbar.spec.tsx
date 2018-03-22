@@ -78,7 +78,9 @@ describe('<GridToolbar/>', () => {
 
   describe('When input text changes', () => {
     it('should update state search text', () => {
+      props.showSearchText = true;
       const wrapper = shallow(<GridToolbar {...props}/>);
+
       wrapper.find(Input).simulate('change', { target: { name: 'search', value: 'search' } });
       expect(wrapper.state().searchText).to.equal('search');
     });
@@ -196,15 +198,56 @@ describe('<GridToolbar/>', () => {
   describe('printTable()', () => {
     it('should update the state of \'anchorPrint\' to \'null\'', () => {
       props.isPrintEnabled = true;
-      props.onPrint = () => { return; };
+      props.onPrint = (filtered: boolean) => { return; };
 
       const wrapper = shallow(<GridToolbar {...props}/>);
-      wrapper.find(IconButton).simulate('click', { currentTarget: document.createElement('button') });
+      wrapper.setState({
+        anchorPrint: document.createElement('button')
+      });
 
-      const menuItems = wrapper.find(Menu).find(MenuItem);
       assert.isNotNull(wrapper.state().anchorPrint);
 
-      menuItems.at(1).simulate('click', { preventDefault: () => { return; } });
+      wrapper.instance().printTable(true, { preventDefault: () => { return; } });
+      wrapper.update();
+
+      assert.isNull(wrapper.state().anchorPrint);
+    });
+
+    it('Using simulate (\'All rows\'): should update the state of \'anchorPrint\' to \'null\'', () => {
+      props.isPrintEnabled = true;
+      props.onPrint = (filtered: boolean) => { return; };
+
+      const wrapper = shallow(<GridToolbar {...props}/>);
+      wrapper.setState({
+        anchorPrint: document.createElement('button')
+      });
+      assert.isNotNull(wrapper.state().anchorPrint);
+
+      const printIcon = wrapper.find(IconButton).simulate('click', { currentTarget: null });
+      wrapper.update();
+
+      const menuItems = wrapper.find(Menu).find(MenuItem);
+      const menuItemPrintAll = menuItems.at(0).simulate('click', { preventDefault: () => { return; } });
+
+      assert.isNull(wrapper.state().anchorPrint);
+    });
+
+    it('Using simulate (\'Current rows\'): should update the state of \'anchorPrint\' to \'null\'', () => {
+      props.isPrintEnabled = true;
+      props.onPrint = (filtered: boolean) => { return; };
+
+      const wrapper = shallow(<GridToolbar {...props}/>);
+      wrapper.setState({
+        anchorPrint: document.createElement('button')
+      });
+      assert.isNotNull(wrapper.state().anchorPrint);
+
+      const printIcon = wrapper.find(IconButton).simulate('click', { currentTarget: null });
+      wrapper.update();
+
+      const menuItems = wrapper.find(Menu).find(MenuItem);
+      const menuItemPrintAll = menuItems.at(1).simulate('click', { preventDefault: () => { return; } });
+
       assert.isNull(wrapper.state().anchorPrint);
     });
   });
