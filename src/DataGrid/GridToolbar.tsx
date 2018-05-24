@@ -166,12 +166,12 @@ class GridToolbar extends React.Component <IProps & WithStyles<keyof typeof styl
           </FormControl>
         }
         {isExportEnabled && <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleMenuClose}>
-          <MenuItem onClick={(e) => this.exportCSV(false, e)}> All rows</MenuItem>
-          <MenuItem onClick={(e) => this.exportCSV(true, e)}> Current rows</MenuItem>
+          <MenuItem onClick={(e: any) => this.exportCSV(false, e)}> All rows</MenuItem>
+          <MenuItem onClick={(e: any) => this.exportCSV(true, e)}> Current rows</MenuItem>
         </Menu>}
         {isPrintEnabled && <Menu anchorEl={anchorPrint} open={Boolean(anchorPrint)} onClose={this.handlePrintMenuClose}>
-          <MenuItem onClick={(e) => this.printTable(false, e)}> All rows</MenuItem>
-          <MenuItem onClick={(e) => this.printTable(true, e)}> Current rows</MenuItem>
+          <MenuItem onClick={(e: any) => this.printTable(false, e)}> All rows</MenuItem>
+          <MenuItem onClick={(e: any) => this.printTable(true, e)}> Current rows</MenuItem>
         </Menu>}
       </Toolbar>
     );
