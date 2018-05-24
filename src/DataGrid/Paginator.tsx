@@ -1,6 +1,7 @@
-import { TablePagination } from 'material-ui/Table';
-import * as React from 'react';
+import { TablePagination } from '@material-ui/core';
 import TablePaginationActions from './TablePaginationActions';
+
+import * as React from 'react';
 
 interface IProps {
   filteredRecordCount: number;
@@ -38,7 +39,7 @@ const Paginator: React.SFC<IProps> = ({ handlePager, rowsPerPage, rowsPerPageOpt
       rowsPerPageOptions={rowsPerPageOptions ? rowsPerPageOptions : [10, 20, 50, 100]}
       onChangePage={handleChangePage}
       onChangeRowsPerPage={handleChangeRowsPerPage}
-      Actions={TablePaginationActions}
+      ActionsComponent={TablePaginationActions}
     />
   );
 };

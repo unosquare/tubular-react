@@ -1,9 +1,9 @@
-import FirstPageIcon from 'material-ui-icons/FirstPage';
-import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
-import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
-import LastPageIcon from 'material-ui-icons/LastPage';
-import IconButton from 'material-ui/IconButton';
-import { StyleRules, Theme, withStyles } from 'material-ui/styles';
+import IconButton from '@material-ui/core/IconButton';
+import { StyleRules, Theme, withStyles } from '@material-ui/core/styles';
+import FirstPageIcon from '@material-ui/icons/FirstPage';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import LastPageIcon from '@material-ui/icons/LastPage';
 import * as React from 'react';
 
 const styleClasses  = {

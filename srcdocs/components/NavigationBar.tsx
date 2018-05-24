@@ -1,24 +1,29 @@
-import { WithStyles, withStyles } from 'material-ui';
-import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
-import ExpandLess from 'material-ui-icons/ExpandLess';
-import ExpandMore from 'material-ui-icons/ExpandMore';
-import MenuIcon from 'material-ui-icons/Menu';
-import AppBar from 'material-ui/AppBar';
-import Button from 'material-ui/Button';
-import Divider from 'material-ui/Divider';
-import Drawer from 'material-ui/Drawer';
-import IconButton from 'material-ui/IconButton';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import SvgIcon from 'material-ui/SvgIcon';
-import Toolbar from 'material-ui/Toolbar';
-import Tooltip from 'material-ui/Tooltip';
-import Collapse from 'material-ui/transitions/Collapse';
-import Typography from 'material-ui/Typography';
+import {
+    Collapse, List, ListItem, ListItemIcon, ListItemText, Theme , WithStyles, withStyles
+} from '@material-ui/core';
+
+import AppBar from '@material-ui/core/AppBar';
+import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
+import Drawer from '@material-ui/core/Drawer';
+import IconButton from '@material-ui/core/IconButton';
+import { StyleRules } from '@material-ui/core/styles';
+import SvgIcon from '@material-ui/core/SvgIcon';
+import Toolbar from '@material-ui/core/Toolbar';
+import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
+
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import MenuIcon from '@material-ui/icons/Menu';
+
 import * as PropTypes from 'prop-types';
 import * as  React from 'react';
 import { Link } from 'react-router-dom';
 import GitHubIcon from './Github';
-const styles = {
+
+const styles: any = {
     flex: {
         flex: 1,
         textAlign: 'center'
@@ -153,4 +158,4 @@ const NavigationBar =
     }
 });
 
-export default withStyles(styles)(NavigationBar);
+export default withStyles(styles)<any>(NavigationBar);

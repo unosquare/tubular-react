@@ -1,10 +1,10 @@
-import Button from 'material-ui/Button';
-import Divider from 'material-ui/Divider';
-import Grid from 'material-ui/Grid';
-import Hidden from 'material-ui/Hidden';
-import Paper from 'material-ui/Paper';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
+import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
+import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 import DocumentationList from '../../components/DocumentationList';
 

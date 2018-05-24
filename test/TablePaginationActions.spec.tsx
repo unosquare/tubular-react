@@ -1,8 +1,8 @@
+import IconButton from '@material-ui/core/IconButton';
+import { createShallow } from '@material-ui/core/test-utils';
 import { assert, expect } from 'chai';
 import * as Enzyme from 'enzyme';
 import * as Adapter from 'enzyme-adapter-react-16';
-import IconButton from 'material-ui/IconButton';
-import { createShallow } from 'material-ui/test-utils';
 import * as React from 'react';
 import * as sinon from 'sinon';
 import TablePaginationActions from '../src/DataGrid/TablePaginationActions';

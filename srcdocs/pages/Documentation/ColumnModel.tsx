@@ -1,9 +1,9 @@
-import Divider from 'material-ui/Divider';
-import Grid from 'material-ui/Grid';
-import Hidden from 'material-ui/Hidden';
-import Paper from 'material-ui/Paper';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
+import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
+import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 import ColumnModelList from '../../components/ColumnModelTable';
 import DocumentationList from '../../components/DocumentationList';

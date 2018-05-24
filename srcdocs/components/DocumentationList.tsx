@@ -1,8 +1,8 @@
-import Divider from 'material-ui/Divider';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import Paper from 'material-ui/Paper';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
+import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import Divider from '@material-ui/core/Divider';
+import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 

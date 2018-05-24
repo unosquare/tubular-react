@@ -1,13 +1,16 @@
+import {
+  Table, TableBody, TableCell, TableFooter, TableHead, TableRow
+} from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
+import Snackbar from '@material-ui/core/Snackbar';
+import { StyleRules, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+
+import CheckBox from '@material-ui/icons/CheckBox';
+import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
+import WarningIcon from '@material-ui/icons/Warning';
+
 import { debounce } from 'lodash';
-import { WithStyles, withStyles } from 'material-ui';
-import CheckBox from 'material-ui-icons/CheckBox';
-import CheckBoxOutlineBlank from 'material-ui-icons/CheckBoxOutlineBlank';
-import WarningIcon from 'material-ui-icons/Warning';
-import Paper from 'material-ui/Paper';
-import Snackbar from 'material-ui/Snackbar';
-import { StyleRules, Theme } from 'material-ui/styles';
-import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
-import Typography from 'material-ui/Typography';
 import * as moment from 'moment';
 import * as React from 'react';
 import BaseDataSource from './BaseDataSource';
@@ -371,7 +374,7 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
         style={{ paddingTop: '10px' }}
         open={this.state.open}
         onClose={this.handleClose}
-        SnackbarContentProps={{
+        ContentProps={{
           'aria-describedby': 'message-id',
         }}
         message={<span id='message-id'>{this.state.errorMessage}</span>}

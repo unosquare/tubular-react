@@ -1,18 +1,17 @@
-import { WithStyles, withStyles } from 'material-ui';
-import ArrowDownward from 'material-ui-icons/ArrowDownward';
-import ArrowUpward from 'material-ui-icons/ArrowUpward';
-import FilterListIcon from 'material-ui-icons/FilterList';
-import Dialog, { DialogTitle } from 'material-ui/Dialog';
-import IconButton from 'material-ui/IconButton';
-import { StyleRules, Theme } from 'material-ui/styles';
-import { TableCell, TableRow, TableSortLabel } from 'material-ui/Table';
-import Tooltip from 'material-ui/Tooltip';
-import * as moment from 'moment';
-import * as React from 'react';
+import { Dialog, DialogTitle, TableCell, TableRow, TableSortLabel } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import { StyleRules, Theme, WithStyles, withStyles } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
+import ArrowDownward from '@material-ui/icons/ArrowDownward';
+import ArrowUpward from '@material-ui/icons/ArrowUpward';
+import FilterListIcon from '@material-ui/icons/FilterList';
 import { ColumnDataType, ColumnSortDirection, CompareOperators } from './Column';
 import ColumnModel from './ColumnModel';
 import DialogContent from './DialogContent';
 import DialogDropdown from './DialogDropdown';
+
+import * as moment from 'moment';
+import * as React from 'react';
 
 const styleClasses  = {
   applyButton: '',

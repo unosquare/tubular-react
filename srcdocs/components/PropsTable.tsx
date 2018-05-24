@@ -1,8 +1,8 @@
-import Hidden from 'material-ui/Hidden';
-import Paper from 'material-ui/Paper';
-import { withStyles } from 'material-ui/styles';
-import { StyleRules, Theme } from 'material-ui/styles';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import Hidden from '@material-ui/core/Hidden';
+import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
+import { StyleRules, Theme } from '@material-ui/core/styles';
 import * as React from 'react';
 
 const styleClasses = {
@@ -57,8 +57,8 @@ export default withStyles(styles)((props) => {
                         <TableCell><code className={classes.code}>rowsPerPage</code></TableCell>
                         <TableCell><code className={classes.code}>number</code></TableCell>
                         <TableCell>-</TableCell>
-                        <TableCell><strong>Required.</strong> 
-                            It should be a number thats inside the 
+                        <TableCell><strong>Required.</strong>
+                            It should be a number thats inside the
                             <code className={classes.code}>rowsPerPageOptions</code> array.
                         </TableCell>
                     </TableRow>
@@ -66,7 +66,7 @@ export default withStyles(styles)((props) => {
                         <TableCell><code className={classes.code}>rowsPerPageOptions</code></TableCell>
                         <TableCell><code className={classes.code}>array</code></TableCell>
                         <TableCell>[10, 20, 50, 100]</TableCell>
-                        <TableCell>The options that are going to be shown in the 
+                        <TableCell>The options that are going to be shown in the
                             <code className={classes.code}>Page size</code> dropdown.</TableCell>
                     </TableRow>
                     <TableRow hover={true}>

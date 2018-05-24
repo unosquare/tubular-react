@@ -1,16 +1,21 @@
+import Menu, { MenuItem } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import Input from '@material-ui/core/Input';
+import { createShallow } from '@material-ui/core/test-utils';
+import Toolbar from '@material-ui/core/Toolbar';
+
+import DownloadIcon from '@material-ui/icons/FileDownload';
+import PrintIcon from '@material-ui/icons/Print';
+
 import { assert, expect } from 'chai';
 import * as Enzyme from 'enzyme';
 import * as Adapter from 'enzyme-adapter-react-16';
-import DownloadIcon from 'material-ui-icons/FileDownload';
-import PrintIcon from 'material-ui-icons/Print';
-import IconButton from 'material-ui/IconButton';
-import Input from 'material-ui/Input';
-import Menu, { MenuItem } from 'material-ui/Menu';
-import { createShallow } from 'material-ui/test-utils';
-import Toolbar from 'material-ui/Toolbar';
+
 import * as React from 'react';
 import * as sinon from 'sinon';
 import GridToolbar from '../src/DataGrid/GridToolbar';
+
+
 
 Enzyme.configure({ adapter: new Adapter() });
 
