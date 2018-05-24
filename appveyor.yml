@@ -1,14 +1,17 @@
 version: '1.0.{build}'
-environment:
-  nodejs_version: "8"
 platform: Any CPU
+image: 
+- Visual Studio 2017
+- Ubuntu
 notifications:
 - provider: Slack
   auth_token:
     secure: Q+xg4/yU5OR9BVF14cw4yZ+3qlhMeYDsAhUQyOIszmF1mHvq44tIvQpWByBJCd/cgUIZk3SwBpk4hh1MrkQIk6rnaOZ2LNBTev4zrq36oXk=
   channel: '#builds'
+environment:
+  APPVEYOR_YML_DISABLE_PS_LINUX: true
 install:
-- ps: Install-Product node $env:nodejs_version
+- ps: Install-Product node 9
 - npm install
 test_script:
 - npm run lint
