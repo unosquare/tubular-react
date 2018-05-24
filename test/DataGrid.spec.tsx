@@ -1,11 +1,12 @@
+import Table , { TableBody, TableCell, TableFooter, TableHead, TableRow } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
+import { createShallow } from '@material-ui/core/test-utils';
+
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 import * as Enzyme from 'enzyme';
 import * as Adapter from 'enzyme-adapter-react-16';
-import Paper from 'material-ui/Paper';
-import Table, { TableBody, TableCell, TableFooter, TableHead, TableRow } from 'material-ui/Table';
-import { createShallow } from 'material-ui/test-utils';
 import * as React from 'react';
 import DataGrid from '../src';
 import Paginator from '../src/DataGrid/Paginator';

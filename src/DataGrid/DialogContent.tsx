@@ -1,4 +1,4 @@
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 import * as moment from 'moment';
 import * as React from 'react';
 import { ColumnDataType, CompareOperators } from './Column';

@@ -1,12 +1,15 @@
-import LeftArrowIcon from 'material-ui-icons/ChevronLeft';
-import RightArrowIcon from 'material-ui-icons/ChevronRight';
-import DateRangeIcon from 'material-ui-icons/DateRange';
-import TimeIcon from 'material-ui-icons/Schedule';
+import { deepPurple } from '@material-ui/core/colors';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import createPalette from '@material-ui/core/styles/createPalette';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+
+import LeftArrowIcon from '@material-ui/icons/ChevronLeft';
+import RightArrowIcon from '@material-ui/icons/ChevronRight';
+import DateRangeIcon from '@material-ui/icons/DateRange';
+import TimeIcon from '@material-ui/icons/Schedule';
+
 import { DatePicker, DateTimePicker } from 'material-ui-pickers';
-import { deepPurple } from 'material-ui/colors';
-import createMuiTheme from 'material-ui/styles/createMuiTheme';
-import createPalette from 'material-ui/styles/createPalette';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import { ColumnDataType } from './Column';

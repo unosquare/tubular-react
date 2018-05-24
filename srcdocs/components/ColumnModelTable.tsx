@@ -1,7 +1,6 @@
-import Hidden from 'material-ui/Hidden';
-import { withStyles } from 'material-ui/styles';
-import { StyleRules, Theme } from 'material-ui/styles';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import Hidden from '@material-ui/core/Hidden';
+import { StyleRules, Theme, withStyles } from '@material-ui/core/styles';
 import * as React from 'react';
 
 const styleClasses = {
@@ -45,14 +44,14 @@ export default withStyles(styles)((props) => {
                     <TableCell><code className={classes.code}>NONE</code></TableCell>
                     <TableCell>The aggregation function that will be applied to this column</TableCell>
                     <TableCell>
-                        <code className={classes.code}>NONE</code>, 
-                        <code className={classes.code}>SUM</code>, 
+                        <code className={classes.code}>NONE</code>,
+                        <code className={classes.code}>SUM</code>,
                         <code className={classes.code}>AVERAGE</code>,
                         <br />
-                        <code className={classes.code}>COUNT</code>, 
-                        <code className={classes.code}>DISTINCT_COUNT</code>, 
+                        <code className={classes.code}>COUNT</code>,
+                        <code className={classes.code}>DISTINCT_COUNT</code>,
                         <br />
-                        <code className={classes.code}>MAX</code>, 
+                        <code className={classes.code}>MAX</code>,
                         <code className={classes.code}>MIN</code>
                     </TableCell>
                 </TableRow>
@@ -62,12 +61,12 @@ export default withStyles(styles)((props) => {
                     <TableCell><code className={classes.code}>string</code></TableCell>
                     <TableCell>The column type</TableCell>
                     <TableCell>
-                        <code className={classes.code}>STRING</code>, 
-                        <code className={classes.code}>NUMERIC</code>, 
-                        <code className={classes.code}>BOOLEAN</code>, 
+                        <code className={classes.code}>STRING</code>,
+                        <code className={classes.code}>NUMERIC</code>,
+                        <code className={classes.code}>BOOLEAN</code>,
                         <br />
-                        <code className={classes.code}>DATE</code>, 
-                        <code className={classes.code}>DATE_TIME</code>, 
+                        <code className={classes.code}>DATE</code>,
+                        <code className={classes.code}>DATE_TIME</code>,
                         <code className={classes.code}>DATE_TIME_UTC</code>
                     </TableCell>
                 </TableRow>
@@ -105,8 +104,8 @@ export default withStyles(styles)((props) => {
                     <TableCell><code className={classes.code}>NONE</code></TableCell>
                     <TableCell>-</TableCell>
                     <TableCell>
-                        <code className={classes.code}>NONE</code>, 
-                        <code className={classes.code}>ASCENDING</code>, 
+                        <code className={classes.code}>NONE</code>,
+                        <code className={classes.code}>ASCENDING</code>,
                         <code className={classes.code}>DESCENDING</code>
                     </TableCell>
                 </TableRow>

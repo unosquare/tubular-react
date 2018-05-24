@@ -1,9 +1,9 @@
-import Divider from 'material-ui/Divider';
-import Grid from 'material-ui/Grid';
-import Hidden from 'material-ui/Hidden';
-import Paper from 'material-ui/Paper';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
+import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
+import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 import DocumentationList from '../../components/DocumentationList';
 import NavigationBar from '../../components/NavigationBar';
@@ -49,8 +49,8 @@ export default withStyles(styles)((props) => {
                         <Typography variant='subheading'>
                             <i>If you don't define some of the optional props described above,
                             these will not be shown. In the case of </i>
-                            <code className={classes.code}>bodyRenderer</code>, 
-                            <i>the grid will display its default body; if the 
+                            <code className={classes.code}>bodyRenderer</code>,
+                            <i>the grid will display its default body; if the
                             <code className={classes.code}>footerRenderer</code>
                             is not defined, the footer will not be displayed.</i>
                         </Typography>
