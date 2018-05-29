@@ -1,4 +1,4 @@
-import Table , { TableBody, TableCell, TableFooter, TableHead, TableRow } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableFooter, TableHead, TableRow } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import { createShallow } from '@material-ui/core/test-utils';
 
@@ -8,7 +8,7 @@ import { expect } from 'chai';
 import * as Enzyme from 'enzyme';
 import * as Adapter from 'enzyme-adapter-react-16';
 import * as React from 'react';
-import DataGrid from '../src';
+import DataGrid from '../src/DataGrid';
 import Paginator from '../src/DataGrid/Paginator';
 import RemoteDataSource from '../src/DataGrid/RemoteDataSource';
 import { simpleColumnsSample, validColumnsSample } from './utils/columns';
@@ -50,8 +50,9 @@ describe('<DataGrid />', () => {
   let dataSource;
   let mock;
 
-  before(() => {
+  beforeAll(() => {
     mock = new MockAdapter(axios);
+    shallow = createShallow({ dive: true });
   });
 
   beforeEach(() => {
@@ -174,7 +175,7 @@ describe('<DataGrid />', () => {
   describe('When handlePager() is called', () => {
     let dataGrid;
 
-    before( () => {
+    beforeEach( () => {
       mock.reset();
       mock.onPost('url', { ...simpleRequest }).reply(200, {
         ...simpleRecordsExpected
@@ -209,7 +210,7 @@ describe('<DataGrid />', () => {
   describe('When handleTextSearch() is called', () => {
     let dataGrid;
 
-    before( () => {
+    beforeEach( () => {
       mock.reset();
       mock.onPost('url', { ...simpleRequest }).reply(200, {
         ...simpleRecordsExpected
@@ -242,7 +243,7 @@ describe('<DataGrid />', () => {
   describe('When exportTable() is called', () => {
     let dataGrid;
 
-    before( () => {
+    beforeEach( () => {
       mock.reset();
       mock.onPost('url', { ...simpleRequest }).reply(200, {
         ...simpleRecordsExpected
@@ -289,7 +290,7 @@ describe('<DataGrid />', () => {
   describe('When printTable() is called', () => {
     let dataGrid;
 
-    before( () => {
+    beforeEach( () => {
       mock.reset();
       mock.onPost('url', { ...simpleRequest }).reply(200, {
         ...simpleRecordsExpected

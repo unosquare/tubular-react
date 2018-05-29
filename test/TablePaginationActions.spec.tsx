@@ -15,7 +15,7 @@ describe('TablePaginationActions', () => {
   let mountedTablePaginationActions;
   let props;
 
-  before(() => {
+  beforeAll(() => {
     shallow = createShallow({ dive: true });
   });
 

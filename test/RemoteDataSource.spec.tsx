@@ -27,16 +27,16 @@ describe('RemoteDataSource', () => {
   describe('When columns structure is valid', () => {
     let mock;
 
-    before(() => {
+    beforeEach(() => {
         mock = new MockAdapter(axios);
     });
 
-    after(() => {
+    afterEach(() => {
         mock.reset();
     });
 
     describe('When 20 records are requested', () => {
-      before( () => {
+      beforeEach( () => {
         mock.reset();
         mock.onPost('url').reply(200, {
           ...twentyRecordsExpected
@@ -51,7 +51,7 @@ describe('RemoteDataSource', () => {
     });
 
     describe('When search input is Microsoft', () => {
-      before( () => {
+      beforeEach( () => {
         mock.reset();
         mock.onPost('url').reply(200, {
           ...onlyMicrosoftExpected
@@ -68,7 +68,7 @@ describe('RemoteDataSource', () => {
 
     describe('When retrieveData() is called', () => {
       describe('When the response is invalid', () => {
-        before( () => {
+        beforeEach( () => {
           mock.reset();
           mock.onPost('url').reply(200, {
             ...simpleRecordsExpected
@@ -91,7 +91,7 @@ describe('RemoteDataSource', () => {
       describe('When the response is invalid', () => {
         const dtSource = new RemoteDataSource('url', validColumnsSample);
 
-        before( () => {
+        beforeEach( () => {
           mock.reset();
           mock.onPost('url').reply(200, {
             AggregationPayload: simpleRecordsExpected.AggregationPayload,

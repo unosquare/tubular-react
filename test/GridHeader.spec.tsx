@@ -1,4 +1,4 @@
-import Table, { TableCell, TableHead, TableRow } from '@material-ui/core';
+import { Table, TableCell, TableHead, TableRow } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import IconButton from '@material-ui/core/IconButton';
 import { createMount, createShallow } from '@material-ui/core/test-utils';

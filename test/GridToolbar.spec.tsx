@@ -172,7 +172,7 @@ describe('<GridToolbar/>', () => {
       const exportIcon = wrapper.find(IconButton).simulate('click', { currentTarget: null });
       wrapper.update();
 
-      const menuItems = wrapper.find(Menu).find(MenuItem);
+      const menuItems = wrapper.find(MenuItem);
       const menuItemAllCSV = menuItems.at(0).simulate('click', { preventDefault: () => { return; } });
 
       assert.isNull(wrapper.state().anchorEl);
@@ -193,7 +193,7 @@ describe('<GridToolbar/>', () => {
       const exportIcon = wrapper.find(IconButton).simulate('click', { currentTarget: null });
       wrapper.update();
 
-      const menuItems = wrapper.find(Menu).find(MenuItem);
+      const menuItems = wrapper.find(MenuItem);
       const menuItemAllCSV = menuItems.at(1).simulate('click', { preventDefault: () => { return; } });
 
       assert.isNull(wrapper.state().anchorEl);
@@ -231,7 +231,7 @@ describe('<GridToolbar/>', () => {
       const printIcon = wrapper.find(IconButton).simulate('click', { currentTarget: null });
       wrapper.update();
 
-      const menuItems = wrapper.find(Menu).find(MenuItem);
+      const menuItems = wrapper.find(MenuItem);
       const menuItemPrintAll = menuItems.at(0).simulate('click', { preventDefault: () => { return; } });
 
       assert.isNull(wrapper.state().anchorPrint);
@@ -250,7 +250,7 @@ describe('<GridToolbar/>', () => {
       const printIcon = wrapper.find(IconButton).simulate('click', { currentTarget: null });
       wrapper.update();
 
-      const menuItems = wrapper.find(Menu).find(MenuItem);
+      const menuItems = wrapper.find(MenuItem);
       const menuItemPrintAll = menuItems.at(1).simulate('click', { preventDefault: () => { return; } });
 
       assert.isNull(wrapper.state().anchorPrint);
