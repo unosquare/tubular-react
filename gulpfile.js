@@ -1,7 +1,6 @@
 const gulp = require('gulp');
 const del = require('del');
 const copy = require('gulp-copy');
-const mocha = require('gulp-mocha');
 const browserify = require('browserify');
 const watchify = require('watchify');
 const browserSync = require('browser-sync').create();

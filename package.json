@@ -14,6 +14,7 @@
     "docs": "webpack -p"
   },
   "jest": {
+    "setupFiles":["<rootDir>/test/setupTest.js"],
     "moduleFileExtensions": [
       "ts",
       "tsx",
