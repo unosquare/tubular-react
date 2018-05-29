@@ -7,11 +7,24 @@
     "start": "gulp watch",
     "build": "gulp",
     "lint": "tslint src/**/*.ts src/**/*.tsx",
-    "test": "gulp test",
+    "test": "jest",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov",
     "docs:run": "webpack -d",
     "docs": "webpack -p"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testMatch": [
+      "<rootDir>/test/**/*.spec.(ts|tsx)"
+    ]
   },
   "nyc": {
     "extension": [
@@ -46,11 +59,16 @@
     "@material-ui/core": "^1.0.0",
     "@material-ui/icons": "^1.0.0",
     "axios": "^0.18.0",
+    "babel-jest": "^23.0.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "jest": "^23.0.1",
     "lodash": "^4.17.10",
     "material-ui-pickers": "^1.0.0-rc.9",
     "moment": "^2.22.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
+    "react-test-renderer": "^16.4.0",
     "rxjs-es": "^5.0.0-beta.12",
     "typeface-roboto": "0.0.54"
   },
@@ -59,7 +77,6 @@
     "@types/enzyme": "^3.1.10",
     "@types/enzyme-adapter-react-16": "^1.0.2",
     "@types/lodash": "^4.14.109",
-    "@types/mocha": "^5.2.0",
     "@types/prop-types": "^15.5.3",
     "@types/react": "^16.3.14",
     "@types/react-dom": "^16.0.5",
@@ -80,7 +97,6 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "gulp": "^3.9.1",
     "gulp-copy": "^1.1.0",
-    "gulp-mocha": "^6.0.0",
     "gulp-typescript": "^4.0.2",
     "jsdom": "^11.11.0",
     "mock-local-storage": "^1.0.5",
@@ -90,6 +106,7 @@
     "react-syntax-highlighter": "^7.0.4",
     "router5": "^6.2.2",
     "sinon": "^5.0.10",
+    "ts-jest": "^22.4.6",
     "ts-loader": "^4.3.0",
     "ts-node": "^6.0.5",
     "tsify": "^4.0.0",

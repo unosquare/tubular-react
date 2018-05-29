@@ -63,11 +63,6 @@ gulp.task('build:copy', () =>
 
 gulp.task('clean:build', ['build:clean', 'build', 'build:copy']);
 
-gulp.task('test', () => gulp.src(['test/**/*.spec.tsx'])
-  .pipe(mocha({
-    require: ['ts-node/register', 'test/helpers/browser.js']
-  })));
-
 gulp.task('default', ['build:clean', 'build']);
 gulp.task('def', ['build:clean', 'build']);
 
