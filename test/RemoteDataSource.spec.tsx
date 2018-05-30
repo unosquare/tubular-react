@@ -15,11 +15,11 @@ describe('RemoteDataSource', () => {
   const dataSource = new RemoteDataSource('url', validColumnsSample);
 
   describe('isValidResponse()', () => {
-    it('should return true when expectedStructure is valid', () => {
+    test('should return true when expectedStructure is valid', () => {
       expect(dataSource.isValidResponse(validResponseStructure)).to.be.equal(true);
     });
 
-    it('should return false when expectedStructure is invalid', () => {
+    test('should return false when expectedStructure is invalid', () => {
       expect(dataSource.isValidResponse(invalidResponseStructure)).to.be.equal(false);
     });
   });
@@ -43,7 +43,7 @@ describe('RemoteDataSource', () => {
         });
       });
 
-      it('Should return a payload with 20 records', () => {
+      test('Should return a payload with 20 records', () => {
          return dataSource.getAllRecords(20, 0, '').then((e: any) => {
             expect(e.Payload).to.have.lengthOf(20);
          });
@@ -58,7 +58,7 @@ describe('RemoteDataSource', () => {
         });
       });
 
-      it('Should return a payload with only Microsoft records', () => dataSource.getAllRecords(10, 0, 'Microsoft')
+      test('Should return a payload with only Microsoft records', () => dataSource.getAllRecords(10, 0, 'Microsoft')
         .then((r: any) => {
           expect(r.Payload).to.deep.equal(onlyMicrosoftExpected.Payload);
           expect(r.FilteredRecordCount).to.deep.equal(onlyMicrosoftExpected.FilteredRecordCount);
@@ -75,7 +75,7 @@ describe('RemoteDataSource', () => {
           });
         });
 
-        it('Should return a payload', (done) => {
+        test('Should return a payload', (done) => {
           dataSource.retrieveData(10, 0, '')
             .skip(1).subscribe((r) => {
               expect(r.Payload).to.deep.equal(simpleRecordsExpected.Payload);
@@ -101,7 +101,7 @@ describe('RemoteDataSource', () => {
           });
         });
 
-        it('Should throw an error', (done) => {
+        test('Should throw an error', (done) => {
           dtSource.retrieveData(10, 0, '')
             .subscribe((r) => r, (error: any) => {
               expect(error.message).to.be.equal('It\'s not a valid Tubular response object');

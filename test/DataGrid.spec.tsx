@@ -69,23 +69,23 @@ describe('<DataGrid />', () => {
 
   const aggregate = { CustomerName: 500 };
 
-  it('should render a Paper', () => {
+  test('should render a Paper', () => {
     const wrapper = shallow(grid).find(Paper);
     expect(wrapper).to.have.lengthOf(1);
   });
 
-  it('should render a Table', () => {
+  test('should render a Table', () => {
     const wrapper = shallow(grid).find(Table);
     expect(wrapper).to.have.lengthOf(1);
   });
 
-  it('should have 1 rows at first', () => {
+  test('should have 1 rows at first', () => {
     const wrapper = shallow(grid).find(Table).find(TableBody);
     expect(wrapper).to.have.lengthOf(1);
   });
 
   describe('When data is retrieved', () => {
-    it('should render all rows', () => {
+   test('should render all rows', () => {
       const wrapper = shallow(grid);
       wrapper.setState({ data });
       expect(wrapper.find(TableBody).find(TableRow)).to.have.lengthOf(11);
@@ -93,7 +93,7 @@ describe('<DataGrid />', () => {
   });
 
   describe('When custom body is not defined', () => {
-    it('should render the default body', () => {
+   test('should render the default body', () => {
       const wrapper = shallow(grid);
 
       const body = wrapper.find(Table).find(TableBody);
@@ -102,7 +102,7 @@ describe('<DataGrid />', () => {
   });
 
   describe('When custom body is defined', () => {
-    it('should render the custom body', () => {
+   test('should render the custom body', () => {
       grid = (
         <DataGrid
           onError={(x: any) => x}
@@ -121,7 +121,7 @@ describe('<DataGrid />', () => {
   });
 
   describe('When rowsPerPageOptions is not defined and rowsPerPage is invalid', () => {
-    it('should set an error Message, and open a Snackbar', () => {
+   test('should set an error Message, and open a Snackbar', () => {
       grid = (
         <DataGrid
           onError={(x: any) => x}
@@ -140,7 +140,7 @@ describe('<DataGrid />', () => {
   });
 
   describe('When rowsPerPageOptions is defined and rowsPerPage is invalid', () => {
-    it('should set an error Message, and open a Snackbar', () => {
+   test('should set an error Message, and open a Snackbar', () => {
       grid = (
         <DataGrid
           onError={(x: any) => x}
@@ -160,7 +160,7 @@ describe('<DataGrid />', () => {
   });
 
   describe('When footer has no rows', () => {
-    it('should not render any row', () => {
+   test('should not render any row', () => {
       const wrapper = shallow(grid);
       const rowFooter = wrapper.find(Table).find(TableFooter).find(TableRow);
 
@@ -190,7 +190,7 @@ describe('<DataGrid />', () => {
       );
     });
 
-    it('Should refresh the DataGrid DataStream', (done) => {
+   test('Should refresh the DataGrid DataStream', (done) => {
       const wrapper = shallow(dataGrid);
       wrapper.instance().handlePager(10, 1);
       wrapper.state().dataSource.dataStream.skip(2).subscribe((r) => {
@@ -225,7 +225,7 @@ describe('<DataGrid />', () => {
       );
     });
 
-    it('Should refresh the DataStream with only records that match the search text', (done) => {
+   test('Should refresh the DataStream with only records that match the search text', (done) => {
       const wrapper = shallow(dataGrid);
 
       wrapper.instance().handleTextSearch('Microsoft');
@@ -255,7 +255,7 @@ describe('<DataGrid />', () => {
       );
     });
 
-    it('Should create a link element to download the csv', (done) => {
+   test('Should create a link element to download the csv', (done) => {
       const wrapper = shallow(dataGrid);
 
       wrapper.state().dataSource.dataStream.skip(1).subscribe((r) => {
@@ -302,7 +302,7 @@ describe('<DataGrid />', () => {
       );
     });
 
-    it('Should create a window with the data to print', (done) => {
+   test('Should create a window with the data to print', (done) => {
       const wrapper = shallow(dataGrid);
 
       wrapper.state().dataSource.dataStream.skip(1).subscribe((r) => {
@@ -340,7 +340,7 @@ describe('<DataGrid />', () => {
   });
 
   describe('When footer has n rows', () => {
-    it('should render the row with the aggregate operation', () => {
+   test('should render the row with the aggregate operation', () => {
       grid = (
         <DataGrid
           onError={(x: any) => x}
@@ -358,7 +358,7 @@ describe('<DataGrid />', () => {
       expect(rowFooter).to.have.lengthOf(1);
     });
 
-    it('should render the row with the bottom pager', () => {
+   test('should render the row with the bottom pager', () => {
       grid = (
         <DataGrid
           onError={(x: any) => x}
@@ -375,7 +375,7 @@ describe('<DataGrid />', () => {
       expect(rowFooter).to.have.lengthOf(1);
     });
 
-    it('should render the rows with the aggregate operation and the bottom pager', () => {
+   test('should render the rows with the aggregate operation and the bottom pager', () => {
       grid = (
         <DataGrid
           onError={(x: any) => x}
@@ -396,7 +396,7 @@ describe('<DataGrid />', () => {
   });
 
   describe('When footer has showBottomPager property set as true', () => {
-    it('should have a paginator', () => {
+   test('should have a paginator', () => {
       grid = (
         <DataGrid
           onError={(x: any) => x}
@@ -416,7 +416,7 @@ describe('<DataGrid />', () => {
 
   describe('When <TableHead /> has showTopPager property set as true', () => {
 
-    it('Should have a paginator', () => {
+   test('Should have a paginator', () => {
       grid = (
         <DataGrid
           onError={(x: any) => x}

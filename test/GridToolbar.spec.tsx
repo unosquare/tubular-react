@@ -33,11 +33,11 @@ describe('<GridToolbar/>', () => {
     return mountedToolbar;
   };
 
-  it('should render a Toolbar', () => {
+  test('should render a Toolbar', () => {
     expect(toolbar().find(Toolbar)).to.have.lengthOf(1);
   });
 
-  it('should trigger \'componentDidMount()\' once time', () => {
+  test('should trigger \'componentDidMount()\' once time', () => {
     sinon.spy(GridToolbar.prototype, 'componentDidMount');
     window.localStorage.setItem('tubular.Tubular-React_searchText', 'micros');
 
@@ -48,13 +48,13 @@ describe('<GridToolbar/>', () => {
   });
 
   describe('isExportEnabled', () => {
-    it('should render a export button when is set to true', () => {
+    test('should render a export button when is set to true', () => {
       props.isExportEnabled = true;
       const wrapper = shallow(<GridToolbar {...props}/>);
       expect(wrapper.find(IconButton).find(DownloadIcon)).to.have.lengthOf(1);
     });
 
-    it('should not render a export button when is set to false', () => {
+    test('should not render a export button when is set to false', () => {
       props.isExportEnabled = false;
       const wrapper = shallow(<GridToolbar {...props}/>);
       expect(wrapper.find(IconButton).find(DownloadIcon)).to.have.lengthOf(0);
@@ -62,13 +62,13 @@ describe('<GridToolbar/>', () => {
   });
 
   describe('isPrintEnabled', () => {
-    it('should render a print button when is set to true', () => {
+    test('should render a print button when is set to true', () => {
       props.isPrintEnabled = true;
       const wrapper = shallow(<GridToolbar {...props}/>);
       expect(wrapper.find(IconButton).find(PrintIcon)).to.have.lengthOf(1);
     });
 
-    it('should not render a print button when is set to false', () => {
+    test('should not render a print button when is set to false', () => {
       props.isPrintEnabled = false;
       const wrapper = shallow(<GridToolbar {...props}/>);
       expect(wrapper.find(IconButton).find(PrintIcon)).to.have.lengthOf(0);
@@ -76,7 +76,7 @@ describe('<GridToolbar/>', () => {
   });
 
   describe('When input text changes', () => {
-    it('should update state search text', () => {
+    test('should update state search text', () => {
       props.showSearchText = true;
       const wrapper = shallow(<GridToolbar {...props}/>);
 
@@ -84,7 +84,7 @@ describe('<GridToolbar/>', () => {
       expect(wrapper.state().searchText).to.equal('search');
     });
 
-    it('should update state of search text as \'\'', () => {
+    test('should update state of search text as \'\'', () => {
       const wrapper = shallow(<GridToolbar {...props}/>);
 
       wrapper.setState({
@@ -99,7 +99,7 @@ describe('<GridToolbar/>', () => {
   });
 
   describe('When menu has been clicked', () => {
-    it('should update the state of \'anchorEl\' as \'null\' when is closed', () => {
+    test('should update the state of \'anchorEl\' as \'null\' when is closed', () => {
       props.isExportEnabled = true;
       const wrapper = shallow(<GridToolbar {...props}/>);
 
@@ -112,7 +112,7 @@ describe('<GridToolbar/>', () => {
       assert.isNull(wrapper.state().anchorEl);
     });
 
-    it('should update the state of \'anchorPrint\' as \'null\' when is closed', () => {
+    test('should update the state of \'anchorPrint\' as \'null\' when is closed', () => {
       props.isPrintEnabled = true;
 
       const wrapper = shallow(<GridToolbar {...props}/>);
@@ -124,7 +124,7 @@ describe('<GridToolbar/>', () => {
       assert.isNull(wrapper.state().anchorPrint);
     });
 
-    it('should update the state of \'anchorEl\' with non \'null\' value', () => {
+    test('should update the state of \'anchorEl\' with non \'null\' value', () => {
       props.isExportEnabled = true;
       const wrapper = shallow(<GridToolbar {...props}/>);
       wrapper.find(IconButton).simulate('click', { currentTarget: document.createElement('button') });
@@ -134,7 +134,7 @@ describe('<GridToolbar/>', () => {
   });
 
   describe('exportCSV()', () => {
-    it('should update the state of \'anchorEl\' to \'null\'', () => {
+    test('should update the state of \'anchorEl\' to \'null\'', () => {
       props.isExportEnabled = true;
       props.onExport = (filtered: boolean) => { return; };
 
@@ -151,7 +151,7 @@ describe('<GridToolbar/>', () => {
       assert.isNull(wrapper.state().anchorEl);
     });
 
-    it('Using simulate (\'All rows\'): should update the state of \'anchorEl\' to \'null\'', () => {
+    test('Using simulate (\'All rows\'): should update the state of \'anchorEl\' to \'null\'', () => {
       props.isExportEnabled = true;
       props.onExport = (filtered: boolean) => { return; };
 
@@ -172,7 +172,7 @@ describe('<GridToolbar/>', () => {
       assert.isNull(wrapper.state().anchorEl);
     });
 
-    it('Using simulate (\'Current rows\'): should update the state of \'anchorEl\' to \'null\'', () => {
+    test('Using simulate (\'Current rows\'): should update the state of \'anchorEl\' to \'null\'', () => {
       props.isExportEnabled = true;
       props.onExport = (filtered: boolean) => { return; };
 
@@ -195,7 +195,7 @@ describe('<GridToolbar/>', () => {
   });
 
   describe('printTable()', () => {
-    it('should update the state of \'anchorPrint\' to \'null\'', () => {
+    test('should update the state of \'anchorPrint\' to \'null\'', () => {
       props.isPrintEnabled = true;
       props.onPrint = (filtered: boolean) => { return; };
 
@@ -212,7 +212,7 @@ describe('<GridToolbar/>', () => {
       assert.isNull(wrapper.state().anchorPrint);
     });
 
-    it('Using simulate (\'All rows\'): should update the state of \'anchorPrint\' to \'null\'', () => {
+    test('Using simulate (\'All rows\'): should update the state of \'anchorPrint\' to \'null\'', () => {
       props.isPrintEnabled = true;
       props.onPrint = (filtered: boolean) => { return; };
 
@@ -231,7 +231,7 @@ describe('<GridToolbar/>', () => {
       assert.isNull(wrapper.state().anchorPrint);
     });
 
-    it('Using simulate (\'Current rows\'): should update the state of \'anchorPrint\' to \'null\'', () => {
+    test('Using simulate (\'Current rows\'): should update the state of \'anchorPrint\' to \'null\'', () => {
       props.isPrintEnabled = true;
       props.onPrint = (filtered: boolean) => { return; };
 
