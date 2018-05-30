@@ -44,15 +44,12 @@ describe('<DataGrid />', () => {
   let shallow;
   let grid;
   let dataSource;
-  let mock;
 
   beforeAll(() => {
-    mock = new MockAdapter(axios);
     shallow = createShallow({ dive: true });
   });
 
   beforeEach(() => {
-    mock.onPost().reply(200, {...simpleRecordsExpected});
     dataSource = new RemoteDataSource('url', validColumnsSample);
     shallow = createShallow({dive: true});
 
@@ -168,18 +165,22 @@ describe('<DataGrid />', () => {
     });
   });
 
+  // mock
   describe('When handlePager() is called', () => {
     let dataGrid;
+    let mock;
 
-    beforeEach( () => {
-      mock.reset();
+    beforeAll(() => {
+      mock = new MockAdapter(axios);
       mock.onPost('url', { ...simpleRequest }).reply(200, {
         ...simpleRecordsExpected
       });
       mock.onPost('url', { ...page2Request }).reply(200, {
         ...page2Expected
       });
+    });
 
+    beforeEach( () => {
       dataGrid = (
         <DataGrid
           onError={(x: any) => x}
@@ -190,7 +191,11 @@ describe('<DataGrid />', () => {
       );
     });
 
-   test('Should refresh the DataGrid DataStream', (done) => {
+    afterEach(() => {
+      mock.reset();
+    });
+
+    test('Should refresh the DataGrid DataStream', (done) => {
       const wrapper = shallow(dataGrid);
       wrapper.instance().handlePager(10, 1);
       wrapper.state().dataSource.dataStream.skip(2).subscribe((r) => {
@@ -203,11 +208,13 @@ describe('<DataGrid />', () => {
     });
   });
 
+  // mock
   describe('When handleTextSearch() is called', () => {
     let dataGrid;
+    let mock;
 
     beforeEach( () => {
-      mock.reset();
+      mock = new MockAdapter(axios);
       mock.onPost('url', { ...simpleRequest }).reply(200, {
         ...simpleRecordsExpected
       });
@@ -225,7 +232,11 @@ describe('<DataGrid />', () => {
       );
     });
 
-   test('Should refresh the DataStream with only records that match the search text', (done) => {
+    afterEach(() => {
+      mock.reset();
+    });
+
+    test('Should refresh the DataStream with only records that match the search text', (done) => {
       const wrapper = shallow(dataGrid);
 
       wrapper.instance().handleTextSearch('Microsoft');
@@ -236,12 +247,14 @@ describe('<DataGrid />', () => {
     });
   });
 
+  // mock
   describe('When exportTable() is called', () => {
     let dataGrid;
+    let mock;
 
     beforeEach( () => {
-      mock.reset();
-      mock.onPost('url', { ...simpleRequest }).reply(200, {
+      mock = new MockAdapter(axios);
+      mock.onPost('url').reply(200, {
         ...simpleRecordsExpected
       });
 
@@ -255,7 +268,11 @@ describe('<DataGrid />', () => {
       );
     });
 
-   test('Should create a link element to download the csv', (done) => {
+    afterEach(() => {
+      mock.reset();
+    });
+
+    test('Should create a link element to download the csv', (done) => {
       const wrapper = shallow(dataGrid);
 
       wrapper.state().dataSource.dataStream.skip(1).subscribe((r) => {
@@ -283,12 +300,14 @@ describe('<DataGrid />', () => {
     });
   });
 
+  // mock
   describe('When printTable() is called', () => {
     let dataGrid;
+    let mock;
 
     beforeEach( () => {
-      mock.reset();
-      mock.onPost('url', { ...simpleRequest }).reply(200, {
+      mock = new MockAdapter(axios);
+      mock.onPost('url').reply(200, {
         ...simpleRecordsExpected
       });
 
@@ -302,7 +321,11 @@ describe('<DataGrid />', () => {
       );
     });
 
-   test('Should create a window with the data to print', (done) => {
+    afterEach(() => {
+      mock.reset();
+    });
+
+    test('Should create a window with the data to print', (done) => {
       const wrapper = shallow(dataGrid);
 
       wrapper.state().dataSource.dataStream.skip(1).subscribe((r) => {
