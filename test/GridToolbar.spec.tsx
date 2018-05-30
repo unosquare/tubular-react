@@ -8,16 +8,10 @@ import DownloadIcon from '@material-ui/icons/FileDownload';
 import PrintIcon from '@material-ui/icons/Print';
 
 import { assert, expect } from 'chai';
-import * as Enzyme from 'enzyme';
-import * as Adapter from 'enzyme-adapter-react-16';
 
 import * as React from 'react';
 import * as sinon from 'sinon';
 import GridToolbar from '../src/DataGrid/GridToolbar';
-
-
-
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('<GridToolbar/>', () => {
   let shallow;

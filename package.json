@@ -88,7 +88,7 @@
     "@types/react-syntax-highlighter": "0.0.5",
     "@types/rx": "^4.1.1",
     "@types/sinon": "^5.0.0",
-    "@zeit/next-typescript": "1.0.0",
+    "@zeit/next-typescript": "1.0.1",
     "awesome-typescript-loader": "^5.0.0",
     "axios-mock-adapter": "^1.15.0",
     "browser-sync": "^2.24.4",

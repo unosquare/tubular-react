@@ -5,8 +5,6 @@ import { createShallow } from '@material-ui/core/test-utils';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
-import * as Enzyme from 'enzyme';
-import * as Adapter from 'enzyme-adapter-react-16';
 import * as React from 'react';
 import DataGrid from '../src/DataGrid';
 import Paginator from '../src/DataGrid/Paginator';
@@ -41,8 +39,6 @@ const bodyRenderer = (row, index) => (
     </TableCell>
   </TableRow>
 );
-
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('<DataGrid />', () => {
   let shallow;

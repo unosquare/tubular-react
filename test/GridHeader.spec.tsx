@@ -6,8 +6,6 @@ import { createMount, createShallow } from '@material-ui/core/test-utils';
 import Axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { assert, expect } from 'chai';
-import * as Enzyme from 'enzyme';
-import * as Adapter from 'enzyme-adapter-react-16';
 import * as React from 'react';
 import * as sinon from 'sinon';
 import { ColumnDataType, CompareOperators } from '../src/DataGrid/Column';
@@ -18,7 +16,6 @@ import { amountFilterColumnsSample, isShippedFilterColumnsSample, validColumnsSa
 import { simpleRecordsExpected } from './utils/data';
 import localData from './utils/localData';
 
-Enzyme.configure({ adapter: new Adapter() });
 const mock = new MockAdapter(Axios);
 mock.onPost().reply(200, {...simpleRecordsExpected});
 
