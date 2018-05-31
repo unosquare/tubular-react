@@ -1,9 +1,11 @@
-const Enzyme = require("enzyme");
+const enzyme = require("enzyme");
 const Adapter = require("enzyme-adapter-react-16");
+const jsdom = require('jsdom');
+const { JSDOM } = jsdom;
 
 const open = jest.fn();
-
-Enzyme.configure({ adapter: new Adapter() });
+const jsdomWrapper = new JSDOM('<!doctype html><html><body></body></html>');
+const { window } = jsdomWrapper;
 
 var localStorageMock = (function() {
     var store = {};
@@ -23,7 +25,10 @@ var localStorageMock = (function() {
     };
   })();
 
-Object.defineProperty(window, 'localStorage', { value: localStorageMock });
-Object.defineProperty(window, 'open', { value: open });
+enzyme.configure({ adapter: new Adapter() });
 
-
+global.window = window;
+global.document = window.document;
+global.HTMLElement = window.HTMLElement;
+global.localStorage = localStorageMock;
+global.open = open;
