@@ -1,12 +1,9 @@
 import IconButton from '@material-ui/core/IconButton';
 import { createShallow } from '@material-ui/core/test-utils';
 import { assert, expect } from 'chai';
-import * as Enzyme from 'enzyme';
-import * as Adapter from 'enzyme-adapter-react-16';
 import * as React from 'react';
 import * as sinon from 'sinon';
 import TablePaginationActions from '../src/DataGrid/TablePaginationActions';
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('TablePaginationActions', () => {
   const noop = () => { return ; };
@@ -15,7 +12,7 @@ describe('TablePaginationActions', () => {
   let mountedTablePaginationActions;
   let props;
 
-  before(() => {
+  beforeAll(() => {
     shallow = createShallow({ dive: true });
   });
 
@@ -27,7 +24,7 @@ describe('TablePaginationActions', () => {
     return mountedTablePaginationActions;
   };
 
-  it('should render 9 \'<IconButton />\' when has 10 of 500 records to show by page', () => {
+  test('should render 9 \'<IconButton />\' when has 10 of 500 records to show by page', () => {
     const wrapper = shallow(
       <TablePaginationActions
         classes={{}}
@@ -41,7 +38,7 @@ describe('TablePaginationActions', () => {
     expect(wrapper.find(IconButton)).to.have.lengthOf(9);
   });
 
-  it('should have the disabled prop from \'First Page\' as true', () => {
+  test('should have the disabled prop from \'First Page\' as true', () => {
     const wrapper = shallow(
       <TablePaginationActions
         classes={{}}
@@ -58,7 +55,7 @@ describe('TablePaginationActions', () => {
     assert.isTrue(firstPage.props().disabled);
   });
 
-  it('should have the disabled prop from \'First Page\' as false', () => {
+  test('should have the disabled prop from \'First Page\' as false', () => {
     const wrapper = shallow(
       <TablePaginationActions
         classes={{}}
@@ -75,7 +72,7 @@ describe('TablePaginationActions', () => {
     assert.isFalse(firstPage.props().disabled);
   });
 
-  it('should have the disabled prop from \'Last Page\' as true', () => {
+  test('should have the disabled prop from \'Last Page\' as true', () => {
     const wrapper = shallow(
       <TablePaginationActions
         classes={{}}
@@ -92,7 +89,7 @@ describe('TablePaginationActions', () => {
     assert.isTrue(lastPage.props().disabled);
   });
 
-  it('should have the disabled prop from \'Last Page\' as false', () => {
+  test('should have the disabled prop from \'Last Page\' as false', () => {
     const wrapper = shallow(
       <TablePaginationActions
         classes={{}}
@@ -109,7 +106,7 @@ describe('TablePaginationActions', () => {
     assert.isFalse(lastPage.props().disabled);
   });
 
-  it('should have the disabled prop from \'Previous Page\' as false', () => {
+  test('should have the disabled prop from \'Previous Page\' as false', () => {
     const wrapper = shallow(
       <TablePaginationActions
         classes={{}}
@@ -126,7 +123,7 @@ describe('TablePaginationActions', () => {
     assert.isFalse(previousPage.props().disabled);
   });
 
-  it('should have the disabled prop from \'Previous Page\' as true', () => {
+  test('should have the disabled prop from \'Previous Page\' as true', () => {
     const wrapper = shallow(
       <TablePaginationActions
         classes={{}}
@@ -143,7 +140,7 @@ describe('TablePaginationActions', () => {
     assert.isTrue(previousPage.props().disabled);
   });
 
-  it('should have the disable prop from \'Next Page\' as true', () => {
+  test('should have the disable prop from \'Next Page\' as true', () => {
     const wrapper = shallow(
       <TablePaginationActions
         classes={{}}
@@ -160,7 +157,7 @@ describe('TablePaginationActions', () => {
     assert.isTrue(nextPage.props().disabled);
   });
 
-  it('should have the disable prop from \'Next Page\' as false', () => {
+  test('should have the disable prop from \'Next Page\' as false', () => {
     const wrapper = shallow(
       <TablePaginationActions
         classes={{}}
@@ -177,7 +174,7 @@ describe('TablePaginationActions', () => {
     assert.isFalse(nextPage.props().disabled);
   });
 
-  it('should trigger the onClick event when \'Page#\' is clicked', () => {
+  test('should trigger the onClick event when \'Page#\' is clicked', () => {
     const handleClickStub = sinon.spy();
     const wrapper = shallow(
       <TablePaginationActions

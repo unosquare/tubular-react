@@ -1,4 +1,4 @@
-import Table, { TableCell, TableHead, TableRow } from '@material-ui/core';
+import { Table, TableCell, TableHead, TableRow } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import IconButton from '@material-ui/core/IconButton';
 import { createMount, createShallow } from '@material-ui/core/test-utils';
@@ -6,8 +6,6 @@ import { createMount, createShallow } from '@material-ui/core/test-utils';
 import Axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { assert, expect } from 'chai';
-import * as Enzyme from 'enzyme';
-import * as Adapter from 'enzyme-adapter-react-16';
 import * as React from 'react';
 import * as sinon from 'sinon';
 import { ColumnDataType, CompareOperators } from '../src/DataGrid/Column';
@@ -18,7 +16,6 @@ import { amountFilterColumnsSample, isShippedFilterColumnsSample, validColumnsSa
 import { simpleRecordsExpected } from './utils/data';
 import localData from './utils/localData';
 
-Enzyme.configure({ adapter: new Adapter() });
 const mock = new MockAdapter(Axios);
 mock.onPost().reply(200, {...simpleRecordsExpected});
 
@@ -48,25 +45,25 @@ describe('<GridHeader />', () => {
     window.localStorage.removeItem('tubular.Tubular-React');
   });
 
-  it('should render a row', () => {
+  test('should render a row', () => {
     const wrapper = shallow(gridHeader).find(TableRow);
 
     expect(wrapper).to.have.lengthOf(1);
   });
 
-  it('should render n columns', () => {
+  test('should render n columns', () => {
     const wrapper = shallow(gridHeader).find(TableRow).find(TableCell);
 
     expect(wrapper).to.have.lengthOf(5);
   });
 
-  it('should render a dialog', () => {
+  test('should render a dialog', () => {
     const wrapper = shallow(gridHeader).find(Dialog);
 
     expect(wrapper).to.have.lengthOf(1);
   });
 
-  it('should trigger \'componentWillUnmount()\' one time', () => {
+    test('should trigger \'componentWillUnmount()\' one time', () => {
     sinon.spy(GridHeader.prototype, 'componentWillUnmount');
     const wrapper = mount(
       <Table>
@@ -86,7 +83,7 @@ describe('<GridHeader />', () => {
     expect(GridHeader.prototype.componentWillUnmount.calledOnce).to.equal(true);
   });
 
-  it('should trigger \'componentDidMount()\' one time and update the dataSource with the localStorage values', () => {
+  test('should trigger \'componentDidMount()\' one time and update the dataSource with the localStorage values', () => {
     sinon.spy(GridHeader.prototype, 'componentDidMount');
     const gridHeaderDataSource = new RemoteDataSource('url', amountFilterColumnsSample);
     const localStorage = new RemoteDataSource('url', amountFilterColumnsSample);
@@ -116,7 +113,7 @@ describe('<GridHeader />', () => {
   });
 
   describe('When filter dialog has been clicked', () => {
-    it('should update the state of \'open\' to \'false\' when is closed', () => {
+    test('should update the state of \'open\' to \'false\' when is closed', () => {
       const wrapper = shallow(gridHeader);
       wrapper.setState({ open: false });
       wrapper.update();
@@ -124,7 +121,7 @@ describe('<GridHeader />', () => {
       assert.isFalse(wrapper.state().open);
     });
 
-    it('should update the state of \'open\' to \'true\' when is open', () => {
+    test('should update the state of \'open\' to \'true\' when is open', () => {
       const wrapper = shallow(gridHeader);
       const firstCell = wrapper.find(TableRow).find(TableCell);
       const firstIconButton = wrapper.find(TableRow).find(TableCell).find(IconButton).at(0);
@@ -150,7 +147,7 @@ describe('<GridHeader />', () => {
   });
 
   describe('handleClear()', () => {
-    it('should set the state props \'activeFilter\', \'firstFilterValue\' ' +
+    test('should set the state props \'activeFilter\', \'firstFilterValue\' ' +
         'and \'secondFilterValue\' at its initial values', () => {
       const wrapper = shallow(gridHeader);
 
@@ -169,7 +166,7 @@ describe('<GridHeader />', () => {
   });
 
   describe('handleApply()', () => {
-    it('Should change the filter values of the Amount column', () => {
+    test('Should change the filter values of the Amount column', () => {
       const gridHeaderDataSource = new RemoteDataSource('url', amountFilterColumnsSample);
 
       const gridHeader2 = (
@@ -199,7 +196,7 @@ describe('<GridHeader />', () => {
       expect(wrapper.instance().props.dataSource.columns[4].Filter.Operator).to.equal('Between');
     });
 
-    it('Should change the filter values of the IsShipped column', () => {
+    test('Should change the filter values of the IsShipped column', () => {
       const gridHeaderDataSource = new RemoteDataSource('url', isShippedFilterColumnsSample);
 
       const gridHeader2 = (
@@ -230,7 +227,7 @@ describe('<GridHeader />', () => {
   });
 
   describe('sortHandler()', () => {
-    it('Should change the SortDirection value of the CustomerName column', () => {
+    test('Should change the SortDirection value of the CustomerName column', () => {
       const gridHeaderDataSource = new RemoteDataSource('url', amountFilterColumnsSample);
 
       const gridHeader2 = (
@@ -254,7 +251,7 @@ describe('<GridHeader />', () => {
   });
 
   describe('handleKeyDown()', () => {
-    it('should update the state of \'sorting\' to ', () => {
+    test('should update the state of \'sorting\' to ', () => {
       const wrapper = shallow(gridHeader);
 
       wrapper.setState({
@@ -269,7 +266,7 @@ describe('<GridHeader />', () => {
   });
 
   describe('handleKeyUp()', () => {
-    it('should update the state of \'sorting\' to ', () => {
+    test('should update the state of \'sorting\' to ', () => {
       const wrapper = shallow(gridHeader);
 
       wrapper.setState({
@@ -284,7 +281,7 @@ describe('<GridHeader />', () => {
   });
 
   describe('handleChange()', () => {
-    it('should update the state of \'activeFilter\' to \'Contains\'', () => {
+   test('should update the state of \'activeFilter\' to \'Contains\'', () => {
       const wrapper = shallow(gridHeader);
 
       wrapper.setState({
@@ -306,7 +303,7 @@ describe('<GridHeader />', () => {
   });
 
   describe('handleTextFieldChange()', () => {
-    it('should update the state of \'firstFilterValue\' to \'4\'', () => {
+    test('should update the state of \'firstFilterValue\' to \'4\'', () => {
       const wrapper = shallow(gridHeader);
 
       wrapper.setState({
@@ -326,7 +323,7 @@ describe('<GridHeader />', () => {
   });
 
   describe('handleSecondTextFieldChange()', () => {
-    it('should update the state of \'secondFilterValue\' to \'4\'', () => {
+    test('should update the state of \'secondFilterValue\' to \'4\'', () => {
       const wrapper = shallow(gridHeader);
 
       wrapper.setState({
@@ -346,7 +343,7 @@ describe('<GridHeader />', () => {
   });
 
   describe('handleDatePicker()', () => {
-    it('should update the state of \'firstFilterValue\' and \'firstFilterValue\'' +
+    test('should update the state of \'firstFilterValue\' and \'firstFilterValue\'' +
       'to \'2018-25-07T15:40:30-06:00\'', () => {
       const wrapper = shallow(gridHeader);
 

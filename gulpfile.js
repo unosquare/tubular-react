@@ -1,7 +1,6 @@
 const gulp = require('gulp');
 const del = require('del');
 const copy = require('gulp-copy');
-const mocha = require('gulp-mocha');
 const browserify = require('browserify');
 const watchify = require('watchify');
 const browserSync = require('browser-sync').create();
@@ -62,11 +61,6 @@ gulp.task('build:copy', () =>
     .pipe(copy('build/', { prefix: 1 })));
 
 gulp.task('clean:build', ['build:clean', 'build', 'build:copy']);
-
-gulp.task('test', () => gulp.src(['test/**/*.spec.tsx'])
-  .pipe(mocha({
-    require: ['ts-node/register', 'test/helpers/browser.js']
-  })));
 
 gulp.task('default', ['build:clean', 'build']);
 gulp.task('def', ['build:clean', 'build']);

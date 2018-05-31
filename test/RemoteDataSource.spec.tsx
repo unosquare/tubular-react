@@ -15,11 +15,11 @@ describe('RemoteDataSource', () => {
   const dataSource = new RemoteDataSource('url', validColumnsSample);
 
   describe('isValidResponse()', () => {
-    it('should return true when expectedStructure is valid', () => {
+    test('should return true when expectedStructure is valid', () => {
       expect(dataSource.isValidResponse(validResponseStructure)).to.be.equal(true);
     });
 
-    it('should return false when expectedStructure is invalid', () => {
+    test('should return false when expectedStructure is invalid', () => {
       expect(dataSource.isValidResponse(invalidResponseStructure)).to.be.equal(false);
     });
   });
@@ -27,23 +27,23 @@ describe('RemoteDataSource', () => {
   describe('When columns structure is valid', () => {
     let mock;
 
-    before(() => {
+    beforeEach(() => {
         mock = new MockAdapter(axios);
     });
 
-    after(() => {
+    afterEach(() => {
         mock.reset();
     });
 
     describe('When 20 records are requested', () => {
-      before( () => {
+      beforeEach( () => {
         mock.reset();
         mock.onPost('url').reply(200, {
           ...twentyRecordsExpected
         });
       });
 
-      it('Should return a payload with 20 records', () => {
+      test('Should return a payload with 20 records', () => {
          return dataSource.getAllRecords(20, 0, '').then((e: any) => {
             expect(e.Payload).to.have.lengthOf(20);
          });
@@ -51,14 +51,14 @@ describe('RemoteDataSource', () => {
     });
 
     describe('When search input is Microsoft', () => {
-      before( () => {
+      beforeEach( () => {
         mock.reset();
         mock.onPost('url').reply(200, {
           ...onlyMicrosoftExpected
         });
       });
 
-      it('Should return a payload with only Microsoft records', () => dataSource.getAllRecords(10, 0, 'Microsoft')
+      test('Should return a payload with only Microsoft records', () => dataSource.getAllRecords(10, 0, 'Microsoft')
         .then((r: any) => {
           expect(r.Payload).to.deep.equal(onlyMicrosoftExpected.Payload);
           expect(r.FilteredRecordCount).to.deep.equal(onlyMicrosoftExpected.FilteredRecordCount);
@@ -68,14 +68,14 @@ describe('RemoteDataSource', () => {
 
     describe('When retrieveData() is called', () => {
       describe('When the response is invalid', () => {
-        before( () => {
+        beforeEach( () => {
           mock.reset();
           mock.onPost('url').reply(200, {
             ...simpleRecordsExpected
           });
         });
 
-        it('Should return a payload', (done) => {
+        test('Should return a payload', (done) => {
           dataSource.retrieveData(10, 0, '')
             .skip(1).subscribe((r) => {
               expect(r.Payload).to.deep.equal(simpleRecordsExpected.Payload);
@@ -91,7 +91,7 @@ describe('RemoteDataSource', () => {
       describe('When the response is invalid', () => {
         const dtSource = new RemoteDataSource('url', validColumnsSample);
 
-        before( () => {
+        beforeEach( () => {
           mock.reset();
           mock.onPost('url').reply(200, {
             AggregationPayload: simpleRecordsExpected.AggregationPayload,
@@ -101,7 +101,7 @@ describe('RemoteDataSource', () => {
           });
         });
 
-        it('Should throw an error', (done) => {
+        test('Should throw an error', (done) => {
           dtSource.retrieveData(10, 0, '')
             .subscribe((r) => r, (error: any) => {
               expect(error.message).to.be.equal('It\'s not a valid Tubular response object');

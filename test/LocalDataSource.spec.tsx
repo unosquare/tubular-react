@@ -49,7 +49,7 @@ describe('LocalDataSource', () => {
 
   describe('getAllRecords()', () => {
     const dataSource = new LocalDataSource(localData, validColumnsSample);
-    it('should return a payload', (done) => {
+    test('should return a payload', (done) => {
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.deep.equal(expectedLocaDataSourcelResponse.Payload);
@@ -57,21 +57,21 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return 10 records', (done) => {
+    test('should return 10 records', (done) => {
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
         expect(response.Payload).to.have.lengthOf(10);
         done();
       });
     });
 
-    it('should return a payload with the following 10 records when page is set to 1', (done) => {
+    test('should return a payload with the following 10 records when page is set to 1', (done) => {
        dataSource.getAllRecords(10, 1, '').then((response: GridResponse) => {
         expect(response.Payload).to.deep.equal(expectedPayloadPage2);
         done();
       });
     });
 
-    it('should return a payload with records in descending order (sorting by \'OrderID\')', (done) => {
+    test('should return a payload with records in descending order (sorting by \'OrderID\')', (done) => {
       const $dataSource = new LocalDataSource(localData, validColumnsSampleDescending);
 
       $dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
@@ -80,7 +80,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload with records that has multiple sorting (sorting by \'CustomerName\' and \'OrderID\')'
+    test('should return a payload with records that has multiple sorting (sorting by \'CustomerName\' and \'OrderID\')'
     , (done) => {
       const $dataSource = new LocalDataSource(localData, validColumnsSampleMultipleSorting);
 
@@ -90,7 +90,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload when search by text is set (searching by \'CustomerName\')', (done) => {
+    test('should return a payload when search by text is set (searching by \'CustomerName\')', (done) => {
       const $dataSource = new LocalDataSource(localData, validColumnsSample);
 
       $dataSource.getAllRecords(4, 0, 'ves').then((response: GridResponse) => {
@@ -112,7 +112,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.Argument = [];
     });
 
-    it('should return a payload without filters', (done) => {
+    test('should return a payload without filters', (done) => {
 
       dataSource.columns[0].Filter.Text = null;
       dataSource.columns[0].Filter.Operator = CompareOperators.NONE;
@@ -127,7 +127,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload with one record', (done) => {
+    test('should return a payload with one record', (done) => {
       dataSource.columns[0].Filter.Text = 9;
       dataSource.columns[0].Filter.Operator = CompareOperators.EQUALS;
       dataSource.columns[0].Filter.HasFilter = true;
@@ -140,7 +140,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload with records 2 to 9', (done) => {
+    test('should return a payload with records 2 to 9', (done) => {
       dataSource.columns[0].Filter.Text = 2;
       dataSource.columns[0].Filter.Operator = CompareOperators.BETWEEN;
       dataSource.columns[0].Filter.HasFilter = true;
@@ -154,7 +154,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload with records where OrderID >= 9', (done) => {
+    test('should return a payload with records where OrderID >= 9', (done) => {
       dataSource.columns[0].Filter.Text = 9;
       dataSource.columns[0].Filter.Operator = CompareOperators.GTE;
       dataSource.columns[0].Filter.HasFilter = true;
@@ -168,7 +168,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload with records where OrderID > 9', (done) => {
+    test('should return a payload with records where OrderID > 9', (done) => {
       dataSource.columns[0].Filter.Text = 9;
       dataSource.columns[0].Filter.Operator = CompareOperators.GT;
       dataSource.columns[0].Filter.HasFilter = true;
@@ -182,7 +182,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload with records where OrderID <= 5', (done) => {
+    test('should return a payload with records where OrderID <= 5', (done) => {
       dataSource.columns[0].Filter.Text = 5;
       dataSource.columns[0].Filter.Operator = CompareOperators.LTE;
       dataSource.columns[0].Filter.HasFilter = true;
@@ -196,7 +196,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload with records where OrderId < 5', (done) => {
+    test('should return a payload with records where OrderId < 5', (done) => {
       dataSource.columns[0].Filter.Text = 5;
       dataSource.columns[0].Filter.Operator = CompareOperators.LT;
       dataSource.columns[0].Filter.HasFilter = true;
@@ -210,7 +210,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return an empty array', (done) => {
+    test('should return an empty array', (done) => {
       dataSource.columns[0].Filter.Text = 501;
       dataSource.columns[0].Filter.Operator = CompareOperators.EQUALS;
       dataSource.columns[0].Filter.HasFilter = true;
@@ -238,7 +238,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.Argument = [];
     });
 
-    it('should return a payload without filters', (done) => {
+    test('should return a payload without filters', (done) => {
       dataSource.columns[1].Filter.Text = null;
       dataSource.columns[1].Filter.Operator = CompareOperators.NONE;
       dataSource.columns[1].Filter.HasFilter = false;
@@ -250,7 +250,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload with records where CustomerName equals \'Unosquare LLC\'', (done) => {
+    test('should return a payload with records where CustomerName equals \'Unosquare LLC\'', (done) => {
       dataSource.columns[1].Filter.Text = 'Unosquare LLC';
       dataSource.columns[1].Filter.Operator = CompareOperators.EQUALS;
       dataSource.columns[1].Filter.HasFilter = true;
@@ -262,7 +262,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload with records where CustomerName isn\'t equals to \'Microsoft\'', (done) => {
+    test('should return a payload with records where CustomerName isn\'t equals to \'Microsoft\'', (done) => {
       dataSource.columns[1].Filter.Text = 'Microsoft';
       dataSource.columns[1].Filter.Operator = CompareOperators.NOT_EQUALS;
       dataSource.columns[1].Filter.HasFilter = true;
@@ -274,7 +274,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload with records where CustomerName contains \'ves\'', (done) => {
+    test('should return a payload with records where CustomerName contains \'ves\'', (done) => {
       dataSource.columns[1].Filter.Text = 'ves';
       dataSource.columns[1].Filter.Operator = CompareOperators.CONTAINS;
       dataSource.columns[1].Filter.HasFilter = true;
@@ -286,7 +286,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload with records where CustomerName not contains \'a\'', (done) => {
+    test('should return a payload with records where CustomerName not contains \'a\'', (done) => {
       dataSource.columns[1].Filter.Text = 'a';
       dataSource.columns[1].Filter.Operator = CompareOperators.NOT_CONTAINS;
       dataSource.columns[1].Filter.HasFilter = true;
@@ -298,7 +298,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload with records where CustomerName starts with \'M\'', (done) => {
+    test('should return a payload with records where CustomerName starts with \'M\'', (done) => {
       dataSource.columns[1].Filter.Text = 'M';
       dataSource.columns[1].Filter.Operator = CompareOperators.STARTS_WITH;
       dataSource.columns[1].Filter.HasFilter = true;
@@ -310,7 +310,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload with records where CustomerName does not starts with \'M\'', (done) => {
+    test('should return a payload with records where CustomerName does not starts with \'M\'', (done) => {
       dataSource.columns[1].Filter.Text = 'M';
       dataSource.columns[1].Filter.Operator = CompareOperators.NOT_STARTS_WITH;
       dataSource.columns[1].Filter.HasFilter = true;
@@ -322,7 +322,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload with records where CustomerName ends with \'a\'', (done) => {
+    test('should return a payload with records where CustomerName ends with \'a\'', (done) => {
       dataSource.columns[1].Filter.Text = 'a';
       dataSource.columns[1].Filter.Operator = CompareOperators.ENDS_WITH;
       dataSource.columns[1].Filter.HasFilter = true;
@@ -334,7 +334,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload with records where CustomerName not ends with \'a\'', (done) => {
+    test('should return a payload with records where CustomerName not ends with \'a\'', (done) => {
       dataSource.columns[1].Filter.Text = 'a';
       dataSource.columns[1].Filter.Operator = CompareOperators.NOT_ENDS_WITH;
       dataSource.columns[1].Filter.HasFilter = true;
@@ -367,7 +367,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[2].Filter.Argument = [];
     });
 
-    it('should return a payload without filters', (done) => {
+    test('should return a payload without filters', (done) => {
       dataSource.columns[2].Filter.Text = null;
       dataSource.columns[2].Filter.Operator = CompareOperators.NONE;
       dataSource.columns[2].Filter.HasFilter = false;
@@ -379,7 +379,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload with records where \'Shipped Date\' are equals to March 19th 2016', (done) => {
+    test('should return a payload with records where \'Shipped Date\' are equals to March 19th 2016', (done) => {
       dataSource.columns[2].Filter.Text = '2016-03-19T19:00:00';
       dataSource.columns[2].Filter.Operator = CompareOperators.EQUALS;
       dataSource.columns[2].Filter.HasFilter = true;
@@ -391,7 +391,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload with records where \'Shipped Date\' are between March 19th 2016 and November 11th 2016',
+    test('should return a payload with records where \'Shipped Date\' are between March 19th 2016 and November 11th 2016',
         (done) => {
       dataSource.columns[2].Filter.Text = '2016-03-19T19:00:00';
       dataSource.columns[2].Filter.Operator = CompareOperators.BETWEEN;
@@ -404,7 +404,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload with records where \'Shipped Date\' are greater than or equal to March 19th 2016',
+    test('should return a payload with records where \'Shipped Date\' are greater than or equal to March 19th 2016',
         (done) => {
       dataSource.columns[2].Filter.Text = '2016-03-19T19:00:00';
       dataSource.columns[2].Filter.Operator = CompareOperators.GTE;
@@ -417,7 +417,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload with records where \'Shipped Date\' are greater than to March 19th 2016',
+    test('should return a payload with records where \'Shipped Date\' are greater than to March 19th 2016',
         (done) => {
       dataSource.columns[2].Filter.Text = '2016-03-19T19:00:00';
       dataSource.columns[2].Filter.Operator = CompareOperators.GT;
@@ -432,7 +432,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload with records where \'Shipped Date\' are less than or equal than to March 19th 2016',
+    test('should return a payload with records where \'Shipped Date\' are less than or equal than to March 19th 2016',
         (done) => {
       dataSource.columns[2].Filter.Text = '2016-03-19T19:00:00';
       dataSource.columns[2].Filter.Operator = CompareOperators.LTE;
@@ -446,7 +446,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return a payload with records where \'Shipped Date\' are less than or equal than to March 19th 2016',
+    test('should return a payload with records where \'Shipped Date\' are less than or equal than to March 19th 2016',
         (done) => {
       dataSource.columns[2].Filter.Text = '2016-03-19T19:00:00';
       dataSource.columns[2].Filter.Operator = CompareOperators.LT;
@@ -467,7 +467,7 @@ describe('LocalDataSource', () => {
       customAmountCol.Aggregate = null;
     });
 
-    it('should return the average of the \'Amount\' column', (done) => {
+    test('should return the average of the \'Amount\' column', (done) => {
       customAmountCol.Aggregate = AggregateFunctions.AVERAGE;
       const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
 
@@ -477,7 +477,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return the sum of the \'Amount\' column', (done) => {
+    test('should return the sum of the \'Amount\' column', (done) => {
       customAmountCol.Aggregate = AggregateFunctions.SUM;
       const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
 
@@ -487,7 +487,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return the max of the \'Amount\' column', (done) => {
+    test('should return the max of the \'Amount\' column', (done) => {
       customAmountCol.Aggregate = AggregateFunctions.MAX;
       const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
 
@@ -497,7 +497,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return the min of the \'Amount\' column', (done) => {
+    test('should return the min of the \'Amount\' column', (done) => {
       customAmountCol.Aggregate = AggregateFunctions.MIN;
       const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
 
@@ -507,7 +507,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return the total of records in \'Customer Name\' eliminating duplicates', (done) => {
+    test('should return the total of records in \'Customer Name\' eliminating duplicates', (done) => {
       customCustomerNameCol.Aggregate = AggregateFunctions.DISTINCT_COUNT;
       const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
 
@@ -517,7 +517,7 @@ describe('LocalDataSource', () => {
       });
     });
 
-    it('should return the total of records in \'Customer Name\'', (done) => {
+    test('should return the total of records in \'Customer Name\'', (done) => {
       customCustomerNameCol.Aggregate = AggregateFunctions.COUNT;
       const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
 
@@ -531,7 +531,7 @@ describe('LocalDataSource', () => {
   describe('When retrieveData() is called', () => {
     const dataSource = new LocalDataSource(localData, simpleColumnsSample);
 
-    it('should return a payload', (done) => {
+    test('should return a payload', (done) => {
       dataSource.retrieveData(10, 0, '').skip(1).subscribe((response: GridResponse) => {
         expect(response.Payload).to.deep.equal(expectedLocalDataSourceResponseConnect.Payload);
         expect(response.FilteredRecordCount).to.deep.equal(expectedLocalDataSourceResponseConnect.FilteredRecordCount);
