@@ -12,7 +12,7 @@
     "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov",
     "docs:run": "webpack -d",
     "docs": "webpack -p",
-    "prepare": "gulp publish"
+    "prepublishOnly": "gulp publish"
   },
   "jest": {
     "setupFiles": [
