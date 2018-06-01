@@ -52,17 +52,10 @@ gulp.task('build', () =>
     .pipe(tsProject())
     .js.pipe(gulp.dest('build/')));
 
-gulp.task('build:clean', () => {
-  del.sync(['build']);
-});
+gulp.task('build:clean', () => del.sync(['build']));
 
-gulp.task('build:copy', () => 
-  gulp.src(['package.json', 'README.md', 'LICENSE'])
-    .pipe(copy('build/', { prefix: 1 })));
-
-gulp.task('clean:build', ['build:clean', 'build', 'build:copy']);
+gulp.task('publish', ['build:clean', 'build']);
 
 gulp.task('default', ['build:clean', 'build']);
-gulp.task('def', ['build:clean', 'build']);
 
 gulp.task('watch', ['watchify', 'browserSync']);

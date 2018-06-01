@@ -1,8 +1,8 @@
 {
   "name": "tubular-react",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "Tubular React",
-  "main": "./src/index",
+  "main": "build/index.js",
   "scripts": {
     "start": "gulp watch",
     "build": "gulp",
@@ -11,7 +11,8 @@
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov",
     "docs:run": "webpack -d",
-    "docs": "webpack -p"
+    "docs": "webpack -p",
+    "prepare": "gulp publish"
   },
   "jest": {
     "setupFiles": [
