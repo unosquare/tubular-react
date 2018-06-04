@@ -1,0 +1,19 @@
+{
+    "files": [
+        "sample/src/**/*.*"
+    ],
+    "compilerOptions": {
+        "outDir": "./sample/app/",
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "target": "es5",
+        "allowJs": true,
+        "jsx": "react",
+        "lib": ["es5", "es6", "dom"],
+        "module": "commonjs"    
+    },
+    "exclude": [
+      "test/**/*.*",
+      "node_modules"
+    ]
+}

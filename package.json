@@ -4,15 +4,15 @@
   "description": "Tubular React",
   "main": "build/index.js",
   "scripts": {
-    "start": "gulp watch",
-    "build": "gulp",
+    "build:docs": "webpack --env.NODE_ENV=docs --mode=production --progress",
+    "build:prod": "webpack --env.NODE_ENV=tubular-react --mode=production --progress",
+    "sample": "webpack --env.NODE_ENV=sample --mode=development --progress",
+    "sample:watch": "webpack --env.NODE_ENV=sample --mode=development --progress --watch",
     "lint": "tslint src/**/*.ts src/**/*.tsx",
     "test": "jest",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov",
-    "docs:run": "webpack -d",
-    "docs": "webpack -p",
-    "prepublishOnly": "gulp publish"
+    "prepublishOnly": "npm run build:prod"
   },
   "jest": {
     "setupFiles": [
@@ -96,6 +96,7 @@
     "browser-sync": "^2.24.4",
     "browserify": "^16.2.2",
     "chai": "^4.1.2",
+    "copy-webpack-plugin": "^4.5.1",
     "coveralls": "^3.0.1",
     "del": "^3.0.0",
     "enzyme": "^3.3.0",
