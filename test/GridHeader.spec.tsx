@@ -340,28 +340,5 @@ describe('<GridHeader />', () => {
 
       expect(wrapper.state().secondFilterValue).to.be.equal('4');
     });
-  });
-
-  describe('handleDatePicker()', () => {
-    test('should update the state of \'firstFilterValue\' and \'firstFilterValue\'' +
-      'to \'2018-25-07T15:40:30-06:00\'', () => {
-      const wrapper = shallow(gridHeader);
-
-      wrapper.setState({
-        activeFilter: 'Equals',
-        activeFilterColumn: 'ShippedDate',
-        columnType: 'datetime',
-        firstFilterValue: '',
-        open: true,
-        secondFilterValue: ''
-      });
-
-      wrapper.instance().handleDatePicker({format: () => ('2018-25-07T15:40:30-06:00')}, 'Value');
-      wrapper.instance().handleDatePicker({format: () => ('2018-25-07T15:40:30-06:00')}, 'Value2');
-      wrapper.update();
-
-      expect(wrapper.state().firstFilterValue).to.be.equal('2018-25-07T15:40:30-06:00');
-      expect(wrapper.state().firstFilterValue).to.be.equal('2018-25-07T15:40:30-06:00');
-    });
-  });
+  }); 
 });

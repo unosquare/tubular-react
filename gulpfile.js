@@ -47,6 +47,10 @@ gulp.task('browserSync', () => {
   gulp.watch('sample/app/bundle.js').on('change', browserSync.reload);
 });
 
+gulp.task('build:sample', () => 
+  bundle_js(browserify('./sample/src/app.js', Object.assign(watchify.args, { debug: true }))
+  .plugin(tsify)));
+
 gulp.task('build', () => 
   tsProject.src()
     .pipe(tsProject())

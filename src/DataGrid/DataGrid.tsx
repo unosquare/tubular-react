@@ -227,7 +227,7 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
       let finalVal = '';
 
       for (let i = 0; i < row.length; i++) {
-        if (visibility[i]) {
+        if (!visibility[i]) continue;
           let innerValue = row[i] === null || row[i] === undefined ? '' :
             (typeof(row[i]) === 'boolean') ? (row[i] === true && 'Yes') :
             row[i].toString();
@@ -247,7 +247,7 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
           }
 
           finalVal += result;
-        }
+        
       }
 
       return `${finalVal}\n`;
@@ -343,13 +343,10 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
             </TableRow>
         ))}
         {filteredRecordCount === 0 &&
-          (<TableRow>
-            <TableCell style={{ display: 'flex', padding: '10px' }}>
-              <WarningIcon />
+          (<TableRow>              
               <Typography style={{ paddingLeft: '15px' }} variant='body2' gutterBottom={true}>
-                No records found
+              <WarningIcon /> No records found
               </Typography>
-            </TableCell>
           </TableRow>)}
       </TableBody>
     );

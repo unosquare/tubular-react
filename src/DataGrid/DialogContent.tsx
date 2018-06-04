@@ -5,57 +5,51 @@ import { ColumnDataType, CompareOperators } from './Column';
 import DialogInput from './DialogInput';
 
 interface IProps {
-  activeFilter: string;
   classes: any;
-  columnType: string;
-  operator: string;
-  value: any;
-  value2: any;
+  activeColumn: any;
   handleApply(): void;
-  handleClear(): void;
-  handleDatePicker(event: any, name: string): void;
+  handleClear(): void; 
   handleTextFieldChange(event: any): void;
   handleSecondTextFieldChange(event: any): void;
 }
 
 const DialogContent: React.SFC<IProps> = ({
-  classes, value, value2, columnType, activeFilter, operator,
-  handleDatePicker, handleTextFieldChange, handleApply,
+  classes, activeColumn, 
+  handleTextFieldChange, handleApply,
   handleClear, handleSecondTextFieldChange }) => {
   let firstValue;
   let secondValue;
 
-  switch (columnType) {
+  switch (activeColumn.columnType) {
   case ColumnDataType.DATE:
   case ColumnDataType.DATE_TIME:
   case ColumnDataType.DATE_TIME_UTC:
-    firstValue = value ? value : moment().format();
-    secondValue = value2 ? value2 : moment().format();
+    firstValue = activeColumn.value ? activeColumn.value : moment().format();
+    secondValue = activeColumn.value2 ? activeColumn.value2 : moment().format();
     break;
   case ColumnDataType.BOOLEAN:
-    firstValue = operator === CompareOperators.NONE ? '' : value;
+    firstValue = activeColumn.operator === CompareOperators.NONE ? '' : activeColumn.value;
     break;
   default:
-    firstValue = operator === CompareOperators.NONE ? '' : value || '';
-    secondValue = value2 || '';
+    firstValue = activeColumn.operator === CompareOperators.NONE ? '' : activeColumn.value || '';
+    secondValue = activeColumn.value2 || '';
   }
 
   return (
     <div >
       <DialogInput
-        disabled={operator === CompareOperators.NONE}
+        disabled={activeColumn.operator === CompareOperators.NONE}
         value={firstValue}
         handleApply={handleApply}
         mod={'Value'}
         label={'Value'}
         classes={classes}
-        columnType={columnType}
-        activeFilter={activeFilter}
-        handleDatePicker={handleDatePicker}
+        columnType={activeColumn.columnType}
+        activeFilter={activeColumn.activeFilter} 
         handleTextFieldChange={handleTextFieldChange}
       />
 
-      {operator === CompareOperators.BETWEEN &&
+      {activeColumn.operator === CompareOperators.BETWEEN &&
         <DialogInput
           disabled={false}
           value={secondValue}
@@ -63,9 +57,8 @@ const DialogContent: React.SFC<IProps> = ({
           mod={'Value2'}
           label={'Value 2'}
           classes={classes}
-          columnType={columnType}
-          activeFilter={activeFilter}
-          handleDatePicker={handleDatePicker}
+          columnType={activeColumn.columnType}
+          activeFilter={activeColumn.activeFilter}
           handleTextFieldChange={handleSecondTextFieldChange}
         />}
 
@@ -73,8 +66,8 @@ const DialogContent: React.SFC<IProps> = ({
         <Button
           className={classes.applyButton}
           onClick={() => handleApply()}
-          disabled={operator === CompareOperators.NONE}
-          style={operator === CompareOperators.NONE ? { background: 'grey' } : {}}
+          disabled={activeColumn.operator === CompareOperators.NONE}
+          style={activeColumn.operator === CompareOperators.NONE ? { background: 'grey' } : {}}
         >
           Apply
         </Button>

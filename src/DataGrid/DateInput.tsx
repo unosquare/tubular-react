@@ -8,11 +8,13 @@ import RightArrowIcon from '@material-ui/icons/ChevronRight';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import TimeIcon from '@material-ui/icons/Schedule';
 
-import { DatePicker, DateTimePicker } from 'material-ui-pickers';
+import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import { ColumnDataType } from './Column';
+import * as moment from 'moment';
 
 const muiTheme = createMuiTheme({
   palette: createPalette({
@@ -25,35 +27,30 @@ interface IProps {
   columnType: string;
   disabled: boolean;
   mod: string;
-  value: string;
-  handleDatePicker(event: any, name: string): void;
-}
+  value: string; 
+} 
 
-const DateInput: React.SFC<IProps> = ({ columnType, disabled, value, mod, handleDatePicker }) => (
+const DateInput: React.SFC<IProps> = ({ columnType, disabled, value, mod, }) => (
   <div style={{ padding: '15px 20px 5px 20px' }}>
     <MuiThemeProvider theme={muiTheme}>
-      {
+      {               
         columnType === ColumnDataType.DATE_TIME || columnType === ColumnDataType.DATE_TIME_UTC ?
-          <DateTimePicker
-            disabled={disabled}
-            style={{ width: '100%' }}
-            value={value}
-            onChange={(event) => handleDatePicker(event, mod)}
-            leftArrowIcon={<LeftArrowIcon />}
-            rightArrowIcon={<RightArrowIcon />}
-            dateRangeIcon={<DateRangeIcon/>}
-            timeIcon={<TimeIcon/>}
-            format={'MMMM Do YYYY hh:mm a'}
+          <TextField
+          id="datetime-local"
+          type="datetime-local"
+          defaultValue= "2016-05-24T10:30"
+          InputLabelProps={{
+            shrink: true,
+          }}
           />
           :
-          <DatePicker
-            disabled={disabled}
-            style={{ width: '100%' }}
-            value={value}
-            onChange={(event) => handleDatePicker(event, mod)}
-            leftArrowIcon={<LeftArrowIcon />}
-            rightArrowIcon={<RightArrowIcon />}
-            format={'MMMM Do YYYY'}
+          <TextField
+            id="date"
+            type="date"
+            defaultValue="2016-05-24"
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
       }
     </MuiThemeProvider>
