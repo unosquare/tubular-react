@@ -7,7 +7,7 @@
     "build:docs": "webpack --env.NODE_ENV=docs --mode=production --progress",
     "build:prod": "webpack --env.NODE_ENV=tubular-react --mode=production --progress",
     "sample": "webpack --env.NODE_ENV=sample --mode=development --progress",
-    "sample:watch": "webpack --env.NODE_ENV=sample --mode=development --progress --watch",
+    "sample:serve": "webpack-dev-server --env.NODE_ENV=sample --open --progress",
     "lint": "tslint src/**/*.ts src/**/*.tsx",
     "test": "jest",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
@@ -121,7 +121,8 @@
     "vinyl-source-stream": "^2.0.0",
     "watchify": "^3.11.0",
     "webpack": "^4.8.3",
-    "webpack-cli": "^3.0.1"
+    "webpack-cli": "^3.0.1",
+    "webpack-dev-server": "^3.1.4"
   },
   "peerDependencies": {
     "react": "^15.0.0 || ^16.0.0",

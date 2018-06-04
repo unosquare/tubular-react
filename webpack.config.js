@@ -87,11 +87,15 @@ const sampleConfig = {
   },
   resolve: {
     extensions: [ '.tsx', '.ts', '.js', 'jsx' ],
+  },
+  devServer: { 
+    contentBase: SAMPLE_DIR, 
+    compress: true,  
+    port: 9000 
   }
 }
 
 module.exports = env => {
-  
   switch(env.NODE_ENV) {
     case 'docs':
       return docsConfig;
