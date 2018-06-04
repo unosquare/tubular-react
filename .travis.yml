@@ -8,7 +8,6 @@ notifications:
   slack: unolabs:cbusXPH6pBwZ35rVDzi4k4ve
 install:
 - npm install
-- npm i -g gulp-cli
 script:
 - npm run lint
 - npm run build
