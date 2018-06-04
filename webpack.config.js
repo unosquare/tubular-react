@@ -19,7 +19,7 @@ const docsConfig = {
   },
   module : {    
     rules: [
-      { test: /\.tsx?$/, loader: 'awesome-typescript-loader?configFileName=tsconfig.docs.json'},
+      { test: /\.tsx?$/, loader: 'awesome-typescript-loader', options: { configFileName: './tsconfigs/tsconfig.docs.json' } },
     ],
   },
   resolve: {
@@ -39,15 +39,14 @@ const tubularReactConfig = {
   },
   module : {
     rules: [
-      { test: /\.tsx?$/, loader: 'awesome-typescript-loader?configFileName=tsconfig.tubular.json'},
+      { test: /\.tsx?$/, loader: 'awesome-typescript-loader', options: { configFileName: './tsconfigs/tsconfig.docs.json' } },
     ],
   },
   resolve: {
     extensions: [ '.tsx', '.ts', '.js', 'jsx' ],
     alias: { 
       'react': path.resolve(__dirname, './node_modules/react') ,
-      'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
-      'assets': path.resolve(__dirname, 'assets')
+      'react-dom': path.resolve(__dirname, './node_modules/react-dom')
     }
   },
   externals: {
@@ -83,7 +82,7 @@ const sampleConfig = {
   devtool: 'source-map',
   module : {    
     rules: [
-      { test: /\.tsx?$/, loader: 'awesome-typescript-loader?configFileName=tsconfig.sample.json'},
+      { test: /\.tsx?$/, loader: 'awesome-typescript-loader', options: { configFileName: './tsconfigs/tsconfig.docs.json' } },
     ],
   },
   resolve: {
