@@ -2,7 +2,7 @@
   "name": "tubular-react",
   "version": "0.2.2",
   "description": "Tubular React",
-  "main": "build/index.js",
+  "main": "dist/bundle.js",
   "scripts": {
     "build:docs": "webpack --env.NODE_ENV=docs --mode=production --progress",
     "build:prod": "webpack --env.NODE_ENV=tubular-react --mode=production --progress",
@@ -39,7 +39,7 @@
       "gulpfile.js",
       "next.config.js",
       "test/**/*.*",
-      "build/**/*.*",
+      "dist/**/*.*",
       "sample/**/*.*",
       "docs/**/*.*",
       "pages/**/*.*",
