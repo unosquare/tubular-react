@@ -6,8 +6,9 @@
   "scripts": {
     "build:docs": "webpack --env.NODE_ENV=docs --mode=production --progress",
     "build:prod": "webpack --env.NODE_ENV=tubular-react --mode=production --progress",
+    "build:dev": "webpack --env.NODE_ENV=tubular-react --mode=development --progress",
     "sample": "webpack --env.NODE_ENV=sample --mode=development --progress",
-    "sample:serve": "webpack-dev-server --env.NODE_ENV=sample --open --progress",
+    "start": "webpack-dev-server --env.NODE_ENV=sample --open --progress",
     "lint": "tslint src/**/*.ts src/**/*.tsx",
     "test": "jest",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
@@ -36,7 +37,6 @@
       ".tsx"
     ],
     "exclude": [
-      "gulpfile.js",
       "next.config.js",
       "test/**/*.*",
       "dist/**/*.*",
@@ -101,9 +101,6 @@
     "del": "^3.0.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "gulp": "^3.9.1",
-    "gulp-copy": "^1.1.0",
-    "gulp-typescript": "^4.0.2",
     "jsdom": "^11.11.0",
     "nyc": "^11.8.0",
     "react-router": "^4.2.0",
