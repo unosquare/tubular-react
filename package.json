@@ -29,7 +29,12 @@
     },
     "testMatch": [
       "<rootDir>/test/**/*.spec.(ts|tsx)"
-    ]
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "tsconfig.base.json"
+      }
+    }
   },
   "nyc": {
     "extension": [
@@ -64,9 +69,6 @@
     "@material-ui/icons": "^1.0.0",
     "@types/vinyl": "^2.0.2",
     "axios": "^0.18.0",
-    "babel-jest": "^23.0.1",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
     "jest": "^23.0.1",
     "lodash": "^4.17.10",
     "material-ui-pickers": "^1.0.0-rc.9",
