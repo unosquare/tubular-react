@@ -30,10 +30,8 @@ const ColumnDataTypeToHtmlType = {
 };
 
 const DialogInput: React.SFC<IProps> = ({ classes, disabled, value, columnType, activeFilter, label,
-  mod, handleApply, handleTextFieldChange }) => {   
-    console.log('dialogInput'); 
-    console.log(value+' '+columnType+' '+label);
-    return (
+  mod, handleApply, handleTextFieldChange }) => {
+     return (
       columnType === ColumnDataType.BOOLEAN ?
       (
         <Dropdown

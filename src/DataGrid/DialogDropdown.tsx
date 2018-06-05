@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ColumnDataType, CompareOperators } from './Column';
 import Dropdown from './Dropdown';
 
+
 const NumericOperators = [
   { Value: CompareOperators.NONE, Title: 'None' },
   { Value: CompareOperators.EQUALS, Title: 'Equals' },
@@ -12,7 +13,7 @@ const NumericOperators = [
   { Value: CompareOperators.LT, Title: '<' }
 ];
 
-const StringOperators = [
+ const StringOperators = [
   { Value: CompareOperators.NONE, Title: 'None' },
   { Value: CompareOperators.EQUALS, Title: 'Equals' },
   { Value: CompareOperators.NOT_EQUALS, Title: 'Not Equals' },
@@ -24,68 +25,51 @@ const StringOperators = [
   { Value: CompareOperators.NOT_ENDS_WITH, Title: 'Not Ends With' }
 ];
 
-const BooleanOperators = [
+ const BooleanOperators = [
   { Value: CompareOperators.NONE, Title: 'None' },
   { Value: CompareOperators.EQUALS, Title: 'Equals' },
   { Value: CompareOperators.NOT_EQUALS, Title: 'Not Equals' }
 ];
 
+
 interface IProps {
-  activeFilter: string;
   classes: any;
-  columnType: string;
-  value: string;
+  activeColumn:any;
   handleChange(value: any): void;
 }
 
-const DialogDropdown: React.SFC<IProps> = ({ classes, value, columnType, activeFilter, handleChange }) => {
-  const dropdownValue = value === undefined ? 'None' : value;
+const getOperators = (DataType:any) =>{
+  
+      switch (DataType) {
+      case ColumnDataType.STRING:
+        return StringOperators
+      case ColumnDataType.NUMERIC:
+      case ColumnDataType.DATE:
+      case ColumnDataType.DATE_TIME:
+      case ColumnDataType.DATE_TIME_UTC:
+        return NumericOperators
+      case ColumnDataType.BOOLEAN:
+        return BooleanOperators
+      default:
+        return [];
+      }
+}
+
+const DialogDropdown: React.SFC<IProps> = ({ classes, activeColumn, handleChange }) => {
+  const dropdownValue = activeColumn.Filter.Operator === '' ? 'None' : activeColumn.Filter.Operator;
   let component;
-  switch (columnType) {
-  case ColumnDataType.STRING:
-    return(
-    <Dropdown
-      disabled={false}
-      operators={StringOperators}
-      classes={classes}
-      value={dropdownValue}
-      activeFilter={activeFilter}
-      handleChange={handleChange}
-    />);
-  case ColumnDataType.NUMERIC:
-  case ColumnDataType.DATE:
-  case ColumnDataType.DATE_TIME:
-  case ColumnDataType.DATE_TIME_UTC:
-    component = (
-      <Dropdown
-        disabled={false}
-        operators={NumericOperators}
-        classes={classes}
-        value={dropdownValue}
-        activeFilter={activeFilter}
-        handleChange={handleChange}
-      />
-    );
-    break;
-  case ColumnDataType.BOOLEAN:
-    component =
+  return component =
     (
       <Dropdown
         disabled={false}
-        operators={BooleanOperators}
+        operators={getOperators(activeColumn.DataType)}
         classes={classes}
         value={dropdownValue}
-        activeFilter={activeFilter}
+        activeFilter={activeColumn.Name}
         handleChange={handleChange}
       />
     );
-    break;
-  default:
-    component = null;
-    break;
-  }
-
-  return component;
 };
+
 
 export default DialogDropdown;

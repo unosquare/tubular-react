@@ -13,13 +13,13 @@ interface IProps {
 }
 
 const Dropdown: React.SFC<IProps> = ({ classes, disabled, value, handleChange, activeFilter, operators }) => (
-  <div style={{ padding: '20px 20px 5px 20px' }}>
+   <div style={{ padding: '20px 20px 5px 20px' }}>
     <Select
       disabled={disabled}
       className={classes.dropdown}
       value={value}
       onChange={(event) => handleChange(event.target.value)}
-      input={<Input name={activeFilter} />}
+       input={<Input name={activeFilter} />} 
     >
       {
         operators.map( (row: any, i: number) => (

@@ -19,37 +19,36 @@ const DialogContent: React.SFC<IProps> = ({
   handleClear, handleSecondTextFieldChange }) => {
   let firstValue;
   let secondValue;
-
-  switch (activeColumn.columnType) {
+  
+  switch (activeColumn.DataType) {
   case ColumnDataType.DATE:
   case ColumnDataType.DATE_TIME:
   case ColumnDataType.DATE_TIME_UTC:
-    firstValue = activeColumn.value ? activeColumn.value : moment().format();
-    secondValue = activeColumn.value2 ? activeColumn.value2 : moment().format();
+    firstValue = activeColumn.Filter.Text ? activeColumn.Filter.Text : moment().format();
+    secondValue = activeColumn.Filter.Argument[0] ? activeColumn.Filter.Argument[0] : moment().format();
     break;
   case ColumnDataType.BOOLEAN:
-    firstValue = activeColumn.operator === CompareOperators.NONE ? '' : activeColumn.value;
+    firstValue = activeColumn.Filter.Operator === CompareOperators.NONE ? '' : activeColumn.Filter.Text;
     break;
   default:
-    firstValue = activeColumn.operator === CompareOperators.NONE ? '' : activeColumn.value || '';
-    secondValue = activeColumn.value2 || '';
-  }
-
+    firstValue = activeColumn.Filter.Operator === CompareOperators.NONE ? '' : activeColumn.Filter.Text || '';
+    secondValue = activeColumn.Filter.Argument[0] || '';
+  } 
   return (
     <div >
       <DialogInput
-        disabled={activeColumn.operator === CompareOperators.NONE}
+        disabled={activeColumn.Filter.Operator === CompareOperators.NONE}
         value={firstValue}
         handleApply={handleApply}
         mod={'Value'}
         label={'Value'}
         classes={classes}
-        columnType={activeColumn.columnType}
-        activeFilter={activeColumn.activeFilter} 
+        columnType={activeColumn.DataType}
+        activeFilter={activeColumn.Name} 
         handleTextFieldChange={handleTextFieldChange}
       />
 
-      {activeColumn.operator === CompareOperators.BETWEEN &&
+      {activeColumn.Filter.Operator === CompareOperators.BETWEEN &&
         <DialogInput
           disabled={false}
           value={secondValue}
@@ -57,8 +56,8 @@ const DialogContent: React.SFC<IProps> = ({
           mod={'Value2'}
           label={'Value 2'}
           classes={classes}
-          columnType={activeColumn.columnType}
-          activeFilter={activeColumn.activeFilter}
+          columnType={activeColumn.DataType}
+          activeFilter={activeColumn.Name}
           handleTextFieldChange={handleSecondTextFieldChange}
         />}
 
