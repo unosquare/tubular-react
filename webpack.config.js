@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const DOCS_BUILD_DIR = path.resolve(__dirname, 'docs/');
 const DOCS_APP_DIR = path.resolve(__dirname, 'srcdocs/pages/');
@@ -39,30 +39,16 @@ const tubularReactConfig = {
   },
   module : {
     rules: [
-      { test: /\.tsx?$/, loader: 'awesome-typescript-loader', options: { configFileName: './tsconfigs/tsconfig.docs.json' } },
+      { test: /\.tsx?$/, loader: 'awesome-typescript-loader', options: { configFileName: './tsconfigs/tsconfig.tubular.json' } },
     ],
   },
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js', 'jsx' ],
-    alias: { 
-      'react': path.resolve(__dirname, './node_modules/react') ,
-      'react-dom': path.resolve(__dirname, './node_modules/react-dom')
-    }
+    extensions: [ '.tsx', '.ts', '.js', 'jsx' ]
   },
   externals: {
     // Don't bundle react or react-dom
-    react: {
-        commonjs: "react",
-        commonjs2: "react",
-        amd: "React",
-        root: "React"
-    },
-    "react-dom": {
-        commonjs: "react-dom",
-        commonjs2: "react-dom",
-        amd: "ReactDOM",
-        root: "ReactDOM"
-    }
+    'react': 'React',
+    'react-dom': 'ReactDOM'
   },
   plugins: [
     new CopyWebpackPlugin([
@@ -82,7 +68,7 @@ const sampleConfig = {
   devtool: 'source-map',
   module : {    
     rules: [
-      { test: /\.tsx?$/, loader: 'awesome-typescript-loader', options: { configFileName: './tsconfigs/tsconfig.docs.json' } },
+      { test: /\.tsx?$/, loader: 'awesome-typescript-loader', options: { configFileName: './tsconfigs/tsconfig.sample.json' } },
     ],
   },
   resolve: {

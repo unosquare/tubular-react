@@ -4,6 +4,7 @@
         "sample/src/**/*.*"
     ],
     "compilerOptions": {
-        "outDir": "../sample/app/"
+        "outDir": "../sample/app/",
+        "sourceMap": true
     }
 }

@@ -4,6 +4,7 @@
         "srcdocs/**/*.*"
     ],
     "compilerOptions": {
-        "outDir": "../docs/"
+        "outDir": "../docs/",
+        "sourceMap": false
     }
 }
