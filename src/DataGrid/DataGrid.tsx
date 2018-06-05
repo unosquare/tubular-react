@@ -13,7 +13,7 @@ import WarningIcon from '@material-ui/icons/Warning';
 import { debounce } from 'lodash';
 import * as moment from 'moment';
 import * as React from 'react';
-import BaseDataSource from './BaseDataSource';
+import BaseDataSource from './DataSource/BaseDataSource';
 import { ColumnDataType } from './Column';
 import ColumnModel from './ColumnModel';
 import GridHeader from './GridHeader';

@@ -9,6 +9,7 @@ import { ColumnDataType, ColumnSortDirection, CompareOperators } from './Column'
 import ColumnModel from './ColumnModel';
 import DialogContent from './DialogContent';
 import DialogDropdown from './DialogDropdown';
+import DialogModal from './DialogModal';
 
 import * as moment from 'moment';
 import * as React from 'react';
@@ -66,6 +67,12 @@ interface IProps {
   refreshGrid(): void;
 }
 
+interface IDialogProps {
+  classes: any;
+  activeColumn:any;
+  handleChange(value: any): void;
+}
+ 
 class GridHeader extends React.Component<IProps & WithStyles<styleClasses>, IState> {
   public state = {
     activeColumn: null as any,
@@ -110,7 +117,7 @@ class GridHeader extends React.Component<IProps & WithStyles<styleClasses>, ISta
       case ColumnDataType.BOOLEAN:
         this.filterHandler(this.state.activeColumn.Filter.Text === 'true', '', true);
         break;
-      default:
+      default:   
         this.filterHandler(this.state.activeColumn.Filter.Text, this.state.activeColumn.Filter.Argument[0], true);
     }
   }
@@ -141,9 +148,10 @@ class GridHeader extends React.Component<IProps & WithStyles<styleClasses>, ISta
   public componentDidMount() {
     if (localStorage.getItem(`tubular.${this.props.gridName}`)) {
       const storage = JSON.parse(localStorage.getItem(`tubular.${this.props.gridName}`));
+      
       const dataSource = this.props.dataSource;
 
-      storage.forEach((element: any, i: number) => {
+      storage.forEach((element: any, i: number) => {        
         if (dataSource.columns[i] === undefined) return;
         dataSource.columns[i].SortDirection = element.SortDirection;
         dataSource.columns[i].SortOrder = element.SortOrder;
@@ -166,7 +174,6 @@ class GridHeader extends React.Component<IProps & WithStyles<styleClasses>, ISta
 
   public filterHandler = (firstValue: any, secondValue: any, hasFilter: boolean) => {
     const column = this.props.dataSource.columns.find((column: any) => column.Name === this.state.activeColumn.Name);
-
     if (!column) return;
 
     column.Filter.Text = firstValue;
@@ -176,9 +183,9 @@ class GridHeader extends React.Component<IProps & WithStyles<styleClasses>, ISta
     if (secondValue !== undefined) {
       column.Filter.Argument = [secondValue];
     }
-
-    this.props.refreshGrid();
-    this.handleClose();
+    
+    this.props.refreshGrid();    
+    this.handleClose();    
   }
 
   public componentWillUnmount() {
@@ -258,31 +265,21 @@ class GridHeader extends React.Component<IProps & WithStyles<styleClasses>, ISta
       }
     }));
   }
-
+  
   public render() {
     const { classes, dataSource } = this.props;
     return (
-      <TableRow>
-        <Dialog open={this.state.activeColumn != null} onClose={this.handleClose} >
-          <DialogTitle
-            style={{ minWidth: '300px', background: '#ececec', padding: '15px 20px 15px 20px' }}
-            id='responsive-dialog-title'
-          >{'Filter'}
-          </DialogTitle>
-          <DialogDropdown
-            classes={classes}
-            activeColumn={this.state.activeColumn}
-            handleChange={this.handleChange}
-          />
-          <DialogContent
-            classes={classes}
-            activeColumn={this.state.activeColumn}
-            handleTextFieldChange={this.handleTextFieldChange}
-            handleSecondTextFieldChange={this.handleSecondTextFieldChange}
-            handleApply={this.handleApply}
-            handleClear={this.handleClear}
-          />
-        </Dialog>
+      <TableRow>  
+         <DialogModal
+                classes={classes}
+                activeColumn={this.state.activeColumn}
+                handleChange={this.handleChange}
+                handleClose={this.handleClose}
+                handleTextFieldChange={this.handleTextFieldChange}
+                handleSecondTextFieldChange={this.handleSecondTextFieldChange}
+                handleApply={this.handleApply}
+                handleClear={this.handleClear}
+            />
         {dataSource.columns.filter((col: any) => col.Visible).map((column: any) => {
           const render = column.Sortable ?
             (<Tooltip

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
-import RemoteDataSource from '../src/DataGrid/RemoteDataSource';
+import RemoteDataSource from '../src/DataGrid/DataSource/RemoteDataSource';
 import { validColumnsSample } from './utils/columns';
 import {
   invalidResponseStructure,

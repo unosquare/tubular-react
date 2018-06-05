@@ -15,7 +15,6 @@ interface IProps {
   columnType: string;
   disabled: boolean;
   label: string;
-  mod: string;
   value: any;
   handleApply(): void; 
   handleTextFieldChange(event: any): void;
@@ -30,7 +29,7 @@ const ColumnDataTypeToHtmlType = {
 };
 
 const DialogInput: React.SFC<IProps> = ({ classes, disabled, value, columnType, activeFilter, label,
-  mod, handleApply, handleTextFieldChange }) => {
+  handleApply, handleTextFieldChange }) => {
      return (
       columnType === ColumnDataType.BOOLEAN ?
       (

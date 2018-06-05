@@ -26,11 +26,10 @@ const muiTheme = createMuiTheme({
 interface IProps {
   columnType: string;
   disabled: boolean;
-  mod: string;
   value: string; 
 } 
 
-const DateInput: React.SFC<IProps> = ({ columnType, disabled, value, mod, }) => (
+const DateInput: React.SFC<IProps> = ({ columnType, disabled, value }) => (
   <div style={{ padding: '15px 20px 5px 20px' }}>
     <MuiThemeProvider theme={muiTheme}>
       {               

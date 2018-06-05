@@ -40,7 +40,6 @@ const DialogContent: React.SFC<IProps> = ({
         disabled={activeColumn.Filter.Operator === CompareOperators.NONE}
         value={firstValue}
         handleApply={handleApply}
-        mod={'Value'}
         label={'Value'}
         classes={classes}
         columnType={activeColumn.DataType}
@@ -53,7 +52,6 @@ const DialogContent: React.SFC<IProps> = ({
           disabled={false}
           value={secondValue}
           handleApply={handleApply}
-          mod={'Value2'}
           label={'Value 2'}
           classes={classes}
           columnType={activeColumn.DataType}
