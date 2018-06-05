@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-var Visualizer = require('webpack-visualizer-plugin');
 
 const DOCS_BUILD_DIR = path.resolve(__dirname, 'docs/');
 const DOCS_APP_DIR = path.resolve(__dirname, 'srcdocs/pages/');
