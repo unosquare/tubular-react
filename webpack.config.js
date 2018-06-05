@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+var Visualizer = require('webpack-visualizer-plugin');
 
 const DOCS_BUILD_DIR = path.resolve(__dirname, 'docs/');
 const DOCS_APP_DIR = path.resolve(__dirname, 'srcdocs/pages/');
@@ -28,18 +29,25 @@ const docsConfig = {
 };
 
 const tubularReactConfig = {
-  entry: APP_ENTRY + '/index.ts',
+  entry: {
+    tubular: APP_ENTRY + '/index.ts'
+  },
   output: {
     path: BUILD_DIR,
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
     library: 'tubular-react',
     libraryTarget: 'umd',
     publicPath: BUILD_DIR,
     umdNamedDefine: true
   },
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    }
+ },
   module : {
     rules: [
-      { test: /\.tsx?$/, loader: 'awesome-typescript-loader', options: { configFileName: './tsconfigs/tsconfig.tubular.json' } },
+      { test: /\.tsx?$/, loader: 'awesome-typescript-loader', options: { configFileName: './tsconfigs/tsconfig.tubular.json' } }
     ],
   },
   resolve: {
