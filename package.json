@@ -2,17 +2,18 @@
   "name": "tubular-react",
   "version": "0.2.2",
   "description": "Tubular React",
-  "main": "build/index.js",
+  "main": "dist/bundle.js",
   "scripts": {
-    "start": "gulp watch",
-    "build": "gulp",
+    "build:docs": "webpack --env.NODE_ENV=docs --mode=production --progress",
+    "build:prod": "webpack --env.NODE_ENV=tubular-react --mode=production --progress",
+    "build:dev": "webpack --env.NODE_ENV=tubular-react --mode=development --progress",
+    "sample": "webpack --env.NODE_ENV=sample --mode=development --progress",
+    "start": "webpack-dev-server --env.NODE_ENV=sample --open --progress",
     "lint": "tslint src/**/*.ts src/**/*.tsx",
     "test": "jest",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov",
-    "docs:run": "webpack -d",
-    "docs": "webpack -p",
-    "prepublishOnly": "gulp publish"
+    "prepublishOnly": "npm run build:prod"
   },
   "jest": {
     "setupFiles": [
@@ -28,7 +29,12 @@
     },
     "testMatch": [
       "<rootDir>/test/**/*.spec.(ts|tsx)"
-    ]
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "tsconfig.base.json"
+      }
+    }
   },
   "nyc": {
     "extension": [
@@ -36,10 +42,9 @@
       ".tsx"
     ],
     "exclude": [
-      "gulpfile.js",
       "next.config.js",
       "test/**/*.*",
-      "build/**/*.*",
+      "dist/**/*.*",
       "sample/**/*.*",
       "docs/**/*.*",
       "pages/**/*.*",
@@ -62,10 +67,8 @@
   "dependencies": {
     "@material-ui/core": "^1.0.0",
     "@material-ui/icons": "^1.0.0",
+    "@types/vinyl": "^2.0.2",
     "axios": "^0.18.0",
-    "babel-jest": "^23.0.1",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
     "jest": "^23.0.1",
     "lodash": "^4.17.10",
     "material-ui-pickers": "^1.0.0-rc.9",
@@ -95,13 +98,11 @@
     "browser-sync": "^2.24.4",
     "browserify": "^16.2.2",
     "chai": "^4.1.2",
+    "copy-webpack-plugin": "^4.5.1",
     "coveralls": "^3.0.1",
     "del": "^3.0.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "gulp": "^3.9.1",
-    "gulp-copy": "^1.1.0",
-    "gulp-typescript": "^4.0.2",
     "jsdom": "^11.11.0",
     "nyc": "^11.8.0",
     "react-router": "^4.2.0",
@@ -118,7 +119,9 @@
     "typescript": "^2.8.3",
     "vinyl-source-stream": "^2.0.0",
     "watchify": "^3.11.0",
-    "webpack": "^4.8.3"
+    "webpack": "^4.8.3",
+    "webpack-cli": "^3.0.1",
+    "webpack-dev-server": "^3.1.4"
   },
   "peerDependencies": {
     "react": "^15.0.0 || ^16.0.0",
