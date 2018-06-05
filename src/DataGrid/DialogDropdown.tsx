@@ -57,9 +57,8 @@ const getOperators = (DataType:any) =>{
 
 const DialogDropdown: React.SFC<IProps> = ({ classes, activeColumn, handleChange }) => {
   const dropdownValue = activeColumn.Filter.Operator === '' ? 'None' : activeColumn.Filter.Operator;
-  let component;
-  return component =
-    (
+  
+  return (
       <Dropdown
         disabled={false}
         operators={getOperators(activeColumn.DataType)}

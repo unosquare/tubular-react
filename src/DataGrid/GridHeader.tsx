@@ -13,51 +13,50 @@ import DialogDropdown from './DialogDropdown';
 import * as moment from 'moment';
 import * as React from 'react';
 
-const styleClasses  = {
-  applyButton: '',
-  arrowStyle: '',
-  clearButton: '',
-  dialog: '',
-  dropdown: '',
-  mainDialogStyle: '',
-  textField: '',
-};
+type styleClasses =
+  'applyButton' |
+  'arrowStyle' |
+  'clearButton' |
+  'dialog' |
+  'dropdown' |
+  'mainDialogStyle' |
+  'textField';
 
-const styles = (theme: Theme): StyleRules<keyof typeof styleClasses> => (
+const styles = (theme: Theme): StyleRules<styleClasses> => (
   {
-  applyButton: {
-    background: '#28b62c',
-    color: 'white',
-    marginRight: '30px'
-  },
-  arrowStyle: {
-    marginLeft: '5px',
-    width: '15px'
-  },
-  clearButton: {
-    background: '#ff4136',
-    color: 'white'
-  },
-  dialog: {
-    background: 'black',
-    minWidth: '400px'
-  },
-  dropdown: {
-    width: '100%'
-  },
-  mainDialogStyle: {
-    padding: '25px 25px 25px 25px'
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200
-  }
-});
+    applyButton: {
+      background: '#28b62c',
+      color: 'white',
+      marginRight: '30px'
+    },
+    arrowStyle: {
+      marginLeft: '5px',
+      width: '15px'
+    },
+    clearButton: {
+      background: '#ff4136',
+      color: 'white'
+    },
+    dialog: {
+      background: 'black',
+      minWidth: '400px'
+    },
+    dropdown: {
+      width: '100%'
+    },
+    mainDialogStyle: {
+      padding: '25px 25px 25px 25px'
+    },
+    textField: {
+      marginLeft: theme.spacing.unit,
+      marginRight: theme.spacing.unit,
+      width: 200
+    }
+  });
 
 interface IState {
-  activeColumn:any;
-  sorting:boolean;
+  activeColumn: any;
+  sorting: boolean;
 }
 interface IProps {
   dataSource: any;
@@ -67,36 +66,36 @@ interface IProps {
   refreshGrid(): void;
 }
 
-class GridHeader extends React.Component <IProps & WithStyles<keyof typeof styleClasses>, IState> {
+class GridHeader extends React.Component<IProps & WithStyles<styleClasses>, IState> {
   public state = {
     activeColumn: null as any,
-    sorting:true
+    sorting: true
   };
 
   public handleClose = () => {
-    this.setState({activeColumn:null});
+    this.setState({ activeColumn: null });
   }
 
   public handleOpen = (column: any) => {
     this.setState({
       activeColumn: column,
-     },
-      () => {        
+    },
+      () => {
         document.getElementById(column.Name).blur();
       }
     );
   }
 
   public handleClear = () => {
-    this.setState(prevState =>({
-      activeColumn:{
+    this.setState(prevState => ({
+      activeColumn: {
         ...prevState.activeColumn,
-      Filter:{
-        ...prevState.activeColumn.Filter,
-        operator: CompareOperators.NONE, 
-        Text:'',
-        Argument:['']
-      }     
+        Filter: {
+          ...prevState.activeColumn.Filter,
+          operator: CompareOperators.NONE,
+          Text: '',
+          Argument: ['']
+        }
       }
     }), () => {
       this.filterHandler(this.state.activeColumn.Filter.Text, this.state.activeColumn.Filter.Argument[0], false);
@@ -105,21 +104,21 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
 
   public handleApply = () => {
     switch (this.state.activeColumn.DataType) {
-    case ColumnDataType.NUMERIC:
-      this.filterHandler(parseFloat(this.state.activeColumn.Filter.Text), parseFloat(this.state.activeColumn.Filter.Argument[0]), true);
-      break;
-    case ColumnDataType.BOOLEAN:
-      this.filterHandler(this.state.activeColumn.Filter.Text === 'true', '', true);
-      break;
-    default:
-      this.filterHandler(this.state.activeColumn.Filter.Text, this.state.activeColumn.Filter.Argument[0], true);
+      case ColumnDataType.NUMERIC:
+        this.filterHandler(parseFloat(this.state.activeColumn.Filter.Text), parseFloat(this.state.activeColumn.Filter.Argument[0]), true);
+        break;
+      case ColumnDataType.BOOLEAN:
+        this.filterHandler(this.state.activeColumn.Filter.Text === 'true', '', true);
+        break;
+      default:
+        this.filterHandler(this.state.activeColumn.Filter.Text, this.state.activeColumn.Filter.Argument[0], true);
     }
   }
 
   public handleKeyDown(event: any) {
     if (event.key === 'Control' && this.state.sorting === true) {
-      this.setState(prevState=>({ 
-        activeColumn:{
+      this.setState(prevState => ({
+        activeColumn: {
           ...prevState.activeColumn,
           sorting: false
         }
@@ -129,11 +128,11 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
 
   public handleKeyUp(event: any) {
     if (event.key === 'Control' && this.state.sorting === false) {
-      this.setState(prevState=>({ 
-        activeColumn:{
+      this.setState(prevState => ({
+        activeColumn: {
           ...prevState.activeColumn,
           sorting: true
-          
+
         }
       }));
     }
@@ -144,19 +143,19 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
       const storage = JSON.parse(localStorage.getItem(`tubular.${this.props.gridName}`));
       const dataSource = this.props.dataSource;
 
-      storage.forEach( (element: any, i: number) => {
-        if (dataSource.columns[i] !== undefined) {
-          dataSource.columns[i].SortDirection = element.SortDirection;
-          dataSource.columns[i].SortOrder = element.SortOrder;
-          if (dataSource.columns[i].Filter && element.Filter) {
-            dataSource.columns[i].Filter.HasFilter = element.Filter.HasFilter;
-            dataSource.columns[i].Filter.Operator = element.Filter.Operator;
-            dataSource.columns[i].Filter.Text =
-              dataSource.columns[i].DataType === ColumnDataType.BOOLEAN ?
-                element.Filter.Text :
-                element.Filter.Text || '';
-            dataSource.columns[i].Filter.Argument[0] = element.Filter.Argument[0] || '';
-          }
+      storage.forEach((element: any, i: number) => {
+        if (dataSource.columns[i] === undefined) return;
+        dataSource.columns[i].SortDirection = element.SortDirection;
+        dataSource.columns[i].SortOrder = element.SortOrder;
+
+        if (dataSource.columns[i].Filter && element.Filter) {
+          dataSource.columns[i].Filter.HasFilter = element.Filter.HasFilter;
+          dataSource.columns[i].Filter.Operator = element.Filter.Operator;
+          dataSource.columns[i].Filter.Text =
+            dataSource.columns[i].DataType === ColumnDataType.BOOLEAN ?
+              element.Filter.Text :
+              element.Filter.Text || '';
+          dataSource.columns[i].Filter.Argument[0] = element.Filter.Argument[0] || '';
         }
       });
     }
@@ -166,16 +165,17 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
   }
 
   public filterHandler = (firstValue: any, secondValue: any, hasFilter: boolean) => {
-    this.props.dataSource.columns.forEach( (column: any) => {     
-      if (column.Name === this.state.activeColumn.Name) {
-        column.Filter.Text = firstValue;
-        column.Filter.Operator = this.state.activeColumn.activeFilter;
-        column.Filter.HasFilter = hasFilter;
-        if (secondValue !== undefined) {
-          column.Filter.Argument = [secondValue];
-        }
-      }
-    });
+    const column = this.props.dataSource.columns.find((column: any) => column.Name === this.state.activeColumn.Name);
+
+    if (!column) return;
+
+    column.Filter.Text = firstValue;
+    column.Filter.Operator = this.state.activeColumn.Filter.Operator;
+    column.Filter.HasFilter = hasFilter;
+    
+    if (secondValue !== undefined) {
+      column.Filter.Argument = [secondValue];
+    }
 
     this.props.refreshGrid();
     this.handleClose();
@@ -189,7 +189,7 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
   public sortHandler = (property: string) => {
     const array = Object.assign({}, this.props.dataSource);
 
-    array.columns.forEach( (column: any) => {
+    array.columns.forEach((column: any) => {
       if (column.Name === property) {
         column.SortDirection = column.SortDirection === ColumnSortDirection.NONE
           ? ColumnSortDirection.ASCENDING
@@ -204,16 +204,16 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
         }
 
         if (this.state.sorting === true) {
-          array.columns.filter((col: any) => col.Name !== property).forEach( ($column: any) => {
+          array.columns.filter((col: any) => col.Name !== property).forEach(($column: any) => {
             $column.SortOrder = -1;
             $column.SortDirection = ColumnSortDirection.NONE;
           });
         }
 
         const currentlySortedColumns = array.columns.filter((col: ColumnModel) => col.SortOrder > 0)
-          .sort((a: ColumnModel, b: ColumnModel) => a.SortOrder === b.SortOrder ? 0 : a.SortOrder > b.SortOrder );
+          .sort((a: ColumnModel, b: ColumnModel) => a.SortOrder === b.SortOrder ? 0 : a.SortOrder > b.SortOrder);
 
-        currentlySortedColumns.forEach( ($column: any, i: number) => {
+        currentlySortedColumns.forEach(($column: any, i: number) => {
           $column.SortOrder = i + 1;
         });
       }
@@ -223,47 +223,47 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
   }
 
   public handleTextFieldChange = (event: any) => {
-    let value=event.target.value;
-    this.setState(prevState=>({
-      activeColumn:{
+    let value = event.target.value;
+    this.setState(prevState => ({
+      activeColumn: {
         ...prevState.activeColumn,
-        Filter:{
+        Filter: {
           ...prevState.activeColumn.Filter,
-          Text:value,
-        }      
-      }      
+          Text: value,
+        }
+      }
     }));
   }
 
   public handleSecondTextFieldChange = (event: any) => {
-    this.setState(prevState=>({
-      activeColumn:{
+    this.setState(prevState => ({
+      activeColumn: {
         ...prevState.activeColumn,
-        Filter:{
+        Filter: {
           ...prevState.activeColumn.Filter,
-          Argument:[event],
-        }         
-      }      
+          Argument: [event],
+        }
+      }
     }));
   }
 
   public handleChange = (event: any) => {
-    this.setState(prevState=>({
-      activeColumn:{
-        ...prevState.activeColumn,        
-        Filter:{
+    this.setState(prevState => ({
+      activeColumn: {
+        ...prevState.activeColumn,
+        Filter: {
           ...prevState.activeColumn.Filter,
-          Operator:event          
+          Operator: event
         }
-      }      
-    }));    
+      }
+    }));
   }
 
   public render() {
-    const {  classes, dataSource} = this.props;
+    const { classes, dataSource } = this.props;
     return (
       <TableRow>
-        <Dialog open={this.state.activeColumn!=null} onClose={this.handleClose} >
+        <Dialog open={this.state.activeColumn != null} onClose={this.handleClose} >
           <DialogTitle
             style={{ minWidth: '300px', background: '#ececec', padding: '15px 20px 15px 20px' }}
             id='responsive-dialog-title'
@@ -303,12 +303,12 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
             </Tooltip>)
             : (column.Label);
           const filter = column.Filter &&
-              (<IconButton id={column.Name} onClick={() => this.handleOpen(column)} >
-                {column.Filter.HasFilter && column.Filter.Operator !== CompareOperators.NONE ?
-                  <FilterListIcon style={{ background: '#28b62c', color: 'white', borderRadius: '50%' }}/>
-                  :
-                  <FilterListIcon/>}
-              </IconButton>);
+            (<IconButton id={column.Name} onClick={() => this.handleOpen(column)} >
+              {column.Filter.HasFilter && column.Filter.Operator !== CompareOperators.NONE ?
+                <FilterListIcon style={{ background: '#28b62c', color: 'white', borderRadius: '50%' }} />
+                :
+                <FilterListIcon />}
+            </IconButton>);
           return (
             <TableCell key={column.Label} padding={column.Label === '' ? 'none' : 'default'}>
               {render}
