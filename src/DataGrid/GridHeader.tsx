@@ -14,46 +14,10 @@ import DialogModal from './DialogModal';
 import * as moment from 'moment';
 import * as React from 'react';
 
-type styleClasses =
-  'applyButton' |
-  'arrowStyle' |
-  'clearButton' |
-  'dialog' |
-  'dropdown' |
-  'mainDialogStyle' |
-  'textField';
-
-const styles = (theme: Theme): StyleRules<styleClasses> => (
-  {
-    applyButton: {
-      background: '#28b62c',
-      color: 'white',
-      marginRight: '30px'
-    },
-    arrowStyle: {
+const arrowStyle= {
       marginLeft: '5px',
       width: '15px'
-    },
-    clearButton: {
-      background: '#ff4136',
-      color: 'white'
-    },
-    dialog: {
-      background: 'black',
-      minWidth: '400px'
-    },
-    dropdown: {
-      width: '100%'
-    },
-    mainDialogStyle: {
-      padding: '25px 25px 25px 25px'
-    },
-    textField: {
-      marginLeft: theme.spacing.unit,
-      marginRight: theme.spacing.unit,
-      width: 200
-    }
-  });
+    };
 
 interface IState {
   activeColumn: any;
@@ -66,14 +30,8 @@ interface IProps {
   rowsPerPage: number;
   refreshGrid(): void;
 }
-
-interface IDialogProps {
-  classes: any;
-  activeColumn:any;
-  handleChange(value: any): void;
-}
  
-class GridHeader extends React.Component<IProps & WithStyles<styleClasses>, IState> {
+class GridHeader extends React.Component<IProps, IState> {
   public state = {
     activeColumn: null as any,
     sorting: true
@@ -99,7 +57,7 @@ class GridHeader extends React.Component<IProps & WithStyles<styleClasses>, ISta
         ...prevState.activeColumn,
         Filter: {
           ...prevState.activeColumn.Filter,
-          operator: CompareOperators.NONE,
+          Operator: CompareOperators.NONE,
           Text: '',
           Argument: ['']
         }
@@ -267,11 +225,10 @@ class GridHeader extends React.Component<IProps & WithStyles<styleClasses>, ISta
   }
   
   public render() {
-    const { classes, dataSource } = this.props;
+    const { dataSource } = this.props;
     return (
       <TableRow>  
          <DialogModal
-                classes={classes}
                 activeColumn={this.state.activeColumn}
                 handleChange={this.handleChange}
                 handleClose={this.handleClose}
@@ -290,11 +247,11 @@ class GridHeader extends React.Component<IProps & WithStyles<styleClasses>, ISta
               <TableSortLabel onClick={(event: any) => this.sortHandler(column.Name)} >
                 {column.Label}
                 {column.SortDirection === ColumnSortDirection.ASCENDING ?
-                  <ArrowUpward className={classes.arrowStyle} />
+                  <ArrowUpward style={arrowStyle} />
                   : column.SortDirection === ColumnSortDirection.DESCENDING ?
-                    <ArrowDownward className={classes.arrowStyle} />
+                    <ArrowDownward style={arrowStyle} />
                     :
-                    <div className={classes.arrowStyle} />
+                    <div style={arrowStyle} />
                 }
               </TableSortLabel>
             </Tooltip>)
@@ -318,4 +275,4 @@ class GridHeader extends React.Component<IProps & WithStyles<styleClasses>, ISta
   }
 }
 
-export default withStyles(styles)(GridHeader);
+export default GridHeader;

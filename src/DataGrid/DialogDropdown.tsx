@@ -33,7 +33,6 @@ const NumericOperators = [
 
 
 interface IProps {
-  classes: any;
   activeColumn:any;
   handleChange(value: any): void;
 }
@@ -55,14 +54,13 @@ const getOperators = (DataType:any) =>{
       }
 }
 
-const DialogDropdown: React.SFC<IProps> = ({ classes, activeColumn, handleChange }) => {
+const DialogDropdown: React.SFC<IProps> = ({ activeColumn, handleChange }) => {
   const dropdownValue = activeColumn.Filter.Operator === '' ? 'None' : activeColumn.Filter.Operator;
   
   return (
       <Dropdown
         disabled={false}
         operators={getOperators(activeColumn.DataType)}
-        classes={classes}
         value={dropdownValue}
         activeFilter={activeColumn.Name}
         handleChange={handleChange}

@@ -9,26 +9,15 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import * as React from 'react';
 
-const styleClasses  = {
-  button: '',
-  formControl: '',
-  spacer: '',
-};
 
-const styles = (theme: Theme): StyleRules<keyof typeof styleClasses> => (
-  {
-    button: {
-      minWidth: 150
-    },
-    formControl: {
-      margin: theme.spacing.unit,
-      minWidth: 250
-    },
-    spacer: {
-      flex: '1 1 100%'
-    }
-  }
-);
+const spacer= {
+  flex: '1 1 100%'
+}
+
+const formControl= {
+  margin: '5px',
+  minWidth: '250px'
+}
 
 interface IState {
   anchorEl?: HTMLElement;
@@ -47,7 +36,7 @@ interface IProps {
   onExport(condition: boolean): void;
 }
 
-class GridToolbar extends React.Component <IProps & WithStyles<keyof typeof styleClasses>, IState> {
+class GridToolbar extends React.Component <IProps, IState> {
   public static defaultProps = {
     onSearchTextChange: (x: any): any => x
   };
@@ -122,12 +111,12 @@ class GridToolbar extends React.Component <IProps & WithStyles<keyof typeof styl
   }
 
   public render() {
-    const { classes, filteredRecordCount, isPrintEnabled, isExportEnabled, onPrint, showSearchText} = this.props;
+    const { filteredRecordCount, isPrintEnabled, isExportEnabled, onPrint, showSearchText} = this.props;
     const { searchText, anchorEl, anchorPrint } = this.state;
 
     return(
       <Toolbar>
-        <div className={classes.spacer}/>
+        <div style={spacer}/>
         {
           isExportEnabled &&
           <IconButton disabled={filteredRecordCount === 0} onClick={this.handleMenuOpen}>
@@ -141,7 +130,7 @@ class GridToolbar extends React.Component <IProps & WithStyles<keyof typeof styl
           </IconButton>
         }
         { showSearchText &&
-          <FormControl className={classes.formControl}>
+          <FormControl style={formControl}>
             <Input
               fullWidth={true}
               type='text'
@@ -178,4 +167,4 @@ class GridToolbar extends React.Component <IProps & WithStyles<keyof typeof styl
   }
 }
 
-export default withStyles(styles)(GridToolbar);
+export default GridToolbar;

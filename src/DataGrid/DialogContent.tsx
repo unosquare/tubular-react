@@ -4,8 +4,23 @@ import * as React from 'react';
 import { ColumnDataType, CompareOperators } from './Column';
 import DialogInput from './DialogInput';
 
+const clearButton= {
+  background: '#ff4136',
+  color: 'white'
+}
+const applyButton= {
+  background: '#28b62c',
+  color: 'white',
+  marginRight: '30px'
+}
+const applyButtonDisable= {
+  background: 'grey',
+  color: 'white',
+  marginRight: '30px'
+}
+const wrapperInput={ padding: '15px 20px 5px 20px' }
+
 interface IProps {
-  classes: any;
   activeColumn: any;
   handleApply(): void;
   handleClear(): void; 
@@ -13,8 +28,7 @@ interface IProps {
   handleSecondTextFieldChange(event: any): void;
 }
 
-const DialogContent: React.SFC<IProps> = ({
-  classes, activeColumn, 
+const DialogContent: React.SFC<IProps> = ({ activeColumn, 
   handleTextFieldChange, handleApply,
   handleClear, handleSecondTextFieldChange }) => {
   let firstValue;
@@ -35,13 +49,12 @@ const DialogContent: React.SFC<IProps> = ({
     secondValue = activeColumn.Filter.Argument[0] || '';
   } 
   return (
-    <div >
+    <div style={wrapperInput}>
       <DialogInput
         disabled={activeColumn.Filter.Operator === CompareOperators.NONE}
         value={firstValue}
         handleApply={handleApply}
         label={'Value'}
-        classes={classes}
         columnType={activeColumn.DataType}
         activeFilter={activeColumn.Name} 
         handleTextFieldChange={handleTextFieldChange}
@@ -53,7 +66,6 @@ const DialogContent: React.SFC<IProps> = ({
           value={secondValue}
           handleApply={handleApply}
           label={'Value 2'}
-          classes={classes}
           columnType={activeColumn.DataType}
           activeFilter={activeColumn.Name}
           handleTextFieldChange={handleSecondTextFieldChange}
@@ -61,14 +73,13 @@ const DialogContent: React.SFC<IProps> = ({
 
       <div style={{ padding: '20px 10px 15px 10px', textAlign: 'center' }}>
         <Button
-          className={classes.applyButton}
           onClick={() => handleApply()}
-          disabled={activeColumn.operator === CompareOperators.NONE}
-          style={activeColumn.operator === CompareOperators.NONE ? { background: 'grey' } : {}}
+          disabled={activeColumn.Filter.Operator === CompareOperators.NONE}
+          style={activeColumn.Filter.Operator === CompareOperators.NONE ? applyButtonDisable : applyButton}
         >
           Apply
         </Button>
-        <Button className={classes.clearButton} onClick={() => handleClear()}>Clear</Button>
+        <Button style={clearButton} onClick={() => handleClear()}>Clear</Button>
       </div>
     </div>
   );
