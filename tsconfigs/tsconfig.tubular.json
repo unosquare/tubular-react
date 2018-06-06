@@ -1,14 +1,16 @@
 {
-    "extends": "../tsconfig.base.json",
-    "files": [
-        "src/**/*.*"
-    ],
     "compilerOptions": {
-        "outDir": "../dist/",
-        "sourceMap": true,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "preserveConstEnums": true,
+        "outDir": "../dist/lib",
+        "jsx": "preserve",
+        "lib": ["es5", "es6", "dom"],
         "declaration": true,
-        "allowSyntheticDefaultImports": true,
-        "module": "ESNext",
-        "moduleResolution": "node"
-    }
+        "sourceMap": true,
+        "target": "es2015",
+        "skipLibCheck": true
+    },
+    "include": [ "../src/**/*.ts", "../src/**/*.tsx" ],
+    "exclude": [ "../test/**/*.*", "../node_modules" ]
 }
