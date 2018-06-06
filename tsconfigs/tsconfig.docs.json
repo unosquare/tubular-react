@@ -1,0 +1,10 @@
+{
+    "extends": "../tsconfig.base.json",
+    "files": [
+        "srcdocs/**/*.*"
+    ],
+    "compilerOptions": {
+        "outDir": "../docs/",
+        "sourceMap": false
+    }
+}

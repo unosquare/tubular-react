@@ -1,0 +1,10 @@
+{
+    "extends": "../tsconfig.base.json",
+    "files": [
+        "sample/src/**/*.*"
+    ],
+    "compilerOptions": {
+        "outDir": "../sample/app/",
+        "sourceMap": true
+    }
+}

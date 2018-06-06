@@ -72,3 +72,5 @@ package-lock.json
 !.vscode/extensions.json
 
 .next
+/sample/app/*.map
+/dist
