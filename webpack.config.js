@@ -28,12 +28,13 @@ const docsConfig = {
 };
 
 const tubularReactConfig = {
+  devtool: 'source-map',
   entry: {
-    tubular: APP_ENTRY + '/index.ts'
+    'tubular-react': APP_ENTRY + '/index.ts',
   },
   output: {
     path: BUILD_DIR,
-    filename: '[name].bundle.js',
+    filename: '[name].js',
     library: 'tubular-react',
     libraryTarget: 'umd',
     publicPath: BUILD_DIR,
@@ -46,24 +47,12 @@ const tubularReactConfig = {
  },
   module : {
     rules: [
-      { test: /\.tsx?$/, loader: 'awesome-typescript-loader', options: { configFileName: './tsconfigs/tsconfig.tubular.json' } }
+      { test: /\.(ts|tsx)$/, loader: 'awesome-typescript-loader', exclude: /node_modules/, options: { configFileName: './tsconfigs/tsconfig.tubular.json' } }
     ],
   },
   resolve: {
     extensions: [ '.tsx', '.ts', '.js', 'jsx' ]
-  },
-  externals: {
-    // Don't bundle react or react-dom
-    'react': 'React',
-    'react-dom': 'ReactDOM'
-  },
-  plugins: [
-    new CopyWebpackPlugin([
-      { from: './package.json', to: './' },
-      { from: './README.md', to: './' },
-      { from: './LICENSE', to: './' }
-    ])
-  ]
+  }
 }
 
 const sampleConfig = {

@@ -2,7 +2,7 @@
     "compilerOptions": {
         "noImplicitAny": true,
         "target": "es5",
-        "allowJs": true,
+        "allowJs": false,
         "jsx": "react",
         "lib": ["es5", "es6", "dom"],
         "module": "commonjs"

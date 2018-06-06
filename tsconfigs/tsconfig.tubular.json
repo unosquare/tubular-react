@@ -5,6 +5,10 @@
     ],
     "compilerOptions": {
         "outDir": "../dist/",
-        "sourceMap": false
+        "sourceMap": true,
+        "declaration": true,
+        "allowSyntheticDefaultImports": true,
+        "module": "ESNext",
+        "moduleResolution": "node"
     }
 }
