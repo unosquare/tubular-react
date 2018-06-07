@@ -1,7 +1,13 @@
 import * as React from 'react';
 import { ColumnDataType, CompareOperators } from './Column';
-import Dropdown from './Dropdown';
+import Input from '@material-ui/core/Input';
+import Select from '@material-ui/core/Select';
+import { MenuItem } from '@material-ui/core';
 
+const dropdown= {
+  width: '80%',
+  marginLeft: '10%'
+};
 
 const NumericOperators = [
   { Value: CompareOperators.NONE, Title: 'None' },
@@ -54,19 +60,25 @@ const getOperators = (DataType:any) =>{
       }
 }
 
-const DialogDropdown: React.SFC<IProps> = ({ activeColumn, handleChange }) => {
-  const dropdownValue = activeColumn.Filter.Operator === '' ? 'None' : activeColumn.Filter.Operator;
-  
+const OperatorsDropdown: React.SFC<IProps> = ({ activeColumn, handleChange }) => {
+  const value = activeColumn.Filter.Operator === '' ? 'None' : activeColumn.Filter.Operator;
+  const operators=getOperators(activeColumn.DataType);
   return (
-      <Dropdown
-        disabled={false}
-        operators={getOperators(activeColumn.DataType)}
-        value={dropdownValue}
-        activeFilter={activeColumn.Name}
-        handleChange={handleChange}
-      />
-    );
+       <Select
+       disabled={false}
+       style={dropdown}
+       value={value}
+       onChange={(event) => handleChange(event.target.value)}
+       input={<Input name={activeColumn.Name} />} 
+     >
+       {
+         operators.map( (row: any, i: number) => (
+           <MenuItem key={i} value={row.Value}>{row.Title}</MenuItem>
+         ))
+       }
+     </Select>    
+  );
 };
 
 
-export default DialogDropdown;
+export default OperatorsDropdown;

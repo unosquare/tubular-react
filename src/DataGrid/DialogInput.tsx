@@ -1,18 +1,14 @@
 import * as React from 'react';
 import { ColumnDataType } from './Column';
-import DateInput from './DateInput';
 import TextField from '@material-ui/core/TextField';
 import * as moment from 'moment';
 import { MenuItem } from '@material-ui/core';
 
-const textField= {
-  width: '80%',
-  marginLeft: '10%',
-};
 
 const dropdown= {
   width: '80%',
-  marginLeft: '10%'
+  marginLeft: '10%',
+  marginTop: '5%',
 };
 
 const BooleanInputOperators = [

@@ -7,17 +7,20 @@ import ArrowUpward from '@material-ui/icons/ArrowUpward';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { ColumnDataType, ColumnSortDirection, CompareOperators } from './Column';
 import ColumnModel from './ColumnModel';
-import DialogContent from './DialogContent';
-import DialogDropdown from './DialogDropdown';
 import DialogModal from './DialogModal';
 
 import * as moment from 'moment';
 import * as React from 'react';
 
-const arrowStyle= {
-      marginLeft: '5px',
-      width: '15px'
-    };
+type customStyles  = 'arrowStyle';
+
+const styles = (theme: Theme): StyleRules<customStyles> => (
+  {
+  arrowStyle: {
+    marginLeft: '5px',
+    width: '15px'
+  }
+}); 
 
 interface IState {
   activeColumn: any;
@@ -31,7 +34,7 @@ interface IProps {
   refreshGrid(): void;
 }
  
-class GridHeader extends React.Component<IProps, IState> {
+class GridHeader extends React.Component <IProps & WithStyles<customStyles>, IState> {
   public state = {
     activeColumn: null as any,
     sorting: true
@@ -225,7 +228,7 @@ class GridHeader extends React.Component<IProps, IState> {
   }
   
   public render() {
-    const { dataSource } = this.props;
+    const { classes, dataSource } = this.props;
     return (
       <TableRow>  
          <DialogModal
@@ -247,11 +250,11 @@ class GridHeader extends React.Component<IProps, IState> {
               <TableSortLabel onClick={(event: any) => this.sortHandler(column.Name)} >
                 {column.Label}
                 {column.SortDirection === ColumnSortDirection.ASCENDING ?
-                  <ArrowUpward style={arrowStyle} />
+                  <ArrowUpward className={classes.arrowStyle} />
                   : column.SortDirection === ColumnSortDirection.DESCENDING ?
-                    <ArrowDownward style={arrowStyle} />
+                    <ArrowDownward className={classes.arrowStyle} />
                     :
-                    <div style={arrowStyle} />
+                    <div className={classes.arrowStyle} />
                 }
               </TableSortLabel>
             </Tooltip>)
@@ -275,4 +278,4 @@ class GridHeader extends React.Component<IProps, IState> {
   }
 }
 
-export default GridHeader;
+export default withStyles(styles)(GridHeader);
