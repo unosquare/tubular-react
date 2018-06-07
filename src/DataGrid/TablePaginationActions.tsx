@@ -6,28 +6,17 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import * as React from 'react';
 
+type styleClasses  = 'root';
 
-const root= {
-  flexShrink: 0,
-  marginLeft: '12.5px'
-}
+const styles = (theme: Theme): StyleRules<styleClasses> => (
+  {
+    root: {
+      flexShrink: 0,
+      marginLeft: theme.spacing.unit * 2.5
+    }
+  }
+);
 
-const buttonStyle= {
-  height: '30px',
-  width: '30px'
-}
-const buttonPageStyle= {
-  height: '30px',
-  width: '30px',
-  fontSize: '18px', 
-  background: '#158cba', 
-  color: 'white'
-}
-const buttonNoPage= {
-  height: '30px',
-  width: '30px',
-  fontSize: '18px'
-}
 
 interface IProps {
   classes: any;
@@ -79,9 +68,8 @@ const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsP
   }
 
   return (
-    <div style={root}>
+    <div className={classes.root}>
       <IconButton
-        style={buttonStyle}
         onClick={handleFirstPageButtonClick}
         disabled={page === 0}
         aria-label='First Page'
@@ -90,7 +78,6 @@ const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsP
       </IconButton>
 
       <IconButton
-        style={buttonStyle}
         onClick={handleBackButtonClick}
         disabled={page === 0}
         aria-label='Previous Page'
@@ -104,16 +91,15 @@ const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsP
               key={index}
               onClick={(event) => handlePageButtonClick(event, pages[index])}
               aria-label={`Page${index + 1}`}
-              style={ pages[index] === page ?
-                 buttonPageStyle :
-                 buttonNoPage }
+              color={ pages[index] === page ?
+                 'primary' :
+                 'default' }
             >
               {pages[index] + 1}
             </IconButton>))
       }
 
       <IconButton
-        style={buttonStyle}
         onClick={handleNextButtonClick}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
         aria-label='Next Page'
@@ -122,7 +108,6 @@ const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsP
       </IconButton>
 
       <IconButton
-        style={buttonStyle}
         onClick={handleLastPageButtonClick}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
         aria-label='Last Page'
@@ -134,4 +119,6 @@ const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsP
   );
 };
 
-export default TablePaginationActions;
+export default withStyles(styles, { withTheme: true })(
+  TablePaginationActions,
+);
