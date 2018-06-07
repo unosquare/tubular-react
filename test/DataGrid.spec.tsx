@@ -4,7 +4,6 @@ import { createShallow } from '@material-ui/core/test-utils';
 
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { expect } from 'chai';
 import * as React from 'react';
 import DataGrid from '../src/DataGrid';
 import Paginator from '../src/DataGrid/Paginator';
