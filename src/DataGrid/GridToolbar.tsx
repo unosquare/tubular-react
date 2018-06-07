@@ -1,21 +1,11 @@
-import { FormControl, Input, InputAdornment, Menu, MenuItem } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import { StyleRules, Theme, WithStyles, withStyles } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import CloseIcon from '@material-ui/icons/Close';
-import DownloadIcon from '@material-ui/icons/FileDownload';
-import PrintIcon from '@material-ui/icons/Print';
-import SearchIcon from '@material-ui/icons/Search';
+import { FormControl, IconButton, Input, InputAdornment, Menu, MenuItem, Toolbar } from '@material-ui/core';
+import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core/styles';
+
+import { Close, FileDownload, Print, Search } from '@material-ui/icons';
 
 import * as React from 'react';
 
-const styleClasses  = {
-  button: '',
-  formControl: '',
-  spacer: '',
-};
-
-const styles = (theme: Theme): StyleRules<keyof typeof styleClasses> => (
+const styles = (theme: Theme) => createStyles(
   {
     button: {
       minWidth: 150
@@ -36,7 +26,7 @@ interface IState {
   searchText: string;
 }
 
-interface IProps {
+interface IProps extends WithStyles<typeof styles> {
   gridName: string;
   isExportEnabled: boolean;
   isPrintEnabled: boolean;
@@ -47,7 +37,7 @@ interface IProps {
   onExport(condition: boolean): void;
 }
 
-class GridToolbar extends React.Component <IProps & WithStyles<keyof typeof styleClasses>, IState> {
+class GridToolbar extends React.Component <IProps, IState> {
   public static defaultProps = {
     onSearchTextChange: (x: any): any => x
   };
@@ -131,13 +121,13 @@ class GridToolbar extends React.Component <IProps & WithStyles<keyof typeof styl
         {
           isExportEnabled &&
           <IconButton disabled={filteredRecordCount === 0} onClick={this.handleMenuOpen}>
-            <DownloadIcon />
+            <FileDownload />
           </IconButton>
         }
         {
           isPrintEnabled &&
           <IconButton disabled={filteredRecordCount === 0} onClick={this.handlePrintMenuOpen} >
-            <PrintIcon/>
+            <Print/>
           </IconButton>
         }
         { showSearchText &&
@@ -150,7 +140,7 @@ class GridToolbar extends React.Component <IProps & WithStyles<keyof typeof styl
               startAdornment={
                 <InputAdornment position='end'>
                   <IconButton>
-                    <SearchIcon />
+                    <Search />
                   </IconButton>
                 </InputAdornment>
               }
@@ -158,7 +148,7 @@ class GridToolbar extends React.Component <IProps & WithStyles<keyof typeof styl
                 searchText !== '' &&
                 <InputAdornment position='end'>
                   <IconButton onClick={this.clearSearchText}>
-                    <CloseIcon />
+                    <Close />
                   </IconButton>
                 </InputAdornment>
               }

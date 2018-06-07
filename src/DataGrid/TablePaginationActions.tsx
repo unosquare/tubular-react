@@ -1,17 +1,11 @@
-import IconButton from '@material-ui/core/IconButton';
-import { StyleRules, Theme, withStyles } from '@material-ui/core/styles';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
+import { IconButton } from '@material-ui/core';
+import { createStyles, Theme, withStyles, WithStyles,  } from '@material-ui/core/styles';
+
+import { FirstPage, KeyboardArrowLeft, KeyboardArrowRight, LastPage } from '@material-ui/icons';
+
 import * as React from 'react';
 
-const styleClasses  = {
-  buttonStyle: '',
-  root: '',
-};
-
-const styles = (theme: Theme): StyleRules<keyof typeof styleClasses> => (
+const styles = (theme: Theme) => createStyles(
   {
     buttonStyle: {
       height: '30px',
@@ -23,8 +17,7 @@ const styles = (theme: Theme): StyleRules<keyof typeof styleClasses> => (
     }
   }
 );
-interface IProps {
-  classes: any;
+interface IProps extends WithStyles<typeof styles> {
   count: number;
   page: number;
   rowsPerPage: number;
@@ -80,7 +73,7 @@ const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsP
         disabled={page === 0}
         aria-label='First Page'
       >
-        <FirstPageIcon />
+        <FirstPage />
       </IconButton>
 
       <IconButton
@@ -122,7 +115,7 @@ const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsP
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
         aria-label='Last Page'
       >
-        <LastPageIcon />
+        <LastPage />
       </IconButton>
 
     </div>

@@ -1,6 +1,4 @@
-import { MenuItem } from '@material-ui/core';
-import Input from '@material-ui/core/Input';
-import Select from '@material-ui/core/Select';
+import { Input, MenuItem, Select } from '@material-ui/core';
 import * as React from 'react';
 
 interface IProps {

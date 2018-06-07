@@ -1,8 +1,5 @@
-import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
-import Hidden from '@material-ui/core/Hidden';
-import Paper from '@material-ui/core/Paper';
-import { withStyles } from '@material-ui/core/styles';
-import { StyleRules, Theme } from '@material-ui/core/styles';
+import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { StyleRules, Theme, withStyles } from '@material-ui/core/styles';
 import * as React from 'react';
 
 const styleClasses = {

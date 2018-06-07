@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { AggregateFunctions } from '../src/DataGrid';
 import { CompareOperators } from '../src/DataGrid/Column';
 import GridResponse from '../src/DataGrid/GridResponse';

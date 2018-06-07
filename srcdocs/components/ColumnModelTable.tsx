@@ -1,5 +1,4 @@
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
-import Hidden from '@material-ui/core/Hidden';
 import { StyleRules, Theme, withStyles } from '@material-ui/core/styles';
 import * as React from 'react';
 

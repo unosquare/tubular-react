@@ -1,29 +1,17 @@
 import {
-    Collapse, List, ListItem, ListItemIcon, ListItemText, Theme , WithStyles, withStyles
+    AppBar, Collapse, Divider, Drawer, IconButton, List, ListItem,
+    ListItemIcon, ListItemText, Theme, Toolbar, Tooltip, WithStyles,
+    withStyles
 } from '@material-ui/core';
+import createStyles from '@material-ui/core/styles/createStyles';
 
-import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
-import IconButton from '@material-ui/core/IconButton';
-import { StyleRules } from '@material-ui/core/styles';
-import SvgIcon from '@material-ui/core/SvgIcon';
-import Toolbar from '@material-ui/core/Toolbar';
-import Tooltip from '@material-ui/core/Tooltip';
-import Typography from '@material-ui/core/Typography';
+import { ChevronLeft, ExpandLess, ExpandMore, Menu } from '@material-ui/icons';
 
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import MenuIcon from '@material-ui/icons/Menu';
-
-import * as PropTypes from 'prop-types';
 import * as  React from 'react';
 import { Link } from 'react-router-dom';
 import GitHubIcon from './Github';
 
-const styles: any = {
+const styles: any = (theme: Theme) => createStyles({
     flex: {
         flex: 1,
         textAlign: 'center'
@@ -43,10 +31,12 @@ const styles: any = {
     spacer: {
         flex: '1 1 100%'
     }
-};
+});
+
+interface IProps extends WithStyles<typeof styles> {}
 
 const NavigationBar =
-    withStyles(styles)( class extends React.Component<WithStyles<keyof typeof styles>> {
+    withStyles(styles)( class extends React.Component<IProps> {
     public state = {
         openDrawer: false,
         openList: false
@@ -68,7 +58,7 @@ const NavigationBar =
                     <Toolbar>
                         <Tooltip title='Open'>
                             <IconButton onClick={this.toggleDrawer(true)} color='inherit'>
-                                <MenuIcon />
+                                <Menu />
                             </IconButton>
                         </Tooltip>
                         <img
@@ -94,7 +84,7 @@ const NavigationBar =
                     <List>
                         <Tooltip title='Close'>
                             <ListItem button={true} onClick={this.toggleDrawer(false)}>
-                                <ListItemIcon><ChevronLeftIcon /></ListItemIcon>
+                                <ListItemIcon><ChevronLeft /></ListItemIcon>
                             </ListItem>
                         </Tooltip>
                         <Divider />
