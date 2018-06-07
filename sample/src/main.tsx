@@ -9,7 +9,7 @@ import DataGrid, {
   ColumnModel,
   ColumnSortDirection,
   RemoteDataSource
-} from '../../dist/DataGrid';
+} from '../../src';
 
 const columns = [
   new ColumnModel( 'OrderID',

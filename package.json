@@ -10,6 +10,7 @@
     "sample": "webpack --env.NODE_ENV=sample --mode=development --progress",
     "start": "webpack-dev-server --env.NODE_ENV=sample --open --progress",
     "lint": "tslint src/**/*.ts src/**/*.tsx",
+    "transpile": "tsc --p ./tsconfigs/tsconfig.tubular.json",
     "test": "jest",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov",
@@ -65,8 +66,8 @@
   },
   "homepage": "https://github.com/unosquare/tubular-react#readme",
   "dependencies": {
-    "@material-ui/core": "^1.0.0",
-    "@material-ui/icons": "^1.0.0",
+    "@material-ui/core": "^1.2.0",
+    "@material-ui/icons": "^1.1.0",
     "@types/vinyl": "^2.0.2",
     "axios": "^0.18.0",
     "jest": "^23.0.1",

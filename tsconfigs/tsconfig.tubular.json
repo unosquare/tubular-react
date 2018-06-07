@@ -1,14 +1,13 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
         "moduleResolution": "node",
         "preserveConstEnums": true,
-        "outDir": "../dist/lib",
-        "jsx": "preserve",
+        "outDir": "../dist",
+        "jsx": "react",
         "lib": ["es5", "es6", "dom"],
         "declaration": true,
         "sourceMap": true,
-        "target": "es2015",
+        "target": "es5",
         "skipLibCheck": true
     },
     "include": [ "../src/**/*.ts", "../src/**/*.tsx" ],

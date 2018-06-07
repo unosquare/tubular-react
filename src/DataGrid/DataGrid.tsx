@@ -3,13 +3,14 @@ import {
 } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Snackbar from '@material-ui/core/Snackbar';
-import { StyleRules, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
+import { Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 import WarningIcon from '@material-ui/icons/Warning';
 
+import createStyles from '@material-ui/core/styles/createStyles';
 import { debounce } from 'lodash';
 import * as moment from 'moment';
 import * as React from 'react';
@@ -21,14 +22,7 @@ import GridResponse from './GridResponse';
 import GridToolbar from './GridToolbar';
 import Paginator from './Paginator';
 
-const styleClasses = {
-  dialogButtonStyle: '',
-  dialogContentStyle: '',
-  dialogTitleStyle: '',
-  root: ''
-};
-
-const styles = (theme: Theme): StyleRules<keyof typeof styleClasses> => (
+const styles = (theme: Theme) => createStyles(
   {
     dialogButtonStyle: {
       background: '#28b62c',
@@ -65,7 +59,7 @@ interface IState {
   totalRecordCount: number;
 }
 
-interface IProps {
+interface IProps extends WithStyles<typeof styles> {
   dataSource: BaseDataSource;
   gridName: string;
   rowsPerPage: number;
@@ -80,7 +74,7 @@ interface IProps {
   footerRenderer?(aggregate: any): any;
 }
 
-class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleClasses>, IState> {
+class DataGrid extends React.Component<IProps, IState> {
   public state = {
     aggregate: {},
     data: [] as any,

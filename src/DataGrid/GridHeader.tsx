@@ -1,6 +1,6 @@
 import { Dialog, DialogTitle, TableCell, TableRow, TableSortLabel } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
-import { StyleRules, Theme, WithStyles, withStyles } from '@material-ui/core/styles';
+import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import ArrowUpward from '@material-ui/icons/ArrowUpward';
@@ -23,7 +23,7 @@ const styleClasses  = {
   textField: '',
 };
 
-const styles = (theme: Theme): StyleRules<keyof typeof styleClasses> => (
+const styles = (theme: Theme) => createStyles(
   {
   applyButton: {
     background: '#28b62c',
@@ -64,7 +64,7 @@ interface IState {
   secondFilterValue: string;
   activeFilterColumn: string;
 }
-interface IProps {
+interface IProps extends WithStyles<typeof styles> {
   dataSource: any;
   gridName: string;
   page?: number;
@@ -72,7 +72,7 @@ interface IProps {
   refreshGrid(): void;
 }
 
-class GridHeader extends React.Component <IProps & WithStyles<keyof typeof styleClasses>, IState> {
+class GridHeader extends React.Component <IProps, IState> {
   public state = {
     activeFilter: '',
     activeFilterColumn: '',
@@ -264,7 +264,7 @@ class GridHeader extends React.Component <IProps & WithStyles<keyof typeof style
   }
 
   public render() {
-    const {  classes, dataSource} = this.props;
+    const { classes, dataSource} = this.props;
     return (
       <TableRow>
         <Dialog open={this.state.open} onClose={this.handleClose} >
