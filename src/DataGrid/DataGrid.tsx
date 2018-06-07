@@ -2,11 +2,10 @@ import {
   Paper, Snackbar,  Table, TableBody, TableCell, TableFooter,
   TableHead, TableRow, Typography
 } from '@material-ui/core';
-import { Theme, withStyles, WithStyles } from '@material-ui/core/styles';
+import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 
 import { CheckBox, CheckBoxOutlineBlank, Warning } from '@material-ui/icons';
 
-import createStyles from '@material-ui/core/styles/createStyles';
 import { debounce } from 'lodash';
 import * as moment from 'moment';
 import * as React from 'react';

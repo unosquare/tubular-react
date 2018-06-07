@@ -3,10 +3,7 @@ import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import createPalette from '@material-ui/core/styles/createPalette';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 
-import LeftArrowIcon from '@material-ui/icons/ChevronLeft';
-import RightArrowIcon from '@material-ui/icons/ChevronRight';
-import DateRangeIcon from '@material-ui/icons/DateRange';
-import TimeIcon from '@material-ui/icons/Schedule';
+import { ChevronLeft, ChevronRight, DateRange, Schedule } from '@material-ui/icons';
 
 import { DatePicker, DateTimePicker } from 'material-ui-pickers';
 
@@ -39,10 +36,10 @@ const DateInput: React.SFC<IProps> = ({ columnType, disabled, value, mod, handle
             style={{ width: '100%' }}
             value={value}
             onChange={(event) => handleDatePicker(event, mod)}
-            leftArrowIcon={<LeftArrowIcon />}
-            rightArrowIcon={<RightArrowIcon />}
-            dateRangeIcon={<DateRangeIcon/>}
-            timeIcon={<TimeIcon/>}
+            leftArrowIcon={<ChevronLeft />}
+            rightArrowIcon={<ChevronRight />}
+            dateRangeIcon={<DateRange/>}
+            timeIcon={<Schedule/>}
             format={'MMMM Do YYYY hh:mm a'}
           />
           :
@@ -51,8 +48,8 @@ const DateInput: React.SFC<IProps> = ({ columnType, disabled, value, mod, handle
             style={{ width: '100%' }}
             value={value}
             onChange={(event) => handleDatePicker(event, mod)}
-            leftArrowIcon={<LeftArrowIcon />}
-            rightArrowIcon={<RightArrowIcon />}
+            leftArrowIcon={<ChevronLeft />}
+            rightArrowIcon={<ChevronRight />}
             format={'MMMM Do YYYY'}
           />
       }

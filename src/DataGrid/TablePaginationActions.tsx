@@ -1,16 +1,11 @@
 import { IconButton } from '@material-ui/core';
-import { StyleRules, Theme, withStyles } from '@material-ui/core/styles';
+import { createStyles, Theme, withStyles, WithStyles,  } from '@material-ui/core/styles';
 
 import { FirstPage, KeyboardArrowLeft, KeyboardArrowRight, LastPage } from '@material-ui/icons';
 
 import * as React from 'react';
 
-const styleClasses  = {
-  buttonStyle: '',
-  root: '',
-};
-
-const styles = (theme: Theme): StyleRules<keyof typeof styleClasses> => (
+const styles = (theme: Theme) => createStyles(
   {
     buttonStyle: {
       height: '30px',
@@ -22,8 +17,7 @@ const styles = (theme: Theme): StyleRules<keyof typeof styleClasses> => (
     }
   }
 );
-interface IProps {
-  classes: any;
+interface IProps extends WithStyles<typeof styles> {
   count: number;
   page: number;
   rowsPerPage: number;
