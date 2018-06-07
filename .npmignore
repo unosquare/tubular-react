@@ -74,3 +74,8 @@ appveyor.yml
 test
 docs
 sample
+next.config.js
+tsconfig.base.json
+tslint.json
+webpack.config.js
+tsconfigs

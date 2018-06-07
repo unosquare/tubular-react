@@ -1,6 +1,6 @@
 {
   "name": "tubular-react",
-  "version": "0.2.2",
+  "version": "0.2.4",
   "description": "Tubular React",
   "main": "dist/bundle.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "test": "jest",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov",
-    "prepublishOnly": "npm run build:prod"
+    "prepublishOnly": "npm run transpile"
   },
   "jest": {
     "setupFiles": [
