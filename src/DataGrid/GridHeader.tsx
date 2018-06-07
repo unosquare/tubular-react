@@ -1,10 +1,8 @@
-import { Dialog, DialogTitle, TableCell, TableRow, TableSortLabel } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
+import { Dialog, DialogTitle, IconButton, TableCell, TableRow, TableSortLabel, Tooltip } from '@material-ui/core';
 import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core/styles';
-import Tooltip from '@material-ui/core/Tooltip';
-import ArrowDownward from '@material-ui/icons/ArrowDownward';
-import ArrowUpward from '@material-ui/icons/ArrowUpward';
-import FilterListIcon from '@material-ui/icons/FilterList';
+
+import { ArrowDownward, ArrowUpward, FilterList } from '@material-ui/icons';
+
 import { ColumnDataType, ColumnSortDirection, CompareOperators } from './Column';
 import ColumnModel from './ColumnModel';
 import DialogContent from './DialogContent';
@@ -316,9 +314,9 @@ class GridHeader extends React.Component <IProps, IState> {
           const filter = column.Filter &&
               (<IconButton id={column.Name} onClick={() => this.handleOpen(column)} >
                 {column.Filter.HasFilter && column.Filter.Operator !== CompareOperators.NONE ?
-                  <FilterListIcon style={{ background: '#28b62c', color: 'white', borderRadius: '50%' }}/>
+                  <FilterList style={{ background: '#28b62c', color: 'white', borderRadius: '50%' }}/>
                   :
-                  <FilterListIcon/>}
+                  <FilterList/>}
               </IconButton>);
           return (
             <TableCell key={column.Label} padding={column.Label === '' ? 'none' : 'default'}>

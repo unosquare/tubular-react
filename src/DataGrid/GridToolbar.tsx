@@ -1,11 +1,7 @@
-import { FormControl, Input, InputAdornment, Menu, MenuItem } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
+import { FormControl, IconButton, Input, InputAdornment, Menu, MenuItem, Toolbar } from '@material-ui/core';
 import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import CloseIcon from '@material-ui/icons/Close';
-import DownloadIcon from '@material-ui/icons/FileDownload';
-import PrintIcon from '@material-ui/icons/Print';
-import SearchIcon from '@material-ui/icons/Search';
+
+import { Close, FileDownload, Print, Search } from '@material-ui/icons';
 
 import * as React from 'react';
 
@@ -125,13 +121,13 @@ class GridToolbar extends React.Component <IProps, IState> {
         {
           isExportEnabled &&
           <IconButton disabled={filteredRecordCount === 0} onClick={this.handleMenuOpen}>
-            <DownloadIcon />
+            <FileDownload />
           </IconButton>
         }
         {
           isPrintEnabled &&
           <IconButton disabled={filteredRecordCount === 0} onClick={this.handlePrintMenuOpen} >
-            <PrintIcon/>
+            <Print/>
           </IconButton>
         }
         { showSearchText &&
@@ -144,7 +140,7 @@ class GridToolbar extends React.Component <IProps, IState> {
               startAdornment={
                 <InputAdornment position='end'>
                   <IconButton>
-                    <SearchIcon />
+                    <Search />
                   </IconButton>
                 </InputAdornment>
               }
@@ -152,7 +148,7 @@ class GridToolbar extends React.Component <IProps, IState> {
                 searchText !== '' &&
                 <InputAdornment position='end'>
                   <IconButton onClick={this.clearSearchText}>
-                    <CloseIcon />
+                    <Close />
                   </IconButton>
                 </InputAdornment>
               }

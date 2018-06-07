@@ -1,6 +1,6 @@
 import { TableCell, TableRow } from '@material-ui/core';
-import CheckBox from '@material-ui/icons/CheckBox';
-import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
+import { CheckBox, CheckBoxOutlineBlank } from '@material-ui/icons';
+
 import * as moment from 'moment';
 import * as React from 'react';
 import DataGrid, {

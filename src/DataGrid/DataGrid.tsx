@@ -1,14 +1,10 @@
 import {
-  Table, TableBody, TableCell, TableFooter, TableHead, TableRow
+  Paper, Snackbar,  Table, TableBody, TableCell, TableFooter,
+  TableHead, TableRow, Typography
 } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
-import Snackbar from '@material-ui/core/Snackbar';
 import { Theme, withStyles, WithStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 
-import CheckBox from '@material-ui/icons/CheckBox';
-import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
-import WarningIcon from '@material-ui/icons/Warning';
+import { CheckBox, CheckBoxOutlineBlank, Warning } from '@material-ui/icons';
 
 import createStyles from '@material-ui/core/styles/createStyles';
 import { debounce } from 'lodash';
@@ -339,7 +335,7 @@ class DataGrid extends React.Component<IProps, IState> {
         {filteredRecordCount === 0 &&
           (<TableRow>
             <TableCell style={{ display: 'flex', padding: '10px' }}>
-              <WarningIcon />
+              <Warning />
               <Typography style={{ paddingLeft: '15px' }} variant='body2' gutterBottom={true}>
                 No records found
               </Typography>

@@ -6,7 +6,7 @@ const DOCS_BUILD_DIR = path.resolve(__dirname, 'docs/');
 const DOCS_APP_DIR = path.resolve(__dirname, 'srcdocs/pages/');
 
 const BUILD_DIR = path.resolve(__dirname, 'dist/');
-const APP_ENTRY = path.resolve(__dirname, 'src/');
+const APP_ENTRY = path.resolve(__dirname, 'dist/');
 
 const SAMPLE_DIR = path.resolve(__dirname, 'sample/app/');
 const SAMPLE_ENTRY = path.resolve(__dirname, 'sample/src/');
@@ -56,7 +56,7 @@ const tubularReactConfig = {
 }
 
 const sampleConfig = {
-  entry: SAMPLE_ENTRY + '/app.tsx',
+  entry: SAMPLE_ENTRY + '/index.js',
   output: {
     path: SAMPLE_DIR,
     filename: 'bundle.js'
