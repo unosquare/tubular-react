@@ -1,7 +1,5 @@
-import { Typography, WithStyles, withStyles } from '@material-ui/core';
-import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import { Divider, Grid, Paper, Typography, WithStyles, withStyles } from '@material-ui/core';
+
 import * as React from 'react';
 import SampleExport from '../../srcdocs/components/SampleExport';
 import SampleFeatures from '../../srcdocs/components/SampleFeatures';

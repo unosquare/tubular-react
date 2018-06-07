@@ -5,16 +5,14 @@
   "main": "dist/bundle.js",
   "scripts": {
     "build:docs": "webpack --env.NODE_ENV=docs --mode=production --progress",
-    "build:prod": "webpack --env.NODE_ENV=tubular-react --mode=production --progress",
-    "build:dev": "webpack --env.NODE_ENV=tubular-react --mode=development --progress",
+    "build": "tsc --p ./tsconfigs/tsconfig.tubular.json",
     "sample": "webpack --env.NODE_ENV=sample --mode=development --progress",
     "start": "webpack-dev-server --env.NODE_ENV=sample --open --progress",
     "lint": "tslint src/**/*.ts src/**/*.tsx",
-    "transpile": "tsc --p ./tsconfigs/tsconfig.tubular.json",
     "test": "jest",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov",
-    "prepublishOnly": "npm run transpile"
+    "prepublishOnly": "npm run build"
   },
   "jest": {
     "setupFiles": [
