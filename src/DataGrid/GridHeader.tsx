@@ -261,10 +261,7 @@ class GridHeader extends React.Component <IProps & WithStyles<customStyles>, ISt
             : (column.Label);
           const filter = column.Filter &&
             (<IconButton id={column.Name} onClick={() => this.handleOpen(column)} >
-              {column.Filter.HasFilter && column.Filter.Operator !== CompareOperators.NONE ?
-                <FilterListIcon style={{ background: '#28b62c', color: 'white', borderRadius: '50%' }} />
-                :
-                <FilterListIcon />}
+                <FilterListIcon color={(column.Filter.HasFilter && column.Filter.Operator !== CompareOperators.NONE) ?'action':'disabled'} />
             </IconButton>);
           return (
             <TableCell key={column.Label} padding={column.Label === '' ? 'none' : 'default'}>
