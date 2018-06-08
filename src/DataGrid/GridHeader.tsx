@@ -3,10 +3,10 @@ import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core/s
 
 import { ArrowDownward, ArrowUpward, FilterList } from '@material-ui/icons';
 
+import * as React from 'react';
+import DialogModal from './DialogModal';
 import { ColumnDataType, ColumnSortDirection, CompareOperators } from './Models/Column';
 import ColumnModel from './Models/ColumnModel';
-import DialogModal from './DialogModal';
-import * as React from 'react';
 
 const styles = (theme: Theme) => createStyles(
   {
@@ -14,7 +14,7 @@ const styles = (theme: Theme) => createStyles(
     marginLeft: '5px',
     width: '15px'
   }
-}); 
+});
 
 interface IState {
   activeColumn: any;
@@ -49,14 +49,14 @@ class GridHeader extends React.Component <IProps, IState> {
   }
 
   public handleClear = () => {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       activeColumn: {
         ...prevState.activeColumn,
         Filter: {
           ...prevState.activeColumn.Filter,
+          Argument: [''],
           Operator: CompareOperators.NONE,
           Text: '',
-          Argument: ['']
         }
       }
     }), () => {
@@ -67,19 +67,21 @@ class GridHeader extends React.Component <IProps, IState> {
   public handleApply = () => {
     switch (this.state.activeColumn.DataType) {
       case ColumnDataType.NUMERIC:
-        this.filterHandler(parseFloat(this.state.activeColumn.Filter.Text), parseFloat(this.state.activeColumn.Filter.Argument[0]), true);
+        this.filterHandler(
+          parseFloat(this.state.activeColumn.Filter.Text),
+          parseFloat(this.state.activeColumn.Filter.Argument[0]), true);
         break;
       case ColumnDataType.BOOLEAN:
         this.filterHandler(this.state.activeColumn.Filter.Text === 'true', '', true);
         break;
-      default:   
+      default:
         this.filterHandler(this.state.activeColumn.Filter.Text, this.state.activeColumn.Filter.Argument[0], true);
     }
   }
 
   public handleKeyDown(event: any) {
     if (event.key === 'Control' && this.state.sorting === true) {
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         activeColumn: {
           ...prevState.activeColumn,
           sorting: false
@@ -90,7 +92,7 @@ class GridHeader extends React.Component <IProps, IState> {
 
   public handleKeyUp(event: any) {
     if (event.key === 'Control' && this.state.sorting === false) {
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         activeColumn: {
           ...prevState.activeColumn,
           sorting: true
@@ -103,11 +105,11 @@ class GridHeader extends React.Component <IProps, IState> {
   public componentDidMount() {
     if (localStorage.getItem(`tubular.${this.props.gridName}`)) {
       const storage = JSON.parse(localStorage.getItem(`tubular.${this.props.gridName}`));
-      
+
       const dataSource = this.props.dataSource;
 
-      storage.forEach((element: any, i: number) => {        
-        if (dataSource.columns[i] === undefined) return;
+      storage.forEach((element: any, i: number) => {
+        if (dataSource.columns[i] === undefined) { return; }
         dataSource.columns[i].SortDirection = element.SortDirection;
         dataSource.columns[i].SortOrder = element.SortOrder;
 
@@ -128,19 +130,19 @@ class GridHeader extends React.Component <IProps, IState> {
   }
 
   public filterHandler = (firstValue: any, secondValue: any, hasFilter: boolean) => {
-    const column = this.props.dataSource.columns.find((column: any) => column.Name === this.state.activeColumn.Name);
-    if (!column) return;
+    const column = this.props.dataSource.columns.find((c: any) => column.Name === this.state.activeColumn.Name);
+    if (!column) { return; }
 
     column.Filter.Text = firstValue;
     column.Filter.Operator = this.state.activeColumn.Filter.Operator;
     column.Filter.HasFilter = hasFilter;
-    
+
     if (secondValue !== undefined) {
       column.Filter.Argument = [secondValue];
     }
-    
-    this.props.refreshGrid();    
-    this.handleClose();    
+
+    this.props.refreshGrid();
+    this.handleClose();
   }
 
   public componentWillUnmount() {
@@ -185,8 +187,8 @@ class GridHeader extends React.Component <IProps, IState> {
   }
 
   public handleTextFieldChange = (event: any) => {
-    let value = event.target.value;
-    this.setState(prevState => ({
+    const value = event.target.value;
+    this.setState((prevState) => ({
       activeColumn: {
         ...prevState.activeColumn,
         Filter: {
@@ -198,7 +200,7 @@ class GridHeader extends React.Component <IProps, IState> {
   }
 
   public handleSecondTextFieldChange = (event: any) => {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       activeColumn: {
         ...prevState.activeColumn,
         Filter: {
@@ -210,7 +212,7 @@ class GridHeader extends React.Component <IProps, IState> {
   }
 
   public handleChange = (event: any) => {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       activeColumn: {
         ...prevState.activeColumn,
         Filter: {
@@ -220,20 +222,20 @@ class GridHeader extends React.Component <IProps, IState> {
       }
     }));
   }
-  
+
   public render() {
     const { classes, dataSource} = this.props;
     return (
-      <TableRow>  
-         <DialogModal
-                activeColumn={this.state.activeColumn}
-                handleChange={this.handleChange}
-                handleClose={this.handleClose}
-                handleTextFieldChange={this.handleTextFieldChange}
-                handleSecondTextFieldChange={this.handleSecondTextFieldChange}
-                handleApply={this.handleApply}
-                handleClear={this.handleClear}
-            />
+      <TableRow>
+        <DialogModal
+          activeColumn={this.state.activeColumn}
+          handleChange={this.handleChange}
+          handleClose={this.handleClose}
+          handleTextFieldChange={this.handleTextFieldChange}
+          handleSecondTextFieldChange={this.handleSecondTextFieldChange}
+          handleApply={this.handleApply}
+          handleClear={this.handleClear}
+        />
         {dataSource.columns.filter((col: any) => col.Visible).map((column: any) => {
           const render = column.Sortable ?
             (<Tooltip
@@ -255,7 +257,10 @@ class GridHeader extends React.Component <IProps, IState> {
             : (column.Label);
           const filter = column.Filter &&
             (<IconButton id={column.Name} onClick={() => this.handleOpen(column)} >
-                <FilterList color={(column.Filter.HasFilter && column.Filter.Operator !== CompareOperators.NONE) ?'action':'disabled'} />
+              <FilterList
+                color={(column.Filter.HasFilter && column.Filter.Operator !== CompareOperators.NONE)
+                  ? 'action' : 'disabled'}
+              />
             </IconButton>);
           return (
             <TableCell key={column.Label} padding={column.Label === '' ? 'none' : 'default'}>

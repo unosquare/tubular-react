@@ -1,24 +1,24 @@
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 
 import DialogInput from './DialogInput';
-import OperatorsDropdown from './OperatorsDropdown';
 import { ColumnDataType, CompareOperators } from './Models/Column';
+import OperatorsDropdown from './OperatorsDropdown';
 
-import * as React from 'react';
 import * as moment from 'moment';
+import * as React from 'react';
 
 interface IProps {
-  activeColumn:any;
+  activeColumn: any;
   handleChange(value: any): void;
   handleApply(): void;
-  handleClear(): void; 
+  handleClear(): void;
   handleTextFieldChange(event: any): void;
   handleSecondTextFieldChange(event: any): void;
   handleClose(): void;
 }
-var firstValue:any;
-var secondValue: any;
-const setInitialValues=( activeColumn:any) =>{
+let firstValue: any;
+let secondValue: any;
+const setInitialValues = ( activeColumn: any) => {
     switch (activeColumn.DataType) {
       case ColumnDataType.DATE:
       case ColumnDataType.DATE_TIME:
@@ -32,17 +32,17 @@ const setInitialValues=( activeColumn:any) =>{
       default:
         firstValue = activeColumn.Filter.Operator === CompareOperators.NONE ? '' : activeColumn.Filter.Text || '';
         secondValue = activeColumn.Filter.Argument[0] || '';
-    } 
-}
-const DialogModal: React.SFC<IProps> = ({activeColumn, handleChange, handleClose, handleApply, handleClear, handleTextFieldChange, handleSecondTextFieldChange }) => {
-    if(activeColumn==null) return null;
-        
-    setInitialValues(activeColumn)
+    }
+};
+const DialogModal: React.SFC<IProps> = ({
+    activeColumn, handleChange, handleClose, handleApply, handleClear, handleTextFieldChange,
+    handleSecondTextFieldChange}) => {
+
+    if ( activeColumn == null ) { return null; }
+    setInitialValues(activeColumn);
     return (
         <Dialog open={activeColumn != null} onClose={handleClose} >
-            <DialogTitle 
-            >{'Filter'}
-            </DialogTitle>
+            <DialogTitle>{'Filter'}</DialogTitle>
             <DialogContent>
                 <OperatorsDropdown
                     activeColumn={activeColumn}
@@ -52,7 +52,7 @@ const DialogModal: React.SFC<IProps> = ({activeColumn, handleChange, handleClose
                     disabled={activeColumn.Filter.Operator === CompareOperators.NONE}
                     value={firstValue}
                     handleApply={handleApply}
-                    label={activeColumn.Filter.Operator != CompareOperators.BETWEEN ? 'Value' : 'First Value'}
+                    label={activeColumn.Filter.Operator !== CompareOperators.BETWEEN ? 'Value' : 'First Value'}
                     columnType={activeColumn.DataType}
                     activeFilter={activeColumn.Name}
                     handleTextFieldChange={handleTextFieldChange}
@@ -70,10 +70,10 @@ const DialogModal: React.SFC<IProps> = ({activeColumn, handleChange, handleClose
                     />}
 
                 <DialogActions>
-                    <Button size="medium" color="secondary"
-                        onClick={() => handleClear()}>Clear</Button>
+                    <Button size='medium' color='secondary' onClick={() => handleClear()}>Clear</Button>
                     <Button
-                        size="medium" color="primary"
+                        size='medium'
+                        color='primary'
                         onClick={() => handleApply()}
                         disabled={activeColumn.Filter.Operator === CompareOperators.NONE}
                     >
@@ -84,8 +84,4 @@ const DialogModal: React.SFC<IProps> = ({activeColumn, handleChange, handleClose
         </Dialog>
       );
   };
-  
-  
-  export default DialogModal;
-  
-
+export default DialogModal;
