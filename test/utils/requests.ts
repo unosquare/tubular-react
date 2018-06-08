@@ -1,6 +1,6 @@
 import { AggregateFunctions, ColumnDataType, ColumnSortDirection, } from '../../src/DataGrid/';
-import ColumnModel from '../../src/DataGrid/ColumnModel';
-import GridRequest from '../../src/DataGrid/GridRequest';
+import ColumnModel from '../../src/DataGrid/Models/ColumnModel';
+import GridRequest from '../../src/DataGrid/Models/GridRequest';
 
 const simpleRequest = new GridRequest({
     Columns: [

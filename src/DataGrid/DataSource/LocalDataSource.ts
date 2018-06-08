@@ -5,10 +5,10 @@ import {
   AggregateFunctions,
   ColumnSortDirection,
   CompareOperators,
-} from '../Column';
-import ColumnModel from '../ColumnModel';
-import GridRequest from '../GridRequest';
-import GridResponse from '../GridResponse';
+} from '../Models/Column';
+import ColumnModel from '../Models/ColumnModel';
+import GridRequest from '../Models/GridRequest';
+import GridResponse from '../Models/GridResponse';
 import GridDataResponse from '../utils/GridDataResponse';
 
 export default class LocalDataSource extends BaseDataSource {

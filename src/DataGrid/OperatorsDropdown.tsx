@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ColumnDataType, CompareOperators } from './Column';
+import { ColumnDataType, CompareOperators } from './Models/Column';
 
 import { Input, MenuItem, Select } from '@material-ui/core';
 

@@ -1,5 +1,5 @@
 import * as Rx from 'rx';
-import ColumnModel from '../ColumnModel';
+import ColumnModel from '../Models/ColumnModel';
 
 export default abstract class BaseDataSource {
 

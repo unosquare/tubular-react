@@ -10,10 +10,10 @@ import { debounce } from 'lodash';
 import * as moment from 'moment';
 import * as React from 'react';
 import BaseDataSource from './DataSource/BaseDataSource';
-import { ColumnDataType } from './Column';
-import ColumnModel from './ColumnModel';
+import { ColumnDataType } from './Models/Column';
+import ColumnModel from './Models/ColumnModel';
 import GridHeader from './GridHeader';
-import GridResponse from './GridResponse';
+import GridResponse from './Models/GridResponse';
 import GridToolbar from './GridToolbar';
 import Paginator from './Paginator';
 

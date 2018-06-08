@@ -2,7 +2,7 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mate
 
 import DialogInput from './DialogInput';
 import OperatorsDropdown from './OperatorsDropdown';
-import { ColumnDataType, CompareOperators } from './Column';
+import { ColumnDataType, CompareOperators } from './Models/Column';
 
 import * as React from 'react';
 import * as moment from 'moment';

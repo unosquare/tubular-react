@@ -3,8 +3,8 @@ import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core/s
 
 import { ArrowDownward, ArrowUpward, FilterList } from '@material-ui/icons';
 
-import { ColumnDataType, ColumnSortDirection, CompareOperators } from './Column';
-import ColumnModel from './ColumnModel';
+import { ColumnDataType, ColumnSortDirection, CompareOperators } from './Models/Column';
+import ColumnModel from './Models/ColumnModel';
 import DialogModal from './DialogModal';
 import * as React from 'react';
 

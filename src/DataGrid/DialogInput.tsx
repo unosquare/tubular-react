@@ -3,7 +3,7 @@ import * as moment from 'moment';
 
 import { MenuItem, TextField } from '@material-ui/core';
 
-import { ColumnDataType } from './Column';
+import { ColumnDataType } from './Models/Column';
 
 const dropdown= {
   width: '80%',
