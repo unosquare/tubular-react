@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { ColumnDataType, CompareOperators } from './Column';
-import Input from '@material-ui/core/Input';
-import Select from '@material-ui/core/Select';
-import { MenuItem } from '@material-ui/core';
+
+import { Input, MenuItem, Select } from '@material-ui/core';
 
 const dropdown= {
   width: '80%',

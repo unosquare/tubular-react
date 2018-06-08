@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { ColumnDataType } from './Column';
-import TextField from '@material-ui/core/TextField';
 import * as moment from 'moment';
-import { MenuItem } from '@material-ui/core';
 
+import { MenuItem, TextField } from '@material-ui/core';
+
+import { ColumnDataType } from './Column';
 
 const dropdown= {
   width: '80%',
@@ -35,8 +35,7 @@ const ColumnDataTypeToHtmlType = {
   boolean:'boolean'
 };
 
-const DialogInput: React.SFC<IProps> = ({ disabled, value, columnType, activeFilter, label,
-  handleApply, handleTextFieldChange }) => {   
+const DialogInput: React.SFC<IProps> = ({ disabled, value, columnType, activeFilter, label, handleTextFieldChange }) => {   
     ((ColumnDataTypeToHtmlType as any)[columnType]).includes('datetime')? value=moment(value).format('YYYY-MM-DD[T]HH:mm')
     : ((ColumnDataTypeToHtmlType as any)[columnType]).includes('date')? value=moment(value).format('YYYY-MM-DD'): value;
      return (

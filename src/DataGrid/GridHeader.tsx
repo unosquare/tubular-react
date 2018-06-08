@@ -1,4 +1,4 @@
-import { Dialog, DialogTitle, IconButton, TableCell, TableRow, TableSortLabel, Tooltip } from '@material-ui/core';
+import { IconButton, TableCell, TableRow, TableSortLabel, Tooltip } from '@material-ui/core';
 import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core/styles';
 
 import { ArrowDownward, ArrowUpward, FilterList } from '@material-ui/icons';
@@ -6,11 +6,7 @@ import { ArrowDownward, ArrowUpward, FilterList } from '@material-ui/icons';
 import { ColumnDataType, ColumnSortDirection, CompareOperators } from './Column';
 import ColumnModel from './ColumnModel';
 import DialogModal from './DialogModal';
-
-import * as moment from 'moment';
 import * as React from 'react';
-
-type customStyles  = 'arrowStyle';
 
 const styles = (theme: Theme) => createStyles(
   {

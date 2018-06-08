@@ -1,11 +1,9 @@
-import { Dialog, DialogTitle } from '@material-ui/core';
-import { StyleRules, Theme, WithStyles, withStyles } from '@material-ui/core/styles';
-import DialogContent from '@material-ui/core/DialogContent';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core';
+
 import DialogInput from './DialogInput';
 import OperatorsDropdown from './OperatorsDropdown';
-import DialogActions from '@material-ui/core/DialogActions';
-import Button from '@material-ui/core/Button';
 import { ColumnDataType, CompareOperators } from './Column';
+
 import * as React from 'react';
 import * as moment from 'moment';
 
