@@ -121,22 +121,23 @@ describe('<GridHeader />', () => {
 
       firstIconButton.simulate('blur');
       wrapper.setState({
-        activeFilter: 'Equals',
-        activeFilterColumn: 'OrderID',
-        columnType: 'numeric',
-        firstFilterValue: '6',
-        open: true,
-        secondFilterValue: ''
+        activeColumn: {
+          Name:'OrderID',
+          DataType:ColumnDataType.NUMERIC,
+          Filter: {
+            Operator: CompareOperators.EQUALS,
+            Text: '6',
+            Argument: ['']
+          }
+        }
       });
       wrapper.update();
 
-      expect(wrapper.find(Dialog).props().open).toBe(true);
-
-      expect(wrapper.state().activeFilter).toBe('Equals');
-      expect(wrapper.state().activeFilterColumn).toBe('OrderID');
-      expect(wrapper.state().columnType).toBe('numeric');
-      expect(wrapper.state().firstFilterValue).toBe('6');
-      expect(wrapper.state().secondFilterValue).toBe('');
+      expect(wrapper.state().activeColumn.Filter.Operator	).toBe('Equals');
+      expect(wrapper.state().activeColumn.Name).toBe('OrderID');
+      expect(wrapper.state().activeColumn.DataType).toBe('numeric');
+      expect(wrapper.state().activeColumn.Filter.Text).toBe('6');
+      expect(wrapper.state().activeColumn.Filter.Argument[0]).toBe('');
     });
   });
 
@@ -146,16 +147,20 @@ describe('<GridHeader />', () => {
         const wrapper = shallow(gridHeader);
 
         wrapper.setState({
-          columnType: 'datetime',
-          firstFilterValue: '2018-03-06T15:40:30-06:00',
-          secondFilterValue: '2018-03-06T15:40:30-06:00'
+          activeColumn: {
+            Name:'OrderID',
+            DataType:ColumnDataType.DATE_TIME,
+            Filter: {
+              Operator: CompareOperators.BETWEEN,
+              Text: '2018-03-06T15:40:30',
+              Argument: ['2018-03-06T15:40:30'],
+              Open: true,
+            }
+          }
         });
-
+        
         wrapper.instance().handleClear();
-
-        expect(wrapper.state().activeFilter).toBe('None');
-        expect(wrapper.state().firstFilterValue).toBe('');
-        expect(wrapper.state().secondFilterValue).toBe('');
+        expect(wrapper.state().activeColumn).toBeNull();
       });
   });
 
@@ -175,11 +180,15 @@ describe('<GridHeader />', () => {
 
       const wrapper = shallow(gridHeader2);
       wrapper.setState({
-        activeFilter: CompareOperators.BETWEEN,
-        activeFilterColumn: 'Amount',
-        columnType: ColumnDataType.NUMERIC,
-        firstFilterValue: 4,
-        secondFilterValue: 15
+        activeColumn: {
+          Name:'Amount',
+          DataType:ColumnDataType.NUMERIC,
+          Filter: {
+            Operator: CompareOperators.BETWEEN,
+            Text: 4,
+            Argument: [15]
+          }
+        }
       });
 
       wrapper.instance().handleApply();
@@ -205,11 +214,15 @@ describe('<GridHeader />', () => {
 
       const wrapper = shallow(gridHeader2);
       wrapper.setState({
-        activeFilter: CompareOperators.EQUALS,
-        activeFilterColumn: 'IsShipped',
-        columnType: ColumnDataType.BOOLEAN,
-        firstFilterValue: 'true',
-        secondFilterValue: ''
+        activeColumn: {
+          Name:'IsShipped',
+          DataType:ColumnDataType.BOOLEAN,
+          Filter: {
+            Operator: CompareOperators.EQUALS,
+            Text: 'true',
+            Argument: ['']
+          }
+        }
       });
 
       wrapper.instance().handleApply();
@@ -255,7 +268,7 @@ describe('<GridHeader />', () => {
       wrapper.instance().handleKeyDown({ key: 'Control' });
       wrapper.update();
 
-      expect(wrapper.state().sorting).toEqual('Multiple');
+      expect(wrapper.state().sorting).toEqual('Single');
     });
   });
 
@@ -270,7 +283,7 @@ describe('<GridHeader />', () => {
       wrapper.instance().handleKeyUp({ key: 'Control' });
       wrapper.update();
 
-      expect(wrapper.state().sorting).toEqual('Single');
+      expect(wrapper.state().sorting).toEqual('Multiple');
     });
   });
 
@@ -279,20 +292,24 @@ describe('<GridHeader />', () => {
       const wrapper = shallow(gridHeader);
 
       wrapper.setState({
-        activeFilter: 'None',
-        activeFilterColumn: 'CustomerName',
-        columnType: 'string',
-        firstFilterValue: '',
-        open: true,
-        secondFilterValue: ''
+        activeColumn: {
+          Name:'CustomerName',
+          DataType:ColumnDataType.STRING,
+          Filter: {
+            Operator: CompareOperators.NONE,
+            Text: '',
+            Argument: ['']
+          }
+        }
+        
       });
 
-      expect(wrapper.state().activeFilter).toBe('None');
+      expect(wrapper.state().activeColumn.Filter.Operator).toBe('None');
 
       wrapper.instance().handleChange('Contains');
       wrapper.update();
 
-      expect(wrapper.state().activeFilter).toBe('Contains');
+      expect(wrapper.state().activeColumn.Filter.Operator).toBe('Contains');
     });
   });
 
@@ -301,18 +318,21 @@ describe('<GridHeader />', () => {
       const wrapper = shallow(gridHeader);
 
       wrapper.setState({
-        activeFilter: 'Equals',
-        activeFilterColumn: 'OrderID',
-        columnType: 'numeric',
-        firstFilterValue: '',
-        open: true,
-        secondFilterValue: ''
+        activeColumn: {
+          Name:'OrderID',
+          DataType:ColumnDataType.NUMERIC,
+          Filter: {
+            Operator: CompareOperators.EQUALS,
+            Text: '',
+            Argument: ['']
+          }
+        }
       });
 
-      wrapper.instance().handleTextFieldChange('4');
+      wrapper.instance().handleTextFieldChange({target:{value:'4'}});
       wrapper.update();
 
-      expect(wrapper.state().firstFilterValue).toBe('4');
+      expect(wrapper.state().activeColumn.Filter.Text).toBe('4');
     });
   });
 
@@ -321,18 +341,21 @@ describe('<GridHeader />', () => {
       const wrapper = shallow(gridHeader);
 
       wrapper.setState({
-        activeFilter: 'Equals',
-        activeFilterColumn: 'OrderID',
-        columnType: 'numeric',
-        firstFilterValue: '',
-        open: true,
-        secondFilterValue: ''
+        activeColumn: {
+          Name:'OrderID',
+          DataType:ColumnDataType.NUMERIC,
+          Filter: {
+            Operator: CompareOperators.EQUALS,
+            Text: '',
+            Argument: ['']
+          }
+        }
       });
 
       wrapper.instance().handleSecondTextFieldChange('4');
       wrapper.update();
 
-      expect(wrapper.state().secondFilterValue).toBe('4');
+       expect(wrapper.state().activeColumn.Filter.Argument[0]).toBe('4');
     });
   });
 });
