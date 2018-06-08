@@ -34,7 +34,7 @@ describe('TablePaginationActions', () => {
       />
     );
 
-    expect(wrapper.find(IconButton)).to.have.lengthOf(9);
+    expect(wrapper.find(IconButton)).toHaveLength(9);
   });
 
   test('should have the disabled prop from \'First Page\' as true', () => {
@@ -51,7 +51,7 @@ describe('TablePaginationActions', () => {
     const firstPage = wrapper.find(IconButton).at(0);
 
     firstPage.simulate('click');
-    assert.isTrue(firstPage.props().disabled);
+    expect(firstPage.props().disabled).toBe(true);
   });
 
   test('should have the disabled prop from \'First Page\' as false', () => {
@@ -68,7 +68,7 @@ describe('TablePaginationActions', () => {
     const firstPage = wrapper.find(IconButton).at(0);
 
     firstPage.simulate('click');
-    assert.isFalse(firstPage.props().disabled);
+    expect(firstPage.props().disabled).toBe(false);
   });
 
   test('should have the disabled prop from \'Last Page\' as true', () => {
@@ -85,7 +85,7 @@ describe('TablePaginationActions', () => {
     const lastPage = wrapper.find(IconButton).at(8);
 
     lastPage.simulate('click');
-    assert.isTrue(lastPage.props().disabled);
+    expect(lastPage.props().disabled).toBe(true);
   });
 
   test('should have the disabled prop from \'Last Page\' as false', () => {
@@ -102,7 +102,7 @@ describe('TablePaginationActions', () => {
     const lastPage = wrapper.find(IconButton).at(8);
 
     lastPage.simulate('click');
-    assert.isFalse(lastPage.props().disabled);
+    expect(lastPage.props().disabled).toBe(false);
   });
 
   test('should have the disabled prop from \'Previous Page\' as false', () => {
@@ -119,7 +119,7 @@ describe('TablePaginationActions', () => {
     const previousPage = wrapper.find(IconButton).at(1);
 
     previousPage.simulate('click');
-    assert.isFalse(previousPage.props().disabled);
+    expect(previousPage.props().disabled).toBe(false);
   });
 
   test('should have the disabled prop from \'Previous Page\' as true', () => {
@@ -136,7 +136,7 @@ describe('TablePaginationActions', () => {
     const previousPage = wrapper.find(IconButton).at(1);
 
     previousPage.simulate('click');
-    assert.isTrue(previousPage.props().disabled);
+    expect(previousPage.props().disabled).toBe(true);
   });
 
   test('should have the disable prop from \'Next Page\' as true', () => {
@@ -153,7 +153,7 @@ describe('TablePaginationActions', () => {
     const nextPage = wrapper.find(IconButton).at(7);
 
     nextPage.simulate('click');
-    assert.isTrue(nextPage.props().disabled);
+    expect(nextPage.props().disabled).toBe(true);
   });
 
   test('should have the disable prop from \'Next Page\' as false', () => {
@@ -170,7 +170,7 @@ describe('TablePaginationActions', () => {
     const nextPage = wrapper.find(IconButton).at(7);
 
     nextPage.simulate('click');
-    assert.isFalse(nextPage.props().disabled);
+    expect(nextPage.props().disabled).toBe(false);
   });
 
   test('should trigger the onClick event when \'Page#\' is clicked', () => {
@@ -187,8 +187,7 @@ describe('TablePaginationActions', () => {
 
     const page = wrapper.find(IconButton).at(4);
     page.simulate('click');
-
-    assert.isTrue(handleClickStub.calledOnce);
+    expect(handleClickStub.calledOnce).toBe(true);
   });
 
   beforeEach( () => {

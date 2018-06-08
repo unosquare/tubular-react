@@ -47,19 +47,19 @@ describe('<GridHeader />', () => {
   test('should render a row', () => {
     const wrapper = shallow(gridHeader).find(TableRow);
 
-    expect(wrapper).to.have.lengthOf(1);
+    expect(wrapper).toHaveLength(1);
   });
 
   test('should render n columns', () => {
     const wrapper = shallow(gridHeader).find(TableRow).find(TableCell);
 
-    expect(wrapper).to.have.lengthOf(5);
+    expect(wrapper).toHaveLength(5);
   });
 
   test('should render a dialog', () => {
     const wrapper = shallow(gridHeader).find(Dialog);
 
-    expect(wrapper).to.have.lengthOf(1);
+    expect(wrapper).toHaveLength(1);
   });
 
     test('should trigger \'componentWillUnmount()\' one time', () => {
@@ -79,7 +79,7 @@ describe('<GridHeader />', () => {
     );
 
     wrapper.unmount();
-    expect(GridHeader.prototype.componentWillUnmount.calledOnce).to.equal(true);
+    expect(GridHeader.prototype.componentWillUnmount.calledOnce).toEqual(true);
   });
 
   test('should trigger \'componentDidMount()\' one time and update the dataSource with the localStorage values', () => {
@@ -105,10 +105,10 @@ describe('<GridHeader />', () => {
 
     const wrapper = shallow(gridHeader2);
 
-    expect(wrapper.instance().props.dataSource.columns[4].Filter.Text).to.equal(2);
-    expect(wrapper.instance().props.dataSource.columns[4].Filter.HasFilter).to.equal(true);
-    expect(wrapper.instance().props.dataSource.columns[4].Filter.Operator).to.equal('Between');
-    expect(GridHeader.prototype.componentDidMount.calledOnce).to.equal(true);
+    expect(wrapper.instance().props.dataSource.columns[4].Filter.Text).toEqual(2);
+    expect(wrapper.instance().props.dataSource.columns[4].Filter.HasFilter).toEqual(true);
+    expect(wrapper.instance().props.dataSource.columns[4].Filter.Operator).toEqual('Between');
+    expect(GridHeader.prototype.componentDidMount.calledOnce).toEqual(true);
   });
 
   describe('When filter dialog has been clicked', () => {
@@ -117,7 +117,7 @@ describe('<GridHeader />', () => {
       wrapper.setState({ open: false });
       wrapper.update();
 
-      assert.isFalse(wrapper.state().open);
+      expect(wrapper.state().open).toBe(false);
     });
 
     test('should update the state of \'open\' to \'true\' when is open', () => {
@@ -136,12 +136,13 @@ describe('<GridHeader />', () => {
       });
       wrapper.update();
 
-      assert.isTrue(wrapper.find(Dialog).props().open);
-      expect(wrapper.state().activeFilter).to.be.equal('Equals');
-      expect(wrapper.state().activeFilterColumn).to.be.equal('OrderID');
-      expect(wrapper.state().columnType).to.be.equal('numeric');
-      expect(wrapper.state().firstFilterValue).to.be.equal('6');
-      assert.isEmpty(wrapper.state().secondFilterValue);
+      expect(wrapper.find(Dialog).props().open).toBe(true);
+
+      expect(wrapper.state().activeFilter).toBe('Equals');
+      expect(wrapper.state().activeFilterColumn).toBe('OrderID');
+      expect(wrapper.state().columnType).toBe('numeric');
+      expect(wrapper.state().firstFilterValue).toBe('6');
+      expect(wrapper.state().secondFilterValue).toBe('');
     });
   });
 
@@ -158,9 +159,9 @@ describe('<GridHeader />', () => {
 
       wrapper.instance().handleClear();
 
-      expect(wrapper.state().activeFilter).to.be.equal('None');
-      assert.isEmpty(wrapper.state().firstFilterValue);
-      assert.isEmpty(wrapper.state().secondFilterValue);
+      expect(wrapper.state().activeFilter).toBe('None');
+      expect(wrapper.state().firstFilterValue).toBe('');
+      expect(wrapper.state().secondFilterValue).toBe('');
     });
   });
 
@@ -189,10 +190,10 @@ describe('<GridHeader />', () => {
 
       wrapper.instance().handleApply();
 
-      expect(wrapper.instance().props.dataSource.columns[4].Filter.Text).to.equal(4);
-      expect(wrapper.instance().props.dataSource.columns[4].Filter.Argument).deep.equal([15]);
-      expect(wrapper.instance().props.dataSource.columns[4].Filter.HasFilter).to.equal(true);
-      expect(wrapper.instance().props.dataSource.columns[4].Filter.Operator).to.equal('Between');
+      expect(wrapper.instance().props.dataSource.columns[4].Filter.Text).toEqual(4);
+      expect(wrapper.instance().props.dataSource.columns[4].Filter.Argument).toEqual([15]);
+      expect(wrapper.instance().props.dataSource.columns[4].Filter.HasFilter).toEqual(true);
+      expect(wrapper.instance().props.dataSource.columns[4].Filter.Operator).toEqual('Between');
     });
 
     test('Should change the filter values of the IsShipped column', () => {
@@ -219,9 +220,9 @@ describe('<GridHeader />', () => {
 
       wrapper.instance().handleApply();
 
-      expect(wrapper.instance().props.dataSource.columns[5].Filter.Text).to.equal(true);
-      expect(wrapper.instance().props.dataSource.columns[5].Filter.HasFilter).to.equal(true);
-      expect(wrapper.instance().props.dataSource.columns[5].Filter.Operator).to.equal('Equals');
+      expect(wrapper.instance().props.dataSource.columns[5].Filter.Text).toEqual(true);
+      expect(wrapper.instance().props.dataSource.columns[5].Filter.HasFilter).toEqual(true);
+      expect(wrapper.instance().props.dataSource.columns[5].Filter.Operator).toEqual('Equals');
     });
   });
 
@@ -241,11 +242,11 @@ describe('<GridHeader />', () => {
 
       const wrapper = shallow(gridHeader2);
 
-      expect(wrapper.instance().props.dataSource.columns[1].SortDirection).to.equal('None');
+      expect(wrapper.instance().props.dataSource.columns[1].SortDirection).toEqual('None');
       wrapper.instance().sortHandler('CustomerName');
-      expect(wrapper.instance().props.dataSource.columns[1].SortDirection).to.equal('Ascending');
+      expect(wrapper.instance().props.dataSource.columns[1].SortDirection).toEqual('Ascending');
       wrapper.instance().sortHandler('CustomerName');
-      expect(wrapper.instance().props.dataSource.columns[1].SortDirection).to.equal('Descending');
+      expect(wrapper.instance().props.dataSource.columns[1].SortDirection).toEqual('Descending');
     });
   });
 
@@ -260,7 +261,7 @@ describe('<GridHeader />', () => {
       wrapper.instance().handleKeyDown({ key: 'Control' });
       wrapper.update();
 
-      expect(wrapper.state().sorting).to.equal('Multiple');
+      expect(wrapper.state().sorting).toEqual('Multiple');
     });
   });
 
@@ -275,7 +276,7 @@ describe('<GridHeader />', () => {
       wrapper.instance().handleKeyUp({ key: 'Control' });
       wrapper.update();
 
-      expect(wrapper.state().sorting).to.equal('Single');
+      expect(wrapper.state().sorting).toEqual('Single');
     });
   });
 
@@ -292,12 +293,12 @@ describe('<GridHeader />', () => {
         secondFilterValue: ''
       });
 
-      expect(wrapper.state().activeFilter).to.be.equal('None');
+      expect(wrapper.state().activeFilter).toBe('None');
 
       wrapper.instance().handleChange('Contains');
       wrapper.update();
 
-      expect(wrapper.state().activeFilter).to.be.equal('Contains');
+      expect(wrapper.state().activeFilter).toBe('Contains');
     });
   });
 
@@ -317,7 +318,7 @@ describe('<GridHeader />', () => {
       wrapper.instance().handleTextFieldChange('4');
       wrapper.update();
 
-      expect(wrapper.state().firstFilterValue).to.be.equal('4');
+      expect(wrapper.state().firstFilterValue).toBe('4');
     });
   });
 
@@ -337,7 +338,7 @@ describe('<GridHeader />', () => {
       wrapper.instance().handleSecondTextFieldChange('4');
       wrapper.update();
 
-      expect(wrapper.state().secondFilterValue).to.be.equal('4');
+      expect(wrapper.state().secondFilterValue).toBe('4');
     });
-  }); 
+  });
 });

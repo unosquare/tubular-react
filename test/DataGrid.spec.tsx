@@ -7,7 +7,7 @@ import MockAdapter from 'axios-mock-adapter';
 import * as React from 'react';
 import DataGrid from '../src/DataGrid';
 import Paginator from '../src/DataGrid/Paginator';
-import RemoteDataSource from '../src/DataGrid/RemoteDataSource';
+import RemoteDataSource from '../src/DataGrid/DataSource/RemoteDataSource';
 import { simpleColumnsSample, validColumnsSample } from './utils/columns';
 import { data, onlyMicrosoftExpected, page2Expected, simpleRecordsExpected } from './utils/data';
 import { microsoftSearchRequest, page2Request, simpleRequest } from './utils/requests';
@@ -67,24 +67,24 @@ describe('<DataGrid />', () => {
 
   test('should render a Paper', () => {
     const wrapper = shallow(grid).find(Paper);
-    expect(wrapper).to.have.lengthOf(1);
+    expect(wrapper).toHaveLength(1);
   });
 
   test('should render a Table', () => {
     const wrapper = shallow(grid).find(Table);
-    expect(wrapper).to.have.lengthOf(1);
+    expect(wrapper).toHaveLength(1);
   });
 
   test('should have 1 rows at first', () => {
     const wrapper = shallow(grid).find(Table).find(TableBody);
-    expect(wrapper).to.have.lengthOf(1);
+    expect(wrapper).toHaveLength(1);
   });
 
   describe('When data is retrieved', () => {
    test('should render all rows', () => {
       const wrapper = shallow(grid);
       wrapper.setState({ data });
-      expect(wrapper.find(TableBody).find(TableRow)).to.have.lengthOf(11);
+      expect(wrapper.find(TableBody).find(TableRow)).toHaveLength(11);
     });
   });
 
@@ -93,7 +93,7 @@ describe('<DataGrid />', () => {
       const wrapper = shallow(grid);
 
       const body = wrapper.find(Table).find(TableBody);
-      expect(body).to.have.lengthOf(1);
+      expect(body).toHaveLength(1);
     });
   });
 
@@ -112,7 +112,7 @@ describe('<DataGrid />', () => {
       const wrapper = shallow(grid);
       const body = wrapper.find(Table).find(TableBody);
 
-      expect(body).to.have.lengthOf(1);
+      expect(body).toHaveLength(1);
     });
   });
 
@@ -130,8 +130,8 @@ describe('<DataGrid />', () => {
 
       const wrapper = shallow(grid);
 
-      expect(wrapper.state().errorMessage).to.be.equal('The rowsPerPage value should be: 10,20,50,100');
-      expect(wrapper.state().open).to.be.equal(true);
+      expect(wrapper.state().errorMessage).toBe('The rowsPerPage value should be: 10,20,50,100');
+      expect(wrapper.state().open).toBe(true);
     });
   });
 
@@ -150,8 +150,8 @@ describe('<DataGrid />', () => {
 
       const wrapper = shallow(grid);
 
-      expect(wrapper.state().errorMessage).to.be.equal('The rowsPerPage value should be: 10,25,50');
-      expect(wrapper.state().open).to.be.equal(true);
+      expect(wrapper.state().errorMessage).toBe('The rowsPerPage value should be: 10,25,50');
+      expect(wrapper.state().open).toBe(true);
     });
   });
 
@@ -160,7 +160,7 @@ describe('<DataGrid />', () => {
       const wrapper = shallow(grid);
       const rowFooter = wrapper.find(Table).find(TableFooter).find(TableRow);
 
-      expect(rowFooter).to.have.lengthOf(0);
+      expect(rowFooter).toHaveLength(0);
     });
   });
 
@@ -199,8 +199,8 @@ describe('<DataGrid />', () => {
       wrapper.state().dataSource.dataStream.skip(2).subscribe((r) => {
         wrapper.update();
 
-        expect(wrapper.find(TableBody).find(TableRow)).to.have.lengthOf(10);
-        expect(wrapper.state().data).to.deep.equal(page2Expected.Payload);
+        expect(wrapper.find(TableBody).find(TableRow)).toHaveLength(10);
+        expect(wrapper.state().data).toEqual(page2Expected.Payload);
         done();
       });
     });
@@ -238,7 +238,7 @@ describe('<DataGrid />', () => {
 
       wrapper.instance().handleTextSearch('Microsoft');
       wrapper.state().dataSource.dataStream.skip(2).subscribe((r) => {
-        expect(r.Payload).to.deep.equal(onlyMicrosoftExpected.Payload);
+        expect(r.Payload).toEqual(onlyMicrosoftExpected.Payload);
         done();
       });
     });
@@ -290,7 +290,7 @@ describe('<DataGrid />', () => {
 
           const file = window.document.getElementById('download').getAttribute('href');
 
-          expect(csvFile).to.be.equal(file);
+          expect(csvFile).toBe(file);
           done();
         }, 0);
       });
@@ -352,7 +352,7 @@ describe('<DataGrid />', () => {
           '</body>\n' +
           '</html>';
 
-          expect(csvFile).to.be.equal(global.popupWindow);
+          expect(csvFile).toBe(global.popupWindow);
           done();
         }, 0);
       });
@@ -375,7 +375,7 @@ describe('<DataGrid />', () => {
       wrapper.setState({ aggregate });
       const rowFooter = wrapper.find(Table).find(TableFooter).find(TableRow);
 
-      expect(rowFooter).to.have.lengthOf(1);
+      expect(rowFooter).toHaveLength(1);
     });
 
    test('should render the row with the bottom pager', () => {
@@ -392,7 +392,7 @@ describe('<DataGrid />', () => {
       const wrapper = shallow(grid);
       const rowFooter = wrapper.find(Table).find(TableFooter).find(TableRow);
 
-      expect(rowFooter).to.have.lengthOf(1);
+      expect(rowFooter).toHaveLength(1);
     });
 
    test('should render the rows with the aggregate operation and the bottom pager', () => {
@@ -411,7 +411,7 @@ describe('<DataGrid />', () => {
       wrapper.setState({ aggregate });
       const rowFooter = wrapper.find(Table).find(TableFooter).find(TableRow);
 
-      expect(rowFooter).to.have.lengthOf(2);
+      expect(rowFooter).toHaveLength(2);
     });
   });
 
@@ -430,7 +430,7 @@ describe('<DataGrid />', () => {
       const wrapper = shallow(grid);
       const rowFooter = wrapper.find(Table).find(TableFooter).find(TableRow).find(Paginator);
 
-      expect(rowFooter).to.have.lengthOf(1);
+      expect(rowFooter).toHaveLength(1);
     });
   });
 
@@ -450,7 +450,7 @@ describe('<DataGrid />', () => {
       const wrapper = shallow(grid);
       const rowHeader = wrapper.find(Table).find(TableHead).find(TableRow).find(Paginator);
 
-      expect(rowHeader).to.have.lengthOf(1);
+      expect(rowHeader).toHaveLength(1);
     });
   });
 });

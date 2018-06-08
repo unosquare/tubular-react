@@ -15,11 +15,11 @@ describe('RemoteDataSource', () => {
 
   describe('isValidResponse()', () => {
     test('should return true when expectedStructure is valid', () => {
-      expect(dataSource.isValidResponse(validResponseStructure)).to.be.equal(true);
+      expect(dataSource.isValidResponse(validResponseStructure)).toBe(true);
     });
 
     test('should return false when expectedStructure is invalid', () => {
-      expect(dataSource.isValidResponse(invalidResponseStructure)).to.be.equal(false);
+      expect(dataSource.isValidResponse(invalidResponseStructure)).toBe(false);
     });
   });
 
@@ -44,7 +44,7 @@ describe('RemoteDataSource', () => {
 
       test('Should return a payload with 20 records', () => {
          return dataSource.getAllRecords(20, 0, '').then((e: any) => {
-            expect(e.Payload).to.have.lengthOf(20);
+            expect(e.Payload).toHaveLength(20);
          });
       });
     });
@@ -59,9 +59,9 @@ describe('RemoteDataSource', () => {
 
       test('Should return a payload with only Microsoft records', () => dataSource.getAllRecords(10, 0, 'Microsoft')
         .then((r: any) => {
-          expect(r.Payload).to.deep.equal(onlyMicrosoftExpected.Payload);
-          expect(r.FilteredRecordCount).to.deep.equal(onlyMicrosoftExpected.FilteredRecordCount);
-          expect(r.TotalRecordCount).to.deep.equal(onlyMicrosoftExpected.TotalRecordCount);
+          expect(r.Payload).toEqual(onlyMicrosoftExpected.Payload);
+          expect(r.FilteredRecordCount).toEqual(onlyMicrosoftExpected.FilteredRecordCount);
+          expect(r.TotalRecordCount).toEqual(onlyMicrosoftExpected.TotalRecordCount);
         }));
     });
 
@@ -77,9 +77,9 @@ describe('RemoteDataSource', () => {
         test('Should return a payload', (done) => {
           dataSource.retrieveData(10, 0, '')
             .skip(1).subscribe((r) => {
-              expect(r.Payload).to.deep.equal(simpleRecordsExpected.Payload);
-              expect(r.FilteredRecordCount).to.deep.equal(simpleRecordsExpected.FilteredRecordCount);
-              expect(r.TotalRecordCount).to.deep.equal(simpleRecordsExpected.TotalRecordCount);
+              expect(r.Payload).toEqual(simpleRecordsExpected.Payload);
+              expect(r.FilteredRecordCount).toEqual(simpleRecordsExpected.FilteredRecordCount);
+              expect(r.TotalRecordCount).toEqual(simpleRecordsExpected.TotalRecordCount);
               done();
             }, (error: any) => {
               done();
@@ -103,7 +103,7 @@ describe('RemoteDataSource', () => {
         test('Should throw an error', (done) => {
           dtSource.retrieveData(10, 0, '')
             .subscribe((r) => r, (error: any) => {
-              expect(error.message).to.be.equal('It\'s not a valid Tubular response object');
+              expect(error.message).toBe('It\'s not a valid Tubular response object');
               done();
             });
         });
