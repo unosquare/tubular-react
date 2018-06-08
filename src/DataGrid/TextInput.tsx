@@ -5,14 +5,13 @@ interface IProps {
   activeFilter: string;
   disabled: boolean;
   label: string;
-  mod: string;
   value: string;
   handleApply(): void;
   handleTextFieldChange(event: any): void;
 }
 
 const TextInput: React.SFC<IProps> =
-  ({ activeFilter, disabled, handleApply, handleTextFieldChange, label, mod, value }) => {
+  ({ activeFilter, disabled, handleApply, handleTextFieldChange, label, value }) => {
 
   return(
     <div style={{ padding: '15px 20px 5px 20px' }}>

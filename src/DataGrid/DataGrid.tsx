@@ -9,7 +9,7 @@ import { CheckBox, CheckBoxOutlineBlank, Warning } from '@material-ui/icons';
 import { debounce } from 'lodash';
 import * as moment from 'moment';
 import * as React from 'react';
-import BaseDataSource from './BaseDataSource';
+import BaseDataSource from './DataSource/BaseDataSource';
 import { ColumnDataType } from './Column';
 import ColumnModel from './ColumnModel';
 import GridHeader from './GridHeader';
@@ -216,7 +216,7 @@ class DataGrid extends React.Component<IProps, IState> {
       let finalVal = '';
 
       for (let i = 0; i < row.length; i++) {
-        if (visibility[i]) {
+        if (!visibility[i]) continue;
           let innerValue = row[i] === null || row[i] === undefined ? '' :
             (typeof(row[i]) === 'boolean') ? (row[i] === true && 'Yes') :
             row[i].toString();
@@ -236,7 +236,7 @@ class DataGrid extends React.Component<IProps, IState> {
           }
 
           finalVal += result;
-        }
+        
       }
 
       return `${finalVal}\n`;
@@ -336,9 +336,9 @@ class DataGrid extends React.Component<IProps, IState> {
             <TableCell style={{ display: 'flex', padding: '10px' }}>
               <Warning />
               <Typography style={{ paddingLeft: '15px' }} variant='body2' gutterBottom={true}>
-                No records found
+              <Warning /> No records found
               </Typography>
-            </TableCell>
+              </TableCell>
           </TableRow>)}
       </TableBody>
     );

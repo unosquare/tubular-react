@@ -1,8 +1,8 @@
 import Axios from 'axios';
 import BaseDataSource from './BaseDataSource';
-import ColumnModel from './ColumnModel';
-import GridRequest from './GridRequest';
-import GridResponse from './GridResponse';
+import ColumnModel from '../ColumnModel';
+import GridRequest from '../GridRequest';
+import GridResponse from '../GridResponse';
 
 export default class RemoteDataSource extends BaseDataSource {
 

@@ -32,7 +32,7 @@ describe('<GridToolbar/>', () => {
   };
 
   test('should render a Toolbar', () => {
-    expect(toolbar().find(Toolbar)).to.have.lengthOf(1);
+    expect(toolbar().find(Toolbar)).toHaveLength(1);
   });
 
   test('should trigger \'componentDidMount()\' once time', () => {
@@ -41,21 +41,21 @@ describe('<GridToolbar/>', () => {
 
     const wrapper = shallow(<GridToolbar {...props}/>);
 
-    expect(wrapper.state().searchText).to.equal('micros');
-    expect(GridToolbar.prototype.componentDidMount.calledOnce).to.equal(true);
+    expect(wrapper.state().searchText).toEqual('micros');
+    expect(GridToolbar.prototype.componentDidMount.calledOnce).toEqual(true);
   });
 
   describe('isExportEnabled', () => {
     test('should render a export button when is set to true', () => {
       props.isExportEnabled = true;
       const wrapper = shallow(<GridToolbar {...props}/>);
-      expect(wrapper.find(IconButton).find(DownloadIcon)).to.have.lengthOf(1);
+      expect(wrapper.find(IconButton).find(DownloadIcon)).toHaveLength(1);
     });
 
     test('should not render a export button when is set to false', () => {
       props.isExportEnabled = false;
       const wrapper = shallow(<GridToolbar {...props}/>);
-      expect(wrapper.find(IconButton).find(DownloadIcon)).to.have.lengthOf(0);
+      expect(wrapper.find(IconButton).find(DownloadIcon)).toHaveLength(0);
     });
   });
 
@@ -63,13 +63,13 @@ describe('<GridToolbar/>', () => {
     test('should render a print button when is set to true', () => {
       props.isPrintEnabled = true;
       const wrapper = shallow(<GridToolbar {...props}/>);
-      expect(wrapper.find(IconButton).find(PrintIcon)).to.have.lengthOf(1);
+      expect(wrapper.find(IconButton).find(PrintIcon)).toHaveLength(1);
     });
 
     test('should not render a print button when is set to false', () => {
       props.isPrintEnabled = false;
       const wrapper = shallow(<GridToolbar {...props}/>);
-      expect(wrapper.find(IconButton).find(PrintIcon)).to.have.lengthOf(0);
+      expect(wrapper.find(IconButton).find(PrintIcon)).toHaveLength(0);
     });
   });
 
@@ -79,7 +79,7 @@ describe('<GridToolbar/>', () => {
       const wrapper = shallow(<GridToolbar {...props}/>);
 
       wrapper.find(Input).simulate('change', { target: { name: 'search', value: 'search' } });
-      expect(wrapper.state().searchText).to.equal('search');
+      expect(wrapper.state().searchText).toEqual('search');
     });
 
     test('should update state of search text as \'\'', () => {
@@ -92,7 +92,7 @@ describe('<GridToolbar/>', () => {
       wrapper.instance().clearSearchText();
       wrapper.update();
 
-      expect(wrapper.state().searchText).to.equal('');
+      expect(wrapper.state().searchText).toEqual('');
     });
   });
 
@@ -107,7 +107,7 @@ describe('<GridToolbar/>', () => {
       wrapper.instance().handleMenuClose();
       wrapper.update();
 
-      assert.isNull(wrapper.state().anchorEl);
+      expect(wrapper.state().anchorEl).toBeNull();
     });
 
     test('should update the state of \'anchorPrint\' as \'null\' when is closed', () => {
@@ -116,10 +116,10 @@ describe('<GridToolbar/>', () => {
       const wrapper = shallow(<GridToolbar {...props}/>);
 
       wrapper.find(IconButton).simulate('click', { currentTarget: document.createElement('button') });
-      assert.isNotNull(wrapper.state().anchorPrint);
+      expect(wrapper.state().anchorPrint).not.toBeNull();
 
       wrapper.instance().handlePrintMenuClose();
-      assert.isNull(wrapper.state().anchorPrint);
+      expect(wrapper.state().anchorPrint).toBeNull();
     });
 
     test('should update the state of \'anchorEl\' with non \'null\' value', () => {
@@ -127,7 +127,7 @@ describe('<GridToolbar/>', () => {
       const wrapper = shallow(<GridToolbar {...props}/>);
       wrapper.find(IconButton).simulate('click', { currentTarget: document.createElement('button') });
       wrapper.update();
-      assert.isNotNull(wrapper.state().anchorEl);
+      expect(wrapper.state().anchorEl).not.toBeNull();;
     });
   });
 
@@ -141,12 +141,12 @@ describe('<GridToolbar/>', () => {
         anchorEl: document.createElement('button')
       });
 
-      assert.isNotNull(wrapper.state().anchorEl);
+      expect(wrapper.state().anchorEl).not.toBeNull();;
 
       wrapper.instance().exportCSV(true, { preventDefault: () => { return; } });
       wrapper.update();
 
-      assert.isNull(wrapper.state().anchorEl);
+      expect(wrapper.state().anchorEl).toBeNull();;
     });
 
     test('Using simulate (\'All rows\'): should update the state of \'anchorEl\' to \'null\'', () => {
@@ -158,7 +158,8 @@ describe('<GridToolbar/>', () => {
       wrapper.setState({
         anchorEl: document.createElement('button')
       });
-      assert.isNotNull(wrapper.state().anchorEl);
+
+      expect(wrapper.state().anchorEl).not.toBeNull();;
 
       // Checking 'anchorEl' updated to 'null' when 'All rows' is clicked
       const exportIcon = wrapper.find(IconButton).simulate('click', { currentTarget: null });
@@ -167,7 +168,7 @@ describe('<GridToolbar/>', () => {
       const menuItems = wrapper.find(MenuItem);
       const menuItemAllCSV = menuItems.at(0).simulate('click', { preventDefault: () => { return; } });
 
-      assert.isNull(wrapper.state().anchorEl);
+      expect(wrapper.state().anchorEl).toBeNull();;
     });
 
     test('Using simulate (\'Current rows\'): should update the state of \'anchorEl\' to \'null\'', () => {
@@ -179,7 +180,7 @@ describe('<GridToolbar/>', () => {
       wrapper.setState({
         anchorEl: document.createElement('button')
       });
-      assert.isNotNull(wrapper.state().anchorEl);
+      expect(wrapper.state().anchorEl).not.toBeNull();
 
       // Checking 'anchorEl' updated to 'null' when 'Current rows' is clicked
       const exportIcon = wrapper.find(IconButton).simulate('click', { currentTarget: null });
@@ -188,7 +189,7 @@ describe('<GridToolbar/>', () => {
       const menuItems = wrapper.find(MenuItem);
       const menuItemAllCSV = menuItems.at(1).simulate('click', { preventDefault: () => { return; } });
 
-      assert.isNull(wrapper.state().anchorEl);
+      expect(wrapper.state().anchorEl).toBeNull();
     });
   });
 
@@ -202,12 +203,12 @@ describe('<GridToolbar/>', () => {
         anchorPrint: document.createElement('button')
       });
 
-      assert.isNotNull(wrapper.state().anchorPrint);
+      expect(wrapper.state().anchorPrint).not.toBeNull();
 
       wrapper.instance().printTable(true, { preventDefault: () => { return; } });
       wrapper.update();
 
-      assert.isNull(wrapper.state().anchorPrint);
+      expect(wrapper.state().anchorPrint).toBeNull();
     });
 
     test('Using simulate (\'All rows\'): should update the state of \'anchorPrint\' to \'null\'', () => {
@@ -218,7 +219,7 @@ describe('<GridToolbar/>', () => {
       wrapper.setState({
         anchorPrint: document.createElement('button')
       });
-      assert.isNotNull(wrapper.state().anchorPrint);
+      expect(wrapper.state().anchorPrint).not.toBeNull();
 
       const printIcon = wrapper.find(IconButton).simulate('click', { currentTarget: null });
       wrapper.update();
@@ -226,7 +227,7 @@ describe('<GridToolbar/>', () => {
       const menuItems = wrapper.find(MenuItem);
       const menuItemPrintAll = menuItems.at(0).simulate('click', { preventDefault: () => { return; } });
 
-      assert.isNull(wrapper.state().anchorPrint);
+      expect(wrapper.state().anchorPrint).toBeNull();
     });
 
     test('Using simulate (\'Current rows\'): should update the state of \'anchorPrint\' to \'null\'', () => {
@@ -237,7 +238,7 @@ describe('<GridToolbar/>', () => {
       wrapper.setState({
         anchorPrint: document.createElement('button')
       });
-      assert.isNotNull(wrapper.state().anchorPrint);
+      expect(wrapper.state().anchorPrint).not.toBeNull();
 
       const printIcon = wrapper.find(IconButton).simulate('click', { currentTarget: null });
       wrapper.update();
@@ -245,7 +246,7 @@ describe('<GridToolbar/>', () => {
       const menuItems = wrapper.find(MenuItem);
       const menuItemPrintAll = menuItems.at(1).simulate('click', { preventDefault: () => { return; } });
 
-      assert.isNull(wrapper.state().anchorPrint);
+      expect(wrapper.state().anchorPrint).toBeNull();
     });
   });
 

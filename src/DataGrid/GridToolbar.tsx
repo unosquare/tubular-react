@@ -37,9 +37,9 @@ interface IProps extends WithStyles<typeof styles> {
   onExport(condition: boolean): void;
 }
 
-class GridToolbar extends React.Component <IProps, IState> {
+class GridToolbar extends React.Component<IProps, IState> {
   public static defaultProps = {
-    onSearchTextChange: (x: any): any => x
+    onSearchTextChange: (x: any) => x
   };
 
   public state = {

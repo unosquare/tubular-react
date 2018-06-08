@@ -9,14 +9,14 @@ import * as React from 'react';
 import * as sinon from 'sinon';
 import { ColumnDataType, CompareOperators } from '../src/DataGrid/Column';
 import GridHeader from '../src/DataGrid/GridHeader';
-import LocalDataSource from '../src/DataGrid/LocalDataSource';
-import RemoteDataSource from '../src/DataGrid/RemoteDataSource';
+import LocalDataSource from '../src/DataGrid/DataSource/LocalDataSource';
+import RemoteDataSource from '../src/DataGrid/DataSource/RemoteDataSource';
 import { amountFilterColumnsSample, isShippedFilterColumnsSample, validColumnsSample } from './utils/columns';
 import { simpleRecordsExpected } from './utils/data';
 import localData from './utils/localData';
 
 const mock = new MockAdapter(Axios);
-mock.onPost().reply(200, {...simpleRecordsExpected});
+mock.onPost().reply(200, { ...simpleRecordsExpected });
 
 describe('<GridHeader />', () => {
   let shallow;
@@ -47,22 +47,16 @@ describe('<GridHeader />', () => {
   test('should render a row', () => {
     const wrapper = shallow(gridHeader).find(TableRow);
 
-    expect(wrapper).to.have.lengthOf(1);
+    expect(wrapper).toHaveLength(1);
   });
 
   test('should render n columns', () => {
     const wrapper = shallow(gridHeader).find(TableRow).find(TableCell);
 
-    expect(wrapper).to.have.lengthOf(5);
+    expect(wrapper).toHaveLength(5);
   });
 
-  test('should render a dialog', () => {
-    const wrapper = shallow(gridHeader).find(Dialog);
-
-    expect(wrapper).to.have.lengthOf(1);
-  });
-
-    test('should trigger \'componentWillUnmount()\' one time', () => {
+  test('should trigger \'componentWillUnmount()\' one time', () => {
     sinon.spy(GridHeader.prototype, 'componentWillUnmount');
     const wrapper = mount(
       <Table>
@@ -79,7 +73,7 @@ describe('<GridHeader />', () => {
     );
 
     wrapper.unmount();
-    expect(GridHeader.prototype.componentWillUnmount.calledOnce).to.equal(true);
+    expect(GridHeader.prototype.componentWillUnmount.calledOnce).toEqual(true);
   });
 
   test('should trigger \'componentDidMount()\' one time and update the dataSource with the localStorage values', () => {
@@ -105,10 +99,10 @@ describe('<GridHeader />', () => {
 
     const wrapper = shallow(gridHeader2);
 
-    expect(wrapper.instance().props.dataSource.columns[4].Filter.Text).to.equal(2);
-    expect(wrapper.instance().props.dataSource.columns[4].Filter.HasFilter).to.equal(true);
-    expect(wrapper.instance().props.dataSource.columns[4].Filter.Operator).to.equal('Between');
-    expect(GridHeader.prototype.componentDidMount.calledOnce).to.equal(true);
+    expect(wrapper.instance().props.dataSource.columns[4].Filter.Text).toEqual(2);
+    expect(wrapper.instance().props.dataSource.columns[4].Filter.HasFilter).toEqual(true);
+    expect(wrapper.instance().props.dataSource.columns[4].Filter.Operator).toEqual('Between');
+    expect(GridHeader.prototype.componentDidMount.calledOnce).toEqual(true);
   });
 
   describe('When filter dialog has been clicked', () => {
@@ -117,7 +111,7 @@ describe('<GridHeader />', () => {
       wrapper.setState({ open: false });
       wrapper.update();
 
-      assert.isFalse(wrapper.state().open);
+      expect(wrapper.state().open).toBe(false);
     });
 
     test('should update the state of \'open\' to \'true\' when is open', () => {
@@ -127,41 +121,47 @@ describe('<GridHeader />', () => {
 
       firstIconButton.simulate('blur');
       wrapper.setState({
-        activeFilter: 'Equals',
-        activeFilterColumn: 'OrderID',
-        columnType: 'numeric',
-        firstFilterValue: '6',
-        open: true,
-        secondFilterValue: ''
+        activeColumn: {
+          Name:'OrderID',
+          DataType:ColumnDataType.NUMERIC,
+          Filter: {
+            Operator: CompareOperators.EQUALS,
+            Text: '6',
+            Argument: ['']
+          }
+        }
       });
       wrapper.update();
 
-      assert.isTrue(wrapper.find(Dialog).props().open);
-      expect(wrapper.state().activeFilter).to.be.equal('Equals');
-      expect(wrapper.state().activeFilterColumn).to.be.equal('OrderID');
-      expect(wrapper.state().columnType).to.be.equal('numeric');
-      expect(wrapper.state().firstFilterValue).to.be.equal('6');
-      assert.isEmpty(wrapper.state().secondFilterValue);
+      expect(wrapper.state().activeColumn.Filter.Operator	).toBe('Equals');
+      expect(wrapper.state().activeColumn.Name).toBe('OrderID');
+      expect(wrapper.state().activeColumn.DataType).toBe('numeric');
+      expect(wrapper.state().activeColumn.Filter.Text).toBe('6');
+      expect(wrapper.state().activeColumn.Filter.Argument[0]).toBe('');
     });
   });
 
   describe('handleClear()', () => {
     test('should set the state props \'activeFilter\', \'firstFilterValue\' ' +
-        'and \'secondFilterValue\' at its initial values', () => {
-      const wrapper = shallow(gridHeader);
+      'and \'secondFilterValue\' at its initial values', () => {
+        const wrapper = shallow(gridHeader);
 
-      wrapper.setState({
-        columnType: 'datetime',
-        firstFilterValue: '2018-03-06T15:40:30-06:00',
-        secondFilterValue: '2018-03-06T15:40:30-06:00'
+        wrapper.setState({
+          activeColumn: {
+            Name:'OrderID',
+            DataType:ColumnDataType.DATE_TIME,
+            Filter: {
+              Operator: CompareOperators.BETWEEN,
+              Text: '2018-03-06T15:40:30',
+              Argument: ['2018-03-06T15:40:30'],
+              Open: true,
+            }
+          }
+        });
+        
+        wrapper.instance().handleClear();
+        expect(wrapper.state().activeColumn).toBeNull();
       });
-
-      wrapper.instance().handleClear();
-
-      expect(wrapper.state().activeFilter).to.be.equal('None');
-      assert.isEmpty(wrapper.state().firstFilterValue);
-      assert.isEmpty(wrapper.state().secondFilterValue);
-    });
   });
 
   describe('handleApply()', () => {
@@ -180,19 +180,23 @@ describe('<GridHeader />', () => {
 
       const wrapper = shallow(gridHeader2);
       wrapper.setState({
-        activeFilter: CompareOperators.BETWEEN,
-        activeFilterColumn: 'Amount',
-        columnType: ColumnDataType.NUMERIC,
-        firstFilterValue: 4,
-        secondFilterValue: 15
+        activeColumn: {
+          Name:'Amount',
+          DataType:ColumnDataType.NUMERIC,
+          Filter: {
+            Operator: CompareOperators.BETWEEN,
+            Text: 4,
+            Argument: [15]
+          }
+        }
       });
 
       wrapper.instance().handleApply();
 
-      expect(wrapper.instance().props.dataSource.columns[4].Filter.Text).to.equal(4);
-      expect(wrapper.instance().props.dataSource.columns[4].Filter.Argument).deep.equal([15]);
-      expect(wrapper.instance().props.dataSource.columns[4].Filter.HasFilter).to.equal(true);
-      expect(wrapper.instance().props.dataSource.columns[4].Filter.Operator).to.equal('Between');
+      expect(wrapper.instance().props.dataSource.columns[4].Filter.Text).toEqual(4);
+      expect(wrapper.instance().props.dataSource.columns[4].Filter.Argument).toEqual([15]);
+      expect(wrapper.instance().props.dataSource.columns[4].Filter.HasFilter).toEqual(true);
+      expect(wrapper.instance().props.dataSource.columns[4].Filter.Operator).toEqual('Between');
     });
 
     test('Should change the filter values of the IsShipped column', () => {
@@ -210,18 +214,22 @@ describe('<GridHeader />', () => {
 
       const wrapper = shallow(gridHeader2);
       wrapper.setState({
-        activeFilter: CompareOperators.EQUALS,
-        activeFilterColumn: 'IsShipped',
-        columnType: ColumnDataType.BOOLEAN,
-        firstFilterValue: 'true',
-        secondFilterValue: ''
+        activeColumn: {
+          Name:'IsShipped',
+          DataType:ColumnDataType.BOOLEAN,
+          Filter: {
+            Operator: CompareOperators.EQUALS,
+            Text: 'true',
+            Argument: ['']
+          }
+        }
       });
 
       wrapper.instance().handleApply();
 
-      expect(wrapper.instance().props.dataSource.columns[5].Filter.Text).to.equal(true);
-      expect(wrapper.instance().props.dataSource.columns[5].Filter.HasFilter).to.equal(true);
-      expect(wrapper.instance().props.dataSource.columns[5].Filter.Operator).to.equal('Equals');
+      expect(wrapper.instance().props.dataSource.columns[5].Filter.Text).toEqual(true);
+      expect(wrapper.instance().props.dataSource.columns[5].Filter.HasFilter).toEqual(true);
+      expect(wrapper.instance().props.dataSource.columns[5].Filter.Operator).toEqual('Equals');
     });
   });
 
@@ -241,11 +249,11 @@ describe('<GridHeader />', () => {
 
       const wrapper = shallow(gridHeader2);
 
-      expect(wrapper.instance().props.dataSource.columns[1].SortDirection).to.equal('None');
+      expect(wrapper.instance().props.dataSource.columns[1].SortDirection).toEqual('None');
       wrapper.instance().sortHandler('CustomerName');
-      expect(wrapper.instance().props.dataSource.columns[1].SortDirection).to.equal('Ascending');
+      expect(wrapper.instance().props.dataSource.columns[1].SortDirection).toEqual('Ascending');
       wrapper.instance().sortHandler('CustomerName');
-      expect(wrapper.instance().props.dataSource.columns[1].SortDirection).to.equal('Descending');
+      expect(wrapper.instance().props.dataSource.columns[1].SortDirection).toEqual('Descending');
     });
   });
 
@@ -260,7 +268,7 @@ describe('<GridHeader />', () => {
       wrapper.instance().handleKeyDown({ key: 'Control' });
       wrapper.update();
 
-      expect(wrapper.state().sorting).to.equal('Multiple');
+      expect(wrapper.state().sorting).toEqual('Single');
     });
   });
 
@@ -275,29 +283,33 @@ describe('<GridHeader />', () => {
       wrapper.instance().handleKeyUp({ key: 'Control' });
       wrapper.update();
 
-      expect(wrapper.state().sorting).to.equal('Single');
+      expect(wrapper.state().sorting).toEqual('Multiple');
     });
   });
 
   describe('handleChange()', () => {
-   test('should update the state of \'activeFilter\' to \'Contains\'', () => {
+    test('should update the state of \'activeFilter\' to \'Contains\'', () => {
       const wrapper = shallow(gridHeader);
 
       wrapper.setState({
-        activeFilter: 'None',
-        activeFilterColumn: 'CustomerName',
-        columnType: 'string',
-        firstFilterValue: '',
-        open: true,
-        secondFilterValue: ''
+        activeColumn: {
+          Name:'CustomerName',
+          DataType:ColumnDataType.STRING,
+          Filter: {
+            Operator: CompareOperators.NONE,
+            Text: '',
+            Argument: ['']
+          }
+        }
+        
       });
 
-      expect(wrapper.state().activeFilter).to.be.equal('None');
+      expect(wrapper.state().activeColumn.Filter.Operator).toBe('None');
 
       wrapper.instance().handleChange('Contains');
       wrapper.update();
 
-      expect(wrapper.state().activeFilter).to.be.equal('Contains');
+      expect(wrapper.state().activeColumn.Filter.Operator).toBe('Contains');
     });
   });
 
@@ -306,18 +318,21 @@ describe('<GridHeader />', () => {
       const wrapper = shallow(gridHeader);
 
       wrapper.setState({
-        activeFilter: 'Equals',
-        activeFilterColumn: 'OrderID',
-        columnType: 'numeric',
-        firstFilterValue: '',
-        open: true,
-        secondFilterValue: ''
+        activeColumn: {
+          Name:'OrderID',
+          DataType:ColumnDataType.NUMERIC,
+          Filter: {
+            Operator: CompareOperators.EQUALS,
+            Text: '',
+            Argument: ['']
+          }
+        }
       });
 
-      wrapper.instance().handleTextFieldChange('4');
+      wrapper.instance().handleTextFieldChange({target:{value:'4'}});
       wrapper.update();
 
-      expect(wrapper.state().firstFilterValue).to.be.equal('4');
+      expect(wrapper.state().activeColumn.Filter.Text).toBe('4');
     });
   });
 
@@ -326,41 +341,21 @@ describe('<GridHeader />', () => {
       const wrapper = shallow(gridHeader);
 
       wrapper.setState({
-        activeFilter: 'Equals',
-        activeFilterColumn: 'OrderID',
-        columnType: 'numeric',
-        firstFilterValue: '',
-        open: true,
-        secondFilterValue: ''
+        activeColumn: {
+          Name:'OrderID',
+          DataType:ColumnDataType.NUMERIC,
+          Filter: {
+            Operator: CompareOperators.EQUALS,
+            Text: '',
+            Argument: ['']
+          }
+        }
       });
 
       wrapper.instance().handleSecondTextFieldChange('4');
       wrapper.update();
 
-      expect(wrapper.state().secondFilterValue).to.be.equal('4');
-    });
-  });
-
-  describe('handleDatePicker()', () => {
-    test('should update the state of \'firstFilterValue\' and \'firstFilterValue\'' +
-      'to \'2018-25-07T15:40:30-06:00\'', () => {
-      const wrapper = shallow(gridHeader);
-
-      wrapper.setState({
-        activeFilter: 'Equals',
-        activeFilterColumn: 'ShippedDate',
-        columnType: 'datetime',
-        firstFilterValue: '',
-        open: true,
-        secondFilterValue: ''
-      });
-
-      wrapper.instance().handleDatePicker({format: () => ('2018-25-07T15:40:30-06:00')}, 'Value');
-      wrapper.instance().handleDatePicker({format: () => ('2018-25-07T15:40:30-06:00')}, 'Value2');
-      wrapper.update();
-
-      expect(wrapper.state().firstFilterValue).to.be.equal('2018-25-07T15:40:30-06:00');
-      expect(wrapper.state().firstFilterValue).to.be.equal('2018-25-07T15:40:30-06:00');
+       expect(wrapper.state().activeColumn.Filter.Argument[0]).toBe('4');
     });
   });
 });

@@ -1,7 +1,7 @@
 import { AggregateFunctions } from '../src/DataGrid';
 import { CompareOperators } from '../src/DataGrid/Column';
 import GridResponse from '../src/DataGrid/GridResponse';
-import LocalDataSource from '../src/DataGrid/LocalDataSource';
+import LocalDataSource from '../src/DataGrid/DataSource/LocalDataSource';
 import {
   aggregateColumnsSample,
   customAmountCol,
@@ -51,21 +51,21 @@ describe('LocalDataSource', () => {
     test('should return a payload', (done) => {
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.deep.equal(expectedLocaDataSourcelResponse.Payload);
+        expect(response.Payload).toEqual(expectedLocaDataSourcelResponse.Payload);
         done();
       });
     });
 
     test('should return 10 records', (done) => {
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.have.lengthOf(10);
+        expect(response.Payload).toHaveLength(10);
         done();
       });
     });
 
     test('should return a payload with the following 10 records when page is set to 1', (done) => {
        dataSource.getAllRecords(10, 1, '').then((response: GridResponse) => {
-        expect(response.Payload).to.deep.equal(expectedPayloadPage2);
+        expect(response.Payload).toEqual(expectedPayloadPage2);
         done();
       });
     });
@@ -74,7 +74,7 @@ describe('LocalDataSource', () => {
       const $dataSource = new LocalDataSource(localData, validColumnsSampleDescending);
 
       $dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.deep.equal(expectedPayloadDescSortByOrderID);
+        expect(response.Payload).toEqual(expectedPayloadDescSortByOrderID);
         done();
       });
     });
@@ -84,7 +84,7 @@ describe('LocalDataSource', () => {
       const $dataSource = new LocalDataSource(localData, validColumnsSampleMultipleSorting);
 
       $dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.deep.equal(expectedPayloadMultipleSort);
+        expect(response.Payload).toEqual(expectedPayloadMultipleSort);
         done();
       });
     });
@@ -93,8 +93,8 @@ describe('LocalDataSource', () => {
       const $dataSource = new LocalDataSource(localData, validColumnsSample);
 
       $dataSource.getAllRecords(4, 0, 'ves').then((response: GridResponse) => {
-        expect(response.Payload).to.have.lengthOf(4);
-        expect(response.Payload).to.deep.equal(expectedPayloadTextSearchVesta);
+        expect(response.Payload).toHaveLength(4);
+        expect(response.Payload).toEqual(expectedPayloadTextSearchVesta);
 
         done();
       });
@@ -119,8 +119,8 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.have.lengthOf(10);
-        expect(response.Payload).to.deep.equal(expectedPayloadNoneNumeric);
+        expect(response.Payload).toHaveLength(10);
+        expect(response.Payload).toEqual(expectedPayloadNoneNumeric);
 
         done();
       });
@@ -133,8 +133,8 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.have.lengthOf(1);
-        expect(response.Payload).to.deep.equal(expectedPayloadEqualsNumeric);
+        expect(response.Payload).toHaveLength(1);
+        expect(response.Payload).toEqual(expectedPayloadEqualsNumeric);
         done();
       });
     });
@@ -146,8 +146,8 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.Argument = [9];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.have.lengthOf(8);
-        expect(response.Payload).to.deep.equal(expectedPayloadBetweenNumeric);
+        expect(response.Payload).toHaveLength(8);
+        expect(response.Payload).toEqual(expectedPayloadBetweenNumeric);
 
         done();
       });
@@ -160,8 +160,8 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.have.lengthOf(10);
-        expect(response.Payload).to.deep.equal(expectedPayloadGteNumeric);
+        expect(response.Payload).toHaveLength(10);
+        expect(response.Payload).toEqual(expectedPayloadGteNumeric);
 
         done();
       });
@@ -174,8 +174,8 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.have.lengthOf(10);
-        expect(response.Payload).to.deep.equal(expectedPayloadGtNumeric);
+        expect(response.Payload).toHaveLength(10);
+        expect(response.Payload).toEqual(expectedPayloadGtNumeric);
 
         done();
       });
@@ -188,8 +188,8 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.have.lengthOf(5);
-        expect(response.Payload).to.deep.equal(expectedPayloadLteNumeric);
+        expect(response.Payload).toHaveLength(5);
+        expect(response.Payload).toEqual(expectedPayloadLteNumeric);
 
         done();
       });
@@ -202,8 +202,8 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.have.lengthOf(4);
-        expect(response.Payload).to.deep.equal(expectedPayloadLtNumeric);
+        expect(response.Payload).toHaveLength(4);
+        expect(response.Payload).toEqual(expectedPayloadLtNumeric);
 
         done();
       });
@@ -216,7 +216,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[0].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.have.lengthOf(0);
+        expect(response.Payload).toHaveLength(0);
         done();
       });
     });
@@ -244,7 +244,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.deep.equal(expectedPayloadNoneString);
+        expect(response.Payload).toEqual(expectedPayloadNoneString);
         done();
       });
     });
@@ -256,7 +256,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.deep.equal(expectedPayloadEqualsString);
+        expect(response.Payload).toEqual(expectedPayloadEqualsString);
         done();
       });
     });
@@ -268,7 +268,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.deep.equal(expectedPayloadNotEqualsString);
+        expect(response.Payload).toEqual(expectedPayloadNotEqualsString);
         done();
       });
     });
@@ -280,7 +280,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.deep.equal(expectedPayloadContainsString);
+        expect(response.Payload).toEqual(expectedPayloadContainsString);
         done();
       });
     });
@@ -292,7 +292,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.deep.equal(expectedPayloadNotContainsString);
+        expect(response.Payload).toEqual(expectedPayloadNotContainsString);
         done();
       });
     });
@@ -304,7 +304,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.deep.equal(expectedPayloadStartsWithString);
+        expect(response.Payload).toEqual(expectedPayloadStartsWithString);
         done();
       });
     });
@@ -316,7 +316,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.deep.equal(expectedPayloadNotStartsWithString);
+        expect(response.Payload).toEqual(expectedPayloadNotStartsWithString);
         done();
       });
     });
@@ -328,7 +328,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.deep.equal(expectedPayloadEndsWithString);
+        expect(response.Payload).toEqual(expectedPayloadEndsWithString);
         done();
       });
     });
@@ -340,7 +340,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[1].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.deep.equal(expectedPayloadNotEndsWithString);
+        expect(response.Payload).toEqual(expectedPayloadNotEndsWithString);
         done();
       });
     });
@@ -373,7 +373,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[2].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.deep.equal(expectedPayloadNoneDate);
+        expect(response.Payload).toEqual(expectedPayloadNoneDate);
         done();
       });
     });
@@ -385,7 +385,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[2].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.deep.equal(expectedPayloadEqualsDate);
+        expect(response.Payload).toEqual(expectedPayloadEqualsDate);
         done();
       });
     });
@@ -398,7 +398,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[2].Filter.Argument = ['2016-11-08T18:00:00'];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.deep.equal(expectedPayloadBetweenDate);
+        expect(response.Payload).toEqual(expectedPayloadBetweenDate);
         done();
       });
     });
@@ -411,7 +411,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[2].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.deep.equal(expectedPayloadGteDate);
+        expect(response.Payload).toEqual(expectedPayloadGteDate);
         done();
       });
     });
@@ -424,8 +424,8 @@ describe('LocalDataSource', () => {
       dataSource.columns[2].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.have.lengthOf(10);
-        expect(response.Payload).to.deep.equal(expectedPayloadGtDate);
+        expect(response.Payload).toHaveLength(10);
+        expect(response.Payload).toEqual(expectedPayloadGtDate);
 
         done();
       });
@@ -439,7 +439,7 @@ describe('LocalDataSource', () => {
       dataSource.columns[2].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.deep.equal(expectedPayloadLteDate);
+        expect(response.Payload).toEqual(expectedPayloadLteDate);
 
         done();
       });
@@ -453,8 +453,8 @@ describe('LocalDataSource', () => {
       dataSource.columns[2].Filter.Argument = [];
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Payload).to.have.lengthOf(2);
-        expect(response.Payload).to.deep.equal(expectedPayloadLtDate);
+        expect(response.Payload).toHaveLength(2);
+        expect(response.Payload).toEqual(expectedPayloadLtDate);
 
         done();
       });
@@ -471,7 +471,7 @@ describe('LocalDataSource', () => {
       const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Aggregate.Amount).to.be.closeTo(157.363, 0.001);
+        expect(response.Aggregate.Amount).toBeCloseTo(157.363, 0.001);
         done();
       });
     });
@@ -481,7 +481,7 @@ describe('LocalDataSource', () => {
       const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Aggregate.Amount).to.be.equal(3462);
+        expect(response.Aggregate.Amount).toBe(3462);
         done();
       });
     });
@@ -491,7 +491,7 @@ describe('LocalDataSource', () => {
       const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Aggregate.Amount).to.be.equal(300);
+        expect(response.Aggregate.Amount).toBe(300);
         done();
       });
     });
@@ -501,7 +501,7 @@ describe('LocalDataSource', () => {
       const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Aggregate.Amount).to.be.equal(9);
+        expect(response.Aggregate.Amount).toBe(9);
         done();
       });
     });
@@ -511,7 +511,7 @@ describe('LocalDataSource', () => {
       const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Aggregate.CustomerName).to.be.equal(7);
+        expect(response.Aggregate.CustomerName).toBe(7);
         done();
       });
     });
@@ -521,7 +521,7 @@ describe('LocalDataSource', () => {
       const dataSource = new LocalDataSource(localData, aggregateColumnsSample);
 
       dataSource.getAllRecords(10, 0, '').then((response: GridResponse) => {
-        expect(response.Aggregate.CustomerName).to.be.equal(22);
+        expect(response.Aggregate.CustomerName).toBe(22);
         done();
       });
     });
@@ -532,9 +532,9 @@ describe('LocalDataSource', () => {
 
     test('should return a payload', (done) => {
       dataSource.retrieveData(10, 0, '').skip(1).subscribe((response: GridResponse) => {
-        expect(response.Payload).to.deep.equal(expectedLocalDataSourceResponseConnect.Payload);
-        expect(response.FilteredRecordCount).to.deep.equal(expectedLocalDataSourceResponseConnect.FilteredRecordCount);
-        expect(response.TotalRecordCount).to.deep.equal(expectedLocalDataSourceResponseConnect.TotalRecordCount);
+        expect(response.Payload).toEqual(expectedLocalDataSourceResponseConnect.Payload);
+        expect(response.FilteredRecordCount).toEqual(expectedLocalDataSourceResponseConnect.FilteredRecordCount);
+        expect(response.TotalRecordCount).toEqual(expectedLocalDataSourceResponseConnect.TotalRecordCount);
         done();
       }, (error: any) => {
         done();

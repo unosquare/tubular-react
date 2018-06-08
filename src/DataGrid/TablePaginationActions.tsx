@@ -7,10 +7,6 @@ import * as React from 'react';
 
 const styles = (theme: Theme) => createStyles(
   {
-    buttonStyle: {
-      height: '30px',
-      width: '30px'
-    },
     root: {
       flexShrink: 0,
       marginLeft: theme.spacing.unit * 2.5
@@ -68,7 +64,6 @@ const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsP
   return (
     <div className={classes.root}>
       <IconButton
-        className={classes.buttonStyle}
         onClick={handleFirstPageButtonClick}
         disabled={page === 0}
         aria-label='First Page'
@@ -77,7 +72,6 @@ const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsP
       </IconButton>
 
       <IconButton
-        className={classes.buttonStyle}
         onClick={handleBackButtonClick}
         disabled={page === 0}
         aria-label='Previous Page'
@@ -88,20 +82,18 @@ const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsP
       {
         pages.map((element, index) => ( count / rowsPerPage > index &&
             <IconButton
-              className={classes.buttonStyle}
               key={index}
               onClick={(event) => handlePageButtonClick(event, pages[index])}
               aria-label={`Page${index + 1}`}
-              style={ pages[index] === page ?
-                { fontSize: '18px', background: '#158cba', color: 'white' } :
-                { fontSize: '18px' } }
+              color={ pages[index] === page ?
+                 'primary' :
+                 'default' }
             >
               {pages[index] + 1}
             </IconButton>))
       }
 
       <IconButton
-        className={classes.buttonStyle}
         onClick={handleNextButtonClick}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
         aria-label='Next Page'
@@ -110,7 +102,6 @@ const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsP
       </IconButton>
 
       <IconButton
-        className={classes.buttonStyle}
         onClick={handleLastPageButtonClick}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
         aria-label='Last Page'
