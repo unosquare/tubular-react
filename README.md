@@ -17,6 +17,8 @@
 * Export data to a CSV file.
 * Print data.
 
+You can try a [CodeSandbox demo](https://codesandbox.io/s/64jwr7mx8r).
+
 For more information how to implement a remote datasource, check [Tubular DotNet](https://github.com/unosquare/tubular-dotnet) project or [Tubular Node.js](https://github.com/unosquare/tubular-nodejs) project. Depending in your backend.
 
 Similar components are available in [Angular.js flavor](https://github.com/unosquare/tubular) and [Angular2](https://github.com/unosquare/tubular2).
