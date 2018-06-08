@@ -5,7 +5,6 @@ import { createMount, createShallow } from '@material-ui/core/test-utils';
 
 import Axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { assert, expect } from 'chai';
 import * as React from 'react';
 import * as sinon from 'sinon';
 import { ColumnDataType, CompareOperators } from '../src/DataGrid/Column';

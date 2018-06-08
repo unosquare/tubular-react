@@ -1,23 +1,24 @@
-import { FormControl, Input, InputAdornment, Menu, MenuItem } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import { StyleRules, Theme, WithStyles, withStyles } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import CloseIcon from '@material-ui/icons/Close';
-import DownloadIcon from '@material-ui/icons/FileDownload';
-import PrintIcon from '@material-ui/icons/Print';
-import SearchIcon from '@material-ui/icons/Search';
+import { FormControl, IconButton, Input, InputAdornment, Menu, MenuItem, Toolbar } from '@material-ui/core';
+import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core/styles';
+
+import { Close, FileDownload, Print, Search } from '@material-ui/icons';
 
 import * as React from 'react';
 
-
-const spacer= {
-  flex: '1 1 100%'
-}
-
-const formControl= {
-  margin: '5px',
-  minWidth: '250px'
-}
+const styles = (theme: Theme) => createStyles(
+  {
+    button: {
+      minWidth: 150
+    },
+    formControl: {
+      margin: theme.spacing.unit,
+      minWidth: 250
+    },
+    spacer: {
+      flex: '1 1 100%'
+    }
+  }
+);
 
 interface IState {
   anchorEl?: HTMLElement;
@@ -25,7 +26,7 @@ interface IState {
   searchText: string;
 }
 
-interface IProps {
+interface IProps extends WithStyles<typeof styles> {
   gridName: string;
   isExportEnabled: boolean;
   isPrintEnabled: boolean;
@@ -36,9 +37,9 @@ interface IProps {
   onExport(condition: boolean): void;
 }
 
-class GridToolbar extends React.Component <IProps, IState> {
+class GridToolbar extends React.Component<IProps, IState> {
   public static defaultProps = {
-    onSearchTextChange: (x: any): any => x
+    onSearchTextChange: (x: any) => x
   };
 
   public state = {
@@ -111,26 +112,26 @@ class GridToolbar extends React.Component <IProps, IState> {
   }
 
   public render() {
-    const { filteredRecordCount, isPrintEnabled, isExportEnabled, onPrint, showSearchText} = this.props;
+    const { classes, filteredRecordCount, isPrintEnabled, isExportEnabled, onPrint, showSearchText} = this.props;
     const { searchText, anchorEl, anchorPrint } = this.state;
 
     return(
       <Toolbar>
-        <div style={spacer}/>
+        <div className={classes.spacer}/>
         {
           isExportEnabled &&
           <IconButton disabled={filteredRecordCount === 0} onClick={this.handleMenuOpen}>
-            <DownloadIcon />
+            <FileDownload />
           </IconButton>
         }
         {
           isPrintEnabled &&
           <IconButton disabled={filteredRecordCount === 0} onClick={this.handlePrintMenuOpen} >
-            <PrintIcon/>
+            <Print/>
           </IconButton>
         }
         { showSearchText &&
-          <FormControl style={formControl}>
+          <FormControl className={classes.formControl}>
             <Input
               fullWidth={true}
               type='text'
@@ -139,7 +140,7 @@ class GridToolbar extends React.Component <IProps, IState> {
               startAdornment={
                 <InputAdornment position='end'>
                   <IconButton>
-                    <SearchIcon />
+                    <Search />
                   </IconButton>
                 </InputAdornment>
               }
@@ -147,7 +148,7 @@ class GridToolbar extends React.Component <IProps, IState> {
                 searchText !== '' &&
                 <InputAdornment position='end'>
                   <IconButton onClick={this.clearSearchText}>
-                    <CloseIcon />
+                    <Close />
                   </IconButton>
                 </InputAdornment>
               }
@@ -167,4 +168,4 @@ class GridToolbar extends React.Component <IProps, IState> {
   }
 }
 
-export default GridToolbar;
+export default withStyles(styles)(GridToolbar);

@@ -7,8 +7,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import DownloadIcon from '@material-ui/icons/FileDownload';
 import PrintIcon from '@material-ui/icons/Print';
 
-import { assert, expect } from 'chai';
-
 import * as React from 'react';
 import * as sinon from 'sinon';
 import GridToolbar from '../src/DataGrid/GridToolbar';

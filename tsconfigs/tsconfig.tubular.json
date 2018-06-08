@@ -1,10 +1,15 @@
 {
-    "extends": "../tsconfig.base.json",
-    "files": [
-        "src/**/*.*"
-    ],
     "compilerOptions": {
-        "outDir": "../dist/",
-        "sourceMap": false
-    }
+        "moduleResolution": "node",
+        "preserveConstEnums": true,
+        "outDir": "../dist",
+        "jsx": "react",
+        "lib": ["es5", "es6", "dom"],
+        "declaration": true,
+        "sourceMap": true,
+        "target": "es5",
+        "skipLibCheck": true
+    },
+    "include": [ "../src/**/*.ts", "../src/**/*.tsx" ],
+    "exclude": [ "../test/**/*.*", "../node_modules" ]
 }

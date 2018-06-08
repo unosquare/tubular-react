@@ -1,10 +1,8 @@
-import { Dialog, DialogTitle, TableCell, TableRow, TableSortLabel } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import { StyleRules, Theme, WithStyles, withStyles } from '@material-ui/core/styles';
-import Tooltip from '@material-ui/core/Tooltip';
-import ArrowDownward from '@material-ui/icons/ArrowDownward';
-import ArrowUpward from '@material-ui/icons/ArrowUpward';
-import FilterListIcon from '@material-ui/icons/FilterList';
+import { Dialog, DialogTitle, IconButton, TableCell, TableRow, TableSortLabel, Tooltip } from '@material-ui/core';
+import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core/styles';
+
+import { ArrowDownward, ArrowUpward, FilterList } from '@material-ui/icons';
+
 import { ColumnDataType, ColumnSortDirection, CompareOperators } from './Column';
 import ColumnModel from './ColumnModel';
 import DialogModal from './DialogModal';
@@ -14,7 +12,7 @@ import * as React from 'react';
 
 type customStyles  = 'arrowStyle';
 
-const styles = (theme: Theme): StyleRules<customStyles> => (
+const styles = (theme: Theme) => createStyles(
   {
   arrowStyle: {
     marginLeft: '5px',
@@ -26,15 +24,15 @@ interface IState {
   activeColumn: any;
   sorting: boolean;
 }
-interface IProps {
+interface IProps extends WithStyles<typeof styles> {
   dataSource: any;
   gridName: string;
   page?: number;
   rowsPerPage: number;
   refreshGrid(): void;
 }
- 
-class GridHeader extends React.Component <IProps & WithStyles<customStyles>, IState> {
+
+class GridHeader extends React.Component <IProps, IState> {
   public state = {
     activeColumn: null as any,
     sorting: true
@@ -228,7 +226,7 @@ class GridHeader extends React.Component <IProps & WithStyles<customStyles>, ISt
   }
   
   public render() {
-    const { classes, dataSource } = this.props;
+    const { classes, dataSource} = this.props;
     return (
       <TableRow>  
          <DialogModal
@@ -261,7 +259,7 @@ class GridHeader extends React.Component <IProps & WithStyles<customStyles>, ISt
             : (column.Label);
           const filter = column.Filter &&
             (<IconButton id={column.Name} onClick={() => this.handleOpen(column)} >
-                <FilterListIcon color={(column.Filter.HasFilter && column.Filter.Operator !== CompareOperators.NONE) ?'action':'disabled'} />
+                <FilterList color={(column.Filter.HasFilter && column.Filter.Operator !== CompareOperators.NONE) ?'action':'disabled'} />
             </IconButton>);
           return (
             <TableCell key={column.Label} padding={column.Label === '' ? 'none' : 'default'}>

@@ -1,26 +1,15 @@
 import { Collapse, List, ListItem, ListItemIcon, ListItemText, WithStyles } from '@material-ui/core';
 
-import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
-import IconButton from '@material-ui/core/IconButton';
-import { withStyles } from '@material-ui/core/styles';
-import SvgIcon from '@material-ui/core/SvgIcon';
-import Toolbar from '@material-ui/core/Toolbar';
-import Tooltip from '@material-ui/core/Tooltip';
-import Typography from '@material-ui/core/Typography';
+import { AppBar, Divider, Drawer, IconButton, Toolbar, Tooltip } from '@material-ui/core';
+import { createStyles, Theme, withStyles } from '@material-ui/core/styles';
 
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import MenuIcon from '@material-ui/icons/Menu';
+import { ChevronLeft, ExpandLess, ExpandMore, Menu } from '@material-ui/icons';
 
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import GitHubIcon from './Github';
 
-const styles: any = {
+const styles = (theme: Theme) => createStyles({
     flex: {
         flex: 1,
         textAlign: 'center'
@@ -38,14 +27,16 @@ const styles: any = {
     spacer: {
         flex: '1 1 100%'
     }
-};
+});
+
+interface IProps extends  WithStyles<typeof styles> {}
 
 interface IState {
     openDrawer: boolean;
     openList: boolean;
 }
 
-export default withStyles(styles)(class extends React.Component<WithStyles<keyof typeof styles>, IState> {
+export default withStyles(styles)(class extends React.Component<IProps, IState> {
 
     public state = {
         openDrawer: false,
@@ -71,7 +62,7 @@ export default withStyles(styles)(class extends React.Component<WithStyles<keyof
                     <Toolbar>
                         <Tooltip title='Open'>
                             <IconButton onClick={this.toggleDrawer(true)} color='inherit'>
-                                <MenuIcon />
+                                <Menu />
                             </IconButton>
                         </Tooltip>
                         <img className={classes.logo} src='../../static/tubular.png' alt='Tubular' />
@@ -93,7 +84,7 @@ export default withStyles(styles)(class extends React.Component<WithStyles<keyof
                     <List>
                         <Tooltip title='Close'>
                             <ListItem button={true} onClick={this.toggleDrawer(false)}>
-                                <ListItemIcon><ChevronLeftIcon /></ListItemIcon>
+                                <ListItemIcon><ChevronLeft /></ListItemIcon>
                             </ListItem>
                         </Tooltip>
                         <Divider />

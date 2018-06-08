@@ -1,6 +1,5 @@
 import IconButton from '@material-ui/core/IconButton';
 import { createShallow } from '@material-ui/core/test-utils';
-import { assert, expect } from 'chai';
 import * as React from 'react';
 import * as sinon from 'sinon';
 import TablePaginationActions from '../src/DataGrid/TablePaginationActions';

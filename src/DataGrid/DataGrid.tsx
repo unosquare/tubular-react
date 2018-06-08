@@ -1,14 +1,10 @@
 import {
-  Table, TableBody, TableCell, TableFooter, TableHead, TableRow
+  Paper, Snackbar,  Table, TableBody, TableCell, TableFooter,
+  TableHead, TableRow, Typography
 } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
-import Snackbar from '@material-ui/core/Snackbar';
-import { StyleRules, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 
-import CheckBox from '@material-ui/icons/CheckBox';
-import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
-import WarningIcon from '@material-ui/icons/Warning';
+import { CheckBox, CheckBoxOutlineBlank, Warning } from '@material-ui/icons';
 
 import { debounce } from 'lodash';
 import * as moment from 'moment';
@@ -21,14 +17,7 @@ import GridResponse from './GridResponse';
 import GridToolbar from './GridToolbar';
 import Paginator from './Paginator';
 
-const styleClasses = {
-  dialogButtonStyle: '',
-  dialogContentStyle: '',
-  dialogTitleStyle: '',
-  root: ''
-};
-
-const styles = (theme: Theme): StyleRules<keyof typeof styleClasses> => (
+const styles = (theme: Theme) => createStyles(
   {
     dialogButtonStyle: {
       background: '#28b62c',
@@ -65,7 +54,7 @@ interface IState {
   totalRecordCount: number;
 }
 
-interface IProps {
+interface IProps extends WithStyles<typeof styles> {
   dataSource: BaseDataSource;
   gridName: string;
   rowsPerPage: number;
@@ -80,7 +69,7 @@ interface IProps {
   footerRenderer?(aggregate: any): any;
 }
 
-class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleClasses>, IState> {
+class DataGrid extends React.Component<IProps, IState> {
   public state = {
     aggregate: {},
     data: [] as any,
@@ -343,10 +332,13 @@ class DataGrid extends React.Component<IProps & WithStyles<keyof typeof styleCla
             </TableRow>
         ))}
         {filteredRecordCount === 0 &&
-          (<TableRow>              
+          (<TableRow>
+            <TableCell style={{ display: 'flex', padding: '10px' }}>
+              <Warning />
               <Typography style={{ paddingLeft: '15px' }} variant='body2' gutterBottom={true}>
-              <WarningIcon /> No records found
+              <Warning /> No records found
               </Typography>
+              </TableCell>
           </TableRow>)}
       </TableBody>
     );

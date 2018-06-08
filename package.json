@@ -1,19 +1,18 @@
 {
   "name": "tubular-react",
-  "version": "0.2.2",
+  "version": "0.2.6",
   "description": "Tubular React",
-  "main": "dist/bundle.js",
+  "main": "dist/index.js",
   "scripts": {
     "build:docs": "webpack --env.NODE_ENV=docs --mode=production --progress",
-    "build:prod": "webpack --env.NODE_ENV=tubular-react --mode=production --progress",
-    "build:dev": "webpack --env.NODE_ENV=tubular-react --mode=development --progress",
+    "build": "tsc --p ./tsconfigs/tsconfig.tubular.json",
     "sample": "webpack --env.NODE_ENV=sample --mode=development --progress",
     "start": "webpack-dev-server --env.NODE_ENV=sample --open --progress",
     "lint": "tslint src/**/*.ts src/**/*.tsx",
     "test": "jest",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov",
-    "prepublishOnly": "npm run build:prod"
+    "prepublishOnly": "npm run build"
   },
   "jest": {
     "setupFiles": [
@@ -65,8 +64,8 @@
   },
   "homepage": "https://github.com/unosquare/tubular-react#readme",
   "dependencies": {
-    "@material-ui/core": "^1.0.0",
-    "@material-ui/icons": "^1.0.0",
+    "@material-ui/core": "^1.2.0",
+    "@material-ui/icons": "^1.1.0",
     "@types/vinyl": "^2.0.2",
     "axios": "^0.18.0",
     "jest": "^23.0.1",
@@ -79,7 +78,6 @@
     "typeface-roboto": "0.0.54"
   },
   "devDependencies": {
-    "@types/chai": "^4.1.3",
     "@types/enzyme": "^3.1.10",
     "@types/enzyme-adapter-react-16": "^1.0.2",
     "@types/lodash": "^4.14.109",
@@ -96,8 +94,6 @@
     "axios-mock-adapter": "^1.15.0",
     "browser-sync": "^2.24.4",
     "browserify": "^16.2.2",
-    "chai": "^4.1.2",
-    "copy-webpack-plugin": "^4.5.1",
     "coveralls": "^3.0.1",
     "del": "^3.0.0",
     "enzyme": "^3.3.0",

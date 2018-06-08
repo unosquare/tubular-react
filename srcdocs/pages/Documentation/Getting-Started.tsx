@@ -1,9 +1,6 @@
-import { Typography } from '@material-ui/core';
-import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
-import Hidden from '@material-ui/core/Hidden';
-import Paper from '@material-ui/core/Paper';
+import { Divider, Grid, Hidden, Paper, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+
 import * as React from 'react';
 import SyntaxHighligther from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/styles/hljs';
