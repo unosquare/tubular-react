@@ -16,7 +16,7 @@ import { simpleRecordsExpected } from './utils/data';
 import localData from './utils/localData';
 
 const mock = new MockAdapter(Axios);
-mock.onPost().reply(200, {...simpleRecordsExpected});
+mock.onPost().reply(200, { ...simpleRecordsExpected });
 
 describe('<GridHeader />', () => {
   let shallow;
@@ -56,13 +56,7 @@ describe('<GridHeader />', () => {
     expect(wrapper).toHaveLength(5);
   });
 
-  test('should render a dialog', () => {
-    const wrapper = shallow(gridHeader).find(Dialog);
-
-    expect(wrapper).toHaveLength(1);
-  });
-
-    test('should trigger \'componentWillUnmount()\' one time', () => {
+  test('should trigger \'componentWillUnmount()\' one time', () => {
     sinon.spy(GridHeader.prototype, 'componentWillUnmount');
     const wrapper = mount(
       <Table>
@@ -148,21 +142,21 @@ describe('<GridHeader />', () => {
 
   describe('handleClear()', () => {
     test('should set the state props \'activeFilter\', \'firstFilterValue\' ' +
-        'and \'secondFilterValue\' at its initial values', () => {
-      const wrapper = shallow(gridHeader);
+      'and \'secondFilterValue\' at its initial values', () => {
+        const wrapper = shallow(gridHeader);
 
-      wrapper.setState({
-        columnType: 'datetime',
-        firstFilterValue: '2018-03-06T15:40:30-06:00',
-        secondFilterValue: '2018-03-06T15:40:30-06:00'
+        wrapper.setState({
+          columnType: 'datetime',
+          firstFilterValue: '2018-03-06T15:40:30-06:00',
+          secondFilterValue: '2018-03-06T15:40:30-06:00'
+        });
+
+        wrapper.instance().handleClear();
+
+        expect(wrapper.state().activeFilter).toBe('None');
+        expect(wrapper.state().firstFilterValue).toBe('');
+        expect(wrapper.state().secondFilterValue).toBe('');
       });
-
-      wrapper.instance().handleClear();
-
-      expect(wrapper.state().activeFilter).toBe('None');
-      expect(wrapper.state().firstFilterValue).toBe('');
-      expect(wrapper.state().secondFilterValue).toBe('');
-    });
   });
 
   describe('handleApply()', () => {
@@ -281,7 +275,7 @@ describe('<GridHeader />', () => {
   });
 
   describe('handleChange()', () => {
-   test('should update the state of \'activeFilter\' to \'Contains\'', () => {
+    test('should update the state of \'activeFilter\' to \'Contains\'', () => {
       const wrapper = shallow(gridHeader);
 
       wrapper.setState({
