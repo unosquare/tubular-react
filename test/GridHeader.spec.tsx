@@ -7,7 +7,7 @@ import Axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import * as React from 'react';
 import * as sinon from 'sinon';
-import { ColumnDataType, CompareOperators } from '../src/DataGrid/Column';
+import { ColumnDataType, CompareOperators } from '../src/DataGrid/Models/Column';
 import GridHeader from '../src/DataGrid/GridHeader';
 import LocalDataSource from '../src/DataGrid/DataSource/LocalDataSource';
 import RemoteDataSource from '../src/DataGrid/DataSource/RemoteDataSource';

@@ -3,18 +3,16 @@ import {
   TableHead, TableRow, Typography
 } from '@material-ui/core';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
-
 import { CheckBox, CheckBoxOutlineBlank, Warning } from '@material-ui/icons';
-
 import { debounce } from 'lodash';
 import * as moment from 'moment';
 import * as React from 'react';
 import BaseDataSource from './DataSource/BaseDataSource';
-import { ColumnDataType } from './Column';
-import ColumnModel from './ColumnModel';
 import GridHeader from './GridHeader';
-import GridResponse from './GridResponse';
 import GridToolbar from './GridToolbar';
+import { ColumnDataType } from './Models/Column';
+import ColumnModel from './Models/ColumnModel';
+import GridResponse from './Models/GridResponse';
 import Paginator from './Paginator';
 
 const styles = (theme: Theme) => createStyles(
@@ -216,27 +214,27 @@ class DataGrid extends React.Component<IProps, IState> {
       let finalVal = '';
 
       for (let i = 0; i < row.length; i++) {
-        if (!visibility[i]) continue;
-          let innerValue = row[i] === null || row[i] === undefined ? '' :
+        if (!visibility[i]) { continue; }
+        let innerValue = (row[i] === null || row[i] === undefined) ? '' :
             (typeof(row[i]) === 'boolean') ? (row[i] === true && 'Yes') :
             row[i].toString();
 
-          if (moment(row[i], moment.ISO_8601, true).isValid()) {
+        if (moment(row[i], moment.ISO_8601, true).isValid()) {
             innerValue = moment(row[i]).format('MMMM Do YYYY, h:mm:ss a');
           }
 
-          let result = innerValue.replace(/"/g, '""');
+        let result = innerValue.replace(/"/g, '""');
 
-          if (result.search(/("|,|\n)/g) >= 0) {
+        if (result.search(/("|,|\n)/g) >= 0) {
             result = `"${result}"`;
           }
 
-          if (i > 0) {
+        if (i > 0) {
             finalVal += ',';
           }
 
-          finalVal += result;
-        
+        finalVal += result;
+
       }
 
       return `${finalVal}\n`;

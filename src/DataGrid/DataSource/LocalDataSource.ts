@@ -1,15 +1,15 @@
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import BaseDataSource from './BaseDataSource';
 import {
   AggregateFunctions,
   ColumnSortDirection,
   CompareOperators,
-} from '../Column';
-import ColumnModel from '../ColumnModel';
-import GridRequest from '../GridRequest';
-import GridResponse from '../GridResponse';
+} from '../Models/Column';
+import ColumnModel from '../Models/ColumnModel';
+import GridRequest from '../Models/GridRequest';
+import GridResponse from '../Models/GridResponse';
 import GridDataResponse from '../utils/GridDataResponse';
+import BaseDataSource from './BaseDataSource';
 
 export default class LocalDataSource extends BaseDataSource {
 
