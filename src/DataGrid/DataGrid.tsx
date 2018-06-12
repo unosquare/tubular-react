@@ -354,12 +354,23 @@ class DataGrid extends React.Component<IProps, IState> {
 
     return (
       <Paper className={classes.root}>
-      <GridProvider value={ 
-        {
-        state: this.state.activeColumn,
-        actions: {
-        }
-        } }>
+      <GridProvider value={{
+            state: this.state.activeColumn,
+              actions: {
+                handleChange = (event: any) => {
+                  const value = event.target.value
+                  this.setState((prevState) => ({
+                    activeColumn: {
+                      ...prevState.activeColumn,
+                      Filter: {
+                        ...prevState.activeColumn.Filter,
+                        Operator: value
+                      }
+                    }
+                  }));
+                }
+            }
+          }}>
         {snackbar}
         <GridToolbar
           filteredRecordCount={filteredRecordCount}
