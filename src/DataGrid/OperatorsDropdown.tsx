@@ -3,6 +3,8 @@ import { ColumnDataType, CompareOperators } from './Models/Column';
 
 import { Input, MenuItem, Select } from '@material-ui/core';
 
+import GridConsumer from './GridContext';
+
 const dropdown = {
   marginLeft: '10%',
   width: '80%'
@@ -62,11 +64,13 @@ const OperatorsDropdown: React.SFC<IProps> = ({ activeColumn, handleChange }) =>
   const value = activeColumn.Filter.Operator === '' ? 'None' : activeColumn.Filter.Operator;
   const operators = getOperators(activeColumn.DataType);
   return (
+    <GridConsumer>
+      {(context) =>
     <Select
       disabled={false}
       style={dropdown}
       value={value}
-      onChange={(event) => handleChange(event.target.value)}
+      onChange={context.handleChange(event)}
       input={<Input name={activeColumn.Name} />}
     >
       {
@@ -75,6 +79,7 @@ const OperatorsDropdown: React.SFC<IProps> = ({ activeColumn, handleChange }) =>
         ))
       }
     </Select>
+      }</GridConsumer>
   );
 };
 export default OperatorsDropdown;
