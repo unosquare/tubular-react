@@ -310,6 +310,9 @@ class DataGrid extends React.Component<IProps, IState> {
   }
 
   public render() {
+    const { classes, bodyRenderer, footerRenderer, showBottomPager, rowsPerPageOptions,
+      showTopPager, showPrintButton, showExportButton } = this.props;
+    const { data, rowsPerPage, page, dataSource, aggregate, filteredRecordCount, totalRecordCount } = this.state;
     const body = (
       <GridProvider>
       <TableBody>
