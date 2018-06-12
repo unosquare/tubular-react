@@ -1,5 +1,5 @@
 import {
-  Paper, Snackbar,  Table, TableBody, TableCell, TableFooter,
+  Paper, Snackbar, Table, TableBody, TableCell, TableFooter,
   TableHead, TableRow, Typography
 } from '@material-ui/core';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
@@ -8,7 +8,7 @@ import { debounce } from 'lodash';
 import * as moment from 'moment';
 import * as React from 'react';
 import BaseDataSource from './DataSource/BaseDataSource';
-import GridContext, { GridProvider } from './GridContext';
+import { GridProvider } from './GridContext';
 import GridHeader from './GridHeader';
 import GridToolbar from './GridToolbar';
 import { ColumnDataType } from './Models/Column';
@@ -184,11 +184,11 @@ class DataGrid extends React.Component<IProps, IState> {
               }
               return `<td>${
                 dataSource.columns[index].DataType === ColumnDataType.DATE ||
-                dataSource.columns[index].DataType === ColumnDataType.DATE_TIME ||
-                dataSource.columns[index].DataType === ColumnDataType.DATE_TIME_UTC ?
+                  dataSource.columns[index].DataType === ColumnDataType.DATE_TIME ||
+                  dataSource.columns[index].DataType === ColumnDataType.DATE_TIME_UTC ?
                   moment(cell).format('MMMM Do YYYY, h:mm:ss a') :
-                dataSource.columns[index].DataType === ColumnDataType.BOOLEAN ? (cell === true ? 'Yes' : 'No') :
-                  cell || 0}</td>`;
+                  dataSource.columns[index].DataType === ColumnDataType.BOOLEAN ? (cell === true ? 'Yes' : 'No') :
+                    cell || 0}</td>`;
             }).join(' ')}</tr>`;
           }).join(' ')}</tbody></table>`;
         popup.document.title = this.props.gridName;
@@ -217,22 +217,22 @@ class DataGrid extends React.Component<IProps, IState> {
       for (let i = 0; i < row.length; i++) {
         if (!visibility[i]) { continue; }
         let innerValue = (row[i] === null || row[i] === undefined) ? '' :
-            (typeof(row[i]) === 'boolean') ? (row[i] === true && 'Yes') :
+          (typeof (row[i]) === 'boolean') ? (row[i] === true && 'Yes') :
             row[i].toString();
 
         if (moment(row[i], moment.ISO_8601, true).isValid()) {
-            innerValue = moment(row[i]).format('MMMM Do YYYY, h:mm:ss a');
-          }
+          innerValue = moment(row[i]).format('MMMM Do YYYY, h:mm:ss a');
+        }
 
         let result = innerValue.replace(/"/g, '""');
 
         if (result.search(/("|,|\n)/g) >= 0) {
-            result = `"${result}"`;
-          }
+          result = `"${result}"`;
+        }
 
         if (i > 0) {
-            finalVal += ',';
-          }
+          finalVal += ',';
+        }
 
         finalVal += result;
 
@@ -314,33 +314,28 @@ class DataGrid extends React.Component<IProps, IState> {
       showTopPager, showPrintButton, showExportButton } = this.props;
     const { data, rowsPerPage, page, dataSource, aggregate, filteredRecordCount, totalRecordCount } = this.state;
     const body = (
-      <GridProvider>
-      <TableBody>
-        <GridContext.Consumer>
-          {(context) => context.data}
-        </GridContext.Consumer>
-        {data.map((row: any, rowIndex: number) => (
-          bodyRenderer
-            ? bodyRenderer(row, rowIndex)
-            : <TableRow hover={true} key={rowIndex}>
-              {
-                dataSource.columns.filter((col: any) => col.Visible).map((column: ColumnModel, colIndex: number) =>
-                  <TableCell key={colIndex} padding={column.Label === '' ? 'none' : 'default'}>
-                    {
-                      this.renderCell(column, row)
-                    }
-                  </TableCell>)
-              }
-            </TableRow>
-        ))}
-        {filteredRecordCount === 0 &&
-          (<TableRow>
+        <TableBody>
+          {data.map((row: any, rowIndex: number) => (
+            bodyRenderer
+              ? bodyRenderer(row, rowIndex)
+              : <TableRow hover={true} key={rowIndex}>
+                {
+                  dataSource.columns.filter((col: any) => col.Visible).map((column: ColumnModel, colIndex: number) =>
+                    <TableCell key={colIndex} padding={column.Label === '' ? 'none' : 'default'}>
+                      {
+                        this.renderCell(column, row)
+                      }
+                    </TableCell>)
+                }
+              </TableRow>
+          ))}
+          {filteredRecordCount === 0 &&
+            (<TableRow>
               <Typography style={{ paddingLeft: '15px' }} variant='body2' gutterBottom={true}>
-              <Warning /> No records found
+                <Warning /> No records found
               </Typography>
-          </TableRow>)}
-      </TableBody>
-      </GridProvider>
+            </TableRow>)}
+        </TableBody>
     );
 
     const paginator = (
@@ -372,6 +367,7 @@ class DataGrid extends React.Component<IProps, IState> {
 
     return (
       <Paper className={classes.root}>
+      <GridProvider value={ this.state }>
         {snackbar}
         <GridToolbar
           filteredRecordCount={filteredRecordCount}
@@ -400,6 +396,7 @@ class DataGrid extends React.Component<IProps, IState> {
             {showBottomPager && paginator}
           </TableFooter>
         </Table>
+      </GridProvider>
       </Paper>
     );
   }
