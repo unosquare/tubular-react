@@ -18,21 +18,6 @@ import Paginator from './Paginator';
 
 const styles = (theme: Theme) => createStyles(
   {
-    dialogButtonStyle: {
-      background: '#28b62c',
-      color: 'white',
-      marginBottom: '5px',
-      marginRight: '5px',
-      minWidth: '90px'
-    },
-    dialogContentStyle: {
-      color: 'black',
-      paddingTop: '25px'
-    },
-    dialogTitleStyle: {
-      background: '#ececec',
-      minWidth: '300px'
-    },
     root: {
       marginTop: theme.spacing.unit * 3,
       overflowX: 'auto',
@@ -51,6 +36,7 @@ interface IState {
   rowsPerPage: number;
   searchText: string;
   totalRecordCount: number;
+  activeColumn: any;
 }
 
 interface IProps extends WithStyles<typeof styles> {
@@ -79,7 +65,8 @@ class DataGrid extends React.Component<IProps, IState> {
     page: 0,
     rowsPerPage: this.props.rowsPerPage,
     searchText: '',
-    totalRecordCount: 0
+    totalRecordCount: 0,
+    activeColumn: null
   };
 
   public componentDidMount() {
@@ -367,7 +354,12 @@ class DataGrid extends React.Component<IProps, IState> {
 
     return (
       <Paper className={classes.root}>
-      <GridProvider value={ this.state }>
+      <GridProvider value={ 
+        {
+        state: this.state.activeColumn,
+        actions: {
+        }
+        } }>
         {snackbar}
         <GridToolbar
           filteredRecordCount={filteredRecordCount}
