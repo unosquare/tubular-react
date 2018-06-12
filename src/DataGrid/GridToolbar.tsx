@@ -112,7 +112,7 @@ class GridToolbar extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const { classes, filteredRecordCount, isPrintEnabled, isExportEnabled, onPrint, showSearchText} = this.props;
+    const { classes, filteredRecordCount, isPrintEnabled, isExportEnabled, showSearchText} = this.props;
     const { searchText, anchorEl, anchorPrint } = this.state;
 
     return(
