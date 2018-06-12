@@ -1,7 +1,7 @@
 import { AggregateFunctions } from '../src/DataGrid';
-import { CompareOperators } from '../src/DataGrid/Column';
-import GridResponse from '../src/DataGrid/GridResponse';
 import LocalDataSource from '../src/DataGrid/DataSource/LocalDataSource';
+import { CompareOperators } from '../src/DataGrid/Models/Column';
+import GridResponse from '../src/DataGrid/Models/GridResponse';
 import {
   aggregateColumnsSample,
   customAmountCol,

@@ -1,4 +1,4 @@
-import * as Rx from 'rx';
+import { BehaviorSubject } from 'rxjs';
 import ColumnModel from '../Models/ColumnModel';
 
 export default abstract class BaseDataSource {
@@ -10,7 +10,7 @@ export default abstract class BaseDataSource {
 
     constructor(columns: ColumnModel[]) {
         this.columns = columns;
-        this.dataStream = new Rx.BehaviorSubject({ Payload: [] });
+        this.dataStream = new BehaviorSubject({ Payload: [] });
         BaseDataSource.counter = 0;
     }
 
@@ -18,10 +18,10 @@ export default abstract class BaseDataSource {
 
         this.getAllRecords(rowsPerPage, page, searchText)
             .then((data) => {
-                this.dataStream.onNext(data);
+                this.dataStream.next(data);
             })
             .catch((error) => {
-                this.dataStream.onError(error);
+                this.dataStream.error(error);
             });
 
         return this.dataStream;

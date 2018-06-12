@@ -8,6 +8,7 @@ import { debounce } from 'lodash';
 import * as moment from 'moment';
 import * as React from 'react';
 import BaseDataSource from './DataSource/BaseDataSource';
+import GridContext, { GridProvider } from './GridContext';
 import GridHeader from './GridHeader';
 import GridToolbar from './GridToolbar';
 import { ColumnDataType } from './Models/Column';
@@ -68,18 +69,6 @@ interface IProps extends WithStyles<typeof styles> {
 }
 
 class DataGrid extends React.Component<IProps, IState> {
-  public state = {
-    aggregate: {},
-    data: [] as any,
-    dataSource: this.props.dataSource,
-    errorMessage: '',
-    filteredRecordCount: 0,
-    open: false,
-    page: 0,
-    rowsPerPage: this.props.rowsPerPage,
-    searchText: '',
-    totalRecordCount: 0
-  };
 
   public componentDidMount() {
     if (this.props.rowsPerPageOptions) {
@@ -309,12 +298,12 @@ class DataGrid extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const { classes, bodyRenderer, footerRenderer, showBottomPager, rowsPerPageOptions,
-      showTopPager, showPrintButton, showExportButton } = this.props;
-    const { data, rowsPerPage, page, dataSource, aggregate, filteredRecordCount, totalRecordCount } = this.state;
-
     const body = (
+      <GridProvider>
       <TableBody>
+        <GridContext.Consumer>
+          {(context) => context.data}
+        </GridContext.Consumer>
         {data.map((row: any, rowIndex: number) => (
           bodyRenderer
             ? bodyRenderer(row, rowIndex)
@@ -331,14 +320,12 @@ class DataGrid extends React.Component<IProps, IState> {
         ))}
         {filteredRecordCount === 0 &&
           (<TableRow>
-            <TableCell style={{ display: 'flex', padding: '10px' }}>
-              <Warning />
               <Typography style={{ paddingLeft: '15px' }} variant='body2' gutterBottom={true}>
               <Warning /> No records found
               </Typography>
-              </TableCell>
           </TableRow>)}
       </TableBody>
+      </GridProvider>
     );
 
     const paginator = (

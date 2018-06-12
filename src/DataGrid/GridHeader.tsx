@@ -130,7 +130,7 @@ class GridHeader extends React.Component <IProps, IState> {
   }
 
   public filterHandler = (firstValue: any, secondValue: any, hasFilter: boolean) => {
-    const column = this.props.dataSource.columns.find((c: any) => column.Name === this.state.activeColumn.Name);
+    const column = this.props.dataSource.columns.find((c: any) => c.Name === this.state.activeColumn.Name);
     if (!column) { return; }
 
     column.Filter.Text = firstValue;

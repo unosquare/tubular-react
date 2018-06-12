@@ -1,4 +1,4 @@
-import Menu, { MenuItem } from '@material-ui/core';
+import { MenuItem } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Input from '@material-ui/core/Input';
 import { createShallow } from '@material-ui/core/test-utils';
