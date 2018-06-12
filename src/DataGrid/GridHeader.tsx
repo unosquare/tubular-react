@@ -8,6 +8,8 @@ import DialogModal from './DialogModal';
 import { ColumnDataType, ColumnSortDirection, CompareOperators } from './Models/Column';
 import ColumnModel from './Models/ColumnModel';
 
+import { GridConsumer } from './GridContext';
+
 const styles = (theme: Theme) => createStyles(
   {
   arrowStyle: {
@@ -36,16 +38,6 @@ class GridHeader extends React.Component <IProps, IState> {
 
   public handleClose = () => {
     this.setState({ activeColumn: null });
-  }
-
-  public handleOpen = (column: any) => {
-    this.setState({
-      activeColumn: column,
-    },
-      () => {
-        document.getElementById(column.Name).blur();
-      }
-    );
   }
 
   public handleClear = () => {
@@ -186,77 +178,52 @@ class GridHeader extends React.Component <IProps, IState> {
     this.props.refreshGrid();
   }
 
-  public handleTextFieldChange = (event: any) => {
-    const value = event.target.value;
-    this.setState((prevState) => ({
-      activeColumn: {
-        ...prevState.activeColumn,
-        Filter: {
-          ...prevState.activeColumn.Filter,
-          Text: value,
-        }
-      }
-    }));
-  }
-
-  public handleSecondTextFieldChange = (event: any) => {
-    this.setState((prevState) => ({
-      activeColumn: {
-        ...prevState.activeColumn,
-        Filter: {
-          ...prevState.activeColumn.Filter,
-          Argument: [event],
-        }
-      }
-    }));
-  }
-
   public render() {
     const { classes, dataSource} = this.props;
     return (
-      <TableRow>
-        <DialogModal
-          activeColumn={this.state.activeColumn}
-          handleClose={this.handleClose}
-          handleTextFieldChange={this.handleTextFieldChange}
-          handleSecondTextFieldChange={this.handleSecondTextFieldChange}
-          handleApply={this.handleApply}
-          handleClear={this.handleClear}
-        />
-        {dataSource.columns.filter((col: any) => col.Visible).map((column: any) => {
+            <GridConsumer>
+                {({ actions, state }) =>
+                    < TableRow >
+                    <DialogModal
+                        handleClose={this.handleClose}
+                        handleApply={this.handleApply}
+                        handleClear={this.handleClear}
+                    />{dataSource.columns.filter((col: any) => col.Visible).map((column: any) => {
           const render = column.Sortable ?
             (<Tooltip
-              title='Click to sort. Press Ctrl to sort by multiple columns'
-              placement='bottom-start'
-              enterDelay={300}
-            >
-              <TableSortLabel onClick={(event: any) => this.sortHandler(column.Name)} >
-                {column.Label}
-                {column.SortDirection === ColumnSortDirection.ASCENDING ?
-                  <ArrowUpward className={classes.arrowStyle} />
-                  : column.SortDirection === ColumnSortDirection.DESCENDING ?
-                    <ArrowDownward className={classes.arrowStyle} />
-                    :
-                    <div className={classes.arrowStyle} />
-                }
-              </TableSortLabel>
-            </Tooltip>)
-            : (column.Label);
+                    title='Click to sort. Press Ctrl to sort by multiple columns'
+                    placement='bottom-start'
+                    enterDelay={300}
+                  >
+                    <TableSortLabel onClick={(event: any) => this.sortHandler(column.Name)} >
+                        {column.Label}
+                        {column.SortDirection === ColumnSortDirection.ASCENDING ?
+                            <ArrowUpward className={classes.arrowStyle} />
+                            : column.SortDirection === ColumnSortDirection.DESCENDING ?
+                                <ArrowDownward className={classes.arrowStyle} />
+                                :
+                                <div className={classes.arrowStyle} />
+                        }
+                    </TableSortLabel>
+                </Tooltip>
+              )
+                : (column.Label);
           const filter = column.Filter &&
-            (<IconButton id={column.Name} onClick={() => this.handleOpen(column)} >
-              <FilterList
-                color={(column.Filter.HasFilter && column.Filter.Operator !== CompareOperators.NONE)
-                  ? 'action' : 'disabled'}
-              />
-            </IconButton>);
+            (<IconButton id={column.Name} onClick={actions.handleOpen(column)} >
+                    <FilterList
+                        color={(column.Filter.HasFilter && column.Filter.Operator !== CompareOperators.NONE)
+                            ? 'action' : 'disabled'}
+                    />
+                </IconButton>);
           return (
             <TableCell key={column.Label} padding={column.Label === '' ? 'none' : 'default'}>
-              {render}
-              {filter}
-            </TableCell>
-          );
-        })}
-      </TableRow>
+                    {render}
+                    {filter}
+                </TableCell>
+                );
+              })}
+      </TableRow>}
+      </GridConsumer>
     );
   }
 }

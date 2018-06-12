@@ -1,14 +1,13 @@
 import * as React from 'react';
 
-interface IContext
-{
-    state?: any;
+interface IContext {
     actions?: any;
+    state?: any;
 }
 
 const GridContext = React.createContext<IContext>({
+    actions: null,
     state: null,
-    actions: null
 });
 
 export const GridProvider = GridContext.Provider;

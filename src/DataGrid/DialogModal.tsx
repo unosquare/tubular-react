@@ -33,9 +33,7 @@ const setInitialValues = ( activeColumn: any) => {
         secondValue = activeColumn.Filter.Argument[0] || '';
     }
 };
-const DialogModal: React.SFC<IProps> = ({
-    activeColumn,  handleClose, handleApply, handleClear, handleTextFieldChange,
-    handleSecondTextFieldChange}) => {
+const DialogModal: React.SFC<IProps> = (handleClose) => {
 
     if ( activeColumn == null ) { return null; }
     setInitialValues(activeColumn);

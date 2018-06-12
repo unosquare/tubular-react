@@ -70,8 +70,7 @@ const OperatorsDropdown: React.SFC = () => {
               <MenuItem key={i} value={row.Value}>{row.Title}</MenuItem>
             ))
           }
-        </Select>
-      }
+        </Select>}
     </GridConsumer>
   );
 };

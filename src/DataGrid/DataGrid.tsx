@@ -366,6 +366,39 @@ class DataGrid extends React.Component<IProps, IState> {
                   }
                 }
               }));
+            },
+            handleOpen: (column: any) => {
+              this.setState({
+                activeColumn: column,
+              },
+                () => {
+                  document.getElementById(column.Name).blur();
+                }
+              );
+            },
+            handleTextFieldChange: (event: any) => {
+              const value = event.target.value;
+              this.setState((prevState) => ({
+                activeColumn: {
+                  ...prevState.activeColumn,
+                  Filter: {
+                    ...prevState.activeColumn.Filter,
+                    Text: value,
+                  }
+                }
+              }));
+            },
+            handleSecondTextFieldChange: (event: any) => {
+              const value = event.target.value;
+              this.setState((prevState) => ({
+                activeColumn: {
+                  ...prevState.activeColumn,
+                  Filter: {
+                    ...prevState.activeColumn.Filter,
+                    Argument: [value],
+                  }
+                }
+              }));
             }
           }
         }}>
