@@ -7,9 +7,6 @@ import * as React from 'react';
 
 const styles = (theme: Theme) => createStyles(
   {
-    button: {
-      minWidth: 150
-    },
     formControl: {
       margin: theme.spacing.unit,
       minWidth: 250
