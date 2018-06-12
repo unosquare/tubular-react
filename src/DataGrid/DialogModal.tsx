@@ -9,7 +9,6 @@ import * as React from 'react';
 
 interface IProps {
   activeColumn: any;
-  handleChange(value: any): void;
   handleApply(): void;
   handleClear(): void;
   handleTextFieldChange(event: any): void;
@@ -35,7 +34,7 @@ const setInitialValues = ( activeColumn: any) => {
     }
 };
 const DialogModal: React.SFC<IProps> = ({
-    activeColumn, handleChange, handleClose, handleApply, handleClear, handleTextFieldChange,
+    activeColumn,  handleClose, handleApply, handleClear, handleTextFieldChange,
     handleSecondTextFieldChange}) => {
 
     if ( activeColumn == null ) { return null; }
@@ -44,10 +43,7 @@ const DialogModal: React.SFC<IProps> = ({
         <Dialog open={activeColumn != null} onClose={handleClose} >
             <DialogTitle>{'Filter'}</DialogTitle>
             <DialogContent>
-                <OperatorsDropdown
-                    activeColumn={activeColumn}
-                    handleChange={handleChange}
-                />
+                <OperatorsDropdown />
                 <DialogInput
                     disabled={activeColumn.Filter.Operator === CompareOperators.NONE}
                     value={firstValue}

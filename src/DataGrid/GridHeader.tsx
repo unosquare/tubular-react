@@ -211,25 +211,12 @@ class GridHeader extends React.Component <IProps, IState> {
     }));
   }
 
-  public handleChange = (event: any) => {
-    this.setState((prevState) => ({
-      activeColumn: {
-        ...prevState.activeColumn,
-        Filter: {
-          ...prevState.activeColumn.Filter,
-          Operator: event
-        }
-      }
-    }));
-  }
-
   public render() {
     const { classes, dataSource} = this.props;
     return (
       <TableRow>
         <DialogModal
           activeColumn={this.state.activeColumn}
-          handleChange={this.handleChange}
           handleClose={this.handleClose}
           handleTextFieldChange={this.handleTextFieldChange}
           handleSecondTextFieldChange={this.handleSecondTextFieldChange}

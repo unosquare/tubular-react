@@ -66,15 +66,11 @@ class DataGrid extends React.Component<IProps, IState> {
     rowsPerPage: this.props.rowsPerPage,
     searchText: '',
     totalRecordCount: 0,
-    activeColumn: null
+    activeColumn: null as any
   };
 
   public componentDidMount() {
-    if (this.props.rowsPerPageOptions) {
-      this.rowsPerPageChecker(this.props.rowsPerPageOptions);
-    } else {
-      this.rowsPerPageChecker([10, 20, 50, 100]);
-    }
+    this.rowsPerPageChecker(this.props.rowsPerPageOptions || [10, 20, 50, 100]);
 
     const pageSize = parseInt(localStorage.getItem(`tubular.${this.props.gridName}_pageSize`), 10) ||
       this.props.rowsPerPage;
@@ -301,28 +297,28 @@ class DataGrid extends React.Component<IProps, IState> {
       showTopPager, showPrintButton, showExportButton } = this.props;
     const { data, rowsPerPage, page, dataSource, aggregate, filteredRecordCount, totalRecordCount } = this.state;
     const body = (
-        <TableBody>
-          {data.map((row: any, rowIndex: number) => (
-            bodyRenderer
-              ? bodyRenderer(row, rowIndex)
-              : <TableRow hover={true} key={rowIndex}>
-                {
-                  dataSource.columns.filter((col: any) => col.Visible).map((column: ColumnModel, colIndex: number) =>
-                    <TableCell key={colIndex} padding={column.Label === '' ? 'none' : 'default'}>
-                      {
-                        this.renderCell(column, row)
-                      }
-                    </TableCell>)
-                }
-              </TableRow>
-          ))}
-          {filteredRecordCount === 0 &&
-            (<TableRow>
-              <Typography style={{ paddingLeft: '15px' }} variant='body2' gutterBottom={true}>
-                <Warning /> No records found
+      <TableBody>
+        {data.map((row: any, rowIndex: number) => (
+          bodyRenderer
+            ? bodyRenderer(row, rowIndex)
+            : <TableRow hover={true} key={rowIndex}>
+              {
+                dataSource.columns.filter((col: any) => col.Visible).map((column: ColumnModel, colIndex: number) =>
+                  <TableCell key={colIndex} padding={column.Label === '' ? 'none' : 'default'}>
+                    {
+                      this.renderCell(column, row)
+                    }
+                  </TableCell>)
+              }
+            </TableRow>
+        ))}
+        {filteredRecordCount === 0 &&
+          (<TableRow>
+            <Typography style={{ paddingLeft: '15px' }} variant='body2' gutterBottom={true}>
+              <Warning /> No records found
               </Typography>
-            </TableRow>)}
-        </TableBody>
+          </TableRow>)}
+      </TableBody>
     );
 
     const paginator = (
@@ -354,52 +350,54 @@ class DataGrid extends React.Component<IProps, IState> {
 
     return (
       <Paper className={classes.root}>
-      <GridProvider value={{
-            state: this.state.activeColumn,
-              actions: {
-                handleChange = (event: any) => {
-                  const value = event.target.value
-                  this.setState((prevState) => ({
-                    activeColumn: {
-                      ...prevState.activeColumn,
-                      Filter: {
-                        ...prevState.activeColumn.Filter,
-                        Operator: value
-                      }
-                    }
-                  }));
+        <GridProvider value={{
+          state: {
+            activeColumn: this.state.activeColumn
+          },
+          actions: {
+            handleChange: (event: any) => {
+              const value = event.target.value
+              this.setState((prevState) => ({
+                activeColumn: {
+                  ...prevState.activeColumn,
+                  Filter: {
+                    ...prevState.activeColumn.Filter,
+                    Operator: value
+                  }
                 }
+              }));
             }
-          }}>
-        {snackbar}
-        <GridToolbar
-          filteredRecordCount={filteredRecordCount}
-          gridName={this.props.gridName}
-          showSearchText={this.props.showSearchText}
-          onSearchTextChange={this.handleTextSearch}
-          isPrintEnabled={showPrintButton}
-          isExportEnabled={showExportButton}
-          onPrint={this.printTable}
-          onExport={this.exportTable}
-        />
-        <Table>
-          <TableHead>
-            {showTopPager && paginator}
-            <GridHeader
-              gridName={this.props.gridName}
-              dataSource={dataSource}
-              page={page}
-              rowsPerPage={rowsPerPage}
-              refreshGrid={this.refreshGrid}
-            />
-          </TableHead>
-          {body}
-          <TableFooter>
-            {footerRenderer && footerRenderer(aggregate)}
-            {showBottomPager && paginator}
-          </TableFooter>
-        </Table>
-      </GridProvider>
+          }
+        }}>
+          {snackbar}
+          <GridToolbar
+            filteredRecordCount={filteredRecordCount}
+            gridName={this.props.gridName}
+            showSearchText={this.props.showSearchText}
+            onSearchTextChange={this.handleTextSearch}
+            isPrintEnabled={showPrintButton}
+            isExportEnabled={showExportButton}
+            onPrint={this.printTable}
+            onExport={this.exportTable}
+          />
+          <Table>
+            <TableHead>
+              {showTopPager && paginator}
+              <GridHeader
+                gridName={this.props.gridName}
+                dataSource={dataSource}
+                page={page}
+                rowsPerPage={rowsPerPage}
+                refreshGrid={this.refreshGrid}
+              />
+            </TableHead>
+            {body}
+            <TableFooter>
+              {footerRenderer && footerRenderer(aggregate)}
+              {showBottomPager && paginator}
+            </TableFooter>
+          </Table>
+        </GridProvider>
       </Paper>
     );
   }

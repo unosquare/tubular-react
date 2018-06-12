@@ -3,7 +3,7 @@ import { ColumnDataType, CompareOperators } from './Models/Column';
 
 import { Input, MenuItem, Select } from '@material-ui/core';
 
-import GridConsumer from './GridContext';
+import { GridConsumer } from './GridContext';
 
 const dropdown = {
   marginLeft: '10%',
@@ -38,48 +38,41 @@ const BooleanOperators = [
   { Value: CompareOperators.NOT_EQUALS, Title: 'Not Equals' }
 ];
 
-interface IProps {
-  activeColumn: any;
-  handleChange(value: any): void;
-}
-
 const getOperators = (DataType: any) => {
-
-      switch (DataType) {
-      case ColumnDataType.STRING:
-        return StringOperators;
-      case ColumnDataType.NUMERIC:
-      case ColumnDataType.DATE:
-      case ColumnDataType.DATE_TIME:
-      case ColumnDataType.DATE_TIME_UTC:
-        return NumericOperators;
-      case ColumnDataType.BOOLEAN:
-        return BooleanOperators;
-      default:
-        return [];
+  switch (DataType) {
+    case ColumnDataType.STRING:
+      return StringOperators;
+    case ColumnDataType.NUMERIC:
+    case ColumnDataType.DATE:
+    case ColumnDataType.DATE_TIME:
+    case ColumnDataType.DATE_TIME_UTC:
+      return NumericOperators;
+    case ColumnDataType.BOOLEAN:
+      return BooleanOperators;
+    default:
+      return [];
   }
 };
 
-const OperatorsDropdown: React.SFC<IProps> = ({ activeColumn, handleChange }) => {
-  const value = activeColumn.Filter.Operator === '' ? 'None' : activeColumn.Filter.Operator;
-  const operators = getOperators(activeColumn.DataType);
+const OperatorsDropdown: React.SFC = () => {
   return (
     <GridConsumer>
-      {(context) =>
-    <Select
-      disabled={false}
-      style={dropdown}
-      value={value}
-      onChange={context.handleChange(event)}
-      input={<Input name={activeColumn.Name} />}
-    >
-      {
-        operators.map((row: any, i: number) => (
-          <MenuItem key={i} value={row.Value}>{row.Title}</MenuItem>
-        ))
+      {({ state, actions }) =>
+        <Select
+          disabled={false}
+          style={dropdown}
+          value={state.activeColumn.Filter.Operator === '' ? 'None' : state.activeColumn.Filter.Operator}
+          onChange={actions.handleChange}
+          input={<Input name={state.activeColumn.Name} />}
+        >
+          {
+            getOperators(state.activeColumn.DataType).map((row: any, i: number) => (
+              <MenuItem key={i} value={row.Value}>{row.Title}</MenuItem>
+            ))
+          }
+        </Select>
       }
-    </Select>
-      }</GridConsumer>
+    </GridConsumer>
   );
 };
 export default OperatorsDropdown;
