@@ -69,6 +69,18 @@ interface IProps extends WithStyles<typeof styles> {
 }
 
 class DataGrid extends React.Component<IProps, IState> {
+  public state = {
+    aggregate: {},
+    data: [] as any,
+    dataSource: this.props.dataSource,
+    errorMessage: '',
+    filteredRecordCount: 0,
+    open: false,
+    page: 0,
+    rowsPerPage: this.props.rowsPerPage,
+    searchText: '',
+    totalRecordCount: 0
+  };
 
   public componentDidMount() {
     if (this.props.rowsPerPageOptions) {
