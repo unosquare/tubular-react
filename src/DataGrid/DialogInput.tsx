@@ -49,8 +49,7 @@ const getValue = (dataType: ColumnDataType, operator: CompareOperators, value: s
 const DialogInput: React.SFC<IProps> = ({ column, handleTextFieldChange, isPrimary }) => {
   const value = getValue(column.DataType, column.Operator, isPrimary ? column.Filter.Text : column.Filter.Argument[0]);
   const disabled = isPrimary ? column.Filter.Operator === CompareOperators.NONE : false;
-  const label = isPrimary ?
-  column.activeColumn.Filter.Operator !== CompareOperators.BETWEEN ? 'Value' : 'First Value' : 'Second Value';
+  const label = isPrimary ? column.Filter.Operator !== CompareOperators.BETWEEN ? 'Value' : 'First Value' : 'Second Value';
 
   return (
     <TextField

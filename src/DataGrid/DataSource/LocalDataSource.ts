@@ -15,27 +15,15 @@ export default class LocalDataSource extends BaseDataSource {
 
   public localData: any[];
 
-  constructor(localData: any[], columns: ColumnModel[]) {
-    super(columns);
+  constructor(localData: any[]) {
+    super();
     this.localData = localData;
   }
 
-  public getAllRecords(rowsPerPage: number, page: number, searchText: string): Promise<object> {
+  public getAllRecords(request: GridRequest): Promise<object> {
     return new Promise((resolve, reject) => {
       try {
         let data = this.localData;
-
-        const request = new GridRequest({
-          Columns: this.columns,
-          Count: BaseDataSource.counter++,
-          Search: {
-            Operator: 'Auto',
-            Text: searchText ? searchText : ''
-          },
-          Skip: page * rowsPerPage,
-          Take: rowsPerPage,
-          TimezoneOffset: 360
-        });
 
         const response = new GridDataResponse({
           Counter: request.Count,
@@ -67,7 +55,7 @@ export default class LocalDataSource extends BaseDataSource {
         const rows = data.map((row: any) => {
           const obj: any = {};
 
-          this.columns.forEach((column: any, key: any) => {
+          request.Columns.forEach((column: any, key: any) => {
             obj[column.Name] = row[key] || row[column.Name];
           });
 
@@ -80,8 +68,6 @@ export default class LocalDataSource extends BaseDataSource {
           Aggregate: response.AggregationPayload,
           FilteredRecordCount: response.FilteredRecordCount,
           Payload: response.Payload,
-          RowsPerPage: rowsPerPage,
-          SearchText: searchText,
           TotalRecordCount: response.TotalRecordCount
         }));
       } catch (error) {

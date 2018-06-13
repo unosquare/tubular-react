@@ -44,13 +44,14 @@ const columns = [
   )
 ];
 
+const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged');
+
 export default class Main extends React.Component {
   public render() {
-    const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns);
-
     return (
       <DataGrid
         dataSource={dataSource}
+        columns={columns}
         gridName='Tubular-React'
         bodyRenderer={
           (row: any, index: any) =>

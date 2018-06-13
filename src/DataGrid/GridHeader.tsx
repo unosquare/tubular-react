@@ -18,96 +18,27 @@ const styles = (theme: Theme) => createStyles(
     }
   });
 
-interface IState {
-  sorting: boolean;
-}
-
 interface IProps extends WithStyles<typeof styles> {
-  dataSource: any;
-  page?: number;
-  rowsPerPage: number;
-  refreshGrid(): void;
+  columns: ColumnModel[];
 }
 
-class GridHeader extends React.Component<IProps, IState> {
-  public state = {
-    sorting: true
-  };
-
-  public handleKeyDown(event: any) {
-    if (event.key === 'Control' && this.state.sorting) {
-      // TODO: Rewrite
-    }
-  }
-
-  public handleKeyUp(event: any) {
-    if (event.key === 'Control' && !this.state.sorting) {
-      // TODO: Rewrite
-    }
-  }
-
-  public componentDidMount() {
-    document.addEventListener('keydown', (event) => this.handleKeyDown(event));
-    document.addEventListener('keyup', (event) => this.handleKeyUp(event));
-  }
-
-  public componentWillUnmount() {
-    document.removeEventListener('keydown', (event) => this.handleKeyDown(event));
-    document.removeEventListener('keyup', (event) => this.handleKeyUp(event));
-  }
-
-  public sortHandler = (property: string) => {
-    const array = Object.assign({}, this.props.dataSource);
-
-    array.columns.forEach((column: any) => {
-      if (column.Name === property) {
-        column.SortDirection = column.SortDirection === ColumnSortDirection.NONE
-          ? ColumnSortDirection.ASCENDING
-          : column.SortDirection === ColumnSortDirection.ASCENDING ?
-            ColumnSortDirection.DESCENDING :
-            ColumnSortDirection.NONE;
-
-        if (column.SortDirection === ColumnSortDirection.NONE) {
-          column.SortOrder = -1;
-        } else {
-          column.SortOrder = Number.MAX_VALUE;
-        }
-
-        if (this.state.sorting === true) {
-          array.columns.filter((col: any) => col.Name !== property).forEach(($column: any) => {
-            $column.SortOrder = -1;
-            $column.SortDirection = ColumnSortDirection.NONE;
-          });
-        }
-
-        const currentlySortedColumns = array.columns.filter((col: ColumnModel) => col.SortOrder > 0)
-          .sort((a: ColumnModel, b: ColumnModel) => a.SortOrder === b.SortOrder ? 0 : a.SortOrder > b.SortOrder);
-
-        currentlySortedColumns.forEach(($column: any, i: number) => {
-          $column.SortOrder = i + 1;
-        });
-      }
-    });
-
-    this.props.refreshGrid();
-  }
-
+class GridHeader extends React.Component<IProps> {
   public render() {
-    const { classes, dataSource } = this.props;
+    const { classes, columns } = this.props;
 
     return (
       <GridConsumer>
         {({ actions, state }) =>
           < TableRow >
           {state.activeColumn && <DialogModal />}
-            {dataSource.columns.filter((col: any) => col.Visible).map((column: any) => {
+            {columns.filter((col: any) => col.Visible).map((column: any) => {
               const render = column.Sortable ?
                 (<Tooltip
                   title='Click to sort. Press Ctrl to sort by multiple columns'
                   placement='bottom-start'
                   enterDelay={300}
                 >
-                  <TableSortLabel onClick={(event: any) => this.sortHandler(column.Name)} >
+                  <TableSortLabel onClick={() => actions.sortColumn(column.Name)} >
                     {column.Label}
                     {column.SortDirection === ColumnSortDirection.ASCENDING ?
                       <ArrowUpward className={classes.arrowStyle} />
@@ -121,7 +52,7 @@ class GridHeader extends React.Component<IProps, IState> {
                 )
                 : (column.Label);
               const filter = column.Filter &&
-                (<IconButton id={column.Name} onClick={actions.setActiveColumn(column)} >
+                (<IconButton id={column.Name} onClick={() => actions.setActiveColumn(column)} >
                   <FilterList
                     color={(column.Filter.HasFilter && column.Filter.Operator !== CompareOperators.NONE)
                       ? 'action' : 'disabled'}

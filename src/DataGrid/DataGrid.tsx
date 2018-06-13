@@ -7,12 +7,14 @@ import { CheckBox, CheckBoxOutlineBlank, Warning } from '@material-ui/icons';
 import { debounce } from 'lodash';
 import * as moment from 'moment';
 import * as React from 'react';
+
 import BaseDataSource from './DataSource/BaseDataSource';
 import { GridProvider } from './GridContext';
 import GridHeader from './GridHeader';
 import GridToolbar from './GridToolbar';
-import { ColumnDataType, CompareOperators } from './Models/Column';
+import { ColumnDataType, CompareOperators, ColumnSortDirection } from './Models/Column';
 import ColumnModel from './Models/ColumnModel';
+import GridRequest from './Models/GridRequest';
 import GridResponse from './Models/GridResponse';
 import Paginator from './Paginator';
 
@@ -28,7 +30,6 @@ const styles = (theme: Theme) => createStyles(
 interface IState {
   aggregate: any;
   data: any[];
-  dataSource: BaseDataSource;
   errorMessage: string;
   filteredRecordCount: number;
   open: boolean;
@@ -37,10 +38,13 @@ interface IState {
   searchText: string;
   totalRecordCount: number;
   activeColumn: any;
+  gridRequest: GridRequest;
+  multiSort: boolean;
 }
 
 interface IProps extends WithStyles<typeof styles> {
   dataSource: BaseDataSource;
+  columns: ColumnModel[];
   gridName: string;
   rowsPerPage: number;
   rowsPerPageOptions?: number[];
@@ -56,6 +60,7 @@ interface IProps extends WithStyles<typeof styles> {
 
 class DataGrid extends React.Component<IProps, IState> {
   public state = {
+    multiSort: false,
     activeColumn: null as any,
     aggregate: {},
     data: [] as any,
@@ -64,26 +69,41 @@ class DataGrid extends React.Component<IProps, IState> {
     filteredRecordCount: 0,
     open: false,
     page: 0,
-    rowsPerPage: this.props.rowsPerPage,
-    searchText: '',
+    rowsPerPage: parseInt(localStorage.getItem(`tubular.${this.props.gridName}_pageSize`), 10) ||  this.props.rowsPerPage,
+    searchText: localStorage.getItem(`tubular.${this.props.gridName}_searchText`) || '',
     totalRecordCount: 0,
+    gridRequest: new GridRequest(this.props.columns, this.props.rowsPerPage, 0)
   };
 
+  public handleKeyDown(event: any) {
+    if (event.key === 'Control' && !this.state.multiSort) {
+      this.setState({ multiSort: true });
+    }
+  }
+
+  public handleKeyUp(event: any) {
+    if (event.key === 'Control' && this.state.multiSort) {
+      this.setState({ multiSort: false });
+    }
+  }
+
+  public componentWillUnmount() {
+    document.removeEventListener('keydown', (event) => this.handleKeyDown(event));
+    document.removeEventListener('keyup', (event) => this.handleKeyUp(event));
+  }
+
   public componentDidMount() {
+    document.addEventListener('keydown', (event) => this.handleKeyDown(event));
+    document.addEventListener('keyup', (event) => this.handleKeyUp(event));
+
     this.rowsPerPageChecker(this.props.rowsPerPageOptions || [10, 20, 50, 100]);
 
-    const pageSize = parseInt(localStorage.getItem(`tubular.${this.props.gridName}_pageSize`), 10) ||
-      this.props.rowsPerPage;
-    const searchText = localStorage.getItem(`tubular.${this.props.gridName}_searchText`) || '';
-
-    this.state.dataSource.retrieveData(pageSize, this.state.page, searchText)
+    this.state.dataSource.retrieveData(this.state.gridRequest)
       .subscribe((tbResponse: GridResponse) => {
         this.setState({
           aggregate: tbResponse.Aggregate,
           data: tbResponse.Payload,
           filteredRecordCount: tbResponse.FilteredRecordCount || 0,
-          rowsPerPage: tbResponse.RowsPerPage || 10,
-          searchText: tbResponse.SearchText || '',
           totalRecordCount: tbResponse.TotalRecordCount || 0
         });
       }, (error: any) => {
@@ -99,23 +119,23 @@ class DataGrid extends React.Component<IProps, IState> {
     // TODO: Fix, and change to update the state
     const storage = JSON.parse(localStorage.getItem(`tubular.${this.props.gridName}`));
     console.log(storage);
-    const dataSource = this.props.dataSource;
+    // const dataSource = this.props.dataSource;
 
-    storage.forEach((element: any, i: number) => {
-      if (dataSource.columns[i] === undefined) { return; }
-      dataSource.columns[i].SortDirection = element.SortDirection;
-      dataSource.columns[i].SortOrder = element.SortOrder;
+    // storage.forEach((element: any, i: number) => {
+    //   if (gridRequest.Columns[i] === undefined) { return; }
+    //   gridRequest.Columns[i].SortDirection = element.SortDirection;
+    //   gridRequest.Columns[i].SortOrder = element.SortOrder;
 
-      if (dataSource.columns[i].Filter && element.Filter) {
-        dataSource.columns[i].Filter.HasFilter = element.Filter.HasFilter;
-        dataSource.columns[i].Filter.Operator = element.Filter.Operator;
-        dataSource.columns[i].Filter.Text =
-          dataSource.columns[i].DataType === ColumnDataType.BOOLEAN ?
-            element.Filter.Text :
-            element.Filter.Text || '';
-        dataSource.columns[i].Filter.Argument[0] = element.Filter.Argument[0] || '';
-      }
-    });
+    //   if (gridRequest.Columns[i].Filter && element.Filter) {
+    //     gridRequest.Columns[i].Filter.HasFilter = element.Filter.HasFilter;
+    //     gridRequest.Columns[i].Filter.Operator = element.Filter.Operator;
+    //     gridRequest.Columns[i].Filter.Text =
+    //       gridRequest.Columns[i].DataType === ColumnDataType.BOOLEAN ?
+    //         element.Filter.Text :
+    //         element.Filter.Text || '';
+    //     gridRequest.Columns[i].Filter.Argument[0] = element.Filter.Argument[0] || '';
+    //   }
+    // });
   }
 
   public componentWillMount() {
@@ -143,17 +163,17 @@ class DataGrid extends React.Component<IProps, IState> {
   }
 
   public refreshGrid = () => {
-    const { dataSource, rowsPerPage, page, searchText } = this.state;
+    const { gridRequest, rowsPerPage, searchText } = this.state;
 
-    dataSource.retrieveData(rowsPerPage, page, searchText);
+    this.props.dataSource.retrieveData(gridRequest);
 
-    localStorage.setItem(`tubular.${this.props.gridName}`, JSON.stringify(dataSource.columns));
+    localStorage.setItem(`tubular.${this.props.gridName}`, JSON.stringify(gridRequest.Columns));
     localStorage.setItem(`tubular.${this.props.gridName}_pageSize`, String(rowsPerPage));
     localStorage.setItem(`tubular.${this.props.gridName}_searchText`, searchText);
   }
 
   public printTable = (filtered: boolean) => {
-    const { dataSource, filteredRecordCount, searchText } = this.state;
+    const { filteredRecordCount, gridRequest } = this.state;
     let count;
     let page;
 
@@ -169,14 +189,14 @@ class DataGrid extends React.Component<IProps, IState> {
       page = 0;
     }
 
-    dataSource.getAllRecords(count, page, searchText)
+    this.props.dataSource.getAllRecords(gridRequest)
       .then(({ Payload }: any) => {
         const popup = window.open('about:blank', 'Print', 'location=0,height=500,width=800');
         popup.document
           .write('<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.min.css" />');
 
         const tableHtml = `<table class="table table-bordered table-striped"><thead><tr>${
-          dataSource.columns
+          gridRequest.Columns
             .filter((c: any) => c.Visible)
             .reduce((prev: any, el: any) => `${prev}<th>${el.Label || el.Name}</th>`, '')
           }</tr></thead><tbody>${
@@ -185,15 +205,15 @@ class DataGrid extends React.Component<IProps, IState> {
               row = Object.keys(row).map((key: any) => row[key]);
             }
             return `<tr>${row.map((cell: any, index: number) => {
-              if (dataSource.columns[index] && !dataSource.columns[index].Visible) {
+              if (gridRequest.Columns[index] && !gridRequest.Columns[index].Visible) {
                 return '';
               }
               return `<td>${
-                dataSource.columns[index].DataType === ColumnDataType.DATE ||
-                  dataSource.columns[index].DataType === ColumnDataType.DATE_TIME ||
-                  dataSource.columns[index].DataType === ColumnDataType.DATE_TIME_UTC ?
+                gridRequest.Columns[index].DataType === ColumnDataType.DATE ||
+                  gridRequest.Columns[index].DataType === ColumnDataType.DATE_TIME ||
+                  gridRequest.Columns[index].DataType === ColumnDataType.DATE_TIME_UTC ?
                   moment(cell).format('MMMM Do YYYY, h:mm:ss a') :
-                  dataSource.columns[index].DataType === ColumnDataType.BOOLEAN ? (cell === true ? 'Yes' : 'No') :
+                  gridRequest.Columns[index].DataType === ColumnDataType.BOOLEAN ? (cell === true ? 'Yes' : 'No') :
                     cell || 0}</td>`;
             }).join(' ')}</tr>`;
           }).join(' ')}</tbody></table>`;
@@ -207,9 +227,9 @@ class DataGrid extends React.Component<IProps, IState> {
   }
 
   public exportTable = (filtered: boolean) => {
-    const { dataSource, filteredRecordCount, totalRecordCount, searchText } = this.state;
-    const header = dataSource.columns.map((x: any) => x.Label);
-    const visibility = dataSource.columns.map((x: any) => x.Visible);
+    const { gridRequest, filteredRecordCount, searchText } = this.state;
+    const header = gridRequest.Columns.map((x: any) => x.Label);
+    const visibility = gridRequest.Columns.map((x: any) => x.Visible);
     let count;
     let page;
 
@@ -259,7 +279,7 @@ class DataGrid extends React.Component<IProps, IState> {
       page = 0;
     }
 
-    dataSource.getAllRecords(count, page, searchText)
+    this.props.dataSource.getAllRecords(gridRequest)
       .then(({ Payload }: any) => {
         Payload.forEach((row: any) => {
           csvFile += processRow(row);
@@ -318,7 +338,7 @@ class DataGrid extends React.Component<IProps, IState> {
   public render() {
     const { classes, bodyRenderer, footerRenderer, showBottomPager, rowsPerPageOptions,
       showTopPager, showPrintButton, showExportButton } = this.props;
-    const { data, rowsPerPage, page, dataSource, aggregate, filteredRecordCount, totalRecordCount } = this.state;
+    const { data, rowsPerPage, page, gridRequest, aggregate, filteredRecordCount, totalRecordCount } = this.state;
     const body = (
       <TableBody>
         {data.map((row: any, rowIndex: number) => (
@@ -326,7 +346,7 @@ class DataGrid extends React.Component<IProps, IState> {
             ? bodyRenderer(row, rowIndex)
             : <TableRow hover={true} key={rowIndex}>
               {
-                dataSource.columns.filter((col: any) => col.Visible).map((column: ColumnModel, colIndex: number) =>
+                gridRequest.Columns.filter((col: any) => col.Visible).map((column: ColumnModel, colIndex: number) =>
                   <TableCell key={colIndex} padding={column.Label === '' ? 'none' : 'default'}>
                     {
                       this.renderCell(column, row)
@@ -401,7 +421,7 @@ class DataGrid extends React.Component<IProps, IState> {
             },
             clearActiveColumn: () => {
               this.setState((prevState) => {
-                const columns = { ...prevState.dataSource.columns };
+                const columns = [...prevState.gridRequest.Columns];
                 const columnIdx = columns.findIndex((c: ColumnModel) => c.Name === prevState.activeColumn.Name);
 
                 if (columnIdx !== -1) {
@@ -412,13 +432,10 @@ class DataGrid extends React.Component<IProps, IState> {
                     Argument: ['']
                   };
                 }
+
                 return {
-                  ...prevState, // TODO: Check if you really need this
                   activeColumn: null,
-                  dataSource: {
-                    ...prevState.dataSource,
-                    columns: columns
-                  } as BaseDataSource
+                  gridRequest: new GridRequest(columns, prevState.rowsPerPage, prevState.page, prevState.searchText)
                 };
               });
             },
@@ -437,7 +454,7 @@ class DataGrid extends React.Component<IProps, IState> {
                   FilterArgument = prevState.activeColumn.Filter.Argument[0];
                 }
 
-                const columns = { ...prevState.dataSource.columns };
+                const columns = [...prevState.gridRequest.Columns];
                 const columnIdx = columns.findIndex((c: ColumnModel) => c.Name === prevState.activeColumn.Name);
 
                 if (columnIdx !== -1) {
@@ -450,21 +467,52 @@ class DataGrid extends React.Component<IProps, IState> {
                 }
 
                 return {
-                  activeColumn: {
-                    ...prevState.activeColumn,
-                    Filter: {
-                      ...prevState.activeColumn.Filter,
-                      HasFilter: true,
-                      Text: FilterText,
-                      Argument: [FilterArgument],
-                    }
-                  },
-                  dataSource: {
-                    ...prevState.dataSource,
-                    columns: columns
-                  } as BaseDataSource
+                  activeColumn: null,
+                  gridRequest: new GridRequest(columns, prevState.rowsPerPage, prevState.page, prevState.searchText)
                 }
-              });
+              }, () => this.refreshGrid());
+            },
+            sortColumn: (property: string) => {
+              this.setState((prevState) => {
+                const columns = [...prevState.gridRequest.Columns];
+
+                columns.forEach((column: any) => {
+                  if (column.Name === property) {
+                    column.SortDirection = column.SortDirection === ColumnSortDirection.NONE
+                      ? ColumnSortDirection.ASCENDING
+                      : column.SortDirection === ColumnSortDirection.ASCENDING ?
+                        ColumnSortDirection.DESCENDING :
+                        ColumnSortDirection.NONE;
+
+                    if (column.SortDirection === ColumnSortDirection.NONE) {
+                      column.SortOrder = -1;
+                    } else {
+                      column.SortOrder = Number.MAX_VALUE;
+                    }
+
+                    if (!prevState.multiSort) {
+                      columns.filter((col: any) => col.Name !== property).forEach(($column: any) => {
+                        $column.SortOrder = -1;
+                        $column.SortDirection = ColumnSortDirection.NONE;
+                      });
+                    }
+
+                    const currentlySortedColumns = columns
+                      .filter((col: ColumnModel) => col.SortOrder > 0)
+                      .sort((a: ColumnModel, b: ColumnModel) => a.SortOrder === b.SortOrder ? 0 : (a.SortOrder > b.SortOrder ? 1 : -1));
+
+                    currentlySortedColumns.forEach(($column: any, i: number) => {
+                      $column.SortOrder = i + 1;
+                    });
+                  }
+                });
+
+
+                return {
+                  activeColumn: null,
+                  gridRequest: new GridRequest(columns, prevState.rowsPerPage, prevState.page, prevState.searchText)
+                }
+              }, () => this.refreshGrid());
             },
             handleTextFieldChange: (event: any) => {
               const value = event.target.value;
@@ -506,12 +554,7 @@ class DataGrid extends React.Component<IProps, IState> {
           <Table>
             <TableHead>
               {showTopPager && paginator}
-              <GridHeader
-                dataSource={dataSource}
-                page={page}
-                rowsPerPage={rowsPerPage}
-                refreshGrid={this.refreshGrid}
-              />
+              <GridHeader columns={gridRequest.Columns} />
             </TableHead>
             {body}
             <TableFooter>

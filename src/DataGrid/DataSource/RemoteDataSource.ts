@@ -1,5 +1,4 @@
 import Axios from 'axios';
-import ColumnModel from '../Models/ColumnModel';
 import GridRequest from '../Models/GridRequest';
 import GridResponse from '../Models/GridResponse';
 import BaseDataSource from './BaseDataSource';
@@ -8,32 +7,23 @@ export default class RemoteDataSource extends BaseDataSource {
 
   public url: string;
 
-  constructor(url: string, columns: ColumnModel[]) {
-    super(columns);
+  constructor(url: string) {
+    super();
     this.url = url;
   }
 
-  public getAllRecords(rowsPerPage: number, page: number, searchText: string): Promise<object> {
+  public getAllRecords(request: GridRequest): Promise<object> {
     return new Promise((resolve, reject) => {
-      const request = new GridRequest({
-        Columns: this.columns,
-        Count: BaseDataSource.counter++,
-        Search: { Text: searchText ? searchText : '', Operator: 'Auto' },
-        Skip: page * rowsPerPage,
-        Take: rowsPerPage,
-        TimezoneOffset: 360
-      });
-
+      
       Axios.post(this.url, request).then((response) => {
         if (response.data === undefined || !this.isValidResponse(response.data)) {
           throw new Error('It\'s not a valid Tubular response object');
         }
 
-        const data = response.data.Payload;
-        const rows = data.map((row: any) => {
+        const rows = response.data.Payload.map((row: any) => {
           const obj: any = {};
 
-          this.columns.forEach((column: any, key: any) => {
+          request.Columns.forEach((column: any, key: any) => {
             obj[column.Name] = row[key] || row[column.Name];
           });
 
@@ -44,8 +34,6 @@ export default class RemoteDataSource extends BaseDataSource {
           Aggregate: response.data.AggregationPayload,
           FilteredRecordCount: response.data.FilteredRecordCount,
           Payload: rows,
-          RowsPerPage: rowsPerPage,
-          SearchText: searchText,
           TotalRecordCount: response.data.TotalRecordCount
         }));
       }).catch((error) => {
