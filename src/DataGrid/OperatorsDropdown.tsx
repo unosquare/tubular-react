@@ -59,7 +59,6 @@ const OperatorsDropdown: React.SFC = () => {
     <GridConsumer>
       {({ state, actions }) =>
         <Select
-          disabled={false}
           style={dropdown}
           value={state.activeColumn.Filter.Operator === '' ? 'None' : state.activeColumn.Filter.Operator}
           onChange={actions.handleChange}

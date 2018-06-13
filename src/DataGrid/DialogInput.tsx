@@ -23,7 +23,7 @@ interface IProps {
 }
 
 const ColumnDataTypeToHtmlType = {
-  boolean: 'boolean',
+  boolean: 'text',
   date: 'date',
   datetime: 'datetime-local',
   datetimeutc: 'datetime-local',
@@ -39,7 +39,7 @@ const getValue = (dataType: ColumnDataType, operator: CompareOperators, value: s
     case ColumnDataType.DATE_TIME_UTC:
       return value ? moment(value).format('YYYY-MM-DD[T]HH:mm') : moment().format('YYYY-MM-DD[T]HH:mm');
     case ColumnDataType.BOOLEAN:
-      return operator === CompareOperators.NONE ? '' : value;
+      return operator === CompareOperators.NONE ? '' : (typeof (value) === 'boolean' ? (value === true ? 'true' : 'false') : value);
     default:
       return operator === CompareOperators.NONE ? '' : (value || '');
   }
@@ -51,35 +51,23 @@ const DialogInput: React.SFC<IProps> = ({ column, handleTextFieldChange, isPrima
   const label = isPrimary ? column.activeColumn.Filter.Operator !== CompareOperators.BETWEEN ? 'Value' : 'First Value' : 'Second Value';
 
   return (
-    column.DataType === ColumnDataType.BOOLEAN ?
-      (
-        <TextField
-          select={true}
-          style={dropdown}
-          label={label}
-          value={typeof (value) === 'boolean' ? value === true ? 'true' : 'false' : value}
-          onChange={handleTextFieldChange}
-        >
-          {BooleanInputOperators.map((option) => (
-            <MenuItem key={option.Value} value={option.Value}>
-              {option.Title}
-            </MenuItem>
-          ))}
-        </TextField>
-      )
-      :
-      (
-        <TextField
-          style={dropdown}
-          id={column.Name}
-          disabled={disabled}
-          value={value}
-          defaultValue={value}
-          label={label}
-          type={(ColumnDataTypeToHtmlType as any)[column.DataType]}
-          onChange={handleTextFieldChange}
-        />
-      )
+    <TextField
+      select={column.DataType === ColumnDataType.BOOLEAN} 
+      style={dropdown}
+      id={column.Name}
+      disabled={disabled}
+      value={value}
+      defaultValue={value}
+      label={label}
+      type={(ColumnDataTypeToHtmlType as any)[column.DataType]}
+      onChange={handleTextFieldChange}
+    >
+      {column.DataType === ColumnDataType.BOOLEAN && BooleanInputOperators.map((option) => (
+        <MenuItem key={option.Value} value={option.Value}>
+          {option.Title}
+        </MenuItem>
+      ))}
+    </TextField>
   );
 };
 
