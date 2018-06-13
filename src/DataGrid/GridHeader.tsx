@@ -5,136 +5,50 @@ import { ArrowDownward, ArrowUpward, FilterList } from '@material-ui/icons';
 
 import * as React from 'react';
 import DialogModal from './DialogModal';
-import { ColumnDataType, ColumnSortDirection, CompareOperators } from './Models/Column';
+import { ColumnSortDirection, CompareOperators } from './Models/Column';
 import ColumnModel from './Models/ColumnModel';
 
 import { GridConsumer } from './GridContext';
 
 const styles = (theme: Theme) => createStyles(
   {
-  arrowStyle: {
-    marginLeft: '5px',
-    width: '15px'
-  }
-});
+    arrowStyle: {
+      marginLeft: '5px',
+      width: '15px'
+    }
+  });
 
 interface IState {
-  activeColumn: any;
   sorting: boolean;
 }
+
 interface IProps extends WithStyles<typeof styles> {
   dataSource: any;
-  gridName: string;
   page?: number;
   rowsPerPage: number;
   refreshGrid(): void;
 }
 
-class GridHeader extends React.Component <IProps, IState> {
+class GridHeader extends React.Component<IProps, IState> {
   public state = {
-    activeColumn: null as any,
     sorting: true
   };
 
-  public handleClose = () => {
-    this.setState({ activeColumn: null });
-  }
-
-  public handleClear = () => {
-    this.setState((prevState) => ({
-      activeColumn: {
-        ...prevState.activeColumn,
-        Filter: {
-          ...prevState.activeColumn.Filter,
-          Argument: [''],
-          Operator: CompareOperators.NONE,
-          Text: '',
-        }
-      }
-    }), () => {
-      this.filterHandler(this.state.activeColumn.Filter.Text, this.state.activeColumn.Filter.Argument[0], false);
-    });
-  }
-
-  public handleApply = () => {
-    switch (this.state.activeColumn.DataType) {
-      case ColumnDataType.NUMERIC:
-        this.filterHandler(
-          parseFloat(this.state.activeColumn.Filter.Text),
-          parseFloat(this.state.activeColumn.Filter.Argument[0]), true);
-        break;
-      case ColumnDataType.BOOLEAN:
-        this.filterHandler(this.state.activeColumn.Filter.Text === 'true', '', true);
-        break;
-      default:
-        this.filterHandler(this.state.activeColumn.Filter.Text, this.state.activeColumn.Filter.Argument[0], true);
-    }
-  }
-
   public handleKeyDown(event: any) {
-    if (event.key === 'Control' && this.state.sorting === true) {
-      this.setState((prevState) => ({
-        activeColumn: {
-          ...prevState.activeColumn,
-          sorting: false
-        }
-      }));
+    if (event.key === 'Control' && this.state.sorting) {
+      // TODO: Rewrite
     }
   }
 
   public handleKeyUp(event: any) {
-    if (event.key === 'Control' && this.state.sorting === false) {
-      this.setState((prevState) => ({
-        activeColumn: {
-          ...prevState.activeColumn,
-          sorting: true
-
-        }
-      }));
+    if (event.key === 'Control' && !this.state.sorting) {
+      // TODO: Rewrite
     }
   }
 
   public componentDidMount() {
-    if (localStorage.getItem(`tubular.${this.props.gridName}`)) {
-      const storage = JSON.parse(localStorage.getItem(`tubular.${this.props.gridName}`));
-
-      const dataSource = this.props.dataSource;
-
-      storage.forEach((element: any, i: number) => {
-        if (dataSource.columns[i] === undefined) { return; }
-        dataSource.columns[i].SortDirection = element.SortDirection;
-        dataSource.columns[i].SortOrder = element.SortOrder;
-
-        if (dataSource.columns[i].Filter && element.Filter) {
-          dataSource.columns[i].Filter.HasFilter = element.Filter.HasFilter;
-          dataSource.columns[i].Filter.Operator = element.Filter.Operator;
-          dataSource.columns[i].Filter.Text =
-            dataSource.columns[i].DataType === ColumnDataType.BOOLEAN ?
-              element.Filter.Text :
-              element.Filter.Text || '';
-          dataSource.columns[i].Filter.Argument[0] = element.Filter.Argument[0] || '';
-        }
-      });
-    }
-
     document.addEventListener('keydown', (event) => this.handleKeyDown(event));
     document.addEventListener('keyup', (event) => this.handleKeyUp(event));
-  }
-
-  public filterHandler = (firstValue: any, secondValue: any, hasFilter: boolean) => {
-    const column = this.props.dataSource.columns.find((c: any) => c.Name === this.state.activeColumn.Name);
-    if (!column) { return; }
-
-    column.Filter.Text = firstValue;
-    column.Filter.Operator = this.state.activeColumn.Filter.Operator;
-    column.Filter.HasFilter = hasFilter;
-
-    if (secondValue !== undefined) {
-      column.Filter.Argument = [secondValue];
-    }
-
-    this.props.refreshGrid();
-    this.handleClose();
   }
 
   public componentWillUnmount() {
@@ -179,49 +93,49 @@ class GridHeader extends React.Component <IProps, IState> {
   }
 
   public render() {
-    const { classes, dataSource} = this.props;
+    const { classes, dataSource } = this.props;
+
     return (
-            <GridConsumer>
-                {({ actions, state }) =>
-                    < TableRow >
-                    <DialogModal
-                        handleApply={this.handleApply}
-                        handleClear={this.handleClear}
-                    />{dataSource.columns.filter((col: any) => col.Visible).map((column: any) => {
-          const render = column.Sortable ?
-            (<Tooltip
-                    title='Click to sort. Press Ctrl to sort by multiple columns'
-                    placement='bottom-start'
-                    enterDelay={300}
-                  >
-                    <TableSortLabel onClick={(event: any) => this.sortHandler(column.Name)} >
-                        {column.Label}
-                        {column.SortDirection === ColumnSortDirection.ASCENDING ?
-                            <ArrowUpward className={classes.arrowStyle} />
-                            : column.SortDirection === ColumnSortDirection.DESCENDING ?
-                                <ArrowDownward className={classes.arrowStyle} />
-                                :
-                                <div className={classes.arrowStyle} />
-                        }
-                    </TableSortLabel>
+      <GridConsumer>
+        {({ actions, state }) =>
+          < TableRow >
+            <DialogModal />
+            {dataSource.columns.filter((col: any) => col.Visible).map((column: any) => {
+              const render = column.Sortable ?
+                (<Tooltip
+                  title='Click to sort. Press Ctrl to sort by multiple columns'
+                  placement='bottom-start'
+                  enterDelay={300}
+                >
+                  <TableSortLabel onClick={(event: any) => this.sortHandler(column.Name)} >
+                    {column.Label}
+                    {column.SortDirection === ColumnSortDirection.ASCENDING ?
+                      <ArrowUpward className={classes.arrowStyle} />
+                      : column.SortDirection === ColumnSortDirection.DESCENDING ?
+                        <ArrowDownward className={classes.arrowStyle} />
+                        :
+                        <div className={classes.arrowStyle} />
+                    }
+                  </TableSortLabel>
                 </Tooltip>
-              )
+                )
                 : (column.Label);
-          const filter = column.Filter &&
-            (<IconButton id={column.Name} onClick={actions.handleOpen(column)} >
-                    <FilterList
-                        color={(column.Filter.HasFilter && column.Filter.Operator !== CompareOperators.NONE)
-                            ? 'action' : 'disabled'}
-                    />
+              const filter = column.Filter &&
+                (<IconButton id={column.Name} onClick={actions.setActiveColumn(column)} >
+                  <FilterList
+                    color={(column.Filter.HasFilter && column.Filter.Operator !== CompareOperators.NONE)
+                      ? 'action' : 'disabled'}
+                  />
                 </IconButton>);
-          return (
-            <TableCell key={column.Label} padding={column.Label === '' ? 'none' : 'default'}>
-                    {render}
-                    {filter}
+
+              return (
+                <TableCell key={column.Label} padding={column.Label === '' ? 'none' : 'default'}>
+                  {render}
+                  {filter}
                 </TableCell>
-                );
-              })}
-      </TableRow>}
+              );
+            })}
+          </TableRow>}
       </GridConsumer>
     );
   }

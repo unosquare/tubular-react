@@ -11,7 +11,7 @@ import BaseDataSource from './DataSource/BaseDataSource';
 import { GridProvider } from './GridContext';
 import GridHeader from './GridHeader';
 import GridToolbar from './GridToolbar';
-import { ColumnDataType } from './Models/Column';
+import { ColumnDataType, CompareOperators } from './Models/Column';
 import ColumnModel from './Models/ColumnModel';
 import GridResponse from './Models/GridResponse';
 import Paginator from './Paginator';
@@ -93,6 +93,29 @@ class DataGrid extends React.Component<IProps, IState> {
 
         this.props.onError(error);
       });
+
+    if (!localStorage.getItem(`tubular.${this.props.gridName}`)) return;
+
+    // TODO: Fix, and change to update the state
+    // const storage = JSON.parse(localStorage.getItem(`tubular.${this.props.gridName}`));
+
+    // const dataSource = this.props.dataSource;
+
+    // storage.forEach((element: any, i: number) => {
+    //   if (dataSource.columns[i] === undefined) { return; }
+    //   dataSource.columns[i].SortDirection = element.SortDirection;
+    //   dataSource.columns[i].SortOrder = element.SortOrder;
+
+    //   if (dataSource.columns[i].Filter && element.Filter) {
+    //     dataSource.columns[i].Filter.HasFilter = element.Filter.HasFilter;
+    //     dataSource.columns[i].Filter.Operator = element.Filter.Operator;
+    //     dataSource.columns[i].Filter.Text =
+    //       dataSource.columns[i].DataType === ColumnDataType.BOOLEAN ?
+    //         element.Filter.Text :
+    //         element.Filter.Text || '';
+    //     dataSource.columns[i].Filter.Argument[0] = element.Filter.Argument[0] || '';
+    //   }
+    // });
   }
 
   public componentWillMount() {
@@ -104,7 +127,7 @@ class DataGrid extends React.Component<IProps, IState> {
 
     if (index === -1) {
       this.setState({
-        errorMessage: 'The rowsPerPage value should be: ' + rowsPerPageOptions.toString()
+        errorMessage: `The rowsPerPage value should be: ${rowsPerPageOptions}`
       },
         () => this.handleOpen()
       );
@@ -367,7 +390,7 @@ class DataGrid extends React.Component<IProps, IState> {
                 }
               }));
             },
-            handleOpen: (column: any) => {
+            setActiveColumn: (column: any) => {
               this.setState({
                 activeColumn: column,
               },
@@ -375,6 +398,34 @@ class DataGrid extends React.Component<IProps, IState> {
                   document.getElementById(column.Name).blur();
                 }
               );
+            },
+            clearActiveColumn: () => {
+              this.setState((prevState) => {
+                const columns = { ...prevState.dataSource.columns };
+                const columnIdx = columns.findIndex((c: ColumnModel) => c.Name === prevState.activeColumn.Name);
+
+                if (columnIdx !== -1) {
+                  (columns[columnIdx]).Filter = {
+                    Text: '',
+                    Operator: CompareOperators.NONE,
+                    HasFilter: false,
+                    Argument: ['']
+                  };
+                }
+
+                return {
+                  ...prevState, // TODO: Check if you really need this
+                  activeColumn: null,
+                  dataSource: {
+                    ...prevState.dataSource,
+                    columns: columns
+                  } as BaseDataSource
+                };
+              });
+            },
+            filterActiveColumn: () => {
+              // Hay que transformar los datos de activeColumn, si es number parseFloat, y si es bool convertir a boolean
+              // Actualizar datasource basandose en activeColumn (esta ultima no debe modificarse)
             },
             handleTextFieldChange: (event: any) => {
               const value = event.target.value;
@@ -417,7 +468,6 @@ class DataGrid extends React.Component<IProps, IState> {
             <TableHead>
               {showTopPager && paginator}
               <GridHeader
-                gridName={this.props.gridName}
                 dataSource={dataSource}
                 page={page}
                 rowsPerPage={rowsPerPage}

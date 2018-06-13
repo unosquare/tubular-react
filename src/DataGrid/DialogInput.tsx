@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import { MenuItem, TextField } from '@material-ui/core';
 
-import { ColumnDataType } from './Models/Column';
+import { ColumnDataType, CompareOperators } from './Models/Column';
 
 const dropdown = {
   marginLeft: '10%',
@@ -17,12 +17,8 @@ const BooleanInputOperators = [
 ];
 
 interface IProps {
-  activeFilter: string;
-  columnType: string;
-  disabled: boolean;
-  label: string;
-  value: any;
-  handleApply(): void;
+  isPrimary: boolean;
+  column: any;
   handleTextFieldChange(event: any): void;
 }
 
@@ -35,13 +31,27 @@ const ColumnDataTypeToHtmlType = {
   string: 'text'
 };
 
-const DialogInput: React.SFC<IProps> = ({disabled, value, columnType, activeFilter, label, handleTextFieldChange}) => {
-  ((ColumnDataTypeToHtmlType as any)[columnType]).includes('datetime') ?
-      value = moment(value).format('YYYY-MM-DD[T]HH:mm')
-    : ((ColumnDataTypeToHtmlType as any)[columnType]).includes('date') ?
-        value = moment(value).format('YYYY-MM-DD') : value = value;
+const getValue = (dataType: ColumnDataType, operator: CompareOperators, value: string) => {
+  switch (dataType) {
+    case ColumnDataType.DATE:
+      return value ? moment(value).format('YYYY-MM-DD') : moment().format('YYYY-MM-DD');
+    case ColumnDataType.DATE_TIME:
+    case ColumnDataType.DATE_TIME_UTC:
+      return value ? moment(value).format('YYYY-MM-DD[T]HH:mm') : moment().format('YYYY-MM-DD[T]HH:mm');
+    case ColumnDataType.BOOLEAN:
+      return operator === CompareOperators.NONE ? '' : value;
+    default:
+      return operator === CompareOperators.NONE ? '' : (value || '');
+  }
+};
+
+const DialogInput: React.SFC<IProps> = ({ column, handleTextFieldChange, isPrimary }) => {
+  const value = getValue(column.DataType, column.Operator, isPrimary ? column.Filter.Text : column.Filter.Argument[0]);
+  const disabled = isPrimary ? column.Filter.Operator === CompareOperators.NONE : false;
+  const label = isPrimary ? column.activeColumn.Filter.Operator !== CompareOperators.BETWEEN ? 'Value' : 'First Value' : 'Second Value';
+
   return (
-    columnType === ColumnDataType.BOOLEAN ?
+    column.DataType === ColumnDataType.BOOLEAN ?
       (
         <TextField
           select={true}
@@ -61,12 +71,12 @@ const DialogInput: React.SFC<IProps> = ({disabled, value, columnType, activeFilt
       (
         <TextField
           style={dropdown}
-          id={activeFilter}
+          id={column.Name}
           disabled={disabled}
           value={value}
           defaultValue={value}
           label={label}
-          type={(ColumnDataTypeToHtmlType as any)[columnType]}
+          type={(ColumnDataTypeToHtmlType as any)[column.DataType]}
           onChange={handleTextFieldChange}
         />
       )
