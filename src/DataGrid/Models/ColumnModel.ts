@@ -16,7 +16,7 @@ export default class ColumnModel {
 
   public Aggregate: AggregateFunctions;
   public DataType: ColumnDataType;
-  public Filter: object;
+  public Filter: any;
   public IsKey: boolean;
   public Label: string;
   public Name: string;

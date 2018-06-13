@@ -12,7 +12,7 @@ const DialogModal: React.SFC = () => {
     return (
         <GridConsumer>
             {({ state, actions }) =>
-                <Dialog open={state.activeColumn != null} onClose={actions.handleClose} >
+                <Dialog open={true} onClose={actions.handleClose} >
                     <DialogTitle>{'Filter'}</DialogTitle>
                     <DialogContent>
                         <OperatorsDropdown />
@@ -38,10 +38,10 @@ const DialogModal: React.SFC = () => {
                                 disabled={state.activeColumn.Filter.Operator === CompareOperators.NONE}
                             >
                                 Apply
-                    </Button>
+                            </Button>
                         </DialogActions>
                     </DialogContent>
-                </Dialog>}
+            </Dialog>}
         </GridConsumer>
     );
 };

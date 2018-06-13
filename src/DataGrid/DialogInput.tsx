@@ -39,7 +39,8 @@ const getValue = (dataType: ColumnDataType, operator: CompareOperators, value: s
     case ColumnDataType.DATE_TIME_UTC:
       return value ? moment(value).format('YYYY-MM-DD[T]HH:mm') : moment().format('YYYY-MM-DD[T]HH:mm');
     case ColumnDataType.BOOLEAN:
-      return operator === CompareOperators.NONE ? '' : (typeof (value) === 'boolean' ? (value === true ? 'true' : 'false') : value);
+      return operator === CompareOperators.NONE ? ''
+      : (typeof (value) === 'boolean' ? (value === true ? 'true' : 'false') : value);
     default:
       return operator === CompareOperators.NONE ? '' : (value || '');
   }
@@ -48,11 +49,12 @@ const getValue = (dataType: ColumnDataType, operator: CompareOperators, value: s
 const DialogInput: React.SFC<IProps> = ({ column, handleTextFieldChange, isPrimary }) => {
   const value = getValue(column.DataType, column.Operator, isPrimary ? column.Filter.Text : column.Filter.Argument[0]);
   const disabled = isPrimary ? column.Filter.Operator === CompareOperators.NONE : false;
-  const label = isPrimary ? column.activeColumn.Filter.Operator !== CompareOperators.BETWEEN ? 'Value' : 'First Value' : 'Second Value';
+  const label = isPrimary ?
+  column.activeColumn.Filter.Operator !== CompareOperators.BETWEEN ? 'Value' : 'First Value' : 'Second Value';
 
   return (
     <TextField
-      select={column.DataType === ColumnDataType.BOOLEAN} 
+      select={column.DataType === ColumnDataType.BOOLEAN}
       style={dropdown}
       id={column.Name}
       disabled={disabled}

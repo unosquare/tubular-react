@@ -99,7 +99,7 @@ class GridHeader extends React.Component<IProps, IState> {
       <GridConsumer>
         {({ actions, state }) =>
           < TableRow >
-            <DialogModal />
+          {state.activeColumn && <DialogModal />}
             {dataSource.columns.filter((col: any) => col.Visible).map((column: any) => {
               const render = column.Sortable ?
                 (<Tooltip

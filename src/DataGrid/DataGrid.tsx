@@ -56,6 +56,7 @@ interface IProps extends WithStyles<typeof styles> {
 
 class DataGrid extends React.Component<IProps, IState> {
   public state = {
+    activeColumn: null as any,
     aggregate: {},
     data: [] as any,
     dataSource: this.props.dataSource,
@@ -66,7 +67,6 @@ class DataGrid extends React.Component<IProps, IState> {
     rowsPerPage: this.props.rowsPerPage,
     searchText: '',
     totalRecordCount: 0,
-    activeColumn: null as any
   };
 
   public componentDidMount() {
@@ -94,28 +94,28 @@ class DataGrid extends React.Component<IProps, IState> {
         this.props.onError(error);
       });
 
-    if (!localStorage.getItem(`tubular.${this.props.gridName}`)) return;
+    if (!localStorage.getItem(`tubular.${this.props.gridName}`)) { return; }
 
     // TODO: Fix, and change to update the state
-    // const storage = JSON.parse(localStorage.getItem(`tubular.${this.props.gridName}`));
+    const storage = JSON.parse(localStorage.getItem(`tubular.${this.props.gridName}`));
+    console.log(storage);
+    const dataSource = this.props.dataSource;
 
-    // const dataSource = this.props.dataSource;
+    storage.forEach((element: any, i: number) => {
+      if (dataSource.columns[i] === undefined) { return; }
+      dataSource.columns[i].SortDirection = element.SortDirection;
+      dataSource.columns[i].SortOrder = element.SortOrder;
 
-    // storage.forEach((element: any, i: number) => {
-    //   if (dataSource.columns[i] === undefined) { return; }
-    //   dataSource.columns[i].SortDirection = element.SortDirection;
-    //   dataSource.columns[i].SortOrder = element.SortOrder;
-
-    //   if (dataSource.columns[i].Filter && element.Filter) {
-    //     dataSource.columns[i].Filter.HasFilter = element.Filter.HasFilter;
-    //     dataSource.columns[i].Filter.Operator = element.Filter.Operator;
-    //     dataSource.columns[i].Filter.Text =
-    //       dataSource.columns[i].DataType === ColumnDataType.BOOLEAN ?
-    //         element.Filter.Text :
-    //         element.Filter.Text || '';
-    //     dataSource.columns[i].Filter.Argument[0] = element.Filter.Argument[0] || '';
-    //   }
-    // });
+      if (dataSource.columns[i].Filter && element.Filter) {
+        dataSource.columns[i].Filter.HasFilter = element.Filter.HasFilter;
+        dataSource.columns[i].Filter.Operator = element.Filter.Operator;
+        dataSource.columns[i].Filter.Text =
+          dataSource.columns[i].DataType === ColumnDataType.BOOLEAN ?
+            element.Filter.Text :
+            element.Filter.Text || '';
+        dataSource.columns[i].Filter.Argument[0] = element.Filter.Argument[0] || '';
+      }
+    });
   }
 
   public componentWillMount() {
@@ -412,7 +412,6 @@ class DataGrid extends React.Component<IProps, IState> {
                     Argument: ['']
                   };
                 }
-
                 return {
                   ...prevState, // TODO: Check if you really need this
                   activeColumn: null,
@@ -424,8 +423,48 @@ class DataGrid extends React.Component<IProps, IState> {
               });
             },
             filterActiveColumn: () => {
-              // Hay que transformar los datos de activeColumn, si es number parseFloat, y si es bool convertir a boolean
-              // Actualizar datasource basandose en activeColumn (esta ultima no debe modificarse)
+              this.setState((prevState) => {
+                let FilterText;
+                let FilterArgument;
+                if (prevState.activeColumn.DataType == ColumnDataType.NUMERIC) {
+                  FilterText = parseFloat(prevState.activeColumn.Filter.Text)
+                  FilterArgument = parseFloat(prevState.activeColumn.Filter.Argument[0])
+                } else if (prevState.activeColumn.DataType == ColumnDataType.BOOLEAN) {
+                  FilterText = prevState.activeColumn.Filter.Text === 'true' ? true : false;
+                  FilterArgument = ''
+                } else {
+                  FilterText = prevState.activeColumn.Filter.Text;
+                  FilterArgument = prevState.activeColumn.Filter.Argument[0];
+                }
+
+                const columns = { ...prevState.dataSource.columns };
+                const columnIdx = columns.findIndex((c: ColumnModel) => c.Name === prevState.activeColumn.Name);
+
+                if (columnIdx !== -1) {
+                  (columns[columnIdx]).Filter = {
+                    ...prevState.activeColumn.Filter,
+                    HasFilter: true,
+                    Text: FilterText,
+                    Argument: [FilterArgument],
+                  };
+                }
+
+                return {
+                  activeColumn: {
+                    ...prevState.activeColumn,
+                    Filter: {
+                      ...prevState.activeColumn.Filter,
+                      HasFilter: true,
+                      Text: FilterText,
+                      Argument: [FilterArgument],
+                    }
+                  },
+                  dataSource: {
+                    ...prevState.dataSource,
+                    columns: columns
+                  } as BaseDataSource
+                }
+              });
             },
             handleTextFieldChange: (event: any) => {
               const value = event.target.value;
