@@ -6,61 +6,60 @@ import OperatorsDropdown from './OperatorsDropdown';
 
 import * as moment from 'moment';
 import * as React from 'react';
+import { GridConsumer } from './GridContext';
 
 interface IProps {
-  activeColumn: any;
   handleApply(): void;
   handleClear(): void;
-  handleTextFieldChange(event: any): void;
-  handleSecondTextFieldChange(event: any): void;
-  handleClose(): void;
 }
-let firstValue: any;
-let secondValue: any;
+
 const setInitialValues = ( activeColumn: any) => {
     switch (activeColumn.DataType) {
       case ColumnDataType.DATE:
       case ColumnDataType.DATE_TIME:
       case ColumnDataType.DATE_TIME_UTC:
-        firstValue = activeColumn.Filter.Text ? activeColumn.Filter.Text : moment().format();
-        secondValue = activeColumn.Filter.Argument[0] ? activeColumn.Filter.Argument[0] : moment().format();
-        break;
+      return{
+        firstValue: activeColumn.Filter.Text ? activeColumn.Filter.Text : moment().format(),
+        secondValue: activeColumn.Filter.Argument[0] ? activeColumn.Filter.Argument[0] : moment().format()
+      };
       case ColumnDataType.BOOLEAN:
-        firstValue = activeColumn.Filter.Operator === CompareOperators.NONE ? '' : activeColumn.Filter.Text;
-        break;
+      return {
+        firstValue: activeColumn.Filter.Operator === CompareOperators.NONE ? '' : activeColumn.Filter.Text
+        };
       default:
-        firstValue = activeColumn.Filter.Operator === CompareOperators.NONE ? '' : activeColumn.Filter.Text || '';
-        secondValue = activeColumn.Filter.Argument[0] || '';
+      return {
+        firstValue: activeColumn.Filter.Operator === CompareOperators.NONE ? '' : activeColumn.Filter.Text || '',
+        secondValue: activeColumn.Filter.Argument[0] || ''
+      };
     }
 };
-const DialogModal: React.SFC<IProps> = (handleClose) => {
-
-    if ( activeColumn == null ) { return null; }
-    setInitialValues(activeColumn);
+const DialogModal: React.SFC<IProps> = ({handleApply, handleClear}) => {
     return (
-        <Dialog open={activeColumn != null} onClose={handleClose} >
+        <GridConsumer>
+            {({ state, actions }) =>
+        <Dialog open={state.activeColumn != null} onClose={actions.handleClose} >
             <DialogTitle>{'Filter'}</DialogTitle>
             <DialogContent>
                 <OperatorsDropdown />
                 <DialogInput
-                    disabled={activeColumn.Filter.Operator === CompareOperators.NONE}
-                    value={firstValue}
+                    disabled={state.activeColumn.Filter.Operator === CompareOperators.NONE}
+                    value={setInitialValues(state.activeColumn).firstValue}
                     handleApply={handleApply}
-                    label={activeColumn.Filter.Operator !== CompareOperators.BETWEEN ? 'Value' : 'First Value'}
-                    columnType={activeColumn.DataType}
-                    activeFilter={activeColumn.Name}
-                    handleTextFieldChange={handleTextFieldChange}
+                    label={state.activeColumn.Filter.Operator !== CompareOperators.BETWEEN ? 'Value' : 'First Value'}
+                    columnType={state.activeColumn.DataType}
+                    activeFilter={state.activeColumn.Name}
+                    handleTextFieldChange={actions.handleTextFieldChange}
                 />
 
-                {activeColumn.Filter.Operator === CompareOperators.BETWEEN &&
+                {state.activeColumn.Filter.Operator === CompareOperators.BETWEEN &&
                     <DialogInput
                         disabled={false}
-                        value={secondValue}
+                        value={setInitialValues(state.activeColumn).secondValue}
                         handleApply={handleApply}
                         label={'Second Value'}
-                        columnType={activeColumn.DataType}
-                        activeFilter={activeColumn.Name}
-                        handleTextFieldChange={handleSecondTextFieldChange}
+                        columnType={state.activeColumn.DataType}
+                        activeFilter={state.activeColumn.Name}
+                        handleTextFieldChange={actions.handleSecondTextFieldChange}
                     />}
 
                 <DialogActions>
@@ -69,13 +68,14 @@ const DialogModal: React.SFC<IProps> = (handleClose) => {
                         size='medium'
                         color='primary'
                         onClick={() => handleApply()}
-                        disabled={activeColumn.Filter.Operator === CompareOperators.NONE}
+                        disabled={state.activeColumn.Filter.Operator === CompareOperators.NONE}
                     >
                         Apply
                     </Button>
                 </DialogActions>
             </DialogContent>
-        </Dialog>
+        </Dialog>}
+        </GridConsumer>
       );
   };
 export default DialogModal;

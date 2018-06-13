@@ -185,7 +185,6 @@ class GridHeader extends React.Component <IProps, IState> {
                 {({ actions, state }) =>
                     < TableRow >
                     <DialogModal
-                        handleClose={this.handleClose}
                         handleApply={this.handleApply}
                         handleClear={this.handleClear}
                     />{dataSource.columns.filter((col: any) => col.Visible).map((column: any) => {
