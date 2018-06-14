@@ -12,12 +12,12 @@ import BaseDataSource from './DataSource/BaseDataSource';
 import { GridProvider } from './GridContext';
 import GridHeader from './GridHeader';
 import GridToolbar from './GridToolbar';
+import GridToolbarFunctions = require( './GridToolbarFunctions');
 import { ColumnDataType, ColumnSortDirection, CompareOperators } from './Models/Column';
 import ColumnModel from './Models/ColumnModel';
 import GridRequest from './Models/GridRequest';
 import GridResponse from './Models/GridResponse';
 import Paginator from './Paginator';
-import PrintTable from './PrintTable';
 
 const styles = (theme: Theme) => createStyles(
   {
@@ -41,7 +41,7 @@ interface IState {
   totalRecordCount: number;
   activeColumn: any;
   gridRequest: GridRequest;
-  multiSort: boolean;
+  multiSort: boolean;  
 }
 
 interface IProps extends WithStyles<typeof styles> {
@@ -50,6 +50,7 @@ interface IProps extends WithStyles<typeof styles> {
   gridName: string;
   rowsPerPage: number;
   rowsPerPageOptions?: number[];
+  toolbarOptions: any;
   onError?(error: any): any;
   bodyRenderer?(column: any, index: number): any;
   footerRenderer?(aggregate: any): any;
@@ -153,6 +154,10 @@ class DataGrid extends React.Component<IProps, IState> {
     }
   }
 
+  public handleTextSearch = (searchText: string) => {
+    this.setState({ searchText }, () => this.refreshGrid());
+  }
+
   public handlePager = (rowsPerPage: number, page: number) => {
     this.setState({ rowsPerPage, page }, () => this.refreshGrid());
   }
@@ -165,73 +170,6 @@ class DataGrid extends React.Component<IProps, IState> {
     localStorage.setItem(`tubular.${this.props.gridName}`, JSON.stringify(gridRequest.Columns));
     localStorage.setItem(`tubular.${this.props.gridName}_pageSize`, String(rowsPerPage));
     localStorage.setItem(`tubular.${this.props.gridName}_searchText`, searchText);
-  }
-
-  public exportTable = (filtered: boolean) => {
-    const { gridRequest } = this.state;
-    const header = gridRequest.Columns.map((x: any) => x.Label);
-    const visibility = gridRequest.Columns.map((x: any) => x.Visible);
-
-    const processRow = (row: any) => {
-      if (row instanceof Object) {
-        row = Object.keys(row).map((key: any) => row[key]);
-      }
-
-      let finalVal = '';
-
-      for (let i = 0; i < row.length; i++) {
-        if (!visibility[i]) { continue; }
-        let innerValue = (row[i] === null || row[i] === undefined) ? '' :
-          (typeof (row[i]) === 'boolean') ? (row[i] === true && 'Yes') :
-            row[i].toString();
-
-        if (moment(row[i], moment.ISO_8601, true).isValid()) {
-          innerValue = moment(row[i]).format('MMMM Do YYYY, h:mm:ss a');
-        }
-
-        let result = innerValue.replace(/"/g, '""');
-
-        if (result.search(/("|,|\n)/g) >= 0) {
-          result = `"${result}"`;
-        }
-
-        if (i > 0) {
-          finalVal += ',';
-        }
-
-        finalVal += result;
-
-      }
-
-      return `${finalVal}\n`;
-    };
-
-    let csvFile = '';
-    if (header.length > 0) {
-      csvFile += processRow(header);
-    }
-
-    this.props.dataSource.getAllRecords(gridRequest)
-      .then(({ Payload }: any) => {
-        Payload.forEach((row: any) => {
-          csvFile += processRow(row);
-        });
-      }).then(() => {
-        const blob = new Blob([`\uFEFF${csvFile}`], {
-          type: 'text/csv;charset=utf-8;'
-        });
-
-        const fileURL = URL.createObjectURL(blob);
-        const downloadLink = document.createElement('a');
-
-        downloadLink.setAttribute('href', fileURL);
-        downloadLink.setAttribute('id', 'download');
-        downloadLink.setAttribute('download', 'data.csv');
-        document.body.appendChild(downloadLink);
-
-        downloadLink.click();
-        URL.revokeObjectURL(fileURL);
-      });
   }
 
   public renderCell = (column: ColumnModel, row: any) => {
@@ -268,7 +206,7 @@ class DataGrid extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const { classes, bodyRenderer, footerRenderer, rowsPerPageOptions } = this.props;
+    const { classes, bodyRenderer, footerRenderer, rowsPerPageOptions, toolbarOptions } = this.props;
     const { data, rowsPerPage, page, gridRequest, aggregate, filteredRecordCount, totalRecordCount } = this.state;
     const body = (
       <TableBody>
@@ -439,7 +377,6 @@ class DataGrid extends React.Component<IProps, IState> {
                   }
                 });
 
-
                 return {
                   activeColumn: null,
                   gridRequest: new GridRequest(columns, prevState.rowsPerPage, prevState.page, prevState.searchText)
@@ -470,30 +407,39 @@ class DataGrid extends React.Component<IProps, IState> {
                 }
               }));
             },
-            TextSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+            textSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => {
               const searchText = event.target.value;
               this.setState({ searchText }, () => this.refreshGrid());
             },
-            ClearSearchText: ()=> {
+            clearSearchText: ()=> {
               this.setState({
                 searchText: ''
               }, () => this.refreshGrid());
             },
-            GetGridResult: (event: React.MouseEvent<HTMLElement>) =>{
+            printDocument: (event: React.MouseEvent<HTMLElement>) => {
               event.preventDefault();
               let gridResult: any;
               let gridRequestColumns = gridRequest.Columns;
               this.props.dataSource.getAllRecords(gridRequest)
                   .then(({ Payload }: any) => {gridResult = Payload});
-              let printTable = new PrintTable(gridResult, gridRequestColumns, this.props.gridName, filteredRecordCount);
-                  printTable.PrintDocument();
+            
+              GridToolbarFunctions.printDocument(gridResult, gridRequestColumns, this.props.gridName, filteredRecordCount); 
+            },
+            exportCSV: (event: React.MouseEvent<HTMLElement>) => {
+              event.preventDefault();
+              let gridResult: any;
+              let gridRequestColumns = gridRequest.Columns;
+              this.props.dataSource.getAllRecords(gridRequest)
+                  .then(({ Payload }: any) => {gridResult = Payload});
+
+              GridToolbarFunctions.exportCSV(gridResult, gridRequestColumns, filteredRecordCount);
             }
           }
         }}>
           {snackbar}
           <GridToolbar
+            toolbarOptions={toolbarOptions}
             filteredRecordCount={filteredRecordCount}
-            onExport={this.exportTable}
           />
           <Table>
             <TableHead>

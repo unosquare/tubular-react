@@ -79,9 +79,18 @@ export default class Main extends React.Component {
         }
         rowsPerPage={10}
         rowsPerPageOptions={[10, 20, 50, 100]}
+        toolbarOptions={
+          {
+          showBottomPager: true,
+          showExportButton: true,
+          showPrintButton: true,
+          showSearchText: true,
+          showTopPager: true
+         }
+        }
         footerRenderer={
           (aggregates: any) =>
-            <TableRow>
+              <TableRow>
               <TableCell>Total: </TableCell>
               <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
               <TableCell />
