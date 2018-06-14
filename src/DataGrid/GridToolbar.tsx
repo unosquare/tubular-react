@@ -25,12 +25,7 @@ interface IState {
 }
 
 interface IProps extends WithStyles<typeof styles> {
-  gridName: string;
-  isExportEnabled: boolean;
-  isPrintEnabled: boolean;
   filteredRecordCount: number;
-  showSearchText?: boolean;
-  onPrint(condition: boolean): void;
   onExport(condition: boolean): void;
 }
 
@@ -74,37 +69,22 @@ class GridToolbar extends React.Component<IProps, IState> {
     onExport(filtered);
   }
 
-  public printTable = (filtered: boolean, e: React.MouseEvent<HTMLElement>) => {
-    const { onPrint } = this.props;
-    e.preventDefault();
-    this.setState({
-      anchorPrint: null as HTMLElement
-    });
-    onPrint(filtered);
-  }
-
   public render() {
-    const { classes, filteredRecordCount, isPrintEnabled, isExportEnabled, showSearchText } = this.props;
+    const { classes, filteredRecordCount } = this.props;
     const { anchorEl, anchorPrint } = this.state;
 
     return (
       <GridConsumer>
         {({ state, actions }) =>
-        <Toolbar>
-          <div className={classes.spacer} />
-          {
-            isExportEnabled &&
+          <Toolbar>
+            <div className={classes.spacer} />
+
             <IconButton disabled={filteredRecordCount === 0} onClick={this.handleMenuOpen}>
               <FileDownload />
             </IconButton>
-          }
-          {
-            isPrintEnabled &&
             <IconButton disabled={filteredRecordCount === 0} onClick={this.handlePrintMenuOpen} >
               <Print />
             </IconButton>
-          }
-          {showSearchText &&
             <FormControl className={classes.formControl}>
               <Input
                 fullWidth={true}
@@ -128,16 +108,15 @@ class GridToolbar extends React.Component<IProps, IState> {
                 }
               />
             </FormControl>
-          }
-          {isExportEnabled && <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleMenuClose}>
-            <MenuItem onClick={(e: any) => this.exportCSV(false, e)}> All rows</MenuItem>
-            <MenuItem onClick={(e: any) => this.exportCSV(true, e)}> Current rows</MenuItem>
-          </Menu>}
-          {isPrintEnabled && <Menu anchorEl={anchorPrint} open={Boolean(anchorPrint)} onClose={this.handlePrintMenuClose}>
-            <MenuItem onClick={(e: any) => this.printTable(false, e)}> All rows</MenuItem>
-            <MenuItem onClick={(e: any) => this.printTable(true, e)}> Current rows</MenuItem>
-          </Menu>}
-        </Toolbar>}
+            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleMenuClose}>
+              <MenuItem onClick={(e: any) => this.exportCSV(false, e)}> All rows</MenuItem>
+              <MenuItem onClick={(e: any) => this.exportCSV(true, e)}> Current rows</MenuItem>
+            </Menu>
+            <Menu anchorEl={anchorPrint} open={Boolean(anchorPrint)} onClose={this.handlePrintMenuClose}>
+              <MenuItem onClick={(e: any) => actions.GetGridResult(e)}> All rows</MenuItem>
+              <MenuItem onClick={(e: any) => actions.GetGridResult(e)}> Current rows</MenuItem>
+            </Menu>
+          </Toolbar>}
       </GridConsumer>
     );
   }

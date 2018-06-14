@@ -17,6 +17,7 @@ import ColumnModel from './Models/ColumnModel';
 import GridRequest from './Models/GridRequest';
 import GridResponse from './Models/GridResponse';
 import Paginator from './Paginator';
+import PrintTable from './PrintTable';
 
 const styles = (theme: Theme) => createStyles(
   {
@@ -32,6 +33,7 @@ interface IState {
   data: any[];
   errorMessage: string;
   filteredRecordCount: number;
+  gridResult: object;
   open: boolean;
   page: number;
   rowsPerPage: number;
@@ -48,11 +50,6 @@ interface IProps extends WithStyles<typeof styles> {
   gridName: string;
   rowsPerPage: number;
   rowsPerPageOptions?: number[];
-  showBottomPager?: boolean;
-  showTopPager?: boolean;
-  showPrintButton?: boolean;
-  showExportButton?: boolean;
-  showSearchText?: boolean;
   onError?(error: any): any;
   bodyRenderer?(column: any, index: number): any;
   footerRenderer?(aggregate: any): any;
@@ -67,6 +64,7 @@ class DataGrid extends React.Component<IProps, IState> {
     errorMessage: '',
     filteredRecordCount: 0,
     gridRequest: new GridRequest(this.props.columns, this.props.rowsPerPage, 0),
+    gridResult: {},
     multiSort: false,
     open: false,
     page: 0,
@@ -169,66 +167,10 @@ class DataGrid extends React.Component<IProps, IState> {
     localStorage.setItem(`tubular.${this.props.gridName}_searchText`, searchText);
   }
 
-  public printTable = (filtered: boolean) => {
-    const { filteredRecordCount, gridRequest } = this.state;
-    let count;
-    let page;
-
-    if (filteredRecordCount === 0) {
-      return;
-    }
-
-    if (filtered) {
-      count = this.state.rowsPerPage;
-      page = this.state.page;
-    } else {
-      count = filteredRecordCount;
-      page = 0;
-    }
-
-    this.props.dataSource.getAllRecords(gridRequest)
-      .then(({ Payload }: any) => {
-        const popup = window.open('about:blank', 'Print', 'location=0,height=500,width=800');
-        popup.document
-          .write('<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.min.css" />');
-
-        const tableHtml = `<table class="table table-bordered table-striped"><thead><tr>${
-          gridRequest.Columns
-            .filter((c: any) => c.Visible)
-            .reduce((prev: any, el: any) => `${prev}<th>${el.Label || el.Name}</th>`, '')
-          }</tr></thead><tbody>${
-          Payload.map((row: any) => {
-            if (row instanceof Object) {
-              row = Object.keys(row).map((key: any) => row[key]);
-            }
-            return `<tr>${row.map((cell: any, index: number) => {
-              if (gridRequest.Columns[index] && !gridRequest.Columns[index].Visible) {
-                return '';
-              }
-              return `<td>${
-                gridRequest.Columns[index].DataType === ColumnDataType.DATE ||
-                  gridRequest.Columns[index].DataType === ColumnDataType.DATE_TIME ||
-                  gridRequest.Columns[index].DataType === ColumnDataType.DATE_TIME_UTC ?
-                  moment(cell).format('MMMM Do YYYY, h:mm:ss a') :
-                  gridRequest.Columns[index].DataType === ColumnDataType.BOOLEAN ? (cell === true ? 'Yes' : 'No') :
-                    cell || 0}</td>`;
-            }).join(' ')}</tr>`;
-          }).join(' ')}</tbody></table>`;
-        popup.document.title = this.props.gridName;
-        popup.document.write('<body onload="window.print();">');
-        popup.document.write(`<h1>${this.props.gridName}</h1>`);
-        popup.document.write(tableHtml);
-        popup.document.write('</body>');
-        popup.document.close();
-      });
-  }
-
   public exportTable = (filtered: boolean) => {
-    const { gridRequest, filteredRecordCount, searchText } = this.state;
+    const { gridRequest } = this.state;
     const header = gridRequest.Columns.map((x: any) => x.Label);
     const visibility = gridRequest.Columns.map((x: any) => x.Visible);
-    let count;
-    let page;
 
     const processRow = (row: any) => {
       if (row instanceof Object) {
@@ -267,13 +209,6 @@ class DataGrid extends React.Component<IProps, IState> {
     let csvFile = '';
     if (header.length > 0) {
       csvFile += processRow(header);
-    }
-    if (filtered) {
-      count = this.state.rowsPerPage;
-      page = this.state.page;
-    } else {
-      count = filteredRecordCount;
-      page = 0;
     }
 
     this.props.dataSource.getAllRecords(gridRequest)
@@ -333,8 +268,7 @@ class DataGrid extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const { classes, bodyRenderer, footerRenderer, showBottomPager, rowsPerPageOptions,
-      showTopPager, showPrintButton, showExportButton } = this.props;
+    const { classes, bodyRenderer, footerRenderer, rowsPerPageOptions } = this.props;
     const { data, rowsPerPage, page, gridRequest, aggregate, filteredRecordCount, totalRecordCount } = this.state;
     const body = (
       <TableBody>
@@ -544,29 +478,32 @@ class DataGrid extends React.Component<IProps, IState> {
               this.setState({
                 searchText: ''
               }, () => this.refreshGrid());
+            },
+            GetGridResult: (event: React.MouseEvent<HTMLElement>) =>{
+              event.preventDefault();
+              let gridResult: any;
+              let gridRequestColumns = gridRequest.Columns;
+              this.props.dataSource.getAllRecords(gridRequest)
+                  .then(({ Payload }: any) => {gridResult = Payload});
+              let printTable = new PrintTable(gridResult, gridRequestColumns, this.props.gridName, filteredRecordCount);
+                  printTable.PrintDocument();
             }
-          
           }
         }}>
           {snackbar}
           <GridToolbar
             filteredRecordCount={filteredRecordCount}
-            gridName={this.props.gridName}
-            showSearchText={this.props.showSearchText}
-            isPrintEnabled={showPrintButton}
-            isExportEnabled={showExportButton}
-            onPrint={this.printTable}
             onExport={this.exportTable}
           />
           <Table>
             <TableHead>
-              {showTopPager && paginator}
+              {paginator}
               <GridHeader columns={gridRequest.Columns} />
             </TableHead>
             {body}
             <TableFooter>
-              {footerRenderer && footerRenderer(aggregate)}
-              {showBottomPager && paginator}
+              {footerRenderer(aggregate)}
+              {paginator}
             </TableFooter>
           </Table>
         </GridProvider>
