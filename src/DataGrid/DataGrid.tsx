@@ -12,7 +12,7 @@ import BaseDataSource from './DataSource/BaseDataSource';
 import { GridProvider } from './GridContext';
 import GridHeader from './GridHeader';
 import GridToolbar from './GridToolbar';
-import { ColumnDataType, CompareOperators, ColumnSortDirection } from './Models/Column';
+import { ColumnDataType, ColumnSortDirection, CompareOperators } from './Models/Column';
 import ColumnModel from './Models/ColumnModel';
 import GridRequest from './Models/GridRequest';
 import GridResponse from './Models/GridResponse';
@@ -60,19 +60,20 @@ interface IProps extends WithStyles<typeof styles> {
 
 class DataGrid extends React.Component<IProps, IState> {
   public state = {
-    multiSort: false,
     activeColumn: null as any,
     aggregate: {},
     data: [] as any,
     dataSource: this.props.dataSource,
     errorMessage: '',
     filteredRecordCount: 0,
+    gridRequest: new GridRequest(this.props.columns, this.props.rowsPerPage, 0),
+    multiSort: false,
     open: false,
     page: 0,
-    rowsPerPage: parseInt(localStorage.getItem(`tubular.${this.props.gridName}_pageSize`), 10) ||  this.props.rowsPerPage,
+    rowsPerPage: parseInt(
+      localStorage.getItem(`tubular.${this.props.gridName}_pageSize`), 10) ||  this.props.rowsPerPage,
     searchText: localStorage.getItem(`tubular.${this.props.gridName}_searchText`) || '',
     totalRecordCount: 0,
-    gridRequest: new GridRequest(this.props.columns, this.props.rowsPerPage, 0)
   };
 
   public handleKeyDown(event: any) {
@@ -152,10 +153,6 @@ class DataGrid extends React.Component<IProps, IState> {
         () => this.handleOpen()
       );
     }
-  }
-
-  public handleTextSearch = (searchText: string) => {
-    this.setState({ searchText }, () => this.refreshGrid());
   }
 
   public handlePager = (rowsPerPage: number, page: number) => {
@@ -395,7 +392,8 @@ class DataGrid extends React.Component<IProps, IState> {
       <Paper className={classes.root}>
         <GridProvider value={{
           state: {
-            activeColumn: this.state.activeColumn
+            activeColumn: this.state.activeColumn,
+            searchText: this.state.searchText
           },
           actions: {
             handleChange: (event: any) => {
@@ -537,7 +535,17 @@ class DataGrid extends React.Component<IProps, IState> {
                   }
                 }
               }));
+            },
+            TextSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+              const searchText = event.target.value;
+              this.setState({ searchText }, () => this.refreshGrid());
+            },
+            ClearSearchText: ()=> {
+              this.setState({
+                searchText: ''
+              }, () => this.refreshGrid());
             }
+          
           }
         }}>
           {snackbar}
@@ -545,7 +553,6 @@ class DataGrid extends React.Component<IProps, IState> {
             filteredRecordCount={filteredRecordCount}
             gridName={this.props.gridName}
             showSearchText={this.props.showSearchText}
-            onSearchTextChange={this.handleTextSearch}
             isPrintEnabled={showPrintButton}
             isExportEnabled={showExportButton}
             onPrint={this.printTable}
