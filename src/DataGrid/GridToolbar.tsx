@@ -69,50 +69,47 @@ class GridToolbar extends React.Component<IProps, IState> {
         {({ state, actions }) =>
           <Toolbar>
             <div className={classes.spacer} />
-
-               {toolbarOptions.showExportButton &&
-          <IconButton disabled={filteredRecordCount === 0} onClick={this.handleMenuOpen}>
-            <FileDownload />
-          </IconButton>}
-        {toolbarOptions.showPrintButton &&
-          <IconButton disabled={filteredRecordCount === 0} onClick={this.handlePrintMenuOpen} >
-            <Print/>
-          </IconButton>}
-          {toolbarOptions.showSearchText &&
-            <FormControl className={classes.formControl}>
-              <Input
-                fullWidth={true}
-                type='text'
-                value={state.searchText}
-                onChange={actions.TextSearchChange}
-                startAdornment={
-                  <InputAdornment position='end'>
-                    <IconButton>
-                      <Search />
-                    </IconButton>
-                  </InputAdornment>
-                }
-                endAdornment={
-                  state.searchText !== '' &&
-                  <InputAdornment position='end'>
-                    <IconButton onClick={actions.ClearSearchText}>
-                      <Close />
-                    </IconButton>
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
-          }
-           {toolbarOptions.showExportButton &&
+            {toolbarOptions.showExportButton &&
+              <IconButton disabled={filteredRecordCount === 0} onClick={this.handleMenuOpen}>
+                <FileDownload />
+              </IconButton>}
+            {toolbarOptions.showPrintButton &&
+              <IconButton disabled={filteredRecordCount === 0} onClick={this.handlePrintMenuOpen} >
+                <Print />
+              </IconButton>}
+            {toolbarOptions.showSearchText &&
+              <FormControl className={classes.formControl}>
+                <Input
+                  fullWidth={true}
+                  type='text'
+                  value={state.searchText}
+                  onChange={actions.textSearchChange}
+                  startAdornment={
+                    <InputAdornment position='end'>
+                        <Search />
+                    </InputAdornment>
+                  }
+                  endAdornment={
+                    state.searchText !== '' &&
+                    <InputAdornment position='end'>
+                      <IconButton onClick={actions.clearSearchText}>
+                        <Close />
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
+            }
+            {toolbarOptions.showExportButton &&
               <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleMenuClose}>
-                <MenuItem onClick={(e: any) => actions.exportCSV(e)}> All rows</MenuItem>
-                <MenuItem onClick={(e: any) => actions.exportCSV(e)}> Current rows</MenuItem>
+                <MenuItem onClick={() => actions.exportCSV(false)}> Current rows</MenuItem>
+                <MenuItem onClick={() => actions.exportCSV(true)}> All rows</MenuItem>
               </Menu>
             }
             {toolbarOptions.showPrintButton &&
               <Menu anchorEl={anchorPrint} open={Boolean(anchorPrint)} onClose={this.handlePrintMenuClose}>
-              <MenuItem onClick={(e: any) => actions.printDocument(e)}> All rows</MenuItem>
-              <MenuItem onClick={(e: any) => actions.printDocument(e)}> Current rows</MenuItem>
+                <MenuItem onClick={() => actions.printDocument(false)}> Current rows</MenuItem>
+                <MenuItem onClick={() => actions.printDocument(true)}> All rows</MenuItem>
               </Menu>
             }
           </Toolbar>}

@@ -20,10 +20,6 @@ interface IProps extends WithStyles<typeof styles> {
   onChangePage(event: React.MouseEvent<HTMLElement>, page: number): void;
 }
 const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsPerPage, onChangePage }) => {
-  const handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    onChangePage(event, 0);
-  };
-
   const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     onChangePage(event, page - 1);
   };
@@ -64,7 +60,7 @@ const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsP
   return (
     <div className={classes.root}>
       <IconButton
-        onClick={handleFirstPageButtonClick}
+        onClick={(e) => onChangePage(e, 0)}
         disabled={page === 0}
         aria-label='First Page'
       >
@@ -113,6 +109,4 @@ const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsP
   );
 };
 
-export default withStyles(styles, { withTheme: true })(
-  TablePaginationActions,
-);
+export default withStyles(styles, { withTheme: true })(TablePaginationActions);

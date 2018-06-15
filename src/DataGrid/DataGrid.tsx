@@ -12,7 +12,7 @@ import BaseDataSource from './DataSource/BaseDataSource';
 import { GridProvider } from './GridContext';
 import GridHeader from './GridHeader';
 import GridToolbar from './GridToolbar';
-import GridToolbarFunctions = require( './GridToolbarFunctions');
+import GridToolbarFunctions = require('./GridToolbarFunctions');
 import { ColumnDataType, ColumnSortDirection, CompareOperators } from './Models/Column';
 import ColumnModel from './Models/ColumnModel';
 import GridRequest from './Models/GridRequest';
@@ -41,7 +41,7 @@ interface IState {
   totalRecordCount: number;
   activeColumn: any;
   gridRequest: GridRequest;
-  multiSort: boolean;  
+  multiSort: boolean;
 }
 
 interface IProps extends WithStyles<typeof styles> {
@@ -70,7 +70,7 @@ class DataGrid extends React.Component<IProps, IState> {
     open: false,
     page: 0,
     rowsPerPage: parseInt(
-      localStorage.getItem(`tubular.${this.props.gridName}_pageSize`), 10) ||  this.props.rowsPerPage,
+      localStorage.getItem(`tubular.${this.props.gridName}_pageSize`), 10) || this.props.rowsPerPage,
     searchText: localStorage.getItem(`tubular.${this.props.gridName}_searchText`) || '',
     totalRecordCount: 0,
   };
@@ -138,10 +138,6 @@ class DataGrid extends React.Component<IProps, IState> {
     // });
   }
 
-  public componentWillMount() {
-    this.handleTextSearch = debounce(this.handleTextSearch, 600);
-  }
-
   public rowsPerPageChecker = (rowsPerPageOptions: number[]) => {
     const index = rowsPerPageOptions.indexOf(this.props.rowsPerPage);
 
@@ -152,10 +148,6 @@ class DataGrid extends React.Component<IProps, IState> {
         () => this.handleOpen()
       );
     }
-  }
-
-  public handleTextSearch = (searchText: string) => {
-    this.setState({ searchText }, () => this.refreshGrid());
   }
 
   public handlePager = (rowsPerPage: number, page: number) => {
@@ -411,27 +403,36 @@ class DataGrid extends React.Component<IProps, IState> {
               const searchText = event.target.value;
               this.setState({ searchText }, () => this.refreshGrid());
             },
-            clearSearchText: ()=> {
+            clearSearchText: () => {
               this.setState({
                 searchText: ''
               }, () => this.refreshGrid());
             },
-            printDocument: (event: React.MouseEvent<HTMLElement>) => {
-              event.preventDefault();
-              if (filteredRecordCount == 0) return; 
+            printDocument: (allRows: boolean) => {
+              if (filteredRecordCount == 0) return;
 
               let gridRequestColumns = gridRequest.Columns;
-              this.props.dataSource.getAllRecords(gridRequest)
+
+              if (allRows) {
+                gridRequest.Take = -1;
+                this.props.dataSource.getAllRecords(gridRequest)
                   .then(({ Payload }: any) => GridToolbarFunctions.printDocument(Payload, gridRequestColumns, this.props.gridName));
+              } else {
+                GridToolbarFunctions.printDocument(this.state.data, gridRequestColumns, this.props.gridName)
+              }
             },
-            exportCSV: (event: React.MouseEvent<HTMLElement>) => {
-              event.preventDefault();
-              if (filteredRecordCount == 0) return; 
-              
+            exportCSV: (allRows: boolean) => {
+              if (filteredRecordCount == 0) return;
+
               let gridRequestColumns = gridRequest.Columns;
 
-              this.props.dataSource.getAllRecords(gridRequest)
+              if (allRows) {
+                gridRequest.Take = -1;
+                this.props.dataSource.getAllRecords(gridRequest)
                   .then(({ Payload }: any) => GridToolbarFunctions.exportCSV(Payload, gridRequestColumns));
+              } else {
+                GridToolbarFunctions.exportCSV(this.state.data, gridRequestColumns);
+              }
             }
           }
         }}>
