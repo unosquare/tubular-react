@@ -157,7 +157,7 @@ class DataGrid extends React.Component<IProps, IState> {
   public refreshGrid = () => {
     const { gridRequest, rowsPerPage, searchText } = this.state;
 
-    this.props.dataSource.retrieveData(gridRequest);
+    this.props.dataSource.retrieveData(gridRequest); 
 
     localStorage.setItem(`tubular.${this.props.gridName}`, JSON.stringify(gridRequest.Columns));
     localStorage.setItem(`tubular.${this.props.gridName}_pageSize`, String(rowsPerPage));
@@ -399,9 +399,10 @@ class DataGrid extends React.Component<IProps, IState> {
                 }
               }));
             },
-            textSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => {
-              const searchText = event.target.value;
-              this.setState({ searchText }, () => this.refreshGrid());
+            textSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => {            
+              const text = event.target.value;
+              gridRequest.Search={ Text: text, Operator: 'Auto' };
+              this.setState({ searchText: text}, () => this.refreshGrid());
             },
             clearSearchText: () => {
               this.setState({

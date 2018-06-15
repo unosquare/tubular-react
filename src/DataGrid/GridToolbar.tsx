@@ -20,7 +20,7 @@ const styles = (theme: Theme) => createStyles(
 );
 
 interface IState {
-  anchorEl?: HTMLElement;
+  anchorExport?: HTMLElement;
   anchorPrint?: HTMLElement;
 }
 
@@ -32,19 +32,19 @@ interface IProps extends WithStyles<typeof styles> {
 class GridToolbar extends React.Component<IProps, IState> {
 
   public state = {
-    anchorEl: null as HTMLElement,
+    anchorExport: null as HTMLElement,
     anchorPrint: null as HTMLElement
   };
 
   public handleMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
     this.setState({
-      anchorEl: event.currentTarget
+      anchorExport: event.currentTarget
     });
   }
 
   public handleMenuClose = (): void => {
     this.setState({
-      anchorEl: null as HTMLElement
+      anchorExport: null as HTMLElement
     });
   }
 
@@ -62,7 +62,7 @@ class GridToolbar extends React.Component<IProps, IState> {
 
   public render() {
     const { classes, filteredRecordCount, toolbarOptions } = this.props;
-    const { anchorEl, anchorPrint } = this.state;
+    const { anchorExport, anchorPrint } = this.state;
 
     return (
       <GridConsumer>
@@ -101,15 +101,16 @@ class GridToolbar extends React.Component<IProps, IState> {
               </FormControl>
             }
             {toolbarOptions.showExportButton &&
-              <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleMenuClose}>
+              <Menu anchorEl={anchorExport} open={Boolean(anchorExport)} onClose={this.handleMenuClose}>
                 <MenuItem onClick={() => actions.exportCSV(false)}> Current rows</MenuItem>
                 <MenuItem onClick={() => actions.exportCSV(true)}> All rows</MenuItem>
               </Menu>
             }
             {toolbarOptions.showPrintButton &&
-              <Menu anchorEl={anchorPrint} open={Boolean(anchorPrint)} onClose={this.handlePrintMenuClose}>
-                <MenuItem onClick={() => actions.printDocument(false)}> Current rows</MenuItem>
-                <MenuItem onClick={() => actions.printDocument(true)}> All rows</MenuItem>
+              <Menu anchorEl={anchorPrint} open={Boolean(anchorPrint)}>
+                <MenuItem onClick={() => actions.printDocumment(false)}>
+                Current rows</MenuItem>
+                <MenuItem onClick={() => actions.printDocumment(true)}> All rows</MenuItem>
               </Menu>
             }
           </Toolbar>}
