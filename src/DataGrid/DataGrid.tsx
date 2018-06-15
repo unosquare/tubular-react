@@ -418,21 +418,20 @@ class DataGrid extends React.Component<IProps, IState> {
             },
             printDocument: (event: React.MouseEvent<HTMLElement>) => {
               event.preventDefault();
-              let gridResult: any;
+              if (filteredRecordCount == 0) return; 
+
               let gridRequestColumns = gridRequest.Columns;
               this.props.dataSource.getAllRecords(gridRequest)
-                  .then(({ Payload }: any) => {gridResult = Payload});
-            
-              GridToolbarFunctions.printDocument(gridResult, gridRequestColumns, this.props.gridName, filteredRecordCount); 
+                  .then(({ Payload }: any) => GridToolbarFunctions.printDocument(Payload, gridRequestColumns, this.props.gridName));
             },
             exportCSV: (event: React.MouseEvent<HTMLElement>) => {
               event.preventDefault();
-              let gridResult: any;
+              if (filteredRecordCount == 0) return; 
+              
               let gridRequestColumns = gridRequest.Columns;
-              this.props.dataSource.getAllRecords(gridRequest)
-                  .then(({ Payload }: any) => {gridResult = Payload});
 
-              GridToolbarFunctions.exportCSV(gridResult, gridRequestColumns, filteredRecordCount);
+              this.props.dataSource.getAllRecords(gridRequest)
+                  .then(({ Payload }: any) => GridToolbarFunctions.exportCSV(Payload, gridRequestColumns));
             }
           }
         }}>

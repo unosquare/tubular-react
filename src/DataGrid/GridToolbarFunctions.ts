@@ -49,9 +49,7 @@ const processRow = (row: any, visibleColumns: any) => {
 
 };
 
-function pd(gridResult: any, gridRequestColumns: any, gridName: string, filteredRecordCount: number) {
-        if (filteredRecordCount === 0) { return; }
-
+function printDoc(gridResult: any, gridRequestColumns: any, gridName: string) {
         const tableHtml = `<table class="table table-bordered table-striped"><thead><tr>${
             gridRequestColumns
                 .filter((c: any) => c.Visible)
@@ -80,9 +78,7 @@ function pd(gridResult: any, gridRequestColumns: any, gridName: string, filtered
         documentToPrint.document.close();
 }
 
-function ecsv(gridResult: any, gridRequestColumns: any, filteredRecordCount: number) {
-    if (filteredRecordCount === 0) { return; }
-
+function exportFile(gridResult: any, gridRequestColumns: any) {
     const header = gridRequestColumns.map((x: any) => x.Label);
     const visibleColumns = gridRequestColumns.map((x: any) => x.Visible);
 
@@ -110,4 +106,4 @@ function ecsv(gridResult: any, gridRequestColumns: any, filteredRecordCount: num
     URL.revokeObjectURL(fileURL);
 }
 
-export = { printDocument: pd, exportCsv: ecsv };
+export = { printDocument: printDoc, exportCSV: exportFile };
