@@ -4,7 +4,6 @@ import {
 } from '@material-ui/core';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import { CheckBox, CheckBoxOutlineBlank, Warning } from '@material-ui/icons';
-import { debounce } from 'lodash';
 import * as moment from 'moment';
 import * as React from 'react';
 
@@ -257,7 +256,8 @@ class DataGrid extends React.Component<IProps, IState> {
         <GridProvider value={{
           state: {
             activeColumn: this.state.activeColumn,
-            searchText: this.state.searchText
+            searchText: this.state.searchText,
+            columns: this.props.columns
           },
           actions: {
             handleChange: (event: any) => {
@@ -445,7 +445,7 @@ class DataGrid extends React.Component<IProps, IState> {
           <Table>
             <TableHead>
               {paginator}
-              <GridHeader columns={gridRequest.Columns} />
+              <GridHeader />
             </TableHead>
             {body}
             <TableFooter>

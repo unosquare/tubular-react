@@ -11,61 +11,50 @@ const cellValue = (cellDataType: string, cell: any) => {
         case ColumnDataType.BOOLEAN:
             return (cell === true ? 'Yes' : 'No');
         default:
-            return cell;
+            return cell || '';
     }
 };
 
-const processRow = (row: any, visibleColumns: any) => {
+const objToArray = (row: any) => {
     if (row instanceof Object) {
         row = Object.keys(row).map((key: any) => row[key]);
     }
-    let finalVal = '';
 
-    for (let i = 0; i < row.length; i++) {
-        if (!visibleColumns[i]) { continue; }
-        let innerValue = (row[i] === null || row[i] === undefined) ? '' :
-            (typeof (row[i]) === 'boolean') ? (row[i] === true && 'Yes') :
-                row[i].toString();
+    return row;
+}
 
-        if (moment(row[i], moment.ISO_8601, true).isValid()) {
-            innerValue = moment(row[i]).format('MMMM Do YYYY, h:mm:ss a');
-        }
-
-        let result = innerValue.replace(/"/g, '""');
+const processRow = (row: any, columns: any[]) => {
+    let finalVal = objToArray(row).reduce((prev, value, i) => {
+        if (!columns[i].Visible) return;
+        
+        let result = cellValue(columns[i].DataType, value)
+            .replace(/"/g, '""');
 
         if (result.search(/("|,|\n)/g) >= 0) {
             result = `"${result}"`;
         }
 
         if (i > 0) {
-            finalVal += ',';
+            prev += ',';
         }
 
-        finalVal += result;
-
-    }
+        prev += result;
+    }, '');
 
     return `${finalVal}\n`;
-
 };
 
-function printDoc(gridResult: any, gridRequestColumns: any, gridName: string) {
+function printDoc(gridResult: any, columns: any, gridName: string) {
         const tableHtml = `<table class="table table-bordered table-striped"><thead><tr>${
-            gridRequestColumns
+            columns
                 .filter((c: any) => c.Visible)
                 .reduce((prev: any, el: any) => `${prev}<th>${el.Label || el.Name}</th>`, '')
             }</tr></thead><tbody>${
-            gridResult.map((row: any) => {
-                if (row instanceof Object) {
-                    row = Object.keys(row).map((key: any) => row[key]);
-                }
-                return `<tr>${row.map((cell: any, index: number) => {
-                    if (gridRequestColumns[index] && !gridRequestColumns[index].Visible) {
-                        return '';
-                    }
-                    return `<td>${cellValue(gridRequestColumns[index].DataType, cell)}</td>`;
-                }).join(' ')}</tr>`;
-            }).join(' ')}</tbody></table>`;
+            gridResult.map((row: any) => 
+                `<tr>${objToArray(row).map((cell: any, index: number) => 
+                    !columns[index].Visible ? '' : `<td>${cellValue(columns[index].DataType, cell)}</td>`
+                ).join(' ')}</tr>`)
+            .join(' ')}</tbody></table>`;
 
         const documentToPrint = window.open('about:blank', 'Print', 'location=0,height=500,width=800');
         documentToPrint.document
@@ -78,17 +67,16 @@ function printDoc(gridResult: any, gridRequestColumns: any, gridName: string) {
         documentToPrint.document.close();
 }
 
-function exportFile(gridResult: any, gridRequestColumns: any) {
-    const header = gridRequestColumns.map((x: any) => x.Label);
-    const visibleColumns = gridRequestColumns.map((x: any) => x.Visible);
+function exportFile(gridResult: any, columns: any) {
+    const header = columns.map((x: any) => x.Label);
 
     let csvFile = '';
     if (header.length > 0) {
-        csvFile += processRow(header, visibleColumns);
+        csvFile += processRow(header, columns);
     }
 
     gridResult.forEach((row: any) => {
-        csvFile += processRow(row, visibleColumns);
+        csvFile += processRow(row, columns);
     });
 
     const blob = new Blob([`\uFEFF${csvFile}`], {
