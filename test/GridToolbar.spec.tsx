@@ -75,7 +75,7 @@ describe('<GridToolbar/>', () => {
 
   describe('When input text changes', () => {
     test('should update state search text', () => {
-      props.showSearchText = true;
+      props.searchText = true;
       const wrapper = shallow(<GridToolbar {...props}/>);
 
       wrapper.find(Input).simulate('change', { target: { name: 'search', value: 'search' } });

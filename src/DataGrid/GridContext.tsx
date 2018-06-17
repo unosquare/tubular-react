@@ -1,5 +1,4 @@
 import * as React from 'react';
-import ColumnModel from './Models/ColumnModel';
 
 interface IContext {
     actions?: any;

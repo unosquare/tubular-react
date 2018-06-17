@@ -38,9 +38,9 @@ class SamplePagination extends React.Component {
             <DataGrid
                 dataSource={dataSource}
                 rowsPerPage={10}
-                showBottomPager={true}
-                showSearchText={false}
-                showTopPager={true}
+                bottomPager={true}
+                searchText={false}
+                topPager={true}
                 gridName='Tubular-React'
             />
         );

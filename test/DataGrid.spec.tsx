@@ -57,7 +57,7 @@ describe('<DataGrid />', () => {
         onError={(x: any) => x}
         gridName='Motorhead'
         rowsPerPage={10}
-        showTopPager={true}
+        topPager={true}
         dataSource={dataSource}
       />
     );
@@ -385,7 +385,7 @@ describe('<DataGrid />', () => {
           gridName='Motorhead'
           rowsPerPage={10}
           dataSource={new RemoteDataSource('url', validColumnsSample)}
-          showBottomPager={true}
+          bottomPager={true}
         />
       );
 
@@ -402,7 +402,7 @@ describe('<DataGrid />', () => {
           gridName='Motorhead'
           rowsPerPage={10}
           dataSource={new RemoteDataSource('url', validColumnsSample)}
-          showBottomPager={true}
+          bottomPager={true}
           footerRenderer={footerRenderer}
         />
       );
@@ -415,7 +415,7 @@ describe('<DataGrid />', () => {
     });
   });
 
-  describe('When footer has showBottomPager property set as true', () => {
+  describe('When footer has bottomPager property set as true', () => {
    test('should have a paginator', () => {
       grid = (
         <DataGrid
@@ -423,7 +423,7 @@ describe('<DataGrid />', () => {
           gridName='Motorhead'
           rowsPerPage={10}
           dataSource={new RemoteDataSource('url', validColumnsSample)}
-          showBottomPager={true}
+          bottomPager={true}
         />
       );
 
@@ -434,7 +434,7 @@ describe('<DataGrid />', () => {
     });
   });
 
-  describe('When <TableHead /> has showTopPager property set as true', () => {
+  describe('When <TableHead /> has topPager property set as true', () => {
 
    test('Should have a paginator', () => {
       grid = (
@@ -443,7 +443,7 @@ describe('<DataGrid />', () => {
           gridName='Motorhead'
           rowsPerPage={10}
           dataSource={new RemoteDataSource('url', validColumnsSample)}
-          showTopPager={true}
+          topPager={true}
         />
       );
 

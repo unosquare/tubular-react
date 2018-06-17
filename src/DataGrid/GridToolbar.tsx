@@ -69,15 +69,15 @@ class GridToolbar extends React.Component<IProps, IState> {
         {({ state, actions }) =>
           <Toolbar>
             <div className={classes.spacer} />
-            {toolbarOptions.showExportButton &&
+            {toolbarOptions.exportButton &&
               <IconButton disabled={filteredRecordCount === 0} onClick={this.handleMenuOpen}>
                 <FileDownload />
               </IconButton>}
-            {toolbarOptions.showPrintButton &&
+            {toolbarOptions.printButton &&
               <IconButton disabled={filteredRecordCount === 0} onClick={this.handlePrintMenuOpen} >
                 <Print />
               </IconButton>}
-            {toolbarOptions.showSearchText &&
+            {toolbarOptions.searchText &&
               <FormControl className={classes.formControl}>
                 <Input
                   fullWidth={true}
@@ -100,13 +100,13 @@ class GridToolbar extends React.Component<IProps, IState> {
                 />
               </FormControl>
             }
-            {toolbarOptions.showExportButton &&
+            {toolbarOptions.exportButton &&
               <Menu anchorEl={anchorExport} open={Boolean(anchorExport)} onClose={this.handleMenuClose}>
                 <MenuItem onClick={() => actions.exportCSV(false)}> Current rows</MenuItem>
                 <MenuItem onClick={() => actions.exportCSV(true)}> All rows</MenuItem>
               </Menu>
             }
-            {toolbarOptions.showPrintButton &&
+            {toolbarOptions.printButton &&
               <Menu anchorEl={anchorPrint} open={Boolean(anchorPrint)}>
                 <MenuItem onClick={() => actions.printDocumment(false)}>
                 Current rows</MenuItem>

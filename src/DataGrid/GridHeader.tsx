@@ -17,7 +17,7 @@ const GridHeader: React.SFC = () => {
   return (
     <GridConsumer>
       {({ actions, state }) =>
-        < TableRow >
+        <TableRow>
           {state.activeColumn && <DialogModal />}
           {state.columns.filter((col: any) => col.Visible).map((column: any) => {
             const render = column.Sortable ?

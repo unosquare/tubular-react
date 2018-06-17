@@ -81,11 +81,11 @@ export default class Main extends React.Component {
         rowsPerPageOptions={[10, 20, 50, 100]}
         toolbarOptions={
           {
-          showBottomPager: true,
-          showExportButton: true,
-          showPrintButton: true,
-          showSearchText: true,
-          showTopPager: true
+          bottomPager: true,
+          exportButton: true,
+          printButton: true,
+          searchText: true,
+          topPager: true
          }
         }
         footerRenderer={

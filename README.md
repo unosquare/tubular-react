@@ -121,11 +121,11 @@ These are all the available props (and their default values) for the `<DataGrid 
 | `gridName`         | `string`                               |        -        |**Required**                                 |
 | `rowsPerPage`      | `number`                               |        -        |**Required.** It should be a number that is inside the `rowsPerPageOptions` array.|
 |`rowsPerPageOptions`| `array`                                |[10, 20, 50, 100]| The options that are going to be shown in the `Page size` dropdown.|
-| `showBottomPager`  | `bool`                                 |     `true`     |**Optional**                                              |
-| `showExportButton` | `bool`                                 |     `true`     |**Optional**                                                  |
-| `showSearchText`   | `bool`                             |        `true`        |**Optional**                                                  |
-| `showTopPager`     | `bool`                                 |     `true`     |**Optional**                                                 |
-| `showPrintButton`  | `bool`                                 |     `true`     |**Optional**                                                  |
+| `bottomPager`  | `bool`                                 |     `true`     |**Optional**                                              |
+| `exportButton` | `bool`                                 |     `true`     |**Optional**                                                  |
+| `searchText`   | `bool`                             |        `true`        |**Optional**                                                  |
+| `topPager`     | `bool`                                 |     `true`     |**Optional**                                                 |
+| `printButton`  | `bool`                                 |     `true`     |**Optional**                                                  |
 | `bodyRenderer`     | `function`                             |        -        |**Optional**                                                  |
 | `footerRenderer`   | `function`                             |        -        |**Optional**                                                  |
 

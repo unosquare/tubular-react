@@ -5,7 +5,6 @@ import {
   ColumnSortDirection,
   CompareOperators,
 } from '../Models/Column';
-import ColumnModel from '../Models/ColumnModel';
 import GridRequest from '../Models/GridRequest';
 import GridResponse from '../Models/GridResponse';
 import GridDataResponse from '../utils/GridDataResponse';

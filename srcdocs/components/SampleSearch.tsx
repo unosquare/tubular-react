@@ -50,9 +50,9 @@ class SamplePagination extends React.Component {
             <DataGrid
                 dataSource={dataSource}
                 rowsPerPage={10}
-                showBottomPager={true}
-                showSearchText={true}
-                showTopPager={true}
+                bottomPager={true}
+                searchText={true}
+                topPager={true}
                 gridName='table'
             />
         );
