@@ -26,7 +26,6 @@ interface IState {
 
 interface IProps extends WithStyles<typeof styles> {
   toolbarOptions: any;
-  filteredRecordCount: number;
 }
 
 class GridToolbar extends React.Component<IProps, IState> {
@@ -61,7 +60,7 @@ class GridToolbar extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const { classes, filteredRecordCount, toolbarOptions } = this.props;
+    const { classes, toolbarOptions } = this.props;
     const { anchorExport, anchorPrint } = this.state;
 
     return (
@@ -70,11 +69,11 @@ class GridToolbar extends React.Component<IProps, IState> {
           <Toolbar>
             <div className={classes.spacer} />
             {toolbarOptions.exportButton &&
-              <IconButton disabled={filteredRecordCount === 0} onClick={this.handleMenuOpen}>
+              <IconButton disabled={state.filteredRecordCount === 0} onClick={this.handleMenuOpen}>
                 <FileDownload />
               </IconButton>}
             {toolbarOptions.printButton &&
-              <IconButton disabled={filteredRecordCount === 0} onClick={this.handlePrintMenuOpen} >
+              <IconButton disabled={state.filteredRecordCount === 0} onClick={this.handlePrintMenuOpen} >
                 <Print />
               </IconButton>}
             {toolbarOptions.searchText &&

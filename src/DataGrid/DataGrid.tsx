@@ -1,10 +1,8 @@
 import {
-  Paper, Snackbar, Table, TableBody, TableCell, TableFooter,
-  TableHead, TableRow, Typography
+  Paper, Table, TableFooter,
+  TableHead, TableRow
 } from '@material-ui/core';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
-import { CheckBox, CheckBoxOutlineBlank, Warning } from '@material-ui/icons';
-import * as moment from 'moment';
 import * as React from 'react';
 
 import BaseDataSource from './DataSource/BaseDataSource';
@@ -17,6 +15,8 @@ import ColumnModel from './Models/ColumnModel';
 import GridRequest from './Models/GridRequest';
 import GridResponse from './Models/GridResponse';
 import Paginator from './Paginator';
+import GridSnackbar from './GridSnackbar';
+import GridBody from './GridBody';
 
 const styles = (theme: Theme) => createStyles(
   {
@@ -32,8 +32,6 @@ interface IState {
   data: any[];
   errorMessage: string;
   filteredRecordCount: number;
-  gridResult: object;
-  open: boolean;
   page: number;
   rowsPerPage: number;
   searchText: string;
@@ -61,17 +59,15 @@ class DataGrid extends React.Component<IProps, IState> {
     aggregate: {},
     data: [] as any,
     dataSource: this.props.dataSource,
-    errorMessage: '',
+    errorMessage: null,
     filteredRecordCount: 0,
     gridRequest: new GridRequest(this.props.columns, this.props.rowsPerPage, 0),
-    gridResult: {},
     multiSort: false,
-    open: false,
     page: 0,
     rowsPerPage: parseInt(
       localStorage.getItem(`tubular.${this.props.gridName}_pageSize`), 10) || this.props.rowsPerPage,
     searchText: localStorage.getItem(`tubular.${this.props.gridName}_searchText`) || '',
-    totalRecordCount: 0,
+    totalRecordCount: 0
   };
 
   public handleKeyDown(event: any) {
@@ -143,9 +139,7 @@ class DataGrid extends React.Component<IProps, IState> {
     if (index === -1) {
       this.setState({
         errorMessage: `The rowsPerPage value should be: ${rowsPerPageOptions}`
-      },
-        () => this.handleOpen()
-      );
+      });
     }
   }
 
@@ -163,67 +157,10 @@ class DataGrid extends React.Component<IProps, IState> {
     localStorage.setItem(`tubular.${this.props.gridName}_searchText`, searchText);
   }
 
-  public renderCell = (column: ColumnModel, row: any) => {
-    let rows = null;
-
-    switch (column.DataType) {
-      case ColumnDataType.NUMERIC:
-        rows = row[column.Name] || 0;
-        break;
-      case ColumnDataType.DATE:
-        rows = moment(row[column.Name]).format('MMMM Do YYYY') || '';
-        break;
-      case ColumnDataType.DATE_TIME:
-      case ColumnDataType.DATE_TIME_UTC:
-        rows = moment(row[column.Name]).format('MMMM Do YYYY, h:mm:ss a') || '';
-        break;
-      case ColumnDataType.BOOLEAN:
-        rows = row[column.Name] === true ? <CheckBox /> : <CheckBoxOutlineBlank />;
-        break;
-      default:
-        rows = row[column.Name];
-        break;
-    }
-
-    return rows;
-  }
-
-  public handleClose = () => {
-    this.setState({ open: false });
-  }
-
-  public handleOpen = () => {
-    this.setState({ open: true });
-  }
-
   public render() {
     const { classes, bodyRenderer, footerRenderer, rowsPerPageOptions, toolbarOptions } = this.props;
-    const { data, rowsPerPage, page, gridRequest, aggregate, filteredRecordCount, totalRecordCount } = this.state;
-    const body = (
-      <TableBody>
-        {data.map((row: any, rowIndex: number) => (
-          bodyRenderer
-            ? bodyRenderer(row, rowIndex)
-            : <TableRow hover={true} key={rowIndex}>
-              {
-                gridRequest.Columns.filter((col: any) => col.Visible).map((column: ColumnModel, colIndex: number) =>
-                  <TableCell key={colIndex} padding={column.Label === '' ? 'none' : 'default'}>
-                    {
-                      this.renderCell(column, row)
-                    }
-                  </TableCell>)
-              }
-            </TableRow>
-        ))}
-        {filteredRecordCount === 0 &&
-          (<TableRow>
-            <Typography style={{ paddingLeft: '15px' }} variant='body2' gutterBottom={true}>
-              <Warning /> No records found
-              </Typography>
-          </TableRow>)}
-      </TableBody>
-    );
-
+    const { rowsPerPage, page, gridRequest, aggregate, filteredRecordCount, totalRecordCount, errorMessage } = this.state;
+    
     const paginator = (
       <TableRow>
         <Paginator
@@ -237,29 +174,19 @@ class DataGrid extends React.Component<IProps, IState> {
       </TableRow>
     );
 
-    const snackbar = (
-      <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        autoHideDuration={4000}
-        style={{ paddingTop: '10px' }}
-        open={this.state.open}
-        onClose={this.handleClose}
-        ContentProps={{
-          'aria-describedby': 'message-id',
-        }}
-        message={<span id='message-id'>{this.state.errorMessage}</span>}
-      />
-    );
-
     return (
       <Paper className={classes.root}>
         <GridProvider value={{
           state: {
             activeColumn: this.state.activeColumn,
             searchText: this.state.searchText,
-            columns: this.props.columns
+            columns: this.props.columns,
+            data: this.state.data,
+            gridRequest: gridRequest,
+            filteredRecordCount: filteredRecordCount
           },
           actions: {
+            bodyRenderer: bodyRenderer,
             handleChange: (event: any) => {
               const value = event.target.value
               this.setState((prevState) => ({
@@ -309,7 +236,7 @@ class DataGrid extends React.Component<IProps, IState> {
                   FilterText = parseFloat(prevState.activeColumn.Filter.Text)
                   FilterArgument = parseFloat(prevState.activeColumn.Filter.Argument[0])
                 } else if (prevState.activeColumn.DataType == ColumnDataType.BOOLEAN) {
-                  FilterText = prevState.activeColumn.Filter.Text === 'true' ? true : false;
+                  FilterText = prevState.activeColumn.Filter.Text === 'true';
                   FilterArgument = ''
                 } else {
                   FilterText = prevState.activeColumn.Filter.Text;
@@ -437,17 +364,16 @@ class DataGrid extends React.Component<IProps, IState> {
             }
           }
         }}>
-          {snackbar}
+          {errorMessage && <GridSnackbar />}
           <GridToolbar
             toolbarOptions={toolbarOptions}
-            filteredRecordCount={filteredRecordCount}
           />
           <Table>
             <TableHead>
               {paginator}
               <GridHeader />
             </TableHead>
-            {body}
+            <GridBody />
             <TableFooter>
               {footerRenderer(aggregate)}
               {paginator}
