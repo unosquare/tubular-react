@@ -11,18 +11,10 @@ import GridDataResponse from '../utils/GridDataResponse';
 import BaseDataSource from './BaseDataSource';
 
 export default class LocalDataSource extends BaseDataSource {
-
-  public localData: any[];
-
-  constructor(localData: any[]) {
-    super();
-    this.localData = localData;
-  }
-
   public getAllRecords(request: GridRequest): Promise<object> {
     return new Promise((resolve, reject) => {
       try {
-        let data = this.localData;
+        let data = this.props.source;
 
         const response = new GridDataResponse({
           Counter: request.Count,

@@ -74,7 +74,6 @@
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-test-renderer": "^16.4.0",
-    "rxjs-es": "^5.0.0-beta.12",
     "typeface-roboto": "0.0.54"
   },
   "devDependencies": {
@@ -87,7 +86,6 @@
     "@types/react-router": "^4.0.25",
     "@types/react-router-dom": "^4.2.6",
     "@types/react-syntax-highlighter": "0.0.5",
-    "@types/rx": "^4.1.1",
     "@types/sinon": "^5.0.0",
     "@zeit/next-typescript": "1.0.1",
     "awesome-typescript-loader": "^5.0.0",

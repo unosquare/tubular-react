@@ -4,18 +4,10 @@ import GridResponse from '../Models/GridResponse';
 import BaseDataSource from './BaseDataSource';
 
 export default class RemoteDataSource extends BaseDataSource {
-
-  public url: string;
-
-  constructor(url: string) {
-    super();
-    this.url = url;
-  }
-
   public getAllRecords(request: GridRequest): Promise<object> {
     return new Promise((resolve, reject) => {
       
-      Axios.post(this.url, request).then((response) => {
+      Axios.post(this.props.source, request).then((response) => {
         if (response.data === undefined || !this.isValidResponse(response.data)) {
           throw new Error('It\'s not a valid Tubular response object');
         }
