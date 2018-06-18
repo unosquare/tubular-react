@@ -5,16 +5,16 @@ import {
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import * as React from 'react';
 
+import GridBody from './GridBody';
 import { GridProvider } from './GridContext';
 import GridHeader from './GridHeader';
+import GridSnackbar from './GridSnackbar';
 import GridToolbar from './GridToolbar';
 import GridToolbarFunctions = require('./GridToolbarFunctions');
 import { ColumnDataType, ColumnSortDirection, CompareOperators } from './Models/Column';
 import ColumnModel from './Models/ColumnModel';
 import GridRequest from './Models/GridRequest';
 import Paginator from './Paginator';
-import GridSnackbar from './GridSnackbar';
-import GridBody from './GridBody';
 
 import { DataSourceConsumer } from './DataSource/BaseDataSource';
 
@@ -45,7 +45,7 @@ interface IProps extends WithStyles<typeof styles> {
 class DataGrid extends React.Component<IProps, IState> {
   public state = {
     activeColumn: null as any,
-    errorMessage: null,
+    errorMessage: null as any,
     multiSort: false
   };
 
@@ -77,7 +77,7 @@ class DataGrid extends React.Component<IProps, IState> {
 
     return (
       <DataSourceConsumer>
-        {({ actions, columns, data, filteredRecordCount, totalRecordCount, aggregate, searchText, itemsPerPage }) =>
+        {({ actions, columns, data, filteredRecordCount, totalRecordCount, aggregate, searchText, itemsPerPage, page }) =>
           <Paper className={classes.root}>
             <GridProvider value={{
               state: {
@@ -87,7 +87,8 @@ class DataGrid extends React.Component<IProps, IState> {
                 data: data,
                 filteredRecordCount: filteredRecordCount,
                 itemsPerPage: itemsPerPage,
-                totalRecordCount: totalRecordCount
+                totalRecordCount: totalRecordCount,
+                page: page
               },
               actions: {
                 bodyRenderer: bodyRenderer,
@@ -158,10 +159,10 @@ class DataGrid extends React.Component<IProps, IState> {
                     this.setState(() => { activeColumn: null }, () => actions.updateColumns(newColumns));
                 },
                 sortColumn: (property: string) => {
-                  this.setState((prevState) => {
-                    const columns = [...prevState.gridRequest.Columns];
+                  const newColumns = [...columns];
+                  this.setState((prevState) => {                    
 
-                    columns.forEach((column: any) => {
+                    newColumns.forEach((column: any) => {
                       if (column.Name === property) {
                         column.SortDirection = column.SortDirection === ColumnSortDirection.NONE
                           ? ColumnSortDirection.ASCENDING
@@ -176,27 +177,21 @@ class DataGrid extends React.Component<IProps, IState> {
                         }
 
                         if (!prevState.multiSort) {
-                          columns.filter((col: any) => col.Name !== property).forEach(($column: any) => {
-                            $column.SortOrder = -1;
-                            $column.SortDirection = ColumnSortDirection.NONE;
+                          newColumns.filter((col: any) => col.Name !== property).forEach((column: any) => {
+                            column.SortOrder = -1;
+                            column.SortDirection = ColumnSortDirection.NONE;
                           });
                         }
 
-                        const currentlySortedColumns = columns
+                        const currentlySortedColumns = newColumns
                           .filter((col: ColumnModel) => col.SortOrder > 0)
                           .sort((a: ColumnModel, b: ColumnModel) => a.SortOrder === b.SortOrder ? 0 : (a.SortOrder > b.SortOrder ? 1 : -1));
 
-                        currentlySortedColumns.forEach(($column: any, i: number) => {
-                          $column.SortOrder = i + 1;
+                        currentlySortedColumns.forEach((column: any, i: number) => {
+                          column.SortOrder = i + 1;
                         });
                       }
-                    });
-
-                    return {
-                      activeColumn: null,
-                      gridRequest: new GridRequest(columns, prevState.rowsPerPage, prevState.page, prevState.searchText)
-                    }
-                  });
+                    })}, () => actions.updateColumns(newColumns));
                 },
                 handleTextFieldChange: (event: any) => {
                   const value = event.target.value;
@@ -226,28 +221,27 @@ class DataGrid extends React.Component<IProps, IState> {
                 clearSearchText: () => actions.updateSearchText(''),
                 printDocument: (allRows: boolean) => {
                   if (filteredRecordCount == 0) return;
-
-                  let gridRequestColumns = gridRequest.Columns;
+                  
+                  let gridRequest= new GridRequest(columns, itemsPerPage, page, searchText);
 
                   if (allRows) {
                     gridRequest.Take = -1;
                     actions.request(gridRequest)
-                      .then(({ Payload }: any) => GridToolbarFunctions.printDocument(Payload, gridRequestColumns, this.props.gridName));
+                      .then(({ Payload }: any) => GridToolbarFunctions.printDocument(Payload, columns, this.props.gridName));
                   } else {
-                    GridToolbarFunctions.printDocument(data, gridRequestColumns, this.props.gridName)
+                    GridToolbarFunctions.printDocument(data, columns, this.props.gridName)
                   }
                 },
                 exportCSV: (allRows: boolean) => {
-                  if (filteredRecordCount == 0) return;
+                  if (filteredRecordCount == 0) { return; }
 
-                  let gridRequestColumns = gridRequest.Columns;
-
+                  let gridRequest= new GridRequest(columns, itemsPerPage, page, searchText);
                   if (allRows) {
                     gridRequest.Take = -1;
                     actions.request(gridRequest)
-                      .then(({ Payload }: any) => GridToolbarFunctions.exportCSV(Payload, gridRequestColumns));
+                      .then(({ Payload }: any) => GridToolbarFunctions.exportCSV(Payload, columns));
                   } else {
-                    GridToolbarFunctions.exportCSV(data, gridRequestColumns);
+                    GridToolbarFunctions.exportCSV(data, columns);
                   }
                 },
                 updatePage: actions.updatePage,

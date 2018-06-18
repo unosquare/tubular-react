@@ -28,13 +28,13 @@ interface IContext extends IState {
 const DataSourceContext = React.createContext<IContext>({
     actions: null,
     aggregate: null,
+    columns: null,
     data: null,
     filteredRecordCount: null,
-    totalRecordCount: null,
-    searchText: null,
-    columns: null,
     itemsPerPage: null,
-    page: null
+    page: null,
+    searchText: null,
+    totalRecordCount: null
 });
 
 export const DataSourceConsumer = DataSourceContext.Consumer;
@@ -42,13 +42,13 @@ export const DataSourceConsumer = DataSourceContext.Consumer;
 export default abstract class BaseDataSource extends React.Component<IProps, IState> {
     public state = {
         aggregate: {},
-        data: [] as any,
         columns: this.props.columns,
+        data: [] as any,
+        filteredRecordCount: null as any,
         itemsPerPage: this.props.itemsPerPage,
-        filteredRecordCount: null,
-        totalRecordCount: null,
         page: 1,
-        searchText: null
+        searchText: '',
+        totalRecordCount: null as any
     };
 
     public abstract getAllRecords(request: GridRequest): Promise<object>;
@@ -65,7 +65,7 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
                     filteredRecordCount: response.FilteredRecordCount || 0,
                     totalRecordCount: response.TotalRecordCount || 0
                 });
-            })
+        });
     }
 
     public componentDidMount() {

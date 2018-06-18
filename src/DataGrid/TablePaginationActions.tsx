@@ -20,47 +20,32 @@ interface IProps extends WithStyles<typeof styles> {
   onChangePage(event: React.MouseEvent<HTMLElement>, page: number): void;
 }
 const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsPerPage, onChangePage }) => {
-  const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    onChangePage(event, page - 1);
-  };
-
-  const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    onChangePage(event, page + 1);
-  };
-
-  const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const $maxPage: number = Math.max(0, Math.ceil(count / rowsPerPage) - 1);
-
-    onChangePage(
-      event,
-      $maxPage
-    );
-  };
-
-  const handlePageButtonClick = (event: React.MouseEvent<HTMLElement>, Page: number) => {
-    onChangePage(
-      event,
-      Page,
-    );
-  };
-
-  let pages: any[] = [];
+  const pages: any[] = [];
   const maxPage = Math.max(0, Math.ceil(count / rowsPerPage) - 1);
-
-  if (page < 3) {
-    pages = [ 0, 1, 2, 3, 4 ];
-  } else if (maxPage === 3) {
-    pages = [ 0, 1, 2, 3];
+  let fromPage = 0;
+  let toPage = 0;
+ 
+  if (maxPage < 6) {
+    toPage = maxPage;
+  } else if (page - 1 <= 0) {
+    fromPage = 0;
+    toPage = 5;
   } else if (page > maxPage - 2) {
-    pages = [maxPage - 4, maxPage - 3, maxPage - 2, maxPage - 1, maxPage];
+    fromPage = maxPage - 5;
+    toPage = maxPage;
   } else {
-    pages = [ page - 2, page - 1, page, page + 1, page + 2 ];
+    fromPage = page - 2;
+    toPage = page + 3;
+  }
+
+  for (let i = fromPage; i < toPage; i++) {
+    pages.push(i);
   }
 
   return (
     <div className={classes.root}>
       <IconButton
-        onClick={(e) => onChangePage(e, 0)}
+        onClick={(e) => onChangePage(e, 1)}
         disabled={page === 0}
         aria-label='First Page'
       >
@@ -68,7 +53,7 @@ const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsP
       </IconButton>
 
       <IconButton
-        onClick={handleBackButtonClick}
+        onClick={(e) => onChangePage(e, page - 1)}
         disabled={page === 0}
         aria-label='Previous Page'
       >
@@ -76,10 +61,10 @@ const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsP
       </IconButton>
 
       {
-        pages.map((element, index) => ( count / rowsPerPage > index &&
+        pages.map((index) => ( count / rowsPerPage > index &&
             <IconButton
               key={index}
-              onClick={(event) => handlePageButtonClick(event, pages[index])}
+              onClick={(e) => onChangePage(e, pages[index])}
               aria-label={`Page${index + 1}`}
               color={ pages[index] === page ?
                  'primary' :
@@ -90,7 +75,7 @@ const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsP
       }
 
       <IconButton
-        onClick={handleNextButtonClick}
+        onClick={(e) => onChangePage(e, page + 1)}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
         aria-label='Next Page'
       >
@@ -98,7 +83,7 @@ const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsP
       </IconButton>
 
       <IconButton
-        onClick={handleLastPageButtonClick}
+        onClick={(e) => onChangePage(e, Math.max(0, Math.ceil(count / rowsPerPage) - 1))}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
         aria-label='Last Page'
       >

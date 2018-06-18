@@ -8,7 +8,7 @@ interface IProps {
   rowsPerPageOptions?: number[];
 }
 
-const message = (totalRecordCount, filteredRecordCount) => ({ from, to, count }: any) =>
+const message = (totalRecordCount: any, filteredRecordCount: any) => ({ from, to, count }: any) =>
   totalRecordCount === filteredRecordCount ?
     `${from}-${to} of ${count}` :
     filteredRecordCount === 0 ?

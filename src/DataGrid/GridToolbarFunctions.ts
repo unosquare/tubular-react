@@ -21,12 +21,12 @@ const objToArray = (row: any) => {
     }
 
     return row;
-}
+};
 
 const processRow = (row: any, columns: any[]) => {
-    let finalVal = objToArray(row).reduce((prev, value, i) => {
-        if (!columns[i].Visible) return;
-        
+    const finalVal = objToArray(row).reduce((prev: any, value: any, i: any) => {
+        if (!columns[i].Visible) { return; }
+
         let result = cellValue(columns[i].DataType, value)
             .replace(/"/g, '""');
 
@@ -50,7 +50,7 @@ function printDoc(gridResult: any, columns: any, gridName: string) {
                 .filter((c: any) => c.Visible)
                 .reduce((prev: any, el: any) => `${prev}<th>${el.Label || el.Name}</th>`, '')
             }</tr></thead><tbody>${
-            gridResult.map((row: any) => 
+            gridResult.map((row: any) =>
                 `<tr>${objToArray(row).map((cell: any, index: number) => 
                     !columns[index].Visible ? '' : `<td>${cellValue(columns[index].DataType, cell)}</td>`
                 ).join(' ')}</tr>`)

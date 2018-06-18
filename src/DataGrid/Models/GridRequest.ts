@@ -9,7 +9,7 @@ export default class GridRequest {
   public Skip: number;
   public Take: number;
   public TimezoneOffset: number;
-  
+
   protected static counter: number;
 
   constructor(columns: ColumnModel[], rowsPerPage: number, page: number, searchText: string = '') {
