@@ -50,7 +50,6 @@ describe('<DataGrid />', () => {
 
   beforeEach(() => {
     dataSource = new RemoteDataSource('url', validColumnsSample);
-    shallow = createShallow({dive: true});
 
     grid = (
       <DataGrid

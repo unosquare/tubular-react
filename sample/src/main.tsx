@@ -8,7 +8,8 @@ import DataGrid, {
   ColumnDataType,
   ColumnModel,
   ColumnSortDirection,
-  RemoteDataSource
+  RemoteDataSource,
+  ToolbarOptions
 } from '../../src';
 
 const columns = [
@@ -57,7 +58,7 @@ const columns = [
 export default class Main extends React.Component {
   public render() {
     return (
-      <RemoteDataSource 
+      <RemoteDataSource
         source='http://tubular.azurewebsites.net/api/orders/paged' 
         columns={columns}
         itemsPerPage={10}>
@@ -88,15 +89,7 @@ export default class Main extends React.Component {
               </TableRow>
           }
           rowsPerPageOptions={[10, 20, 50, 100]}
-          toolbarOptions={
-            {
-              bottomPager: true,
-              exportButton: true,
-              printButton: true,
-              searchText: true,
-              topPager: true
-            }
-          }
+          toolbarOptions={ToolbarOptions}
           footerRenderer={
             (aggregates: any) =>
               <TableRow>

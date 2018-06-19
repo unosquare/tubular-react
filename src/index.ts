@@ -5,7 +5,8 @@ import DataGrid,
   ColumnModel,
   ColumnSortDirection,
   LocalDataSource,
-  RemoteDataSource
+  RemoteDataSource,
+  ToolbarOptions
 } from './DataGrid';
 
 export default DataGrid;
@@ -16,5 +17,6 @@ export {
   ColumnModel,
   ColumnSortDirection,
   LocalDataSource,
-  RemoteDataSource
+  RemoteDataSource,
+  ToolbarOptions
 };

@@ -20,13 +20,14 @@ interface IProps extends WithStyles<typeof styles> {
   onChangePage(event: React.MouseEvent<HTMLElement>, page: number): void;
 }
 
-const getPages = function(currentPage: any, totalPages: any) {
-  var pages = [];
+const getPages = (currentPage: any, totalPages: any) => {
+  const pages = [];
 
   // Default page limits
-  var startPage = 1, endPage = totalPages;
-  var maxSize  = 5;
-  var isMaxSized = maxSize < totalPages;
+  let startPage = 1;
+  let endPage = totalPages;
+  const maxSize  = 6;
+  const isMaxSized = maxSize < totalPages;
 
   // recompute if maxSize
   if (isMaxSized) {
@@ -42,12 +43,12 @@ const getPages = function(currentPage: any, totalPages: any) {
   }
 
   // Add page number links
-  for (var number = startPage; number <= endPage; number++) {
-    pages.push(number - 1);
+  for (let num = startPage; num < endPage; num++) {
+    pages.push(num - 1);
   }
 
   return pages;
-}
+};
 
 const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsPerPage, onChangePage }) => {
   const pages = getPages(page, count);
@@ -74,12 +75,12 @@ const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsP
             <IconButton
               key={value}
               onClick={(e) => onChangePage(e, value)}
-              aria-label={`Page${value+1}`}
+              aria-label={`Page${value + 1}`}
               color={ value === page ?
                  'primary' :
                  'default' }
             >
-              {value+1}
+              {value + 1}
             </IconButton>))
       }
 
