@@ -60,9 +60,10 @@ export default class Main extends React.Component {
   public render() {
     return (
       <RemoteDataSource
-        source='http://tubular.azurewebsites.net/api/orders/paged' 
+        source='http://tubular.azurewebsites.net/api/orders/paged'
         columns={columns}
-        itemsPerPage={10}>
+        itemsPerPage={toolbarOptions.itemsPerPage}
+      >
         <DataGrid
           gridName='Tubular-React'
           bodyRenderer={
@@ -89,7 +90,7 @@ export default class Main extends React.Component {
                 </TableCell>
               </TableRow>
           }
-          rowsPerPageOptions={[10, 20, 50, 100]}
+          rowsPerPageOptions={toolbarOptions.rowsPerPageOptions}
           toolbarOptions={toolbarOptions}
           footerRenderer={
             (aggregates: any) =>
