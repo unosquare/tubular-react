@@ -12,6 +12,7 @@ import DataGrid, {
   ToolbarOptions
 } from '../../src';
 
+const toolbarOptions = new ToolbarOptions();
 const columns = [
   new ColumnModel('OrderID',
     {
@@ -89,7 +90,7 @@ export default class Main extends React.Component {
               </TableRow>
           }
           rowsPerPageOptions={[10, 20, 50, 100]}
-          toolbarOptions={ToolbarOptions}
+          toolbarOptions={toolbarOptions}
           footerRenderer={
             (aggregates: any) =>
               <TableRow>
