@@ -36,16 +36,12 @@ export default class LocalDataSource extends BaseDataSource {
           }
         }
 
-        response.AggregationPayload = this.getAggregatePayload(request, data);
-
         data = _.slice(data, request.Skip, request.Skip + request.Take);
 
-        response.Payload = data.map((row: any) => this.parsePayload(row, request.Columns));
-
         resolve(new GridResponse({
-          Aggregate: response.AggregationPayload,
+          Aggregate: this.getAggregatePayload(request, data),
           FilteredRecordCount: response.FilteredRecordCount,
-          Payload: response.Payload,
+          Payload: data.map((row: any) => this.parsePayload(row, request.Columns)),
           TotalRecordCount: response.TotalRecordCount
         }));
       } catch (error) {
@@ -56,7 +52,7 @@ export default class LocalDataSource extends BaseDataSource {
 
   public applyFreeTextSearch(request: any, subset: any[]) {
     if (request.Search && request.Search.Operator.toLowerCase() === CompareOperators.AUTO.toLowerCase()) {
-      const searchableColumns = request.Columns.filter((x:any) => x.Searchable);
+      const searchableColumns = request.Columns.filter((x: any) => x.Searchable);
 
       if (searchableColumns.length > 0) {
         const filter = request.Search.Text.toLowerCase();
@@ -77,12 +73,13 @@ export default class LocalDataSource extends BaseDataSource {
 
     filteredColumns.forEach((filterableColumn: any) => {
       request.Columns.find((column: any) => column.Name === filterableColumn.Name).HasFilter = true;
+      const isDate = filterableColumn.DataType === 'datetime' ||
+        filterableColumn.DataType === 'date' ||
+        filterableColumn.DataType === 'datetimeutc';
 
       switch (filterableColumn.Filter.Operator) {
         case CompareOperators.EQUALS:
-          if (filterableColumn.DataType === 'datetime' ||
-            filterableColumn.DataType === 'date' ||
-            filterableColumn.DataType === 'datetimeutc') {
+          if (isDate) {
             subset = subset.filter((row) =>
               moment(row[filterableColumn.Name]).isSame(moment(filterableColumn.Filter.Text)));
           } else if (filterableColumn.DataType === 'string') {
@@ -127,9 +124,7 @@ export default class LocalDataSource extends BaseDataSource {
             !row[filterableColumn.Name].toLowerCase().endsWith(filterableColumn.Filter.Text.toLowerCase()));
           break;
         case CompareOperators.GT:
-          if (filterableColumn.DataType === 'datetime' ||
-            filterableColumn.DataType === 'date' ||
-            filterableColumn.DataType === 'datetimeutc') {
+          if (isDate) {
             subset = subset.filter((row) =>
               moment(row[filterableColumn.Name]).isAfter(moment(filterableColumn.Filter.Text)));
           } else {
@@ -137,9 +132,7 @@ export default class LocalDataSource extends BaseDataSource {
           }
           break;
         case CompareOperators.GTE:
-          if (filterableColumn.DataType === 'datetime' ||
-            filterableColumn.DataType === 'date' ||
-            filterableColumn.DataType === 'datetimeutc') {
+          if (isDate) {
             subset = subset.filter((row) =>
               moment(row[filterableColumn.Name]).isSameOrAfter(moment(filterableColumn.Filter.Text)));
           } else {
@@ -147,9 +140,7 @@ export default class LocalDataSource extends BaseDataSource {
           }
           break;
         case CompareOperators.LT:
-          if (filterableColumn.DataType === 'datetime' ||
-            filterableColumn.DataType === 'date' ||
-            filterableColumn.DataType === 'datetimeutc') {
+          if (isDate) {
             subset = subset.filter((row) =>
               moment(row[filterableColumn.Name]).isBefore(moment(filterableColumn.Filter.Text)));
           } else {
@@ -157,9 +148,7 @@ export default class LocalDataSource extends BaseDataSource {
           }
           break;
         case CompareOperators.LTE:
-          if (filterableColumn.DataType === 'datetime' ||
-            filterableColumn.DataType === 'date' ||
-            filterableColumn.DataType === 'datetimeutc') {
+          if (isDate) {
             subset = subset.filter((row) =>
               moment(row[filterableColumn.Name]).isSameOrBefore(moment(filterableColumn.Filter.Text)));
           } else {
@@ -167,9 +156,7 @@ export default class LocalDataSource extends BaseDataSource {
           }
           break;
         case CompareOperators.BETWEEN:
-          if (filterableColumn.DataType === 'datetime' ||
-            filterableColumn.DataType === 'date' ||
-            filterableColumn.DataType === 'datetimeutc') {
+          if (isDate) {
             subset = subset.filter((row) =>
               moment(row[filterableColumn.Name]).isSameOrAfter(moment(filterableColumn.Filter.Text)) &&
               moment(row[filterableColumn.Name]).isSameOrBefore(moment(filterableColumn.Filter.Argument[0])));
