@@ -77,7 +77,8 @@ class DataGrid extends React.Component<IProps, IState> {
 
     return (
       <DataSourceConsumer>
-        {({ actions, columns, data, filteredRecordCount, totalRecordCount, aggregate, searchText, itemsPerPage, page }) =>
+        {({ actions, columns, data, filteredRecordCount, totalRecordCount,
+            aggregate, searchText, itemsPerPage, page }) =>
           <Paper className={classes.root}>
             <GridProvider value={{
               state: {
@@ -220,7 +221,7 @@ class DataGrid extends React.Component<IProps, IState> {
                 textSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => actions.updateSearchText(event.target.value),
                 clearSearchText: () => actions.updateSearchText(''),
                 printDocument: (allRows: boolean) => {
-                  if (filteredRecordCount == 0) return;
+                  if (filteredRecordCount == 0) { return; }
                   
                   let gridRequest= new GridRequest(columns, itemsPerPage, page, searchText);
 
