@@ -35,7 +35,6 @@ interface IState {
 
 interface IProps extends WithStyles<typeof styles> {
   gridName: string;
-  rowsPerPageOptions?: number[];
   toolbarOptions: any;
   onError?(error: any): any;
   bodyRenderer?(column: any, index: number): any;
@@ -72,7 +71,7 @@ class DataGrid extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const { classes, bodyRenderer, footerRenderer, rowsPerPageOptions, toolbarOptions } = this.props;
+    const { classes, bodyRenderer, footerRenderer, toolbarOptions } = this.props;
     const { errorMessage } = this.state;
 
     return (
@@ -249,7 +248,7 @@ class DataGrid extends React.Component<IProps, IState> {
                 <TableHead>
                   {toolbarOptions.topPager &&
                     <TableRow>
-                      <Paginator rowsPerPageOptions={rowsPerPageOptions} />
+                      <Paginator rowsPerPageOptions={toolbarOptions.rowsPerPageOptions} />
                     </TableRow>
                   }
                   <GridHeader />
@@ -259,7 +258,7 @@ class DataGrid extends React.Component<IProps, IState> {
                   {footerRenderer(aggregate)}
                   {toolbarOptions.bottomPager &&
                     <TableRow>
-                      <Paginator rowsPerPageOptions={rowsPerPageOptions} />
+                      <Paginator rowsPerPageOptions={toolbarOptions.rowsPerPageOptions} />
                     </TableRow>
                   }
                 </TableFooter>

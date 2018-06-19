@@ -90,7 +90,6 @@ export default class Main extends React.Component {
                 </TableCell>
               </TableRow>
           }
-          rowsPerPageOptions={toolbarOptions.rowsPerPageOptions}
           toolbarOptions={toolbarOptions}
           footerRenderer={
             (aggregates: any) =>
