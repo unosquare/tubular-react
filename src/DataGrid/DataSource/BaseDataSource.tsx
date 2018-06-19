@@ -53,8 +53,11 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
 
     public abstract getAllRecords(request: GridRequest): Promise<object>;
 
-    public retrieveData() {
-        const { columns, itemsPerPage, page, searchText } = this.state;
+    public retrieveData(options: any = {}) {
+        const columns = options.columns || this.state.columns;
+        const itemsPerPage = options.itemsPerPage || this.state.itemsPerPage;
+        const page = options.page || this.state.page;
+        const searchText = options.searchText || this.state.searchText;
 
         // TODO: handle error
         this.getAllRecords(new GridRequest(columns, itemsPerPage, page, searchText))
@@ -63,9 +66,13 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
                     aggregate: response.Aggregate,
                     data: response.Payload,
                     filteredRecordCount: response.FilteredRecordCount || 0,
-                    totalRecordCount: response.TotalRecordCount || 0
+                    totalRecordCount: response.TotalRecordCount || 0,
+                    columns: columns,
+                    itemsPerPage: itemsPerPage,
+                    page: page,
+                    searchText: searchText
                 });
-        });
+            });
     }
 
     public componentDidMount() {
@@ -78,19 +85,16 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
                 ...this.state,
                 actions: {
                     retrieveData: this.retrieveData,
-                    updateColumns: (columns: ColumnModel[]) => {
-                        this.setState({ columns: columns }, this.retrieveData);
-                    },
-                    updateSearchText: (searchText: string) => {
-                        this.setState({ searchText: searchText }, this.retrieveData);
-                    },
-                    updatePage: (page: number) => {
-                        this.setState({ page: page }, this.retrieveData);
-                    },
-                    updateItemPerPage: (itemsPerPage: number) => {
-                        this.setState({ itemsPerPage: itemsPerPage }, this.retrieveData);
-                    },
-                    request: (gridRequest: GridRequest) => this.getAllRecords(gridRequest)
+                    updateColumns: (columns: ColumnModel[]) =>
+                        this.retrieveData({ columns }),
+                    updateSearchText: (searchText: string) =>
+                        this.retrieveData({ searchText }),
+                    updatePage: (page: number) =>
+                        this.retrieveData({ page }),
+                    updateItemPerPage: (itemsPerPage: number) =>
+                        this.retrieveData({ itemsPerPage }),
+                    request: (gridRequest: GridRequest) =>
+                        this.getAllRecords(gridRequest)
                 }
             }}>
                 {this.props.children}

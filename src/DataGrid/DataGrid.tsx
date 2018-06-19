@@ -127,7 +127,7 @@ class DataGrid extends React.Component<IProps, IState> {
                     };
                   }
 
-                  this.setState(() => { activeColumn: null }, () => actions.updateColumns(newColumns));
+                  this.setState({ activeColumn: null }, () => actions.updateColumns(newColumns));
                 },
                 filterActiveColumn: () => {
                   const { activeColumn } = this.state;
@@ -147,7 +147,6 @@ class DataGrid extends React.Component<IProps, IState> {
                     FilterArgument = activeColumn.Filter.Argument[0];
                   }
 
-
                   if (columnIdx !== -1) {
                     (newColumns[columnIdx]).Filter = {
                       ...activeColumn.Filter,
@@ -157,7 +156,7 @@ class DataGrid extends React.Component<IProps, IState> {
                     };
                   }
 
-                  this.setState(() => { activeColumn: null }, () => actions.updateColumns(newColumns));
+                  this.setState({ activeColumn: null }, () => actions.updateColumns(newColumns));
                 },
                 sortColumn: (property: string) => {
                   const newColumns = [...columns];
