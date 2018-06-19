@@ -78,7 +78,7 @@ class DataGrid extends React.Component<IProps, IState> {
     return (
       <DataSourceConsumer>
         {({ actions, columns, data, filteredRecordCount, totalRecordCount,
-            aggregate, searchText, itemsPerPage, page }) =>
+          aggregate, searchText, itemsPerPage, page }) =>
           <Paper className={classes.root}>
             <GridProvider value={{
               state: {
@@ -134,65 +134,60 @@ class DataGrid extends React.Component<IProps, IState> {
                   const newColumns = [...columns];
                   const columnIdx = columns.findIndex((c: ColumnModel) => c.Name === this.state.activeColumn.Name);
 
-                    let FilterText;
-                    let FilterArgument;
-                    if (activeColumn.DataType == ColumnDataType.NUMERIC) {
-                      FilterText = parseFloat(activeColumn.Filter.Text)
-                      FilterArgument = parseFloat(activeColumn.Filter.Argument[0])
-                    } else if (activeColumn.DataType == ColumnDataType.BOOLEAN) {
-                      FilterText = activeColumn.Filter.Text === 'true';
-                      FilterArgument = ''
-                    } else {
-                      FilterText = activeColumn.Filter.Text;
-                      FilterArgument = activeColumn.Filter.Argument[0];
-                    }
+                  let FilterText;
+                  let FilterArgument;
+                  if (activeColumn.DataType == ColumnDataType.NUMERIC) {
+                    FilterText = parseFloat(activeColumn.Filter.Text)
+                    FilterArgument = parseFloat(activeColumn.Filter.Argument[0])
+                  } else if (activeColumn.DataType == ColumnDataType.BOOLEAN) {
+                    FilterText = activeColumn.Filter.Text === 'true';
+                    FilterArgument = ''
+                  } else {
+                    FilterText = activeColumn.Filter.Text;
+                    FilterArgument = activeColumn.Filter.Argument[0];
+                  }
 
 
-                    if (columnIdx !== -1) {
-                      (newColumns[columnIdx]).Filter = {
-                        ...activeColumn.Filter,
-                        HasFilter: true,
-                        Text: FilterText,
-                        Argument: [FilterArgument],
-                      };
-                    }
+                  if (columnIdx !== -1) {
+                    (newColumns[columnIdx]).Filter = {
+                      ...activeColumn.Filter,
+                      HasFilter: true,
+                      Text: FilterText,
+                      Argument: [FilterArgument],
+                    };
+                  }
 
-                    this.setState(() => { activeColumn: null }, () => actions.updateColumns(newColumns));
+                  this.setState(() => { activeColumn: null }, () => actions.updateColumns(newColumns));
                 },
                 sortColumn: (property: string) => {
                   const newColumns = [...columns];
-                  this.setState((prevState) => {                    
+                  const column = columns.find((c: ColumnModel) => c.Name === property);
+                  if (!column) { return; }
 
-                    newColumns.forEach((column: any) => {
-                      if (column.Name === property) {
-                        column.SortDirection = column.SortDirection === ColumnSortDirection.NONE
-                          ? ColumnSortDirection.ASCENDING
-                          : column.SortDirection === ColumnSortDirection.ASCENDING ?
-                            ColumnSortDirection.DESCENDING :
-                            ColumnSortDirection.NONE;
+                  column.SortDirection = column.SortDirection === ColumnSortDirection.NONE
+                    ? ColumnSortDirection.ASCENDING
+                    : column.SortDirection === ColumnSortDirection.ASCENDING ?
+                      ColumnSortDirection.DESCENDING :
+                      ColumnSortDirection.NONE;
 
-                        if (column.SortDirection === ColumnSortDirection.NONE) {
-                          column.SortOrder = -1;
-                        } else {
-                          column.SortOrder = Number.MAX_VALUE;
-                        }
+                  column.SortOrder = column.SortDirection === ColumnSortDirection.NONE ? -1 : Number.MAX_VALUE;
 
-                        if (!prevState.multiSort) {
-                          newColumns.filter((col: any) => col.Name !== property).forEach((column: any) => {
-                            column.SortOrder = -1;
-                            column.SortDirection = ColumnSortDirection.NONE;
-                          });
-                        }
+                  if (!this.state.multiSort) {
+                    newColumns.filter((col: any) => col.Name !== property).forEach((column: any) => {
+                      column.SortOrder = -1;
+                      column.SortDirection = ColumnSortDirection.NONE;
+                    });
+                  }
 
-                        const currentlySortedColumns = newColumns
-                          .filter((col: ColumnModel) => col.SortOrder > 0)
-                          .sort((a: ColumnModel, b: ColumnModel) => a.SortOrder === b.SortOrder ? 0 : (a.SortOrder > b.SortOrder ? 1 : -1));
+                  const currentlySortedColumns = newColumns
+                    .filter((col: ColumnModel) => col.SortOrder > 0)
+                    .sort((a: ColumnModel, b: ColumnModel) => a.SortOrder === b.SortOrder ? 0 : (a.SortOrder > b.SortOrder ? 1 : -1));
 
-                        currentlySortedColumns.forEach((column: any, i: number) => {
-                          column.SortOrder = i + 1;
-                        });
-                      }
-                    })}, () => actions.updateColumns(newColumns));
+                  currentlySortedColumns.forEach((column: any, i: number) => {
+                    column.SortOrder = i + 1;
+                  });
+
+                  actions.updateColumns(newColumns);
                 },
                 handleTextFieldChange: (event: any) => {
                   const value = event.target.value;
@@ -222,8 +217,8 @@ class DataGrid extends React.Component<IProps, IState> {
                 clearSearchText: () => actions.updateSearchText(''),
                 printDocument: (allRows: boolean) => {
                   if (filteredRecordCount == 0) { return; }
-                  
-                  let gridRequest= new GridRequest(columns, itemsPerPage, page, searchText);
+
+                  let gridRequest = new GridRequest(columns, itemsPerPage, page, searchText);
 
                   if (allRows) {
                     gridRequest.Take = -1;
@@ -236,7 +231,7 @@ class DataGrid extends React.Component<IProps, IState> {
                 exportCSV: (allRows: boolean) => {
                   if (filteredRecordCount == 0) { return; }
 
-                  let gridRequest= new GridRequest(columns, itemsPerPage, page, searchText);
+                  let gridRequest = new GridRequest(columns, itemsPerPage, page, searchText);
                   if (allRows) {
                     gridRequest.Take = -1;
                     actions.request(gridRequest)
@@ -255,21 +250,21 @@ class DataGrid extends React.Component<IProps, IState> {
               />
               <Table>
                 <TableHead>
-                  <TableRow>
-                    <Paginator
-                      rowsPerPageOptions={rowsPerPageOptions}
-                    />
-                  </TableRow>
+                  {toolbarOptions.topPager &&
+                    <TableRow>
+                      <Paginator rowsPerPageOptions={rowsPerPageOptions} />
+                    </TableRow>
+                  }
                   <GridHeader />
                 </TableHead>
                 <GridBody />
                 <TableFooter>
                   {footerRenderer(aggregate)}
-                  <TableRow>
-                    <Paginator
-                      rowsPerPageOptions={rowsPerPageOptions}
-                    />
-                  </TableRow>
+                  {toolbarOptions.bottomPager &&
+                    <TableRow>
+                      <Paginator rowsPerPageOptions={rowsPerPageOptions} />
+                    </TableRow>
+                  }
                 </TableFooter>
               </Table>
             </GridProvider>

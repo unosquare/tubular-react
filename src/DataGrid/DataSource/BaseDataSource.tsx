@@ -44,11 +44,11 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
         aggregate: {},
         columns: this.props.columns,
         data: [] as any,
-        filteredRecordCount: null as any,
+        filteredRecordCount: 0,
         itemsPerPage: this.props.itemsPerPage,
-        page: 1,
+        page: 0,
         searchText: '',
-        totalRecordCount: null as any
+        totalRecordCount: 0
     };
 
     public abstract getAllRecords(request: GridRequest): Promise<object>;

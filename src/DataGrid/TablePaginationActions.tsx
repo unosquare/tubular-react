@@ -19,33 +19,42 @@ interface IProps extends WithStyles<typeof styles> {
   rowsPerPage: number;
   onChangePage(event: React.MouseEvent<HTMLElement>, page: number): void;
 }
+
+const getPages = function(currentPage: any, totalPages: any) {
+  var pages = [];
+
+  // Default page limits
+  var startPage = 1, endPage = totalPages;
+  var maxSize  = 5;
+  var isMaxSized = maxSize < totalPages;
+
+  // recompute if maxSize
+  if (isMaxSized) {
+      // Current page is displayed in the middle of the visible ones
+      startPage = Math.max(currentPage - Math.floor(maxSize / 2), 1);
+      endPage = startPage + maxSize - 1;
+
+      // Adjust if limit is exceeded
+      if (endPage > totalPages) {
+        endPage = totalPages;
+        startPage = endPage - maxSize + 1;
+      }
+  }
+
+  // Add page number links
+  for (var number = startPage; number <= endPage; number++) {
+    pages.push(number - 1);
+  }
+
+  return pages;
+}
+
 const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsPerPage, onChangePage }) => {
-  const pages: any[] = [];
-  const maxPage = Math.max(0, Math.ceil(count / rowsPerPage) - 1);
-  let fromPage = 0;
-  let toPage = 0;
- 
-  if (maxPage < 6) {
-    toPage = maxPage;
-  } else if (page - 1 <= 0) {
-    fromPage = 0;
-    toPage = 5;
-  } else if (page > maxPage - 2) {
-    fromPage = maxPage - 5;
-    toPage = maxPage;
-  } else {
-    fromPage = page - 2;
-    toPage = page + 3;
-  }
-
-  for (let i = fromPage; i < toPage; i++) {
-    pages.push(i);
-  }
-
+  const pages = getPages(page, count);
   return (
     <div className={classes.root}>
       <IconButton
-        onClick={(e) => onChangePage(e, 1)}
+        onClick={(e) => onChangePage(e, 0)}
         disabled={page === 0}
         aria-label='First Page'
       >
@@ -61,16 +70,16 @@ const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsP
       </IconButton>
 
       {
-        pages.map((index) => ( count / rowsPerPage > index &&
+        pages.map((value) => (
             <IconButton
-              key={index}
-              onClick={(e) => onChangePage(e, pages[index])}
-              aria-label={`Page${index + 1}`}
-              color={ pages[index] === page ?
+              key={value}
+              onClick={(e) => onChangePage(e, value)}
+              aria-label={`Page${value+1}`}
+              color={ value === page ?
                  'primary' :
                  'default' }
             >
-              {pages[index] + 1}
+              {value+1}
             </IconButton>))
       }
 
