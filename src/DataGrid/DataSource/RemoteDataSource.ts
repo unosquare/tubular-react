@@ -12,15 +12,7 @@ export default class RemoteDataSource extends BaseDataSource {
           throw new Error('It\'s not a valid Tubular response object');
         }
 
-        const rows = response.data.Payload.map((row: any) => {
-          const obj: any = {};
-
-          request.Columns.forEach((column: any, key: any) => {
-            obj[column.Name] = row[key] || row[column.Name];
-          });
-
-          return obj;
-        });
+        const rows = response.data.Payload.map((row: any) => this.parsePayload(row, request.Columns));
 
         resolve(new GridResponse({
           Aggregate: response.data.AggregationPayload,
@@ -28,9 +20,7 @@ export default class RemoteDataSource extends BaseDataSource {
           Payload: rows,
           TotalRecordCount: response.data.TotalRecordCount
         }));
-      }).catch((error) => {
-        reject(error);
-      });
+      }).catch(reject);
     });
   }
 

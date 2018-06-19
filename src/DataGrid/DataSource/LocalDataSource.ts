@@ -28,9 +28,6 @@ export default class LocalDataSource extends BaseDataSource {
 
         response.FilteredRecordCount = data.length;
 
-        const offset = request.Skip;
-        const limit = request.Take;
-
         if (request.Take > -1) {
           response.TotalPages = Math.ceil(response.FilteredRecordCount / request.Take);
 
@@ -41,19 +38,9 @@ export default class LocalDataSource extends BaseDataSource {
 
         response.AggregationPayload = this.getAggregatePayload(request, data);
 
-        data = _.slice(data, offset, offset + limit);
+        data = _.slice(data, request.Skip, request.Skip + request.Take);
 
-        const rows = data.map((row: any) => {
-          const obj: any = {};
-
-          request.Columns.forEach((column: any, key: any) => {
-            obj[column.Name] = row[key] || row[column.Name];
-          });
-
-          return obj;
-        });
-
-        response.Payload = rows;
+        response.Payload = data.map((row: any) => this.parsePayload(row, request.Columns));
 
         resolve(new GridResponse({
           Aggregate: response.AggregationPayload,
@@ -69,7 +56,7 @@ export default class LocalDataSource extends BaseDataSource {
 
   public applyFreeTextSearch(request: any, subset: any[]) {
     if (request.Search && request.Search.Operator.toLowerCase() === CompareOperators.AUTO.toLowerCase()) {
-      const searchableColumns = _.filter(request.Columns, 'Searchable');
+      const searchableColumns = request.Columns.filter((x:any) => x.Searchable);
 
       if (searchableColumns.length > 0) {
         const filter = request.Search.Text.toLowerCase();

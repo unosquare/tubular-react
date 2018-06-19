@@ -134,25 +134,25 @@ class DataGrid extends React.Component<IProps, IState> {
                   const newColumns = [...columns];
                   const columnIdx = columns.findIndex((c: ColumnModel) => c.Name === this.state.activeColumn.Name);
 
-                  let FilterText;
-                  let FilterArgument;
+                  let filterText;
+                  let filterArgument;
                   if (activeColumn.DataType == ColumnDataType.NUMERIC) {
-                    FilterText = parseFloat(activeColumn.Filter.Text)
-                    FilterArgument = parseFloat(activeColumn.Filter.Argument[0])
+                    filterText = parseFloat(activeColumn.Filter.Text)
+                    filterArgument = parseFloat(activeColumn.Filter.Argument[0])
                   } else if (activeColumn.DataType == ColumnDataType.BOOLEAN) {
-                    FilterText = activeColumn.Filter.Text === 'true';
-                    FilterArgument = ''
+                    filterText = activeColumn.Filter.Text === 'true';
+                    filterArgument = ''
                   } else {
-                    FilterText = activeColumn.Filter.Text;
-                    FilterArgument = activeColumn.Filter.Argument[0];
+                    filterText = activeColumn.Filter.Text;
+                    filterArgument = activeColumn.Filter.Argument[0];
                   }
 
                   if (columnIdx !== -1) {
                     (newColumns[columnIdx]).Filter = {
                       ...activeColumn.Filter,
                       HasFilter: true,
-                      Text: FilterText,
-                      Argument: [FilterArgument],
+                      Text: filterText,
+                      Argument: [filterArgument],
                     };
                   }
 
@@ -189,25 +189,23 @@ class DataGrid extends React.Component<IProps, IState> {
                   actions.updateColumns(newColumns);
                 },
                 handleTextFieldChange: (event: any) => {
-                  const value = event.target.value;
                   this.setState((prevState) => ({
                     activeColumn: {
                       ...prevState.activeColumn,
                       Filter: {
                         ...prevState.activeColumn.Filter,
-                        Text: value,
+                        Text: event.target.value,
                       }
                     }
                   }));
                 },
                 handleSecondTextFieldChange: (event: any) => {
-                  const value = event.target.value;
                   this.setState((prevState) => ({
                     activeColumn: {
                       ...prevState.activeColumn,
                       Filter: {
                         ...prevState.activeColumn.Filter,
-                        Argument: [value],
+                        Argument: [event.target.value],
                       }
                     }
                   }));
