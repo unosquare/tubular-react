@@ -1,7 +1,11 @@
 import { Snackbar } from '@material-ui/core';
 import * as React from 'react';
 
-const GridSnackbar: React.SFC = () => {
+interface IProps {
+  errorMessage: string;
+}
+
+const GridSnackbar: React.SFC<IProps> = ({errorMessage}) => {
   return (
     <Snackbar
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
@@ -11,7 +15,7 @@ const GridSnackbar: React.SFC = () => {
       ContentProps={{
         'aria-describedby': 'message-id',
       }}
-      message={<span id='message-id'>{this.state.errorMessage}</span>}
+      message={<span id='message-id'>{errorMessage}</span>}
     />
   );
 };

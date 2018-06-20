@@ -204,7 +204,7 @@ class DataGrid extends React.Component<IProps, IState> {
                 }
               }}
             >
-              {errorMessage && <GridSnackbar />}
+              {errorMessage && <GridSnackbar errorMessage={errorMessage} />}
               <GridToolbar
                 toolbarOptions={toolbarOptions}
               />
