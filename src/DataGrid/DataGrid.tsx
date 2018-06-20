@@ -93,25 +93,20 @@ class DataGrid extends React.Component<IProps, IState> {
                 },
                 actions: {
                   bodyRenderer,
-                  handleChange: (event: any) => {
+                  setFilterOperator: (value: string) => {
                     this.setState((prevState) => ({
                       activeColumn: {
                         ...prevState.activeColumn,
                         Filter: {
                           ...prevState.activeColumn.Filter,
-                          Operator: event.target.value
+                          Operator: value
                         }
                       }
                     }));
                   },
                   setActiveColumn: (column: any) => {
-                    this.setState({
-                      activeColumn: column,
-                    },
-                      () => {
-                        document.getElementById(column.Name).blur();
-                      }
-                    );
+                    this.setState({ activeColumn: column },
+                      () => document.getElementById(column.Name).blur());
                   },
                   clearActiveColumn: () => {
                     const newColumns = [...columns];
@@ -130,7 +125,8 @@ class DataGrid extends React.Component<IProps, IState> {
                   },
                   filterActiveColumn: () => {
                     const newColumns = [...columns];
-                    const columnIdx = columns.findIndex((c: ColumnModel) => c.Name === activeColumn.Name);
+                    const column = columns.find((c: ColumnModel) => c.Name === activeColumn.Name);
+                    if (!column) { return; }
 
                     let filterText;
                     let filterArgument;
@@ -145,14 +141,12 @@ class DataGrid extends React.Component<IProps, IState> {
                       filterArgument = activeColumn.Filter.Argument[0];
                     }
 
-                    if (columnIdx !== -1) {
-                      (newColumns[columnIdx]).Filter = {
-                        ...activeColumn.Filter,
-                        HasFilter: true,
-                        Text: filterText,
-                        Argument: [filterArgument],
-                      };
-                    }
+                    column.Filter = {
+                      ...activeColumn.Filter,
+                      HasFilter: true,
+                      Text: filterText,
+                      Argument: [filterArgument]
+                    };
 
                     this.setState({ activeColumn: null }, () => actions.updateColumns(newColumns));
                   },
@@ -170,55 +164,50 @@ class DataGrid extends React.Component<IProps, IState> {
                     column.SortOrder = column.SortDirection === ColumnSortDirection.NONE ? -1 : Number.MAX_VALUE;
 
                     if (!this.state.multiSort) {
-                      newColumns.filter((col: any) => col.Name !== property).forEach((c: any) => {
-                        c.SortOrder = -1;
-                        c.SortDirection = ColumnSortDirection.NONE;
-                      });
+                      newColumns
+                        .filter((col: any) => col.Name !== property)
+                        .forEach((c: any) => {
+                          c.SortOrder = -1;
+                          c.SortDirection = ColumnSortDirection.NONE;
+                        });
                     }
 
-                    const currentlySortedColumns = newColumns
+                    newColumns
                       .filter((col: ColumnModel) => col.SortOrder > 0)
-                      .sort((a: ColumnModel, b: ColumnModel) => a.SortOrder === b.SortOrder ? 0 : (a.SortOrder > b.SortOrder ? 1 : -1));
-
-                    currentlySortedColumns.forEach((column: any, i: number) => {
-                      column.SortOrder = i + 1;
-                    });
+                      .sort((a: ColumnModel, b: ColumnModel) => a.SortOrder === b.SortOrder ? 0 : (a.SortOrder > b.SortOrder ? 1 : -1))
+                      .forEach((column: any, i: number) => { column.SortOrder = i + 1; });
 
                     actions.updateColumns(newColumns);
                   },
-                  handleTextFieldChange: (event: any) => {
+                  handleTextFieldChange: (value: string) => {
                     this.setState((prevState) => ({
                       activeColumn: {
                         ...prevState.activeColumn,
                         Filter: {
                           ...prevState.activeColumn.Filter,
-                          Text: event.target.value,
+                          Text: value
                         }
                       }
                     }));
                   },
-                  handleSecondTextFieldChange: (event: any) => {
+                  handleSecondTextFieldChange: (value: string) => {
                     this.setState((prevState) => ({
                       activeColumn: {
                         ...prevState.activeColumn,
                         Filter: {
                           ...prevState.activeColumn.Filter,
-                          Argument: [event.target.value],
+                          Argument: [value]
                         }
                       }
                     }));
                   },
-                  textSearchChange: (event: React.ChangeEvent<HTMLInputElement>) =>
-                    actions.updateSearchText(event.target.value),
+                  textSearchChange: actions.updateSearchText,
                   clearSearchText: () => actions.updateSearchText(''),
                   printDocument: (allRows: boolean) => {
                     if (filteredRecordCount === 0) { return; }
 
                     if (allRows) {
-                      const gridRequest = new GridRequest(columns, itemsPerPage, page, searchText);
-                      gridRequest.Take = -1;
-
-                      actions.request(gridRequest)
+                      actions.request(new GridRequest(columns, -1, 0, searchText))
                         .then(({ Payload }: any) =>
                           GridToolbarFunctions.printDocument(Payload, columns, this.props.gridName));
                     } else {
@@ -229,10 +218,7 @@ class DataGrid extends React.Component<IProps, IState> {
                     if (filteredRecordCount === 0) { return; }
 
                     if (allRows) {
-                      const gridRequest = new GridRequest(columns, itemsPerPage, page, searchText);
-                      gridRequest.Take = -1;
-
-                      actions.request(gridRequest)
+                      actions.request(new GridRequest(columns, -1, 0, searchText))
                         .then(({ Payload }: any) =>
                           GridToolbarFunctions.exportCSV(Payload, columns));
                     } else {

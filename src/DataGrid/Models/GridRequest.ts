@@ -15,7 +15,7 @@ export default class GridRequest {
   constructor(columns: ColumnModel[], rowsPerPage: number, page: number, searchText: string = '') {
     this.Columns = columns;
     this.Search = { Text: searchText, Operator: 'Auto' };
-    this.Skip = page * rowsPerPage;
+    this.Skip = rowsPerPage === -1 ? 0 : page * rowsPerPage;
     this.Take = rowsPerPage;
     this.TimezoneOffset = currentTimezone;
 

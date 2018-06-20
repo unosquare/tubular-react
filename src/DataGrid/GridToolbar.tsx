@@ -82,10 +82,10 @@ class GridToolbar extends React.Component<IProps, IState> {
                   fullWidth={true}
                   type='text'
                   value={state.searchText}
-                  onChange={actions.textSearchChange}
+                  onChange={(e: any) => actions.textSearchChange(e.target.value)}
                   startAdornment={
                     <InputAdornment position='end'>
-                        <Search />
+                      <Search />
                     </InputAdornment>
                   }
                   endAdornment={
@@ -107,9 +107,8 @@ class GridToolbar extends React.Component<IProps, IState> {
             }
             {toolbarOptions.printButton &&
               <Menu anchorEl={anchorPrint} open={Boolean(anchorPrint)}>
-                <MenuItem onClick={() => actions.printDocumment(false)}>
-                Current rows</MenuItem>
-                <MenuItem onClick={() => actions.printDocumment(true)}> All rows</MenuItem>
+                <MenuItem onClick={() => actions.printDocument(false)}> Current rows</MenuItem>
+                <MenuItem onClick={() => actions.printDocument(true)}> All rows</MenuItem>
               </Menu>
             }
           </Toolbar>}

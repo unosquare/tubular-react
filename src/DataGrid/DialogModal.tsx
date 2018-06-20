@@ -13,7 +13,7 @@ const DialogModal: React.SFC = () => {
         <GridConsumer>
             {({ state, actions }) =>
                 <Dialog open={true} onClose={actions.handleClose} >
-                    <DialogTitle>{'Filter'}</DialogTitle>
+                    <DialogTitle>Filter</DialogTitle>
                     <DialogContent>
                         <OperatorsDropdown />
                         <DialogInput

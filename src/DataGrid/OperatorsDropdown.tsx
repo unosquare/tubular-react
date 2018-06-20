@@ -61,7 +61,7 @@ const OperatorsDropdown: React.SFC = () => {
         <Select
           style={dropdown}
           value={state.activeColumn.Filter.Operator === '' ? 'None' : state.activeColumn.Filter.Operator}
-          onChange={actions.handleChange}
+          onChange={(e: any) => actions.setFilterOperator(e.target.value)}
           input={<Input name={state.activeColumn.Name} />}
         >
           {

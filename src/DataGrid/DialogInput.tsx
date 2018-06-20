@@ -19,7 +19,7 @@ const BooleanInputOperators = [
 interface IProps {
   isPrimary: boolean;
   column: any;
-  handleTextFieldChange(event: any): void;
+  handleTextFieldChange(value: string): void;
 }
 
 const ColumnDataTypeToHtmlType = {
@@ -61,7 +61,7 @@ const DialogInput: React.SFC<IProps> = ({ column, handleTextFieldChange, isPrima
       defaultValue={value}
       label={label}
       type={(ColumnDataTypeToHtmlType as any)[column.DataType]}
-      onChange={handleTextFieldChange}
+      onChange={(e:any) => handleTextFieldChange(e.target.value)}
     >
       {column.DataType === ColumnDataType.BOOLEAN && BooleanInputOperators.map((option) => (
         <MenuItem key={option.Value} value={option.Value}>
