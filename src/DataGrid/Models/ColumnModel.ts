@@ -1,19 +1,18 @@
 import { AggregateFunctions, ColumnDataType, ColumnSortDirection } from './Column';
 import IColumnModelOptions from './IColumnModelOptions';
 
+function filterProps(name: string): object {
+  return {
+    Argument: [],
+    HasFilter: false,
+    Name: name,
+    Operator: 'None',
+    OptionsUrl: null,
+    Text: null
+  };
+}
+
 export default class ColumnModel {
-
-  public static filterProps(name: string): object {
-    return {
-      Argument: [],
-      HasFilter: false,
-      Name: name,
-      Operator: 'None',
-      OptionsUrl: null,
-      Text: null
-    };
-  }
-
   public Aggregate: AggregateFunctions;
   public DataType: ColumnDataType;
   public Filter: any;
@@ -37,6 +36,6 @@ export default class ColumnModel {
     this.SortOrder = options && this.SortDirection !== ColumnSortDirection.NONE && options.SortOrder || -1;
     this.Sortable = options && options.Sortable || false;
     this.Visible = options && options.Visible || true;
-    this.Filter = options && options.Filtering ? ColumnModel.filterProps(name) : null;
+    this.Filter = options && options.Filtering ? filterProps(name) : null;
   }
 }

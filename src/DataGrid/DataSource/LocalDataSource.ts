@@ -177,24 +177,19 @@ export default class LocalDataSource extends BaseDataSource {
     let sortedColumns = _.filter(request.Columns, (column) =>
       column.SortOrder > 0);
 
+    let columns: any[] = [];
+    let orders: any[] = [];
+
     if (sortedColumns.length > 0) {
       sortedColumns = _.sortBy(sortedColumns, ['SortOrder']);
-
-      const columns: any[] = [];
-      const orders: any[] = [];
-
-      _.forEach(sortedColumns, (column) => {
-        columns.push(column.Name);
-
-        orders.push((column.SortDirection === ColumnSortDirection.ASCENDING ? 'asc' : 'desc'));
-      });
-
-      subset = _.orderBy(subset, columns, orders);
+      columns = sortedColumns.map(y => y.Name);
+      orders = sortedColumns.map(y => y.SortDirection === ColumnSortDirection.ASCENDING ? 'asc' : 'desc');
     } else {
-      subset = _.orderBy(subset, request.Columns[0].Name, 'asc');
+      columns.push(request.Columns[0].Name);
+      orders.push('asc');
     }
 
-    return subset;
+    return _.orderBy(subset, columns, orders);
   }
 
   public getAggregatePayload(request: any, subset: any[]) {

@@ -8,23 +8,23 @@ export default class RemoteDataSource extends BaseDataSource {
     return new Promise((resolve, reject) => {
       
       Axios.post(this.props.source, request).then((response) => {
-        if (response.data === undefined || !this.isValidResponse(response.data)) {
+        if (!this.isValidResponse(response.data)) {
           throw new Error('It\'s not a valid Tubular response object');
         }
-
-        const rows = response.data.Payload.map((row: any) => this.parsePayload(row, request.Columns));
 
         resolve(new GridResponse({
           Aggregate: response.data.AggregationPayload,
           FilteredRecordCount: response.data.FilteredRecordCount,
-          Payload: rows,
+          Payload: response.data.Payload.map((row: any) => this.parsePayload(row, request.Columns)),
           TotalRecordCount: response.data.TotalRecordCount
         }));
       }).catch(reject);
     });
   }
 
-  public isValidResponse(response: object) {
+  public isValidResponse(data: any) {
+    if (!data) return;
+
     const expectedStructure: any = {
       AggregationPayload: null,
       Counter: null,
@@ -36,7 +36,7 @@ export default class RemoteDataSource extends BaseDataSource {
     };
 
     const expectedStructureKeys = Object.keys(expectedStructure).sort();
-    const responseKeys = Object.keys(response).sort();
+    const responseKeys = Object.keys(data).sort();
 
     return JSON.stringify(expectedStructureKeys) === JSON.stringify(responseKeys);
   }

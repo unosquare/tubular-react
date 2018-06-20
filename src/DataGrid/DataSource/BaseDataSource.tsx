@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { debounce } from 'lodash';
 
 import ColumnModel from '../Models/ColumnModel';
 import GridRequest from '../Models/GridRequest';
@@ -51,6 +52,16 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
         totalRecordCount: 0
     };
 
+    constructor(props: IProps) {
+        super(props);
+
+        this.handleSearchText = debounce(this.handleSearchText, 500);
+    }
+
+    handleSearchText(searchText: string) {
+        this.retrieveData({ searchText });
+    }
+
     public abstract getAllRecords(request: GridRequest): Promise<object>;
 
     public parsePayload(row: any, columns: any[]) {
@@ -97,8 +108,14 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
                     retrieveData: this.retrieveData,
                     updateColumns: (columns: ColumnModel[]) =>
                         this.retrieveData({ columns }),
-                    updateSearchText: (searchText: string) =>
-                        this.retrieveData({ searchText }),
+                    updateSearchText: (searchText: string) => {
+                        if (!searchText) {
+                            this.retrieveData({ searchText });
+                        } else {
+                            this.setState({ searchText });
+                            this.handleSearchText(searchText);
+                        }
+                    },
                     updatePage: (page: number) =>
                         this.retrieveData({ page }),
                     updateItemPerPage: (itemsPerPage: number) =>
