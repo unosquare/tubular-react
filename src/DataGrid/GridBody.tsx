@@ -47,8 +47,8 @@ const GridBody: React.SFC = () => {
                                 state.gridRequest.Columns
                                     .filter((col: any) => col.Visible)
                                     .map((column: ColumnModel, colIndex: number) =>
-                                        <TableCell 
-                                        key={colIndex} 
+                                        <TableCell
+                                            key={colIndex}
                                             padding={column.Label === '' ? 'none' : 'default'}>
                                             {
                                                 renderCell(column, row)

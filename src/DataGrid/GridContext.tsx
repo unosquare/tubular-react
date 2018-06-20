@@ -11,11 +11,11 @@ interface IContext {
 
 const GridContext = React.createContext<IContext>({
     actions: null,
-    state: null,
     columns: null,
-    gridRequest: null,
     data: null,
-    filteredRecordCount: null
+    filteredRecordCount: null,
+    gridRequest: null,
+    state: null
 });
 
 export const GridProvider = GridContext.Provider;

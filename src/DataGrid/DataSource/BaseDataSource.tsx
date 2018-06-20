@@ -58,26 +58,20 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
         this.handleSearchText = debounce(this.handleSearchText, 500);
     }
 
-    handleSearchText(searchText: string) {
-        this.retrieveData({ searchText });
-    }
-
     public abstract getAllRecords(request: GridRequest): Promise<object>;
 
     public parsePayload(row: any, columns: any[]) {
-        const obj: any = {};
-    
-        columns.forEach((column: any, key: any) => {
-          obj[column.Name] = row[key] || row[column.Name];
-        });
-    
-        return obj;
+        return columns.reduce((obj: any, column: any, key: any) => {
+            obj[column.Name] = row[key] || row[column.Name];
+            
+            return obj;
+        }, {});
     }
 
     public retrieveData(options: any = {}) {
         const columns = options.columns || this.state.columns;
         const itemsPerPage = options.itemsPerPage || this.state.itemsPerPage;
-        const page = options.page || this.state.page;
+        const page = typeof options.page === 'undefined' ? this.state.page : options.page;
         const searchText = typeof options.searchText === 'undefined' ? this.state.searchText : options.searchText;
 
         // TODO: handle error
@@ -127,5 +121,9 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
                 {this.props.children}
             </DataSourceContext.Provider>
         );
+    }
+
+    private handleSearchText(searchText: string) {
+        this.retrieveData({ searchText });
     }
 }

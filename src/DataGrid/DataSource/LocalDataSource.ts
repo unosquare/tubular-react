@@ -50,7 +50,7 @@ export default class LocalDataSource extends BaseDataSource {
     });
   }
 
-  public applyFreeTextSearch(request: any, subset: any[]) {
+  private applyFreeTextSearch(request: any, subset: any[]) {
     if (request.Search && request.Search.Operator.toLowerCase() === CompareOperators.AUTO.toLowerCase()) {
       const searchableColumns = request.Columns.filter((x: any) => x.Searchable);
 
@@ -66,7 +66,7 @@ export default class LocalDataSource extends BaseDataSource {
     return subset;
   }
 
-  public applyFiltering(request: any, subset: any[]) {
+  private applyFiltering(request: any, subset: any[]) {
     const filteredColumns = request.Columns.filter((column: any) =>
       column.Filter && (column.Filter.Text || column.Filter.Argument) &&
       column.Filter && column.Filter.Operator.toLowerCase() !== CompareOperators.NONE.toLowerCase());
@@ -173,7 +173,7 @@ export default class LocalDataSource extends BaseDataSource {
     return subset;
   }
 
-  public applySorting(request: any, subset: any[]) {
+  private applySorting(request: any, subset: any[]) {
     let sortedColumns = _.filter(request.Columns, (column) =>
       column.SortOrder > 0);
 
@@ -182,8 +182,8 @@ export default class LocalDataSource extends BaseDataSource {
 
     if (sortedColumns.length > 0) {
       sortedColumns = _.sortBy(sortedColumns, ['SortOrder']);
-      columns = sortedColumns.map(y => y.Name);
-      orders = sortedColumns.map(y => y.SortDirection === ColumnSortDirection.ASCENDING ? 'asc' : 'desc');
+      columns = sortedColumns.map((y) => y.Name);
+      orders = sortedColumns.map((y) => y.SortDirection === ColumnSortDirection.ASCENDING ? 'asc' : 'desc');
     } else {
       columns.push(request.Columns[0].Name);
       orders.push('asc');
@@ -192,7 +192,7 @@ export default class LocalDataSource extends BaseDataSource {
     return _.orderBy(subset, columns, orders);
   }
 
-  public getAggregatePayload(request: any, subset: any[]) {
+  private getAggregatePayload(request: any, subset: any[]) {
     const aggregateColumns = _.filter(request.Columns, (column) =>
       column.Aggregate && column.Aggregate.toLowerCase() !== AggregateFunctions.NONE.toLowerCase());
 
