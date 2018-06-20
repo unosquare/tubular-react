@@ -151,33 +151,7 @@ class DataGrid extends React.Component<IProps, IState> {
                     this.setState({ activeColumn: null }, () => actions.updateColumns(newColumns));
                   },
                   sortColumn: (property: string) => {
-                    const newColumns = [...columns];
-                    const column = columns.find((c: ColumnModel) => c.Name === property);
-                    if (!column) { return; }
-
-                    column.SortDirection = column.SortDirection === ColumnSortDirection.NONE
-                      ? ColumnSortDirection.ASCENDING
-                      : column.SortDirection === ColumnSortDirection.ASCENDING ?
-                        ColumnSortDirection.DESCENDING :
-                        ColumnSortDirection.NONE;
-
-                    column.SortOrder = column.SortDirection === ColumnSortDirection.NONE ? -1 : Number.MAX_VALUE;
-
-                    if (!this.state.multiSort) {
-                      newColumns
-                        .filter((col: any) => col.Name !== property)
-                        .forEach((c: any) => {
-                          c.SortOrder = -1;
-                          c.SortDirection = ColumnSortDirection.NONE;
-                        });
-                    }
-
-                    newColumns
-                      .filter((col: ColumnModel) => col.SortOrder > 0)
-                      .sort((a: ColumnModel, b: ColumnModel) => a.SortOrder === b.SortOrder ? 0 : (a.SortOrder > b.SortOrder ? 1 : -1))
-                      .forEach((column: any, i: number) => { column.SortOrder = i + 1; });
-
-                    actions.updateColumns(newColumns);
+                    actions.updateColumns(ColumnModel.SortColumnArray(property, [...columns], this.state.multiSort));
                   },
                   handleTextFieldChange: (value: string) => {
                     this.setState((prevState) => ({

@@ -69,23 +69,23 @@ export default class Main extends React.Component {
           bodyRenderer={
             (row: any, index: any) =>
               <TableRow hover={true} key={index}>
-                <TableCell padding={'default'}>
+                <TableCell padding='default'>
                   {row.OrderID}
                 </TableCell>
-                <TableCell padding={'default'}>
+                <TableCell padding='default'>
                   {row.CustomerName}
                 </TableCell>
-                <TableCell padding={'default'}>
+                <TableCell padding='default'>
                   {moment(row.ShippedDate).format('MMMM Do YYYY, h:mm:ss a')}
                 </TableCell>
-                <TableCell padding={'default'}>
+                <TableCell padding='default'>
                   {row.ShipperCity}
                 </TableCell>
-                <TableCell padding={'default'}>
+                <TableCell padding='default' numeric>
                   {row.Amount || 0}
                 </TableCell>
-                <TableCell padding={'default'}>
-                  {row.IsShipped === true ? <CheckBox />
+                <TableCell padding='default'>
+                  {row.IsShipped ? <CheckBox />
                     : <CheckBoxOutlineBlank />}
                 </TableCell>
               </TableRow>
