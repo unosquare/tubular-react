@@ -6,7 +6,7 @@ import BaseDataSource from './BaseDataSource';
 export default class RemoteDataSource extends BaseDataSource {
   public getAllRecords(request: GridRequest): Promise<object> {
     return new Promise((resolve, reject) => {
-  
+
       Axios.post(this.props.source, request).then((response) => {
         if (!this.isValidResponse(response.data)) {
           throw new Error('It\'s not a valid Tubular response object');

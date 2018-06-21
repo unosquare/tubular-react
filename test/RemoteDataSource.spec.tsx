@@ -1,9 +1,10 @@
-import { shallow } from 'enzyme';
-import RemoteDataSource from '../src/DataGrid/DataSource/RemoteDataSource';
-import * as React from 'react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { mount, shallow } from 'enzyme';
+import * as React from 'react';
+import RemoteDataSource from '../src/DataGrid/DataSource/RemoteDataSource';
 import { validColumnsSample } from './utils/columns';
+import GridRequest from '../src/DataGrid/Models/GridRequest'
 import {
   invalidResponseStructure,
   onlyMicrosoftExpected,
@@ -12,12 +13,24 @@ import {
   validResponseStructure
 } from './utils/data';
 
+
+
 describe('RemoteDataSource', () => {
+  let mock;
+
+  beforeAll(() => {
+    mock = new MockAdapter(axios);
+  });
+
+  afterEach(() => {
+    mock.reset();
+  });
+
   describe('When component is mounted', () => {
-    beforeEach( () => {
+    beforeEach(() => {
       mock.reset();
       mock.onPost('url').reply(200, {
-        ...twentyRecordsExpected
+        ...simpleRecordsExpected
       });
     });
 
@@ -31,96 +44,33 @@ describe('RemoteDataSource', () => {
       );
 
       expect(component.state('data')).toBeDefined();
-    })
+    });
   });
 
-  describe('When columns structure is valid', () => {
-    let mock;
-
-    beforeEach(() => {
-        mock = new MockAdapter(axios);
-    });
-
-    afterEach(() => {
-        mock.reset();
-    });
-
-    
-
+  describe('', () => {
     describe('When 20 records are requested', () => {
-      beforeEach( () => {
-        mock.reset();
+      beforeEach(() => {
         mock.onPost('url').reply(200, {
           ...twentyRecordsExpected
         });
       });
 
+      const component = shallow(
+        <RemoteDataSource
+          source='url'
+          columns={validColumnsSample}
+          itemsPerPage={10}
+        />
+      );
+      const instance  = component.instance();
+      instance.getAllRecords(new GridRequest(validColumnsSample, 20, 0, ''));
+      expect(inst.getAllRecords(any))
       test('Should return a payload with 20 records', () => {
-         return dataSource.getAllRecords(20, 0, '').then((e: any) => {
-            expect(e.Payload).toHaveLength(20);
-         });
-      });
-    });
-
-    describe('When search input is Microsoft', () => {
-      beforeEach( () => {
-        mock.reset();
-        mock.onPost('url').reply(200, {
-          ...onlyMicrosoftExpected
-        });
-      });
-
-      test('Should return a payload with only Microsoft records', () => dataSource.getAllRecords(10, 0, 'Microsoft')
-        .then((r: any) => {
-          expect(r.Payload).toEqual(onlyMicrosoftExpected.Payload);
-          expect(r.FilteredRecordCount).toEqual(onlyMicrosoftExpected.FilteredRecordCount);
-          expect(r.TotalRecordCount).toEqual(onlyMicrosoftExpected.TotalRecordCount);
-        }));
-    });
-
-    describe('When retrieveData() is called', () => {
-      describe('When the response is invalid', () => {
-        beforeEach( () => {
-          mock.reset();
-          mock.onPost('url').reply(200, {
-            ...simpleRecordsExpected
-          });
-        });
-
-        test('Should return a payload', (done) => {
-          dataSource.retrieveData(10, 0, '')
-            .skip(1).subscribe((r) => {
-              expect(r.Payload).toEqual(simpleRecordsExpected.Payload);
-              expect(r.FilteredRecordCount).toEqual(simpleRecordsExpected.FilteredRecordCount);
-              expect(r.TotalRecordCount).toEqual(simpleRecordsExpected.TotalRecordCount);
-              done();
-            }, (error: any) => {
-              done();
-            });
-        });
-      });
-
-      describe('When the response is invalid', () => {
-        const dtSource = new RemoteDataSource('url', validColumnsSample);
-
-        beforeEach( () => {
-          mock.reset();
-          mock.onPost('url').reply(200, {
-            AggregationPayload: simpleRecordsExpected.AggregationPayload,
-            Counter: simpleRecordsExpected.Counter,
-            CurrentPage: simpleRecordsExpected.CurrentPage,
-            FilteredRecordCount: simpleRecordsExpected.FilteredRecordCount
-          });
-        });
-
-        test('Should throw an error', (done) => {
-          dtSource.retrieveData(10, 0, '')
-            .subscribe((r) => r, (error: any) => {
-              expect(error.message).toBe('It\'s not a valid Tubular response object');
-              done();
-            });
+        return dataSource.getAllRecords(20, 0, '').then((e: any) => {
+          expect(e.Payload).toHaveLength(20);
         });
       });
     });
   });
+
 });
