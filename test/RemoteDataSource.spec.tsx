@@ -4,73 +4,104 @@ import { mount, shallow } from 'enzyme';
 import * as React from 'react';
 import RemoteDataSource from '../src/DataGrid/DataSource/RemoteDataSource';
 import { validColumnsSample } from './utils/columns';
-import GridRequest from '../src/DataGrid/Models/GridRequest'
 import {
-  invalidResponseStructure,
-  onlyMicrosoftExpected,
-  simpleRecordsExpected,
-  twentyRecordsExpected,
-  validResponseStructure
+  page2Expected,
+  simpleRecordsExpected
 } from './utils/data';
 
-
-
 describe('RemoteDataSource', () => {
-  let mock;
-
-  beforeAll(() => {
-    mock = new MockAdapter(axios);
-  });
+  const mock = new MockAdapter(axios);
 
   afterEach(() => {
     mock.reset();
   });
 
-  describe('When component is mounted', () => {
+  test('Should mount with valid props', () => {
     beforeEach(() => {
-      mock.reset();
       mock.onPost('url').reply(200, {
         ...simpleRecordsExpected
       });
     });
-
-    test('Should contain data', () => {
-      const component = shallow(
-        <RemoteDataSource
-          source='url'
-          columns={validColumnsSample}
-          itemsPerPage={10}
-        />
-      );
-
-      expect(component.state('data')).toBeDefined();
-    });
+    const component = shallow(
+      <RemoteDataSource
+        source='url'
+        columns={validColumnsSample}
+        itemsPerPage={10}
+      />
+    );
+    expect(component.props()).toBeDefined();
   });
 
-  describe('', () => {
-    describe('When 20 records are requested', () => {
-      beforeEach(() => {
-        mock.onPost('url').reply(200, {
-          ...twentyRecordsExpected
-        });
-      });
-
-      const component = shallow(
-        <RemoteDataSource
-          source='url'
-          columns={validColumnsSample}
-          itemsPerPage={10}
-        />
-      );
-      const instance  = component.instance();
-      instance.getAllRecords(new GridRequest(validColumnsSample, 20, 0, ''));
-      expect(inst.getAllRecords(any))
-      test('Should return a payload with 20 records', () => {
-        return dataSource.getAllRecords(20, 0, '').then((e: any) => {
-          expect(e.Payload).toHaveLength(20);
-        });
+  test('Should contain data with valid url', () => {
+    beforeEach(() => {
+      mock.onPost('url').reply(200, {
+        ...simpleRecordsExpected
       });
     });
+    const component = shallow(
+      <RemoteDataSource
+        source='url'
+        columns={validColumnsSample}
+        itemsPerPage={10}
+      />
+    );
+
+    expect(component.state().data).toBeDefined();
   });
 
+  test('Should have error with invalid url', () => {
+    beforeEach(() => {
+      mock.onPost('url').reply(400, {error: 'Bad Request' });
+    });
+    const component = shallow(
+      <RemoteDataSource
+        source='url'
+        columns={validColumnsSample}
+        itemsPerPage={10}
+      />
+    );
+
+    expect(component.state().data).not.toBeDefined();
+  });
+
+  test('Should contain state columns equals to props columns', () => {
+    beforeEach(() => {
+      mock.onPost('url').reply(200, {
+        ...simpleRecordsExpected
+      });
+    });
+    const component = shallow(
+      <RemoteDataSource
+        source='url'
+        columns={validColumnsSample}
+        itemsPerPage={10}
+      />
+    );
+
+    expect(component.state('columns')).toEqual(validColumnsSample);
+  });
+
+  test('When change state page should reload data ', () => {
+    beforeEach(() => {
+      mock.onPost('url').reply(200, {
+        ...simpleRecordsExpected
+      });
+      mock.onPost('url').reply(200, {
+        ...page2Expected
+      });
+    });
+    const component = shallow(
+      <RemoteDataSource
+        source='url'
+        columns={validColumnsSample}
+        itemsPerPage={10}
+      />
+    );
+    component.setState({
+      page: 1
+    });
+
+    expect(component.state().page).toBe(1);
+    expect(component.state().data).toEqual(page2Expected.Payload);
+  });
 });
