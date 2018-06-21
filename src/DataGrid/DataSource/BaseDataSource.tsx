@@ -19,7 +19,7 @@ interface IState {
 interface IProps {
     source: any;
     columns: ColumnModel[];
-    itemsPerPage: number;
+    itemsPerPage?: number;
 }
 
 interface IContext extends IState {
@@ -46,7 +46,7 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
         columns: this.props.columns,
         data: [] as any,
         filteredRecordCount: 0,
-        itemsPerPage: this.props.itemsPerPage,
+        itemsPerPage: this.props.itemsPerPage || 10,
         page: 0,
         searchText: '',
         totalRecordCount: 0
