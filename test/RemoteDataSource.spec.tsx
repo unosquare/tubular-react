@@ -5,7 +5,6 @@ import * as React from 'react';
 import RemoteDataSource from '../src/DataGrid/DataSource/RemoteDataSource';
 import { validColumnsSample } from './utils/columns';
 import {
-  page2Expected,
   simpleRecordsExpected
 } from './utils/data';
 
@@ -24,7 +23,6 @@ describe('<RemoteDataSource />', () => {
       <RemoteDataSource
         source='url'
         columns={validColumnsSample}
-        itemsPerPage={10}
       />
     );
     expect(component.props()).toBeDefined();
@@ -38,7 +36,6 @@ describe('<RemoteDataSource />', () => {
       <RemoteDataSource
         source='url'
         columns={validColumnsSample}
-        itemsPerPage={10}
       />
     );
 
@@ -51,7 +48,6 @@ describe('<RemoteDataSource />', () => {
       <RemoteDataSource
         source='url'
         columns={validColumnsSample}
-        itemsPerPage={10}
       />
     );
 
@@ -66,7 +62,6 @@ describe('<RemoteDataSource />', () => {
       <RemoteDataSource
         source='url'
         columns={validColumnsSample}
-        itemsPerPage={10}
       />
     );
 
