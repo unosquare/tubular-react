@@ -17,6 +17,7 @@ import GridRequest from './Models/GridRequest';
 import Paginator from './Paginator';
 
 import { DataSourceConsumer } from './DataSource/BaseDataSource';
+import ToolbarOptions from './Models/ToolbarOptions';
 
 const styles = (theme: Theme) => createStyles(
   {
@@ -35,7 +36,7 @@ interface IState {
 
 interface IProps extends WithStyles<typeof styles> {
   gridName: string;
-  toolbarOptions: any;
+  toolbarOptions?: ToolbarOptions;
   onError?(error: any): any;
   bodyRenderer?(column: any, index: number): any;
   footerRenderer?(aggregate: any): any;
@@ -71,8 +72,9 @@ class DataGrid extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const { classes, bodyRenderer, footerRenderer, toolbarOptions } = this.props;
+    const { classes, bodyRenderer, footerRenderer } = this.props;
     const { errorMessage, activeColumn } = this.state;
+    const toolbarOptions = this.props.toolbarOptions || new ToolbarOptions();
 
     return (
       <DataSourceConsumer>
@@ -198,7 +200,7 @@ class DataGrid extends React.Component<IProps, IState> {
                 </TableHead>
                 <GridBody bodyRenderer={bodyRenderer} />
                 <TableFooter>
-                  {footerRenderer(aggregate)}
+                  {footerRenderer && footerRenderer(aggregate)}
                   {toolbarOptions.bottomPager &&
                     <TableRow>
                       <Paginator rowsPerPageOptions={toolbarOptions.rowsPerPageOptions} />

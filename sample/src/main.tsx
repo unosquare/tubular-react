@@ -56,8 +56,7 @@ const columns = [
   )
 ];
 
-export default class Main extends React.Component {
-  public render() {
+const Main: React.SFC = () => {
     return (
       <RemoteDataSource
         source='http://tubular.azurewebsites.net/api/orders/paged'
@@ -104,5 +103,6 @@ export default class Main extends React.Component {
         />
       </RemoteDataSource>
     );
-  }
 }
+
+export default Main;

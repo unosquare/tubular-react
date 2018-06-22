@@ -1,51 +1,19 @@
-import { Table, TableBody, TableCell, TableFooter, TableHead, TableRow } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableFooter, TableRow } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import * as React from 'react';
-import DataGrid from '../src/DataGrid';
-import RemoteDataSource from '../src/DataGrid/DataSource/RemoteDataSource';
-import { ColumnDataType, CompareOperators } from '../src/DataGrid/Models/Column';
-import ColumnModel from '../src/DataGrid/Models/ColumnModel';
-import ToolbarOptions from '../src/DataGrid/Models/ToolbarOptions';
-import Paginator from '../src/DataGrid/Paginator';
 import { simpleColumnsSample, validColumnsSample } from './utils/columns';
 import { data, expected, onlyMicrosoftExpected, page2Expected, simpleRecordsExpected } from './utils/data';
 import { microsoftSearchRequest, page2Request, simpleRequest } from './utils/requests';
 
-const footerRenderer = (aggregates) => (
-  <TableRow>
-    <TableCell>Total: </TableCell>
-    <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
-    <TableCell />
-    <TableCell />
-    <TableCell />
-  </TableRow>
-);
-
-const bodyRenderer = (row, index) => (
-  <TableRow hover={true} key={index}>
-    <TableCell padding={'default'}>
-      {row.OrderID}
-    </TableCell>
-    <TableCell padding={'default'}>
-      {row.CustomerName}
-    </TableCell>
-    <TableCell padding={'default'}>
-      {row.ShippedDate}
-    </TableCell>
-    <TableCell padding={'default'}>
-      {row.ShipperCity}
-    </TableCell>
-  </TableRow>
-);
 beforeEach(() => {
   jest.resetModules();
 });
 
-const getGridWithContext = (context = {
+const getRemoteDataSourceWithContext = (context = {
   actions: {},
   aggregate: expected.aggregate,
   columns: validColumnsSample,
@@ -53,49 +21,79 @@ const getGridWithContext = (context = {
   filteredRecordCount: expected.filteredRecordCount,
   searchText: expected.searchText
 }) => {
-  jest.doMock('../src/DataGrid/GridContext', () => {
+  jest.doMock('../src/DataGrid/DataSource/BaseDataSource', () => {
     return {
-      GridConsumer: {
+      DataSourceContext: {
         Consumer: (props) => props.children(context)
       }
     };
   });
-  return require('../src/DataGrid').DataGrid;
+
+  return require('../src/DataGrid/DataSource/RemoteDataSource').default;
 };
+const getGridWithContext = (context = {
+  actions: {},
+  state: {
+    aggregate: expected.aggregate,
+    columns: validColumnsSample,
+    data,
+    filteredRecordCount: expected.filteredRecordCount,
+    searchText: expected.searchText
+  }
+}) => {
+  jest.doMock('../src/DataGrid/GridContext', () => {
+    return {
+      GridContext: {
+        Consumer: (props) => props.children(context)
+      }
+    };
+  });
+
+  return require('../src/DataGrid/DataGrid').default;
+};
+
 describe('<DataGrid />', () => {
-  let grid;
+  const RemoteDataSource = getRemoteDataSourceWithContext();
+  const DataGrid = getGridWithContext();
   const mock = new MockAdapter(axios);
+  const grid = (<RemoteDataSource
+    source='url'
+    columns={validColumnsSample}>
+    <DataGrid
+      gridName='Tubular-React'
+    />
+  </RemoteDataSource>);
 
   beforeEach(() => {
     mock.onPost('url').reply(200, {
       ...simpleRecordsExpected
     });
-    grid = getGridWithContext();
   });
 
   test('should render a Paper', () => {
-    const wrapper = shallow(grid).find(Paper);
-    expect(wrapper.length).toHaveLength(1);
+    const wrapper = mount(grid).find(Paper);
+
+    expect(wrapper).toHaveLength(1);
   });
 
   test('should render a Table', () => {
-    const wrapper = shallow(grid).find(Table);
+    const wrapper = mount(grid).find(Table);
     expect(wrapper).toHaveLength(1);
   });
 
   test('should have 1 rows at first', () => {
-    const wrapper = shallow(grid).find(Table).find(TableBody);
+    const wrapper = mount(grid).find(Table).find(TableBody);
     expect(wrapper).toHaveLength(1);
   });
 
   test('should render all rows', () => {
-    const wrapper = shallow(grid);
+    const wrapper = mount(grid);
     wrapper.setState({ data });
     expect(wrapper.find(TableBody).find(TableRow)).toHaveLength(11);
   });
 
   test('should render the default body', () => {
-    const wrapper = shallow(grid);
+    const wrapper = mount(grid);
 
     const body = wrapper.find(Table).find(TableBody);
     expect(body).toHaveLength(1);
@@ -103,7 +101,7 @@ describe('<DataGrid />', () => {
 
   describe('When footer has no rows', () => {
     test('should not render any row', () => {
-      const wrapper = shallow(grid);
+      const wrapper = mount(grid);
       const rowFooter = wrapper.find(Table).find(TableFooter).find(TableRow);
 
       expect(rowFooter).toHaveLength(0);
@@ -120,16 +118,12 @@ describe('<DataGrid />', () => {
       });
     });
 
-    beforeEach(() => {
-      grid = getGridWithContext();
-    });
-
     afterEach(() => {
       mock.reset();
     });
 
     test('Should refresh the DataGrid DataStream', (done) => {
-      const wrapper = shallow(grid);
+      const wrapper = mount(grid);
       wrapper.instance().handlePager(10, 1);
       wrapper.state().dataSource.dataStream.skip(2).subscribe((r) => {
         wrapper.update();
@@ -169,7 +163,7 @@ describe('<DataGrid />', () => {
     });
 
     test('Should refresh the DataStream with only records that match the search text', (done) => {
-      const wrapper = shallow(dataGrid);
+      const wrapper = mount(dataGrid);
 
       wrapper.instance().handleTextSearch('Microsoft');
       wrapper.state().dataSource.dataStream.skip(2).subscribe((r) => {
@@ -205,7 +199,7 @@ describe('<DataGrid />', () => {
     });
 
     test('Should create a link element to download the csv', (done) => {
-      const wrapper = shallow(dataGrid);
+      const wrapper = mount(dataGrid);
 
       wrapper.state().dataSource.dataStream.skip(1).subscribe((r) => {
         wrapper.instance().exportTable(false);
@@ -258,7 +252,7 @@ describe('<DataGrid />', () => {
     });
 
     test('Should create a window with the data to print', (done) => {
-      const wrapper = shallow(dataGrid);
+      const wrapper = mount(dataGrid);
 
       wrapper.state().dataSource.dataStream.skip(1).subscribe((r) => {
         wrapper.instance().printTable();
@@ -291,101 +285,6 @@ describe('<DataGrid />', () => {
           done();
         }, 0);
       });
-    });
-  });
-
-  describe('When footer has n rows', () => {
-    test('should render the row with the aggregate operation', () => {
-      grid = (
-        <DataGrid
-          onError={(x: any) => x}
-          gridName='Motorhead'
-          rowsPerPage={10}
-          dataSource={new RemoteDataSource('url', validColumnsSample)}
-          footerRenderer={footerRenderer}
-        />
-      );
-
-      const wrapper = shallow(grid);
-      wrapper.setState({ aggregate });
-      const rowFooter = wrapper.find(Table).find(TableFooter).find(TableRow);
-
-      expect(rowFooter).toHaveLength(1);
-    });
-
-    test('should render the row with the bottom pager', () => {
-      grid = (
-        <DataGrid
-          onError={(x: any) => x}
-          gridName='Motorhead'
-          rowsPerPage={10}
-          dataSource={new RemoteDataSource('url', validColumnsSample)}
-          bottomPager={true}
-        />
-      );
-
-      const wrapper = shallow(grid);
-      const rowFooter = wrapper.find(Table).find(TableFooter).find(TableRow);
-
-      expect(rowFooter).toHaveLength(1);
-    });
-
-    test('should render the rows with the aggregate operation and the bottom pager', () => {
-      grid = (
-        <DataGrid
-          onError={(x: any) => x}
-          gridName='Motorhead'
-          rowsPerPage={10}
-          dataSource={new RemoteDataSource('url', validColumnsSample)}
-          bottomPager={true}
-          footerRenderer={footerRenderer}
-        />
-      );
-
-      const wrapper = shallow(grid);
-      wrapper.setState({ aggregate });
-      const rowFooter = wrapper.find(Table).find(TableFooter).find(TableRow);
-
-      expect(rowFooter).toHaveLength(2);
-    });
-  });
-
-  describe('When footer has bottomPager property set as true', () => {
-    test('should have a paginator', () => {
-      grid = (
-        <DataGrid
-          onError={(x: any) => x}
-          gridName='Motorhead'
-          rowsPerPage={10}
-          dataSource={new RemoteDataSource('url', validColumnsSample)}
-          bottomPager={true}
-        />
-      );
-
-      const wrapper = shallow(grid);
-      const rowFooter = wrapper.find(Table).find(TableFooter).find(TableRow).find(Paginator);
-
-      expect(rowFooter).toHaveLength(1);
-    });
-  });
-
-  describe('When <TableHead /> has topPager property set as true', () => {
-
-    test('Should have a paginator', () => {
-      grid = (
-        <DataGrid
-          onError={(x: any) => x}
-          gridName='Motorhead'
-          rowsPerPage={10}
-          dataSource={new RemoteDataSource('url', validColumnsSample)}
-          topPager={true}
-        />
-      );
-
-      const wrapper = shallow(grid);
-      const rowHeader = wrapper.find(Table).find(TableHead).find(TableRow).find(Paginator);
-
-      expect(rowHeader).toHaveLength(1);
     });
   });
 });

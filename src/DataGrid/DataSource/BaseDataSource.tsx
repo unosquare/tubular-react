@@ -104,7 +104,6 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
             <DataSourceContext.Provider value={{
                 ...this.state,
                 actions: {
-                    retrieveData: this.retrieveData,
                     updateColumns: (columns: ColumnModel[]) =>
                         this.retrieveData({ columns }),
                     updateSearchText: (searchText: string) => {
