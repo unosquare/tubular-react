@@ -16,7 +16,7 @@ const cellValue = (cellDataType: string, cell: any) => {
 };
 
 const objToArray = (row: any) => {
-    return row instanceof Object 
+    return row instanceof Object
         ? Object.keys(row).map((key: any) => row[key])
         : row;
 };
@@ -32,42 +32,38 @@ const processRow = (row: any, columns: any[], ignoreType: boolean) => {
             result = `"${result}"`;
         }
 
-        if (i > 0) {
-            prev += ',';
-        }
-
-        return prev + result;
+        return `${prev}${i > 0 && ','}${result}`;
     }, '');
 
     return `${finalVal}\n`;
 };
 
 function printDoc(gridResult: any, columns: any, gridName: string) {
-        const tableHtml = `<table class="table table-bordered table-striped"><thead><tr>${
-            columns
-                .filter((c: any) => c.Visible)
-                .reduce((prev: any, el: any) => `${prev}<th>${el.Label || el.Name}</th>`, '')
-            }</tr></thead><tbody>${
-            gridResult.map((row: any) =>
-                `<tr>${objToArray(row).map((cell: any, index: number) => 
-                    !columns[index].Visible ? '' : `<td>${cellValue(columns[index].DataType, cell)}</td>`
-                ).join(' ')}</tr>`)
+    const tableHtml = `<table class="table table-bordered table-striped"><thead><tr>${
+        columns
+            .filter((c: any) => c.Visible)
+            .reduce((prev: any, el: any) => `${prev}<th>${el.Label || el.Name}</th>`, '')
+        }</tr></thead><tbody>${
+        gridResult.map((row: any) =>
+            `<tr>${objToArray(row).map((cell: any, index: number) =>
+                !columns[index].Visible ? '' : `<td>${cellValue(columns[index].DataType, cell)}</td>`
+            ).join(' ')}</tr>`)
             .join(' ')}</tbody></table>`;
 
-        const documentToPrint = window.open('about:blank', 'Print', 'location=0,height=500,width=800');
-        documentToPrint.document
-            .write('<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.min.css" />');
-        documentToPrint.document.title = gridName;
-        documentToPrint.document.write('<body onload="window.print();">');
-        documentToPrint.document.write(`<h1>${gridName}</h1>`);
-        documentToPrint.document.write(tableHtml);
-        documentToPrint.document.write('</body>');
-        documentToPrint.document.close();
+    const documentToPrint = window.open('about:blank', 'Print', 'location=0,height=500,width=800');
+    documentToPrint.document
+        .write('<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.min.css" />');
+    documentToPrint.document.title = gridName;
+    documentToPrint.document.write('<body onload="window.print();">');
+    documentToPrint.document.write(`<h1>${gridName}</h1>`);
+    documentToPrint.document.write(tableHtml);
+    documentToPrint.document.write('</body>');
+    documentToPrint.document.close();
 }
 
 function exportFile(gridResult: any, columns: any) {
     const csvFile = gridResult.reduce(
-        (prev: string, row: any) => prev + processRow(row, columns, false), 
+        (prev: string, row: any) => prev + processRow(row, columns, false),
         processRow(columns.map((x: any) => x.Label), columns, true));
 
     const fileURL = URL.createObjectURL(new Blob([`\uFEFF${csvFile}`], {
@@ -85,7 +81,7 @@ function exportFile(gridResult: any, columns: any) {
     URL.revokeObjectURL(fileURL);
 }
 
-export const exportGrid = function(format: string, gridResult: any, columns: any, gridName: string) {
+export const exportGrid = function (format: string, gridResult: any, columns: any, gridName: string) {
     if (format === 'csv')
         exportFile(gridResult, columns);
     else
