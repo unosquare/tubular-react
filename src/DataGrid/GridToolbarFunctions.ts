@@ -66,21 +66,14 @@ function printDoc(gridResult: any, columns: any, gridName: string) {
 }
 
 function exportFile(gridResult: any, columns: any) {
-    const header = columns.map((x: any) => x.Label);
+    const csvFile = gridResult.reduce(
+        (prev: string, row: any) => prev + processRow(row, columns, false), 
+        processRow(columns.map((x: any) => x.Label), columns, true));
 
-    let csvFile = '';
-    if (header.length > 0) {
-        csvFile += processRow(header, columns, true);
-    }
-
-    gridResult.forEach((row: any) => {
-        csvFile += processRow(row, columns, false);
-    });
-
-    const blob = new Blob([`\uFEFF${csvFile}`], {
+    const fileURL = URL.createObjectURL(new Blob([`\uFEFF${csvFile}`], {
         type: 'text/csv;charset=utf-8;'
-    });
-    const fileURL = URL.createObjectURL(blob);
+    }));
+
     const downloadLink = document.createElement('a');
 
     downloadLink.setAttribute('href', fileURL);
