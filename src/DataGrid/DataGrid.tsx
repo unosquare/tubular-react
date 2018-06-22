@@ -1,5 +1,5 @@
 import {
-  Paper, Table, TableFooter,
+  LinearProgress, Paper, Table, TableFooter,
   TableHead, TableRow
 } from '@material-ui/core';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
@@ -76,7 +76,7 @@ class DataGrid extends React.Component<IProps, IState> {
 
     return (
       <DataSourceConsumer>
-        {({ actions, columns, data, filteredRecordCount, aggregate, searchText }) =>
+        {({ actions, columns, data, filteredRecordCount, aggregate, searchText, isLoading }) =>
           <Paper className={classes.root}>
             <GridProvider
               value={{
@@ -186,6 +186,7 @@ class DataGrid extends React.Component<IProps, IState> {
               <GridToolbar
                 toolbarOptions={toolbarOptions}
               />
+              {isLoading && <LinearProgress />}
               <Table>
                 <TableHead>
                   {toolbarOptions.topPager &&

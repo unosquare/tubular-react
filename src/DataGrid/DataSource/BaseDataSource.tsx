@@ -14,6 +14,7 @@ interface IState {
     page: number;
     searchText: any;
     columns: ColumnModel[];
+    isLoading: boolean;
 }
 
 interface IProps {
@@ -35,7 +36,8 @@ const DataSourceContext = React.createContext<IContext>({
     itemsPerPage: null,
     page: null,
     searchText: null,
-    totalRecordCount: null
+    totalRecordCount: null,
+    isLoading: false
 });
 
 export const DataSourceConsumer = DataSourceContext.Consumer;
@@ -49,7 +51,8 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
         itemsPerPage: this.props.itemsPerPage || 10,
         page: 0,
         searchText: '',
-        totalRecordCount: 0
+        totalRecordCount: 0,
+        isLoading: false
     };
 
     constructor(props: IProps) {
@@ -63,12 +66,13 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
     public parsePayload(row: any, columns: any[]) {
         return columns.reduce((obj: any, column: any, key: any) => {
             obj[column.Name] = row[key] || row[column.Name];
-            
+
             return obj;
         }, {});
     }
 
     public retrieveData(options: any = {}) {
+        this.setState({ isLoading: true });
         const columns = options.columns || this.state.columns;
         const itemsPerPage = options.itemsPerPage || this.state.itemsPerPage;
         const page = typeof options.page === 'undefined' ? this.state.page : options.page;
@@ -85,7 +89,8 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
                     columns: columns,
                     itemsPerPage: itemsPerPage,
                     page: page,
-                    searchText: searchText
+                    searchText: searchText,
+                    isLoading: false
                 });
             });
     }
