@@ -101,14 +101,14 @@ class GridToolbar extends React.Component<IProps, IState> {
             }
             {toolbarOptions.exportButton &&
               <Menu anchorEl={anchorExport} open={Boolean(anchorExport)} onClose={this.handleMenuClose}>
-                <MenuItem onClick={() => actions.exportCSV(false)}> Current rows</MenuItem>
-                <MenuItem onClick={() => actions.exportCSV(true)}> All rows</MenuItem>
+                <MenuItem onClick={() => actions.export(false, 'csv')}> Current rows</MenuItem>
+                <MenuItem onClick={() => actions.export(true, 'csv')}> All rows</MenuItem>
               </Menu>
             }
             {toolbarOptions.printButton &&
               <Menu anchorEl={anchorPrint} open={Boolean(anchorPrint)}>
-                <MenuItem onClick={() => actions.printDocument(false)}> Current rows</MenuItem>
-                <MenuItem onClick={() => actions.printDocument(true)}> All rows</MenuItem>
+                <MenuItem onClick={() => actions.export(false, 'print')}> Current rows</MenuItem>
+                <MenuItem onClick={() => actions.export(true, 'print')}> All rows</MenuItem>
               </Menu>
             }
           </Toolbar>}

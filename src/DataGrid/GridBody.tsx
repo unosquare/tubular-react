@@ -8,7 +8,7 @@ import * as React from 'react';
 
 import { ColumnDataType } from './Models/Column';
 import ColumnModel from './Models/ColumnModel';
-import { GridConsumer } from './GridContext';
+import { DataSourceConsumer } from './DataSource/BaseDataSource';
 
 const renderCell = (column: ColumnModel, row: any) => {
     let rows = null;
@@ -35,16 +35,21 @@ const renderCell = (column: ColumnModel, row: any) => {
     return rows;
 };
 
-const GridBody: React.SFC = () => {
-    return (<GridConsumer>
-        {({ actions, state }) =>
+interface IProps {
+    bodyRenderer?(column: any, index: number): any;
+}
+
+const GridBody: React.SFC<IProps> = ({bodyRenderer}) => {
+    return (
+    <DataSourceConsumer>
+        {({ data, columns, filteredRecordCount }) =>
             <TableBody>
-                {state.data.map((row: any, rowIndex: number) => (
-                    actions.bodyRenderer
-                        ? actions.bodyRenderer(row, rowIndex)
+                {data.map((row: any, rowIndex: number) => (
+                    bodyRenderer
+                        ? bodyRenderer(row, rowIndex)
                         : <TableRow hover={true} key={rowIndex}>
                             {
-                                state.gridRequest.Columns
+                                columns
                                     .filter((col: any) => col.Visible)
                                     .map((column: ColumnModel, colIndex: number) =>
                                         <TableCell
@@ -57,7 +62,7 @@ const GridBody: React.SFC = () => {
                             }
                         </TableRow>
                 ))}
-                {state.filteredRecordCount === 0 &&
+                {filteredRecordCount === 0 &&
                     (<TableRow>
                         <Typography style={{ paddingLeft: '15px' }} variant='body2' gutterBottom={true}>
                             <Warning /> No records found
@@ -65,7 +70,7 @@ const GridBody: React.SFC = () => {
                     </TableRow>)}
             </TableBody>
         }
-    </GridConsumer>);
+    </DataSourceConsumer>);
 };
 
 export default GridBody;

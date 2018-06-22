@@ -11,23 +11,21 @@ const cellValue = (cellDataType: string, cell: any) => {
         case ColumnDataType.BOOLEAN:
             return (cell === true ? 'Yes' : 'No');
         default:
-            return cell || '';
+            return (cell || '').toString();
     }
 };
 
 const objToArray = (row: any) => {
-    if (row instanceof Object) {
-        row = Object.keys(row).map((key: any) => row[key]);
-    }
-
-    return row;
+    return row instanceof Object 
+        ? Object.keys(row).map((key: any) => row[key])
+        : row;
 };
 
-const processRow = (row: any, columns: any[]) => {
+const processRow = (row: any, columns: any[], ignoreType: boolean) => {
     const finalVal = objToArray(row).reduce((prev: any, value: any, i: any) => {
         if (!columns[i].Visible) { return; }
 
-        let result = cellValue(columns[i].DataType, value)
+        let result = cellValue(ignoreType ? ColumnDataType.STRING : columns[i].DataType, value)
             .replace(/"/g, '""');
 
         if (result.search(/("|,|\n)/g) >= 0) {
@@ -38,7 +36,7 @@ const processRow = (row: any, columns: any[]) => {
             prev += ',';
         }
 
-        prev += result;
+        return prev + result;
     }, '');
 
     return `${finalVal}\n`;
@@ -72,11 +70,11 @@ function exportFile(gridResult: any, columns: any) {
 
     let csvFile = '';
     if (header.length > 0) {
-        csvFile += processRow(header, columns);
+        csvFile += processRow(header, columns, true);
     }
 
     gridResult.forEach((row: any) => {
-        csvFile += processRow(row, columns);
+        csvFile += processRow(row, columns, false);
     });
 
     const blob = new Blob([`\uFEFF${csvFile}`], {
@@ -94,4 +92,9 @@ function exportFile(gridResult: any, columns: any) {
     URL.revokeObjectURL(fileURL);
 }
 
-export = { printDocument: printDoc, exportCSV: exportFile };
+export const exportGrid = function(format: string, gridResult: any, columns: any, gridName: string) {
+    if (format === 'csv')
+        exportFile(gridResult, columns);
+    else
+        printDoc(gridResult, columns, gridName);
+}
