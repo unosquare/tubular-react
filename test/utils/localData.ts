@@ -1,4 +1,4 @@
-const localData = [
+export const expectedLocalData = [
   {
     OrderID: 1,
     CustomerName: 'Microsoft',
@@ -68,7 +68,11 @@ const localData = [
     ShippedDate: '2016-03-19T19:00:00',
     ShipperCity: 'Portland, OR, USA',
     Amount: 300.00
-  },
+  }
+];
+
+export const localData = [
+  ...expectedLocalData,
   {
     OrderID: 11,
     CustomerName: 'Microsoft',
@@ -154,5 +158,3 @@ const localData = [
     Amount: 150.00
   }
 ];
-
-export default localData;

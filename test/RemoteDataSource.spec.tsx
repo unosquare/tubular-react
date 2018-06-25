@@ -29,7 +29,8 @@ describe('<RemoteDataSource />', () => {
     });
 
     const component = shallow(componentJsx);
-    (component.instance() as any).retrieveData({}, () => {
+    (component.instance() as any).retrieveData()
+    .then(() => {
       expect(component.state().data).toEqual(simpleRecordsExpected.Payload);
       done();
     });
@@ -39,7 +40,8 @@ describe('<RemoteDataSource />', () => {
     mock.onPost('url').reply(400, { error: 'Bad Request' });
 
     const component = shallow(componentJsx);
-    (component.instance() as any).retrieveData({}, () => {
+    (component.instance() as any).retrieveData()
+    .then(() => {
       expect(component.state().data).toEqual([]);
       expect(component.state().error).toBeDefined();
       done();
@@ -47,10 +49,6 @@ describe('<RemoteDataSource />', () => {
   });
 
   test('Should contain state columns equals to props columns', () => {
-    mock.onPost('url').reply(200, {
-      ...simpleRecordsExpected
-    });
-
     const component = shallow(componentJsx);
     expect(component.state('columns')).toEqual(validColumnsSample);
   });

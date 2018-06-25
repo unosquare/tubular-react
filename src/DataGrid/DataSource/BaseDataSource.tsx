@@ -66,7 +66,7 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
         }, {});
     }
 
-    public retrieveData(options: any = {}, callback?: any) {
+    public retrieveData(options: any = {}): Promise<any> {
         this.setState({ isLoading: true });
         const columns = options.columns || this.state.columns;
         const itemsPerPage = options.itemsPerPage || this.state.itemsPerPage;
@@ -74,7 +74,7 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
         const searchText = typeof options.searchText === 'undefined' ? this.state.searchText : options.searchText;
 
         // TODO: handle error
-        this.getAllRecords(new GridRequest(columns, itemsPerPage, page, searchText))
+        return this.getAllRecords(new GridRequest(columns, itemsPerPage, page, searchText))
             .then((response: GridResponse) => {
                 this.setState({
                     aggregate: response.Aggregate,
@@ -86,9 +86,9 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
                     page: page,
                     searchText: searchText,
                     isLoading: false
-                }, () => { if (callback) callback() });
+                });
             })
-            .catch(err => this.setState({error: err}, () => { if (callback) callback() }));
+            .catch(err => this.setState({ error: err }));
     }
 
     public componentDidMount() {
@@ -98,7 +98,7 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
     public render() {
         return (
             <DataSourceContext.Provider value={{
-                dataSource : { ...this.state },
+                dataSource: { ...this.state },
                 actions: {
                     updateColumns: (columns: ColumnModel[]) =>
                         this.retrieveData({ columns }),
