@@ -21,6 +21,9 @@ import ToolbarOptions from './Models/ToolbarOptions';
 
 const styles = (theme: Theme) => createStyles(
   {
+    progress: {
+      height: theme.spacing.unit * 2
+    },
     root: {
       marginTop: theme.spacing.unit * 3,
       overflowX: 'auto',
@@ -188,7 +191,9 @@ class DataGrid extends React.Component<IProps, IState> {
               <GridToolbar
                 toolbarOptions={toolbarOptions}
               />
+              <div className={classes.progress}>
               {isLoading && <LinearProgress />}
+              </div>
               <Table>
                 <TableHead>
                   {toolbarOptions.topPager &&
