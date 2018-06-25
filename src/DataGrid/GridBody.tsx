@@ -36,7 +36,7 @@ const renderCell = (column: ColumnModel, row: any) => {
 };
 
 interface IProps {
-    bodyRenderer?(column: any, index: number): any;
+    bodyRenderer?(row: any, index: number): any;
 }
 
 const GridBody: React.SFC<IProps> = ({ bodyRenderer }) => {
@@ -55,16 +55,14 @@ const GridBody: React.SFC<IProps> = ({ bodyRenderer }) => {
                                             <TableCell
                                                 key={colIndex}
                                                 padding={column.Label === '' ? 'none' : 'default'}>
-                                                {
-                                                    renderCell(column, row)
-                                                }
+                                                {renderCell(column, row)}
                                             </TableCell>)
                                 }
                             </TableRow>
                     ))}
                     {filteredRecordCount === 0 &&
                         (<TableRow>
-                            <TableCell colSpan={6}>
+                            <TableCell colSpan={columns.filter((col: any) => col.Visible).length}>
                                 <Typography style={{ paddingLeft: '15px' }} variant='body2' gutterBottom={true}>
                                     <Warning /> No records found
                                 </Typography>
