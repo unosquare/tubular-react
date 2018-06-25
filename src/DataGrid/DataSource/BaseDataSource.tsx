@@ -15,6 +15,7 @@ interface IState {
     searchText: any;
     columns: ColumnModel[];
     isLoading: boolean;
+    error: any;
 }
 
 interface IProps {
@@ -37,7 +38,8 @@ const DataSourceContext = React.createContext<IContext>({
     page: null,
     searchText: null,
     totalRecordCount: null,
-    isLoading: false
+    isLoading: false,
+    error: null
 });
 
 export const DataSourceConsumer = DataSourceContext.Consumer;
@@ -52,7 +54,8 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
         page: 0,
         searchText: '',
         totalRecordCount: 0,
-        isLoading: false
+        isLoading: false,
+        error: null
     };
 
     constructor(props: IProps) {
@@ -92,7 +95,8 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
                     searchText: searchText,
                     isLoading: false
                 });
-            });
+            })
+            .catch(err => this.setState({error: err}));
     }
 
     public componentDidMount() {
