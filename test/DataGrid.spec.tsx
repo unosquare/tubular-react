@@ -10,6 +10,7 @@ import ColumnModel from '../src/DataGrid/Models/ColumnModel';
 import { simpleColumnsSample, validColumnsSample } from './utils/columns';
 import { data, expected, onlyMicrosoftExpected, page2Expected, simpleRecordsExpected } from './utils/data';
 import { microsoftSearchRequest, page2Request, simpleRequest } from './utils/requests';
+import DataGrid from '../src/DataGrid/DataGrid';
 
 beforeEach(() => {
   jest.resetModules();
@@ -36,40 +37,10 @@ const getRemoteDataSourceWithContext = (dataSource = {}) => {
 
   return require('../src/DataGrid/DataSource/RemoteDataSource').default;
 };
-const getGridWithContext = (context = {
-  actions: {},
-  state: {
-    aggregate: expected.aggregate,
-    columns: validColumnsSample,
-    data,
-    filteredRecordCount: expected.filteredRecordCount,
-    searchText: expected.searchText
-  }
-}) => {
-  jest.doMock('../src/DataGrid/GridContext', () => {
-    return {
-      GridContext: {
-        Consumer: (props) => props.children(context)
-      }
-    };
-  });
-
-  return require('../src/DataGrid/DataGrid').default;
-};
 
 const getGridElement = (dataSource:any = {}) => {
-  const RemoteDataSource = getRemoteDataSourceWithContext(dataSource);
-  const DataGrid = getGridWithContext();
-  return (
-    <RemoteDataSource
-      source='url'
-      columns={validColumnsSample}
-    >
-      <DataGrid
-        gridName='Tubular-React'
-      />
-    </RemoteDataSource>
-  );
+  const withRemoteDataSource = getRemoteDataSourceWithContext(dataSource);
+  return withRemoteDataSource(() => (<DataGrid gridName="Test" />), validColumnsSample, 'url');
 };
 
 describe('<DataGrid />', () => {

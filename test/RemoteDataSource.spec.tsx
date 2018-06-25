@@ -3,23 +3,18 @@ import MockAdapter from 'axios-mock-adapter';
 import { shallow } from 'enzyme';
 import * as React from 'react';
 
-import RemoteDataSource from '../src/DataGrid/DataSource/RemoteDataSource';
+import withRemoteDataSource from '../src/DataGrid/DataSource/RemoteDataSource';
 import { validColumnsSample } from './utils/columns';
 import { simpleRecordsExpected } from './utils/data';
 
 describe('<RemoteDataSource />', () => {
   const mock = new MockAdapter(axios);
-  const componentJsx = (
-    <RemoteDataSource
-      source='url'
-      columns={validColumnsSample}
-    />
-  );
+  const TestComponent = withRemoteDataSource(() => (<span></span>), validColumnsSample, 'url') ;
 
   afterEach(() => mock.reset());
 
   test('Should mount with valid props', () => {
-    const component = shallow(componentJsx);
+    const component = shallow(<TestComponent />);
     expect(component.props()).toBeDefined();
   });
 
@@ -28,7 +23,7 @@ describe('<RemoteDataSource />', () => {
       ...simpleRecordsExpected
     });
 
-    const component = shallow(componentJsx);
+    const component = shallow(<TestComponent />);
     (component.instance() as any).retrieveData()
     .then(() => {
       expect(component.state().data).toEqual(simpleRecordsExpected.Payload);
@@ -39,7 +34,7 @@ describe('<RemoteDataSource />', () => {
   test('Should have error with invalid url', (done) => {
     mock.onPost('url').reply(400, { error: 'Bad Request' });
 
-    const component = shallow(componentJsx);
+    const component = shallow(<TestComponent />);
     (component.instance() as any).retrieveData()
     .then(() => {
       expect(component.state().data).toEqual([]);
@@ -48,8 +43,8 @@ describe('<RemoteDataSource />', () => {
     });
   });
 
-  test('Should contain state columns equals to props columns', () => {
-    const component = shallow(componentJsx);
+  test('Should contain state columns equals to props columns', () => {    
+    const component = shallow(<TestComponent />);
     expect(component.state('columns')).toEqual(validColumnsSample);
   });
 });

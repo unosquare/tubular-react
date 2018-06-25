@@ -27,7 +27,7 @@
       "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testMatch": [
-      "<rootDir>/test/**/*.spec.(ts|tsx)"
+      "<rootDir>/test/**/DataGrid.spec.(ts|tsx)"
     ],
     "globals": {
       "ts-jest": {

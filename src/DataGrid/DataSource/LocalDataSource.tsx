@@ -21,8 +21,8 @@ const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, i
       }
     }
     
-    getWrappedComponent() {
-      return <WrappedComponent {...this.props} />;
+    getWrappedComponent() : any {
+      return WrappedComponent;
     }
 
   public getAllRecords(request: GridRequest): Promise<object> {
