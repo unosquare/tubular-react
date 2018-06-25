@@ -24,12 +24,12 @@ interface IProps {
     itemsPerPage?: number;
 }
 
-interface IContext {
+export interface IDataSourceContext {
     dataSource?: IState;
     actions?: any;
 }
 
-const DataSourceContext = React.createContext<IContext>({
+const DataSourceContext = React.createContext<IDataSourceContext>({
     actions: null,
     dataSource: null
 });
@@ -66,7 +66,7 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
         }, {});
     }
 
-    public retrieveData(options: any = {}) {
+    public retrieveData(options: any = {}, callback?: any) {
         this.setState({ isLoading: true });
         const columns = options.columns || this.state.columns;
         const itemsPerPage = options.itemsPerPage || this.state.itemsPerPage;
@@ -86,9 +86,9 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
                     page: page,
                     searchText: searchText,
                     isLoading: false
-                });
+                }, () => { if (callback) callback() });
             })
-            .catch(err => this.setState({error: err}));
+            .catch(err => this.setState({error: err}, () => { if (callback) callback() }));
     }
 
     public componentDidMount() {
