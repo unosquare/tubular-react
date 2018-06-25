@@ -110,10 +110,10 @@ class DataGrid extends React.Component<IProps, IState> {
 
                     if (columnIdx !== -1) {
                       (newColumns[columnIdx]).Filter = {
-                        Text: '',
-                        Operator: CompareOperators.NONE,
+                        Argument: [''],
                         HasFilter: false,
-                        Argument: ['']
+                        Operator: CompareOperators.NONE,
+                        Text: ''
                       };
                     }
 
@@ -129,16 +129,16 @@ class DataGrid extends React.Component<IProps, IState> {
                     if (activeColumn.DataType === ColumnDataType.NUMERIC) {
                       filterText = parseFloat(filterText);
                       filterArgument = parseFloat(filterArgument);
-                    } else if (activeColumn.DataType == ColumnDataType.BOOLEAN) {
+                    } else if (activeColumn.DataType === ColumnDataType.BOOLEAN) {
                       filterText = filterText === 'true';
                       filterArgument = '';
                     }
 
                     column.Filter = {
                       ...activeColumn.Filter,
+                      Argument: [filterArgument],
                       HasFilter: true,
-                      Text: filterText,
-                      Argument: [filterArgument]
+                      Text: filterText
                     };
 
                     this.setState({ activeColumn: null }, () => actions.updateColumns(newColumns));
@@ -178,7 +178,7 @@ class DataGrid extends React.Component<IProps, IState> {
                         .then(({ Payload }: any) =>
                         exportGrid(format, Payload, columns, this.props.gridName));
                     } else {
-                      exportGrid(format, data, columns, this.props.gridName)
+                      exportGrid(format, data, columns, this.props.gridName);
                     }
                   }
                 }
@@ -209,8 +209,7 @@ class DataGrid extends React.Component<IProps, IState> {
                 </TableFooter>
               </Table>
             </GridProvider>
-          </Paper>
-        }
+          </Paper>}
       </DataSourceConsumer>
     );
   }

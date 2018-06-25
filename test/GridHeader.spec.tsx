@@ -319,13 +319,13 @@ describe('<GridHeader />', () => {
 
       wrapper.setState({
         activeColumn: {
-          Name:'OrderID',
-          DataType:ColumnDataType.NUMERIC,
+          DataType: ColumnDataType.NUMERIC,
           Filter: {
+            Argument: [''],
             Operator: CompareOperators.EQUALS,
-            Text: '',
-            Argument: ['']
-          }
+            Text: ''
+          },
+          Name: 'OrderID'
         }
       });
 
