@@ -32,7 +32,6 @@ const styles = (theme: Theme) => createStyles(
   });
 
 interface IState {
-  errorMessage: string;
   activeColumn: any;
   multiSort: boolean;
 }
@@ -48,7 +47,6 @@ interface IProps extends WithStyles<typeof styles> {
 class DataGrid extends React.Component<IProps, IState> {
   public state = {
     activeColumn: null as any,
-    errorMessage: null as any,
     multiSort: false
   };
 
@@ -76,12 +74,12 @@ class DataGrid extends React.Component<IProps, IState> {
 
   public render() {
     const { classes, bodyRenderer, footerRenderer } = this.props;
-    const { errorMessage, activeColumn } = this.state;
+    const { activeColumn } = this.state;
     const toolbarOptions = this.props.toolbarOptions || new ToolbarOptions();
 
     return (
       <DataSourceConsumer>
-        {({ actions, columns, data, filteredRecordCount, aggregate, searchText, isLoading }) =>
+        {({ actions, columns, data, filteredRecordCount, aggregate, searchText, isLoading, error }) =>
           <Paper className={classes.root}>
             <GridProvider
               value={{
@@ -187,7 +185,7 @@ class DataGrid extends React.Component<IProps, IState> {
                 }
               }}
             >
-              {errorMessage && <GridSnackbar errorMessage={errorMessage} />}
+              {error && <GridSnackbar errorMessage={error} />}
               <GridToolbar
                 toolbarOptions={toolbarOptions}
               />
