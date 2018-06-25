@@ -18,13 +18,13 @@ const message = (totalRecordCount: any, filteredRecordCount: any) => ({ from, to
 const Paginator: React.SFC<IProps> = ({ rowsPerPageOptions }) => {
   return (
     <DataSourceConsumer>
-      {({ totalRecordCount, filteredRecordCount, itemsPerPage, page, actions }) =>
+      {({ dataSource, actions }) =>
         <TablePagination
-          labelDisplayedRows={message(totalRecordCount, filteredRecordCount)}
+          labelDisplayedRows={message(dataSource.totalRecordCount, dataSource.filteredRecordCount)}
           labelRowsPerPage={'Page size:'}
-          count={filteredRecordCount}
-          rowsPerPage={itemsPerPage}
-          page={page}
+          count={dataSource.filteredRecordCount}
+          rowsPerPage={dataSource.itemsPerPage}
+          page={dataSource.page}
           rowsPerPageOptions={rowsPerPageOptions}
           onChangePage={(e, p) => actions.updatePage(p)}
           onChangeRowsPerPage={(e: any) => actions.updateItemPerPage(Number(e.target.value), )}

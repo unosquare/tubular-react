@@ -47,7 +47,7 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
         searchText: '',
         totalRecordCount: 0,
         isLoading: false,
-        error: null
+        error: null as any
     };
 
     constructor(props: IProps) {
