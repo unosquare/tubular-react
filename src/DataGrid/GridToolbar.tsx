@@ -5,7 +5,8 @@ import { Close, FileDownload, Print, Search } from '@material-ui/icons';
 
 import * as React from 'react';
 
-import { GridConsumer } from './GridContext';
+import { exportGrid } from './GridToolbarFunctions';
+import { DataSourceConsumer } from './DataSource/BaseDataSource';
 
 const styles = (theme: Theme) => createStyles(
   {
@@ -26,6 +27,7 @@ interface IState {
 
 interface IProps extends WithStyles<typeof styles> {
   toolbarOptions: any;
+  gridName: string;
 }
 
 class GridToolbar extends React.Component<IProps, IState> {
@@ -60,20 +62,28 @@ class GridToolbar extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const { classes, toolbarOptions } = this.props;
+    const { classes, toolbarOptions, gridName } = this.props;
     const { anchorExport, anchorPrint } = this.state;
+    const partialExportCsv = (data: any, columns: any) => {
+      exportGrid('csv', data, columns, gridName);
+      this.handleMenuClose();
+    };
+    const partialPrint = (data: any, columns: any) => {
+      exportGrid('print', data, columns, gridName);
+      this.handlePrintMenuClose();
+    };
 
     return (
-      <GridConsumer>
-        {({ state, actions }) =>
+      <DataSourceConsumer>
+        {({ dataSource, actions }) =>
           <Toolbar>
             <div className={classes.spacer} />
             {toolbarOptions.exportButton &&
-              <IconButton disabled={state.filteredRecordCount === 0} onClick={this.handleMenuOpen}>
+              <IconButton disabled={dataSource.filteredRecordCount === 0} onClick={this.handleMenuOpen}>
                 <FileDownload />
               </IconButton>}
             {toolbarOptions.printButton &&
-              <IconButton disabled={state.filteredRecordCount === 0} onClick={this.handlePrintMenuOpen} >
+              <IconButton disabled={dataSource.filteredRecordCount === 0} onClick={this.handlePrintMenuOpen} >
                 <Print />
               </IconButton>}
             {toolbarOptions.searchText &&
@@ -81,17 +91,17 @@ class GridToolbar extends React.Component<IProps, IState> {
                 <Input
                   fullWidth={true}
                   type='text'
-                  value={state.searchText}
-                  onChange={(e: any) => actions.textSearchChange(e.target.value)}
+                  value={dataSource.searchText}
+                  onChange={(e: any) => actions.updateSearchText(e.target.value)}
                   startAdornment={
                     <InputAdornment position='end'>
                       <Search />
                     </InputAdornment>
                   }
                   endAdornment={
-                    state.searchText !== '' &&
+                    dataSource.searchText !== '' &&
                     <InputAdornment position='end'>
-                      <IconButton onClick={actions.clearSearchText}>
+                      <IconButton onClick={() => actions.updateSearchText('')}>
                         <Close />
                       </IconButton>
                     </InputAdornment>
@@ -101,18 +111,18 @@ class GridToolbar extends React.Component<IProps, IState> {
             }
             {toolbarOptions.exportButton &&
               <Menu anchorEl={anchorExport} open={Boolean(anchorExport)} onClose={this.handleMenuClose}>
-                <MenuItem onClick={() => { actions.export(false, 'csv'); this.handleMenuClose(); }}> Current rows</MenuItem>
-                <MenuItem onClick={() => { actions.export(true, 'csv'); this.handleMenuClose(); }}> All rows</MenuItem>
+                <MenuItem onClick={() => { actions.export(false, partialExportCsv);  }}> Current rows</MenuItem>
+                <MenuItem onClick={() => { actions.export(true, partialExportCsv); }}> All rows</MenuItem>
               </Menu>
             }
             {toolbarOptions.printButton &&
               <Menu anchorEl={anchorPrint} open={Boolean(anchorPrint)}  onClose={this.handlePrintMenuClose}>
-              <MenuItem onClick={() => { actions.export(false, 'print'); this.handlePrintMenuClose(); }}> Current rows</MenuItem>
-              <MenuItem onClick={() => { actions.export(true, 'print'); this.handlePrintMenuClose(); }}> All rows</MenuItem>
+              <MenuItem onClick={() => { actions.export(false, partialPrint); }}> Current rows</MenuItem>
+              <MenuItem onClick={() => { actions.export(true, partialPrint); }}> All rows</MenuItem>
               </Menu>
             }
           </Toolbar>}
-      </GridConsumer>
+      </DataSourceConsumer>
     );
   }
 }

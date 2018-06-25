@@ -32,7 +32,7 @@ const processRow = (row: any, columns: any[], ignoreType: boolean) => {
             result = `"${result}"`;
         }
 
-        return `${prev}${i > 0 && ','}${result}`;
+        return `${prev}${i > 0 ? ',' : ''}${result}`;
     }, '');
 
     return `${finalVal}\n`;
@@ -44,11 +44,11 @@ function printDoc(gridResult: any, columns: any, gridName: string) {
             .filter((c: any) => c.Visible)
             .reduce((prev: any, el: any) => `${prev}<th>${el.Label || el.Name}</th>`, '')
         }</tr></thead><tbody>${
-        gridResult.map((row: any) =>
-            `<tr>${objToArray(row).map((cell: any, index: number) =>
-                !columns[index].Visible ? '' : `<td>${cellValue(columns[index].DataType, cell)}</td>`
-            ).join(' ')}</tr>`)
-            .join(' ')}</tbody></table>`;
+        gridResult.reduce((prevRow: string, row: any) =>
+            `${prevRow}<tr>${objToArray(row).reduce((prev: string, cell: any, index: number) =>
+                !columns[index].Visible ? prev : `${prev}<td>${cellValue(columns[index].DataType, cell)}</td>`,
+                '')}</tr>`
+            , '')}</tbody></table>`;
 
     const documentToPrint = window.open('about:blank', 'Print', 'location=0,height=500,width=800');
     documentToPrint.document

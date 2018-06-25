@@ -114,6 +114,16 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
                         this.retrieveData({ page }),
                     updateItemPerPage: (itemsPerPage: number) =>
                         this.retrieveData({ itemsPerPage }),
+                    export: (allRows: boolean, exportFunc: any) => {
+                        if (this.state.filteredRecordCount === 0) { return; }
+
+                        if (allRows) {
+                            this.getAllRecords(new GridRequest(this.state.columns, -1, 0, this.state.searchText))
+                                .then(({ Payload }: any) => exportFunc(Payload, this.state.columns));
+                        } else {
+                            exportFunc(this.state.data, this.state.columns);
+                        }
+                    },
                     request: (gridRequest: GridRequest) =>
                         this.getAllRecords(gridRequest)
                 }

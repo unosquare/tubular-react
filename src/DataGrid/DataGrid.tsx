@@ -10,10 +10,8 @@ import { GridProvider } from './GridContext';
 import GridHeader from './GridHeader';
 import GridSnackbar from './GridSnackbar';
 import GridToolbar from './GridToolbar';
-import { exportGrid } from './GridToolbarFunctions';
 import { ColumnDataType, CompareOperators } from './Models/Column';
 import ColumnModel from './Models/ColumnModel';
-import GridRequest from './Models/GridRequest';
 import Paginator from './Paginator';
 
 import { DataSourceConsumer } from './DataSource/BaseDataSource';
@@ -72,7 +70,7 @@ class DataGrid extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const { classes, bodyRenderer, footerRenderer } = this.props;
+    const { classes, bodyRenderer, footerRenderer, gridName } = this.props;
     const { activeColumn } = this.state;
     const toolbarOptions = this.props.toolbarOptions || new ToolbarOptions();
 
@@ -165,19 +163,6 @@ class DataGrid extends React.Component<IProps, IState> {
                         }
                       }
                     }));
-                  },
-                  textSearchChange: actions.updateSearchText,
-                  clearSearchText: () => actions.updateSearchText(''),
-                  export: (allRows: boolean, format: string) => {
-                    if (dataSource.filteredRecordCount === 0) { return; }
-
-                    if (allRows) {
-                      actions.request(new GridRequest(dataSource.columns, -1, 0, dataSource.searchText))
-                        .then(({ Payload }: any) =>
-                          exportGrid(format, Payload, dataSource.columns, this.props.gridName));
-                    } else {
-                      exportGrid(format, dataSource.data, dataSource.columns, this.props.gridName);
-                    }
                   }
                 }
               }}
@@ -185,6 +170,7 @@ class DataGrid extends React.Component<IProps, IState> {
               {dataSource.error && <GridSnackbar errorMessage={dataSource.error} />}
               <GridToolbar
                 toolbarOptions={toolbarOptions}
+                gridName={gridName}
               />
               <div className={classes.progress}>
                 {dataSource.isLoading && <LinearProgress />}

@@ -114,32 +114,16 @@ describe('<DataGrid />', () => {
     expect(rowFooter).toHaveLength(1);
   });
 
-  test('Should refresh the DataStream with only records that match the search text', () => {
-    const RemoteDataSourceWithSearchText = getRemoteDataSourceWithContext({
-      actions: {},
-      aggregate: expected.aggregate,
-      columns: validColumnsSample,
-      data,
-      filteredRecordCount: expected.filteredRecordCount,
-      searchText: 'Microsoft'
-    });
-    const DataGridWithSearchText = getGridWithContext();
-    mock.onPost('url', { ...simpleRequest }).reply(200, {
-      ...simpleRecordsExpected
-    });
+  test('Should filter using search text', (done) => {
     mock.onPost('url', { ...microsoftSearchRequest }).reply(200, {
       ...onlyMicrosoftExpected
     });
-    const wrapper = mount(
-      <RemoteDataSourceWithSearchText
-        source='url'
-        columns={validColumnsSample}
-      >
-        <DataGridWithSearchText
-          gridName='Tubular-React'
-        />
-      </RemoteDataSourceWithSearchText>);
 
-    expect(wrapper.state().data).toEqual(onlyMicrosoftExpected.Payload);
+    const component = mount(grid);
+    (component.instance() as any).retrieveData()
+    .then(() => {
+      expect(component.state().data).toEqual(onlyMicrosoftExpected.Payload);
+      done();
+    });
   });
 });
