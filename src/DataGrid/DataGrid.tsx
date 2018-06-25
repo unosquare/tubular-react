@@ -39,7 +39,6 @@ interface IState {
 interface IProps extends WithStyles<typeof styles> {
   gridName: string;
   toolbarOptions?: ToolbarOptions;
-  onError?(error: any): any;
   bodyRenderer?(column: any, index: number): any;
   footerRenderer?(aggregate: any): any;
 }
@@ -79,15 +78,13 @@ class DataGrid extends React.Component<IProps, IState> {
 
     return (
       <DataSourceConsumer>
-        {({ actions, columns, data, filteredRecordCount, aggregate, searchText, isLoading, error }) =>
+        {({ actions, dataSource }) =>
           <Paper className={classes.root}>
             <GridProvider
               value={{
                 state: {
-                  activeColumn,
-                  columns,
-                  filteredRecordCount,
-                  searchText
+                  ...dataSource,
+                  activeColumn
                 },
                 actions: {
                   setFilterOperator: (value: string) => {
@@ -106,8 +103,8 @@ class DataGrid extends React.Component<IProps, IState> {
                       () => document.getElementById(column.Name).blur());
                   },
                   clearActiveColumn: () => {
-                    const newColumns = [...columns];
-                    const columnIdx = columns.findIndex((c: ColumnModel) => c.Name === activeColumn.Name);
+                    const newColumns = [...dataSource.columns];
+                    const columnIdx = dataSource.columns.findIndex((c: ColumnModel) => c.Name === activeColumn.Name);
 
                     if (columnIdx !== -1) {
                       (newColumns[columnIdx]).Filter = {
@@ -121,8 +118,8 @@ class DataGrid extends React.Component<IProps, IState> {
                     this.setState({ activeColumn: null }, () => actions.updateColumns(newColumns));
                   },
                   filterActiveColumn: () => {
-                    const newColumns = [...columns];
-                    const column = columns.find((c: ColumnModel) => c.Name === activeColumn.Name);
+                    const newColumns = [...dataSource.columns];
+                    const column = dataSource.columns.find((c: ColumnModel) => c.Name === activeColumn.Name);
                     if (!column) { return; }
 
                     let filterText = activeColumn.Filter.Text;
@@ -145,7 +142,7 @@ class DataGrid extends React.Component<IProps, IState> {
                     this.setState({ activeColumn: null }, () => actions.updateColumns(newColumns));
                   },
                   sortColumn: (property: string) => {
-                    actions.updateColumns(ColumnModel.SortColumnArray(property, [...columns], this.state.multiSort));
+                    actions.updateColumns(ColumnModel.SortColumnArray(property, [...dataSource.columns], this.state.multiSort));
                   },
                   handleTextFieldChange: (value: string) => {
                     this.setState((prevState) => ({
@@ -172,25 +169,25 @@ class DataGrid extends React.Component<IProps, IState> {
                   textSearchChange: actions.updateSearchText,
                   clearSearchText: () => actions.updateSearchText(''),
                   export: (allRows: boolean, format: string) => {
-                    if (filteredRecordCount === 0) { return; }
+                    if (dataSource.filteredRecordCount === 0) { return; }
 
                     if (allRows) {
-                      actions.request(new GridRequest(columns, -1, 0, searchText))
+                      actions.request(new GridRequest(dataSource.columns, -1, 0, dataSource.searchText))
                         .then(({ Payload }: any) =>
-                        exportGrid(format, Payload, columns, this.props.gridName));
+                          exportGrid(format, Payload, dataSource.columns, this.props.gridName));
                     } else {
-                      exportGrid(format, data, columns, this.props.gridName);
+                      exportGrid(format, dataSource.data, dataSource.columns, this.props.gridName);
                     }
                   }
                 }
               }}
             >
-              {error && <GridSnackbar errorMessage={error} />}
+              {dataSource.error && <GridSnackbar errorMessage={dataSource.error} />}
               <GridToolbar
                 toolbarOptions={toolbarOptions}
               />
               <div className={classes.progress}>
-              {isLoading && <LinearProgress />}
+                {dataSource.isLoading && <LinearProgress />}
               </div>
               <Table>
                 <TableHead>
@@ -203,7 +200,7 @@ class DataGrid extends React.Component<IProps, IState> {
                 </TableHead>
                 <GridBody bodyRenderer={bodyRenderer} />
                 <TableFooter>
-                  {footerRenderer && footerRenderer(aggregate)}
+                  {footerRenderer && footerRenderer(dataSource.aggregate)}
                   {toolbarOptions.bottomPager &&
                     <TableRow>
                       <Paginator rowsPerPageOptions={toolbarOptions.rowsPerPageOptions} />

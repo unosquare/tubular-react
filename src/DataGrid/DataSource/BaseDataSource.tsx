@@ -24,22 +24,14 @@ interface IProps {
     itemsPerPage?: number;
 }
 
-interface IContext extends IState {
+interface IContext {
+    dataSource?: IState;
     actions?: any;
 }
 
 const DataSourceContext = React.createContext<IContext>({
     actions: null,
-    aggregate: null,
-    columns: null,
-    data: null,
-    filteredRecordCount: null,
-    itemsPerPage: null,
-    page: null,
-    searchText: null,
-    totalRecordCount: null,
-    isLoading: false,
-    error: null
+    dataSource: null
 });
 
 export const DataSourceConsumer = DataSourceContext.Consumer;
@@ -106,7 +98,7 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
     public render() {
         return (
             <DataSourceContext.Provider value={{
-                ...this.state,
+                dataSource : { ...this.state },
                 actions: {
                     updateColumns: (columns: ColumnModel[]) =>
                         this.retrieveData({ columns }),
