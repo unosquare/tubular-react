@@ -1,3 +1,4 @@
+import * as React from 'react';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import {
@@ -8,21 +9,32 @@ import {
 import GridRequest from '../Models/GridRequest';
 import GridResponse from '../Models/GridResponse';
 import GridDataResponse from '../utils/GridDataResponse';
-import BaseDataSource from './BaseDataSource';
+import BaseDataSource, {IBaseDataSourceState } from './BaseDataSource';
 
-export default class LocalDataSource extends BaseDataSource {
+const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, itemsPerPage = 10) => {
+  return class extends BaseDataSource {
+    setInitialState(value: any): IBaseDataSourceState {
+      return {
+        ...value,
+        columns: columns,
+        itemsPerPage: itemsPerPage
+      }
+    }
+    
+    getWrappedComponent() {
+      return <WrappedComponent {...this.props} />;
+    }
+
   public getAllRecords(request: GridRequest): Promise<object> {
     return new Promise((resolve, reject) => {
       try {
-        let data = this.props.source;
-
         const response = new GridDataResponse({
           Counter: request.Count,
           CurrentPage: 1,
-          TotalRecordCount: data.length
+          TotalRecordCount: source.length
         });
 
-        data = this.applyFreeTextSearch(request, data);
+        let data = this.applyFreeTextSearch(request, source);
         data = this.applyFiltering(request, data);
         data = this.applySorting(request, data);
 
@@ -50,7 +62,7 @@ export default class LocalDataSource extends BaseDataSource {
     });
   }
 
-  private applyFreeTextSearch(request: any, subset: any[]) {
+  public applyFreeTextSearch(request: any, subset: any[]) {
     if (request.Search && request.Search.Operator.toLowerCase() === CompareOperators.AUTO.toLowerCase()) {
       const searchableColumns = request.Columns.filter((x: any) => x.Searchable);
 
@@ -66,7 +78,7 @@ export default class LocalDataSource extends BaseDataSource {
     return subset;
   }
 
-  private applyFiltering(request: any, subset: any[]) {
+  public applyFiltering(request: any, subset: any[]) {
     const filteredColumns = request.Columns.filter((column: any) =>
       column.Filter && (column.Filter.Text || column.Filter.Argument) &&
       column.Filter && column.Filter.Operator.toLowerCase() !== CompareOperators.NONE.toLowerCase());
@@ -173,7 +185,7 @@ export default class LocalDataSource extends BaseDataSource {
     return subset;
   }
 
-  private applySorting(request: any, subset: any[]) {
+  public applySorting(request: any, subset: any[]) {
     let sortedColumns = _.filter(request.Columns, (column) =>
       column.SortOrder > 0);
 
@@ -192,7 +204,7 @@ export default class LocalDataSource extends BaseDataSource {
     return _.orderBy(subset, columns, orders);
   }
 
-  private getAggregatePayload(request: any, subset: any[]) {
+  public getAggregatePayload(request: any, subset: any[]) {
     const aggregateColumns = _.filter(request.Columns, (column) =>
       column.Aggregate && column.Aggregate.toLowerCase() !== AggregateFunctions.NONE.toLowerCase());
 
@@ -216,9 +228,7 @@ export default class LocalDataSource extends BaseDataSource {
           value = subset.length;
           break;
         case AggregateFunctions.DISTINCT_COUNT.toLowerCase():
-          value = _.uniqWith(subset, (a, b) => {
-            return a[column.Name] === b[column.Name];
-          }).length;
+          value = _.uniqWith(subset, (a, b) => (a[column.Name] === b[column.Name])).length;
           break;
         default:
           throw new Error('Unsupported aggregate function');
@@ -230,3 +240,6 @@ export default class LocalDataSource extends BaseDataSource {
     return _.reduce(results, _.merge, {});
   }
 }
+}
+
+export default withLocalDataSource;

@@ -39,7 +39,7 @@ export default class ColumnModel {
     this.Filter = options && options.Filtering ? filterProps(name) : null;
   }
 
-  public static SortColumnArray(columnName: string, columns: ColumnModel[], multiSort: boolean) {
+  public static sortColumnArray(columnName: string, columns: ColumnModel[], multiSort: boolean) {
     const column = columns.find((c: ColumnModel) => c.Name === columnName);
     if (!column) { return; }
 

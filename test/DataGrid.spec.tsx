@@ -15,18 +15,21 @@ beforeEach(() => {
   jest.resetModules();
 });
 
-const getRemoteDataSourceWithContext = (context = {
-  actions: {},
-  aggregate: expected.aggregate,
-  columns: validColumnsSample,
-  data,
-  filteredRecordCount: expected.filteredRecordCount,
-  searchText: expected.searchText
-}) => {
+const getRemoteDataSourceWithContext = (dataSource = {}) => {
   jest.doMock('../src/DataGrid/DataSource/BaseDataSource', () => {
     return {
       DataSourceContext: {
-        Consumer: (props) => props.children(context)
+        Consumer: (props) => props.children({
+          actions: {},
+          dataSource: {
+            aggregate: expected.aggregate,
+            columns: validColumnsSample,
+            data,
+            filteredRecordCount: expected.filteredRecordCount,
+            searchText: expected.searchText,
+            ...dataSource
+          }
+        })
       }
     };
   });
@@ -54,11 +57,10 @@ const getGridWithContext = (context = {
   return require('../src/DataGrid/DataGrid').default;
 };
 
-describe('<DataGrid />', () => {
-  const RemoteDataSource = getRemoteDataSourceWithContext();
+const getGridElement = (dataSource:any = {}) => {
+  const RemoteDataSource = getRemoteDataSourceWithContext(dataSource);
   const DataGrid = getGridWithContext();
-  const mock = new MockAdapter(axios);
-  const grid = (
+  return (
     <RemoteDataSource
       source='url'
       columns={validColumnsSample}
@@ -66,7 +68,12 @@ describe('<DataGrid />', () => {
       <DataGrid
         gridName='Tubular-React'
       />
-    </RemoteDataSource>);
+    </RemoteDataSource>
+  );
+};
+
+describe('<DataGrid />', () => {
+  const mock = new MockAdapter(axios);
 
   beforeEach(() => {
     mock.onPost('url').reply(200, {
@@ -79,51 +86,49 @@ describe('<DataGrid />', () => {
   });
 
   test('should render a Paper', () => {
-    const wrapper = mount(grid).find(Paper);
+    const wrapper = mount(getGridElement()).find(Paper);
 
     expect(wrapper).toHaveLength(1);
   });
 
   test('should render a Table', () => {
-    const wrapper = mount(grid).find(Table);
+    const wrapper = mount(getGridElement()).find(Table);
+
     expect(wrapper).toHaveLength(1);
   });
 
   test('should have 1 rows at first', () => {
-    const wrapper = mount(grid).find(Table).find(TableBody);
+    const wrapper = mount(getGridElement()).find(Table).find(TableBody);
+
     expect(wrapper).toHaveLength(1);
   });
 
   test('should render all rows', () => {
-    const wrapper = mount(grid);
+    const wrapper = mount(getGridElement());
     wrapper.setState({ data });
+
     expect(wrapper.find(TableBody).find(TableRow)).toHaveLength(11);
   });
 
   test('should render the default body', () => {
-    const wrapper = mount(grid);
+    const wrapper = mount(getGridElement());
 
     const body = wrapper.find(Table).find(TableBody);
     expect(body).toHaveLength(1);
   });
 
   test('should only render not rows found row', () => {
-    const wrapper = mount(grid);
+    const wrapper = mount(getGridElement());
     const rowFooter = wrapper.find(Table).find(TableFooter).find(TableRow);
 
     expect(rowFooter).toHaveLength(1);
   });
 
-  test('Should filter using search text', (done) => {
+  test('Should filter using search text', () => {
     mock.onPost('url', { ...microsoftSearchRequest }).reply(200, {
       ...onlyMicrosoftExpected
     });
 
-    const component = mount(grid);
-    (component.instance() as any).retrieveData()
-    .then(() => {
-      expect(component.state().data).toEqual(onlyMicrosoftExpected.Payload);
-      done();
-    });
+    const component = mount(getGridElement({searchText: 'Microsoft'}));
   });
 });

@@ -8,9 +8,9 @@ import DataGrid, {
   ColumnDataType,
   ColumnModel,
   ColumnSortDirection,
-  RemoteDataSource,
   ToolbarOptions
 } from '../../src';
+import withRemoteDataSource from '../../src/DataGrid/DataSource/RemoteDataSource';
 
 const toolbarOptions = new ToolbarOptions();
 const columns = [
@@ -58,11 +58,6 @@ const columns = [
 
 const Main: React.SFC = () => {
     return (
-      <RemoteDataSource
-        source='http://tubular.azurewebsites.net/api/orders/paged'
-        columns={columns}
-        itemsPerPage={toolbarOptions.itemsPerPage}
-      >
         <DataGrid
           gridName='Tubular-React'
           bodyRenderer={
@@ -101,8 +96,7 @@ const Main: React.SFC = () => {
               </TableRow>
           }
         />
-      </RemoteDataSource>
     );
 }
 
-export default Main;
+export default withRemoteDataSource(Main, columns, 'http://tubular.azurewebsites.net/api/orders/paged');

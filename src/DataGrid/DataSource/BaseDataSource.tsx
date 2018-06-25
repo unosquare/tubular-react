@@ -5,7 +5,7 @@ import ColumnModel from '../Models/ColumnModel';
 import GridRequest from '../Models/GridRequest';
 import GridResponse from '../Models/GridResponse';
 
-interface IState {
+export interface IBaseDataSourceState {
     aggregate: any;
     data: any[];
     filteredRecordCount: any;
@@ -18,39 +18,33 @@ interface IState {
     error: any;
 }
 
-interface IProps {
-    source: any;
-    columns: ColumnModel[];
-    itemsPerPage?: number;
-}
-
 export interface IDataSourceContext {
-    dataSource?: IState;
+    dataSource?: IBaseDataSourceState;
+    activeColumn: null;
     actions?: any;
 }
 
 const DataSourceContext = React.createContext<IDataSourceContext>({
     actions: null,
+    activeColumn: null,
     dataSource: null
 });
 
 export const DataSourceConsumer = DataSourceContext.Consumer;
 
-export default abstract class BaseDataSource extends React.Component<IProps, IState> {
-    public state = {
+export default abstract class BaseDataSource extends React.Component<{}, IBaseDataSourceState> {
+    public state = this.setInitialState({
         aggregate: {},
-        columns: this.props.columns,
         data: [] as any,
         filteredRecordCount: 0,
-        itemsPerPage: this.props.itemsPerPage || 10,
         page: 0,
         searchText: '',
         totalRecordCount: 0,
         isLoading: false,
         error: null as any
-    };
+    });
 
-    constructor(props: IProps) {
+    constructor(props: any) {
         super(props);
 
         this.handleSearchText = debounce(this.handleSearchText, 500);
@@ -95,45 +89,56 @@ export default abstract class BaseDataSource extends React.Component<IProps, ISt
         this.retrieveData();
     }
 
+    public getActions() {
+        return {
+            updateColumns: (columns: ColumnModel[]) =>
+                this.retrieveData({ columns }),
+            updateSearchText: (searchText: string) => {
+                if (!searchText) {
+                    this.retrieveData({ searchText });
+                } else {
+                    this.setState({ searchText });
+                    this.handleSearchText(searchText);
+                }
+            },
+            updatePage: (page: number) =>
+                this.retrieveData({ page }),
+            updateItemPerPage: (itemsPerPage: number) =>
+                this.retrieveData({ itemsPerPage }),
+            export: (allRows: boolean, exportFunc: any) => {
+                if (this.state.filteredRecordCount === 0) { return; }
+
+                if (allRows) {
+                    this.getAllRecords(new GridRequest(this.state.columns, -1, 0, this.state.searchText))
+                        .then(({ Payload }: any) => exportFunc(Payload, this.state.columns));
+                } else {
+                    exportFunc(this.state.data, this.state.columns);
+                }
+            },
+            request: (gridRequest: GridRequest) =>
+                this.getAllRecords(gridRequest)
+        };
+    }
+
+    public handleSearchText(searchText: string) {
+        this.retrieveData({ searchText });
+    }
+
+    abstract setInitialState(value: any) : IBaseDataSourceState;
+
+    abstract getWrappedComponent() : any;
+
     public render() {
+        const WrappedComponet = this.getWrappedComponent();
+
         return (
             <DataSourceContext.Provider value={{
                 dataSource: { ...this.state },
-                actions: {
-                    updateColumns: (columns: ColumnModel[]) =>
-                        this.retrieveData({ columns }),
-                    updateSearchText: (searchText: string) => {
-                        if (!searchText) {
-                            this.retrieveData({ searchText });
-                        } else {
-                            this.setState({ searchText });
-                            this.handleSearchText(searchText);
-                        }
-                    },
-                    updatePage: (page: number) =>
-                        this.retrieveData({ page }),
-                    updateItemPerPage: (itemsPerPage: number) =>
-                        this.retrieveData({ itemsPerPage }),
-                    export: (allRows: boolean, exportFunc: any) => {
-                        if (this.state.filteredRecordCount === 0) { return; }
-
-                        if (allRows) {
-                            this.getAllRecords(new GridRequest(this.state.columns, -1, 0, this.state.searchText))
-                                .then(({ Payload }: any) => exportFunc(Payload, this.state.columns));
-                        } else {
-                            exportFunc(this.state.data, this.state.columns);
-                        }
-                    },
-                    request: (gridRequest: GridRequest) =>
-                        this.getAllRecords(gridRequest)
-                }
+                activeColumn: null,
+                actions: this.getActions()
             }}>
-                {this.props.children}
+                <WrappedComponet {...this.props} />
             </DataSourceContext.Provider>
         );
-    }
-
-    private handleSearchText(searchText: string) {
-        this.retrieveData({ searchText });
     }
 }

@@ -102,22 +102,21 @@ class DataGrid extends React.Component<IProps, IState> {
                   },
                   clearActiveColumn: () => {
                     const newColumns = [...dataSource.columns];
-                    const columnIdx = dataSource.columns.findIndex((c: ColumnModel) => c.Name === activeColumn.Name);
+                    const column = newColumns.find((c: ColumnModel) => c.Name === activeColumn.Name);
+                    if (!column) { return; }
 
-                    if (columnIdx !== -1) {
-                      (newColumns[columnIdx]).Filter = {
-                        Argument: [''],
-                        HasFilter: false,
-                        Operator: CompareOperators.NONE,
-                        Text: ''
-                      };
-                    }
+                    column.Filter = {
+                      Argument: [''],
+                      HasFilter: false,
+                      Operator: CompareOperators.NONE,
+                      Text: ''
+                    };
 
                     this.setState({ activeColumn: null }, () => actions.updateColumns(newColumns));
                   },
                   filterActiveColumn: () => {
                     const newColumns = [...dataSource.columns];
-                    const column = dataSource.columns.find((c: ColumnModel) => c.Name === activeColumn.Name);
+                    const column = newColumns.find((c: ColumnModel) => c.Name === activeColumn.Name);
                     if (!column) { return; }
 
                     let filterText = activeColumn.Filter.Text;
@@ -140,7 +139,7 @@ class DataGrid extends React.Component<IProps, IState> {
                     this.setState({ activeColumn: null }, () => actions.updateColumns(newColumns));
                   },
                   sortColumn: (property: string) => {
-                    actions.updateColumns(ColumnModel.SortColumnArray(property, [...dataSource.columns], this.state.multiSort));
+                    actions.updateColumns(ColumnModel.sortColumnArray(property, [...dataSource.columns], this.state.multiSort));
                   },
                   handleTextFieldChange: (value: string) => {
                     this.setState((prevState) => ({
