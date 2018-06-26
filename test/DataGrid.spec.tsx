@@ -57,46 +57,37 @@ describe('<DataGrid />', () => {
     mount.cleanUp();
   });
 
-  test.only('should render a Paper', () => {
+  test('should render a Paper', () => {
     const wrapper = mount(<DataGrid />).find(Paper);
-
     expect(wrapper).toHaveLength(1);
   });
 
   test('should render a Table', () => {
-    const wrapper = mount(getGridElement()).find(Table);
-
+    const wrapper = mount(<DataGrid />).find(Table);
     expect(wrapper).toHaveLength(1);
   });
 
-  test('should have 1 rows at first', () => {
-    const wrapper = mount(getGridElement()).find(Table).find(TableBody);
-
+  test('should render TableBody', () => {
+    const wrapper =  mount(<DataGrid />).find(TableBody);
     expect(wrapper).toHaveLength(1);
   });
 
-  test('should render all rows', () => {
-    const wrapper = mount(getGridElement());
-    wrapper.setState({ data });
-
-    expect(wrapper.find(TableBody).find(TableRow)).toHaveLength(11);
+  test('should render TableBody default ten rows', () => {
+    const wrapper =  mount(<DataGrid />).find(TableBody).find(TableRow);
+    expect(wrapper).toHaveLength(10);
   });
 
-  test('should render the default body', () => {
-    const wrapper = mount(getGridElement());
-
-    const body = wrapper.find(Table).find(TableBody);
-    expect(body).toHaveLength(1);
+  test('should render TableFooter', () => {
+    const wrapper =  mount(<DataGrid />).find(TableFooter);
+    expect(wrapper).toHaveLength(1);
   });
 
-  test('should only render not rows found row', () => {
-    const wrapper = mount(getGridElement());
-    const rowFooter = wrapper.find(Table).find(TableFooter).find(TableRow);
-
-    expect(rowFooter).toHaveLength(1);
+  test('should render TableFooter one row', () => {
+    const wrapper =  mount(<DataGrid />).find(TableFooter).find(TableRow);
+    expect(wrapper).toHaveLength(1);
   });
 
-  test('Should filter using search text', () => {
+  test.skip('Should filter using search text', () => {
     mock.onPost('url', { ...microsoftSearchRequest }).reply(200, {
       ...onlyMicrosoftExpected
     });

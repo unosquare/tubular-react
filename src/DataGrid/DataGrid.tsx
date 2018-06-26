@@ -15,7 +15,6 @@ import Paginator from './Paginator';
 
 import { DataSourceContext } from './DataSource/DataSourceContext';
 import ToolbarOptions from './Models/ToolbarOptions';
-console.log(DataSourceContext.Consumer);
 
 const styles = (theme: Theme) => createStyles(
   {
