@@ -5,7 +5,8 @@ import * as React from 'react';
 
 import withRemoteDataSource from '../src/DataGrid/DataSource/RemoteDataSource';
 import { validColumnsSample } from './utils/columns';
-import { simpleRecordsExpected } from './utils/data';
+import { simpleRecordsExpected, onlyMicrosoftExpected } from './utils/data';
+import { microsoftSearchRequest } from './utils/requests';
 
 describe('<RemoteDataSource />', () => {
   const mock = new MockAdapter(axios);
@@ -43,8 +44,16 @@ describe('<RemoteDataSource />', () => {
     });
   });
 
-  test('Should contain state columns equals to props columns', () => {    
+  test('Should contain state columns equals to props columns', () => {
     const component = shallow(<TestComponent />);
     expect(component.state('columns')).toEqual(validColumnsSample);
+  });
+
+  test.skip('Should filter using search text', () => {
+    mock.onPost('url', { ...microsoftSearchRequest }).reply(200, {
+      ...onlyMicrosoftExpected
+    });
+
+    const component = shallow(<TestComponent />);
   });
 });
