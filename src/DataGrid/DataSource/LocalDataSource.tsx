@@ -1,5 +1,7 @@
 import { isAfter, isBefore, isEqual } from 'date-fns';
 import { maxBy, meanBy, merge, minBy, orderBy, sortBy, sumBy, uniqWith } from 'lodash';
+import * as React from 'react'; // leave here
+
 import {
   AggregateFunctions,
   ColumnSortDirection,
