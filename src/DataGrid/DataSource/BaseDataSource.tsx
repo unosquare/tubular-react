@@ -6,7 +6,7 @@ import GridRequest from '../Models/GridRequest';
 import GridResponse from '../Models/GridResponse';
 
 import IBaseDataSourceState from "./IBaseDataSourceState";
-import { Provider } from "./DataSourceContext";
+import DataSourceContext from "./DataSourceContext";
 
 export default abstract class BaseDataSource extends React.Component<{}, IBaseDataSourceState> {
     public state = this.setInitialState({
@@ -108,13 +108,13 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
         const WrappedComponet = this.getWrappedComponent();
 
         return (
-            <Provider value={{
+            <DataSourceContext.Provider value={{
                 dataSource: { ...this.state },
                 activeColumn: null,
                 actions: this.getActions()
             }}>
                 <WrappedComponet error={this.state.error} />
-            </Provider>
+            </DataSourceContext.Provider>
         );
     }
 }

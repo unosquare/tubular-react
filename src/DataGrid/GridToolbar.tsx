@@ -6,7 +6,7 @@ import { Close, FileDownload, Print, Search } from '@material-ui/icons';
 import * as React from 'react';
 
 import { exportGrid } from './GridToolbarFunctions';
-import { Consumer } from './DataSource/DataSourceContext';
+import DataSourceContext from './DataSource/DataSourceContext';
 
 const styles = (theme: Theme) => createStyles(
   {
@@ -74,7 +74,7 @@ class GridToolbar extends React.Component<IProps, IState> {
     };
 
     return (
-      <Consumer>
+      <DataSourceContext.Consumer>
         {({ dataSource, actions }) =>
           <Toolbar>
             <div className={classes.spacer} />
@@ -122,7 +122,7 @@ class GridToolbar extends React.Component<IProps, IState> {
               </Menu>
             }
           </Toolbar>}
-      </Consumer>
+      </DataSourceContext.Consumer>
     );
   }
 }

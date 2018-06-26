@@ -1,6 +1,6 @@
 import { Table, TableBody, TableCell, TableFooter, TableRow } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
-import { mount } from 'enzyme';
+import { createMount } from '@material-ui/core/test-utils';
 
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
@@ -10,14 +10,9 @@ import ColumnModel from '../src/DataGrid/Models/ColumnModel';
 import { simpleColumnsSample, validColumnsSample } from './utils/columns';
 import { data, expected, onlyMicrosoftExpected, page2Expected, simpleRecordsExpected } from './utils/data';
 import { microsoftSearchRequest, page2Request, simpleRequest } from './utils/requests';
-import DataGrid from '../src/DataGrid/DataGrid';
 
-beforeEach(() => {
-  jest.resetModules();
-});
-
-const getRemoteDataSourceWithContext = (dataSource = {}) => {
-  jest.doMock('../src/DataGrid/DataSource/BaseDataSource', () => {
+const getDataGrid = (dataSource = {}) => {
+  jest.doMock('../src/DataGrid/DataSource/DataSourceContext', () => {
     return {
       DataSourceContext: {
         Consumer: (props) => props.children({
@@ -28,36 +23,42 @@ const getRemoteDataSourceWithContext = (dataSource = {}) => {
             data,
             filteredRecordCount: expected.filteredRecordCount,
             searchText: expected.searchText,
-            ...dataSource
+            isLoading: false,
           }
         })
       }
     };
   });
 
-  return require('../src/DataGrid/DataSource/RemoteDataSource').default;
+  return require('../src/DataGrid/DataGrid').default;
 };
 
-const getGridElement = (dataSource:any = {}) => {
-  const withRemoteDataSource = getRemoteDataSourceWithContext(dataSource);
-  return withRemoteDataSource(() => (<DataGrid gridName="Test" />), validColumnsSample, 'url');
-};
+const getGridElement = (dataSource: any = {}) => {
+  return getDataGrid(dataSource);
+}
 
 describe('<DataGrid />', () => {
+  let mount;
+  const DataGrid = getDataGrid();
   const mock = new MockAdapter(axios);
 
   beforeEach(() => {
+    jest.resetModules();
+
     mock.onPost('url').reply(200, {
       ...simpleRecordsExpected
     });
+
+    mount = createMount();
   });
 
   afterEach(() => {
     mock.reset();
+    mount.cleanUp();
   });
 
-  test('should render a Paper', () => {
-    const wrapper = mount(getGridElement()).find(Paper);
+  test.only('should render a Paper', () => {
+    const wrapper = mount(<DataGrid />).find(Paper);
 
     expect(wrapper).toHaveLength(1);
   });
@@ -100,6 +101,6 @@ describe('<DataGrid />', () => {
       ...onlyMicrosoftExpected
     });
 
-    const component = mount(getGridElement({searchText: 'Microsoft'}));
+    const component = mount(getGridElement({ searchText: 'Microsoft' }));
   });
 });

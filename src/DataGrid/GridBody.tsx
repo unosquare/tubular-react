@@ -6,7 +6,7 @@ import { CheckBox, CheckBoxOutlineBlank, Warning } from '@material-ui/icons';
 import * as moment from 'moment';
 import * as React from 'react';
 
-import { Consumer } from './DataSource/DataSourceContext';
+import DataSourceContext from './DataSource/DataSourceContext';
 import { ColumnDataType } from './Models/Column';
 import ColumnModel from './Models/ColumnModel';
 
@@ -41,7 +41,7 @@ interface IProps {
 
 const GridBody: React.SFC<IProps> = ({ bodyRenderer }) => {
     return (
-        <Consumer>
+        <DataSourceContext.Consumer>
             {({ dataSource }) =>
                 <TableBody>
                     {dataSource.data.map((row: any, rowIndex: number) => (
@@ -70,7 +70,7 @@ const GridBody: React.SFC<IProps> = ({ bodyRenderer }) => {
                         </TableRow>)}
                 </TableBody>
             }
-        </Consumer>);
+        </DataSourceContext.Consumer>);
 };
 
 export default GridBody;
