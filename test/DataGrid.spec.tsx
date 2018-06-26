@@ -86,12 +86,4 @@ describe('<DataGrid />', () => {
     const wrapper =  mount(<DataGrid />).find(TableFooter).find(TableRow);
     expect(wrapper).toHaveLength(1);
   });
-
-  test.skip('Should filter using search text', () => {
-    mock.onPost('url', { ...microsoftSearchRequest }).reply(200, {
-      ...onlyMicrosoftExpected
-    });
-
-    const component = mount(getGridElement({ searchText: 'Microsoft' }));
-  });
 });
