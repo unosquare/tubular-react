@@ -1,7 +1,6 @@
 import { Snackbar, TableCell, TableRow } from '@material-ui/core';
 import { CheckBox, CheckBoxOutlineBlank } from '@material-ui/icons';
-
-import * as moment from 'moment';
+import { format, parse } from 'date-fns';
 import * as React from 'react';
 import DataGrid, {
   AggregateFunctions,
@@ -91,12 +90,12 @@ class Main extends React.Component<any, any> {
                   {row.CustomerName}
                 </TableCell>
                 <TableCell padding='default'>
-                  {moment(row.ShippedDate).format('MMMM Do YYYY, h:mm:ss a')}
+                  {format(row.ShippedDate, 'MMMM Do YYYY, h:mm:ss a')}
                 </TableCell>
                 <TableCell padding='default'>
                   {row.ShipperCity}
                 </TableCell>
-                <TableCell padding='default' numeric>
+                <TableCell padding='default' numeric={true}>
                   {row.Amount || 0}
                 </TableCell>
                 <TableCell padding='default'>

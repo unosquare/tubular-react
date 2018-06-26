@@ -1,13 +1,13 @@
-import * as moment from 'moment';
+import { format } from 'date-fns';
 import { ColumnDataType } from './Models/Column';
 
 const cellValue = (cellDataType: string, cell: any) => {
     switch (cellDataType) {
         case ColumnDataType.DATE:
-            return moment(cell).format('MMMM Do YYYY') || '';
+            return format(cell, 'MMMM Do YYYY') || '';
         case ColumnDataType.DATE_TIME:
         case ColumnDataType.DATE_TIME_UTC:
-            return moment(cell).format('MMMM Do YYYY, h:mm:ss a') || '';
+            return format(cell, 'MMMM Do YYYY, h:mm:ss a') || '';
         case ColumnDataType.BOOLEAN:
             return (cell === true ? 'Yes' : 'No');
         default:
