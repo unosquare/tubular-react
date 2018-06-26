@@ -1,12 +1,12 @@
-import * as React from 'react';
 import { debounce } from 'lodash';
+import * as React from 'react';
 
 import ColumnModel from '../Models/ColumnModel';
 import GridRequest from '../Models/GridRequest';
 import GridResponse from '../Models/GridResponse';
 
-import IBaseDataSourceState from "./IBaseDataSourceState";
-import { Provider } from "./DataSourceContext";
+import { Provider } from './DataSourceContext';
+import IBaseDataSourceState from './IBaseDataSourceState';
 
 export default abstract class BaseDataSource extends React.Component<{}, IBaseDataSourceState> {
     public state = this.setInitialState({

@@ -1,5 +1,5 @@
 import { isAfter, isBefore, isEqual } from 'date-fns';
-import * as _ from 'lodash';
+import { maxBy, meanBy, merge, minBy, orderBy, sortBy, sumBy, uniqWith  } from 'lodash';
 import {
   AggregateFunctions,
   ColumnSortDirection,
@@ -48,7 +48,7 @@ const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, i
           }
         }
 
-        data = _.slice(data, request.Skip, request.Skip + request.Take);
+        data = data.slice(request.Skip, request.Skip + request.Take);
 
         resolve(new GridResponse({
           Aggregate: this.getAggregatePayload(request, data),
@@ -69,8 +69,8 @@ const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, i
       if (searchableColumns.length > 0) {
         const filter = request.Search.Text.toLowerCase();
 
-        return _.filter(subset, (item) =>
-          _.some(searchableColumns, (x) =>
+        return subset.filter((item) =>
+        searchableColumns.some((x: any) =>
             item[x.Name].toLowerCase().indexOf(filter) > -1));
       }
     }
@@ -190,49 +190,49 @@ const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, i
   }
 
   public applySorting(request: any, subset: any[]) {
-    let sortedColumns = _.filter(request.Columns, (column) =>
+    let sortedColumns = request.Columns.filter((column: any) =>
       column.SortOrder > 0);
 
     let columns: any[] = [];
     let orders: any[] = [];
 
     if (sortedColumns.length > 0) {
-      sortedColumns = _.sortBy(sortedColumns, ['SortOrder']);
-      columns = sortedColumns.map((y) => y.Name);
-      orders = sortedColumns.map((y) => y.SortDirection === ColumnSortDirection.ASCENDING ? 'asc' : 'desc');
+      sortedColumns = sortBy(sortedColumns, ['SortOrder']);
+      columns = sortedColumns.map((y: any) => y.Name);
+      orders = sortedColumns.map((y: any) => y.SortDirection === ColumnSortDirection.ASCENDING ? 'asc' : 'desc');
     } else {
       columns.push(request.Columns[0].Name);
       orders.push('asc');
     }
 
-    return _.orderBy(subset, columns, orders);
+    return orderBy(subset, columns, orders);
   }
 
   public getAggregatePayload(request: any, subset: any[]) {
-    const aggregateColumns = _.filter(request.Columns, (column) =>
+    const aggregateColumns = request.Columns.filter((column: any) =>
       column.Aggregate && column.Aggregate.toLowerCase() !== AggregateFunctions.NONE.toLowerCase());
 
-    const results = _.map(aggregateColumns, (column) => {
+    const results = aggregateColumns.map((column: any) => {
       let value;
 
       switch (column.Aggregate.toLowerCase()) {
         case AggregateFunctions.SUM.toLowerCase():
-          value = _.sumBy(subset, column.Name);
+          value = sumBy(subset, column.Name);
           break;
         case AggregateFunctions.AVERAGE.toLowerCase():
-          value = _.meanBy(subset, column.Name);
+          value = meanBy(subset, column.Name);
           break;
         case AggregateFunctions.MAX.toLowerCase():
-          value = _.maxBy(subset, column.Name)[column.Name];
+          value = maxBy(subset, column.Name)[column.Name];
           break;
         case AggregateFunctions.MIN.toLowerCase():
-          value = _.minBy(subset, column.Name)[column.Name];
+          value = minBy(subset, column.Name)[column.Name];
           break;
         case AggregateFunctions.COUNT.toLowerCase():
           value = subset.length;
           break;
         case AggregateFunctions.DISTINCT_COUNT.toLowerCase():
-          value = _.uniqWith(subset, (a, b) => (a[column.Name] === b[column.Name])).length;
+          value = uniqWith(subset, (a, b) => (a[column.Name] === b[column.Name])).length;
           break;
         default:
           throw new Error('Unsupported aggregate function');
@@ -241,7 +241,7 @@ const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, i
       return { [column.Name]: value };
     });
 
-    return _.reduce(results, _.merge, {});
+    return results.reduce(merge(results), {});
   }
 }
 }

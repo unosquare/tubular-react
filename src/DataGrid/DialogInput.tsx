@@ -58,7 +58,6 @@ const DialogInput: React.SFC<IProps> = ({ column, handleTextFieldChange, isPrima
       id={column.Name}
       disabled={disabled}
       value={value}
-      defaultValue={value}
       label={label}
       type={(ColumnDataTypeToHtmlType as any)[column.DataType]}
       onChange={(e:any) => handleTextFieldChange(e.target.value)}
