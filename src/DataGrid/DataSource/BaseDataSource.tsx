@@ -6,7 +6,7 @@ import GridRequest from '../Models/GridRequest';
 import GridResponse from '../Models/GridResponse';
 
 import IBaseDataSourceState from "./IBaseDataSourceState";
-import DataSourceContext from "./DataSourceContext";
+import { DataSourceContext } from "./DataSourceContext";
 
 export default abstract class BaseDataSource extends React.Component<{}, IBaseDataSourceState> {
     public state = this.setInitialState({

@@ -6,7 +6,7 @@ import { Close, FileDownload, Print, Search } from '@material-ui/icons';
 import * as React from 'react';
 
 import { exportGrid } from './GridToolbarFunctions';
-import DataSourceContext from './DataSource/DataSourceContext';
+import { DataSourceContext } from './DataSource/DataSourceContext';
 
 const styles = (theme: Theme) => createStyles(
   {

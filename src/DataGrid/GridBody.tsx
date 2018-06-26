@@ -6,7 +6,7 @@ import { CheckBox, CheckBoxOutlineBlank, Warning } from '@material-ui/icons';
 import { format } from 'date-fns';
 import * as React from 'react';
 
-import DataSourceContext from './DataSource/DataSourceContext';
+import { DataSourceContext } from './DataSource/DataSourceContext';
 import { ColumnDataType } from './Models/Column';
 import ColumnModel from './Models/ColumnModel';
 

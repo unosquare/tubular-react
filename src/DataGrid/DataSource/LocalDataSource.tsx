@@ -7,7 +7,6 @@ import {
 } from '../Models/Column';
 import GridRequest from '../Models/GridRequest';
 import GridResponse from '../Models/GridResponse';
-import GridDataResponse from '../utils/GridDataResponse';
 import BaseDataSource from './BaseDataSource';
 import IBaseDataSourceState from './IBaseDataSourceState';
 
@@ -28,11 +27,11 @@ const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, i
   public getAllRecords(request: GridRequest): Promise<object> {
     return new Promise((resolve, reject) => {
       try {
-        const response = new GridDataResponse({
+        const response: any = {
           Counter: request.Count,
           CurrentPage: 1,
           TotalRecordCount: source.length
-        });
+        };
 
         let data = this.applyFreeTextSearch(request, source);
         data = this.applyFiltering(request, data);
