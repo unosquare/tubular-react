@@ -6,8 +6,7 @@ interface IDataSourceContext {
     activeColumn: null;
     actions?: any;
 }
-
-export const { Consumer, Provider } = React.createContext<IDataSourceContext>({
+export const DataSourceContext = React.createContext<IDataSourceContext>({
     actions: null,
     activeColumn: null,
     dataSource: null

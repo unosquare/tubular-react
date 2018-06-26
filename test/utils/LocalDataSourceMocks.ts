@@ -1,5 +1,3 @@
-// Expected response
-
 const expectedLocaDataSourcelResponse = {
   Aggregate: { CustomerName: 22 },
   FilteredRecordCount: 22,
