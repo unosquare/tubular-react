@@ -8,7 +8,6 @@ import * as React from 'react';
 import GridBody from './GridBody';
 import { GridProvider } from './GridContext';
 import GridHeader from './GridHeader';
-import GridSnackbar from './GridSnackbar';
 import GridToolbar from './GridToolbar';
 import { ColumnDataType, CompareOperators } from './Models/Column';
 import ColumnModel from './Models/ColumnModel';
@@ -166,7 +165,6 @@ class DataGrid extends React.Component<IProps, IState> {
                 }
               }}
             >
-              {dataSource.error && <GridSnackbar errorMessage={dataSource.error} />}
               <GridToolbar
                 toolbarOptions={toolbarOptions}
                 gridName={gridName}

@@ -25,7 +25,7 @@ const withRemoteDataSource = (WrappedComponent: any, columns: any, url: string, 
       }
     }
 
-    getWrappedComponent() : any {
+    getWrappedComponent(): any {
       return WrappedComponent;
     }
 

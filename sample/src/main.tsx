@@ -1,4 +1,4 @@
-import { TableCell, TableRow } from '@material-ui/core';
+import { Snackbar, TableCell, TableRow } from '@material-ui/core';
 import { CheckBox, CheckBoxOutlineBlank } from '@material-ui/icons';
 
 import * as moment from 'moment';
@@ -56,47 +56,105 @@ const columns = [
   )
 ];
 
-const Main: React.SFC = () => {
+class ErrorBoundary extends React.Component<any, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = { error: null, errorInfo: null };
+  }
+
+  componentDidCatch(error: any, errorInfo: any) {
+    // Catch errors in any components below and re-render with error message
+    this.setState({
+      error: error,
+      errorInfo: errorInfo
+    })
+    // You can also log error messages to an error reporting service here
+  }
+
+  render() {
+    if (this.state.errorInfo) {
+      // Error path
+      return (
+        <div>
+          <h2>Something went wrong.</h2>
+          <details style={{ whiteSpace: 'pre-wrap' }}>
+            {this.state.error && this.state.error.toString()}
+            <br />
+            {this.state.errorInfo.componentStack}
+          </details>
+        </div>
+      );
+    }
+    // Normally, just render children
+    return this.props.children;
+  }
+}
+
+class Main extends React.Component<any, any> {
+  public state = {
+    errorMessage: null as any
+  };
+
+  public componentWillReceiveProps(nextProps: any) {
+    this.setState({ errorMessage: nextProps.error });
+  }
+
+  public render() {
+    const { errorMessage } = this.state;
     return (
-        <DataGrid
-          gridName='Tubular-React'
-          bodyRenderer={
-            (row: any, index: any) =>
-              <TableRow hover={true} key={index}>
-                <TableCell padding='default'>
-                  {row.OrderID}
-                </TableCell>
-                <TableCell padding='default'>
-                  {row.CustomerName}
-                </TableCell>
-                <TableCell padding='default'>
-                  {moment(row.ShippedDate).format('MMMM Do YYYY, h:mm:ss a')}
-                </TableCell>
-                <TableCell padding='default'>
-                  {row.ShipperCity}
-                </TableCell>
-                <TableCell padding='default' numeric>
-                  {row.Amount || 0}
-                </TableCell>
-                <TableCell padding='default'>
-                  {row.IsShipped ? <CheckBox />
-                    : <CheckBoxOutlineBlank />}
-                </TableCell>
-              </TableRow>
+      <ErrorBoundary>
+        <div className="root">
+          {errorMessage &&
+            <Snackbar
+              anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+              style={{ paddingTop: '10px' }}
+              open={true}
+              ContentProps={{ 'aria-describedby': 'message-id' }}
+              message={<span id='message-id'>{errorMessage}</span>}
+            />
           }
-          toolbarOptions={toolbarOptions}
-          footerRenderer={
-            (aggregates: any) =>
-              <TableRow>
-                <TableCell>Total: </TableCell>
-                <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
-                <TableCell />
-                <TableCell />
-                <TableCell />
-              </TableRow>
-          }
-        />
+          <DataGrid
+            gridName='Tubular-React'
+            bodyRenderer={
+              (row: any, index: any) =>
+                <TableRow hover={true} key={index}>
+                  <TableCell padding='default'>
+                    {row.OrderID}
+                  </TableCell>
+                  <TableCell padding='default'>
+                    {row.CustomerName}
+                  </TableCell>
+                  <TableCell padding='default'>
+                    {moment(row.ShippedDate).format('MMMM Do YYYY, h:mm:ss a')}
+                  </TableCell>
+                  <TableCell padding='default'>
+                    {row.ShipperCity}
+                  </TableCell>
+                  <TableCell padding='default' numeric>
+                    {row.Amount || 0}
+                  </TableCell>
+                  <TableCell padding='default'>
+                    {row.IsShipped ? <CheckBox />
+                      : <CheckBoxOutlineBlank />}
+                  </TableCell>
+                </TableRow>
+            }
+            toolbarOptions={toolbarOptions}
+            footerRenderer={
+              (aggregates: any) =>
+                <TableRow>
+                  <TableCell>Total: </TableCell>
+                  <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
+                  <TableCell />
+                  <TableCell />
+                  <TableCell />
+                </TableRow>
+            }
+          />
+        </div>
+      </ErrorBoundary>
     );
+  }
 }
 
 export default withRemoteDataSource(Main, columns, 'http://tubular.azurewebsites.net/api/orders/paged');
