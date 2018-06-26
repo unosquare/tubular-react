@@ -14,7 +14,7 @@ import { ColumnDataType, CompareOperators } from './Models/Column';
 import ColumnModel from './Models/ColumnModel';
 import Paginator from './Paginator';
 
-import { DataSourceConsumer } from './DataSource/BaseDataSource';
+import { Consumer } from './DataSource/DataSourceContext';
 import ToolbarOptions from './Models/ToolbarOptions';
 
 const styles = (theme: Theme) => createStyles(
@@ -75,7 +75,7 @@ class DataGrid extends React.Component<IProps, IState> {
     const toolbarOptions = this.props.toolbarOptions || new ToolbarOptions();
 
     return (
-      <DataSourceConsumer>
+      <Consumer>
         {({ actions, dataSource }) =>
           <Paper className={classes.root}>
             <GridProvider
@@ -195,7 +195,7 @@ class DataGrid extends React.Component<IProps, IState> {
               </Table>
             </GridProvider>
           </Paper>}
-      </DataSourceConsumer>
+      </Consumer>
     );
   }
 }

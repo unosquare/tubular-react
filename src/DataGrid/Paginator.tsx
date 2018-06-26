@@ -2,7 +2,7 @@ import { TablePagination } from '@material-ui/core';
 import TablePaginationActions from './TablePaginationActions';
 
 import * as React from 'react';
-import { DataSourceConsumer } from './DataSource/BaseDataSource';
+import { Consumer } from './DataSource/DataSourceContext';
 
 interface IProps {
   rowsPerPageOptions?: number[];
@@ -17,7 +17,7 @@ const message = (totalRecordCount: any, filteredRecordCount: any) => ({ from, to
 
 const Paginator: React.SFC<IProps> = ({ rowsPerPageOptions }) => {
   return (
-    <DataSourceConsumer>
+    <Consumer>
       {({ dataSource, actions }) =>
         <TablePagination
           labelDisplayedRows={message(dataSource.totalRecordCount, dataSource.filteredRecordCount)}
@@ -31,7 +31,7 @@ const Paginator: React.SFC<IProps> = ({ rowsPerPageOptions }) => {
           ActionsComponent={TablePaginationActions}
         />
       }
-    </DataSourceConsumer>
+    </Consumer>
   );
 };
 

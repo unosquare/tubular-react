@@ -5,32 +5,8 @@ import ColumnModel from '../Models/ColumnModel';
 import GridRequest from '../Models/GridRequest';
 import GridResponse from '../Models/GridResponse';
 
-export interface IBaseDataSourceState {
-    aggregate: any;
-    data: any[];
-    filteredRecordCount: any;
-    totalRecordCount: any;
-    itemsPerPage: number;
-    page: number;
-    searchText: any;
-    columns: ColumnModel[];
-    isLoading: boolean;
-    error: any;
-}
-
-export interface IDataSourceContext {
-    dataSource?: IBaseDataSourceState;
-    activeColumn: null;
-    actions?: any;
-}
-
-const DataSourceContext = React.createContext<IDataSourceContext>({
-    actions: null,
-    activeColumn: null,
-    dataSource: null
-});
-
-export const DataSourceConsumer = DataSourceContext.Consumer;
+import IBaseDataSourceState from "./IBaseDataSourceState";
+import { Provider } from "./DataSourceContext";
 
 export default abstract class BaseDataSource extends React.Component<{}, IBaseDataSourceState> {
     public state = this.setInitialState({
@@ -124,21 +100,21 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
         this.retrieveData({ searchText });
     }
 
-    abstract setInitialState(value: any) : IBaseDataSourceState;
+    abstract setInitialState(value: any): IBaseDataSourceState;
 
-    abstract getWrappedComponent() : any;
+    abstract getWrappedComponent(): any;
 
     public render() {
         const WrappedComponet = this.getWrappedComponent();
 
         return (
-            <DataSourceContext.Provider value={{
+            <Provider value={{
                 dataSource: { ...this.state },
                 activeColumn: null,
                 actions: this.getActions()
             }}>
                 <WrappedComponet {...this.props} />
-            </DataSourceContext.Provider>
+            </Provider>
         );
     }
 }

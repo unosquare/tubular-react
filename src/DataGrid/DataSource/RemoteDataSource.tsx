@@ -2,7 +2,18 @@ import * as React from 'react';
 import Axios from 'axios';
 import GridRequest from '../Models/GridRequest';
 import GridResponse from '../Models/GridResponse';
-import BaseDataSource, { IBaseDataSourceState } from './BaseDataSource';
+import BaseDataSource from './BaseDataSource';
+import IBaseDataSourceState from "./IBaseDataSourceState";
+
+const expectedStructure: any = {
+  AggregationPayload: null,
+  Counter: null,
+  CurrentPage: null,
+  FilteredRecordCount: null,
+  Payload: null,
+  TotalPages: null,
+  TotalRecordCount: null
+};
 
 const withRemoteDataSource = (WrappedComponent: any, columns: any, url: string, itemsPerPage = 10) => {
   return class extends BaseDataSource {
@@ -36,16 +47,6 @@ const withRemoteDataSource = (WrappedComponent: any, columns: any, url: string, 
 
     public isValidResponse(data: any) {
       if (!data) { return; }
-
-      const expectedStructure: any = {
-        AggregationPayload: null,
-        Counter: null,
-        CurrentPage: null,
-        FilteredRecordCount: null,
-        Payload: null,
-        TotalPages: null,
-        TotalRecordCount: null
-      };
 
       const expectedStructureKeys = Object.keys(expectedStructure).sort();
       const responseKeys = Object.keys(data).sort();

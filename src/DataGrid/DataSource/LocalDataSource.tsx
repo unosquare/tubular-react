@@ -9,7 +9,8 @@ import {
 import GridRequest from '../Models/GridRequest';
 import GridResponse from '../Models/GridResponse';
 import GridDataResponse from '../utils/GridDataResponse';
-import BaseDataSource, {IBaseDataSourceState } from './BaseDataSource';
+import BaseDataSource from './BaseDataSource';
+import IBaseDataSourceState from "./IBaseDataSourceState";
 
 const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, itemsPerPage = 10) => {
   return class extends BaseDataSource {
