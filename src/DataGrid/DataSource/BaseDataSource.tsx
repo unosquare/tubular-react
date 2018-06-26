@@ -43,7 +43,6 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
         const page = typeof options.page === 'undefined' ? this.state.page : options.page;
         const searchText = typeof options.searchText === 'undefined' ? this.state.searchText : options.searchText;
 
-        // TODO: handle error
         return this.getAllRecords(new GridRequest(columns, itemsPerPage, page, searchText))
             .then((response: GridResponse) => {
                 this.setState({
@@ -55,10 +54,11 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
                     itemsPerPage: itemsPerPage,
                     page: page,
                     searchText: searchText,
-                    isLoading: false
+                    isLoading: false,
+                    error: null
                 });
-            })
-            .catch(err => this.setState({ error: err }));
+            }, (reject: any) => this.setState({ isLoading: false, error: reject.message || reject }))
+            .catch((err: any) => this.setState({ isLoading: false, error: err }));
     }
 
     public componentDidMount() {
@@ -113,7 +113,7 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
                 activeColumn: null,
                 actions: this.getActions()
             }}>
-                <WrappedComponet {...this.props} />
+                <WrappedComponet error={this.state.error} />
             </Provider>
         );
     }

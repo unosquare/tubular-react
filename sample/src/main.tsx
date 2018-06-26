@@ -1,4 +1,4 @@
-import { TableCell, TableRow } from '@material-ui/core';
+import { Snackbar, TableCell, TableRow } from '@material-ui/core';
 import { CheckBox, CheckBoxOutlineBlank } from '@material-ui/icons';
 import { format, parse } from 'date-fns';
 import * as React from 'react';
@@ -55,8 +55,29 @@ const columns = [
   )
 ];
 
-const Main: React.SFC = () => {
+class Main extends React.Component<any, any> {
+  public state = {
+    errorMessage: null as any
+  };
+
+  public componentWillReceiveProps(nextProps: any) {
+    this.setState({ errorMessage: nextProps.error });
+  }
+
+  public render() {
+    const { errorMessage } = this.state;
+
     return (
+      <div className="root">
+        {errorMessage &&
+          <Snackbar
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            style={{ paddingTop: '10px' }}
+            open={true}
+            ContentProps={{ 'aria-describedby': 'message-id' }}
+            message={<span id='message-id'>{errorMessage}</span>}
+          />
+        }
         <DataGrid
           gridName='Tubular-React'
           bodyRenderer={
@@ -95,7 +116,9 @@ const Main: React.SFC = () => {
               </TableRow>
           }
         />
+      </div>
     );
-};
+  }
+}
 
 export default withRemoteDataSource(Main, columns, 'http://tubular.azurewebsites.net/api/orders/paged');
