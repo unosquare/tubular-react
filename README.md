@@ -45,7 +45,8 @@ import DataGrid, {
   ColumnDataType,
   ColumnModel,
   ColumnSortDirection,
-  RemoteDataSource
+  RemoteDataSource,
+  ToolbarOptions
 } from 'tubular-react';
 import React from 'react';
 
@@ -69,15 +70,17 @@ const columns = [
 ];
 
 class CustomComponent extends React.Component {
-  state={
-    dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns)
-  }
 
   render() {
-    const { dataSource } = this.state; 
-
     return (
-      <DataGrid dataSource={dataSource} rowsPerPage = { 10 } gridName = 'table' />
+       <RemoteDataSource
+        source='http://tubular.azurewebsites.net/api/orders/paged'
+        columns={columns}
+      >
+        <DataGrid
+          gridName='Tubular-React'
+        />
+      </RemoteDataSource>
     );
   }
 }
@@ -89,9 +92,9 @@ The following snippet shows how to use a custom body and a custom footer:
 ```js
 <DataGrid dataSource={ dataSource } 
         gridName = 'table'
-        bodyRenderer = {
-          (row, index) => 
-            <TableRow hover key = { index }>
+        bodyRenderer={
+          (row: any, index: any) =>
+            <TableRow hover={true} key={index}>
               <TableCell padding = { 'default' }>
                 { row.OrderID }
               </TableCell>
@@ -99,10 +102,9 @@ The following snippet shows how to use a custom body and a custom footer:
                 { row.CustomerName }
               </TableCell>
             </TableRow>
-        } 
-        rowsPerPage = { 10 } 
+        }
         footerRenderer = {
-          aggregates => 
+          (aggregates: any) =>
             <TableRow>
               <TableCell>Total: </TableCell>
               <TableCell> { aggregates && aggregates.CustomerName } </TableCell>

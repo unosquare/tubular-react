@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import { format } from 'date-fns';
 import * as React from 'react';
 
 import { MenuItem, TextField } from '@material-ui/core';
@@ -34,10 +34,10 @@ const ColumnDataTypeToHtmlType = {
 const getValue = (dataType: ColumnDataType, operator: CompareOperators, value: string) => {
   switch (dataType) {
     case ColumnDataType.DATE:
-      return value ? moment(value).format('YYYY-MM-DD') : moment().format('YYYY-MM-DD');
+      return value ? format(value, 'YYYY-MM-DD') : format(new Date(), 'YYYY-MM-DD');
     case ColumnDataType.DATE_TIME:
     case ColumnDataType.DATE_TIME_UTC:
-      return value ? moment(value).format('YYYY-MM-DD[T]HH:mm') : moment().format('YYYY-MM-DD[T]HH:mm');
+      return value ? format(value, 'YYYY-MM-DD[T]HH:mm') : format(new Date(), 'YYYY-MM-DD[T]HH:mm');
     case ColumnDataType.BOOLEAN:
       return operator === CompareOperators.NONE ? ''
       : (typeof (value) === 'boolean' ? (value === true ? 'true' : 'false') : value);

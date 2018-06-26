@@ -1,6 +1,5 @@
-import * as React from 'react';
+import { isAfter, isBefore, isEqual } from 'date-fns';
 import * as _ from 'lodash';
-import * as moment from 'moment';
 import {
   AggregateFunctions,
   ColumnSortDirection,
@@ -10,7 +9,7 @@ import GridRequest from '../Models/GridRequest';
 import GridResponse from '../Models/GridResponse';
 import GridDataResponse from '../utils/GridDataResponse';
 import BaseDataSource from './BaseDataSource';
-import IBaseDataSourceState from "./IBaseDataSourceState";
+import IBaseDataSourceState from './IBaseDataSourceState';
 
 const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, itemsPerPage = 10) => {
   return class extends BaseDataSource {
@@ -94,7 +93,7 @@ const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, i
         case CompareOperators.EQUALS:
           if (isDate) {
             subset = subset.filter((row) =>
-              moment(row[filterableColumn.Name]).isSame(moment(filterableColumn.Filter.Text)));
+            isEqual(row[filterableColumn.Name], filterableColumn.Filter.Text));
           } else if (filterableColumn.DataType === 'string') {
             subset = subset.filter((row) =>
               row[filterableColumn.Name].toLowerCase() === filterableColumn.Filter.Text.toLowerCase());
@@ -139,7 +138,7 @@ const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, i
         case CompareOperators.GT:
           if (isDate) {
             subset = subset.filter((row) =>
-              moment(row[filterableColumn.Name]).isAfter(moment(filterableColumn.Filter.Text)));
+            isAfter(row[filterableColumn.Name], filterableColumn.Filter.Text));
           } else {
             subset = subset.filter((row) => row[filterableColumn.Name] > filterableColumn.Filter.Text);
           }
@@ -147,7 +146,8 @@ const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, i
         case CompareOperators.GTE:
           if (isDate) {
             subset = subset.filter((row) =>
-              moment(row[filterableColumn.Name]).isSameOrAfter(moment(filterableColumn.Filter.Text)));
+              isEqual(row[filterableColumn.Name], filterableColumn.Filter.Text)
+              || isAfter(row[filterableColumn.Name], filterableColumn.Filter.Text));
           } else {
             subset = subset.filter((row) => row[filterableColumn.Name] >= filterableColumn.Filter.Text);
           }
@@ -155,7 +155,7 @@ const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, i
         case CompareOperators.LT:
           if (isDate) {
             subset = subset.filter((row) =>
-              moment(row[filterableColumn.Name]).isBefore(moment(filterableColumn.Filter.Text)));
+            isBefore(row[filterableColumn.Name], filterableColumn.Filter.Text));
           } else {
             subset = subset.filter((row) => row[filterableColumn.Name] < filterableColumn.Filter.Text);
           }
@@ -163,7 +163,8 @@ const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, i
         case CompareOperators.LTE:
           if (isDate) {
             subset = subset.filter((row) =>
-              moment(row[filterableColumn.Name]).isSameOrBefore(moment(filterableColumn.Filter.Text)));
+            isEqual(row[filterableColumn.Name], filterableColumn.Filter.Text)
+            || isBefore(row[filterableColumn.Name], filterableColumn.Filter.Text));
           } else {
             subset = subset.filter((row) => row[filterableColumn.Name] <= filterableColumn.Filter.Text);
           }
@@ -171,8 +172,10 @@ const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, i
         case CompareOperators.BETWEEN:
           if (isDate) {
             subset = subset.filter((row) =>
-              moment(row[filterableColumn.Name]).isSameOrAfter(moment(filterableColumn.Filter.Text)) &&
-              moment(row[filterableColumn.Name]).isSameOrBefore(moment(filterableColumn.Filter.Argument[0])));
+              (isEqual(row[filterableColumn.Name], filterableColumn.Filter.Text)
+              || isAfter(row[filterableColumn.Name], filterableColumn.Filter.Text)) &&
+              (isEqual(row[filterableColumn.Name], filterableColumn.Filter.Argument[0])
+              || isBefore(row[filterableColumn.Name], filterableColumn.Filter.Argument[0])));
           } else {
             subset = subset.filter((row) => row[filterableColumn.Name] >= filterableColumn.Filter.Text &&
               row[filterableColumn.Name] <= filterableColumn.Filter.Argument[0]);

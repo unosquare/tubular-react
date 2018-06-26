@@ -3,7 +3,7 @@ import {
     Typography
 } from '@material-ui/core';
 import { CheckBox, CheckBoxOutlineBlank, Warning } from '@material-ui/icons';
-import * as moment from 'moment';
+import { format } from 'date-fns';
 import * as React from 'react';
 
 import { Consumer } from './DataSource/DataSourceContext';
@@ -18,11 +18,11 @@ const renderCell = (column: ColumnModel, row: any) => {
             rows = row[column.Name] || 0;
             break;
         case ColumnDataType.DATE:
-            rows = moment(row[column.Name]).format('MMMM Do YYYY') || '';
+            rows = format(row[column.Name], 'MMMM Do YYYY') || '';
             break;
         case ColumnDataType.DATE_TIME:
         case ColumnDataType.DATE_TIME_UTC:
-            rows = moment(row[column.Name]).format('MMMM Do YYYY, h:mm:ss a') || '';
+            rows = format(row[column.Name], 'MMMM Do YYYY, h:mm:ss a') || '';
             break;
         case ColumnDataType.BOOLEAN:
             rows = row[column.Name] === true ? <CheckBox /> : <CheckBoxOutlineBlank />;
