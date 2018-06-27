@@ -9,7 +9,6 @@ import GridBody from './GridBody';
 import { GridProvider } from './GridContext';
 import GridHeader from './GridHeader';
 import GridToolbar from './GridToolbar';
-import { ColumnDataType, CompareOperators } from './Models/Column';
 import ColumnModel from './Models/ColumnModel';
 import Paginator from './Paginator';
 
@@ -69,9 +68,10 @@ class DataGrid extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const { classes, bodyRenderer, footerRenderer, gridName } = this.props;
+    const { classes, bodyRenderer, footerRenderer } = this.props;
     const { activeColumn } = this.state;
     const toolbarOptions = this.props.toolbarOptions || new ToolbarOptions();
+    const gridName = this.props.gridName || 'Grid';
 
     return (
       <DataSourceContext.Consumer>
