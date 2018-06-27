@@ -75,6 +75,7 @@ const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsP
             <IconButton
               key={value}
               onClick={(e) => onChangePage(e, value)}
+              disabled={value >= Math.ceil(count / rowsPerPage)}
               aria-label={`Page ${value + 1}`}
               color={ value === page ?
                  'primary' :
