@@ -238,7 +238,7 @@ const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, i
         return { [column.Name]: value };
       });
 
-      return results.reduce(merge(results), {});
+      return results.reduce(() => merge(results), {});
     }
   }
 }
