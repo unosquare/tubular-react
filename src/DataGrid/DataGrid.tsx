@@ -79,22 +79,7 @@ class DataGrid extends React.Component<IProps, IState> {
           <Paper className={classes.root}>
             <GridProvider
               value={{
-                state: {
-                  ...dataSource,
-                  activeColumn
-                },
                 actions: {
-                  setFilterOperator: (value: string) => {
-                    this.setState((prevState) => ({
-                      activeColumn: {
-                        ...prevState.activeColumn,
-                        Filter: {
-                          ...prevState.activeColumn.Filter,
-                          Operator: value
-                        }
-                      }
-                    }));
-                  },
                   setActiveColumn: (column: any) => {
                     this.setState({ activeColumn: column },
                       () => document.getElementById(column.Name).blur());
@@ -140,28 +125,21 @@ class DataGrid extends React.Component<IProps, IState> {
                   sortColumn: (property: string) => {
                     actions.updateColumns(ColumnModel.sortColumnArray(property, [...dataSource.columns], this.state.multiSort));
                   },
-                  handleTextFieldChange: (value: string) => {
+                  handleFilterChange: (value: any) => {
                     this.setState((prevState) => ({
                       activeColumn: {
                         ...prevState.activeColumn,
                         Filter: {
                           ...prevState.activeColumn.Filter,
-                          Text: value
-                        }
-                      }
-                    }));
-                  },
-                  handleSecondTextFieldChange: (value: string) => {
-                    this.setState((prevState) => ({
-                      activeColumn: {
-                        ...prevState.activeColumn,
-                        Filter: {
-                          ...prevState.activeColumn.Filter,
-                          Argument: [value]
+                          ...value
                         }
                       }
                     }));
                   }
+                },
+                state: {
+                  ...dataSource,
+                  activeColumn
                 }
               }}
             >

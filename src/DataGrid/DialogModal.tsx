@@ -19,14 +19,14 @@ const DialogModal: React.SFC = () => {
                         <DialogInput
                             column={state.activeColumn}
                             isPrimary={true}
-                            handleTextFieldChange={actions.handleTextFieldChange}
+                            handleTextFieldChange={(e) => actions.handleFilterChange({ Text: e })}
                         />
 
                         {state.activeColumn.Filter.Operator === CompareOperators.BETWEEN &&
                             <DialogInput
                                 column={state.activeColumn}
                                 isPrimary={false}
-                                handleTextFieldChange={actions.handleSecondTextFieldChange}
+                                handleTextFieldChange={(e) => actions.handleFilterChange({ Argument: [e] })}
                             />}
 
                         <DialogActions>
@@ -41,7 +41,7 @@ const DialogModal: React.SFC = () => {
                             </Button>
                         </DialogActions>
                     </DialogContent>
-            </Dialog>}
+                </Dialog>}
         </GridConsumer>
     );
 };
