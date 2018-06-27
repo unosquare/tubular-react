@@ -1,5 +1,5 @@
 import { isAfter, isBefore, isEqual } from 'date-fns';
-import { maxBy, meanBy, merge, minBy, orderBy, sortBy, sumBy, uniqWith } from 'lodash';
+import { maxBy, meanBy, minBy, orderBy, sortBy, sumBy, uniqWith } from 'lodash';
 import * as React from 'react'; // leave here
 
 import {
@@ -49,10 +49,11 @@ const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, i
             }
           }
 
+          const aggregate = this.getAggregatePayload(request, data);
           data = data.slice(request.Skip, request.Skip + request.Take);
 
           resolve(new GridResponse({
-            Aggregate: this.getAggregatePayload(request, data),
+            Aggregate: aggregate,
             FilteredRecordCount: response.FilteredRecordCount,
             Payload: data.map((row: any) => this.parsePayload(row, request.Columns)),
             TotalRecordCount: response.TotalRecordCount
@@ -209,7 +210,7 @@ const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, i
       const aggregateColumns = request.Columns.filter((column: any) =>
         column.Aggregate && column.Aggregate.toLowerCase() !== AggregateFunctions.NONE.toLowerCase());
 
-      const results = aggregateColumns.map((column: any) => {
+      return aggregateColumns.reduce((prev: any, column: any) => {
         let value;
 
         switch (column.Aggregate.toLowerCase()) {
@@ -235,10 +236,9 @@ const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, i
             throw new Error('Unsupported aggregate function');
         }
 
-        return { [column.Name]: value };
-      });
-
-      return results.reduce(() => merge(results), {});
+        prev[column.Name] = value;
+        return prev;
+      }, {});
     }
   }
 }

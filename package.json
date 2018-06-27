@@ -70,7 +70,6 @@
     "date-fns": "^1.29.0",
     "lodash.maxby": "^4.6.0",
     "lodash.meanby": "^4.10.0",
-    "lodash.merge": "^4.6.1",
     "lodash.minby": "^4.6.0",
     "lodash.orderby": "^4.6.0",
     "lodash.sortby": "^4.7.0",
