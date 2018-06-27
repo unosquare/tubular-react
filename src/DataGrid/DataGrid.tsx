@@ -84,40 +84,14 @@ class DataGrid extends React.Component<IProps, IState> {
                     this.setState({ activeColumn: column },
                       () => document.getElementById(column.Name).blur());
                   },
-                  clearActiveColumn: () => {
+                  setFilter: (value: any) => {
                     const newColumns = [...dataSource.columns];
                     const column = newColumns.find((c: ColumnModel) => c.Name === activeColumn.Name);
                     if (!column) { return; }
-
-                    column.Filter = {
-                      Argument: [''],
-                      HasFilter: false,
-                      Operator: CompareOperators.NONE,
-                      Text: ''
-                    };
-
-                    this.setState({ activeColumn: null }, () => actions.updateColumns(newColumns));
-                  },
-                  filterActiveColumn: () => {
-                    const newColumns = [...dataSource.columns];
-                    const column = newColumns.find((c: ColumnModel) => c.Name === activeColumn.Name);
-                    if (!column) { return; }
-
-                    let filterText = activeColumn.Filter.Text;
-                    let filterArgument = activeColumn.Filter.Argument[0];
-                    if (activeColumn.DataType === ColumnDataType.NUMERIC) {
-                      filterText = parseFloat(filterText);
-                      filterArgument = parseFloat(filterArgument);
-                    } else if (activeColumn.DataType === ColumnDataType.BOOLEAN) {
-                      filterText = filterText === 'true';
-                      filterArgument = '';
-                    }
 
                     column.Filter = {
                       ...activeColumn.Filter,
-                      Argument: [filterArgument],
-                      HasFilter: true,
-                      Text: filterText
+                      ...value
                     };
 
                     this.setState({ activeColumn: null }, () => actions.updateColumns(newColumns));
