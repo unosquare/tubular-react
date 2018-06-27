@@ -61,7 +61,7 @@ const DialogModal: React.SFC = () => {
                                 onClick={() => actions.setFilter(clearFilterPatch)}
                             >
                                 Clear
-                                </Button>
+                            </Button>
                             <Button
                                 size='medium'
                                 color='primary'

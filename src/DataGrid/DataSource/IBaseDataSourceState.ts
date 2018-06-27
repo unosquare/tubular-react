@@ -2,13 +2,13 @@ import ColumnModel from '../Models/ColumnModel';
 
 export default interface IBaseDataSourceState {
     aggregate: any;
+    columns: ColumnModel[];
     data: any[];
+    error: any;
     filteredRecordCount: any;
-    totalRecordCount: any;
+    isLoading: boolean;
     itemsPerPage: number;
     page: number;
     searchText: any;
-    columns: ColumnModel[];
-    isLoading: boolean;
-    error: any;
+    totalRecordCount: any;
 }

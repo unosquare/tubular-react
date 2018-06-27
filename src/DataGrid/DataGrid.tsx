@@ -97,7 +97,10 @@ class DataGrid extends React.Component<IProps, IState> {
                     this.setState({ activeColumn: null }, () => actions.updateColumns(newColumns));
                   },
                   sortColumn: (property: string) => {
-                    actions.updateColumns(ColumnModel.sortColumnArray(property, [...dataSource.columns], this.state.multiSort));
+                    actions.updateColumns(ColumnModel.sortColumnArray(
+                      property, 
+                      [...dataSource.columns], 
+                      this.state.multiSort));
                   },
                   handleFilterChange: (value: any) => {
                     this.setState((prevState) => ({

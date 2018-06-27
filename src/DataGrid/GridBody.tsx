@@ -11,7 +11,7 @@ import { ColumnDataType } from './Models/Column';
 import ColumnModel from './Models/ColumnModel';
 
 const renderCell = (column: ColumnModel, row: any) => {
-    let cell : any;
+    let cell: any;
 
     switch (column.DataType) {
         case ColumnDataType.NUMERIC:
@@ -54,7 +54,8 @@ const GridBody: React.SFC<IProps> = ({ bodyRenderer }) => {
                                         .map((column: ColumnModel, colIndex: number) =>
                                             <TableCell
                                                 key={colIndex}
-                                                padding={column.Label === '' ? 'none' : 'default'}>
+                                                padding={column.Label === '' ? 'none' : 'default'}
+                                            >
                                                 {renderCell(column, row)}
                                             </TableCell>)
                                 }

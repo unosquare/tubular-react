@@ -12,12 +12,12 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
     public state = this.setInitialState({
         aggregate: {},
         data: [] as any,
+        error: null as any,
         filteredRecordCount: 0,
+        isLoading: false,
         page: 0,
         searchText: '',
-        totalRecordCount: 0,
-        isLoading: false,
-        error: null as any
+        totalRecordCount: 0
     });
 
     constructor(props: any) {
@@ -50,10 +50,10 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
                     data: response.Payload,
                     filteredRecordCount: response.FilteredRecordCount || 0,
                     totalRecordCount: response.TotalRecordCount || 0,
-                    columns: columns,
-                    itemsPerPage: itemsPerPage,
-                    page: page,
-                    searchText: searchText,
+                    columns,
+                    itemsPerPage,
+                    page,
+                    searchText,
                     isLoading: false,
                     error: null
                 });
@@ -107,11 +107,12 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
         const WrappedComponet = this.getWrappedComponent();
 
         return (
-            <DataSourceContext.Provider value={{
-                dataSource: { ...this.state },
-                activeColumn: null,
-                actions: this.getActions()
-            }}>
+            <DataSourceContext.Provider
+                value={{
+                    dataSource: { ...this.state },
+                    activeColumn: null,
+                    actions: this.getActions()
+                }}>
                 <WrappedComponet error={this.state.error} />
             </DataSourceContext.Provider>
         );

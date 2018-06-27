@@ -7,18 +7,18 @@ export function debounce<F extends Procedure>(
 ): F {
   let timeoutId: any;
 
-  return function(this: any, ...args: any[]) {
+  return function (this: any, ...args: any[]) {
     const context = this;
 
-    const doLater = function() {
+    const doLater = () => {
       timeoutId = undefined;
       func.apply(context, args);
-    }
+    };
 
     if (timeoutId !== undefined) {
       clearTimeout(timeoutId);
     }
 
     timeoutId = setTimeout(doLater, waitMilliseconds);
-  } as any
+  } as any;
 }

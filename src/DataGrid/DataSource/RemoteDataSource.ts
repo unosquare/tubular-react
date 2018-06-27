@@ -3,7 +3,7 @@ import Axios from 'axios';
 import GridRequest from '../Models/GridRequest';
 import GridResponse from '../Models/GridResponse';
 import BaseDataSource from './BaseDataSource';
-import IBaseDataSourceState from "./IBaseDataSourceState";
+import IBaseDataSourceState from './IBaseDataSourceState';
 
 const expectedStructureKeys = JSON.stringify(Object.keys({
   AggregationPayload: null,
@@ -20,9 +20,9 @@ const withRemoteDataSource = (WrappedComponent: any, columns: any, url: string, 
     public setInitialState(value: any): IBaseDataSourceState {
       return {
         ...value,
-        columns: columns,
-        itemsPerPage: itemsPerPage
-      }
+        columns,
+        itemsPerPage
+      };
     }
 
     public getWrappedComponent(): any {
@@ -48,7 +48,7 @@ const withRemoteDataSource = (WrappedComponent: any, columns: any, url: string, 
     public isValidResponse(data: any) {
       return data && expectedStructureKeys === JSON.stringify(Object.keys(data).sort());
     }
-  }
-}
+  };
+};
 
 export default withRemoteDataSource;
