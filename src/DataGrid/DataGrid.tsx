@@ -9,7 +9,6 @@ import GridBody from './GridBody';
 import { GridProvider } from './GridContext';
 import GridHeader from './GridHeader';
 import GridToolbar from './GridToolbar';
-import { ColumnDataType, CompareOperators } from './Models/Column';
 import ColumnModel from './Models/ColumnModel';
 import Paginator from './Paginator';
 
@@ -69,9 +68,10 @@ class DataGrid extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const { classes, bodyRenderer, footerRenderer, gridName } = this.props;
+    const { classes, bodyRenderer, footerRenderer } = this.props;
     const { activeColumn } = this.state;
     const toolbarOptions = this.props.toolbarOptions || new ToolbarOptions();
+    const gridName = this.props.gridName || 'Grid';
 
     return (
       <DataSourceContext.Consumer>
@@ -84,46 +84,23 @@ class DataGrid extends React.Component<IProps, IState> {
                     this.setState({ activeColumn: column },
                       () => document.getElementById(column.Name).blur());
                   },
-                  clearActiveColumn: () => {
+                  setFilter: (value: any) => {
                     const newColumns = [...dataSource.columns];
                     const column = newColumns.find((c: ColumnModel) => c.Name === activeColumn.Name);
                     if (!column) { return; }
-
-                    column.Filter = {
-                      Argument: [''],
-                      HasFilter: false,
-                      Operator: CompareOperators.NONE,
-                      Text: ''
-                    };
-
-                    this.setState({ activeColumn: null }, () => actions.updateColumns(newColumns));
-                  },
-                  filterActiveColumn: () => {
-                    const newColumns = [...dataSource.columns];
-                    const column = newColumns.find((c: ColumnModel) => c.Name === activeColumn.Name);
-                    if (!column) { return; }
-
-                    let filterText = activeColumn.Filter.Text;
-                    let filterArgument = activeColumn.Filter.Argument[0];
-                    if (activeColumn.DataType === ColumnDataType.NUMERIC) {
-                      filterText = parseFloat(filterText);
-                      filterArgument = parseFloat(filterArgument);
-                    } else if (activeColumn.DataType === ColumnDataType.BOOLEAN) {
-                      filterText = filterText === 'true';
-                      filterArgument = '';
-                    }
 
                     column.Filter = {
                       ...activeColumn.Filter,
-                      Argument: [filterArgument],
-                      HasFilter: true,
-                      Text: filterText
+                      ...value
                     };
 
                     this.setState({ activeColumn: null }, () => actions.updateColumns(newColumns));
                   },
                   sortColumn: (property: string) => {
-                    actions.updateColumns(ColumnModel.sortColumnArray(property, [...dataSource.columns], this.state.multiSort));
+                    actions.updateColumns(ColumnModel.sortColumnArray(
+                      property, 
+                      [...dataSource.columns], 
+                      this.state.multiSort));
                   },
                   handleFilterChange: (value: any) => {
                     this.setState((prevState) => ({

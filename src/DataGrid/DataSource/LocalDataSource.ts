@@ -14,15 +14,15 @@ import IBaseDataSourceState from './IBaseDataSourceState';
 
 const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, itemsPerPage = 10) => {
   return class extends BaseDataSource {
-    setInitialState(value: any): IBaseDataSourceState {
+    public setInitialState(value: any): IBaseDataSourceState {
       return {
         ...value,
-        columns: columns,
-        itemsPerPage: itemsPerPage
-      }
+        columns,
+        itemsPerPage
+      };
     }
 
-    getWrappedComponent(): any {
+    public getWrappedComponent(): any {
       return WrappedComponent;
     }
 
@@ -191,19 +191,19 @@ const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, i
     public applySorting(request: any, subset: any[]) {
       let sortedColumns = request.Columns.filter((column: any) => column.SortOrder > 0);
 
-      let columns: any[] = [];
+      let cols: any[] = [];
       let orders: any[] = [];
 
       if (sortedColumns.length > 0) {
         sortedColumns = sortBy(sortedColumns, ['SortOrder']);
-        columns = sortedColumns.map((y: any) => y.Name);
+        cols = sortedColumns.map((y: any) => y.Name);
         orders = sortedColumns.map((y: any) => y.SortDirection === ColumnSortDirection.ASCENDING ? 'asc' : 'desc');
       } else {
-        columns.push(request.Columns[0].Name);
+        cols.push(request.Columns[0].Name);
         orders.push('asc');
       }
 
-      return orderBy(subset, columns, orders);
+      return orderBy(subset, cols, orders);
     }
 
     public getAggregatePayload(request: any, subset: any[]) {
@@ -240,6 +240,7 @@ const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, i
         return prev;
       }, {});
     }
-  }
-}
+  };
+};
+
 export default withLocalDataSource;

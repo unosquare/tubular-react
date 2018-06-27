@@ -40,7 +40,7 @@ const getValue = (dataType: ColumnDataType, operator: CompareOperators, value: s
       return value ? format(value, 'YYYY-MM-DD[T]HH:mm') : format(new Date(), 'YYYY-MM-DD[T]HH:mm');
     case ColumnDataType.BOOLEAN:
       return operator === CompareOperators.NONE ? ''
-      : (typeof (value) === 'boolean' ? (value === true ? 'true' : 'false') : value);
+        : (typeof (value) === 'boolean' ? (value === true ? 'true' : 'false') : value);
     default:
       return operator === CompareOperators.NONE ? '' : (value || '');
   }
@@ -49,7 +49,9 @@ const getValue = (dataType: ColumnDataType, operator: CompareOperators, value: s
 const DialogInput: React.SFC<IProps> = ({ column, handleTextFieldChange, isPrimary }) => {
   const value = getValue(column.DataType, column.Operator, isPrimary ? column.Filter.Text : column.Filter.Argument[0]);
   const disabled = isPrimary ? column.Filter.Operator === CompareOperators.NONE : false;
-  const label = isPrimary ? column.Filter.Operator !== CompareOperators.BETWEEN ? 'Value' : 'First Value' : 'Second Value';
+  const label = isPrimary 
+    ? (column.Filter.Operator !== CompareOperators.BETWEEN ? 'Value' : 'First Value') 
+    : 'Second Value';
 
   return (
     <TextField
@@ -60,7 +62,7 @@ const DialogInput: React.SFC<IProps> = ({ column, handleTextFieldChange, isPrima
       value={value}
       label={label}
       type={(ColumnDataTypeToHtmlType as any)[column.DataType]}
-      onChange={(e:any) => handleTextFieldChange(e.target.value)}
+      onChange={(e: any) => handleTextFieldChange(e.target.value)}
     >
       {column.DataType === ColumnDataType.BOOLEAN && BooleanInputOperators.map((option) => (
         <MenuItem key={option.Value} value={option.Value}>

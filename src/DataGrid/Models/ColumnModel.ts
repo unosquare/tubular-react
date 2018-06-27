@@ -25,6 +25,10 @@ export default class ColumnModel {
   public Sortable: boolean;
   public Visible: boolean;
 
+  public hasFilter = this.Filter && 
+    (this.Filter.Text || this.Filter.Argument) && 
+    this.Filter.Operator !== CompareOperators.NONE;
+
   constructor(name: string, options?: IColumnModelOptions) {
     this.Aggregate = options && options.Aggregate || AggregateFunctions.NONE;
     this.DataType = options && options.DataType || ColumnDataType.STRING;
@@ -40,8 +44,6 @@ export default class ColumnModel {
 
     this.Filter.HasFilter = this.hasFilter;
   }
-
-  public hasFilter = this.Filter && (this.Filter.Text || this.Filter.Argument) && this.Filter.Operator !== CompareOperators.NONE;
 
   public static sortColumnArray(columnName: string, columns: ColumnModel[], multiSort: boolean) {
     const column = columns.find((c: ColumnModel) => c.Name === columnName);
@@ -67,7 +69,7 @@ export default class ColumnModel {
     columns
       .filter((col: ColumnModel) => col.SortOrder > 0)
       .sort((a: ColumnModel, b: ColumnModel) => a.SortOrder === b.SortOrder ? 0 : (a.SortOrder > b.SortOrder ? 1 : -1))
-      .forEach((column: any, i: number) => { column.SortOrder = i + 1; });
+      .forEach((col: any, i: number) => { col.SortOrder = i + 1; });
 
     return columns;
   }

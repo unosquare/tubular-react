@@ -81,9 +81,10 @@ function exportFile(gridResult: any, columns: any) {
     URL.revokeObjectURL(fileURL);
 }
 
-export const exportGrid = (format: string, gridResult: any, columns: any, gridName: string) => {
-    if (format === 'csv')
+export const exportGrid = (media: string, gridResult: any, columns: any, gridName: string) => {
+    if (media === 'csv') {
         exportFile(gridResult, columns);
-    else
+    } else {
         printDoc(gridResult, columns, gridName);
-}
+    }
+};
