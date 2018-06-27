@@ -1,4 +1,4 @@
-import { AggregateFunctions, ColumnDataType, ColumnSortDirection } from './Column';
+import { AggregateFunctions, ColumnDataType, ColumnSortDirection, CompareOperators } from './Column';
 import IColumnModelOptions from './IColumnModelOptions';
 
 function filterProps(name: string): object {
@@ -36,8 +36,12 @@ export default class ColumnModel {
     this.SortOrder = options && this.SortDirection !== ColumnSortDirection.NONE && options.SortOrder || -1;
     this.Sortable = options && options.Sortable || false;
     this.Visible = options && options.Visible || true;
-    this.Filter = options && options.Filtering ? filterProps(name) : null;
+    this.Filter = options && options.Filtering ? filterProps(name) : {};
+
+    this.Filter.HasFilter = this.hasFilter;
   }
+
+  public hasFilter = this.Filter && (this.Filter.Text || this.Filter.Argument) && this.Filter.Operator !== CompareOperators.NONE;
 
   public static sortColumnArray(columnName: string, columns: ColumnModel[], multiSort: boolean) {
     const column = columns.find((c: ColumnModel) => c.Name === columnName);

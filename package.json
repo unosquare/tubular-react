@@ -1,7 +1,7 @@
 {
   "name": "tubular-react",
   "version": "0.2.6",
-  "description": "Tubular React",
+  "description": "Unosquare Tubular React",
   "main": "dist/index.js",
   "scripts": {
     "build:docs": "webpack --env.NODE_ENV=docs --mode=production --progress",
@@ -27,7 +27,7 @@
       "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testMatch": [
-      "<rootDir>/test/**/DataGrid.spec.(ts|tsx)"
+      "<rootDir>/test/**/*.spec.(ts|tsx)"
     ],
     "globals": {
       "ts-jest": {
@@ -57,8 +57,8 @@
     "type": "git",
     "url": "git+https://github.com/unosquare/tubular-react.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Unosquare",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/unosquare/tubular-react/issues"
   },
@@ -66,11 +66,8 @@
   "dependencies": {
     "@material-ui/core": "^1.2.0",
     "@material-ui/icons": "^1.1.0",
-    "@types/lodash.sumby": "^4.6.3",
-    "@types/vinyl": "^2.0.2",
     "axios": "^0.18.0",
     "date-fns": "^1.29.0",
-    "jest": "^23.0.1",
     "lodash.maxby": "^4.6.0",
     "lodash.meanby": "^4.10.0",
     "lodash.merge": "^4.6.1",
@@ -81,13 +78,12 @@
     "lodash.uniqwith": "^4.5.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
-    "react-test-renderer": "^16.4.0",
     "typeface-roboto": "0.0.54"
   },
   "devDependencies": {
     "@types/enzyme": "^3.1.10",
     "@types/enzyme-adapter-react-16": "^1.0.2",
-    "@types/lodash": "^4.14.109",
+    "@types/lodash.sumby": "^4.6.3",
     "@types/prop-types": "^15.5.3",
     "@types/react": "^16.3.14",
     "@types/react-dom": "^16.0.5",
@@ -95,6 +91,7 @@
     "@types/react-router-dom": "^4.2.6",
     "@types/react-syntax-highlighter": "0.0.5",
     "@types/sinon": "^5.0.0",
+    "@types/vinyl": "^2.0.2",
     "@zeit/next-typescript": "1.0.1",
     "awesome-typescript-loader": "^5.0.0",
     "axios-mock-adapter": "^1.15.0",
@@ -103,11 +100,13 @@
     "coveralls": "^3.0.1",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
+    "jest": "^23.0.1",
     "jsdom": "^11.11.0",
     "nyc": "^11.8.0",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-syntax-highlighter": "^7.0.4",
+    "react-test-renderer": "^16.4.0",
     "router5": "^6.2.2",
     "sinon": "^5.0.10",
     "ts-jest": "^22.4.6",

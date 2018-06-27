@@ -80,12 +80,9 @@ const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, i
     }
 
     public applyFiltering(request: any, subset: any[]) {
-      const filteredColumns = request.Columns.filter((column: any) =>
-        column.Filter && (column.Filter.Text || column.Filter.Argument) &&
-        column.Filter && column.Filter.Operator.toLowerCase() !== CompareOperators.NONE.toLowerCase());
-
-      filteredColumns.forEach((filterableColumn: any) => {
-        request.Columns.find((column: any) => column.Name === filterableColumn.Name).HasFilter = true;
+      request.Columns
+        .filter((column: any) => column.hasFilter)
+        .forEach((filterableColumn: any) => {
         const isDate = filterableColumn.DataType === 'datetime' ||
           filterableColumn.DataType === 'date' ||
           filterableColumn.DataType === 'datetimeutc';
@@ -191,8 +188,7 @@ const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, i
     }
 
     public applySorting(request: any, subset: any[]) {
-      let sortedColumns = request.Columns.filter((column: any) =>
-        column.SortOrder > 0);
+      let sortedColumns = request.Columns.filter((column: any) => column.SortOrder > 0);
 
       let columns: any[] = [];
       let orders: any[] = [];

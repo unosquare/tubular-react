@@ -17,7 +17,7 @@ export default class GridRequest {
     this.Search = { Text: searchText, Operator: 'Auto' };
     this.Skip = rowsPerPage === -1 ? 0 : page * rowsPerPage;
     this.Take = rowsPerPage;
-    this.TimezoneOffset = currentTimezone;''
+    this.TimezoneOffset = currentTimezone;
 
     this.Count = GridRequest.counter++;
   }

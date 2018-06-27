@@ -7,7 +7,8 @@ export default class ToolbarOptions {
     public rowsPerPageOptions: number [];
     public itemsPerPage: number;
 
-    constructor() {
+    constructor(options?: any) {
+       // TODO: Apply options
        this.bottomPager = true;
        this.exportButton = true;
        this.printButton = true;

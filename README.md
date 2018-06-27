@@ -3,12 +3,12 @@
  [![Build Status](https://travis-ci.org/unosquare/tubular-react.svg?branch=master)](https://travis-ci.org/unosquare/tubular-react)
  [![Build status](https://ci.appveyor.com/api/projects/status/xokpdjvlh4djwvri/branch/master?svg=true)](https://ci.appveyor.com/project/geoperez/tubular-react/branch/master)
  [![Coverage Status](https://coveralls.io/repos/github/unosquare/tubular-react/badge.svg?branch=master)](https://coveralls.io/github/unosquare/tubular-react?branch=master)
- 
+
  ![Tubular-React](http://unosquare.github.io/tubular/assets/tubular.png)
- 
+
 :star: *Please star this project if you find it useful!*
 
-**Tubular-React** is a DataGrid component using [MaterialUI](https://material-ui-next.com/). The DataGrid component can display tabular data including the following features:
+**Tubular-React** is a DataGrid component using [MaterialUI](https://material-ui.com/). The DataGrid component can display tabular data including the following features:
 
 * Define a custom layout for columns and cells using `render` methods.
 * Use a remote or local datasource. Remote datasource use a specific Request and Response format.
@@ -28,9 +28,9 @@ Please visit the [Tubular GitHub Page](https://unosquare.github.io/tubular-react
 
 ## Dependencies
 
-* [Material-UI Next](https://material-ui-next.com/) - Version: Beta 34.
+* [Material-UI Next](https://material-ui.com/) - Version: 1.2.0.
 
-## npm Installation 
+## npm Installation
 
 ```
 $ npm install tubular-react --save
@@ -119,7 +119,6 @@ These are all the available props (and their default values) for the `<DataGrid 
 
 | Name             | Type                                   | Default Value   | Description                                  |
 |------------------|----------------------------------------|-----------------|----------------------------------------------|
-| `datasource`       | `RemoteDataSource` or `LocalDataSource`|        -        |**Required**                                 |
 | `gridName`         | `string`                               |        -        |**Required**                                 |
 | `rowsPerPage`      | `number`                               |        -        |**Required.** It should be a number that is inside the `rowsPerPageOptions` array.|
 |`rowsPerPageOptions`| `array`                                |[10, 20, 50, 100]| The options that are going to be shown in the `Page size` dropdown.|

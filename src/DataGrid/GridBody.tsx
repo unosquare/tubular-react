@@ -11,28 +11,28 @@ import { ColumnDataType } from './Models/Column';
 import ColumnModel from './Models/ColumnModel';
 
 const renderCell = (column: ColumnModel, row: any) => {
-    let rows = null;
+    let cell : any;
 
     switch (column.DataType) {
         case ColumnDataType.NUMERIC:
-            rows = row[column.Name] || 0;
+            cell = row[column.Name] || 0;
             break;
         case ColumnDataType.DATE:
-            rows = format(row[column.Name], 'MMMM Do YYYY') || '';
+            cell = format(row[column.Name], 'MMMM Do YYYY') || '';
             break;
         case ColumnDataType.DATE_TIME:
         case ColumnDataType.DATE_TIME_UTC:
-            rows = format(row[column.Name], 'MMMM Do YYYY, h:mm:ss a') || '';
+            cell = format(row[column.Name], 'MMMM Do YYYY, h:mm:ss a') || '';
             break;
         case ColumnDataType.BOOLEAN:
-            rows = row[column.Name] === true ? <CheckBox /> : <CheckBoxOutlineBlank />;
+            cell = row[column.Name] === true ? <CheckBox /> : <CheckBoxOutlineBlank />;
             break;
         default:
-            rows = row[column.Name];
+            cell = row[column.Name];
             break;
     }
 
-    return rows;
+    return cell;
 };
 
 interface IProps {

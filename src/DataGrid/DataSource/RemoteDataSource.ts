@@ -5,7 +5,7 @@ import GridResponse from '../Models/GridResponse';
 import BaseDataSource from './BaseDataSource';
 import IBaseDataSourceState from "./IBaseDataSourceState";
 
-const expectedStructure: any = {
+const expectedStructureKeys = JSON.stringify(Object.keys({
   AggregationPayload: null,
   Counter: null,
   CurrentPage: null,
@@ -13,11 +13,11 @@ const expectedStructure: any = {
   Payload: null,
   TotalPages: null,
   TotalRecordCount: null
-};
+}).sort());
 
 const withRemoteDataSource = (WrappedComponent: any, columns: any, url: string, itemsPerPage = 10) => {
   return class extends BaseDataSource {
-    setInitialState(value: any): IBaseDataSourceState {
+    public setInitialState(value: any): IBaseDataSourceState {
       return {
         ...value,
         columns: columns,
@@ -25,7 +25,7 @@ const withRemoteDataSource = (WrappedComponent: any, columns: any, url: string, 
       }
     }
 
-    getWrappedComponent(): any {
+    public getWrappedComponent(): any {
       return WrappedComponent;
     }
 
@@ -33,7 +33,7 @@ const withRemoteDataSource = (WrappedComponent: any, columns: any, url: string, 
       return Axios.post(url, request)
         .then((response) => {
           if (!this.isValidResponse(response.data)) {
-            throw new Error('It\'s not a valid Tubular response object');
+            throw new Error('Server response is a invalid Tubular object');
           }
 
           return new GridResponse({
@@ -46,12 +46,7 @@ const withRemoteDataSource = (WrappedComponent: any, columns: any, url: string, 
     }
 
     public isValidResponse(data: any) {
-      if (!data) { return; }
-
-      const expectedStructureKeys = Object.keys(expectedStructure).sort();
-      const responseKeys = Object.keys(data).sort();
-
-      return JSON.stringify(expectedStructureKeys) === JSON.stringify(responseKeys);
+      return data && expectedStructureKeys === JSON.stringify(Object.keys(data).sort());
     }
   }
 }

@@ -1,12 +1,12 @@
-import { debounce } from 'lodash';
+import { debounce } from '../utils/debounce';
 import * as React from 'react';
 
 import ColumnModel from '../Models/ColumnModel';
 import GridRequest from '../Models/GridRequest';
 import GridResponse from '../Models/GridResponse';
 
-import IBaseDataSourceState from "./IBaseDataSourceState";
-import { DataSourceContext } from "./DataSourceContext";
+import IBaseDataSourceState from './IBaseDataSourceState';
+import { DataSourceContext } from './DataSourceContext';
 
 export default abstract class BaseDataSource extends React.Component<{}, IBaseDataSourceState> {
     public state = this.setInitialState({
@@ -23,7 +23,7 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
     constructor(props: any) {
         super(props);
 
-        this.handleSearchText = debounce(this.handleSearchText, 500);
+        this.handleSearchText = debounce(this.handleSearchText);
     }
 
     public abstract getAllRecords(request: GridRequest): Promise<object>;
@@ -81,7 +81,7 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
                 this.retrieveData({ page }),
             updateItemPerPage: (itemsPerPage: number) =>
                 this.retrieveData({ itemsPerPage }),
-            export: (allRows: boolean, exportFunc: any) => {
+            exportTo: (allRows: boolean, exportFunc: any) => {
                 if (this.state.filteredRecordCount === 0) { return; }
 
                 if (allRows) {
@@ -91,8 +91,7 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
                     exportFunc(this.state.data, this.state.columns);
                 }
             },
-            request: (gridRequest: GridRequest) =>
-                this.getAllRecords(gridRequest)
+            request: this.getAllRecords
         };
     }
 
@@ -100,9 +99,9 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
         this.retrieveData({ searchText });
     }
 
-    abstract setInitialState(value: any): IBaseDataSourceState;
+    public abstract setInitialState(value: any): IBaseDataSourceState;
 
-    abstract getWrappedComponent(): any;
+    public abstract getWrappedComponent(): any;
 
     public render() {
         const WrappedComponet = this.getWrappedComponent();
