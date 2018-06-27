@@ -38,14 +38,16 @@ $ npm install tubular-react --save
 
 ## Using the `<DataGrid />` component
 
-You can start using `DataGrid` with this sample code. The grid will connect to a remote datasource. Make sure you export your class using `withRemoteDataSource`.
+You can start using `DataGrid` with this sample code. The grid will connect to a remote datasource or have a local datasource depending of how you export your class. The available exports that you can use are [`withRemoteDataSource`](#export-withRemoteDataSource) and [`withLocalDataSource`](##export-withLocalDataSource).
+
+**Make sure you add the export**
+
 ```js
 import DataGrid, {
   AggregateFunctions,
   ColumnDataType,
   ColumnModel,
   ColumnSortDirection,
-  RemoteDataSource,
   ToolbarOptions
 } from 'tubular-react';
 import React from 'react';
@@ -80,8 +82,7 @@ class CustomComponent extends React.Component {
   }
 }
 
-export default withRemoteDataSource(CustomComponent, columns, 'http://tubular.azurewebsites.net/api/orders/paged');
-
+// export default use withLocalDataSource or withRemoteDataSource
 ```
 
 The following snippet shows how to use a custom body and a custom footer:
@@ -114,10 +115,24 @@ render() {
   />
 }
 
+// export default use withLocalDataSource or withRemoteDataSource
+```
+
+### Export `withRemoteDataSource`
+Exporting your `DataGrid` using `withRemoteDataSource` HOC will need both a URL and a `ColumnModel` array.
+
+```js
 export default withRemoteDataSource(CustomComponent, columns, 'http://tubular.azurewebsites.net/api/orders/paged');
 ```
 
-And you can use it like your name you component `<CustomComponent />`
+### Export `withLocalDataSource`
+Exporting your `DataGrid` using `withLocalDataSource` HOC will need both an array of data objects and a `ColumnModel` array. See this [example](https://github.com/unosquare/tubular-react/blob/master/sample/src/local/localData.ts) of how to define the array of objects.
+
+```js
+export default withLocalDataSource(LocalDataGrid, columns, localData);
+```
+
+**And you can use it like your name you component `<CustomComponent />`**
 
 ### `DataGrid` props
 
@@ -125,32 +140,26 @@ These are all the available props (and their default values) for the `<DataGrid 
 
 | Name | Type | Default Value | Description |
 |------------------|----------------------------------------|-----------------|----------------------------------------------|
-| `gridName`        | `string`          | -         | **Required** |
-| `toolbarOptions`  | `ToolbarOptions`  | defaults  | **Required.** It should be an instance of ToolbarOptons |                                                |
-| `bodyRenderer`    | `function`        | -         | **Optional**  |
-| `footerRenderer`  | `function`        | -         |**Optional** |
+| `gridName`        | `string`          | -         | - |
+| `toolbarOptions`  | `ToolbarOptions`  | defaults  | It should be an instance of ToolbarOptions |                                                |
+| `bodyRenderer`    | `function`        | -         | - |
+| `footerRenderer`  | `function`        | -         | - |
 
-### `ToolbarOptions` prop
+### `ToolbarOptions` class
 
-These are all the available properties (and their default values) for the `toolbarOptions={ToolbarOptions}` prop.
+These are all the available properties (and their default values) for the `ToolbarOptions` class.
 
 | Name | Type | Default Value | Description |
 |------------------|----------------------------------------|-----------------|----------------------------------------------|
-| `itemsPerPage`         | `number`    | 10                  | **Optional.** It should be a number that is inside the `rowsPerPageOptions` array.|
+| `itemsPerPage`         | `number`    | 10                  | It should be a number that is inside the `rowsPerPageOptions` array.|
 |`rowsPerPageOptions`   | `array`     | [10, 20, 50, 100]   | The options that are going to be shown in the `Page size` dropdown.|
-| `bottomPager`         | `bool`      | `true`              | **Optional** |
-| `exportButton`        | `bool`      | `true`              | **Optional** |
-| `searchText`          | `bool`      | `true`              | **Optional** |
-| `topPager`            | `bool`      | `true`              | **Optional** |
-| `printButton`         | `bool`      | `true`              | **Optional** |
+| `bottomPager`         | `bool`      | `true`              | - |
+| `exportButton`        | `bool`      | `true`              | - |
+| `searchText`          | `bool`      | `true`              | - |
+| `topPager`            | `bool`      | `true`              | - |
+| `printButton`         | `bool`      | `true`              | - |
 
 _If you don't define some of the optional props described above, these will use their defaults values. In the case of `bodyRenderer`, the grid will display its default body; if the `footerRenderer` is not defined, the footer will not be displayed._
-
-### `export whitRemoteDataSource`
-`whitRemoteDataSource` needs both a URL and a `ColumnModel` array.
-
-### `export whitLocalDataSource`
-`whitLocalDataSource` needs both an array of data objects and a `ColumnModel` array. See this [example](https://github.com/unosquare/tubular-react/blob/master/sample/src/local/localData.ts) of how to define the array of objects.
 
 ### `ColumnModel` 
 It represents a `DataGrid` column and its constructor requires a name identifier as well as an object of column options with the following properties:
