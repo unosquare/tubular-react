@@ -69,7 +69,7 @@ class DataGrid extends React.Component<IProps, IState> {
 
   public render() {
     const { classes, bodyRenderer, footerRenderer } = this.props;
-    const { activeColumn } = this.state;
+    const { activeColumn, multiSort } = this.state;
     const toolbarOptions = this.props.toolbarOptions || new ToolbarOptions();
     const gridName = this.props.gridName || 'Grid';
 
@@ -111,7 +111,7 @@ class DataGrid extends React.Component<IProps, IState> {
                     actions.updateColumns(ColumnModel.sortColumnArray(
                       property,
                       [...dataSource.columns],
-                      this.state.multiSort));
+                      multiSort));
                   }
                 },
                 state: {
