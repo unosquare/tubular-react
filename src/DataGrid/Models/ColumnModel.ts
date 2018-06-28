@@ -13,38 +13,6 @@ function filterProps(name: string): object {
 }
 
 export default class ColumnModel {
-  public Aggregate: AggregateFunctions;
-  public DataType: ColumnDataType;
-  public Filter: any;
-  public IsKey: boolean;
-  public Label: string;
-  public Name: string;
-  public Searchable: boolean;
-  public SortDirection: ColumnSortDirection;
-  public SortOrder: number;
-  public Sortable: boolean;
-  public Visible: boolean;
-
-  public hasFilter = this.Filter && 
-    (this.Filter.Text || this.Filter.Argument) && 
-    this.Filter.Operator !== CompareOperators.NONE;
-
-  constructor(name: string, options?: IColumnModelOptions) {
-    this.Aggregate = options && options.Aggregate || AggregateFunctions.NONE;
-    this.DataType = options && options.DataType || ColumnDataType.STRING;
-    this.IsKey = options && options.IsKey || false;
-    this.Label = options && options.Label || (name || '').replace(/([a-z])([A-Z])/g, '$1 $2');
-    this.Name = name;
-    this.Searchable = options && options.Searchable || false;
-    this.SortDirection = options && options.Sortable && options.SortDirection || ColumnSortDirection.NONE;
-    this.SortOrder = options && this.SortDirection !== ColumnSortDirection.NONE && options.SortOrder || -1;
-    this.Sortable = options && options.Sortable || false;
-    this.Visible = options && options.Visible || true;
-    this.Filter = options && options.Filtering ? filterProps(name) : {};
-
-    this.Filter.HasFilter = this.hasFilter;
-  }
-
   public static sortColumnArray(columnName: string, columns: ColumnModel[], multiSort: boolean) {
     const column = columns.find((c: ColumnModel) => c.Name === columnName);
     if (!column) { return; }
@@ -72,5 +40,37 @@ export default class ColumnModel {
       .forEach((col: any, i: number) => { col.SortOrder = i + 1; });
 
     return columns;
+  }
+
+  public Aggregate: AggregateFunctions;
+  public DataType: ColumnDataType;
+  public Filter: any;
+  public IsKey: boolean;
+  public Label: string;
+  public Name: string;
+  public Searchable: boolean;
+  public SortDirection: ColumnSortDirection;
+  public SortOrder: number;
+  public Sortable: boolean;
+  public Visible: boolean;
+
+  public hasFilter = this.Filter &&
+    (this.Filter.Text || this.Filter.Argument) &&
+    this.Filter.Operator !== CompareOperators.NONE;
+
+  constructor(name: string, options?: IColumnModelOptions) {
+    this.Aggregate = options && options.Aggregate || AggregateFunctions.NONE;
+    this.DataType = options && options.DataType || ColumnDataType.STRING;
+    this.IsKey = options && options.IsKey || false;
+    this.Label = options && options.Label || (name || '').replace(/([a-z])([A-Z])/g, '$1 $2');
+    this.Name = name;
+    this.Searchable = options && options.Searchable || false;
+    this.SortDirection = options && options.Sortable && options.SortDirection || ColumnSortDirection.NONE;
+    this.SortOrder = options && this.SortDirection !== ColumnSortDirection.NONE && options.SortOrder || -1;
+    this.Sortable = options && options.Sortable || false;
+    this.Visible = options && options.Visible || true;
+    this.Filter = options && options.Filtering ? filterProps(name) : {};
+
+    this.Filter.HasFilter = this.hasFilter;
   }
 }

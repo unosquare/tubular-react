@@ -80,6 +80,17 @@ class DataGrid extends React.Component<IProps, IState> {
             <GridProvider
               value={{
                 actions: {
+                  handleFilterChange: (value: any) => {
+                    this.setState((prevState) => ({
+                      activeColumn: {
+                        ...prevState.activeColumn,
+                        Filter: {
+                          ...prevState.activeColumn.Filter,
+                          ...value
+                        }
+                      }
+                    }));
+                  },
                   setActiveColumn: (column: any) => {
                     this.setState({ activeColumn: column },
                       () => document.getElementById(column.Name).blur());
@@ -98,20 +109,9 @@ class DataGrid extends React.Component<IProps, IState> {
                   },
                   sortColumn: (property: string) => {
                     actions.updateColumns(ColumnModel.sortColumnArray(
-                      property, 
-                      [...dataSource.columns], 
+                      property,
+                      [...dataSource.columns],
                       this.state.multiSort));
-                  },
-                  handleFilterChange: (value: any) => {
-                    this.setState((prevState) => ({
-                      activeColumn: {
-                        ...prevState.activeColumn,
-                        Filter: {
-                          ...prevState.activeColumn.Filter,
-                          ...value
-                        }
-                      }
-                    }));
                   }
                 },
                 state: {

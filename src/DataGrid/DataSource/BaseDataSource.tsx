@@ -1,12 +1,12 @@
-import { debounce } from '../utils/debounce';
 import * as React from 'react';
+import { debounce } from '../utils/debounce';
 
 import ColumnModel from '../Models/ColumnModel';
 import GridRequest from '../Models/GridRequest';
 import GridResponse from '../Models/GridResponse';
 
-import IBaseDataSourceState from './IBaseDataSourceState';
 import { DataSourceContext } from './DataSourceContext';
+import IBaseDataSourceState from './IBaseDataSourceState';
 
 export default abstract class BaseDataSource extends React.Component<{}, IBaseDataSourceState> {
     public state = this.setInitialState({
@@ -47,15 +47,15 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
             .then((response: GridResponse) => {
                 this.setState({
                     aggregate: response.Aggregate,
-                    data: response.Payload,
-                    filteredRecordCount: response.FilteredRecordCount || 0,
-                    totalRecordCount: response.TotalRecordCount || 0,
                     columns,
+                    data: response.Payload,
+                    error: null,
+                    filteredRecordCount: response.FilteredRecordCount || 0,
+                    isLoading: false,
                     itemsPerPage,
                     page,
                     searchText,
-                    isLoading: false,
-                    error: null
+                    totalRecordCount: response.TotalRecordCount || 0,
                 });
             }, (reject: any) => this.setState({ isLoading: false, error: reject.message || reject }))
             .catch((err: any) => this.setState({ isLoading: false, error: err }));
@@ -67,20 +67,6 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
 
     public getActions() {
         return {
-            updateColumns: (columns: ColumnModel[]) =>
-                this.retrieveData({ columns }),
-            updateSearchText: (searchText: string) => {
-                if (!searchText) {
-                    this.retrieveData({ searchText });
-                } else {
-                    this.setState({ searchText });
-                    this.handleSearchText(searchText);
-                }
-            },
-            updatePage: (page: number) =>
-                this.retrieveData({ page }),
-            updateItemPerPage: (itemsPerPage: number) =>
-                this.retrieveData({ itemsPerPage }),
             exportTo: (allRows: boolean, exportFunc: any) => {
                 if (this.state.filteredRecordCount === 0) { return; }
 
@@ -91,7 +77,21 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
                     exportFunc(this.state.data, this.state.columns);
                 }
             },
-            request: this.getAllRecords
+            request: this.getAllRecords,
+            updateColumns: (columns: ColumnModel[]) =>
+                this.retrieveData({ columns }),
+            updateItemPerPage: (itemsPerPage: number) =>
+                this.retrieveData({ itemsPerPage }),
+            updatePage: (page: number) =>
+                this.retrieveData({ page }),
+            updateSearchText: (searchText: string) => {
+                if (!searchText) {
+                    this.retrieveData({ searchText });
+                } else {
+                    this.setState({ searchText });
+                    this.handleSearchText(searchText);
+                }
+            },
         };
     }
 
@@ -109,10 +109,11 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
         return (
             <DataSourceContext.Provider
                 value={{
-                    dataSource: { ...this.state },
+                    actions: this.getActions(),
                     activeColumn: null,
-                    actions: this.getActions()
-                }}>
+                    dataSource: { ...this.state }
+                }}
+            >
                 <WrappedComponet error={this.state.error} />
             </DataSourceContext.Provider>
         );

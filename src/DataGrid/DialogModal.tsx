@@ -1,9 +1,9 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 
-import DialogInput from './DialogInput';
-import OperatorsDropdown from './OperatorsDropdown';
 import * as React from 'react';
+import DialogInput from './DialogInput';
 import { GridConsumer } from './GridContext';
+import OperatorsDropdown from './OperatorsDropdown';
 
 import { ColumnDataType, CompareOperators } from './Models/Column';
 

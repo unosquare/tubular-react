@@ -4,9 +4,9 @@ import DataGrid,
   ColumnDataType,
   ColumnModel,
   ColumnSortDirection,
+  ToolbarOptions,
   withLocalDataSource,
-  withRemoteDataSource,
-  ToolbarOptions
+  withRemoteDataSource
 } from './DataGrid';
 
 export default DataGrid;

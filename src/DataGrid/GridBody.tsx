@@ -69,8 +69,7 @@ const GridBody: React.SFC<IProps> = ({ bodyRenderer }) => {
                                 </Typography>
                             </TableCell>
                         </TableRow>)}
-                </TableBody>
-            }
+                </TableBody>}
         </DataSourceContext.Consumer>);
 };
 

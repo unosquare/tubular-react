@@ -1,5 +1,5 @@
-import * as React from 'react';
 import { TablePagination } from '@material-ui/core';
+import * as React from 'react';
 import TablePaginationActions from './TablePaginationActions';
 
 import { DataSourceContext } from './DataSource/DataSourceContext';
@@ -29,8 +29,7 @@ const Paginator: React.SFC<IProps> = ({ rowsPerPageOptions }) => {
           onChangePage={(e, p) => actions.updatePage(p)}
           onChangeRowsPerPage={(e: any) => actions.updateItemPerPage(Number(e.target.value), )}
           ActionsComponent={TablePaginationActions}
-        />
-      }
+        />}
     </DataSourceContext.Consumer>
   );
 };
