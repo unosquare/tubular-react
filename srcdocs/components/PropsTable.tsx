@@ -67,31 +67,31 @@ export default withStyles(styles)((props) => {
                             <code className={classes.code}>Page size</code> dropdown.</TableCell>
                     </TableRow>
                     <TableRow hover={true}>
-                        <TableCell><code className={classes.code}>showBottomPager</code></TableCell>
+                        <TableCell><code className={classes.code}>bottomPager</code></TableCell>
                         <TableCell><code className={classes.code}>bool</code></TableCell>
                         <TableCell><code className={classes.code}>true</code></TableCell>
                         <TableCell><strong>Optional</strong></TableCell>
                     </TableRow>
                     <TableRow hover={true}>
-                        <TableCell><code className={classes.code}>showExportButton</code></TableCell>
+                        <TableCell><code className={classes.code}>exportButton</code></TableCell>
                         <TableCell><code className={classes.code}>bool</code></TableCell>
                         <TableCell><code className={classes.code}>true</code></TableCell>
                         <TableCell><strong>Optional</strong></TableCell>
                     </TableRow>
                     <TableRow hover={true}>
-                        <TableCell><code className={classes.code}>showSearchText</code></TableCell>
+                        <TableCell><code className={classes.code}>searchText</code></TableCell>
                         <TableCell><code className={classes.code}>bool</code></TableCell>
                         <TableCell><code className={classes.code}>true</code></TableCell>
                         <TableCell><strong>Optional</strong></TableCell>
                     </TableRow>
                     <TableRow hover={true}>
-                        <TableCell><code className={classes.code}>showTopPager</code></TableCell>
+                        <TableCell><code className={classes.code}>topPager</code></TableCell>
                         <TableCell><code className={classes.code}>bool</code></TableCell>
                         <TableCell><code className={classes.code}>true</code></TableCell>
                         <TableCell><strong>Optional</strong></TableCell>
                     </TableRow>
                     <TableRow hover={true}>
-                        <TableCell><code className={classes.code}>showPrintButton</code></TableCell>
+                        <TableCell><code className={classes.code}>printButton</code></TableCell>
                         <TableCell><code className={classes.code}>bool</code></TableCell>
                         <TableCell><code className={classes.code}>true</code></TableCell>
                         <TableCell><strong>Optional</strong></TableCell>

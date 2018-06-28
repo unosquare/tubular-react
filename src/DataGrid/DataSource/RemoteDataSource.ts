@@ -1,73 +1,54 @@
 import Axios from 'axios';
-import ColumnModel from '../Models/ColumnModel';
+import * as React from 'react';
 import GridRequest from '../Models/GridRequest';
 import GridResponse from '../Models/GridResponse';
 import BaseDataSource from './BaseDataSource';
+import IBaseDataSourceState from './IBaseDataSourceState';
 
-export default class RemoteDataSource extends BaseDataSource {
+const expectedStructureKeys = JSON.stringify(Object.keys({
+  AggregationPayload: null,
+  Counter: null,
+  CurrentPage: null,
+  FilteredRecordCount: null,
+  Payload: null,
+  TotalPages: null,
+  TotalRecordCount: null
+}).sort());
 
-  public url: string;
+const withRemoteDataSource = (WrappedComponent: any, columns: any, url: string, itemsPerPage = 10) => {
+  return class extends BaseDataSource {
+    public setInitialState(value: any): IBaseDataSourceState {
+      return {
+        ...value,
+        columns,
+        itemsPerPage
+      };
+    }
 
-  constructor(url: string, columns: ColumnModel[]) {
-    super(columns);
-    this.url = url;
-  }
+    public getWrappedComponent(): any {
+      return WrappedComponent;
+    }
 
-  public getAllRecords(rowsPerPage: number, page: number, searchText: string): Promise<object> {
-    return new Promise((resolve, reject) => {
-      const request = new GridRequest({
-        Columns: this.columns,
-        Count: BaseDataSource.counter++,
-        Search: { Text: searchText ? searchText : '', Operator: 'Auto' },
-        Skip: page * rowsPerPage,
-        Take: rowsPerPage,
-        TimezoneOffset: 360
-      });
+    public getAllRecords(request: GridRequest): Promise<object> {
+      return Axios.post(url, request)
+        .then((response) => {
+          if (!this.isValidResponse(response.data)) {
+            throw new Error('Server response is a invalid Tubular object');
+          }
 
-      Axios.post(this.url, request).then((response) => {
-        if (response.data === undefined || !this.isValidResponse(response.data)) {
-          throw new Error('It\'s not a valid Tubular response object');
-        }
-
-        const data = response.data.Payload;
-        const rows = data.map((row: any) => {
-          const obj: any = {};
-
-          this.columns.forEach((column: any, key: any) => {
-            obj[column.Name] = row[key] || row[column.Name];
+          return new GridResponse({
+            Aggregate: response.data.AggregationPayload,
+            FilteredRecordCount: response.data.FilteredRecordCount,
+            Payload: response.data.Payload.map((row: any) => this.parsePayload(row, request.Columns)),
+            TotalRecordCount: response.data.TotalRecordCount
           });
-
-          return obj;
         });
+    }
 
-        resolve(new GridResponse({
-          Aggregate: response.data.AggregationPayload,
-          FilteredRecordCount: response.data.FilteredRecordCount,
-          Payload: rows,
-          RowsPerPage: rowsPerPage,
-          SearchText: searchText,
-          TotalRecordCount: response.data.TotalRecordCount
-        }));
-      }).catch((error) => {
-        reject(error);
-      });
-    });
-  }
+    public isValidResponse(data: any) {
+      return data && expectedStructureKeys === JSON.stringify(Object.keys(data).sort());
+    }
+  };
+};
 
-  public isValidResponse(response: object) {
-    const expectedStructure: any = {
-      AggregationPayload: null,
-      Counter: null,
-      CurrentPage: null,
-      FilteredRecordCount: null,
-      Payload: null,
-      TotalPages: null,
-      TotalRecordCount: null
-    };
-
-    const expectedStructureKeys = Object.keys(expectedStructure).sort();
-    const responseKeys = Object.keys(response).sort();
-
-    return JSON.stringify(expectedStructureKeys) === JSON.stringify(responseKeys);
-  }
-}
+export default withRemoteDataSource;

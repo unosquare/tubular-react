@@ -1,113 +1,59 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import RemoteDataSource from '../src/DataGrid/DataSource/RemoteDataSource';
+import { shallow } from 'enzyme';
+import * as React from 'react';
+
+import withRemoteDataSource from '../src/DataGrid/DataSource/RemoteDataSource';
 import { validColumnsSample } from './utils/columns';
-import {
-  invalidResponseStructure,
-  onlyMicrosoftExpected,
-  simpleRecordsExpected,
-  twentyRecordsExpected,
-  validResponseStructure
-} from './utils/data';
+import { simpleRecordsExpected, onlyMicrosoftExpected } from './utils/data';
+import { microsoftSearchRequest } from './utils/requests';
 
-describe('RemoteDataSource', () => {
-  const dataSource = new RemoteDataSource('url', validColumnsSample);
+describe('<RemoteDataSource />', () => {
+  const mock = new MockAdapter(axios);
+  const TestComponent = withRemoteDataSource(() => (<span></span>), validColumnsSample, 'url') ;
 
-  describe('isValidResponse()', () => {
-    test('should return true when expectedStructure is valid', () => {
-      expect(dataSource.isValidResponse(validResponseStructure)).toBe(true);
+  afterEach(() => mock.reset());
+
+  test('Should mount with valid props', () => {
+    const component = shallow(<TestComponent />);
+    expect(component.props()).toBeDefined();
+  });
+
+  test('Should contain data with valid url', (done) => {
+    mock.onPost('url').reply(200, {
+      ...simpleRecordsExpected
     });
 
-    test('should return false when expectedStructure is invalid', () => {
-      expect(dataSource.isValidResponse(invalidResponseStructure)).toBe(false);
+    const component = shallow(<TestComponent />);
+    (component.instance() as any).retrieveData()
+    .then(() => {
+      expect(component.state().data).toEqual(simpleRecordsExpected.Payload);
+      done();
     });
   });
 
-  describe('When columns structure is valid', () => {
-    let mock;
+  test('Should have error with invalid url', (done) => {
+    mock.onPost('url').reply(400, { error: 'Bad Request' });
 
-    beforeEach(() => {
-        mock = new MockAdapter(axios);
+    const component = shallow(<TestComponent />);
+    (component.instance() as any).retrieveData()
+    .then(() => {
+      expect(component.state().data).toEqual([]);
+      expect(component.state().error).toBeDefined();
+      done();
+    });
+  });
+
+  test('Should contain state columns equals to props columns', () => {
+    const component = shallow(<TestComponent />);
+    expect(component.state('columns')).toEqual(validColumnsSample);
+  });
+
+  test.skip('Should filter using search text', () => {
+    mock.onPost('url', { ...microsoftSearchRequest }).reply(200, {
+      ...onlyMicrosoftExpected
     });
 
-    afterEach(() => {
-        mock.reset();
-    });
-
-    describe('When 20 records are requested', () => {
-      beforeEach( () => {
-        mock.reset();
-        mock.onPost('url').reply(200, {
-          ...twentyRecordsExpected
-        });
-      });
-
-      test('Should return a payload with 20 records', () => {
-         return dataSource.getAllRecords(20, 0, '').then((e: any) => {
-            expect(e.Payload).toHaveLength(20);
-         });
-      });
-    });
-
-    describe('When search input is Microsoft', () => {
-      beforeEach( () => {
-        mock.reset();
-        mock.onPost('url').reply(200, {
-          ...onlyMicrosoftExpected
-        });
-      });
-
-      test('Should return a payload with only Microsoft records', () => dataSource.getAllRecords(10, 0, 'Microsoft')
-        .then((r: any) => {
-          expect(r.Payload).toEqual(onlyMicrosoftExpected.Payload);
-          expect(r.FilteredRecordCount).toEqual(onlyMicrosoftExpected.FilteredRecordCount);
-          expect(r.TotalRecordCount).toEqual(onlyMicrosoftExpected.TotalRecordCount);
-        }));
-    });
-
-    describe('When retrieveData() is called', () => {
-      describe('When the response is invalid', () => {
-        beforeEach( () => {
-          mock.reset();
-          mock.onPost('url').reply(200, {
-            ...simpleRecordsExpected
-          });
-        });
-
-        test('Should return a payload', (done) => {
-          dataSource.retrieveData(10, 0, '')
-            .skip(1).subscribe((r) => {
-              expect(r.Payload).toEqual(simpleRecordsExpected.Payload);
-              expect(r.FilteredRecordCount).toEqual(simpleRecordsExpected.FilteredRecordCount);
-              expect(r.TotalRecordCount).toEqual(simpleRecordsExpected.TotalRecordCount);
-              done();
-            }, (error: any) => {
-              done();
-            });
-        });
-      });
-
-      describe('When the response is invalid', () => {
-        const dtSource = new RemoteDataSource('url', validColumnsSample);
-
-        beforeEach( () => {
-          mock.reset();
-          mock.onPost('url').reply(200, {
-            AggregationPayload: simpleRecordsExpected.AggregationPayload,
-            Counter: simpleRecordsExpected.Counter,
-            CurrentPage: simpleRecordsExpected.CurrentPage,
-            FilteredRecordCount: simpleRecordsExpected.FilteredRecordCount
-          });
-        });
-
-        test('Should throw an error', (done) => {
-          dtSource.retrieveData(10, 0, '')
-            .subscribe((r) => r, (error: any) => {
-              expect(error.message).toBe('It\'s not a valid Tubular response object');
-              done();
-            });
-        });
-      });
-    });
+    const component = shallow(<TestComponent />);
   });
 });

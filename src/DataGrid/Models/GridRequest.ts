@@ -1,6 +1,10 @@
 import ColumnModel from './ColumnModel';
 
+const currentTimezone = new Date().getTimezoneOffset();
+
 export default class GridRequest {
+  protected static counter: number;
+
   public Columns: ColumnModel[];
   public Count: number;
   public Search: object;
@@ -8,12 +12,13 @@ export default class GridRequest {
   public Take: number;
   public TimezoneOffset: number;
 
-  constructor( options?: any ) {
-    this.Columns = options.Columns;
-    this.Count = options.Count;
-    this.Search = options.Search;
-    this.Skip = options.Skip;
-    this.Take = options.Take;
-    this.TimezoneOffset = options.TimezoneOffset;
+  constructor(columns: ColumnModel[], rowsPerPage: number, page: number, searchText: string = '') {
+    this.Columns = columns;
+    this.Search = { Text: searchText, Operator: 'Auto' };
+    this.Skip = rowsPerPage === -1 ? 0 : page * rowsPerPage;
+    this.Take = rowsPerPage;
+    this.TimezoneOffset = currentTimezone;
+
+    this.Count = GridRequest.counter++;
   }
 }

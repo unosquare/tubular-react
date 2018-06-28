@@ -3,12 +3,12 @@
  [![Build Status](https://travis-ci.org/unosquare/tubular-react.svg?branch=master)](https://travis-ci.org/unosquare/tubular-react)
  [![Build status](https://ci.appveyor.com/api/projects/status/xokpdjvlh4djwvri/branch/master?svg=true)](https://ci.appveyor.com/project/geoperez/tubular-react/branch/master)
  [![Coverage Status](https://coveralls.io/repos/github/unosquare/tubular-react/badge.svg?branch=master)](https://coveralls.io/github/unosquare/tubular-react?branch=master)
- 
+
  ![Tubular-React](http://unosquare.github.io/tubular/assets/tubular.png)
- 
+
 :star: *Please star this project if you find it useful!*
 
-**Tubular-React** is a DataGrid component using [MaterialUI](https://material-ui-next.com/). The DataGrid component can display tabular data including the following features:
+**Tubular-React** is a DataGrid component using [MaterialUI](https://material-ui.com/). The DataGrid component can display tabular data including the following features:
 
 * Define a custom layout for columns and cells using `render` methods.
 * Use a remote or local datasource. Remote datasource use a specific Request and Response format.
@@ -28,9 +28,9 @@ Please visit the [Tubular GitHub Page](https://unosquare.github.io/tubular-react
 
 ## Dependencies
 
-* [Material-UI Next](https://material-ui-next.com/) - Version: Beta 34.
+* [Material UI Core](https://material-ui.com/) - Version: 1.2.0.
 
-## npm Installation 
+## npm Installation
 
 ```
 $ npm install tubular-react --save
@@ -38,14 +38,17 @@ $ npm install tubular-react --save
 
 ## Using the `<DataGrid />` component
 
-You can start using `DataGrid` with this sample code. The grid will connect to a remote datasource.
+You can start using `DataGrid` with this sample code. The grid will connect to a remote datasource or have a local datasource depending of how you export your class. The available exports that you can use are [`withRemoteDataSource`](#export-withRemoteDataSource) and [`withLocalDataSource`](##export-withLocalDataSource).
+
+**Make sure you add the export**
+
 ```js
 import DataGrid, {
   AggregateFunctions,
   ColumnDataType,
   ColumnModel,
   ColumnSortDirection,
-  RemoteDataSource
+  ToolbarOptions
 } from 'tubular-react';
 import React from 'react';
 
@@ -69,92 +72,110 @@ const columns = [
 ];
 
 class CustomComponent extends React.Component {
-  state={
-    dataSource: new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns)
-  }
 
   render() {
-    const { dataSource } = this.state; 
-
     return (
-      <DataGrid dataSource={dataSource} rowsPerPage = { 10 } gridName = 'table' />
+        <DataGrid
+          gridName='Tubular-React'
+        />
     );
   }
 }
 
+// export default use withLocalDataSource or withRemoteDataSource
 ```
 
 The following snippet shows how to use a custom body and a custom footer:
 
-```js
-<DataGrid dataSource={ dataSource } 
-        gridName = 'table'
-        bodyRenderer = {
-          (row, index) => 
-            <TableRow hover key = { index }>
-              <TableCell padding = { 'default' }>
-                { row.OrderID }
-              </TableCell>
-              <TableCell padding = { 'default' }>
-                { row.CustomerName }
-              </TableCell>
-            </TableRow>
-        } 
-        rowsPerPage = { 10 } 
-        footerRenderer = {
-          aggregates => 
-            <TableRow>
-              <TableCell>Total: </TableCell>
-              <TableCell> { aggregates && aggregates.CustomerName } </TableCell>
-            </TableRow>
-        }
-/>
+```jsx
+render() {
+  <DataGrid
+          gridName='table'
+          bodyRenderer={
+            (row: any, index: any) =>
+              <TableRow hover={true} key={index}>
+                <TableCell padding={'default'}>
+                  {row.OrderID}
+                </TableCell>
+                <TableCell padding={'default'}>
+                  {row.CustomerName}
+                </TableCell>
+                <TableCell padding={'default'}>
+                  {row.ShipperCity}
+                </TableCell>
+              </TableRow>
+          }
+          footerRenderer={
+            (aggregates: any) =>
+              <TableRow>
+                <TableCell>Total: </TableCell>
+                <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
+              </TableRow>
+          }
+  />
+}
+
+// export default use withLocalDataSource or withRemoteDataSource
 ```
+
+### Export `withRemoteDataSource`
+Exporting your `DataGrid` using `withRemoteDataSource` HOC will need both a URL and a `ColumnModel` array.
+
+```js
+export default withRemoteDataSource(CustomComponent, columns, 'http://tubular.azurewebsites.net/api/orders/paged');
+```
+
+### Export `withLocalDataSource`
+Exporting your `DataGrid` using `withLocalDataSource` HOC will need both an array of data objects and a `ColumnModel` array. See this [example](https://github.com/unosquare/tubular-react/blob/master/sample/src/local/localData.ts) of how to define the array of objects.
+
+```js
+export default withLocalDataSource(LocalDataGrid, columns, localData);
+```
+
+**And you can use it like your name you component `<CustomComponent />`**
 
 ### `DataGrid` props
 
 These are all the available props (and their default values) for the `<DataGrid />` component.
 
-| Name             | Type                                   | Default Value   | Description                                  |
+| Name | Type | Default Value | Description |
 |------------------|----------------------------------------|-----------------|----------------------------------------------|
-| `datasource`       | `RemoteDataSource` or `LocalDataSource`|        -        |**Required**                                 |
-| `gridName`         | `string`                               |        -        |**Required**                                 |
-| `rowsPerPage`      | `number`                               |        -        |**Required.** It should be a number that is inside the `rowsPerPageOptions` array.|
-|`rowsPerPageOptions`| `array`                                |[10, 20, 50, 100]| The options that are going to be shown in the `Page size` dropdown.|
-| `showBottomPager`  | `bool`                                 |     `true`     |**Optional**                                              |
-| `showExportButton` | `bool`                                 |     `true`     |**Optional**                                                  |
-| `showSearchText`   | `bool`                             |        `true`        |**Optional**                                                  |
-| `showTopPager`     | `bool`                                 |     `true`     |**Optional**                                                 |
-| `showPrintButton`  | `bool`                                 |     `true`     |**Optional**                                                  |
-| `bodyRenderer`     | `function`                             |        -        |**Optional**                                                  |
-| `footerRenderer`   | `function`                             |        -        |**Optional**                                                  |
+| `gridName`        | `string`          | -         | - |
+| `toolbarOptions`  | `ToolbarOptions`  | defaults  | It should be an instance of ToolbarOptions |                                                |
+| `bodyRenderer`    | `function`        | -         | - |
+| `footerRenderer`  | `function`        | -         | - |
 
-_If you don't define some of the optional props described above, these will not be shown. In the case of `bodyRenderer`, the grid will display its default body; if the `footerRenderer` is not defined, the footer will not be displayed._
+### `ToolbarOptions` class
 
-### `DataSource`
-`<DataGrid/>` requires a `dataSource` prop which can be an instance of the `RemoteDataSource` class or the `LocalDataSource` class, that deals with data retrieval among other things. 
+These are all the available properties (and their default values) for the `ToolbarOptions` class.
 
-### `RemoteDataSource`
-`RemoteDataSource` needs both a URL and a `ColumnModel` array.
+| Name | Type | Default Value | Description |
+|------------------|----------------------------------------|-----------------|----------------------------------------------|
+| `itemsPerPage`         | `number`    | 10                  | It should be a number that is inside the `rowsPerPageOptions` array.|
+|`rowsPerPageOptions`   | `array`     | [10, 20, 50, 100]   | The options that are going to be shown in the `Page size` dropdown.|
+| `bottomPager`         | `bool`      | `true`              | - |
+| `exportButton`        | `bool`      | `true`              | - |
+| `searchText`          | `bool`      | `true`              | - |
+| `topPager`            | `bool`      | `true`              | - |
+| `printButton`         | `bool`      | `true`              | - |
 
-### `LocalDataSource`
-`LocalDataSource` needs both an array of data objects and a `ColumnModel` array. See this [example](https://github.com/unosquare/tubular-react/blob/master/sample/src/local/localData.ts) of how to define the array of objects.
+_If you don't define some of the optional props described above, these will use their defaults values. In the case of `bodyRenderer`, the grid will display its default body; if the `footerRenderer` is not defined, the footer will not be displayed._
 
 ### `ColumnModel` 
 It represents a `DataGrid` column and its constructor requires a name identifier as well as an object of column options with the following properties:
 
-| Name          | Type              | Default Value     | Description                                                  |Options   |
-|---------------|-------------------|-------------------|--------------------------------------------------------------|----------|
-| `Aggregate`     | `AggregateFunctions`|         `NONE`         | The aggregation function that will be applied to this column.|`NONE`, `SUM`, `AVERAGE`, `COUNT`, `DISTINCT_COUNT`, `MAX`, `MIN`|
-| `DataType`      | `ColumnDataType`    |       `STRING`         |                        The column type.                      |`STRING`, `NUMERIC`, `BOOLEAN`, `DATE`, `DATE_TIME`, `DATE_TIME_UTC`|
-| `Filtering`     | `bool`              |        `false`         |                       Enables filtering.                     |-          |
-| `IsKey`         | `bool`              |        `false`         |         Defines if a column is an identifier or not.         |-          |
-| `Label`         | `string`            |The name of the column|               Column label that will be shown.               |-          |
-| `Searchable`    | `bool`              |        `true`          |     Indicates that a column can be used to search upon.      |-          |
-| `SortDirection` |`ColumnSortDirection`|        `NONE`          |                                    -                          |`NONE`, `ASCENDING`, `DESCENDING`|
-| `SortOrder`     | `number`            |         `-1`          |                                     -                       |-          |
-| `Sortable`      | `bool`              |        `false`         |            Determines if a column can be sorted.             |-          |
-| `Visible`       | `bool`              |        `true`          |            Specifies if a column should be shown.            |-          |
+| Name | Type | Default Value | Description | Options   |
+|---------------|-------------------|-------------------------|--------------------------------------------------------------|----------|
+| `Aggregate`     | `AggregateFunctions`  |         `NONE`          | The aggregation function that will be applied to this column. | `NONE`, `SUM`, `AVERAGE`, `COUNT`, `DISTINCT_COUNT`, `MAX`, `MIN` |
+| `DataType`      | `ColumnDataType`      |       `STRING`          | The column type. | `STRING`, `NUMERIC`, `BOOLEAN`, `DATE`, `DATE_TIME`, `DATE_TIME_UTC` |
+| `Filter`        | `bool`                |        `false`          | Enables filtering.|-|
+| `IsKey`         | `bool`                |        `false`          | Defines if a column is an identifier or not. |-|
+| `Label`         | `string`              | The name of the column  | Column label that will be shown. |-|
+| `Searchable`    | `bool`                |        `true`           | Indicates that a column can be used to search upon. |-|
+| `SortDirection` |`ColumnSortDirection`  |        `NONE`           |-| `NONE`, `ASCENDING`, `DESCENDING` |
+| `SortOrder`     | `number`              |         `-1`            |-|-|
+| `Sortable`      | `bool`                |        `false`          | Determines if a column can be sorted. |-|
+| `Visible`       | `bool`                |        `true`           | Specifies if a column should be shown. |-|
 
 ## Run integrated sample
 

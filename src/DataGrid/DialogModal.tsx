@@ -1,87 +1,79 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 
+import * as React from 'react';
 import DialogInput from './DialogInput';
-import { ColumnDataType, CompareOperators } from './Models/Column';
+import { GridConsumer } from './GridContext';
 import OperatorsDropdown from './OperatorsDropdown';
 
-import * as moment from 'moment';
-import * as React from 'react';
+import { ColumnDataType, CompareOperators } from './Models/Column';
 
-interface IProps {
-  activeColumn: any;
-  handleChange(value: any): void;
-  handleApply(): void;
-  handleClear(): void;
-  handleTextFieldChange(event: any): void;
-  handleSecondTextFieldChange(event: any): void;
-  handleClose(): void;
-}
-let firstValue: any;
-let secondValue: any;
-const setInitialValues = ( activeColumn: any) => {
-    switch (activeColumn.DataType) {
-      case ColumnDataType.DATE:
-      case ColumnDataType.DATE_TIME:
-      case ColumnDataType.DATE_TIME_UTC:
-        firstValue = activeColumn.Filter.Text ? activeColumn.Filter.Text : moment().format();
-        secondValue = activeColumn.Filter.Argument[0] ? activeColumn.Filter.Argument[0] : moment().format();
-        break;
-      case ColumnDataType.BOOLEAN:
-        firstValue = activeColumn.Filter.Operator === CompareOperators.NONE ? '' : activeColumn.Filter.Text;
-        break;
-      default:
-        firstValue = activeColumn.Filter.Operator === CompareOperators.NONE ? '' : activeColumn.Filter.Text || '';
-        secondValue = activeColumn.Filter.Argument[0] || '';
+const createFilterPatch = (activeColumn: any) => {
+    let filterText = activeColumn.Filter.Text;
+    let filterArgument = activeColumn.Filter.Argument[0];
+
+    if (activeColumn.DataType === ColumnDataType.NUMERIC) {
+        filterText = parseFloat(filterText);
+        filterArgument = parseFloat(filterArgument);
+    } else if (activeColumn.DataType === ColumnDataType.BOOLEAN) {
+        filterText = filterText === 'true';
+        filterArgument = '';
     }
+
+    return {
+        Argument: [filterArgument],
+        HasFilter: true,
+        Text: filterText
+    };
 };
-const DialogModal: React.SFC<IProps> = ({
-    activeColumn, handleChange, handleClose, handleApply, handleClear, handleTextFieldChange,
-    handleSecondTextFieldChange}) => {
 
-    if ( activeColumn == null ) { return null; }
-    setInitialValues(activeColumn);
-    return (
-        <Dialog open={activeColumn != null} onClose={handleClose} >
-            <DialogTitle>{'Filter'}</DialogTitle>
-            <DialogContent>
-                <OperatorsDropdown
-                    activeColumn={activeColumn}
-                    handleChange={handleChange}
-                />
-                <DialogInput
-                    disabled={activeColumn.Filter.Operator === CompareOperators.NONE}
-                    value={firstValue}
-                    handleApply={handleApply}
-                    label={activeColumn.Filter.Operator !== CompareOperators.BETWEEN ? 'Value' : 'First Value'}
-                    columnType={activeColumn.DataType}
-                    activeFilter={activeColumn.Name}
-                    handleTextFieldChange={handleTextFieldChange}
-                />
-
-                {activeColumn.Filter.Operator === CompareOperators.BETWEEN &&
-                    <DialogInput
-                        disabled={false}
-                        value={secondValue}
-                        handleApply={handleApply}
-                        label={'Second Value'}
-                        columnType={activeColumn.DataType}
-                        activeFilter={activeColumn.Name}
-                        handleTextFieldChange={handleSecondTextFieldChange}
-                    />}
-
-                <DialogActions>
-                    <Button size='medium' color='secondary' onClick={() => handleClear()}>Clear</Button>
-                    <Button
-                        size='medium'
-                        color='primary'
-                        onClick={() => handleApply()}
-                        disabled={activeColumn.Filter.Operator === CompareOperators.NONE}
-                    >
-                        Apply
-                    </Button>
-                </DialogActions>
-            </DialogContent>
-        </Dialog>
-      );
+const clearFilterPatch = {
+    Argument: [''],
+    HasFilter: false,
+    Operator: CompareOperators.NONE,
+    Text: ''
   };
+
+const DialogModal: React.SFC = () => {
+    return (
+        <GridConsumer>
+            {({ state, actions }) =>
+                <Dialog open={true} onClose={actions.handleClose} >
+                    <DialogTitle>Filter</DialogTitle>
+                    <DialogContent>
+                        <OperatorsDropdown />
+                        <DialogInput
+                            column={state.activeColumn}
+                            isPrimary={true}
+                            handleTextFieldChange={(e) => actions.handleFilterChange({ Text: e })}
+                        />
+
+                        {state.activeColumn.Filter.Operator === CompareOperators.BETWEEN &&
+                            <DialogInput
+                                column={state.activeColumn}
+                                isPrimary={false}
+                                handleTextFieldChange={(e) => actions.handleFilterChange({ Argument: [e] })}
+                            />}
+
+                        <DialogActions>
+                            <Button
+                                size='medium'
+                                color='secondary'
+                                onClick={() => actions.setFilter(clearFilterPatch)}
+                            >
+                                Clear
+                            </Button>
+                            <Button
+                                size='medium'
+                                color='primary'
+                                onClick={() => actions.setFilter(createFilterPatch(state.activeColumn))}
+                                disabled={state.activeColumn.Filter.Operator === CompareOperators.NONE}
+                            >
+                                Apply
+                            </Button>
+                        </DialogActions>
+                    </DialogContent>
+                </Dialog>}
+        </GridConsumer>
+    );
+};
 export default DialogModal;

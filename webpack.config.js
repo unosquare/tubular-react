@@ -40,7 +40,8 @@ const sampleConfig = {
     contentBase: SAMPLE_DIR, 
     compress: true,  
     port: 9000 
-  }
+  },
+  mode: 'development'
 }
 
 module.exports = env => {

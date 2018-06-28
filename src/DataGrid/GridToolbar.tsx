@@ -5,11 +5,11 @@ import { Close, FileDownload, Print, Search } from '@material-ui/icons';
 
 import * as React from 'react';
 
+import { DataSourceContext } from './DataSource/DataSourceContext';
+import { exportGrid } from './GridToolbarFunctions';
+
 const styles = (theme: Theme) => createStyles(
   {
-    button: {
-      minWidth: 150
-    },
     formControl: {
       margin: theme.spacing.unit,
       minWidth: 250
@@ -21,149 +21,96 @@ const styles = (theme: Theme) => createStyles(
 );
 
 interface IState {
-  anchorEl?: HTMLElement;
+  anchorExport?: HTMLElement;
   anchorPrint?: HTMLElement;
-  searchText: string;
 }
 
 interface IProps extends WithStyles<typeof styles> {
+  toolbarOptions: any;
   gridName: string;
-  isExportEnabled: boolean;
-  isPrintEnabled: boolean;
-  filteredRecordCount: number;
-  showSearchText?: boolean;
-  onSearchTextChange(text: string): void;
-  onPrint(condition: boolean): void;
-  onExport(condition: boolean): void;
 }
 
 class GridToolbar extends React.Component<IProps, IState> {
-  public static defaultProps = {
-    onSearchTextChange: (x: any) => x
-  };
 
   public state = {
-    anchorEl: null as HTMLElement,
-    anchorPrint: null as HTMLElement,
-    searchText: '',
+    anchorExport: null as HTMLElement,
+    anchorPrint: null as HTMLElement
   };
 
-  public componentDidMount() {
-    const searchText = localStorage.getItem(`tubular.${this.props.gridName}_searchText`);
-
-    if (searchText) {
-      this.setState({
-        searchText
-      });
-    }
-  }
-
-  public handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const searchText = event.target.value;
-    this.setState({ searchText }, () => this.props.onSearchTextChange(searchText));
-  }
-
-  public clearSearchText = (): void => {
+  public handleExportMenu = (event: React.MouseEvent<HTMLElement>): void => {
     this.setState({
-      searchText: ''
-    }, () => this.props.onSearchTextChange(this.state.searchText));
-  }
-
-  public handleMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
-    this.setState({
-      anchorEl: event.currentTarget
+      anchorExport: event ? event.currentTarget : null
     });
   }
 
-  public handleMenuClose = (): void => {
+  public handlePrintMenu = (event: React.MouseEvent<HTMLElement>): void => {
     this.setState({
-      anchorEl: null as HTMLElement
+      anchorPrint: event ? event.currentTarget : null
     });
-  }
-
-  public handlePrintMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
-    this.setState({
-      anchorPrint: event.currentTarget
-    });
-  }
-
-  public handlePrintMenuClose = (): void => {
-    this.setState({
-      anchorPrint: null as HTMLElement
-    });
-  }
-
-  public exportCSV = (filtered: boolean, e: React.MouseEvent<HTMLElement>) => {
-    const { onExport } = this.props;
-    e.preventDefault();
-    this.setState({
-      anchorEl: null as HTMLElement
-    });
-    onExport(filtered);
-  }
-
-  public printTable = (filtered: boolean, e: React.MouseEvent<HTMLElement>) => {
-    const { onPrint } = this.props;
-    e.preventDefault();
-    this.setState({
-      anchorPrint: null as HTMLElement
-    });
-    onPrint(filtered);
   }
 
   public render() {
-    const { classes, filteredRecordCount, isPrintEnabled, isExportEnabled, onPrint, showSearchText} = this.props;
-    const { searchText, anchorEl, anchorPrint } = this.state;
+    const { classes, toolbarOptions, gridName } = this.props;
+    const { anchorExport, anchorPrint } = this.state;
+    const partialExportCsv = (data: any, columns: any) => {
+      exportGrid('csv', data, columns, gridName);
+      this.handleExportMenu(null);
+    };
+    const partialPrint = (data: any, columns: any) => {
+      exportGrid('print', data, columns, gridName);
+      this.handlePrintMenu(null);
+    };
 
-    return(
-      <Toolbar>
-        <div className={classes.spacer}/>
-        {
-          isExportEnabled &&
-          <IconButton disabled={filteredRecordCount === 0} onClick={this.handleMenuOpen}>
-            <FileDownload />
-          </IconButton>
-        }
-        {
-          isPrintEnabled &&
-          <IconButton disabled={filteredRecordCount === 0} onClick={this.handlePrintMenuOpen} >
-            <Print/>
-          </IconButton>
-        }
-        { showSearchText &&
-          <FormControl className={classes.formControl}>
-            <Input
-              fullWidth={true}
-              type='text'
-              value={this.state.searchText}
-              onChange={this.handleInputChange}
-              startAdornment={
-                <InputAdornment position='end'>
-                  <IconButton>
-                    <Search />
-                  </IconButton>
-                </InputAdornment>
-              }
-              endAdornment={
-                searchText !== '' &&
-                <InputAdornment position='end'>
-                  <IconButton onClick={this.clearSearchText}>
-                    <Close />
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-          </FormControl>
-        }
-        {isExportEnabled && <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleMenuClose}>
-          <MenuItem onClick={(e: any) => this.exportCSV(false, e)}> All rows</MenuItem>
-          <MenuItem onClick={(e: any) => this.exportCSV(true, e)}> Current rows</MenuItem>
-        </Menu>}
-        {isPrintEnabled && <Menu anchorEl={anchorPrint} open={Boolean(anchorPrint)} onClose={this.handlePrintMenuClose}>
-          <MenuItem onClick={(e: any) => this.printTable(false, e)}> All rows</MenuItem>
-          <MenuItem onClick={(e: any) => this.printTable(true, e)}> Current rows</MenuItem>
-        </Menu>}
-      </Toolbar>
+    return (
+      <DataSourceContext.Consumer>
+        {({ dataSource, actions }) =>
+          <Toolbar>
+            <div className={classes.spacer} />
+            {toolbarOptions.exportButton &&
+              <IconButton disabled={dataSource.filteredRecordCount === 0} onClick={this.handleExportMenu}>
+                <FileDownload />
+              </IconButton>}
+            {toolbarOptions.printButton &&
+              <IconButton disabled={dataSource.filteredRecordCount === 0} onClick={this.handlePrintMenu} >
+                <Print />
+              </IconButton>}
+            {toolbarOptions.searchText &&
+              <FormControl className={classes.formControl}>
+                <Input
+                  fullWidth={true}
+                  type='text'
+                  value={dataSource.searchText}
+                  onChange={(e: any) => actions.updateSearchText(e.target.value)}
+                  startAdornment={
+                    <InputAdornment position='end'>
+                      <Search />
+                    </InputAdornment>
+                  }
+                  endAdornment={
+                    dataSource.searchText !== '' &&
+                    <InputAdornment position='end'>
+                      <IconButton onClick={() => actions.updateSearchText('')}>
+                        <Close />
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
+            }
+            {toolbarOptions.exportButton &&
+              <Menu anchorEl={anchorExport} open={Boolean(anchorExport)} onClose={() => this.handleExportMenu(null)}>
+                <MenuItem onClick={() => { actions.exportTo(false, partialExportCsv);  }}> Current rows</MenuItem>
+                <MenuItem onClick={() => { actions.exportTo(true, partialExportCsv); }}> All rows</MenuItem>
+              </Menu>
+            }
+            {toolbarOptions.printButton &&
+              <Menu anchorEl={anchorPrint} open={Boolean(anchorPrint)}  onClose={() => this.handlePrintMenu(null)}>
+              <MenuItem onClick={() => { actions.exportTo(false, partialPrint); }}> Current rows</MenuItem>
+              <MenuItem onClick={() => { actions.exportTo(true, partialPrint); }}> All rows</MenuItem>
+              </Menu>
+            }
+          </Toolbar>}
+      </DataSourceContext.Consumer>
     );
   }
 }

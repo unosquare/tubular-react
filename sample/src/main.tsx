@@ -1,99 +1,45 @@
-import { TableCell, TableRow } from '@material-ui/core';
-import { CheckBox, CheckBoxOutlineBlank } from '@material-ui/icons';
-
-import * as moment from 'moment';
 import * as React from 'react';
-import DataGrid, {
-  AggregateFunctions,
-  ColumnDataType,
-  ColumnModel,
-  ColumnSortDirection,
-  RemoteDataSource
-} from '../../src';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import { withStyles } from '@material-ui/core/styles';
 
-const columns = [
-  new ColumnModel( 'OrderID',
-    { DataType: ColumnDataType.NUMERIC,
-      Filtering: true,
-      IsKey: true,
-      Label: 'ID',
-      SortDirection: ColumnSortDirection.ASCENDING,
-      SortOrder: 1,
-      Sortable: true }
-  ),
-  new ColumnModel( 'CustomerName',
-    { Aggregate: AggregateFunctions.COUNT,
-      Filtering: true,
-      Searchable: true,
-      Sortable: true }
-  ),
-  new ColumnModel( 'ShippedDate',
-    { DataType: ColumnDataType.DATE_TIME,
-      Filtering: true,
-      Sortable: true }
-  ),
-  new ColumnModel( 'ShipperCity' ),
-  new ColumnModel( 'Amount',
-    { DataType: ColumnDataType.NUMERIC,
-      Sortable: true }
-  ),
-  new ColumnModel( 'IsShipped',
-    { DataType: ColumnDataType.BOOLEAN,
-      Filtering: true,
-      Sortable: true }
-  )
-];
+import RemoteDataGrid from './remoteDataGrid';
+import LocalDataGrid from './localDataGrid';
 
-export default class Main extends React.Component {
-  public render() {
-    const dataSource = new RemoteDataSource('http://tubular.azurewebsites.net/api/orders/paged', columns);
+const styles = (theme: any) => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper,
+  }
+});
+
+class Main extends React.Component<any, any> {
+  public state = {
+    value: 0,
+  };
+
+  public handleChange = (event: any, value: any) => {
+    this.setState({ value });
+  };
+
+  render() {
+    const { classes } = this.props;
+    const { value } = this.state;
 
     return (
-      <DataGrid
-        dataSource={dataSource}
-        gridName='Tubular-React'
-        bodyRenderer={
-          (row: any, index: any) =>
-            <TableRow hover={true} key={index}>
-              <TableCell padding={'default'}>
-                {row.OrderID}
-              </TableCell>
-              <TableCell padding={'default'}>
-                {row.CustomerName}
-              </TableCell>
-              <TableCell padding={'default'}>
-                {moment(row.ShippedDate).format('MMMM Do YYYY, h:mm:ss a')}
-              </TableCell>
-              <TableCell padding={'default'}>
-                {row.ShipperCity}
-              </TableCell>
-              <TableCell padding={'default'}>
-                {row.Amount || 0}
-              </TableCell>
-              <TableCell padding={'default'}>
-                {row.IsShipped === true ? <CheckBox />
-                  : <CheckBoxOutlineBlank />}
-              </TableCell>
-            </TableRow>
-        }
-        rowsPerPage={10}
-        rowsPerPageOptions={[10, 20, 50, 100]}
-        showTopPager={true}
-        showBottomPager={true}
-        showPrintButton={true}
-        showExportButton={true}
-        showSearchText={true}
-        footerRenderer={
-          (aggregates: any) =>
-            <TableRow>
-              <TableCell>Total: </TableCell>
-              <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
-              <TableCell />
-              <TableCell />
-              <TableCell />
-            </TableRow>
-        }
-      />
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Tabs value={value} onChange={this.handleChange}>
+          <Tab label="Remote Datasource" />
+          <Tab label="Local Datasource" />
+        </Tabs>
+      </AppBar>
+      {value === 0 &&<RemoteDataGrid />}
+      {value === 1 &&<LocalDataGrid />}
+    </div>
     );
   }
-}
+};
+
+export default withStyles(styles)(Main);
