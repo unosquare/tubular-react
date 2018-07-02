@@ -31,13 +31,21 @@ const ColumnDataTypeToHtmlType = {
   string: 'text'
 };
 
-const getValue = (dataType: ColumnDataType, operator: CompareOperators, value: string) => {
+const getValue = (dataType: ColumnDataType, operator: CompareOperators, value: string, handleTextFieldChange: any) => {
   switch (dataType) {
     case ColumnDataType.DATE:
-      return value ? format(value, 'YYYY-MM-DD') : format(new Date(), 'YYYY-MM-DD');
+      if (value) {
+        return format(value, 'YYYY-MM-DD');
+      }
+      handleTextFieldChange(format(new Date(), 'YYYY-MM-DD'));
+      return '';
     case ColumnDataType.DATE_TIME:
     case ColumnDataType.DATE_TIME_UTC:
-      return value ? format(value, 'YYYY-MM-DD[T]HH:mm') : format(new Date(), 'YYYY-MM-DD[T]HH:mm');
+      if (value) {
+        return format(value, 'YYYY-MM-DD[T]HH:mm');
+      }
+      handleTextFieldChange(format(new Date(), 'YYYY-MM-DD[T]HH:mm'));
+      return '';
     case ColumnDataType.BOOLEAN:
       return operator === CompareOperators.NONE ? ''
         : (typeof (value) === 'boolean' ? (value === true ? 'true' : 'false') : value);
@@ -47,7 +55,8 @@ const getValue = (dataType: ColumnDataType, operator: CompareOperators, value: s
 };
 
 const DialogInput: React.SFC<IProps> = ({ column, handleTextFieldChange, isPrimary }) => {
-  const value = getValue(column.DataType, column.Operator, isPrimary ? column.Filter.Text : column.Filter.Argument[0]);
+  const value = getValue(column.DataType, column.Operator,
+    isPrimary ? column.Filter.Text : column.Filter.Argument[0], handleTextFieldChange);
   const disabled = isPrimary ? column.Filter.Operator === CompareOperators.NONE : false;
   const label = isPrimary
     ? (column.Filter.Operator !== CompareOperators.BETWEEN ? 'Value' : 'First Value')
