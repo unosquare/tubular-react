@@ -34,20 +34,16 @@ const ColumnDataTypeToHtmlType = {
 const getValue = (dataType: ColumnDataType, operator: CompareOperators, value: string, handleTextFieldChange: any) => {
   switch (dataType) {
     case ColumnDataType.DATE:
-      if (value)
-      {
+      if (value) {
         return format(value, 'YYYY-MM-DD');
       }
-      
       handleTextFieldChange(format(new Date(), 'YYYY-MM-DD'));
-      return ''; 
+      return '';
     case ColumnDataType.DATE_TIME:
     case ColumnDataType.DATE_TIME_UTC:
-      if (value)
-      {
+      if (value) {
         return format(value, 'YYYY-MM-DD[T]HH:mm');
       }
-      
       handleTextFieldChange(format(new Date(), 'YYYY-MM-DD[T]HH:mm'));
       return '';
     case ColumnDataType.BOOLEAN:
@@ -59,7 +55,8 @@ const getValue = (dataType: ColumnDataType, operator: CompareOperators, value: s
 };
 
 const DialogInput: React.SFC<IProps> = ({ column, handleTextFieldChange, isPrimary }) => {
-  const value = getValue(column.DataType, column.Operator, isPrimary ? column.Filter.Text : column.Filter.Argument[0], handleTextFieldChange);
+  const value = getValue(column.DataType, column.Operator,
+    isPrimary ? column.Filter.Text : column.Filter.Argument[0], handleTextFieldChange);
   const disabled = isPrimary ? column.Filter.Operator === CompareOperators.NONE : false;
   const label = isPrimary
     ? (column.Filter.Operator !== CompareOperators.BETWEEN ? 'Value' : 'First Value')
