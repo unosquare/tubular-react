@@ -6,9 +6,9 @@ import Axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import * as React from 'react';
 import * as sinon from 'sinon';
-import RemoteDataSource from '../src/DataGrid/DataSource/RemoteDataSource';
 import GridHeader from '../src/DataGrid/GridHeader';
-import { ColumnDataType, CompareOperators } from '../src/DataGrid/Models/Column';
+import { ColumnDataType } from '../src';
+import { CompareOperators } from '../src/Models'
 import { amountFilterColumnsSample, isShippedFilterColumnsSample, validColumnsSample } from './utils/columns';
 
 describe.skip('<GridHeader />', () => {
@@ -55,7 +55,6 @@ describe.skip('<GridHeader />', () => {
 
   test.skip('should trigger \'componentDidMount()\' one time and update the dataSource with the localStorage values', () => {
     sinon.spy(GridHeader.prototype, 'componentDidMount');
-    const localStorage = new RemoteDataSource('url', amountFilterColumnsSample);
 
     localStorage.columns[4].Filter.Text = 2;
     localStorage.columns[4].Filter.HasFilter = true;

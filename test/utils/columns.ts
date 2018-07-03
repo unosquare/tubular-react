@@ -1,5 +1,4 @@
-import { AggregateFunctions, ColumnDataType, ColumnSortDirection } from '../../src/DataGrid/Models/Column';
-import ColumnModel from '../../src/DataGrid/Models/ColumnModel';
+import { AggregateFunctions, ColumnDataType, ColumnSortDirection, ColumnModel } from '../../src';
 
 const regularOrderIdCol = new ColumnModel('OrderID',
   {

@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
 
-import withLocalDataSource from '../src/DataGrid/DataSource/LocalDataSource';
+import { withLocalDataSource } from '../src';
 import { validColumnsSample } from './utils/columns';
 import { localData, expectedLocalData } from './utils/localData';
 
