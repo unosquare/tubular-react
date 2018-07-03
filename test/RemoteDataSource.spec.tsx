@@ -3,7 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { shallow } from 'enzyme';
 import * as React from 'react';
 
-import withRemoteDataSource from '../src/DataGrid/DataSource/RemoteDataSource';
+import { withRemoteDataSource } from '../src';
 import { validColumnsSample } from './utils/columns';
 import { simpleRecordsExpected, onlyMicrosoftExpected } from './utils/data';
 import { microsoftSearchRequest } from './utils/requests';
