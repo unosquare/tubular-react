@@ -8,9 +8,9 @@ import DataGrid, {
   ColumnDataType,
   ColumnModel,
   ColumnSortDirection,
-  ToolbarOptions
+  ToolbarOptions,
+  withRemoteDataSource
 } from '../../src';
-import withRemoteDataSource from '../../src/DataGrid/DataSource/RemoteDataSource';
 
 const toolbarOptions = new ToolbarOptions();
 const columns = [

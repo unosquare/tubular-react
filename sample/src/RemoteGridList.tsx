@@ -1,12 +1,11 @@
 import {
-    createStyles, LinearProgress,
-    Paper, Theme, Toolbar, WithStyles
+    LinearProgress,
+    Paper, Toolbar
 } from '@material-ui/core';
 import { Card, CardActions, CardContent } from '@material-ui/core';
 import { GridList, GridListTile, Typography } from '@material-ui/core';
-import { Button, FormControl, IconButton, Input, InputAdornment } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableRow } from '@material-ui/core';
-import { Close, Search } from '@material-ui/icons';
 import * as React from 'react';
 import {
     AggregateFunctions,
@@ -15,9 +14,19 @@ import {
     ColumnSortDirection,
     DataSourceContext,
     Paginator,
-    ToolbarOptions
+    TextSearchInput,
+    withRemoteDataSource
 } from '../../src';
-import withRemoteDataSource from '../../src/DataGrid/DataSource/RemoteDataSource';
+
+const styles: any  = {
+    progress: {
+        height: '20px'
+    },
+    search: {
+        margin: '15px 10px 10px 10px',
+        textAlign: 'right'
+    }
+};
 
 const columns = [
     new ColumnModel('OrderID',
@@ -61,24 +70,7 @@ const columns = [
         }
     )
 ];
-const styles = (theme: Theme) => createStyles(
-    {
-        progress: {
-            height: theme.spacing.unit * 2
-        },
-        root: {
-            marginTop: theme.spacing.unit * 3,
-            overflowX: 'auto',
-            width: '100%'
-        }
-    });
-interface IProps extends WithStyles<typeof styles> {
-    gridName?: string;
-    toolbarOptions?: ToolbarOptions;
-    bodyRenderer?(column: any, index: number): any;
-    footerRenderer?(aggregate: any): any;
-}
-class LocalGridList extends React.Component<IProps, any> {
+class RemoteGridList extends React.Component<any, any> {
     public state = {
         errorMessage: null as any
     };
@@ -88,35 +80,14 @@ class LocalGridList extends React.Component<IProps, any> {
     }
 
     public render() {
-        const { classes, toolbarOptions } = this.props;
         return (
             <DataSourceContext.Consumer>
-                {({ dataSource, actions }) =>
+                {({ state }) =>
                     <Paper >
-                        <Toolbar>
-                            <FormControl >
-                                <Input
-                                    fullWidth={true}
-                                    type='text'
-                                    value={dataSource.searchText}
-                                    onChange={(e: any) => actions.updateSearchText(e.target.value)}
-                                    startAdornment={
-                                        <InputAdornment position='end'>
-                                            <Search />
-                                        </InputAdornment>
-                                    }
-                                    endAdornment={
-                                        dataSource.searchText !== '' &&
-                                        <InputAdornment position='end'>
-                                            <IconButton onClick={() => actions.updateSearchText('')}>
-                                                <Close />
-                                            </IconButton>
-                                        </InputAdornment>
-                                    }
-                                />
-                            </FormControl>
-                        </Toolbar>
-                        <div >{dataSource.isLoading && <LinearProgress />}</div>
+                        <div style={styles.search}>
+                        <TextSearchInput />
+                        </div>
+                        <div style={styles.progress} >{state.isLoading && <LinearProgress />}</div>
                         <Table>
                             <TableHead>
                                 <TableRow>
@@ -127,7 +98,7 @@ class LocalGridList extends React.Component<IProps, any> {
                                 <TableRow>
                                     <TableCell>
                                         <GridList cellHeight={180} cols={4}>
-                                            {dataSource.data.map((dato) => (
+                                            {state.data.map((dato) => (
                                                 <GridListTile key={dato.OrderID}>
                                                     <Card>
                                                         <CardContent>
@@ -167,4 +138,4 @@ class LocalGridList extends React.Component<IProps, any> {
     }
 }
 
-export default withRemoteDataSource(LocalGridList, columns, 'http://tubular.azurewebsites.net/api/orders/paged');
+export default withRemoteDataSource(RemoteGridList, columns, 'http://tubular.azurewebsites.net/api/orders/paged');

@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import { ColumnDataType } from './Models/Column';
+import { ColumnDataType } from '../Models/Column';
 
 const cellValue = (cellDataType: string, cell: any) => {
     switch (cellDataType) {

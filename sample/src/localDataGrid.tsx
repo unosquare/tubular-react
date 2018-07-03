@@ -8,9 +8,9 @@ import DataGrid, {
   ColumnDataType,
   ColumnModel,
   ColumnSortDirection,
-  ToolbarOptions
+  ToolbarOptions,
+  withLocalDataSource
 } from '../../src';
-import withLocalDataSource from '../../src/DataGrid/DataSource/LocalDataSource';
 import localData from './local/localData';
 
 const toolbarOptions = new ToolbarOptions();

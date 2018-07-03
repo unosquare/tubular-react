@@ -5,7 +5,7 @@ import Tabs from '@material-ui/core/Tabs';
 import * as React from 'react';
 
 import LocalDataGrid from './localDataGrid';
-import LocalGridList from './localGridList';
+import RemoteGridList from './RemoteGridList';
 import RemoteDataGrid from './remoteDataGrid';
 
 const styles = (theme: any) => ({
@@ -32,14 +32,14 @@ class Main extends React.Component<any, any> {
       <div className={classes.root}>
         <AppBar position="static">
           <Tabs value={value} onChange={this.handleChange}>
-            <Tab label="Remote Datasource" />
-            <Tab label="Local Datasource" />
-            <Tab label="Grid List" />
+            <Tab label="Remote DataGrid" />
+            <Tab label="Local DataGrid" />
+            <Tab label="Remote Grid List" />
           </Tabs>
         </AppBar>
         {value === 0 && <RemoteDataGrid />}
         {value === 1 && <LocalDataGrid />}
-        {value === 2 && <LocalGridList />}
+        {value === 2 && <RemoteGridList />}
       </div>
     );
   }

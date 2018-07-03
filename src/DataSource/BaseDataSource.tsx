@@ -10,11 +10,13 @@ import IBaseDataSourceState from './IBaseDataSourceState';
 
 export default abstract class BaseDataSource extends React.Component<{}, IBaseDataSourceState> {
     public state = this.setInitialState({
+        activeColumn: null,
         aggregate: {},
         data: [] as any,
         error: null as any,
         filteredRecordCount: 0,
         isLoading: false,
+        multiSort: false,
         page: 0,
         searchText: '',
         totalRecordCount: 0
@@ -46,6 +48,7 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
         return this.getAllRecords(new GridRequest(columns, itemsPerPage, page, searchText))
             .then((response: GridResponse) => {
                 this.setState({
+                    activeColumn: null,
                     aggregate: response.Aggregate,
                     columns,
                     data: response.Payload,
@@ -61,10 +64,6 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
             .catch((err: any) => this.setState({ isLoading: false, error: err }));
     }
 
-    public componentDidMount() {
-        this.retrieveData();
-    }
-
     public getActions() {
         return {
             exportTo: (allRows: boolean, exportFunc: any) => {
@@ -77,9 +76,41 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
                     exportFunc(this.state.data, this.state.columns);
                 }
             },
-            request: this.getAllRecords,
-            updateColumns: (columns: ColumnModel[]) =>
-                this.retrieveData({ columns }),
+            handleFilterChange: (value: any) => {
+                this.setState((prevState) => ({
+                    activeColumn: {
+                        ...prevState.activeColumn,
+                        Filter: {
+                            ...prevState.activeColumn.Filter,
+                            ...value
+                        }
+                    }
+                }));
+            },
+            setActiveColumn: (column: any) => {
+                this.setState({ activeColumn: column },
+                    () => document.getElementById(column.Name).blur());
+            },
+            setFilter: (value: any) => {
+                const columns = [...this.state.columns];
+                const column = columns.find((c: ColumnModel) => c.Name === this.state.activeColumn.Name);
+                if (!column) { return; }
+
+                column.Filter = {
+                    ...this.state.activeColumn.Filter,
+                    ...value
+                };
+
+                this.retrieveData({ columns });
+            },
+            sortColumn: (property: string) => {
+                const columns = ColumnModel.sortColumnArray(
+                    property,
+                    [...this.state.columns],
+                    this.state.multiSort);
+
+                this.retrieveData({ columns });
+            },
             updateItemPerPage: (itemsPerPage: number) =>
                 this.retrieveData({ itemsPerPage }),
             updatePage: (page: number) =>
@@ -103,6 +134,30 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
 
     public abstract getWrappedComponent(): any;
 
+    public handleKeyDown(event: any) {
+        if (event.key === 'Control' && !this.state.multiSort) {
+            this.setState({ multiSort: true });
+        }
+    }
+
+    public handleKeyUp(event: any) {
+        if (event.key === 'Control' && this.state.multiSort) {
+            this.setState({ multiSort: false });
+        }
+    }
+
+    public componentWillUnmount() {
+        document.removeEventListener('keydown', (event) => this.handleKeyDown(event));
+        document.removeEventListener('keyup', (event) => this.handleKeyUp(event));
+    }
+
+    public componentDidMount() {
+        this.retrieveData();
+
+        document.addEventListener('keydown', (event) => this.handleKeyDown(event));
+        document.addEventListener('keyup', (event) => this.handleKeyUp(event));
+    }
+
     public render() {
         const WrappedComponet = this.getWrappedComponent();
 
@@ -110,8 +165,7 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
             <DataSourceContext.Provider
                 value={{
                     actions: this.getActions(),
-                    activeColumn: null,
-                    dataSource: { ...this.state }
+                    state: { ...this.state }
                 }}
             >
                 <WrappedComponet error={this.state.error} />

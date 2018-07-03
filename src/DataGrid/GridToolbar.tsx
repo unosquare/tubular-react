@@ -1,12 +1,14 @@
-import { FormControl, IconButton, Input, InputAdornment, Menu, MenuItem, Toolbar } from '@material-ui/core';
+import { IconButton, Menu, MenuItem, Toolbar } from '@material-ui/core';
 import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core/styles';
 
-import { Close, FileDownload, Print, Search } from '@material-ui/icons';
+import { FileDownload, Print } from '@material-ui/icons';
 
 import * as React from 'react';
 
-import { DataSourceContext } from './DataSource/DataSourceContext';
+import { DataSourceContext } from '../DataSource';
 import { exportGrid } from './GridToolbarFunctions';
+
+import SearchTextInput from './TextSearchInput'
 
 const styles = (theme: Theme) => createStyles(
   {
@@ -63,39 +65,19 @@ class GridToolbar extends React.Component<IProps, IState> {
 
     return (
       <DataSourceContext.Consumer>
-        {({ dataSource, actions }) =>
+        {({ state, actions }) =>
           <Toolbar>
             <div className={classes.spacer} />
             {toolbarOptions.exportButton &&
-              <IconButton disabled={dataSource.filteredRecordCount === 0} onClick={this.handleExportMenu}>
+              <IconButton disabled={state.filteredRecordCount === 0} onClick={this.handleExportMenu}>
                 <FileDownload />
               </IconButton>}
             {toolbarOptions.printButton &&
-              <IconButton disabled={dataSource.filteredRecordCount === 0} onClick={this.handlePrintMenu} >
+              <IconButton disabled={state.filteredRecordCount === 0} onClick={this.handlePrintMenu} >
                 <Print />
               </IconButton>}
             {toolbarOptions.searchText &&
-              <FormControl className={classes.formControl}>
-                <Input
-                  fullWidth={true}
-                  type='text'
-                  value={dataSource.searchText}
-                  onChange={(e: any) => actions.updateSearchText(e.target.value)}
-                  startAdornment={
-                    <InputAdornment position='end'>
-                      <Search />
-                    </InputAdornment>
-                  }
-                  endAdornment={
-                    dataSource.searchText !== '' &&
-                    <InputAdornment position='end'>
-                      <IconButton onClick={() => actions.updateSearchText('')}>
-                        <Close />
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
+              <SearchTextInput />
             }
             {toolbarOptions.exportButton &&
               <Menu anchorEl={anchorExport} open={Boolean(anchorExport)} onClose={() => this.handleExportMenu(null)}>
