@@ -5,8 +5,8 @@ import Tabs from '@material-ui/core/Tabs';
 import * as React from 'react';
 
 import LocalDataGrid from './localDataGrid';
-import RemoteGridList from './RemoteGridList';
 import RemoteDataGrid from './remoteDataGrid';
+import RemoteGridList from './remoteGridList';
 
 const styles = (theme: any) => ({
   root: {
