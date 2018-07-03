@@ -33,14 +33,14 @@ interface IProps {
 const GridBody: React.SFC<IProps> = ({ bodyRenderer }) => {
     return (
         <DataSourceContext.Consumer>
-            {({ dataSource }) =>
+            {({ state }) =>
                 <TableBody>
-                    {dataSource.data.map((row: any, rowIndex: number) => (
+                    {state.data.map((row: any, rowIndex: number) => (
                         bodyRenderer
                             ? bodyRenderer(row, rowIndex)
                             : <TableRow hover={true} key={rowIndex}>
                                 {
-                                    dataSource.columns
+                                    state.columns
                                         .filter((col: any) => col.Visible)
                                         .map((column: ColumnModel, colIndex: number) =>
                                             <TableCell
@@ -52,9 +52,9 @@ const GridBody: React.SFC<IProps> = ({ bodyRenderer }) => {
                                 }
                             </TableRow>
                     ))}
-                    {dataSource.filteredRecordCount === 0 &&
+                    {state.filteredRecordCount === 0 &&
                         (<TableRow>
-                            <TableCell colSpan={dataSource.columns.filter((col: any) => col.Visible).length}>
+                            <TableCell colSpan={state.columns.filter((col: any) => col.Visible).length}>
                                 <Typography style={{ paddingLeft: '15px' }} variant='body2' gutterBottom={true}>
                                     <Warning /> No records found
                                 </Typography>

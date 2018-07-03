@@ -2,8 +2,7 @@ import * as React from 'react';
 import { ColumnDataType, CompareOperators } from './Models/Column';
 
 import { Input, MenuItem, Select } from '@material-ui/core';
-
-import { GridConsumer } from './GridContext';
+import { DataSourceContext } from './DataSource/DataSourceContext';
 
 const dropdown = {
   marginLeft: '10%',
@@ -56,7 +55,7 @@ const getOperators = (DataType: any) => {
 
 const OperatorsDropdown: React.SFC = () => {
   return (
-    <GridConsumer>
+    <DataSourceContext.Consumer>
       {({ state, actions }) =>
         <Select
           style={dropdown}
@@ -70,7 +69,7 @@ const OperatorsDropdown: React.SFC = () => {
             ))
           }
         </Select>}
-    </GridConsumer>
+    </DataSourceContext.Consumer>
   );
 };
 export default OperatorsDropdown;

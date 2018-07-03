@@ -2,7 +2,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mate
 
 import * as React from 'react';
 import DialogInput from './DialogInput';
-import { GridConsumer } from './GridContext';
+import { DataSourceContext } from './DataSource/DataSourceContext';
 import OperatorsDropdown from './OperatorsDropdown';
 
 import { ColumnDataType, CompareOperators } from './Models/Column';
@@ -35,7 +35,7 @@ const clearFilterPatch = {
 
 const DialogModal: React.SFC = () => {
     return (
-        <GridConsumer>
+        <DataSourceContext.Consumer>
             {({ state, actions }) =>
                 <Dialog open={true} onClose={actions.handleClose} >
                     <DialogTitle>Filter</DialogTitle>
@@ -73,7 +73,7 @@ const DialogModal: React.SFC = () => {
                         </DialogActions>
                     </DialogContent>
                 </Dialog>}
-        </GridConsumer>
+        </DataSourceContext.Consumer>
     );
 };
 export default DialogModal;

@@ -63,15 +63,15 @@ class GridToolbar extends React.Component<IProps, IState> {
 
     return (
       <DataSourceContext.Consumer>
-        {({ dataSource, actions }) =>
+        {({ state, actions }) =>
           <Toolbar>
             <div className={classes.spacer} />
             {toolbarOptions.exportButton &&
-              <IconButton disabled={dataSource.filteredRecordCount === 0} onClick={this.handleExportMenu}>
+              <IconButton disabled={state.filteredRecordCount === 0} onClick={this.handleExportMenu}>
                 <FileDownload />
               </IconButton>}
             {toolbarOptions.printButton &&
-              <IconButton disabled={dataSource.filteredRecordCount === 0} onClick={this.handlePrintMenu} >
+              <IconButton disabled={state.filteredRecordCount === 0} onClick={this.handlePrintMenu} >
                 <Print />
               </IconButton>}
             {toolbarOptions.searchText &&
@@ -79,7 +79,7 @@ class GridToolbar extends React.Component<IProps, IState> {
                 <Input
                   fullWidth={true}
                   type='text'
-                  value={dataSource.searchText}
+                  value={state.searchText}
                   onChange={(e: any) => actions.updateSearchText(e.target.value)}
                   startAdornment={
                     <InputAdornment position='end'>
@@ -87,7 +87,7 @@ class GridToolbar extends React.Component<IProps, IState> {
                     </InputAdornment>
                   }
                   endAdornment={
-                    dataSource.searchText !== '' &&
+                    state.searchText !== '' &&
                     <InputAdornment position='end'>
                       <IconButton onClick={() => actions.updateSearchText('')}>
                         <Close />

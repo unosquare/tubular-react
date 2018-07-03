@@ -3,10 +3,9 @@ import { IconButton, TableCell, TableRow, TableSortLabel, Tooltip } from '@mater
 import { ArrowDownward, ArrowUpward, FilterList } from '@material-ui/icons';
 
 import * as React from 'react';
+import { DataSourceContext } from './DataSource/DataSourceContext';
 import DialogModal from './DialogModal';
 import { ColumnSortDirection, CompareOperators } from './Models/Column';
-
-import { GridConsumer } from './GridContext';
 
 const arrowStyle = {
   marginLeft: '5px',
@@ -15,7 +14,7 @@ const arrowStyle = {
 
 const GridHeader: React.SFC = () => {
   return (
-    <GridConsumer>
+    <DataSourceContext.Consumer>
       {({ actions, state }) =>
         <TableRow>
           {state.activeColumn && <DialogModal />}
@@ -55,7 +54,7 @@ const GridHeader: React.SFC = () => {
             );
           })}
         </TableRow>}
-    </GridConsumer>
+    </DataSourceContext.Consumer>
   );
 };
 export default GridHeader;
