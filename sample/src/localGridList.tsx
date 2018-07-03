@@ -1,8 +1,12 @@
 import {
     GridList, GridListTile,
-    GridListTileBar, IconButton,
-    ListSubheader
+    Typography, Button,
+    TableCell,
+    TableBody
 } from '@material-ui/core';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
 import InfoIcon from '@material-ui/icons/Info';
 import * as React from 'react';
 import {
@@ -11,8 +15,7 @@ import {
     ColumnModel,
     ColumnSortDirection,
     DataSourceContext,
-    Paginator,
-    ToolbarOptions
+    Paginator
 } from '../../src';
 import withRemoteDataSource from '../../src/DataGrid/DataSource/RemoteDataSource';
 import { Table, TableHead, TableRow } from '@material-ui/core';
@@ -70,34 +73,44 @@ class LocalGridList extends React.Component<any, any> {
     }
 
     public render() {
-        const toolbarOptions = new ToolbarOptions();
         return (
             <DataSourceContext.Consumer>
                 {({ dataSource }) =>
-                    <GridList cellHeight={180}>
-                        <GridListTile key='Subheader' cols={2} style={{ height: 'auto' }}>
-                            <ListSubheader component='table' >
-                            <div >
-                                <Paginator rowsPerPageOptions={toolbarOptions.rowsPerPageOptions} />
-                            </div>
-                            </ListSubheader>
-                        </GridListTile>
-                        {dataSource.data.map((dato) => (
-                            <GridListTile key={dato.OrderID}>
-                                <h4>{dato.CustomerName}</h4>
-                                <span>{dato.ShippedDate}</span>
-                                <GridListTileBar
-                                    title={dato.Amount}
-                                    subtitle={<span>In: {dato.ShipperCity}</span>}
-                                    actionIcon={
-                                        <IconButton>
-                                            <InfoIcon />
-                                        </IconButton>
-                                    }
-                                />
-                            </GridListTile>
-                        ))}
-                    </GridList>}
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <Paginator />
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell>
+                                    <GridList cellHeight={180} cols={4}>
+                                        {dataSource.data.map((dato) => (
+                                            <GridListTile key={dato.OrderID}>
+                                                <Card>
+                                                    <CardContent>
+                                                        <Typography gutterBottom variant="headline" component="h2">
+                                                            {dato.CustomerName}
+                                                        </Typography>
+                                                        <Typography component="p">
+                                                            {dato.ShippedDate}
+                                                        </Typography>
+                                                    </CardContent>
+                                                    <CardActions>
+                                                        <Button size="small" color="primary">
+                                                            Learn More
+          </Button>
+                                                    </CardActions>
+                                                </Card>
+                                            </GridListTile>
+                                        ))}
+                                    </GridList>
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                }
             </DataSourceContext.Consumer>
         );
     }

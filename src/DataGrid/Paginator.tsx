@@ -21,11 +21,10 @@ const Paginator: React.SFC<IProps> = ({ rowsPerPageOptions }) => {
       {({ dataSource, actions }) =>
         <TablePagination
           labelDisplayedRows={message(dataSource.totalRecordCount, dataSource.filteredRecordCount)}
-          labelRowsPerPage={'Page size:'}
           count={dataSource.filteredRecordCount}
           rowsPerPage={dataSource.itemsPerPage}
           page={dataSource.page}
-          rowsPerPageOptions={rowsPerPageOptions}
+          rowsPerPageOptions={rowsPerPageOptions || [10,20,50]}
           onChangePage={(e, p) => actions.updatePage(p)}
           onChangeRowsPerPage={(e: any) => actions.updateItemPerPage(Number(e.target.value), )}
           ActionsComponent={TablePaginationActions}
