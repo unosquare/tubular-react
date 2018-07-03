@@ -6,6 +6,7 @@ import * as React from 'react';
 
 import LocalDataGrid from './localDataGrid';
 import RemoteDataGrid from './remoteDataGrid';
+import LocalGridList from './localGridList';
 
 const styles = (theme: any) => ({
   root: {
@@ -21,7 +22,7 @@ class Main extends React.Component<any, any> {
 
   public handleChange = (event: any, value: any) => {
     this.setState({ value });
-  };
+  }
 
   render() {
     const { classes } = this.props;
@@ -33,10 +34,12 @@ class Main extends React.Component<any, any> {
           <Tabs value={value} onChange={this.handleChange}>
             <Tab label="Remote Datasource" />
             <Tab label="Local Datasource" />
+            <Tab label="Grid List" />
           </Tabs>
         </AppBar>
         {value === 0 && <RemoteDataGrid />}
         {value === 1 && <LocalDataGrid />}
+        {value === 2 && <LocalGridList />}
       </div>
     );
   }

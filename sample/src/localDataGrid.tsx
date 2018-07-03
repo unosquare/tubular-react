@@ -10,8 +10,8 @@ import DataGrid, {
   ColumnSortDirection,
   ToolbarOptions
 } from '../../src';
-import localData from './local/localData';
 import withLocalDataSource from '../../src/DataGrid/DataSource/LocalDataSource';
+import localData from './local/localData';
 
 const toolbarOptions = new ToolbarOptions();
 const columns = [

@@ -4,6 +4,8 @@ import DataGrid,
   ColumnDataType,
   ColumnModel,
   ColumnSortDirection,
+  DataSourceContext,
+  Paginator,
   ToolbarOptions,
   withLocalDataSource,
   withRemoteDataSource
@@ -16,7 +18,9 @@ export {
   ColumnDataType,
   ColumnModel,
   ColumnSortDirection,
+  DataSourceContext,
+  Paginator,
+  ToolbarOptions,
   withLocalDataSource,
-  withRemoteDataSource,
-  ToolbarOptions
+  withRemoteDataSource
 };
