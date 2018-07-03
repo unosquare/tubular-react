@@ -1,16 +1,16 @@
-import * as React from 'react';
 import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import { withStyles } from '@material-ui/core/styles';
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
+import * as React from 'react';
 
-import RemoteDataGrid from './remoteDataGrid';
 import LocalDataGrid from './localDataGrid';
+import RemoteDataGrid from './remoteDataGrid';
 
 const styles = (theme: any) => ({
   root: {
-    flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
+    flexGrow: 1
   }
 });
 
@@ -28,16 +28,16 @@ class Main extends React.Component<any, any> {
     const { value } = this.state;
 
     return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Tabs value={value} onChange={this.handleChange}>
-          <Tab label="Remote Datasource" />
-          <Tab label="Local Datasource" />
-        </Tabs>
-      </AppBar>
-      {value === 0 &&<RemoteDataGrid />}
-      {value === 1 &&<LocalDataGrid />}
-    </div>
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Tabs value={value} onChange={this.handleChange}>
+            <Tab label="Remote Datasource" />
+            <Tab label="Local Datasource" />
+          </Tabs>
+        </AppBar>
+        {value === 0 && <RemoteDataGrid />}
+        {value === 1 && <LocalDataGrid />}
+      </div>
     );
   }
 };
