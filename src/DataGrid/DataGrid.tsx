@@ -68,6 +68,6 @@ const DataGrid: React.SFC<IProps> = ({ classes, bodyRenderer, footerRenderer, to
         </Paper>}
     </DataSourceContext.Consumer>
   );
-}
+};
 
 export default withStyles(styles)(DataGrid);
