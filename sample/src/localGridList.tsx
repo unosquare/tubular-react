@@ -1,13 +1,12 @@
 import {
-    GridList, GridListTile,
-    Typography, Button,
-    TableCell,
-    TableBody
+    createStyles, LinearProgress,
+    Paper, Theme, Toolbar, WithStyles
 } from '@material-ui/core';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import InfoIcon from '@material-ui/icons/Info';
+import { Card, CardActions, CardContent } from '@material-ui/core';
+import { GridList, GridListTile, Typography } from '@material-ui/core';
+import { Button, FormControl, IconButton, Input, InputAdornment } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableFooter, TableHead, TableRow } from '@material-ui/core';
+import { Close, Search } from '@material-ui/icons';
 import * as React from 'react';
 import {
     AggregateFunctions,
@@ -15,10 +14,10 @@ import {
     ColumnModel,
     ColumnSortDirection,
     DataSourceContext,
-    Paginator
+    Paginator,
+    ToolbarOptions
 } from '../../src';
 import withRemoteDataSource from '../../src/DataGrid/DataSource/RemoteDataSource';
-import { Table, TableHead, TableRow } from '@material-ui/core';
 
 const columns = [
     new ColumnModel('OrderID',
@@ -62,8 +61,24 @@ const columns = [
         }
     )
 ];
-
-class LocalGridList extends React.Component<any, any> {
+const styles = (theme: Theme) => createStyles(
+    {
+        progress: {
+            height: theme.spacing.unit * 2
+        },
+        root: {
+            marginTop: theme.spacing.unit * 3,
+            overflowX: 'auto',
+            width: '100%'
+        }
+    });
+interface IProps extends WithStyles<typeof styles> {
+    gridName?: string;
+    toolbarOptions?: ToolbarOptions;
+    bodyRenderer?(column: any, index: number): any;
+    footerRenderer?(aggregate: any): any;
+}
+class LocalGridList extends React.Component<IProps, any> {
     public state = {
         errorMessage: null as any
     };
@@ -73,43 +88,79 @@ class LocalGridList extends React.Component<any, any> {
     }
 
     public render() {
+        const { classes, toolbarOptions } = this.props;
         return (
             <DataSourceContext.Consumer>
-                {({ dataSource }) =>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <Paginator />
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            <TableRow>
-                                <TableCell>
-                                    <GridList cellHeight={180} cols={4}>
-                                        {dataSource.data.map((dato) => (
-                                            <GridListTile key={dato.OrderID}>
-                                                <Card>
-                                                    <CardContent>
-                                                        <Typography gutterBottom variant="headline" component="h2">
-                                                            {dato.CustomerName}
-                                                        </Typography>
-                                                        <Typography component="p">
-                                                            {dato.ShippedDate}
-                                                        </Typography>
-                                                    </CardContent>
-                                                    <CardActions>
-                                                        <Button size="small" color="primary">
-                                                            Learn More
-          </Button>
-                                                    </CardActions>
-                                                </Card>
-                                            </GridListTile>
-                                        ))}
-                                    </GridList>
-                                </TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
+                {({ dataSource, actions }) =>
+                    <Paper >
+                        <Toolbar>
+                            <FormControl >
+                                <Input
+                                    fullWidth={true}
+                                    type='text'
+                                    value={dataSource.searchText}
+                                    onChange={(e: any) => actions.updateSearchText(e.target.value)}
+                                    startAdornment={
+                                        <InputAdornment position='end'>
+                                            <Search />
+                                        </InputAdornment>
+                                    }
+                                    endAdornment={
+                                        dataSource.searchText !== '' &&
+                                        <InputAdornment position='end'>
+                                            <IconButton onClick={() => actions.updateSearchText('')}>
+                                                <Close />
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                />
+                            </FormControl>
+                        </Toolbar>
+                        <div >{dataSource.isLoading && <LinearProgress />}</div>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <Paginator />
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell>
+                                        <GridList cellHeight={180} cols={4}>
+                                            {dataSource.data.map((dato) => (
+                                                <GridListTile key={dato.OrderID}>
+                                                    <Card>
+                                                        <CardContent>
+                                                            <Typography
+                                                                gutterBottom={true}
+                                                                variant='headline'
+                                                                component='h2'
+                                                            >
+                                                                {dato.CustomerName}
+                                                            </Typography>
+                                                            <Typography component='p'>
+                                                                {dato.ShippedDate}
+                                                            </Typography>
+                                                        </CardContent>
+                                                        <CardActions>
+                                                            <Button size='small' color='primary'>
+                                                                Learn More
+                                                        </Button>
+                                                        </CardActions>
+                                                    </Card>
+                                                </GridListTile>
+                                            ))}
+                                        </GridList>
+                                    </TableCell>
+                                </TableRow>
+                            </TableBody>
+                            <TableFooter>
+                                <TableRow>
+                                    <Paginator />
+                                </TableRow>
+                            </TableFooter>
+                        </Table>
+                    </Paper>
                 }
             </DataSourceContext.Consumer>
         );

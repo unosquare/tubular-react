@@ -9,6 +9,6 @@ import Paginator from './Paginator';
 
 export default DataGrid;
 export {
-  AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection,
-  DataSourceContext, Paginator, ToolbarOptions, withLocalDataSource, withRemoteDataSource
+  AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection, DataSourceContext,
+  Paginator, ToolbarOptions, withLocalDataSource, withRemoteDataSource
 };
