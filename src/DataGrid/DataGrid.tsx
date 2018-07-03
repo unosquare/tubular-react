@@ -10,8 +10,8 @@ import GridHeader from './GridHeader';
 import GridToolbar from './GridToolbar';
 import Paginator from './Paginator';
 
-import { DataSourceContext } from './DataSource/DataSourceContext';
-import ToolbarOptions from './Models/ToolbarOptions';
+import { DataSourceContext } from '../DataSource';
+import ToolbarOptions from '../Models/ToolbarOptions';
 
 const styles = (theme: Theme) => createStyles(
   {
@@ -32,10 +32,8 @@ interface IProps extends WithStyles<typeof styles> {
   footerRenderer?(aggregate: any): any;
 }
 
-const DataGrid: React.SFC<IProps> = () => {
-  const { classes, bodyRenderer, footerRenderer } = this.props;
-  const toolbarOptions = this.props.toolbarOptions || new ToolbarOptions();
-  const gridName = this.props.gridName || 'Grid';
+const DataGrid: React.SFC<IProps> = ({ classes, bodyRenderer, footerRenderer, toolbarOptions, gridName }) => {
+  toolbarOptions = toolbarOptions || new ToolbarOptions();
 
   return (
     <DataSourceContext.Consumer>
@@ -43,7 +41,7 @@ const DataGrid: React.SFC<IProps> = () => {
         <Paper className={classes.root}>
           <GridToolbar
             toolbarOptions={toolbarOptions}
-            gridName={gridName}
+            gridName={gridName || 'Grid'}
           />
           <div className={classes.progress}>
             {state.isLoading && <LinearProgress />}

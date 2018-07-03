@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { ColumnDataType, CompareOperators } from './Models/Column';
+import { ColumnDataType, CompareOperators } from '../Models';
 
 import { Input, MenuItem, Select } from '@material-ui/core';
-import { DataSourceContext } from './DataSource/DataSourceContext';
+import { DataSourceContext } from '../DataSource';
 
 const dropdown = {
   marginLeft: '10%',

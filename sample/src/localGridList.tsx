@@ -15,9 +15,9 @@ import {
     ColumnModel,
     ColumnSortDirection,
     DataSourceContext,
-    Paginator
+    Paginator,
+    withRemoteDataSource
 } from '../../src';
-import withRemoteDataSource from '../../src/DataGrid/DataSource/RemoteDataSource';
 import { Table, TableHead, TableRow } from '@material-ui/core';
 
 const columns = [
@@ -75,7 +75,7 @@ class LocalGridList extends React.Component<any, any> {
     public render() {
         return (
             <DataSourceContext.Consumer>
-                {({ dataSource }) =>
+                {({ state }) =>
                     <Table>
                         <TableHead>
                             <TableRow>
@@ -86,7 +86,7 @@ class LocalGridList extends React.Component<any, any> {
                             <TableRow>
                                 <TableCell>
                                     <GridList cellHeight={180} cols={4}>
-                                        {dataSource.data.map((dato) => (
+                                        {state.data.map((dato) => (
                                             <GridListTile key={dato.OrderID}>
                                                 <Card>
                                                     <CardContent>

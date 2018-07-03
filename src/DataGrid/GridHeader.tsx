@@ -3,9 +3,9 @@ import { IconButton, TableCell, TableRow, TableSortLabel, Tooltip } from '@mater
 import { ArrowDownward, ArrowUpward, FilterList } from '@material-ui/icons';
 
 import * as React from 'react';
-import { DataSourceContext } from './DataSource/DataSourceContext';
+import { DataSourceContext } from '../DataSource';
 import DialogModal from './DialogModal';
-import { ColumnSortDirection, CompareOperators } from './Models/Column';
+import { ColumnSortDirection, CompareOperators } from '../Models/Column';
 
 const arrowStyle = {
   marginLeft: '5px',

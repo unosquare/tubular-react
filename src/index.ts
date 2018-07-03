@@ -1,15 +1,21 @@
 import DataGrid,
 {
+  Paginator
+} from './DataGrid';
+
+import {
   AggregateFunctions,
   ColumnDataType,
   ColumnModel,
   ColumnSortDirection,
+  ToolbarOptions
+} from './Models';
+
+import {
   DataSourceContext,
-  Paginator,
-  ToolbarOptions,
   withLocalDataSource,
   withRemoteDataSource
-} from './DataGrid';
+} from './DataSource';
 
 export default DataGrid;
 

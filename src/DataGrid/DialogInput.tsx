@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import { MenuItem, TextField } from '@material-ui/core';
 
-import { ColumnDataType, CompareOperators } from './Models/Column';
+import { ColumnDataType, CompareOperators } from '../Models/Column';
 
 const dropdown = {
   marginLeft: '10%',

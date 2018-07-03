@@ -2,10 +2,10 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mate
 
 import * as React from 'react';
 import DialogInput from './DialogInput';
-import { DataSourceContext } from './DataSource/DataSourceContext';
+import { DataSourceContext } from '../DataSource';
 import OperatorsDropdown from './OperatorsDropdown';
 
-import { ColumnDataType, CompareOperators } from './Models/Column';
+import { ColumnDataType, CompareOperators } from '../Models/Column';
 
 const createFilterPatch = (activeColumn: any) => {
     let filterText = activeColumn.Filter.Text;

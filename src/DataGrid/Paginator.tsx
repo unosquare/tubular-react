@@ -2,7 +2,7 @@ import { TablePagination } from '@material-ui/core';
 import * as React from 'react';
 import TablePaginationActions from './TablePaginationActions';
 
-import { DataSourceContext } from './DataSource/DataSourceContext';
+import { DataSourceContext } from '../DataSource';
 
 interface IProps {
   rowsPerPageOptions?: number[];
