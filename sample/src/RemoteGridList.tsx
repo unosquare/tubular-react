@@ -1,4 +1,5 @@
 import {
+    Checkbox,
     LinearProgress,
     Paper
 } from '@material-ui/core';
@@ -6,17 +7,15 @@ import { Card, CardActions, CardContent } from '@material-ui/core';
 import { GridList, GridListTile, Typography } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableRow } from '@material-ui/core';
+import { format } from 'date-fns';
 import * as React from 'react';
 import {
-    AggregateFunctions,
-    ColumnDataType,
-    ColumnModel,
-    ColumnSortDirection,
     DataSourceContext,
     Paginator,
     TextSearchInput,
     withRemoteDataSource
 } from '../../src';
+import columns from './local/LocalColumnsFormat';
 
 const styles: any = {
     progress: {
@@ -28,48 +27,6 @@ const styles: any = {
     }
 };
 
-const columns = [
-    new ColumnModel('OrderID',
-        {
-            DataType: ColumnDataType.NUMERIC,
-            Filtering: true,
-            IsKey: true,
-            Label: 'ID',
-            SortDirection: ColumnSortDirection.ASCENDING,
-            SortOrder: 1,
-            Sortable: true
-        }
-    ),
-    new ColumnModel('CustomerName',
-        {
-            Aggregate: AggregateFunctions.COUNT,
-            Filtering: true,
-            Searchable: true,
-            Sortable: true
-        }
-    ),
-    new ColumnModel('ShippedDate',
-        {
-            DataType: ColumnDataType.DATE_TIME,
-            Filtering: true,
-            Sortable: true
-        }
-    ),
-    new ColumnModel('ShipperCity'),
-    new ColumnModel('Amount',
-        {
-            DataType: ColumnDataType.NUMERIC,
-            Sortable: true
-        }
-    ),
-    new ColumnModel('IsShipped',
-        {
-            DataType: ColumnDataType.BOOLEAN,
-            Filtering: true,
-            Sortable: true
-        }
-    )
-];
 class RemoteGridList extends React.Component<any, any> {
     public state = {
         errorMessage: null as any
@@ -105,7 +62,10 @@ class RemoteGridList extends React.Component<any, any> {
                                                                 {dato.OrderID} - {dato.CustomerName}
                                                             </Typography>
                                                             <Typography component='p'>
-                                                                {dato.ShippedDate}
+                                                                {dato.ShipperCity}
+                                                            </Typography>
+                                                            <Typography component='p'>
+                                                                {format(dato.ShippedDate, 'MMM D YYYY')}
                                                             </Typography>
                                                         </CardContent>
                                                         <CardActions>

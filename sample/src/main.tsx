@@ -9,6 +9,14 @@ import RemoteDataGrid from './remoteDataGrid';
 import RemoteGridList from './remoteGridList';
 
 const styles = (theme: any) => ({
+  logo: {
+    color: 'rgb(255, 255, 255)',
+    display: 'block',
+    fontFamily: 'Roboto',
+    height: 50,
+    maxWidth: 150,
+    width: 150
+  },
   root: {
     backgroundColor: theme.palette.background.paper,
     flexGrow: 1
@@ -31,6 +39,11 @@ class Main extends React.Component<any, any> {
     return (
       <div className={classes.root}>
         <AppBar position='static'>
+          <img
+            className={classes.logo}
+            src='https://unosquare.github.io/tubular-react/static/tubular.png'
+            alt='Tubular'
+          />
           <Tabs value={value} onChange={this.handleChange}>
             <Tab label='Remote DataGrid' />
             <Tab label='Local DataGrid' />

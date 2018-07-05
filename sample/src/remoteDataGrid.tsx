@@ -4,57 +4,12 @@ import { Snackbar, TableCell, TableRow } from '@material-ui/core';
 import { CheckBox, CheckBoxOutlineBlank } from '@material-ui/icons';
 import { format } from 'date-fns';
 import DataGrid, {
-  AggregateFunctions,
-  ColumnDataType,
-  ColumnModel,
-  ColumnSortDirection,
   ToolbarOptions,
   withRemoteDataSource
 } from '../../src';
+import columns from './local/LocalColumnsFormat';
 
 const toolbarOptions = new ToolbarOptions();
-const columns = [
-  new ColumnModel('OrderID',
-    {
-      DataType: ColumnDataType.NUMERIC,
-      Filtering: true,
-      IsKey: true,
-      Label: 'ID',
-      SortDirection: ColumnSortDirection.ASCENDING,
-      SortOrder: 1,
-      Sortable: true
-    }
-  ),
-  new ColumnModel('CustomerName',
-    {
-      Aggregate: AggregateFunctions.COUNT,
-      Filtering: true,
-      Searchable: true,
-      Sortable: true
-    }
-  ),
-  new ColumnModel('ShippedDate',
-    {
-      DataType: ColumnDataType.DATE_TIME,
-      Filtering: true,
-      Sortable: true
-    }
-  ),
-  new ColumnModel('ShipperCity'),
-  new ColumnModel('Amount',
-    {
-      DataType: ColumnDataType.NUMERIC,
-      Sortable: true
-    }
-  ),
-  new ColumnModel('IsShipped',
-    {
-      DataType: ColumnDataType.BOOLEAN,
-      Filtering: true,
-      Sortable: true
-    }
-  )
-];
 
 class RemoteDataGrid extends React.Component<any, any> {
   public state = {

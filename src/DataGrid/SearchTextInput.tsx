@@ -9,7 +9,7 @@ import { DataSourceContext } from '../DataSource';
 const styles: any = {
     formControl: {
       margin: '10px',
-      minWidth: 250
+      width: 250
     }
   };
 
