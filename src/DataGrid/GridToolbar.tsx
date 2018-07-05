@@ -8,7 +8,7 @@ import * as React from 'react';
 import { DataSourceContext } from '../DataSource';
 import { exportGrid } from './GridToolbarFunctions';
 
-import SearchTextInput from './TextSearchInput'
+import SearchTextInput from './SearchTextInput';
 
 const styles = (theme: Theme) => createStyles(
   {

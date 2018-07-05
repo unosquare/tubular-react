@@ -1,21 +1,24 @@
 import { TablePagination } from '@material-ui/core';
 import * as React from 'react';
+import BasicPagination from './BasicPagination';
 import TablePaginationActions from './TablePaginationActions';
 
 import { DataSourceContext } from '../DataSource';
 
 interface IProps {
   rowsPerPageOptions?: number[];
+  advancePagination?: boolean;
 }
 
-const message = (totalRecordCount: any, filteredRecordCount: any) => ({ from, to, count }: any) =>
+const message = (totalRecordCount: any, filteredRecordCount: any) => (
+  { from, to, count }: any) =>
   totalRecordCount === filteredRecordCount ?
     `${from}-${to} of ${count}` :
     filteredRecordCount === 0 ?
       '0 records found' :
       `${from} to ${to} of ${count} from ${totalRecordCount} records`;
 
-const Paginator: React.SFC<IProps> = ({ rowsPerPageOptions }) => {
+const Paginator: React.SFC<IProps> = ({ rowsPerPageOptions, advancePagination }) => {
   return (
     <DataSourceContext.Consumer>
       {({ state, actions }) =>
@@ -27,7 +30,7 @@ const Paginator: React.SFC<IProps> = ({ rowsPerPageOptions }) => {
           rowsPerPageOptions={rowsPerPageOptions || [10, 20, 50]}
           onChangePage={(e, p) => actions.updatePage(p)}
           onChangeRowsPerPage={(e: any) => actions.updateItemPerPage(Number(e.target.value), )}
-          ActionsComponent={TablePaginationActions}
+          ActionsComponent={advancePagination ? TablePaginationActions  : BasicPagination}
         />}
     </DataSourceContext.Consumer>
   );

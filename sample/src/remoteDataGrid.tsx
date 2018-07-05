@@ -67,7 +67,6 @@ class RemoteDataGrid extends React.Component<any, any> {
 
   public render() {
     const { errorMessage } = this.state;
-
     return (
       <div className="root">
         {errorMessage &&

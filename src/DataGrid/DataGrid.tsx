@@ -1,5 +1,5 @@
 import {
-  LinearProgress, Paper, Table, TableFooter,
+  Checkbox, LinearProgress, Paper, Table, TableFooter,
   TableHead, TableRow
 } from '@material-ui/core';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
@@ -50,7 +50,10 @@ const DataGrid: React.SFC<IProps> = ({ classes, bodyRenderer, footerRenderer, to
             <TableHead>
               {toolbarOptions.topPager &&
                 <TableRow>
-                  <Paginator rowsPerPageOptions={toolbarOptions.rowsPerPageOptions} />
+                  <Paginator
+                    rowsPerPageOptions={toolbarOptions.rowsPerPageOptions}
+                    advancePagination={toolbarOptions.advancePagination}
+                  />
                 </TableRow>
               }
               <GridHeader />
@@ -60,7 +63,10 @@ const DataGrid: React.SFC<IProps> = ({ classes, bodyRenderer, footerRenderer, to
               {footerRenderer && footerRenderer(state.aggregate)}
               {toolbarOptions.bottomPager &&
                 <TableRow>
-                  <Paginator rowsPerPageOptions={toolbarOptions.rowsPerPageOptions} />
+                  <Paginator
+                    rowsPerPageOptions={toolbarOptions.rowsPerPageOptions}
+                    advancePagination={toolbarOptions.advancePagination}
+                  />
                 </TableRow>
               }
             </TableFooter>
