@@ -1,11 +1,11 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 
 import * as React from 'react';
+import { DataSourceContext } from '../DataSource';
 import DialogInput from './DialogInput';
-import { GridConsumer } from './GridContext';
 import OperatorsDropdown from './OperatorsDropdown';
 
-import { ColumnDataType, CompareOperators } from './Models/Column';
+import { ColumnDataType, CompareOperators } from '../Models/Column';
 
 const createFilterPatch = (activeColumn: any) => {
     let filterText = activeColumn.Filter.Text;
@@ -35,7 +35,7 @@ const clearFilterPatch = {
 
 const DialogModal: React.SFC = () => {
     return (
-        <GridConsumer>
+        <DataSourceContext.Consumer>
             {({ state, actions }) =>
                 <Dialog open={true} onClose={actions.handleClose} >
                     <DialogTitle>Filter</DialogTitle>
@@ -73,7 +73,7 @@ const DialogModal: React.SFC = () => {
                         </DialogActions>
                     </DialogContent>
                 </Dialog>}
-        </GridConsumer>
+        </DataSourceContext.Consumer>
     );
 };
 export default DialogModal;

@@ -6,9 +6,9 @@ import { CheckBox, CheckBoxOutlineBlank, Warning } from '@material-ui/icons';
 import { format } from 'date-fns';
 import * as React from 'react';
 
-import { DataSourceContext } from './DataSource/DataSourceContext';
-import { ColumnDataType } from './Models/Column';
-import ColumnModel from './Models/ColumnModel';
+import { DataSourceContext } from '../DataSource';
+import { ColumnDataType } from '../Models/Column';
+import ColumnModel from '../Models/ColumnModel';
 
 const renderCell = (column: ColumnModel, row: any) => {
     switch (column.DataType) {
@@ -33,14 +33,14 @@ interface IProps {
 const GridBody: React.SFC<IProps> = ({ bodyRenderer }) => {
     return (
         <DataSourceContext.Consumer>
-            {({ dataSource }) =>
+            {({ state }) =>
                 <TableBody>
-                    {dataSource.data.map((row: any, rowIndex: number) => (
+                    {state.data.map((row: any, rowIndex: number) => (
                         bodyRenderer
                             ? bodyRenderer(row, rowIndex)
                             : <TableRow hover={true} key={rowIndex}>
                                 {
-                                    dataSource.columns
+                                    state.columns
                                         .filter((col: any) => col.Visible)
                                         .map((column: ColumnModel, colIndex: number) =>
                                             <TableCell
@@ -52,9 +52,9 @@ const GridBody: React.SFC<IProps> = ({ bodyRenderer }) => {
                                 }
                             </TableRow>
                     ))}
-                    {dataSource.filteredRecordCount === 0 &&
+                    {state.filteredRecordCount === 0 &&
                         (<TableRow>
-                            <TableCell colSpan={dataSource.columns.filter((col: any) => col.Visible).length}>
+                            <TableCell colSpan={state.columns.filter((col: any) => col.Visible).length}>
                                 <Typography style={{ paddingLeft: '15px' }} variant='body2' gutterBottom={true}>
                                     <Warning /> No records found
                                 </Typography>

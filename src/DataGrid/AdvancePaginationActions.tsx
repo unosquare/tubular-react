@@ -50,7 +50,7 @@ const getPages = (currentPage: any, totalPages: any) => {
   return pages;
 };
 
-const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsPerPage, onChangePage }) => {
+const AdvancePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsPerPage, onChangePage }) => {
   const pages = getPages(page, count);
   return (
     <div className={classes.root}>
@@ -105,4 +105,4 @@ const TablePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsP
   );
 };
 
-export default withStyles(styles, { withTheme: true })(TablePaginationActions);
+export default withStyles(styles, { withTheme: true })(AdvancePaginationActions);
