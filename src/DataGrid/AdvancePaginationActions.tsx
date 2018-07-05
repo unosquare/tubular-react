@@ -20,7 +20,38 @@ interface IProps extends WithStyles<typeof styles> {
   onChangePage(event: React.MouseEvent<HTMLElement>, page: number): void;
 }
 
-const BasicPagination: React.SFC<IProps> = ({ classes, count, page, rowsPerPage, onChangePage }) => {
+const getPages = (currentPage: any, totalPages: any) => {
+  const pages = [];
+
+  // Default page limits
+  let startPage = 1;
+  let endPage = totalPages;
+  const maxSize  = 6;
+  const isMaxSized = maxSize < totalPages;
+
+  // recompute if maxSize
+  if (isMaxSized) {
+      // Current page is displayed in the middle of the visible ones
+      startPage = Math.max(currentPage - Math.floor(maxSize / 2), 1);
+      endPage = startPage + maxSize - 1;
+
+      // Adjust if limit is exceeded
+      if (endPage > totalPages) {
+        endPage = totalPages;
+        startPage = endPage - maxSize + 1;
+      }
+  }
+
+  // Add page number links
+  for (let num = startPage; num < endPage; num++) {
+    pages.push(num - 1);
+  }
+
+  return pages;
+};
+
+const AdvancePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsPerPage, onChangePage }) => {
+  const pages = getPages(page, count);
   return (
     <div className={classes.root}>
       <IconButton
@@ -38,6 +69,21 @@ const BasicPagination: React.SFC<IProps> = ({ classes, count, page, rowsPerPage,
       >
         <KeyboardArrowLeft />
       </IconButton>
+
+      {
+        pages.map((value) => (
+            <IconButton
+              key={value}
+              onClick={(e) => onChangePage(e, value)}
+              disabled={value >= Math.ceil(count / rowsPerPage)}
+              aria-label={`Page ${value + 1}`}
+              color={ value === page ?
+                 'primary' :
+                 'default' }
+            >
+              {value + 1}
+            </IconButton>))
+      }
 
       <IconButton
         onClick={(e) => onChangePage(e, page + 1)}
@@ -59,4 +105,4 @@ const BasicPagination: React.SFC<IProps> = ({ classes, count, page, rowsPerPage,
   );
 };
 
-export default withStyles(styles, { withTheme: true })(BasicPagination);
+export default withStyles(styles, { withTheme: true })(AdvancePaginationActions);

@@ -10,9 +10,6 @@ const styles: any = {
     formControl: {
       margin: '10px',
       minWidth: 250
-    },
-    spacer: {
-      flex: '1 1 100%'
     }
   };
 
@@ -20,7 +17,7 @@ const SearchTextInput: React.SFC = () => {
   return (
     <DataSourceContext.Consumer>
       {({ state, actions }) =>
-        <FormControl className={styles.formControl}>
+        <FormControl style={styles.formControl}>
           <Input
             fullWidth={true}
             type='text'

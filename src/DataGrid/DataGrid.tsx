@@ -1,5 +1,5 @@
 import {
-  Checkbox, LinearProgress, Paper, Table, TableFooter,
+  LinearProgress, Paper, Table, TableFooter,
   TableHead, TableRow
 } from '@material-ui/core';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';

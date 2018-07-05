@@ -1,6 +1,6 @@
 import {
     LinearProgress,
-    Paper, Toolbar
+    Paper
 } from '@material-ui/core';
 import { Card, CardActions, CardContent } from '@material-ui/core';
 import { GridList, GridListTile, Typography } from '@material-ui/core';
@@ -18,7 +18,7 @@ import {
     withRemoteDataSource
 } from '../../src';
 
-const styles: any  = {
+const styles: any = {
     progress: {
         height: '20px'
     },
@@ -85,19 +85,14 @@ class RemoteGridList extends React.Component<any, any> {
                 {({ state }) =>
                     <Paper >
                         <div style={styles.search}>
-                        <TextSearchInput />
+                            <TextSearchInput />
                         </div>
                         <div style={styles.progress} >{state.isLoading && <LinearProgress />}</div>
                         <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <Paginator />
-                                </TableRow>
-                            </TableHead>
                             <TableBody>
                                 <TableRow>
                                     <TableCell>
-                                        <GridList cellHeight={180} cols={4}>
+                                        <GridList cellHeight={180} cols={5}>
                                             {state.data.map((dato) => (
                                                 <GridListTile key={dato.OrderID}>
                                                     <Card>
@@ -107,7 +102,7 @@ class RemoteGridList extends React.Component<any, any> {
                                                                 variant='headline'
                                                                 component='h2'
                                                             >
-                                                                {dato.CustomerName}
+                                                                {dato.OrderID} - {dato.CustomerName}
                                                             </Typography>
                                                             <Typography component='p'>
                                                                 {dato.ShippedDate}
@@ -127,7 +122,7 @@ class RemoteGridList extends React.Component<any, any> {
                             </TableBody>
                             <TableFooter>
                                 <TableRow>
-                                    <Paginator />
+                                    <Paginator advancePagination={false} />
                                 </TableRow>
                             </TableFooter>
                         </Table>
