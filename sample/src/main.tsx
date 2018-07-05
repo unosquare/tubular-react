@@ -24,17 +24,17 @@ class Main extends React.Component<any, any> {
     this.setState({ value });
   }
 
-  render() {
+  public render() {
     const { classes } = this.props;
     const { value } = this.state;
 
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position='static'>
           <Tabs value={value} onChange={this.handleChange}>
-            <Tab label="Remote DataGrid" />
-            <Tab label="Local DataGrid" />
-            <Tab label="Remote Grid List" />
+            <Tab label='Remote DataGrid' />
+            <Tab label='Local DataGrid' />
+            <Tab label='Remote Grid List' />
           </Tabs>
         </AppBar>
         {value === 0 && <RemoteDataGrid />}
@@ -43,6 +43,6 @@ class Main extends React.Component<any, any> {
       </div>
     );
   }
-};
+}
 
 export default withStyles(styles)(Main);

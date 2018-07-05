@@ -68,7 +68,7 @@ class RemoteDataGrid extends React.Component<any, any> {
   public render() {
     const { errorMessage } = this.state;
     return (
-      <div className="root">
+      <div className='root'>
         {errorMessage &&
           <Snackbar
             anchorOrigin={{ vertical: 'top', horizontal: 'center' }}

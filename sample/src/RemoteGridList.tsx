@@ -131,8 +131,7 @@ class RemoteGridList extends React.Component<any, any> {
                                 </TableRow>
                             </TableFooter>
                         </Table>
-                    </Paper>
-                }
+                    </Paper>}
             </DataSourceContext.Consumer>
         );
     }
