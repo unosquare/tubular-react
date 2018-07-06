@@ -10,6 +10,7 @@ import GridHeader from '../src/DataGrid/GridHeader';
 import { ColumnDataType } from '../src';
 import { CompareOperators } from '../src/Models'
 import { amountFilterColumnsSample, isShippedFilterColumnsSample, validColumnsSample } from './utils/columns';
+jest.mock('../src/DataSource/DataSourceContext');
 
 describe.skip('<GridHeader />', () => {
   let shallow;

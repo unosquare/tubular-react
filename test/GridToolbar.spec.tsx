@@ -10,6 +10,7 @@ import PrintIcon from '@material-ui/icons/Print';
 import * as React from 'react';
 import * as sinon from 'sinon';
 import GridToolbar from '../src/DataGrid/GridToolbar';
+jest.mock('../src/DataSource/DataSourceContext');
 
 describe.skip('<GridToolbar/>', () => {
   let shallow;

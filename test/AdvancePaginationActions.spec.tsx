@@ -3,6 +3,7 @@ import { createShallow } from '@material-ui/core/test-utils';
 import * as React from 'react';
 import * as sinon from 'sinon';
 import AdvancePaginationActions from '../src/DataGrid/AdvancePaginationActions';
+jest.mock('../src/DataSource/DataSourceContext');
 
 describe('TablePaginationActions', () => {
   const noop = () => { return ; };
