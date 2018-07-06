@@ -66,6 +66,7 @@
   "dependencies": {
     "@material-ui/core": "^1.2.0",
     "@material-ui/icons": "^1.1.0",
+    "@types/jest": "^23.1.4",
     "axios": "^0.18.0",
     "date-fns": "^1.29.0",
     "lodash.maxby": "^4.6.0",

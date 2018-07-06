@@ -19,8 +19,8 @@ const getDataGrid = (state = {}) => {
             columns: validColumnsSample,
             data,
             filteredRecordCount: expected.filteredRecordCount,
-            searchText: expected.searchText,
-            isLoading: false
+            isLoading: false,
+            searchText: expected.searchText
           }
         })
       }

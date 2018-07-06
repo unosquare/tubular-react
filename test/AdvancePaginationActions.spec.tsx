@@ -2,7 +2,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { createShallow } from '@material-ui/core/test-utils';
 import * as React from 'react';
 import * as sinon from 'sinon';
-import TablePaginationActions from '../src/DataGrid/TablePaginationActions';
+import AdvancePaginationActions from '../src/DataGrid/AdvancePaginationActions';
 
 describe('TablePaginationActions', () => {
   const noop = () => { return ; };
@@ -17,7 +17,7 @@ describe('TablePaginationActions', () => {
 
   const tablePaginationActions = () => {
     if (!mountedTablePaginationActions) {
-      mountedTablePaginationActions = shallow(<TablePaginationActions {...props} />);
+      mountedTablePaginationActions = shallow(<AdvancePaginationActions {...props} />);
     }
 
     return mountedTablePaginationActions;
@@ -25,7 +25,7 @@ describe('TablePaginationActions', () => {
 
   test('should render 9 \'<IconButton />\' when has 10 of 500 records to show by page', () => {
     const wrapper = shallow(
-      <TablePaginationActions
+      <AdvancePaginationActions
         classes={{}}
         count={500}
         page={0}
@@ -39,7 +39,7 @@ describe('TablePaginationActions', () => {
 
   test('should have the disabled prop from \'First Page\' as true', () => {
     const wrapper = shallow(
-      <TablePaginationActions
+      <AdvancePaginationActions
         classes={{}}
         count={500}
         page={0}
@@ -56,7 +56,7 @@ describe('TablePaginationActions', () => {
 
   test('should have the disabled prop from \'First Page\' as false', () => {
     const wrapper = shallow(
-      <TablePaginationActions
+      <AdvancePaginationActions
         classes={{}}
         count={500}
         page={2}
@@ -73,7 +73,7 @@ describe('TablePaginationActions', () => {
 
   test('should have the disabled prop from \'Last Page\' as true', () => {
     const wrapper = shallow(
-      <TablePaginationActions
+      <AdvancePaginationActions
         classes={{}}
         count={500}
         page={49}
@@ -90,7 +90,7 @@ describe('TablePaginationActions', () => {
 
   test('should have the disabled prop from \'Last Page\' as false', () => {
     const wrapper = shallow(
-      <TablePaginationActions
+      <AdvancePaginationActions
         classes={{}}
         count={500}
         page={47}
@@ -107,7 +107,7 @@ describe('TablePaginationActions', () => {
 
   test('should have the disabled prop from \'Previous Page\' as false', () => {
     const wrapper = shallow(
-      <TablePaginationActions
+      <AdvancePaginationActions
         classes={{}}
         count={500}
         page={49}
@@ -124,7 +124,7 @@ describe('TablePaginationActions', () => {
 
   test('should have the disabled prop from \'Previous Page\' as true', () => {
     const wrapper = shallow(
-      <TablePaginationActions
+      <AdvancePaginationActions
         classes={{}}
         count={500}
         page={0}
@@ -141,7 +141,7 @@ describe('TablePaginationActions', () => {
 
   test('should have the disable prop from \'Next Page\' as true', () => {
     const wrapper = shallow(
-      <TablePaginationActions
+      <AdvancePaginationActions
         classes={{}}
         count={500}
         page={49}
@@ -158,7 +158,7 @@ describe('TablePaginationActions', () => {
 
   test('should have the disable prop from \'Next Page\' as false', () => {
     const wrapper = shallow(
-      <TablePaginationActions
+      <AdvancePaginationActions
         classes={{}}
         count={500}
         page={34}
@@ -176,7 +176,7 @@ describe('TablePaginationActions', () => {
   test('should trigger the onClick event when \'Page#\' is clicked', () => {
     const handleClickStub = sinon.spy();
     const wrapper = shallow(
-      <TablePaginationActions
+      <AdvancePaginationActions
         classes={{}}
         count={500}
         page={33}
