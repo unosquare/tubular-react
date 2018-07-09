@@ -3,6 +3,7 @@ import { Divider, Grid, Paper, Typography, WithStyles, withStyles } from '@mater
 import * as React from 'react';
 import SampleExport from '../../srcdocs/components/SampleExport';
 import SampleFeatures from '../../srcdocs/components/SampleFeatures';
+import SampleGridList from '../../srcdocs/components/SampleGridList';
 import SamplePagination from '../../srcdocs/components/SamplePagination';
 import SampleSearch from '../../srcdocs/components/SampleSearch';
 const styles = {
@@ -81,6 +82,18 @@ export default withStyles(styles)(class extends React.Component<WithStyles<keyof
                                     or entire dataset to CSV using client-side only.
                                 </Typography>
                                 <SampleExport/>
+                            </Grid>
+                            <Divider />
+                            <Grid item={true} xs={12} className={classes.paper}>
+                                <Typography variant='headline' gutterBottom={true}>
+                                 Give another presentation to your data.
+                                </Typography>
+                                <Typography variant='subheading'>
+                                 You can provide to your data a styled view that
+                                 allows you perform free-text searches and immediately
+                                 reflect the changes over your data.
+                                </Typography>
+                                <SampleGridList/>
                             </Grid>
                             <Divider />
                         </Paper>
