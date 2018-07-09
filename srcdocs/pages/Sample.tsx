@@ -30,14 +30,8 @@ export default withStyles(styles)(class extends React.Component<WithStyles<keyof
         value: 'one'
     };
 
-    public handleChange = (event: any, value: string) => {
-        this.setState({ value });
-        this.setState({ showCode: false });
-    }
-
     public render() {
         const { classes } = this.props;
-        const { value, showCode } = this.state;
         return (
             <div>
                 <Grid container={true} spacing={24} className={classes.container}>

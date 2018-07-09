@@ -5,7 +5,7 @@ import * as React from 'react';
 
 import { withRemoteDataSource } from '../src';
 import { validColumnsSample } from './utils/columns';
-import { simpleRecordsExpected, onlyMicrosoftExpected } from './utils/data';
+import { onlyMicrosoftExpected, simpleRecordsExpected } from './utils/data';
 import { microsoftSearchRequest } from './utils/requests';
 
 describe('<RemoteDataSource />', () => {
