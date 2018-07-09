@@ -1,37 +1,27 @@
 import IconButton from '@material-ui/core/IconButton';
-import { createShallow } from '@material-ui/core/test-utils';
+import { createMount } from '@material-ui/core/test-utils';
 import * as React from 'react';
-import * as sinon from 'sinon';
 import AdvancePaginationActions from '../src/DataGrid/AdvancePaginationActions';
+import context from '../src/DataSource/__mocks__/testHelpers';
 jest.mock('../src/DataSource/DataSourceContext');
 
 describe('TablePaginationActions', () => {
-  const noop = () => { return ; };
+  let mount;
 
-  let shallow;
-  let mountedTablePaginationActions;
-  let props;
+  beforeEach(() => {
+    jest.resetModules();
 
-  beforeAll(() => {
-    shallow = createShallow({ dive: true });
+    mount = createMount();
   });
 
-  const tablePaginationActions = () => {
-    if (!mountedTablePaginationActions) {
-      mountedTablePaginationActions = shallow(<AdvancePaginationActions {...props} />);
-    }
-
-    return mountedTablePaginationActions;
-  };
-
   test('should render 9 \'<IconButton />\' when has 10 of 500 records to show by page', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AdvancePaginationActions
         classes={{}}
         count={500}
         page={0}
-        rowsPerPage={10}
-        onChangePage={noop}
+        itemsPerPage={10}
+        onChangePage={context.actions.updatePage}
       />
     );
 
@@ -39,13 +29,13 @@ describe('TablePaginationActions', () => {
   });
 
   test('should have the disabled prop from \'First Page\' as true', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AdvancePaginationActions
         classes={{}}
         count={500}
         page={0}
-        rowsPerPage={10}
-        onChangePage={noop}
+        itemsPerPage={10}
+        onChangePage={context.actions.updatePage}
       />
     );
 
@@ -56,13 +46,13 @@ describe('TablePaginationActions', () => {
   });
 
   test('should have the disabled prop from \'First Page\' as false', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AdvancePaginationActions
         classes={{}}
         count={500}
         page={2}
-        rowsPerPage={10}
-        onChangePage={noop}
+        itemsPerPage={10}
+        onChangePage={context.actions.updatePage}
       />
     );
 
@@ -73,13 +63,13 @@ describe('TablePaginationActions', () => {
   });
 
   test('should have the disabled prop from \'Last Page\' as true', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AdvancePaginationActions
         classes={{}}
         count={500}
         page={49}
-        rowsPerPage={10}
-        onChangePage={noop}
+        itemsPerPage={10}
+        onChangePage={context.actions.updatePage}
       />
     );
 
@@ -90,13 +80,13 @@ describe('TablePaginationActions', () => {
   });
 
   test('should have the disabled prop from \'Last Page\' as false', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AdvancePaginationActions
         classes={{}}
         count={500}
         page={47}
-        rowsPerPage={10}
-        onChangePage={noop}
+        itemsPerPage={10}
+        onChangePage={context.actions.updatePage}
       />
     );
 
@@ -107,13 +97,13 @@ describe('TablePaginationActions', () => {
   });
 
   test('should have the disabled prop from \'Previous Page\' as false', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AdvancePaginationActions
         classes={{}}
         count={500}
         page={49}
-        rowsPerPage={10}
-        onChangePage={noop}
+        itemsPerPage={10}
+        onChangePage={context.actions.updatePage}
       />
     );
 
@@ -124,13 +114,13 @@ describe('TablePaginationActions', () => {
   });
 
   test('should have the disabled prop from \'Previous Page\' as true', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AdvancePaginationActions
         classes={{}}
         count={500}
         page={0}
-        rowsPerPage={10}
-        onChangePage={noop}
+        itemsPerPage={10}
+        onChangePage={context.actions.updatePage}
       />
     );
 
@@ -141,13 +131,13 @@ describe('TablePaginationActions', () => {
   });
 
   test('should have the disable prop from \'Next Page\' as true', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AdvancePaginationActions
         classes={{}}
         count={500}
         page={49}
-        rowsPerPage={10}
-        onChangePage={noop}
+        itemsPerPage={10}
+        onChangePage={context.actions.updatePage}
       />
     );
 
@@ -158,13 +148,13 @@ describe('TablePaginationActions', () => {
   });
 
   test('should have the disable prop from \'Next Page\' as false', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AdvancePaginationActions
         classes={{}}
         count={500}
         page={34}
-        rowsPerPage={10}
-        onChangePage={noop}
+        itemsPerPage={10}
+        onChangePage={context.actions.updatePage}
       />
     );
 
@@ -175,23 +165,18 @@ describe('TablePaginationActions', () => {
   });
 
   test('should trigger the onClick event when \'Page#\' is clicked', () => {
-    const handleClickStub = sinon.spy();
-    const wrapper = shallow(
+    const wrapper = mount(
       <AdvancePaginationActions
         classes={{}}
         count={500}
         page={33}
-        rowsPerPage={10}
-        onChangePage={handleClickStub}
+        itemsPerPage={10}
+        onChangePage={context.actions.updatePage}
       />
     );
 
     const page = wrapper.find(IconButton).at(4);
     page.simulate('click');
-    expect(handleClickStub.calledOnce).toBe(true);
-  });
-
-  beforeEach( () => {
-    props = {};
+    expect(context.actions.updatePage.mock.calls.length).toBeGreaterThan(0);
   });
 });

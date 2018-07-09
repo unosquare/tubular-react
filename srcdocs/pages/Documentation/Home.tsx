@@ -51,11 +51,14 @@ export default withStyles(styles)((props) => {
                         </Typography>
                         <Divider />
                         <Typography paragraph={true} variant='subheading' className={classes.content}>
-                            Tubular React is a set of ReactJS components designed to rapidly build
-                            modern web applications.
-                            The centerpiece of Tubular is its fully templateable grid with lots of features
-                            such as server-side pagination, multi-column sorting and filtering, and
-                            built-in export to CSV.
+                            Tubular React is a set of ReactJS components designed to rapidly build modern
+                            web applications.
+                            The centerpiece of Tubular is its fully templated grid with lots of features such as
+                            server-side pagination, searching text, multi-column sorting, and filtering,
+                            built-in export to CSV or been printed.
+                            Another very styled and useful component is the grid list that renders a set of cards with
+                            the general information allowing good data visualization and quickly searching,
+                            besides it has almost the same grid functionalities.
                         </Typography>
                     </Paper>
                 </Grid>
@@ -105,7 +108,7 @@ export default withStyles(styles)((props) => {
                         <Divider />
                         <Typography paragraph={true} variant='subheading' className={classes.content}>
                             <SyntaxHighligther language='tsx' style={docco} className={classes.code}>
-                            $ npm install tubular-react --save
+                                $ npm install tubular-react --save
                             </SyntaxHighligther>
                         </Typography>
                     </Paper>

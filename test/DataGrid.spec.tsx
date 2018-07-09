@@ -3,8 +3,6 @@ import Paper from '@material-ui/core/Paper';
 import { createMount } from '@material-ui/core/test-utils';
 
 import * as React from 'react';
-import { validColumnsSample } from './utils/columns';
-import { data, expected, simpleRecordsExpected } from './utils/data';
 import DataGrid from '../src/DataGrid/DataGrid';
 
 jest.mock('../src/DataSource/DataSourceContext');
