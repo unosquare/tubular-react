@@ -113,19 +113,6 @@ export default withStyles(styles)((props) => {
                         </Typography>
                     </Paper>
                 </Grid>
-                <Grid item={true} xs={12}>
-                    <Paper className={classes.paper}>
-                        <Typography variant='display1'>
-                            Using the <code className={classes.code}>{'</DataGrid>'}</code> component
-                        </Typography>
-                        <Divider />
-                        <Typography paragraph={true} variant='body1' className={classes.content}>
-                            <SyntaxHighligther language='tsx' style={docco} className={classes.code}>
-                                {sample}
-                            </SyntaxHighligther>
-                        </Typography>
-                    </Paper>
-                </Grid>
             </Grid>
         </div>
     );
