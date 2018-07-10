@@ -8,11 +8,7 @@ import DataGrid, {
     ToolbarOptions,
     withRemoteDataSource
 } from '../../src';
-const toolbarOptions = new ToolbarOptions();
-toolbarOptions.exportButton = false;
-toolbarOptions.searchText = false;
-toolbarOptions.printButton = false;
-toolbarOptions.advancePagination = false;
+
 class SampleFeatures extends React.Component {
     public state = {
         errorMessage: null as any
@@ -61,7 +57,7 @@ class SampleFeatures extends React.Component {
                                 </TableCell>
                             </TableRow>
                     }
-                    toolbarOptions={toolbarOptions}
+                    toolbarOptions={new ToolbarOptions()}
                     footerRenderer={
                         (aggregates: any) =>
                             <TableRow>
