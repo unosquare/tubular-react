@@ -55,31 +55,6 @@ class BasicFeatures extends React.Component {
             <div className='root'>
                 <DataGrid
                     gridName='Tubular-React'
-                    // Indicate the order in which the columns should be displayed.
-                    bodyRenderer={
-                        (row: any, index: any) =>
-                            <TableRow hover={true} key={index}>
-                                <TableCell padding='default'>
-                                    {row.OrderID}
-                                </TableCell>
-                                <TableCell padding='default'>
-                                    {row.CustomerName}
-                                </TableCell>
-                                <TableCell padding='default'>
-                                    {format(row.ShippedDate, 'MMMM Do YYYY, h:mm:ss a')}
-                                </TableCell>
-                                <TableCell padding='default'>
-                                    {row.ShipperCity}
-                                </TableCell>
-                                <TableCell padding='default' numeric={true}>
-                                    {row.Amount || 0}
-                                </TableCell>
-                                <TableCell padding='default'>
-                                    {row.IsShipped ? <CheckBox />
-                                        : <CheckBoxOutlineBlank />}
-                                </TableCell>
-                            </TableRow>
-                    }
                 />
             </div>
         );
