@@ -1,4 +1,4 @@
-import {IconButton, TableSortLabel} from '@material-ui/core';
+import {IconButton, Table, TableBody, TableSortLabel} from '@material-ui/core';
 import { createMount } from '@material-ui/core/test-utils';
 import GridHeader from '../src/DataGrid/GridHeader';
 
@@ -21,7 +21,8 @@ describe('<GridHeader />', () => {
   });
 
   test('When column name is clicked the column must be sorted', () => {
-    const wrapper = mount(<GridHeader />);
+    const wrapper = mount(<Table><TableBody><GridHeader /></TableBody></Table>);
+
     const sortLabel = wrapper.find(TableSortLabel).at(0);
 
     sortLabel.simulate('click');
@@ -29,7 +30,7 @@ describe('<GridHeader />', () => {
   });
 
   test('When column filtered icon is clicked the active column must be set', () => {
-    const wrapper = mount(<GridHeader />);
+    const wrapper = mount(<Table><TableBody><GridHeader /></TableBody></Table>);
     const sortLabel = wrapper.find(IconButton).at(0);
 
     sortLabel.simulate('click');
