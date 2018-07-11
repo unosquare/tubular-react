@@ -12,11 +12,11 @@ export default class GridRequest {
   public Take: number;
   public TimezoneOffset: number;
 
-  constructor(columns: ColumnModel[], rowsPerPage: number, page: number, searchText: string = '') {
+  constructor(columns: ColumnModel[], itemsPerPage: number, page: number, searchText: string = '') {
     this.Columns = columns;
     this.Search = { Text: searchText, Operator: 'Auto' };
-    this.Skip = rowsPerPage === -1 ? 0 : page * rowsPerPage;
-    this.Take = rowsPerPage;
+    this.Skip = itemsPerPage === -1 ? 0 : page * itemsPerPage;
+    this.Take = itemsPerPage;
     this.Count = GridRequest.counter++;
     this.TimezoneOffset = currentTimezone;
   }

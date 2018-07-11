@@ -1,326 +1,39 @@
-import { Table, TableCell, TableHead, TableRow } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import { createMount, createShallow } from '@material-ui/core/test-utils';
-
-import Axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
-import * as React from 'react';
-import * as sinon from 'sinon';
+import {IconButton, Table, TableBody, TableSortLabel} from '@material-ui/core';
+import { createMount } from '@material-ui/core/test-utils';
 import GridHeader from '../src/DataGrid/GridHeader';
-import { ColumnDataType } from '../src';
-import { CompareOperators } from '../src/Models'
-import { amountFilterColumnsSample, isShippedFilterColumnsSample, validColumnsSample } from './utils/columns';
 
-describe.skip('<GridHeader />', () => {
-  let shallow;
+import * as React from 'react';
+
+import context from '../src/DataSource/__mocks__/testHelpers';
+jest.mock('../src/DataSource/DataSourceContext');
+
+describe('<GridHeader />', () => {
   let mount;
-  const mock = new MockAdapter(Axios);
-  //mock.onPost().reply(200, { ...simpleRecordsExpected });
 
   beforeEach(() => {
-    shallow = createShallow({ dive: true });
+    jest.resetModules();
+
     mount = createMount();
   });
 
   afterEach(() => {
     mount.cleanUp();
-    window.localStorage.removeItem('tubular.Tubular-React');
   });
 
-  test('should render a row', () => {
-    const wrapper = mount(<GridHeader />).find(TableRow);
+  test('When column name is clicked the column must be sorted', () => {
+    const wrapper = mount(<Table><TableBody><GridHeader /></TableBody></Table>);
 
-    expect(wrapper).toHaveLength(1);
+    const sortLabel = wrapper.find(TableSortLabel).at(0);
+
+    sortLabel.simulate('click');
+    expect(context.actions.sortColumn.mock.results[0].value).toEqual('OrderID');
   });
 
-  test('should render n columns', () => {
-    const wrapper = mount(<GridHeader />).find(TableRow).find(TableCell);
+  test('When column filtered icon is clicked the active column must be set', () => {
+    const wrapper = mount(<Table><TableBody><GridHeader /></TableBody></Table>);
+    const sortLabel = wrapper.find(IconButton).at(0);
 
-    expect(wrapper).toHaveLength(5);
-  });
-
-  test.skip('should trigger \'componentWillUnmount()\' one time', () => {
-    sinon.spy(GridHeader.prototype, 'componentWillUnmount');
-    const wrapper = mount(
-      <Table>
-        <TableHead>
-          <GridHeader />
-        </TableHead>
-      </Table>
-    );
-
-    wrapper.unmount();
-    expect(GridHeader.prototype.componentWillUnmount.calledOnce).toEqual(true);
-  });
-
-  test.skip('should trigger \'componentDidMount()\' one time and update the dataSource with the localStorage values', () => {
-    sinon.spy(GridHeader.prototype, 'componentDidMount');
-
-    localStorage.columns[4].Filter.Text = 2;
-    localStorage.columns[4].Filter.HasFilter = true;
-    localStorage.columns[4].Filter.Operator = 'Between';
-    localStorage.columns[4].Filter.Argument = [10];
-    window.localStorage.setItem('tubular.Tubular-React', JSON.stringify(localStorage.columns));
-
-    const wrapper = shallow(<GridHeader />);
-
-    expect(wrapper.instance().props.dataSource.columns[4].Filter.Text).toEqual(2);
-    expect(wrapper.instance().props.dataSource.columns[4].Filter.HasFilter).toEqual(true);
-    expect(wrapper.instance().props.dataSource.columns[4].Filter.Operator).toEqual('Between');
-    expect(GridHeader.prototype.componentDidMount.calledOnce).toEqual(true);
-  });
-
-  describe.skip('When filter dialog has been clicked', () => {
-    test('should update the state of \'open\' to \'false\' when is closed', () => {
-      const wrapper = shallow(gridHeader);
-      wrapper.setState({ open: false });
-      wrapper.update();
-
-      expect(wrapper.state().open).toBe(false);
-    });
-
-    test('should update the state of \'open\' to \'true\' when is open', () => {
-      const wrapper = shallow(gridHeader);
-      const firstCell = wrapper.find(TableRow).find(TableCell);
-      const firstIconButton = wrapper.find(TableRow).find(TableCell).find(IconButton).at(0);
-
-      firstIconButton.simulate('blur');
-      wrapper.setState({
-        activeColumn: {
-          Name:'OrderID',
-          DataType:ColumnDataType.NUMERIC,
-          Filter: {
-            Operator: CompareOperators.EQUALS,
-            Text: '6',
-            Argument: ['']
-          }
-        }
-      });
-      wrapper.update();
-
-      expect(wrapper.state().activeColumn.Filter.Operator	).toBe('Equals');
-      expect(wrapper.state().activeColumn.Name).toBe('OrderID');
-      expect(wrapper.state().activeColumn.DataType).toBe('numeric');
-      expect(wrapper.state().activeColumn.Filter.Text).toBe('6');
-      expect(wrapper.state().activeColumn.Filter.Argument[0]).toBe('');
-    });
-  });
-
-  describe.skip('handleClear()', () => {
-    test('should set the state props \'activeFilter\', \'firstFilterValue\' ' +
-      'and \'secondFilterValue\' at its initial values', () => {
-        const wrapper = shallow(gridHeader);
-
-        wrapper.setState({
-          activeColumn: {
-            Name:'OrderID',
-            DataType:ColumnDataType.DATE_TIME,
-            Filter: {
-              Operator: CompareOperators.BETWEEN,
-              Text: '2018-03-06T15:40:30',
-              Argument: ['2018-03-06T15:40:30'],
-              Open: true,
-            }
-          }
-        });
-        
-        wrapper.instance().handleClear();
-        expect(wrapper.state().activeColumn).toBeNull();
-      });
-  });
-
-  describe.skip('handleApply()', () => {
-    test('Should change the filter values of the Amount column', () => {
-      const gridHeaderDataSource = new RemoteDataSource('url', amountFilterColumnsSample);
-
-      const gridHeader2 = (
-        <GridHeader
-          dataSource={gridHeaderDataSource}
-          gridName='Tubular-React'
-          page={0}
-          rowsPerPage={10}
-          refreshGrid={() => { return; }}
-        />
-      );
-
-      const wrapper = shallow(gridHeader2);
-      wrapper.setState({
-        activeColumn: {
-          Name:'Amount',
-          DataType:ColumnDataType.NUMERIC,
-          Filter: {
-            Operator: CompareOperators.BETWEEN,
-            Text: 4,
-            Argument: [15]
-          }
-        }
-      });
-
-      wrapper.instance().handleApply();
-
-      expect(wrapper.instance().props.dataSource.columns[4].Filter.Text).toEqual(4);
-      expect(wrapper.instance().props.dataSource.columns[4].Filter.Argument).toEqual([15]);
-      expect(wrapper.instance().props.dataSource.columns[4].Filter.HasFilter).toEqual(true);
-      expect(wrapper.instance().props.dataSource.columns[4].Filter.Operator).toEqual('Between');
-    });
-
-    test('Should change the filter values of the IsShipped column', () => {
-      const gridHeaderDataSource = new RemoteDataSource('url', isShippedFilterColumnsSample);
-
-      const gridHeader2 = (
-        <GridHeader
-          dataSource={gridHeaderDataSource}
-          gridName='Tubular-React'
-          page={0}
-          rowsPerPage={10}
-          refreshGrid={() => { return; }}
-        />
-      );
-
-      const wrapper = shallow(gridHeader2);
-      wrapper.setState({
-        activeColumn: {
-          Name:'IsShipped',
-          DataType:ColumnDataType.BOOLEAN,
-          Filter: {
-            Operator: CompareOperators.EQUALS,
-            Text: 'true',
-            Argument: ['']
-          }
-        }
-      });
-
-      wrapper.instance().handleApply();
-
-      expect(wrapper.instance().props.dataSource.columns[5].Filter.Text).toEqual(true);
-      expect(wrapper.instance().props.dataSource.columns[5].Filter.HasFilter).toEqual(true);
-      expect(wrapper.instance().props.dataSource.columns[5].Filter.Operator).toEqual('Equals');
-    });
-  });
-
-  describe.skip('sortHandler()', () => {
-    test('Should change the SortDirection value of the CustomerName column', () => {
-      const gridHeaderDataSource = new RemoteDataSource('url', amountFilterColumnsSample);
-
-      const gridHeader2 = (
-        <GridHeader
-          dataSource={gridHeaderDataSource}
-          gridName='Tubular-React'
-          page={0}
-          rowsPerPage={10}
-          refreshGrid={() => { return; }}
-        />
-      );
-
-      const wrapper = shallow(gridHeader2);
-
-      expect(wrapper.instance().props.dataSource.columns[1].SortDirection).toEqual('None');
-      wrapper.instance().sortHandler('CustomerName');
-      expect(wrapper.instance().props.dataSource.columns[1].SortDirection).toEqual('Ascending');
-      wrapper.instance().sortHandler('CustomerName');
-      expect(wrapper.instance().props.dataSource.columns[1].SortDirection).toEqual('Descending');
-    });
-  });
-
-  describe.skip('handleKeyDown()', () => {
-    test('should update the state of \'sorting\' to ', () => {
-      const wrapper = shallow(gridHeader);
-
-      wrapper.setState({
-        sorting: 'Single'
-      });
-
-      wrapper.instance().handleKeyDown({ key: 'Control' });
-      wrapper.update();
-
-      expect(wrapper.state().sorting).toEqual('Single');
-    });
-  });
-
-  describe.skip('handleKeyUp()', () => {
-    test('should update the state of \'sorting\' to ', () => {
-      const wrapper = shallow(gridHeader);
-
-      wrapper.setState({
-        sorting: 'Multiple'
-      });
-
-      wrapper.instance().handleKeyUp({ key: 'Control' });
-      wrapper.update();
-
-      expect(wrapper.state().sorting).toEqual('Multiple');
-    });
-  });
-
-  describe.skip('handleChange()', () => {
-    test('should update the state of \'activeFilter\' to \'Contains\'', () => {
-      const wrapper = shallow(gridHeader);
-
-      wrapper.setState({
-        activeColumn: {
-          Name:'CustomerName',
-          DataType:ColumnDataType.STRING,
-          Filter: {
-            Operator: CompareOperators.NONE,
-            Text: '',
-            Argument: ['']
-          }
-        }
-        
-      });
-
-      expect(wrapper.state().activeColumn.Filter.Operator).toBe('None');
-
-      wrapper.instance().handleChange('Contains');
-      wrapper.update();
-
-      expect(wrapper.state().activeColumn.Filter.Operator).toBe('Contains');
-    });
-  });
-
-  describe.skip('handleTextFieldChange()', () => {
-    test('should update the state of \'firstFilterValue\' to \'4\'', () => {
-      const wrapper = shallow(gridHeader);
-
-      wrapper.setState({
-        activeColumn: {
-          DataType: ColumnDataType.NUMERIC,
-          Filter: {
-            Argument: [''],
-            Operator: CompareOperators.EQUALS,
-            Text: ''
-          },
-          Name: 'OrderID'
-        }
-      });
-
-      wrapper.instance().handleTextFieldChange({target:{value:'4'}});
-      wrapper.update();
-
-      expect(wrapper.state().activeColumn.Filter.Text).toBe('4');
-    });
-  });
-
-  describe.skip('handleSecondTextFieldChange()', () => {
-    test('should update the state of \'secondFilterValue\' to \'4\'', () => {
-      const wrapper = shallow(gridHeader);
-
-      wrapper.setState({
-        activeColumn: {
-          Name:'OrderID',
-          DataType:ColumnDataType.NUMERIC,
-          Filter: {
-            Operator: CompareOperators.EQUALS,
-            Text: '',
-            Argument: ['']
-          }
-        }
-      });
-
-      wrapper.instance().handleSecondTextFieldChange('4');
-      wrapper.update();
-
-       expect(wrapper.state().activeColumn.Filter.Argument[0]).toBe('4');
-    });
+    sortLabel.simulate('click');
+    expect(context.actions.setActiveColumn.mock.results[0].value).toEqual('CustomerName');
   });
 });

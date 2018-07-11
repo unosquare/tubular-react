@@ -10,6 +10,7 @@ export default class ToolbarOptions {
 
     constructor(options?: any) {
        // TODO: Apply options
+       this.advancePagination = true;
        this.bottomPager = true;
        this.exportButton = true;
        this.printButton = true;
@@ -17,6 +18,5 @@ export default class ToolbarOptions {
        this.topPager = true;
        this.rowsPerPageOptions = [10, 20, 50, 100];
        this.itemsPerPage = 10;
-       this.advancePagination = true;
     }
 }
