@@ -36,9 +36,6 @@ const styles = {
     }
 };
 
-// tslint:disable-next-line:max-line-length
-const sample = "import DataGrid, {\n  AggregateFunctions,\n  ColumnDataType,\n  ColumnModel,\n  ColumnSortDirection,\n  ToolbarOptions,\n  withRemoteDataSource \n} from 'tubular-react'; \n \n import React from 'react'; \n \n const columns = [ \n new ColumnModel( 'OrderID', \n { DataType: ColumnDataType.NUMERIC, \n     Filtering: true, \n      IsKey: true, \n      Label: 'ID', \n      SortDirection: ColumnSortDirection.ASCENDING, \n      SortOrder: 1, \n      Sortable: true } \n  ), \n  new ColumnModel( 'CustomerName', \n    { Aggregate: AggregateFunctions.COUNT, \n      Filtering: true, \n      Searchable: true, \n      Sortable: true } \n  ),  new ColumnModel( 'ShipperCity' ) \n]; \n  \nclass SampleGrid extends React.Component { \n    public state = { \n        errorMessage: null as any \n    }; \n  \n    public componentWillReceiveProps(nextProps: any) { \n        this.setState({ errorMessage: nextProps.error }); \n    } \n  \n    public render() { \n        const { errorMessage } = this.state; \n        return ( \n            <div className='root'> \n                {errorMessage &&  \n                    <Snackbar \n                        anchorOrigin={{ vertical: 'top', horizontal: 'center' }} \n                        style={{ paddingTop: '10px' }} \n                        open={true} \n                        ContentProps={{ 'aria-describedby': 'message-id' }} \n                        message={<span id='message-id'>{errorMessage}</span>} \n                    /> \n                } \n                <DataGrid \n                    gridName='Tubular-React' \n                    bodyRenderer={ \n                        (row: any, index: any) => \n                            <TableRow hover={true} key={index}> \n                                <TableCell padding='default'> \n                                    {row.OrderID} \n                                </TableCell> \n                                <TableCell padding='default'> \n                                    {row.CustomerName} \n                                </TableCell> \n                                <TableCell padding='default'> \n                                    {row.ShipperCity} \n                                </TableCell> \n                            </TableRow> \n                    } \n                    toolbarOptions={new ToolbarOptions()} \n                    footerRenderer={ \n                        (aggregates: any) => \n                            <TableRow> \n                                <TableCell>Total: </TableCell> \n                                <TableCell>{aggregates && aggregates.CustomerName}</TableCell> \n                                <TableCell /> \n                            </TableRow> \n                    } \n                /> \n            </div> \n        ); \n    } \n} \n  \nexport default withRemoteDataSource(SampleFeatures, columns, 'http://tubular.azurewebsites.net/api/orders/paged'); \n";
-
 export default withStyles(styles)((props) => {
     const { classes } = props;
     return (
@@ -107,7 +104,7 @@ export default withStyles(styles)((props) => {
                     <Typography paragraph={true} variant='subheading' >
                         <ul>
                             <li>
-                                <a href='https://material-ui-next.com'>Material-UI Next - Version: Beta 34.</a>
+                                <a href='https://material-ui.com/'>Material-UI - Version: 1.2.0.</a>
                             </li>
                         </ul>
                     </Typography>

@@ -1,8 +1,5 @@
 import * as React from 'react';
 
-import { TableCell, TableRow } from '@material-ui/core';
-import { CheckBox, CheckBoxOutlineBlank } from '@material-ui/icons';
-import { format } from 'date-fns';
 import DataGrid, {
     AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection, withRemoteDataSource } from '../../src';
 
@@ -49,8 +46,7 @@ const columns = [
         }
     )
 ];
-class BasicFeatures extends React.Component {
-    public render() {
+const MyComponent = () => {
         return (
             <div className='root'>
                 <DataGrid
@@ -58,8 +54,7 @@ class BasicFeatures extends React.Component {
                 />
             </div>
         );
-    }
-}
+};
 
 /*
  Use the component withRemoteDataSource to wrap your component
@@ -67,4 +62,4 @@ class BasicFeatures extends React.Component {
 
  withRemoteDataSource will set an initial context for your grid.
 */
-export default withRemoteDataSource(BasicFeatures, columns, 'http://tubular.azurewebsites.net/api/orders/paged');
+export default withRemoteDataSource(MyComponent, columns, 'http://tubular.azurewebsites.net/api/orders/paged');
