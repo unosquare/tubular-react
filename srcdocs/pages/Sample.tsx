@@ -1,6 +1,6 @@
 import { Divider, Grid, Paper, Typography, WithStyles, withStyles } from '@material-ui/core';
-import { Collapse, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from '@material-ui/core';
-import { Button, IconButton, Tooltip } from '@material-ui/core';
+import { Collapse } from '@material-ui/core';
+import { IconButton, Tooltip } from '@material-ui/core';
 import CodeIcon from '@material-ui/icons/Code';
 import CreateIcon from '@material-ui/icons/Create';
 import SyntaxHighligther from 'react-syntax-highlighter';
@@ -102,9 +102,9 @@ export default withStyles(styles)(class extends React.Component<WithStyles<keyof
                                             </IconButton>
                                         </Tooltip>
                                         <Tooltip title={this.state.openBasic ? 'Hide Code' : 'View Code'}>
-                                            <Button onClick={this.handleClickBasic}>
+                                            <IconButton onClick={this.handleClickBasic}>
                                                 <CodeIcon />
-                                            </Button >
+                                            </IconButton >
                                         </Tooltip>
                                         <Tooltip title='Edit in CodeSandbox'>
                                             <IconButton
@@ -153,9 +153,9 @@ export default withStyles(styles)(class extends React.Component<WithStyles<keyof
                                             </IconButton>
                                         </Tooltip>
                                         <Tooltip title={this.state.openSample ? 'Hide Code' : 'View Code'}>
-                                            <Button onClick={this.handleClickSample}>
+                                            <IconButton onClick={this.handleClickSample}>
                                                 <CodeIcon />
-                                            </Button >
+                                            </IconButton >
                                         </Tooltip>
                                         <Tooltip title='Edit in CodeSandbox'>
                                             <IconButton
@@ -205,9 +205,9 @@ export default withStyles(styles)(class extends React.Component<WithStyles<keyof
                                             </IconButton>
                                         </Tooltip>
                                         <Tooltip title={this.state.openGridList ? 'Hide Code' : 'View Code'}>
-                                            <Button onClick={this.handleClickGrid}>
+                                            <IconButton onClick={this.handleClickGrid}>
                                                 <CodeIcon />
-                                            </Button >
+                                            </IconButton>
                                         </Tooltip>
                                         <Tooltip title='Edit in CodeSandbox'>
                                             <IconButton
