@@ -48,7 +48,8 @@ export default withStyles(styles)((props) => {
                             Installation
                         </Typography>
                         <Typography variant='subheading' paragraph={true}>
-                            Tubular-React is available as an npm package.
+                            Tubular-React is available as
+                            an <a href='https://www.npmjs.com/package/tubular-react' target='_blank'>npm package</a>.
                         </Typography>
                         <Typography variant='headline' paragraph={true}>
                             Dependencies
@@ -56,7 +57,19 @@ export default withStyles(styles)((props) => {
                         <Typography variant='body1' paragraph={true}>
                             <ul>
                                 <li>
-                                    <a href='https://material-ui-next.com'>Material-UI Next - Version: Beta 34.</a>
+                                    <a href='https://github.com/axios/axios'>axios - Version: 0.18.0</a>
+                                </li>
+                                <li>
+                                    <a href='https://date-fns.org/'>date-fns - Version: 1.29.0</a>
+                                </li>
+                                <li>
+                                    <a href='https://lodash.com/'>Lodash - Version: 4.17.10</a>
+                                </li>
+                                <li>
+                                    <a href='https://material-ui.com/'>Material-UI - Version: 1.2.0.</a>
+                                </li>
+                                <li>
+                                    <a href='https://reactjs.org/'>React - Version: 16.4.1</a>
                                 </li>
                             </ul>
                         </Typography>
@@ -70,16 +83,22 @@ export default withStyles(styles)((props) => {
                         <SyntaxHighligther language='tsx' style={docco} className={classes.code}>
                             {'npm install tubular-react --save'}
                         </SyntaxHighligther>
-                        <Divider />
+                        <br/>
                         <Typography variant='headline' paragraph={true}>
                             Usage
                         </Typography>
                         <Typography variant='subheading' paragraph={true}>
-                            Tubular React is an extension of Material-UI to use a grid populated from server-side.
+                            Tubular React is an extension of Material-UI which offers until now a couple of useful
+                            components:
+                            <br/><code className={classes.codeTag}>{'<DataGrid />'}</code> and <code className={classes.codeTag}>{'<GridList />'}</code>.
+                            <br/>
+                            These components supply an organized and nice way to represent your data,
+                            you can populate them from a server-side data source or
+                            a local data source as an array.
                         </Typography>
                         <Typography variant='headline' paragraph={true}> Quick Start </Typography>
                         <Typography variant='body1' paragraph={true}>
-                            Here is a quick example to get you started, it's all you need:
+                            Here is a quick example with all basic features to get you started:
                         </Typography>
                         <SyntaxHighligther language='tsx' style={docco} className={classes.code}>
                             {basicFeatures}

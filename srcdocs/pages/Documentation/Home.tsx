@@ -1,4 +1,4 @@
-import { Divider, Grid, Paper, Typography } from '@material-ui/core';
+import { Button, Divider, Grid, Paper, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 import * as React from 'react';
@@ -35,6 +35,8 @@ const styles = {
         padding: 30,
     }
 };
+// tslint:disable-next-line:max-line-length
+const quickStart = "import * as React from 'react';\nimport columns from './Columns';\nimport DataGrid, { withRemoteDataSource } from 'tubular-react';\n\nconst MyComponent = () => {\n        return (\n            <div className='root'>\n                <DataGrid\n                    gridName='Tubular-React'\n                />\n            </div>\n        );\n};\nexport default withRemoteDataSource(MyComponent, columns, 'http://tubular.azurewebsites.net/api/orders/paged');\n";
 
 export default withStyles(styles)((props) => {
     const { classes } = props;
@@ -104,19 +106,51 @@ export default withStyles(styles)((props) => {
                     <Typography paragraph={true} variant='subheading' >
                         <ul>
                             <li>
+                                <a href='https://github.com/axios/axios'>axios - Version: 0.18.0</a>
+                            </li>
+                            <li>
+                                <a href='https://date-fns.org/'>date-fns - Version: 1.29.0</a>
+                            </li>
+                            <li>
+                                <a href='https://lodash.com/'>Lodash - Version: 4.17.10</a>
+                            </li>
+                            <li>
                                 <a href='https://material-ui.com/'>Material-UI - Version: 1.2.0.</a>
+                            </li>
+                            <li>
+                                <a href='https://reactjs.org/'>React - Version: 16.4.1</a>
                             </li>
                         </ul>
                     </Typography>
                     <br />
                     <Typography variant='display1'>
                         npm Installation
-                        </Typography>
+                    </Typography>
                     <Divider />
                     <Typography paragraph={true} variant='subheading' className={classes.content}>
                         <SyntaxHighligther language='tsx' style={docco} className={classes.code}>
                             $ npm install tubular-react --save
                             </SyntaxHighligther>
+                    </Typography>
+                    <br />
+                    <Typography variant='display1'>
+                        Usage
+                    </Typography>
+                    <Divider />
+                    <Typography paragraph={true} variant='subheading' className={classes.content}>
+                        Here is a quick example to get you started:
+                        <SyntaxHighligther language='tsx' style={docco} className={classes.code}>
+                            {quickStart}
+                        </SyntaxHighligther>
+                        See this
+                            <Button
+                                color='primary'
+                                href='https://github.com/unosquare/tubular-react/blob/master/sample/src/local/LocalColumnsFormat.ts'
+                                target='_blank'
+                            >
+                                example
+                            </Button>
+                            of how to define the columns.
                     </Typography>
                 </Paper>
             </Grid>
