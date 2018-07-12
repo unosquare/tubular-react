@@ -74,4 +74,4 @@ class SampleFeatures extends React.Component {
     }
 }
 
-export default withRemoteDataSource(SampleFeatures, columns, 'http://tubular.azurewebsites.net/api/orders/paged');
+export default withRemoteDataSource(SampleFeatures, columns, 'https://tubular.azurewebsites.net/api/orders/paged');

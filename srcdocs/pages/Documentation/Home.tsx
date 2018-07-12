@@ -36,7 +36,7 @@ const styles = {
     }
 };
 // tslint:disable-next-line:max-line-length
-const quickStart = "import * as React from 'react';\nimport columns from './Columns';\nimport DataGrid, { withRemoteDataSource } from 'tubular-react';\n\nconst MyComponent = () => {\n        return (\n            <div className='root'>\n                <DataGrid\n                    gridName='Tubular-React'\n                />\n            </div>\n        );\n};\nexport default withRemoteDataSource(MyComponent, columns, 'http://tubular.azurewebsites.net/api/orders/paged');\n";
+const quickStart = "import React from 'react';\nimport ReactDOM from 'react-dom';\n\nimport DataGrid, { withRemoteDataSource, ColumnModel } from 'tubular-react';\n\nconst columns = [\n  new ColumnModel('OrderID'),\n  new ColumnModel('CustomerName'),\n  new ColumnModel('ShipperCity')\n];\n\nconst SampleGrid = withRemoteDataSource(\n  () => {\n    return <DataGrid />;\n  },\n  columns,\n  'https://tubular.azurewebsites.net/api/orders/paged'\n);\n\nReactDOM.render(<SampleGrid />, document.getElementById('root'));";
 
 export default withStyles(styles)((props) => {
     const { classes } = props;
@@ -120,9 +120,6 @@ export default withStyles(styles)((props) => {
                             <li>
                                 <a href='https://reactjs.org/'>React - Version: 16.4.1</a>
                             </li>
-                            <li>
-                                <a href='https://reactjs.org/docs/react-dom.html'>React-DOM - Version: 16.4.1</a>
-                            </li>
                         </ul>
                     </Typography>
                     <br />
@@ -141,19 +138,11 @@ export default withStyles(styles)((props) => {
                     </Typography>
                     <Divider />
                     <Typography paragraph={true} variant='subheading' className={classes.content}>
-                        Here is a quick example to get you started:
+                        Here is a quick example to get you started, <b>it's all you need</b>:
                         <SyntaxHighligther language='tsx' style={docco} className={classes.code}>
                             {quickStart}
                         </SyntaxHighligther>
-                        See this
-                            <Button
-                                color='primary'
-                                href='https://github.com/unosquare/tubular-react/blob/master/sample/src/local/LocalColumnsFormat.ts'
-                                target='_blank'
-                            >
-                                example
-                            </Button>
-                            of how to define the columns.
+                        <em>Try it in <a href='https://codesandbox.io/s/6jror6xv9w' target='_blank'>CodeSandbox</a></em>
                     </Typography>
                 </Paper>
             </Grid>

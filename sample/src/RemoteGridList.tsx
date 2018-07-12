@@ -92,4 +92,4 @@ class RemoteGridList extends React.Component<any, any> {
     }
 }
 
-export default withRemoteDataSource(RemoteGridList, columns, 'http://tubular.azurewebsites.net/api/orders/paged');
+export default withRemoteDataSource(RemoteGridList, columns, 'https://tubular.azurewebsites.net/api/orders/paged');

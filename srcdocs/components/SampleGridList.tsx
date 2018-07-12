@@ -91,4 +91,4 @@ class SampleGridList extends React.Component<any, any> {
     }
 }
 
-export default withRemoteDataSource(SampleGridList, columns, 'http://tubular.azurewebsites.net/api/orders/paged');
+export default withRemoteDataSource(SampleGridList, columns, 'https://tubular.azurewebsites.net/api/orders/paged');

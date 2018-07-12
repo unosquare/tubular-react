@@ -71,9 +71,6 @@ export default withStyles(styles)((props) => {
                                 <li>
                                     <a href='https://reactjs.org/'>React - Version: 16.4.1</a>
                                 </li>
-                                <li>
-                                    <a href='https://reactjs.org/docs/react-dom.html'>React-DOM - Version: 16.4.1</a>
-                                </li>
                             </ul>
                         </Typography>
                         <Typography variant='headline' paragraph={true}>
