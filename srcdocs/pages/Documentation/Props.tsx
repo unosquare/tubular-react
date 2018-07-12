@@ -2,9 +2,10 @@ import { Divider, Grid, Hidden, Paper, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 import * as React from 'react';
+import DataGridProps from '../../components/DataGridProps';
 import DocumentationList from '../../components/DocumentationList';
 import NavigationBar from '../../components/NavigationBar';
-import PropsTable from '../../components/PropsTable';
+import ToolBarOptionsProps from '../../components/ToolBarOptionsProps';
 
 const styles = {
     code: {
@@ -33,15 +34,19 @@ export default withStyles(styles)((props) => {
                 </Hidden>
                 <Grid item={true} xs={12} md={9}>
                     <Paper className={classes.paper}>
-                        <Typography variant='display1' paragraph={true}>Props</Typography>
+                        <Typography variant='display1' paragraph={true}>Data grid props</Typography>
                         <Divider />
                         <br />
                         <Typography variant='subheading'>
-                            These are all the available props
-                            (and their default values) for the
+                            It's important to use <code className={classes.code}>withRemoteDataSource</code> or
+                            <code className={classes.code}>withLocalDataSource</code> according to the case
+                            to fill the <code className={classes.code}>{'<DataGrid />'}</code> component
+                            with the data.
+                            <br />
+                            These are all the available props (and their default values) for the
                             <code className={classes.code}>{'<DataGrid />'}</code> component.
                         </Typography>
-                        <PropsTable />
+                        <DataGridProps />
                         <br />
                         <Typography variant='subheading'>
                             <i>If you don't define some of the optional props described above,
@@ -50,6 +55,23 @@ export default withStyles(styles)((props) => {
                             <i>the grid will display its default body; if the
                             <code className={classes.code}>footerRenderer</code>
                             is not defined, the footer will not be displayed.</i>
+                        </Typography>
+                    </Paper>
+                    <br />
+                    <Paper className={classes.paper}>
+                        <Typography variant='display1' paragraph={true}>Tool bar options</Typography>
+                        <Divider />
+                        <br />
+                        <Typography variant='subheading'>
+                            If you need personalite the grid adding, removing
+                            or modifying  fetures, <code className={classes.code}>ToolBarOptions Class</code>
+                            provides several options.
+                        </Typography>
+                        <ToolBarOptionsProps />
+                        <br />
+                        <Typography variant='subheading'>
+                            <i>If you don't define some of the optional props described above,
+                            these will set with the default values.</i>
                         </Typography>
                     </Paper>
                 </Grid>

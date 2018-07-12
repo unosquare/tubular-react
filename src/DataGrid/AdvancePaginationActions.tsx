@@ -13,10 +13,11 @@ const styles = (theme: Theme) => createStyles(
     }
   }
 );
+
 interface IProps extends WithStyles<typeof styles> {
   count: number;
   page: number;
-  rowsPerPage: number;
+  itemsPerPage: number;
   onChangePage(event: React.MouseEvent<HTMLElement>, page: number): void;
 }
 
@@ -50,7 +51,7 @@ const getPages = (currentPage: any, totalPages: any) => {
   return pages;
 };
 
-const AdvancePaginationActions: React.SFC<IProps> = ({ classes, count, page, rowsPerPage, onChangePage }) => {
+const AdvancePaginationActions: React.SFC<IProps> = ({ classes, count, page, itemsPerPage, onChangePage }) => {
   const pages = getPages(page, count);
   return (
     <div className={classes.root}>
@@ -75,7 +76,7 @@ const AdvancePaginationActions: React.SFC<IProps> = ({ classes, count, page, row
             <IconButton
               key={value}
               onClick={(e) => onChangePage(e, value)}
-              disabled={value >= Math.ceil(count / rowsPerPage)}
+              disabled={value >= Math.ceil(count / itemsPerPage)}
               aria-label={`Page ${value + 1}`}
               color={ value === page ?
                  'primary' :
@@ -87,15 +88,15 @@ const AdvancePaginationActions: React.SFC<IProps> = ({ classes, count, page, row
 
       <IconButton
         onClick={(e) => onChangePage(e, page + 1)}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+        disabled={page >= Math.ceil(count / itemsPerPage) - 1}
         aria-label='Next Page'
       >
         <KeyboardArrowRight />
       </IconButton>
 
       <IconButton
-        onClick={(e) => onChangePage(e, Math.max(0, Math.ceil(count / rowsPerPage) - 1))}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+        onClick={(e) => onChangePage(e, Math.max(0, Math.ceil(count / itemsPerPage) - 1))}
+        disabled={page >= Math.ceil(count / itemsPerPage) - 1}
         aria-label='Last Page'
       >
         <LastPage />

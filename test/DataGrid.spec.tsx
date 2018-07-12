@@ -2,57 +2,31 @@ import { Table, TableBody, TableFooter, TableRow } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import { createMount } from '@material-ui/core/test-utils';
 
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
 import * as React from 'react';
-import { validColumnsSample } from './utils/columns';
-import { data, expected, simpleRecordsExpected } from './utils/data';
+import DataGrid from '../src/DataGrid/DataGrid';
 
-const getDataGrid = (state = {}) => {
-  jest.doMock('../src/DataSource/DataSourceContext', () => {
-    return {
-      DataSourceContext: {
-        Consumer: (props) => props.children({
-          actions: {},
-          state: {
-            aggregate: expected.aggregate,
-            columns: validColumnsSample,
-            data,
-            filteredRecordCount: expected.filteredRecordCount,
-            searchText: expected.searchText,
-            isLoading: false
-          }
-        })
-      }
-    };
-  });
-
-  return require('../src/DataGrid/DataGrid').default;
-};
+jest.mock('../src/DataSource/DataSourceContext');
 
 describe('<DataGrid />', () => {
   let mount;
-  const DataGrid = getDataGrid();
-  const mock = new MockAdapter(axios);
 
   beforeEach(() => {
     jest.resetModules();
-
-    mock.onPost('url').reply(200, {
-      ...simpleRecordsExpected
-    });
 
     mount = createMount();
   });
 
   afterEach(() => {
-    mock.reset();
     mount.cleanUp();
   });
 
+  test('should exists', () => {
+    expect(mount(<DataGrid />).exists()).toBeTruthy();
+  });
+
   test('should render a Paper', () => {
-    const wrapper = mount(<DataGrid />).find(Paper);
-    expect(wrapper).toHaveLength(1);
+    const wrapper = mount(<DataGrid />);
+    expect(wrapper.find(Paper)).toHaveLength(1);
   });
 
   test('should render a Table', () => {

@@ -5,8 +5,7 @@ import * as React from 'react';
 
 import { withRemoteDataSource } from '../src';
 import { validColumnsSample } from './utils/columns';
-import { simpleRecordsExpected, onlyMicrosoftExpected } from './utils/data';
-import { microsoftSearchRequest } from './utils/requests';
+import {  simpleRecordsExpected } from './utils/data';
 
 describe('<RemoteDataSource />', () => {
   const mock = new MockAdapter(axios);
@@ -47,13 +46,5 @@ describe('<RemoteDataSource />', () => {
   test('Should contain state columns equals to props columns', () => {
     const component = shallow(<TestComponent />);
     expect(component.state('columns')).toEqual(validColumnsSample);
-  });
-
-  test.skip('Should filter using search text', () => {
-    mock.onPost('url', { ...microsoftSearchRequest }).reply(200, {
-      ...onlyMicrosoftExpected
-    });
-
-    const component = shallow(<TestComponent />);
   });
 });

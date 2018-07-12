@@ -3,10 +3,10 @@ import * as React from 'react';
 
 import { withLocalDataSource } from '../src';
 import { validColumnsSample } from './utils/columns';
-import { localData, expectedLocalData } from './utils/localData';
+import { expectedLocalData, localData } from './utils/localData';
 
 describe('<LocalDataSource />', () => {
-  const TestComponent = withLocalDataSource(() => (<span></span>), validColumnsSample, localData) ;
+  const TestComponent = withLocalDataSource(() => (<span></span>), validColumnsSample, localData, 10) ;
 
   test('Should mount with valid props', () => {
     const component = shallow(<TestComponent />);
