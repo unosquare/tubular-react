@@ -1,13 +1,8 @@
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
-import { StyleRules, Theme, withStyles } from '@material-ui/core/styles';
+import { createStyles, Theme, withStyles } from '@material-ui/core/styles';
 import * as React from 'react';
 
-const styleClasses = {
-    code: '',
-    root: ''
-};
-
-const styles = (theme: Theme): StyleRules<keyof typeof styleClasses> => (
+const styles = (theme: Theme) => createStyles (
     {
         code: {
             background: '#F8F8FF',
