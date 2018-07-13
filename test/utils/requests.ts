@@ -1,4 +1,4 @@
-import { AggregateFunctions, ColumnDataType, ColumnSortDirection,ColumnModel } from '../../src';
+import { AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection } from '../../src';
 import GridRequest from '../../src/Models/GridRequest';
 
 const simpleRequest = new GridRequest(
@@ -15,7 +15,7 @@ const simpleRequest = new GridRequest(
     ),
     new ColumnModel('CustomerName',
       {
-        Aggregate: AggregateFunctions.COUNT,
+        Aggregate: AggregateFunctions.NONE,
         Searchable: true,
         Sortable: false
       }
@@ -35,7 +35,7 @@ const simpleRequest = new GridRequest(
       }
     )
   ],
-  0, 10);
+  10, 0, '');
 
 const microsoftSearchRequest = new GridRequest([
   new ColumnModel('OrderID',
@@ -50,7 +50,7 @@ const microsoftSearchRequest = new GridRequest([
   ),
   new ColumnModel('CustomerName',
     {
-      Aggregate: AggregateFunctions.COUNT,
+      Aggregate: AggregateFunctions.NONE,
       Searchable: true,
       Sortable: false
     }
@@ -85,7 +85,7 @@ const page2Request = new GridRequest([
   ),
   new ColumnModel('CustomerName',
     {
-      Aggregate: AggregateFunctions.COUNT,
+      Aggregate: AggregateFunctions.NONE,
       Searchable: true,
       Sortable: false
     }
@@ -104,6 +104,79 @@ const page2Request = new GridRequest([
       Sortable: false
     }
   )
-], 10, 1);
+],
+10, 1, '');
 
-export { microsoftSearchRequest, page2Request, simpleRequest };
+const pageSize20Request = new GridRequest(
+  [
+    new ColumnModel('OrderID',
+      {
+        DataType: ColumnDataType.NUMERIC,
+        IsKey: true,
+        Label: 'Order ID',
+        SortDirection: ColumnSortDirection.ASCENDING,
+        SortOrder: 1,
+        Sortable: true
+      }
+    ),
+    new ColumnModel('CustomerName',
+      {
+        Aggregate: AggregateFunctions.NONE,
+        Searchable: true,
+        Sortable: false
+      }
+    ),
+    new ColumnModel('ShippedDate',
+      {
+        DataType: ColumnDataType.DATE_TIME,
+        Filtering: true,
+        Sortable: false
+      }
+    ),
+    new ColumnModel('ShipperCity'),
+    new ColumnModel('Amount',
+      {
+        DataType: ColumnDataType.NUMERIC,
+        Sortable: false
+      }
+    )
+  ],
+  20, 0, '');
+
+const desendingOrderIdRequest = new GridRequest(
+    [
+      new ColumnModel('OrderID',
+        {
+          DataType: ColumnDataType.NUMERIC,
+          IsKey: true,
+          Label: 'Order ID',
+          SortDirection: ColumnSortDirection.ASCENDING,
+          SortOrder: -1,
+          Sortable: true
+        }
+      ),
+      new ColumnModel('CustomerName',
+        {
+          Aggregate: AggregateFunctions.COUNT,
+          Searchable: true,
+          Sortable: false
+        }
+      ),
+      new ColumnModel('ShippedDate',
+        {
+          DataType: ColumnDataType.DATE_TIME,
+          Filtering: true,
+          Sortable: false
+        }
+      ),
+      new ColumnModel('ShipperCity'),
+      new ColumnModel('Amount',
+        {
+          DataType: ColumnDataType.NUMERIC,
+          Sortable: false
+        }
+      )
+    ],
+  10, 0, '');
+
+export { desendingOrderIdRequest, microsoftSearchRequest, page2Request, pageSize20Request, simpleRequest };
