@@ -5,7 +5,7 @@ import {
 import { Card, CardActions, CardContent } from '@material-ui/core';
 import { GridList, GridListTile, Typography } from '@material-ui/core';
 import { Button } from '@material-ui/core';
-import { Table, TableBody, TableCell, TableFooter, TableHead, TableRow } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableFooter, TableRow } from '@material-ui/core';
 import { format } from 'date-fns';
 import * as React from 'react';
 import columns from '../../sample/src/local/LocalColumnsFormat';
@@ -91,4 +91,4 @@ class SampleGridList extends React.Component<any, any> {
     }
 }
 
-export default withRemoteDataSource(SampleGridList, columns, 'http://tubular.azurewebsites.net/api/orders/paged');
+export default withRemoteDataSource(SampleGridList, columns, 'https://tubular.azurewebsites.net/api/orders/paged');

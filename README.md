@@ -8,7 +8,7 @@
 
 :star: *Please star this project if you find it useful!*
 
-**Tubular-React** is a DataGrid component using [MaterialUI](https://material-ui.com/). The DataGrid component can display tabular data including the following features:
+**Tubular-React** is a DataGrid component using [Material-UI](https://material-ui.com/). The DataGrid component can display tabular data including the following features:
 
 * Define a custom layout for columns and cells using `render` methods.
 * Use a remote or local datasource. Remote datasource use a specific Request and Response format.
@@ -18,17 +18,19 @@
 * Export data to a CSV file.
 * Print data.
 
-You can try a [CodeSandbox demo](https://codesandbox.io/s/64jwr7mx8r).
+Check the documentation and samples in [Tubular React website](https://unosquare.github.io/tubular-react). Or you can try a [CodeSandbox demo](https://codesandbox.io/s/64jwr7mx8r).
 
 For more information how to implement a remote datasource, check [Tubular DotNet](https://github.com/unosquare/tubular-dotnet) project or [Tubular Node.js](https://github.com/unosquare/tubular-nodejs) project. Depending in your backend.
 
 Similar components are available in [Angular.js flavor](https://github.com/unosquare/tubular) and [Angular2](https://github.com/unosquare/tubular2).
 
-Please visit the [Tubular GitHub Page](https://unosquare.github.io/tubular-react/#/) to learn how quickly you can start coding. Don't forget to check out the Tubular Generator which quickly turns models into an awesome UIs!
-
 ## Dependencies
 
+* [axios](https://github.com/axios/axios) - Version: 0.18.0.
+* [date-fns](https://date-fns.org/) - Version: 1.29.0.
+* [Lodash](https://lodash.com/) - Version: 4.17.10.
 * [Material UI Core](https://material-ui.com/) - Version: 1.2.0.
+* [React](https://reactjs.org/) - Version: 16.4.1.
 
 ## npm Installation
 
@@ -43,44 +45,26 @@ You can start using `DataGrid` with this sample code. The grid will connect to a
 **Make sure you add the export**
 
 ```js
-import DataGrid, {
-  AggregateFunctions,
-  ColumnDataType,
-  ColumnModel,
-  ColumnSortDirection,
-  ToolbarOptions
-} from 'tubular-react';
-import React from 'react';
+import React from "react";
+import ReactDOM from "react-dom";
+
+import DataGrid, { withRemoteDataSource, ColumnModel } from "tubular-react";
 
 const columns = [
-  new ColumnModel( 'OrderID',
-    { DataType: ColumnDataType.NUMERIC,
-      Filtering: true,
-      IsKey: true,
-      Label: 'ID',
-      SortDirection: ColumnSortDirection.ASCENDING,
-      SortOrder: 1,
-      Sortable: true }
-  ),
-  new ColumnModel( 'CustomerName',
-    { Aggregate: AggregateFunctions.COUNT,
-      Filtering: true,
-      Searchable: true,
-      Sortable: true }
-  ),
-  new ColumnModel( 'ShipperCity' )
+  new ColumnModel("OrderID"),
+  new ColumnModel("CustomerName"),
+  new ColumnModel("ShipperCity")
 ];
 
-class CustomComponent extends React.Component {
+const SampleGrid = withRemoteDataSource(
+  () => {
+    return <DataGrid />;
+  },
+  columns,
+  "https://tubular.azurewebsites.net/api/orders/paged"
+);
 
-  render() {
-    return (
-        <DataGrid
-          gridName='Tubular-React'
-        />
-    );
-  }
-}
+ReactDOM.render(<SampleGrid />, document.getElementById("root"));
 
 // export default use withLocalDataSource or withRemoteDataSource
 ```
