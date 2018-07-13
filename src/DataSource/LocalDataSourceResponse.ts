@@ -7,9 +7,9 @@ import {
 import GridRequest from '../Models/GridRequest';
 import GridResponse from '../Models/GridResponse';
 
-const LocalDataSourceResponse = {
+class LocalDataSourceResponse  {
 
-    getResponse: (request: GridRequest, dataSource: any): GridResponse => {
+    public static getResponse(request: GridRequest, dataSource: any): GridResponse {
         try {
             const response: any = {
                 Counter: request.Count,
@@ -42,9 +42,9 @@ const LocalDataSourceResponse = {
         } catch (error) {
             return null;
         }
-    },
+    }
 
-    applyFreeTextSearch: (request: any, subset: any[]) => {
+     private static applyFreeTextSearch(request: any, subset: any[]) {
         if (request.Search && request.Search.Operator.toLowerCase() === CompareOperators.AUTO.toLowerCase()) {
             const searchableColumns = request.Columns.filter((x: any) => x.Searchable);
 
@@ -58,9 +58,9 @@ const LocalDataSourceResponse = {
 
             return subset;
         }
-    },
+    }
 
-    applyFiltering: (request: any, subset: any[]) => {
+    private static applyFiltering(request: any, subset: any[]) {
         request.Columns
             .filter((column: any) => column.hasFilter)
             .forEach((filterableColumn: any) => {
@@ -166,9 +166,9 @@ const LocalDataSourceResponse = {
             });
 
         return subset;
-    },
+    }
 
-    applySorting: (request: any, subset: any[]) => {
+    private static applySorting(request: any, subset: any[]) {
         let sortedColumns = request.Columns.filter((column: any) => column.SortOrder > 0);
 
         let cols: any[] = [];
@@ -184,9 +184,9 @@ const LocalDataSourceResponse = {
         }
 
         return orderBy(subset, cols, orders);
-    },
+    }
 
-    getAggregatePayload: (request: any, subset: any[]) => {
+    private static getAggregatePayload(request: any, subset: any[]) {
         const aggregateColumns = request.Columns.filter((column: any) =>
             column.Aggregate && column.Aggregate.toLowerCase() !== AggregateFunctions.NONE.toLowerCase());
 
@@ -219,16 +219,15 @@ const LocalDataSourceResponse = {
             prev[column.Name] = value;
             return prev;
         }, {});
-    },
+    }
 
-    parsePayload: (row: any, columns: any[]) => {
+    private static parsePayload(row: any, columns: any[]) {
         return columns.reduce((obj: any, column: any, key: any) => {
             obj[column.Name] = row[key] || row[column.Name];
 
             return obj;
         }, {});
     }
-
-};
+}
 
 export default LocalDataSourceResponse;

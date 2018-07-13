@@ -19,11 +19,8 @@ const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, i
 
     public getAllRecords(request: GridRequest): Promise<object> {
       return new Promise((resolve, reject) => {
-        try {
           resolve(LocalDataSourceResponse.getResponse(request, source));
-        } catch (error) {
-          reject(error);
-        }
+          reject('Invalid Response');
       });
     }
   };
