@@ -1,17 +1,15 @@
 import { isAfter, isBefore, isEqual } from 'date-fns';
 import { maxBy, meanBy, minBy, orderBy, sortBy, sumBy, uniqWith } from 'lodash';
-import * as React from 'react'; // leave here
 
 import {
-    AggregateFunctions,
-    ColumnSortDirection,
-    CompareOperators,
+    AggregateFunctions, ColumnSortDirection, CompareOperators,
 } from '../Models/Column';
 import GridRequest from '../Models/GridRequest';
+import GridResponse from '../Models/GridResponse';
 
 const LocalDataSourceResponse = {
 
-    getResponse: (request: GridRequest, dataSource: any): any => {
+    getResponse: (request: GridRequest, dataSource: any): GridResponse => {
         try {
             const response: any = {
                 Counter: request.Count,
@@ -19,11 +17,11 @@ const LocalDataSourceResponse = {
                 TotalRecordCount: dataSource.length
             };
 
-            response.data = this.applyFreeTextSearch(request, dataSource);
-            response.data = this.applyFiltering(request, response.data);
-            response.data = this.applySorting(request, response.data);
+            let data = this.applyFreeTextSearch(request, dataSource);
+            data = this.applyFiltering(request, data);
+            data = this.applySorting(request, data);
 
-            response.FilteredRecordCount = response.data.length;
+            response.FilteredRecordCount = data.length;
 
             if (request.Take > -1) {
                 response.TotalPages = Math.ceil(response.FilteredRecordCount / request.Take);
@@ -33,10 +31,14 @@ const LocalDataSourceResponse = {
                 }
             }
 
-            response.aggregate = this.getAggregatePayload(request, response.data);
-            response.data = response.data.slice(request.Skip, request.Skip + request.Take);
-
-            return response;
+            const aggregate = this.getAggregatePayload(request, data);
+            data = data.slice(request.Skip, request.Skip + request.Take);
+            return new GridResponse({
+                Aggregate: aggregate,
+                FilteredRecordCount: response.FilteredRecordCount,
+                Payload: data.map((row: any) => this.parsePayload(row, request.Columns)),
+                TotalRecordCount: response.TotalRecordCount
+              });
         } catch (error) {
             return null;
         }
@@ -216,6 +218,14 @@ const LocalDataSourceResponse = {
 
             prev[column.Name] = value;
             return prev;
+        }, {});
+    },
+
+    parsePayload: (row: any, columns: any[]) => {
+        return columns.reduce((obj: any, column: any, key: any) => {
+            obj[column.Name] = row[key] || row[column.Name];
+
+            return obj;
         }, {});
     }
 
