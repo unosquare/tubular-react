@@ -1,5 +1,3 @@
-import GridResponse from "../../src/Models/GridResponse";
-
 const pageSize20Response = {
   Aggregate: { },
   FilteredRecordCount: 22,
@@ -306,84 +304,31 @@ const page2Response = {
 };
 
 const desendingOrderIdResponse = {
-  AggregationPayload: { CustomerName: 500 },
-  Counter: 0,
-  CurrentPage: 1,
-  FilteredRecordCount: 500,
+  Aggregate: {},
+  FilteredRecordCount: 22,
   Payload: [
-    {
-      Amount: 120,
-      CustomerName: 'Vesta',
-      OrderID: 500,
-      ShippedDate: '2016-11-02T18:00:00',
-      ShipperCity: 'Los Angeles, CA, USA'
-    },
-    {
-      Amount: 66,
-      CustomerName: 'Oxxo',
-      OrderID: 499,
-      ShippedDate: '2016-11-11T18:00:00',
-      ShipperCity: 'Portland, OR, USA'
-    },
-    {
-      Amount: 6,
-      CustomerName: 'Unosquare LLC',
-      OrderID: 498,
-      ShippedDate: '2016-11-08T18:00:00',
-      ShipperCity: 'Portland, OR, USA'
-    },
-    {
-      Amount: 79,
-      CustomerName: 'Microsoft',
-      OrderID: 497,
-      ShippedDate: '2016-11-03T18:00:00',
-      ShipperCity: 'Los Angeles, CA, USA'
-    },
-    {
-      Amount: 72,
-      CustomerName: 'Vesta',
-      OrderID: 496,
-      ShippedDate: '2016-11-05T18:00:00',
-      ShipperCity: 'Guadalajara, JAL, Mexico'
-    },
-    {
-      Amount: 20,
-      CustomerName: 'Oxxo',
-      OrderID: 495,
-      ShippedDate: '2016-11-10T18:00:00',
-      ShipperCity: 'Guadalajara, JAL, Mexico'
-    },
-    {
-      Amount: 35,
-      CustomerName: 'Vesta',
-      OrderID: 494,
-      ShippedDate: '2016-11-03T18:00:00',
-      ShipperCity: 'Portland, OR, USA'
-    },
-    {
-      Amount: 118,
-      CustomerName: 'Vesta',
-      OrderID: 493,
-      ShippedDate: '2016-11-11T18:00:00',
-      ShipperCity: 'Leon, GTO, Mexico'
-    },
-    {
-      Amount: 110,
-      CustomerName: 'Oxxo',
-      OrderID: 492,
-      ShippedDate: '2016-11-09T18:00:00',
-      ShipperCity: 'Los Angeles, CA, USA'
-    },
-    {
-      Amount: 108,
-      CustomerName: 'Unosquare LLC',
-      OrderID: 491,
-      ShippedDate: '2016-11-02T18:00:00',
-      ShipperCity: 'Los Angeles, CA, USA'
-    }
+    {Amount: 150, CustomerName: 'Tiempo Development', OrderID: 22,
+    ShippedDate: '2016-01-04T18:00:00', ShipperCity: 'Monterrey, NL, Mexico'},
+    {Amount: 100, CustomerName: 'Wizeline', OrderID: 21,
+    ShippedDate: '2015-11-04T18:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
+    {Amount: 78, CustomerName: 'OXXO', OrderID: 20,
+    ShippedDate: '2016-11-04T18:00:00', ShipperCity: 'Portland, OR, USA'},
+    {Amount: 300, CustomerName: 'Vesta', OrderID: 19,
+    ShippedDate: '2016-11-08T18:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
+    {Amount: 92, CustomerName: 'Microsoft', OrderID: 18,
+    ShippedDate: '2016-12-22T08:00:00', ShipperCity: 'Los Angeles, CA, USA'},
+    {Amount: 108, CustomerName: 'Unosquare LLC', OrderID: 17,
+    ShippedDate: '2016-04-23T10:00:00', ShipperCity: 'Leon, GTO, Mexico'},
+    {Amount: 300, CustomerName: 'Microsoft', OrderID: 16,
+    ShippedDate: '2016-03-19T19:00:00', ShipperCity: 'Leon, GTO, Mexico'},
+    {Amount: 192, CustomerName: 'Super La Playa', OrderID: 15,
+    ShippedDate: '2016-12-22T08:00:00', ShipperCity: 'Portland, OR, US'},
+    {Amount: 60, CustomerName: 'Vesta', OrderID: 14,
+    ShippedDate: '2016-04-23T10:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
+    {Amount: 300, CustomerName: 'Unosquare LLC', OrderID: 13,
+    ShippedDate: '2016-03-19T19:00:00', ShipperCity: 'Portland, OR, USA'}
   ],
-  TotalPages: 50,
-  TotalRecordCount: 500
+  TotalRecordCount: 22
 };
 
 const simpleResponse = {
@@ -464,32 +409,188 @@ const simpleResponse = {
   TotalRecordCount: 22
 };
 
-const validResponseStructure = {
-  AggregationPayload: null,
-  Counter: null,
-  CurrentPage: null,
-  FilteredRecordCount: null,
-  Payload: null,
-  TotalPages: null,
-  TotalRecordCount: null
+const aggregateCountResponse = {
+  Aggregate: {CustomerName: 22},
+  FilteredRecordCount: 22,
+  Payload: [
+    {Amount: 150, CustomerName: 'Tiempo Development', OrderID: 22,
+    ShippedDate: '2016-01-04T18:00:00', ShipperCity: 'Monterrey, NL, Mexico'},
+    {Amount: 100, CustomerName: 'Wizeline', OrderID: 21,
+    ShippedDate: '2015-11-04T18:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
+    {Amount: 78, CustomerName: 'OXXO', OrderID: 20,
+    ShippedDate: '2016-11-04T18:00:00', ShipperCity: 'Portland, OR, USA'},
+    {Amount: 300, CustomerName: 'Vesta', OrderID: 19,
+    ShippedDate: '2016-11-08T18:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
+    {Amount: 92, CustomerName: 'Microsoft', OrderID: 18,
+    ShippedDate: '2016-12-22T08:00:00', ShipperCity: 'Los Angeles, CA, USA'},
+    {Amount: 108, CustomerName: 'Unosquare LLC', OrderID: 17,
+    ShippedDate: '2016-04-23T10:00:00', ShipperCity: 'Leon, GTO, Mexico'},
+    {Amount: 300, CustomerName: 'Microsoft', OrderID: 16,
+    ShippedDate: '2016-03-19T19:00:00', ShipperCity: 'Leon, GTO, Mexico'},
+    {Amount: 192, CustomerName: 'Super La Playa', OrderID: 15,
+    ShippedDate: '2016-12-22T08:00:00', ShipperCity: 'Portland, OR, US'},
+    {Amount: 60, CustomerName: 'Vesta', OrderID: 14,
+    ShippedDate: '2016-04-23T10:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
+    {Amount: 300, CustomerName: 'Unosquare LLC', OrderID: 13,
+    ShippedDate: '2016-03-19T19:00:00', ShipperCity: 'Portland, OR, USA'}
+  ],
+  TotalRecordCount: 22
 };
 
-const invalidResponseStructure = {
-  AggregationPayload: null,
-  Counters: null,
-  FilteredRecordCount: null,
-  Paiload: null,
-  TotalPages: null,
-  TotalRecordCount: null
+const aggregateSumResponse = {
+  Aggregate: {Amount: 3462},
+  FilteredRecordCount: 22,
+  Payload: [
+    {Amount: 150, CustomerName: 'Tiempo Development', OrderID: 22,
+    ShippedDate: '2016-01-04T18:00:00', ShipperCity: 'Monterrey, NL, Mexico'},
+    {Amount: 100, CustomerName: 'Wizeline', OrderID: 21,
+    ShippedDate: '2015-11-04T18:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
+    {Amount: 78, CustomerName: 'OXXO', OrderID: 20,
+    ShippedDate: '2016-11-04T18:00:00', ShipperCity: 'Portland, OR, USA'},
+    {Amount: 300, CustomerName: 'Vesta', OrderID: 19,
+    ShippedDate: '2016-11-08T18:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
+    {Amount: 92, CustomerName: 'Microsoft', OrderID: 18,
+    ShippedDate: '2016-12-22T08:00:00', ShipperCity: 'Los Angeles, CA, USA'},
+    {Amount: 108, CustomerName: 'Unosquare LLC', OrderID: 17,
+    ShippedDate: '2016-04-23T10:00:00', ShipperCity: 'Leon, GTO, Mexico'},
+    {Amount: 300, CustomerName: 'Microsoft', OrderID: 16,
+    ShippedDate: '2016-03-19T19:00:00', ShipperCity: 'Leon, GTO, Mexico'},
+    {Amount: 192, CustomerName: 'Super La Playa', OrderID: 15,
+    ShippedDate: '2016-12-22T08:00:00', ShipperCity: 'Portland, OR, US'},
+    {Amount: 60, CustomerName: 'Vesta', OrderID: 14,
+    ShippedDate: '2016-04-23T10:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
+    {Amount: 300, CustomerName: 'Unosquare LLC', OrderID: 13,
+    ShippedDate: '2016-03-19T19:00:00', ShipperCity: 'Portland, OR, USA'}
+  ], TotalRecordCount: 22
+};
+
+const aggregateAverageResponse = {
+  Aggregate: {Amount: 157.36363636363637},
+  FilteredRecordCount: 22,
+  Payload: [
+    {Amount: 150, CustomerName: 'Tiempo Development', OrderID: 22,
+    ShippedDate: '2016-01-04T18:00:00', ShipperCity: 'Monterrey, NL, Mexico'},
+    {Amount: 100, CustomerName: 'Wizeline', OrderID: 21,
+    ShippedDate: '2015-11-04T18:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
+    {Amount: 78, CustomerName: 'OXXO', OrderID: 20,
+    ShippedDate: '2016-11-04T18:00:00', ShipperCity: 'Portland, OR, USA'},
+    {Amount: 300, CustomerName: 'Vesta', OrderID: 19,
+    ShippedDate: '2016-11-08T18:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
+    {Amount: 92, CustomerName: 'Microsoft', OrderID: 18,
+    ShippedDate: '2016-12-22T08:00:00', ShipperCity: 'Los Angeles, CA, USA'},
+    {Amount: 108, CustomerName: 'Unosquare LLC', OrderID: 17,
+    ShippedDate: '2016-04-23T10:00:00', ShipperCity: 'Leon, GTO, Mexico'},
+    {Amount: 300, CustomerName: 'Microsoft', OrderID: 16,
+    ShippedDate: '2016-03-19T19:00:00', ShipperCity: 'Leon, GTO, Mexico'},
+    {Amount: 192, CustomerName: 'Super La Playa', OrderID: 15,
+    ShippedDate: '2016-12-22T08:00:00', ShipperCity: 'Portland, OR, US'},
+    {Amount: 60, CustomerName: 'Vesta', OrderID: 14,
+    ShippedDate: '2016-04-23T10:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
+    {Amount: 300, CustomerName: 'Unosquare LLC', OrderID: 13,
+    ShippedDate: '2016-03-19T19:00:00', ShipperCity: 'Portland, OR, USA'}
+  ], TotalRecordCount: 22
+};
+
+const aggregateDistinctCountResponse = {
+  Aggregate: {Amount: 12},
+  FilteredRecordCount: 22,
+  Payload: [
+    {Amount: 150, CustomerName: 'Tiempo Development', OrderID: 22,
+    ShippedDate: '2016-01-04T18:00:00', ShipperCity: 'Monterrey, NL, Mexico'},
+    {Amount: 100, CustomerName: 'Wizeline', OrderID: 21,
+    ShippedDate: '2015-11-04T18:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
+    {Amount: 78, CustomerName: 'OXXO', OrderID: 20,
+    ShippedDate: '2016-11-04T18:00:00', ShipperCity: 'Portland, OR, USA'},
+    {Amount: 300, CustomerName: 'Vesta', OrderID: 19,
+    ShippedDate: '2016-11-08T18:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
+    {Amount: 92, CustomerName: 'Microsoft', OrderID: 18,
+    ShippedDate: '2016-12-22T08:00:00', ShipperCity: 'Los Angeles, CA, USA'},
+    {Amount: 108, CustomerName: 'Unosquare LLC', OrderID: 17,
+    ShippedDate: '2016-04-23T10:00:00', ShipperCity: 'Leon, GTO, Mexico'},
+    {Amount: 300, CustomerName: 'Microsoft', OrderID: 16,
+    ShippedDate: '2016-03-19T19:00:00', ShipperCity: 'Leon, GTO, Mexico'},
+    {Amount: 192, CustomerName: 'Super La Playa', OrderID: 15,
+    ShippedDate: '2016-12-22T08:00:00', ShipperCity: 'Portland, OR, US'},
+    {Amount: 60, CustomerName: 'Vesta', OrderID: 14,
+    ShippedDate: '2016-04-23T10:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
+    {Amount: 300, CustomerName: 'Unosquare LLC', OrderID: 13,
+    ShippedDate: '2016-03-19T19:00:00', ShipperCity: 'Portland, OR, USA'}
+  ], TotalRecordCount: 22
+};
+
+const aggregateMaxResponse = {
+  Aggregate: {Amount: 300},
+  FilteredRecordCount: 22,
+  Payload: [
+    {Amount: 150, CustomerName: 'Tiempo Development', OrderID: 22,
+    ShippedDate: '2016-01-04T18:00:00', ShipperCity: 'Monterrey, NL, Mexico'},
+    {Amount: 100, CustomerName: 'Wizeline', OrderID: 21,
+    ShippedDate: '2015-11-04T18:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
+    {Amount: 78, CustomerName: 'OXXO', OrderID: 20,
+    ShippedDate: '2016-11-04T18:00:00', ShipperCity: 'Portland, OR, USA'},
+    {Amount: 300, CustomerName: 'Vesta', OrderID: 19,
+    ShippedDate: '2016-11-08T18:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
+    {Amount: 92, CustomerName: 'Microsoft', OrderID: 18,
+    ShippedDate: '2016-12-22T08:00:00', ShipperCity: 'Los Angeles, CA, USA'},
+    {Amount: 108, CustomerName: 'Unosquare LLC', OrderID: 17,
+    ShippedDate: '2016-04-23T10:00:00', ShipperCity: 'Leon, GTO, Mexico'},
+    {Amount: 300, CustomerName: 'Microsoft', OrderID: 16,
+    ShippedDate: '2016-03-19T19:00:00', ShipperCity: 'Leon, GTO, Mexico'},
+    {Amount: 192, CustomerName: 'Super La Playa', OrderID: 15,
+    ShippedDate: '2016-12-22T08:00:00', ShipperCity: 'Portland, OR, US'},
+    {Amount: 60, CustomerName: 'Vesta', OrderID: 14,
+    ShippedDate: '2016-04-23T10:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
+    {Amount: 300, CustomerName: 'Unosquare LLC', OrderID: 13,
+    ShippedDate: '2016-03-19T19:00:00', ShipperCity: 'Portland, OR, USA'}
+  ], TotalRecordCount: 22
+};
+
+const aggregateMinResponse = {
+  Aggregate: {Amount: 9 },
+  FilteredRecordCount: 22,
+  Payload: [
+    {Amount: 150, CustomerName: 'Tiempo Development', OrderID: 22,
+    ShippedDate: '2016-01-04T18:00:00', ShipperCity: 'Monterrey, NL, Mexico'},
+    {Amount: 100, CustomerName: 'Wizeline', OrderID: 21,
+    ShippedDate: '2015-11-04T18:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
+    {Amount: 78, CustomerName: 'OXXO', OrderID: 20,
+    ShippedDate: '2016-11-04T18:00:00', ShipperCity: 'Portland, OR, USA'},
+    {Amount: 300, CustomerName: 'Vesta', OrderID: 19,
+    ShippedDate: '2016-11-08T18:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
+    {Amount: 92, CustomerName: 'Microsoft', OrderID: 18,
+    ShippedDate: '2016-12-22T08:00:00', ShipperCity: 'Los Angeles, CA, USA'},
+    {Amount: 108, CustomerName: 'Unosquare LLC', OrderID: 17,
+    ShippedDate: '2016-04-23T10:00:00', ShipperCity: 'Leon, GTO, Mexico'},
+    {Amount: 300, CustomerName: 'Microsoft', OrderID: 16,
+    ShippedDate: '2016-03-19T19:00:00', ShipperCity: 'Leon, GTO, Mexico'},
+    {Amount: 192, CustomerName: 'Super La Playa', OrderID: 15,
+    ShippedDate: '2016-12-22T08:00:00', ShipperCity: 'Portland, OR, US'},
+    {Amount: 60, CustomerName: 'Vesta', OrderID: 14,
+    ShippedDate: '2016-04-23T10:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
+    {Amount: 300, CustomerName: 'Unosquare LLC', OrderID: 13,
+    ShippedDate: '2016-03-19T19:00:00', ShipperCity: 'Portland, OR, USA'}
+  ], TotalRecordCount: 22
+};
+
+const pageMinus1Response = {
+  Aggregate: { },
+  FilteredRecordCount: 22,
+  Payload: [  ],
+  TotalRecordCount: 22
 };
 
 export {
+  aggregateAverageResponse,
+  aggregateCountResponse,
+  aggregateDistinctCountResponse,
+  aggregateMaxResponse,
+  aggregateMinResponse,
+  aggregateSumResponse,
   desendingOrderIdResponse,
   simpleResponse,
-  invalidResponseStructure,
   searcTexthMicrosoftResponse,
+  pageMinus1Response,
   page2Response,
   simpleRecordsExpected,
   pageSize20Response,
-  validResponseStructure
 };
