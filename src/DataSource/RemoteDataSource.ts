@@ -1,7 +1,6 @@
 import Axios from 'axios';
 import * as React from 'react';
 import GridRequest from '../Models/GridRequest';
-import GridResponse from '../Models/GridResponse';
 import BaseDataSource from './BaseDataSource';
 import IBaseDataSourceState from './IBaseDataSourceState';
 
@@ -44,7 +43,7 @@ const withRemoteDataSource = (WrappedComponent: any, columns: any, url: string, 
     private isValidResponse(data: any) {
       return data && expectedStructureKeys === JSON.stringify(Object.keys(data).sort());
     }
-    
+
     private parsePayload(row: any, columns: any[]) {
       return columns.reduce((obj: any, column: any, key: any) => {
           obj[column.Name] = row[key] || row[column.Name];
