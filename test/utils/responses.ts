@@ -1,5 +1,7 @@
 const pageSize20Response = {
   Aggregate: { },
+  Counter: 0,
+  CurrentPage: 0,
   FilteredRecordCount: 22,
   Payload: [
     {
@@ -209,6 +211,8 @@ const simpleRecordsExpected = {
 
 const searcTexthMicrosoftResponse =   {
   Aggregate: {},
+  Counter: 0,
+  CurrentPage: 0,
   FilteredRecordCount: 5,
   Payload: [
     {Amount: 300, CustomerName: 'Microsoft', OrderID: 1,
@@ -222,11 +226,14 @@ const searcTexthMicrosoftResponse =   {
     {Amount: 92, CustomerName: 'Microsoft', OrderID: 18,
     ShippedDate: '2016-12-22T08:00:00', ShipperCity: 'Los Angeles, CA, USA'}
   ],
+  TotalPages: 1,
   TotalRecordCount: 22
 };
 
 const page2Response = {
   Aggregate: { },
+  Counter: 0,
+  CurrentPage: 0,
   FilteredRecordCount: 22,
   Payload: [
     {
@@ -303,8 +310,10 @@ const page2Response = {
   TotalRecordCount: 22
 };
 
-const desendingOrderIdResponse = {
+const descendingOrderIdResponse = {
   Aggregate: {},
+  Counter: 0,
+  CurrentPage: 0,
   FilteredRecordCount: 22,
   Payload: [
     {Amount: 150, CustomerName: 'Tiempo Development', OrderID: 22,
@@ -328,11 +337,14 @@ const desendingOrderIdResponse = {
     {Amount: 300, CustomerName: 'Unosquare LLC', OrderID: 13,
     ShippedDate: '2016-03-19T19:00:00', ShipperCity: 'Portland, OR, USA'}
   ],
+  TotalPages: 3,
   TotalRecordCount: 22
 };
 
 const simpleResponse = {
   Aggregate: { },
+  Counter: 0,
+  CurrentPage: 1,
   FilteredRecordCount: 22,
   Payload: [
     {
@@ -406,11 +418,14 @@ const simpleResponse = {
       Amount: 300.00
     }
   ],
+  TotalPages: 3,
   TotalRecordCount: 22
 };
 
 const aggregateCountResponse = {
   Aggregate: {CustomerName: 22},
+  Counter: 0,
+  CurrentPage: 1,
   FilteredRecordCount: 22,
   Payload: [
     {Amount: 150, CustomerName: 'Tiempo Development', OrderID: 22,
@@ -434,11 +449,14 @@ const aggregateCountResponse = {
     {Amount: 300, CustomerName: 'Unosquare LLC', OrderID: 13,
     ShippedDate: '2016-03-19T19:00:00', ShipperCity: 'Portland, OR, USA'}
   ],
+  TotalPages: 3,
   TotalRecordCount: 22
 };
 
 const aggregateSumResponse = {
   Aggregate: {Amount: 3462},
+  Counter: 0,
+  CurrentPage: 1,
   FilteredRecordCount: 22,
   Payload: [
     {Amount: 150, CustomerName: 'Tiempo Development', OrderID: 22,
@@ -461,11 +479,15 @@ const aggregateSumResponse = {
     ShippedDate: '2016-04-23T10:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
     {Amount: 300, CustomerName: 'Unosquare LLC', OrderID: 13,
     ShippedDate: '2016-03-19T19:00:00', ShipperCity: 'Portland, OR, USA'}
-  ], TotalRecordCount: 22
+  ], 
+  TotalPages: 3,
+  TotalRecordCount: 22
 };
 
 const aggregateAverageResponse = {
   Aggregate: {Amount: 157.36363636363637},
+  Counter: 0,
+  CurrentPage: 1,
   FilteredRecordCount: 22,
   Payload: [
     {Amount: 150, CustomerName: 'Tiempo Development', OrderID: 22,
@@ -488,11 +510,15 @@ const aggregateAverageResponse = {
     ShippedDate: '2016-04-23T10:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
     {Amount: 300, CustomerName: 'Unosquare LLC', OrderID: 13,
     ShippedDate: '2016-03-19T19:00:00', ShipperCity: 'Portland, OR, USA'}
-  ], TotalRecordCount: 22
+  ], 
+  TotalPages: 3,
+  TotalRecordCount: 22
 };
 
 const aggregateDistinctCountResponse = {
   Aggregate: {Amount: 12},
+  Counter: 0,
+  CurrentPage: 1,
   FilteredRecordCount: 22,
   Payload: [
     {Amount: 150, CustomerName: 'Tiempo Development', OrderID: 22,
@@ -515,11 +541,15 @@ const aggregateDistinctCountResponse = {
     ShippedDate: '2016-04-23T10:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
     {Amount: 300, CustomerName: 'Unosquare LLC', OrderID: 13,
     ShippedDate: '2016-03-19T19:00:00', ShipperCity: 'Portland, OR, USA'}
-  ], TotalRecordCount: 22
+  ], 
+  TotalPages: 3,
+  TotalRecordCount: 22
 };
 
 const aggregateMaxResponse = {
   Aggregate: {Amount: 300},
+  Counter: 0,
+  CurrentPage: 1,
   FilteredRecordCount: 22,
   Payload: [
     {Amount: 150, CustomerName: 'Tiempo Development', OrderID: 22,
@@ -542,11 +572,15 @@ const aggregateMaxResponse = {
     ShippedDate: '2016-04-23T10:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
     {Amount: 300, CustomerName: 'Unosquare LLC', OrderID: 13,
     ShippedDate: '2016-03-19T19:00:00', ShipperCity: 'Portland, OR, USA'}
-  ], TotalRecordCount: 22
+  ], 
+  TotalPages: 3,
+  TotalRecordCount: 22
 };
 
 const aggregateMinResponse = {
   Aggregate: {Amount: 9 },
+  Counter: 0,
+  CurrentPage: 1,
   FilteredRecordCount: 22,
   Payload: [
     {Amount: 150, CustomerName: 'Tiempo Development', OrderID: 22,
@@ -569,13 +603,18 @@ const aggregateMinResponse = {
     ShippedDate: '2016-04-23T10:00:00', ShipperCity: 'Guadalajara, JAL, Mexico'},
     {Amount: 300, CustomerName: 'Unosquare LLC', OrderID: 13,
     ShippedDate: '2016-03-19T19:00:00', ShipperCity: 'Portland, OR, USA'}
-  ], TotalRecordCount: 22
+  ], 
+  TotalPages: 3,
+  TotalRecordCount: 22
 };
 
 const pageMinus1Response = {
   Aggregate: { },
+  Counter: 0,
+  CurrentPage: 0,
   FilteredRecordCount: 22,
   Payload: [  ],
+  TotalPages: 1,
   TotalRecordCount: 22
 };
 
@@ -586,7 +625,7 @@ export {
   aggregateMaxResponse,
   aggregateMinResponse,
   aggregateSumResponse,
-  desendingOrderIdResponse,
+  descendingOrderIdResponse,
   simpleResponse,
   searcTexthMicrosoftResponse,
   pageMinus1Response,

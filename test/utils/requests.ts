@@ -434,7 +434,7 @@ const pageMinus1Request = new GridRequest(
         }
       )
     ],
-    10, -1, '');
+    -1, 0, '');
 
 export { aggregateAverageRequest, aggregateCountRequest, aggregateDistinctCountRequest, aggregateMaxRequest,
   aggregateMinRequest, aggregateSumRequest,

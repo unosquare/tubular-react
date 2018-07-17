@@ -12,7 +12,7 @@ import {
 import {
   aggregateAverageResponse, aggregateCountResponse, aggregateDistinctCountResponse, aggregateMaxResponse,
   aggregateMinResponse, aggregateSumResponse,
-    desendingOrderIdResponse, page2Response, pageMinus1Response,
+    descendingOrderIdResponse, page2Response, pageMinus1Response,
     pageSize20Response, searcTexthMicrosoftResponse, simpleResponse
 } from './utils/responses';
 
@@ -21,7 +21,7 @@ const cases = [
   ['with Page 2', page2Request, page2Response],
   ['with PageSize 20', pageSize20Request, pageSize20Response],
   ['with SearchText Microsoft', microsoftSearchRequest, searcTexthMicrosoftResponse],
-  ['with SortOrder Id Desending', desendingOrderIdRequest, desendingOrderIdResponse],
+  ['with SortOrder Id Desending', desendingOrderIdRequest, descendingOrderIdResponse],
   ['with aggregate function COUNT', aggregateCountRequest, aggregateCountResponse],
   ['with aggregate function SUM', aggregateSumRequest, aggregateSumResponse],
   ['with aggregate function AVERAGE', aggregateAverageRequest, aggregateAverageResponse],

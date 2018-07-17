@@ -7,44 +7,36 @@ import {
 import GridRequest from '../Models/GridRequest';
 import GridResponse from '../Models/GridResponse';
 
-class LocalDataSourceResponse  {
+class LocalDataSourceResponse {
 
     public static getResponse(request: GridRequest, dataSource: any): GridResponse {
-        try {
-            const response: any = {
-                Counter: request.Count,
-                CurrentPage: 1,
-                TotalRecordCount: dataSource.length
-            };
+        const response = new GridResponse(request.Counter);
+        response.TotalRecordCount = dataSource.length;
 
-            let data = this.applyFreeTextSearch(request, dataSource);
-            data = this.applyFiltering(request, data);
-            data = this.applySorting(request, data);
+        let data = this.applyFreeTextSearch(request, dataSource);
+        data = this.applyFiltering(request, data);
+        data = this.applySorting(request, data);
 
-            response.FilteredRecordCount = data.length;
+        response.FilteredRecordCount = data.length;
 
-            if (request.Take > -1) {
-                response.TotalPages = Math.ceil(response.FilteredRecordCount / request.Take);
+        if (request.Take > -1) {
+            response.TotalPages = Math.ceil(response.FilteredRecordCount / request.Take);
 
-                if (response.TotalPages > 0) {
-                    response.CurrentPage = request.Skip / request.Take + 1;
-                }
+            if (response.TotalPages > 0) {
+                response.CurrentPage = request.Skip / request.Take + 1;
             }
-
-            const aggregate = this.getAggregatePayload(request, data);
-            data = data.slice(request.Skip, request.Skip + request.Take);
-            return new GridResponse({
-                Aggregate: aggregate,
-                FilteredRecordCount: response.FilteredRecordCount,
-                Payload: data.map((row: any) => this.parsePayload(row, request.Columns)),
-                TotalRecordCount: response.TotalRecordCount
-              });
-        } catch (error) {
-            return null;
         }
+
+        response.Aggregate = this.getAggregatePayload(request, data);
+        
+        response.Payload = data
+            .slice(request.Skip, request.Skip + request.Take)
+            .map((row: any) => this.parsePayload(row, request.Columns));
+
+        return response;
     }
 
-     private static applyFreeTextSearch(request: any, subset: any[]) {
+    private static applyFreeTextSearch(request: any, subset: any[]) {
         if (request.Search && request.Search.Operator.toLowerCase() === CompareOperators.AUTO.toLowerCase()) {
             const searchableColumns = request.Columns.filter((x: any) => x.Searchable);
 

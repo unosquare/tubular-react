@@ -36,17 +36,21 @@ const withRemoteDataSource = (WrappedComponent: any, columns: any, url: string, 
             throw new Error('Server response is a invalid Tubular object');
           }
 
-          return new GridResponse({
-            Aggregate: response.data.AggregationPayload,
-            FilteredRecordCount: response.data.FilteredRecordCount,
-            Payload: response.data.Payload.map((row: any) => this.parsePayload(row, request.Columns)),
-            TotalRecordCount: response.data.TotalRecordCount
-          });
+          response.data.Payload = response.data.Payload.map((row: any) => this.parsePayload(row, request.Columns))
+          return response.data;
         });
     }
 
-    public isValidResponse(data: any) {
+    private isValidResponse(data: any) {
       return data && expectedStructureKeys === JSON.stringify(Object.keys(data).sort());
+    }
+    
+    private parsePayload(row: any, columns: any[]) {
+      return columns.reduce((obj: any, column: any, key: any) => {
+          obj[column.Name] = row[key] || row[column.Name];
+
+          return obj;
+      }, {});
     }
   };
 };

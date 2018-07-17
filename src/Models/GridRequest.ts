@@ -3,10 +3,10 @@ import ColumnModel from './ColumnModel';
 const currentTimezone = new Date().getTimezoneOffset();
 
 export default class GridRequest {
-  protected static counter: number;
+  protected static counter: number = 0;
 
   public Columns: ColumnModel[];
-  public Count: number;
+  public Counter : number;
   public Search: object;
   public Skip: number;
   public Take: number;
@@ -17,7 +17,7 @@ export default class GridRequest {
     this.Search = { Text: searchText, Operator: 'Auto' };
     this.Skip = itemsPerPage === -1 ? 0 : page * itemsPerPage;
     this.Take = itemsPerPage;
-    this.Count = GridRequest.counter++;
+    this.Counter = GridRequest.counter++;
     this.TimezoneOffset = currentTimezone;
   }
 }
