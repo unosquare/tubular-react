@@ -1,5 +1,5 @@
 import { isAfter, isBefore, isEqual } from 'date-fns';
-import { maxBy, meanBy, minBy, orderBy, sortBy, sumBy, uniqWith } from 'lodash';
+import { orderBy, sortBy } from 'lodash';
 
 import {
     AggregateFunctions, ColumnSortDirection, CompareOperators,
@@ -28,7 +28,7 @@ class LocalDataSourceResponse {
         }
 
         response.Aggregate = this.getAggregatePayload(request, data);
-        
+
         response.Payload = data
             .slice(request.Skip, request.Skip + request.Take)
             .map((row: any) => this.parsePayload(row, request.Columns));
@@ -187,22 +187,28 @@ class LocalDataSourceResponse {
 
             switch (column.Aggregate.toLowerCase()) {
                 case AggregateFunctions.SUM.toLowerCase():
-                    value = sumBy(subset, column.Name);
+                    value = subset.reduce((sum, r) => sum + r[column.Name],
+                        subset[0][column.Name] - subset[0][column.Name]);
                     break;
                 case AggregateFunctions.AVERAGE.toLowerCase():
-                    value = meanBy(subset, column.Name);
+                    value = (subset.reduce((sum, r) => sum + r[column.Name],
+                    subset[0][column.Name] - subset[0][column.Name]) / subset.length);
                     break;
                 case AggregateFunctions.MAX.toLowerCase():
-                    value = maxBy(subset, column.Name)[column.Name];
+                    value = subset.reduce((max, r) => r[column.Name] > max ? r[column.Name] : max,
+                    subset[0][column.Name]);
                     break;
                 case AggregateFunctions.MIN.toLowerCase():
-                    value = minBy(subset, column.Name)[column.Name];
+                    value = subset.reduce((min, r) => r[column.Name] < min ? r[column.Name] : min,
+                    subset[0][column.Name]);
                     break;
                 case AggregateFunctions.COUNT.toLowerCase():
                     value = subset.length;
                     break;
                 case AggregateFunctions.DISTINCT_COUNT.toLowerCase():
-                    value = uniqWith(subset, (a, b) => (a[column.Name] === b[column.Name])).length;
+                    value = subset.reduce((list, r) => {
+                        if (list.indexOf(r[column.Name]) === -1) { list.push(r[column.Name]); }
+                        return  list; }, []).length;
                     break;
                 default:
                     throw new Error('Unsupported aggregate function');

@@ -28,7 +28,6 @@ const cases = [
   ['with aggregate function DISTINCT_COUNT', aggregateDistinctCountRequest, aggregateDistinctCountResponse],
   ['with aggregate function MAX', aggregateMaxRequest, aggregateMaxResponse],
   ['with aggregate function MIN', aggregateMinRequest, aggregateMinResponse],
-  ['with aggregate function MIN', aggregateMinRequest, aggregateMinResponse],
   ['with Page -1', pageMinus1Request, pageMinus1Response]
 ];
 
