@@ -187,27 +187,27 @@ class LocalDataSourceResponse {
 
             switch (column.Aggregate.toLowerCase()) {
                 case AggregateFunctions.SUM.toLowerCase():
-                    value = subset.length === 0 ? 0 : subset.reduce((sum, r) => sum + r[column.Name], 0);
+                    value = subset.length ? 0 : subset.reduce((sum, r) => sum + r[column.Name], 0);
                     break;
                 case AggregateFunctions.AVERAGE.toLowerCase():
-                    value = subset.length === 0 ? 0
+                    value = subset.length ? 0
                             : (subset.reduce((sum, r) => sum + r[column.Name], 0) / subset.length);
                     break;
                 case AggregateFunctions.MAX.toLowerCase():
-                    value = subset.length === 0 ? 0
+                    value = subset.length ? 0
                             : subset.reduce((max, r) => r[column.Name] > max ? r[column.Name] : max,
                     subset[0][column.Name]);
                     break;
                 case AggregateFunctions.MIN.toLowerCase():
-                    value = subset.length === 0 ? 0
+                    value = subset.length ? 0
                             : subset.reduce((min, r) => r[column.Name] < min ? r[column.Name] : min,
                     subset[0][column.Name]);
                     break;
                 case AggregateFunctions.COUNT.toLowerCase():
-                    value = subset.length === 0 ? 0 : subset.length;
+                    value = subset.length ? 0 : subset.length;
                     break;
                 case AggregateFunctions.DISTINCT_COUNT.toLowerCase():
-                    value = subset.length === 0 ? 0
+                    value = subset.length ? 0
                             : subset.reduce((list, r) => {
                                 if (list.indexOf(r[column.Name]) === -1) { list.push(r[column.Name]); }
                                 return  list; }, []).length;
