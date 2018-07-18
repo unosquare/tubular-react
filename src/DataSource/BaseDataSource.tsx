@@ -30,14 +30,6 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
 
     public abstract getAllRecords(request: GridRequest): Promise<object>;
 
-    public parsePayload(row: any, columns: any[]) {
-        return columns.reduce((obj: any, column: any, key: any) => {
-            obj[column.Name] = row[key] || row[column.Name];
-
-            return obj;
-        }, {});
-    }
-
     public retrieveData(options: any = {}): Promise<any> {
         this.setState({ isLoading: true });
         const columns = options.columns || this.state.columns;

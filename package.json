@@ -69,13 +69,6 @@
     "@types/jest": "^23.1.4",
     "axios": "^0.18.0",
     "date-fns": "^1.29.0",
-    "lodash.maxby": "^4.6.0",
-    "lodash.meanby": "^4.10.0",
-    "lodash.minby": "^4.6.0",
-    "lodash.orderby": "^4.6.0",
-    "lodash.sortby": "^4.7.0",
-    "lodash.sumby": "^4.6.0",
-    "lodash.uniqwith": "^4.5.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "typeface-roboto": "0.0.54"
@@ -83,7 +76,6 @@
   "devDependencies": {
     "@types/enzyme": "^3.1.10",
     "@types/enzyme-adapter-react-16": "^1.0.2",
-    "@types/lodash.sumby": "^4.6.3",
     "@types/prop-types": "^15.5.3",
     "@types/react": "^16.3.14",
     "@types/react-dom": "^16.0.5",

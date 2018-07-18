@@ -5,7 +5,7 @@ import * as React from 'react';
 
 import { withRemoteDataSource } from '../src';
 import { validColumnsSample } from './utils/columns';
-import {  simpleRecordsExpected } from './utils/data';
+import {  simpleRecordsExpected } from './utils/responses';
 
 describe('<RemoteDataSource />', () => {
   const mock = new MockAdapter(axios);
