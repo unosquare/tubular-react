@@ -1,4 +1,3 @@
-import Axios from 'axios';
 import * as React from 'react';
 import GridRequest from '../Models/GridRequest';
 import BaseDataSource from './BaseDataSource';
@@ -29,14 +28,21 @@ const withRemoteDataSource = (WrappedComponent: any, columns: any, url: string, 
     }
 
     public getAllRecords(request: GridRequest): Promise<object> {
-      return Axios.post(url, request)
-        .then((response) => {
-          if (!this.isValidResponse(response.data)) {
+     return fetch(url, {
+        body: JSON.stringify(request),
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        method: 'POST'
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (!this.isValidResponse(data)) {
             throw new Error('Server response is a invalid Tubular object');
           }
 
-          response.data.Payload = response.data.Payload.map((row: any) => this.parsePayload(row, request.Columns))
-          return response.data;
+          data.Payload = data.Payload.map((row: any) => this.parsePayload(row, request.Columns));
+          return data;
         });
     }
 
@@ -46,9 +52,9 @@ const withRemoteDataSource = (WrappedComponent: any, columns: any, url: string, 
 
     private parsePayload(row: any, columns: any[]) {
       return columns.reduce((obj: any, column: any, key: any) => {
-          obj[column.Name] = row[key] || row[column.Name];
+        obj[column.Name] = row[key] || row[column.Name];
 
-          return obj;
+        return obj;
       }, {});
     }
   };

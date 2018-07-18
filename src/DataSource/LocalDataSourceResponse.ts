@@ -168,7 +168,7 @@ class LocalDataSourceResponse {
         ];
 
         if (sortedColumns.length > 0) {
-            sortedColumns.sort((a, b) => a.SortOrder > b.SortOrder ? 1 : b.SortOrder > a.SortOrder ? -1 : 0);
+            sortedColumns.sort((a: any, b: any) => a.SortOrder > b.SortOrder ? 1 : b.SortOrder > a.SortOrder ? -1 : 0);
 
             sorts = sortedColumns
                 .map((y: any) => ({ Name: y.Name, Asc: y.SortDirection === ColumnSortDirection.ASCENDING }));

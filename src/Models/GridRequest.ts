@@ -6,7 +6,7 @@ export default class GridRequest {
   protected static counter: number = 0;
 
   public Columns: ColumnModel[];
-  public Counter : number;
+  public Counter: number;
   public Search: object;
   public Skip: number;
   public Take: number;
