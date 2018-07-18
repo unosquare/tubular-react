@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ColumnDataType, CompareOperators } from '../Models';
+import { ColumnDataType, CompareOperators } from 'tubular-common';
 
 import { Input, MenuItem, Select } from '@material-ui/core';
 import { DataSourceContext } from '../DataSource';

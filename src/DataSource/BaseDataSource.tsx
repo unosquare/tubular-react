@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { debounce } from '../utils/debounce';
 
-import ColumnModel from '../Models/ColumnModel';
-import GridRequest from '../Models/GridRequest';
-import GridResponse from '../Models/GridResponse';
+import { ColumnModel, GridRequest, GridResponse } from 'tubular-common';
 
 import { DataSourceContext } from './DataSourceContext';
 import IBaseDataSourceState from './IBaseDataSourceState';

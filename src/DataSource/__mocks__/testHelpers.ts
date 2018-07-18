@@ -1,4 +1,4 @@
-import { AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection } from '../../Models';
+import { AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection } from 'tubular-common';
 
 const context = {
     actions: {

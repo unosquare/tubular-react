@@ -1,4 +1,4 @@
-import ColumnModel from '../Models/ColumnModel';
+import { ColumnModel } from 'tubular-common';
 
 export default interface IBaseDataSourceState {
     activeColumn: any;

@@ -3,8 +3,8 @@ import { IconButton, TableCell, TableRow, TableSortLabel, Tooltip } from '@mater
 import { ArrowDownward, ArrowUpward, FilterList } from '@material-ui/icons';
 
 import * as React from 'react';
+import { ColumnSortDirection, CompareOperators } from 'tubular-common';
 import { DataSourceContext } from '../DataSource';
-import { ColumnSortDirection, CompareOperators } from '../Models/Column';
 import DialogModal from './DialogModal';
 
 const arrowStyle = {

@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import * as React from 'react';
-import GridRequest from '../Models/GridRequest';
+import { GridRequest } from 'tubular-common';
 import BaseDataSource from './BaseDataSource';
 import IBaseDataSourceState from './IBaseDataSourceState';
 
