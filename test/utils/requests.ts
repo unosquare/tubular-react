@@ -1,4 +1,4 @@
-import { AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection } from '../../src';
+import { AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection } from '../../src/Models';
 import GridRequest from '../../src/Models/GridRequest';
 
 const simpleRequest = new GridRequest(

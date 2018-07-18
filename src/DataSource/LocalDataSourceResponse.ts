@@ -1,5 +1,4 @@
 import { isAfter, isBefore, isEqual } from 'date-fns';
-import { orderBy } from 'lodash';
 
 import {
     AggregateFunctions, ColumnSortDirection, CompareOperators,
@@ -161,20 +160,36 @@ class LocalDataSourceResponse {
     }
 
     private static applySorting(request: any, subset: any[]) {
-        const sortedColumns = request.Columns.filter((column: any) => column.SortOrder > 0);
+        const sortedColumns = request.Columns
+            .filter((column: any) => column.SortOrder > 0);
 
-        let cols: any[] = [];
-        let orders: any[] = [];
+        let sorts: any[] = [
+            { Name: request.Columns[0].Name, Asc: true }
+        ];
 
         if (sortedColumns.length > 0) {
             sortedColumns.sort((a, b) => a.SortOrder > b.SortOrder ? 1 : b.SortOrder > a.SortOrder ? -1 : 0);
-            cols = sortedColumns.map((y: any) => y.Name);
-            orders = sortedColumns.map((y: any) => y.SortDirection === ColumnSortDirection.ASCENDING ? 'asc' : 'desc');
-        } else {
-            cols.push(request.Columns[0].Name);
-            orders.push('asc');
+
+            sorts = sortedColumns
+                .map((y: any) => ({ Name: y.Name, Asc: y.SortDirection === ColumnSortDirection.ASCENDING }));
         }
-        return orderBy(subset, cols, orders);
+
+        subset.sort((a, b) => {
+            // TODO: Complete this logic please
+            if (sorts.reduce((prev: any, c: any) => prev && a[c.Name] === b[c.Name], true)) {
+                return 0;
+            }
+
+            for (const current of sorts) {
+                if (current.Asc ? a[current.Name] < b[current.Name] : a[current.Name] > b[current.Name]) {
+                    return -1;
+                }
+            }
+
+            return 1;
+        });
+
+        return subset;
     }
 
     private static getAggregatePayload(request: any, subset: any[]) {
@@ -182,40 +197,38 @@ class LocalDataSourceResponse {
             column.Aggregate && column.Aggregate.toLowerCase() !== AggregateFunctions.NONE.toLowerCase());
 
         return aggregateColumns.reduce((prev: any, column: any) => {
-            let value;
-
             switch (column.Aggregate.toLowerCase()) {
                 case AggregateFunctions.SUM.toLowerCase():
-                    value = subset.length === 0 ? 0 : subset.reduce((sum, r) => sum + r[column.Name], 0);
+                    prev[column.Name] = subset.length === 0 ? 0 : subset.reduce((sum, r) => sum + r[column.Name], 0);
                     break;
                 case AggregateFunctions.AVERAGE.toLowerCase():
-                    value = subset.length === 0 ? 0
-                            : (subset.reduce((sum, r) => sum + r[column.Name], 0) / subset.length);
+                    prev[column.Name] = subset.length === 0 ? 0
+                        : (subset.reduce((sum, r) => sum + r[column.Name], 0) / subset.length);
                     break;
                 case AggregateFunctions.MAX.toLowerCase():
-                    value = subset.length === 0 ? 0
-                            : subset.reduce((max, r) => r[column.Name] > max ? r[column.Name] : max,
-                    subset[0][column.Name]);
+                    prev[column.Name] = subset.length === 0 ? 0
+                        : subset.reduce((max, r) => r[column.Name] > max ? r[column.Name] : max,
+                            subset[0][column.Name]);
                     break;
                 case AggregateFunctions.MIN.toLowerCase():
-                    value = subset.length === 0 ? 0
-                            : subset.reduce((min, r) => r[column.Name] < min ? r[column.Name] : min,
-                    subset[0][column.Name]);
+                    prev[column.Name] = subset.length === 0 ? 0
+                        : subset.reduce((min, r) => r[column.Name] < min ? r[column.Name] : min,
+                            subset[0][column.Name]);
                     break;
                 case AggregateFunctions.COUNT.toLowerCase():
-                    value = subset.length;
+                    prev[column.Name] = subset.length;
                     break;
                 case AggregateFunctions.DISTINCT_COUNT.toLowerCase():
-                    value = subset.length === 0 ? 0
-                            : subset.reduce((list, r) => {
-                                if (list.indexOf(r[column.Name]) === -1) { list.push(r[column.Name]); }
-                                return  list; }, []).length;
+                    prev[column.Name] = subset.length === 0 ? 0
+                        : subset.reduce((list, r) => {
+                            if (list.indexOf(r[column.Name]) === -1) { list.push(r[column.Name]); }
+                            return list;
+                        }, []).length;
                     break;
                 default:
                     throw new Error('Unsupported aggregate function');
             }
 
-            prev[column.Name] = value;
             return prev;
         }, {});
     }
