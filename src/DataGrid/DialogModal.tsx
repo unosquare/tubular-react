@@ -5,7 +5,7 @@ import { DataSourceContext } from '../DataSource';
 import DialogInput from './DialogInput';
 import OperatorsDropdown from './OperatorsDropdown';
 
-import { ColumnDataType, CompareOperators } from '../Models/Column';
+import { ColumnDataType, CompareOperators } from 'tubular-common';
 
 const createFilterPatch = (activeColumn: any) => {
     let filterText = activeColumn.Filter.Text;

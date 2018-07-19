@@ -5,10 +5,6 @@ import DataGrid,
 } from './DataGrid';
 
 import {
-  AggregateFunctions,
-  ColumnDataType,
-  ColumnModel,
-  ColumnSortDirection,
   ToolbarOptions
 } from './Models';
 
@@ -21,10 +17,6 @@ import {
 export default DataGrid;
 
 export {
-  AggregateFunctions,
-  ColumnDataType,
-  ColumnModel,
-  ColumnSortDirection,
   DataSourceContext,
   Paginator,
   TextSearchInput,

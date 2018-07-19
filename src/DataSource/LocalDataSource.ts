@@ -1,7 +1,6 @@
-import GridRequest from '../Models/GridRequest';
+import Transformer, { GridRequest } from 'tubular-common';
 import BaseDataSource from './BaseDataSource';
 import IBaseDataSourceState from './IBaseDataSourceState';
-import LocalDataSourceResponse from './LocalDataSourceResponse';
 
 const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, itemsPerPage = 10) => {
   return class extends BaseDataSource {
@@ -20,7 +19,7 @@ const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, i
     public getAllRecords(request: GridRequest): Promise<object> {
       return new Promise((resolve, reject) => {
         try {
-          resolve(LocalDataSourceResponse.getResponse(request, source));
+          resolve(Transformer.getResponse(request, source));
         } catch (error) {
           reject(error);
         }

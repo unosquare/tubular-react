@@ -6,9 +6,8 @@ import { CheckBox, CheckBoxOutlineBlank, Warning } from '@material-ui/icons';
 import { format } from 'date-fns';
 import * as React from 'react';
 
+import { ColumnDataType, ColumnModel } from 'tubular-common';
 import { DataSourceContext } from '../DataSource';
-import { ColumnDataType } from '../Models/Column';
-import ColumnModel from '../Models/ColumnModel';
 
 const renderCell = (column: ColumnModel, row: any) => {
     switch (column.DataType) {

@@ -1,4 +1,4 @@
-import { AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection } from '../../../src';
+import { AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection } from 'tubular-common';
 
 const columns = [
     new ColumnModel('OrderID',

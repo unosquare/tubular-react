@@ -1,5 +1,5 @@
 import * as React from 'react';
-import GridRequest from '../Models/GridRequest';
+import { GridRequest } from 'tubular-common';
 import BaseDataSource from './BaseDataSource';
 import IBaseDataSourceState from './IBaseDataSourceState';
 
@@ -50,8 +50,8 @@ const withRemoteDataSource = (WrappedComponent: any, columns: any, url: string, 
       return data && expectedStructureKeys === JSON.stringify(Object.keys(data).sort());
     }
 
-    private parsePayload(row: any, columns: any[]) {
-      return columns.reduce((obj: any, column: any, key: any) => {
+    private parsePayload(row: any, c: any[]) {
+      return c.reduce((obj: any, column: any, key: any) => {
         obj[column.Name] = row[key] || row[column.Name];
 
         return obj;
