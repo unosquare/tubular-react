@@ -1,7 +1,7 @@
 import { GridResponse } from 'tubular-common';
 
 const simpleRecordsExpected = new GridResponse(0);
-simpleRecordsExpected.Aggregate = { CustomerName: 500 };
+simpleRecordsExpected.AggregationPayload = { CustomerName: 500 };
 simpleRecordsExpected.CurrentPage = 1;
 simpleRecordsExpected.FilteredRecordCount = 500;
 simpleRecordsExpected.Payload = [
