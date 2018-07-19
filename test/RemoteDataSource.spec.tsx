@@ -14,14 +14,14 @@ describe('<RemoteDataSource />', () => {
   });
 
   test('Should mount with valid props', () => {
-    fetch.mockResponseOnce(JSON.stringify({ data: simpleRecordsExpected }));
+    fetch.mockResponseOnce(JSON.stringify(simpleRecordsExpected));
 
     const component = shallow(<TestComponent />);
     expect(component.props()).toBeDefined();
   });
 
   test('Should contain data with valid url', (done) => {
-    fetch.mockResponse(JSON.stringify({ data: simpleRecordsExpected }));
+    fetch.mockResponse(JSON.stringify(simpleRecordsExpected));
 
     const component = shallow(<TestComponent />);
     (component.instance() as any).retrieveData()
@@ -44,7 +44,7 @@ describe('<RemoteDataSource />', () => {
   });
 
   test('Should contain state columns equals to props columns', () => {
-    fetch.mockResponseOnce(JSON.stringify({ data: simpleRecordsExpected }));
+    fetch.mockResponseOnce(JSON.stringify(simpleRecordsExpected));
 
     const component = shallow(<TestComponent />);
     expect(component.state('columns')).toEqual(validColumnsSample);
