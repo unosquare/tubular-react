@@ -39,7 +39,7 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
             .then((response: GridResponse) => {
                 this.setState({
                     activeColumn: null,
-                    aggregate: response.Aggregate,
+                    aggregate: response.AggregationPayload,
                     columns,
                     data: response.Payload,
                     error: null,

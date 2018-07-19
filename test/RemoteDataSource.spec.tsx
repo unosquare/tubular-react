@@ -1,49 +1,51 @@
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
 import { shallow } from 'enzyme';
 import * as React from 'react';
 
 import { withRemoteDataSource } from '../src';
 import { validColumnsSample } from './utils/columns';
-import {  simpleRecordsExpected } from './utils/responses';
+import { simpleRecordsExpected } from './utils/responses';
 
 describe('<RemoteDataSource />', () => {
-  const mock = new MockAdapter(axios);
-  const TestComponent = withRemoteDataSource(() => (<span></span>), validColumnsSample, 'url') ;
+  // tslint:disable-next-line:max-line-length
+  const TestComponent = withRemoteDataSource(() => (<span></span>), validColumnsSample, 'url');
 
-  afterEach(() => mock.reset());
+  beforeEach(() => {
+    fetch.resetMocks();
+  });
 
   test('Should mount with valid props', () => {
+    fetch.mockResponseOnce(JSON.stringify(simpleRecordsExpected));
+
     const component = shallow(<TestComponent />);
     expect(component.props()).toBeDefined();
   });
 
   test('Should contain data with valid url', (done) => {
-    mock.onPost('url').reply(200, {
-      ...simpleRecordsExpected
-    });
+    fetch.mockResponse(JSON.stringify(simpleRecordsExpected));
 
     const component = shallow(<TestComponent />);
     (component.instance() as any).retrieveData()
-    .then(() => {
-      expect(component.state().data).toEqual(simpleRecordsExpected.Payload);
-      done();
-    });
+      .then(() => {
+        expect(component.state().data).toEqual(simpleRecordsExpected.Payload);
+        done();
+      });
   });
 
   test('Should have error with invalid url', (done) => {
-    mock.onPost('url').reply(400, { error: 'Bad Request' });
+    fetch.mockReject(new Error('Bad Request'));
 
     const component = shallow(<TestComponent />);
     (component.instance() as any).retrieveData()
-    .then(() => {
-      expect(component.state().data).toEqual([]);
-      expect(component.state().error).toBeDefined();
-      done();
-    });
+      .then(() => {
+        expect(component.state().data).toEqual([]);
+        expect(component.state().error).toBeDefined();
+        done();
+      });
   });
 
   test('Should contain state columns equals to props columns', () => {
+    fetch.mockResponseOnce(JSON.stringify(simpleRecordsExpected));
+
     const component = shallow(<TestComponent />);
     expect(component.state('columns')).toEqual(validColumnsSample);
   });
