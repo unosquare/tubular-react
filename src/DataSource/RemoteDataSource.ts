@@ -46,11 +46,11 @@ const withRemoteDataSource = (WrappedComponent: any, columns: any, url: string, 
         });
     }
 
-    private isValidResponse(data: any) {
+    public isValidResponse(data: any) {
       return data && expectedStructureKeys === JSON.stringify(Object.keys(data).sort());
     }
 
-    private parsePayload(row: any, c: any[]) {
+    public parsePayload(row: any, c: any[]) {
       return c.reduce((obj: any, column: any, key: any) => {
         obj[column.Name] = row[key] || row[column.Name];
 

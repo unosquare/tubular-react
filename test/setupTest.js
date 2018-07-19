@@ -32,3 +32,4 @@ global.document = window.document;
 global.HTMLElement = window.HTMLElement;
 global.localStorage = localStorageMock;
 global.open = open;
+global.fetch = require('jest-fetch-mock');

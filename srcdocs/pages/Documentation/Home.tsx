@@ -106,13 +106,7 @@ export default withStyles(styles)((props) => {
                     <Typography paragraph={true} variant='subheading' >
                         <ul>
                             <li>
-                                <a href='https://github.com/axios/axios'>axios - Version: 0.18.0</a>
-                            </li>
-                            <li>
                                 <a href='https://date-fns.org/'>date-fns - Version: 1.29.0</a>
-                            </li>
-                            <li>
-                                <a href='https://lodash.com/'>Lodash - Version: 4.17.10</a>
                             </li>
                             <li>
                                 <a href='https://material-ui.com/'>Material-UI - Version: 1.2.0.</a>

@@ -1,3 +1,4 @@
+import * as React from 'React' // Keep it
 import Transformer, { GridRequest } from 'tubular-common';
 import BaseDataSource from './BaseDataSource';
 import IBaseDataSourceState from './IBaseDataSourceState';

@@ -15,6 +15,7 @@
     "prepublishOnly": "npm run build"
   },
   "jest": {
+    "automock": false,
     "setupFiles": [
       "<rootDir>/test/setupTest.js"
     ],
@@ -67,7 +68,6 @@
     "@material-ui/core": "^1.2.0",
     "@material-ui/icons": "^1.1.0",
     "@types/jest": "^23.1.4",
-    "axios": "^0.18.0",
     "date-fns": "^1.29.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
@@ -86,13 +86,13 @@
     "@types/vinyl": "^2.0.2",
     "@zeit/next-typescript": "1.0.1",
     "awesome-typescript-loader": "^5.0.0",
-    "axios-mock-adapter": "^1.15.0",
     "browser-sync": "^2.24.5",
     "browserify": "^16.2.2",
     "coveralls": "^3.0.1",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "jest": "^23.0.1",
+    "jest-fetch-mock": "^1.6.5",
     "jsdom": "^11.11.0",
     "nyc": "^11.8.0",
     "react-router": "^4.2.0",
