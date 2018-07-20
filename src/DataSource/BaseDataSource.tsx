@@ -84,6 +84,7 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
                     () => document.getElementById(column.Name).blur());
             },
             setFilter: (value: any) => {
+                this.setState({ anchorFilter: null });
                 const columns = [...this.state.columns];
                 const column = columns.find((c: ColumnModel) => c.Name === this.state.activeColumn.Name);
                 if (!column) { return; }
