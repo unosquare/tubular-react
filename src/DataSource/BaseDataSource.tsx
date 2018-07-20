@@ -79,8 +79,9 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
                 }));
             },
             setActiveColumn: (column: any, event: React.MouseEvent<HTMLElement>) => {
-                this.setState({ anchorFilter: event ? event.currentTarget : null });
-                this.setState({ activeColumn: column},
+                this.setState({
+                    activeColumn: column,
+                    anchorFilter: event ? event.currentTarget : null},
                     () => document.getElementById(column.Name).blur());
             },
             setFilter: (value: any) => {
