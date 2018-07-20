@@ -1,6 +1,5 @@
 
 import { Button, Card, CardActions, CardContent, Popover } from '@material-ui/core';
-import { createStyles, Theme, withStyles, WithStyles, } from '@material-ui/core/styles';
 import * as React from 'react';
 import { DataSourceContext } from '../DataSource';
 import DialogInput from './DialogInput';
@@ -26,13 +25,6 @@ const createFilterPatch = (activeColumn: any) => {
         Text: filterText
     };
 };
-
-const styles = (theme: Theme) => createStyles(
-    {
-        card: {
-        }
-    }
-);
 
 const clearFilterPatch = {
     Argument: [''],
