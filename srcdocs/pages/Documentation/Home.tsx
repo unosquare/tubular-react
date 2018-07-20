@@ -109,7 +109,7 @@ export default withStyles(styles)((props) => {
                                 <a href='https://date-fns.org/'>date-fns - Version: 1.29.0</a>
                             </li>
                             <li>
-                                <a href='https://material-ui.com/'>Material-UI - Version: 1.2.0.</a>
+                                <a href='https://material-ui.com/'>Material-UI - Version: 1.4.0</a>
                             </li>
                             <li>
                                 <a href='https://reactjs.org/'>React - Version: 16.4.1</a>
