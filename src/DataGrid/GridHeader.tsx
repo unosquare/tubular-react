@@ -39,7 +39,7 @@ const GridHeader: React.SFC = () => {
               )
               : (column.Label);
             const filter = column.Filter &&
-              (<IconButton id={column.Name} onClick={() => actions.setActiveColumn(column)} >
+              (<IconButton id={column.Name} onClick={(e) => actions.setActiveColumn(column, e)} >
                 <FilterList
                   color={(column.Filter.HasFilter && column.Filter.Operator !== CompareOperators.NONE)
                     ? 'action' : 'disabled'}
