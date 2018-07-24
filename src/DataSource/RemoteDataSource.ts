@@ -48,6 +48,7 @@ const withRemoteDataSource = (WrappedComponent: any, columns: any, request: stri
       }
       return objRequest;
     }
+
     public isValidResponse(data: any) {
       return data && expectedStructureKeys === JSON.stringify(Object.keys(data).sort());
     }

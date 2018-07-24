@@ -1,5 +1,5 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 
+import { Button, Card, CardActions, CardContent, Popover } from '@material-ui/core';
 import * as React from 'react';
 import { DataSourceContext } from '../DataSource';
 import DialogInput from './DialogInput';
@@ -31,30 +31,42 @@ const clearFilterPatch = {
     HasFilter: false,
     Operator: CompareOperators.NONE,
     Text: ''
-  };
+};
 
 const DialogModal: React.SFC = () => {
     return (
         <DataSourceContext.Consumer>
             {({ state, actions }) =>
-                <Dialog open={true} onClose={actions.handleClose} >
-                    <DialogTitle>Filter</DialogTitle>
-                    <DialogContent>
-                        <OperatorsDropdown />
-                        <DialogInput
-                            column={state.activeColumn}
-                            isPrimary={true}
-                            handleTextFieldChange={(e) => actions.handleFilterChange({ Text: e })}
-                        />
-
-                        {state.activeColumn.Filter.Operator === CompareOperators.BETWEEN &&
+                <Popover
+                    open={Boolean(state.anchorFilter)}
+                    onClose={actions.handleClose}
+                    anchorEl={state.anchorFilter}
+                    anchorOrigin={{
+                        horizontal: 'center',
+                        vertical: 'bottom',
+                    }}
+                    transformOrigin={{
+                        horizontal: 'center',
+                        vertical: 'top',
+                    }}
+                >
+                    <Card >
+                        <CardContent>
+                            <OperatorsDropdown />
                             <DialogInput
                                 column={state.activeColumn}
-                                isPrimary={false}
-                                handleTextFieldChange={(e) => actions.handleFilterChange({ Argument: [e] })}
-                            />}
+                                isPrimary={true}
+                                handleTextFieldChange={(e) => actions.handleFilterChange({ Text: e })}
+                            />
 
-                        <DialogActions>
+                            {state.activeColumn.Filter.Operator === CompareOperators.BETWEEN &&
+                                <DialogInput
+                                    column={state.activeColumn}
+                                    isPrimary={false}
+                                    handleTextFieldChange={(e) => actions.handleFilterChange({ Argument: [e] })}
+                                />}
+                        </CardContent>
+                        <CardActions>
                             <Button
                                 size='medium'
                                 color='secondary'
@@ -70,9 +82,9 @@ const DialogModal: React.SFC = () => {
                             >
                                 Apply
                             </Button>
-                        </DialogActions>
-                    </DialogContent>
-                </Dialog>}
+                        </CardActions>
+                    </Card>
+                </Popover>}
         </DataSourceContext.Consumer>
     );
 };

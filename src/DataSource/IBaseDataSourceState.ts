@@ -3,6 +3,7 @@ import { ColumnModel } from 'tubular-common';
 export default interface IBaseDataSourceState {
     activeColumn: any;
     aggregate: any;
+    anchorFilter: any;
     columns: ColumnModel[];
     data: any[];
     error: any;

@@ -10,6 +10,7 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
     public state = this.setInitialState({
         activeColumn: null,
         aggregate: {},
+        anchorFilter: null,
         data: [] as any,
         error: null as any,
         filteredRecordCount: 0,
@@ -77,11 +78,14 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
                     }
                 }));
             },
-            setActiveColumn: (column: any) => {
-                this.setState({ activeColumn: column },
+            setActiveColumn: (column: any, event: React.MouseEvent<HTMLElement>) => {
+                this.setState({
+                    activeColumn: column,
+                    anchorFilter: event ? event.currentTarget : null},
                     () => document.getElementById(column.Name).blur());
             },
             setFilter: (value: any) => {
+                this.setState({ anchorFilter: null });
                 const columns = [...this.state.columns];
                 const column = columns.find((c: ColumnModel) => c.Name === this.state.activeColumn.Name);
                 if (!column) { return; }

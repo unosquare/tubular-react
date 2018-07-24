@@ -27,7 +27,7 @@ Similar components are available in [Angular.js flavor](https://github.com/unosq
 ## Dependencies
 
 * [date-fns](https://date-fns.org/) - Version: 1.29.0.
-* [Material UI Core](https://material-ui.com/) - Version: 1.2.0.
+* [Material UI Core](https://material-ui.com/) - Version: 1.4.0.
 * [React](https://reactjs.org/) - Version: 16.4.1.
 
 ## npm Installation
