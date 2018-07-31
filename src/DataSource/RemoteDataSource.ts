@@ -42,11 +42,20 @@ const withRemoteDataSource = (WrappedComponent: any, columns: any, request: stri
     public getRequest(objRequest: string | Request, gridRequest: GridRequest) {
       if (typeof objRequest === 'string') {
         return new Request(objRequest,
-          {body: JSON.stringify(gridRequest),
-          headers: new Headers({'Content-Type': 'application/json;charset=utf-8'}),
-          method: 'POST'});
+          {
+            body: JSON.stringify(gridRequest),
+            headers: new Headers({ 'Content-Type': 'application/json;charset=utf-8' }),
+            method: 'POST'
+          });
       }
-      return objRequest;
+
+      (objRequest as Request).headers.append('Content-Type', 'application/json;charset=utf-8');
+      return new Request(objRequest.url,
+        {
+          body: JSON.stringify(gridRequest),
+          headers: (objRequest as Request).headers,
+          method: (objRequest as Request).method
+        });
     }
 
     public isValidResponse(data: any) {
