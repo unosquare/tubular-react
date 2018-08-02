@@ -7,8 +7,8 @@ import DataGrid, {
   ToolbarOptions,
   withLocalDataSource
 } from '../../src';
-import columns from './local/LocalColumnsFormat';
-import localData from './local/localData';
+import columns from './data/columns';
+import localData from './data/localData';
 
 const toolbarOptions = new ToolbarOptions();
 

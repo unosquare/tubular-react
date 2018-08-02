@@ -31,8 +31,7 @@ const columns = [
     new ColumnModel('Amount',
         {
             DataType: ColumnDataType.NUMERIC,
-            Sortable: true,
-            Visible: false
+            Sortable: true
         }
     ),
     new ColumnModel('IsShipped',

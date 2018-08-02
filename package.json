@@ -70,7 +70,7 @@
     "date-fns": "^1.29.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
-    "tubular-common": "^1.0.2",
+    "tubular-common": "1.1.2",
     "typeface-roboto": "0.0.54"
   },
   "devDependencies": {
