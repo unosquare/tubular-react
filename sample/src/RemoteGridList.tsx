@@ -1,12 +1,11 @@
 import {
-    Checkbox,
     LinearProgress,
     Paper
 } from '@material-ui/core';
 import { Card, CardActions, CardContent } from '@material-ui/core';
 import { GridList, GridListTile, Typography } from '@material-ui/core';
 import { Button } from '@material-ui/core';
-import { Table, TableBody, TableCell, TableFooter, TableHead, TableRow } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableFooter, TableRow } from '@material-ui/core';
 import { format } from 'date-fns';
 import * as React from 'react';
 import {
@@ -15,7 +14,7 @@ import {
     TextSearchInput,
     withRemoteDataSource
 } from '../../src';
-import columns from './local/LocalColumnsFormat';
+import columns from './data/columns';
 
 const styles: any = {
     progress: {

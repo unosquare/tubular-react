@@ -7,7 +7,7 @@ import DataGrid, {
   ToolbarOptions,
   withRemoteDataSource
 } from '../../src';
-import columns from './local/LocalColumnsFormat';
+import columns from './data/columns';
 
 const toolbarOptions = new ToolbarOptions();
 
