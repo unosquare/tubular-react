@@ -24,13 +24,13 @@ Please visit the [Tubular GitHub Page](http://unosquare.github.io/tubular) to le
 
 ## Dependencies
 
-* [date-fns](https://date-fns.org/) - Version: 1.29.0.
 * [Material UI Core](https://material-ui.com/) - Version: 1.4.0.
-* [React](https://reactjs.org/) - Version: 16.4.1.
+* [React](https://reactjs.org/) - Version: 16.
+* [Tubular Common](https://github.com/unosquare/tubular-common) - Version: 1.1.3.
 
-## npm Installation
+## Installation
 
-```
+```sh
 $ npm install tubular-react --save
 ```
 
