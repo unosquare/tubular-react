@@ -162,7 +162,7 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
                     state: { ...this.state }
                 }}
             >
-                <WrappedComponet error={this.state.error} />
+                <WrappedComponet error={this.state.error} {...this.props} />
             </DataSourceContext.Provider>
         );
     }

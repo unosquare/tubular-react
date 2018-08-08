@@ -1,6 +1,6 @@
 {
   "name": "tubular-react",
-  "version": "0.3.2",
+  "version": "0.4.1",
   "description": "Unosquare Tubular React",
   "main": "dist/index.js",
   "scripts": {
@@ -11,8 +11,7 @@
     "lint": "tslint src/**/*.ts src/**/*.tsx",
     "test": "jest",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
-    "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov",
-    "prepublishOnly": "npm run build"
+    "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov"
   },
   "jest": {
     "automock": false,
