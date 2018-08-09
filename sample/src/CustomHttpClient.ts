@@ -13,7 +13,9 @@ export default class CustomHttpClient implements ITubularHttpClient {
         return fetch(TubularHttpClient.getRequest(this.request, gridRequest))
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
+                // We simulate always one page
+                data.TotalPages = 1;
                 return data;
             });
+    }
 }

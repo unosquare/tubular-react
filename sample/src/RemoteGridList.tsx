@@ -15,6 +15,7 @@ import {
     withRemoteDataSource
 } from '../../src';
 import columns from './data/columns';
+import CustomHttpClient from './CustomHttpClient';
 
 const styles: any = {
     progress: {
@@ -91,4 +92,5 @@ class RemoteGridList extends React.Component<any, any> {
     }
 }
 
-export default withRemoteDataSource(RemoteGridList, columns, 'https://tubular.azurewebsites.net/api/orders/paged');
+const httpClient = new CustomHttpClient('https://tubular.azurewebsites.net/api/orders/paged');
+export default withRemoteDataSource(RemoteGridList, columns, httpClient);
