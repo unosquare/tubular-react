@@ -2,24 +2,17 @@ import { GridRequest } from 'tubular-common';
 import ITubularHttpClient from './ITubularHttpClient';
 
 export default class TubularHttpClient implements ITubularHttpClient {
-    public request: string | Request;
-
-    public constructor(request: string | Request | ITubularHttpClient) {
+    public static resolveRequest(request: string | Request | ITubularHttpClient): string | Request {
         const httpCast = request as ITubularHttpClient;
 
         if (httpCast.request) {
-            this.request = httpCast.request;
-        } else {
-            this.request = request as Request || request as string;
+            return httpCast.request;
         }
+
+        return request as Request || request as string;
     }
 
-    public fetch(gridRequest: GridRequest): Promise<any> {
-        return fetch(this.getRequest(this.request, gridRequest))
-            .then((response) => response.json());
-    }
-
-    private getRequest(objRequest: string | Request, gridRequest: GridRequest) {
+    public static getRequest(objRequest: string | Request, gridRequest: GridRequest) {
         if (typeof objRequest === 'string') {
             return new Request(objRequest,
                 {
@@ -36,5 +29,16 @@ export default class TubularHttpClient implements ITubularHttpClient {
                 headers: (objRequest as Request).headers,
                 method: (objRequest as Request).method
             });
+    }
+
+    public request: string | Request;
+
+    public constructor(request: string | Request | ITubularHttpClient) {
+        this.request = TubularHttpClient.resolveRequest(request);
+    }
+
+    public fetch(gridRequest: GridRequest): Promise<any> {
+        return fetch(TubularHttpClient.getRequest(this.request, gridRequest))
+            .then((response) => response.json());
     }
 }
