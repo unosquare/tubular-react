@@ -8,7 +8,7 @@ import IBaseDataSourceState from './IBaseDataSourceState';
 const withRemoteDataSource = (
   WrappedComponent: any,
   columns: any,
-  request: string | Request | TubularHttpClient,
+  request: string | Request | ITubularHttpClient,
   itemsPerPage = 10) => {
   return class extends BaseDataSource {
     public setInitialState(value: any): IBaseDataSourceState {
