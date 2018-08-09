@@ -5,15 +5,6 @@ import TubularHttpClient from '../utils/TubularHttpClient';
 import BaseDataSource from './BaseDataSource';
 import IBaseDataSourceState from './IBaseDataSourceState';
 
-const expectedStructureKeys = JSON.stringify([
-  'AggregationPayload',
-  'Counter',
-  'CurrentPage',
-  'FilteredRecordCount',
-  'Payload',
-  'TotalPages',
-  'TotalRecordCount']);
-
 const withRemoteDataSource = (
   WrappedComponent: any,
   columns: any,
@@ -44,25 +35,13 @@ const withRemoteDataSource = (
 
       return httpClient.fetch(gridRequest)
         .then((data) => {
-          if (!this.isValidResponse(data)) {
+          if (!TubularHttpClient.isValidResponse(data)) {
             throw new Error('Server response is a invalid Tubular object');
           }
 
-          data.Payload = data.Payload.map((row: any) => this.parsePayload(row, gridRequest.Columns));
+          data.Payload = data.Payload.map((row: any) => TubularHttpClient.parsePayload(row, gridRequest.Columns));
           return data;
         });
-    }
-
-    public parsePayload(row: any, c: any[]) {
-      return c.reduce((obj: any, column: any, key: any) => {
-        obj[column.Name] = row[key] || row[column.Name];
-
-        return obj;
-      }, {});
-    }
-
-    private isValidResponse(data: any) {
-      return data && expectedStructureKeys === JSON.stringify(Object.keys(data).sort());
     }
   };
 };

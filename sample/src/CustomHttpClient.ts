@@ -15,6 +15,8 @@ export default class CustomHttpClient implements ITubularHttpClient {
             .then((data) => {
                 // We simulate always one page
                 data.TotalPages = 1;
+                data.TotalRecordCount = 10;
+                data.FilteredRecordCount = 10;
                 return data;
             });
     }

@@ -1,6 +1,15 @@
 import { GridRequest } from 'tubular-common';
 import ITubularHttpClient from './ITubularHttpClient';
 
+const expectedStructureKeys = JSON.stringify([
+    'AggregationPayload',
+    'Counter',
+    'CurrentPage',
+    'FilteredRecordCount',
+    'Payload',
+    'TotalPages',
+    'TotalRecordCount']);
+
 export default class TubularHttpClient implements ITubularHttpClient {
     public static resolveRequest(request: string | Request | ITubularHttpClient): string | Request {
         const httpCast = request as ITubularHttpClient;
@@ -29,6 +38,18 @@ export default class TubularHttpClient implements ITubularHttpClient {
                 headers: (objRequest as Request).headers,
                 method: (objRequest as Request).method
             });
+    }
+
+    public static isValidResponse(data: any) {
+        return data && expectedStructureKeys === JSON.stringify(Object.keys(data).sort());
+    }
+
+    public static parsePayload(row: any, c: any[]) {
+        return c.reduce((obj: any, column: any, key: any) => {
+            obj[column.Name] = row[key] || row[column.Name];
+
+            return obj;
+        }, {});
     }
 
     public request: string | Request;
