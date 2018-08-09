@@ -9,6 +9,11 @@ import {
 } from './Models';
 
 import {
+  ITubularHttpClient,
+  TubularHttpClient
+} from './utils';
+
+import {
   DataSourceContext,
   withLocalDataSource,
   withRemoteDataSource
@@ -22,5 +27,7 @@ export {
   TextSearchInput,
   ToolbarOptions,
   withLocalDataSource,
-  withRemoteDataSource
+  withRemoteDataSource,
+  ITubularHttpClient,
+  TubularHttpClient
 };
