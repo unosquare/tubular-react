@@ -68,6 +68,7 @@ class GridToolbar extends React.Component<IProps, IState> {
         {({ state, actions }) =>
           <Toolbar>
             <div className={classes.spacer} />
+            {this.props.children}
             {toolbarOptions.exportButton &&
               <IconButton disabled={state.filteredRecordCount === 0} onClick={this.handleExportMenu}>
                 <FileDownload />

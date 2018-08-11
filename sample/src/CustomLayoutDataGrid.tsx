@@ -1,7 +1,8 @@
 import * as React from 'react';
 
-import { Snackbar, TableCell, TableRow } from '@material-ui/core';
-import { CheckBox, CheckBoxOutlineBlank } from '@material-ui/icons';
+import { IconButton, Snackbar, TableCell, TableRow } from '@material-ui/core';
+import { CheckBox, CheckBoxOutlineBlank, CloudDownload } from '@material-ui/icons';
+
 import { format } from 'date-fns';
 import DataGrid, {
   ToolbarOptions,
@@ -72,7 +73,11 @@ class CustomLayoutDataGrid extends React.Component<any, any> {
                 <TableCell />
               </TableRow>
           }
-        />
+        >
+        <IconButton>
+            <CloudDownload />
+        </IconButton>
+        </DataGrid>
       </div>
     );
   }
