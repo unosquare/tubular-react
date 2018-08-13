@@ -15,6 +15,7 @@ export default abstract class BaseDataSource extends React.Component<{}, IBaseDa
         error: null as any,
         filteredRecordCount: 0,
         isLoading: false,
+        itemsPerPage: 10,
         multiSort: false,
         page: 0,
         searchText: '',
