@@ -1,6 +1,6 @@
 {
   "name": "tubular-react",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Unosquare Tubular React",
   "main": "dist/index.js",
   "scripts": {
@@ -75,9 +75,9 @@
   "devDependencies": {
     "@types/enzyme": "^3.1.10",
     "@types/enzyme-adapter-react-16": "^1.0.2",
+    "@types/jest": "^23.1.4",
     "@types/prop-types": "^15.5.3",
     "@types/react": "^16.3.14",
-    "@types/jest": "^23.1.4",
     "@types/react-dom": "^16.0.5",
     "@types/react-router": "^4.0.25",
     "@types/react-router-dom": "^4.2.6",
@@ -85,7 +85,7 @@
     "@types/vinyl": "^2.0.2",
     "@zeit/next-typescript": "1.1.0",
     "awesome-typescript-loader": "^5.0.0",
-    "browser-sync": "^2.24.5",
+    "browser-sync": "^2.24.6",
     "browserify": "^16.2.2",
     "coveralls": "^3.0.1",
     "enzyme": "^3.3.0",
