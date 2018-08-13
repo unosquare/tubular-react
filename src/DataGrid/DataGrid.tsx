@@ -32,7 +32,7 @@ interface IProps extends WithStyles<typeof styles> {
   footerRenderer?(aggregate: any): any;
 }
 
-const DataGrid: React.SFC<IProps> = ({ classes, bodyRenderer, footerRenderer, toolbarOptions, gridName }) => {
+const DataGrid: React.SFC<IProps> = ({ classes, bodyRenderer, footerRenderer, toolbarOptions, gridName, children }) => {
   toolbarOptions = toolbarOptions || new ToolbarOptions();
 
   return (
@@ -42,7 +42,9 @@ const DataGrid: React.SFC<IProps> = ({ classes, bodyRenderer, footerRenderer, to
           <GridToolbar
             toolbarOptions={toolbarOptions}
             gridName={gridName || 'Grid'}
-          />
+          >
+          {children}
+          </GridToolbar>
           <div className={classes.progress}>
             {state.isLoading && <LinearProgress />}
           </div>

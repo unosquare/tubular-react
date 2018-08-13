@@ -4,6 +4,7 @@ import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import * as React from 'react';
 
+import CustomLayoutDataGrid from './CustomLayoutDataGrid';
 import LocalDataGrid from './localDataGrid';
 import RemoteDataGrid from './remoteDataGrid';
 import RemoteGridList from './remoteGridList';
@@ -47,12 +48,14 @@ class Main extends React.Component<any, any> {
           <Tabs value={value} onChange={this.handleChange}>
             <Tab label='Remote DataGrid' />
             <Tab label='Local DataGrid' />
-            <Tab label='Remote Grid List' />
+            <Tab label='Custom DataGrid' />
+            <Tab label='Grid List' />
           </Tabs>
         </AppBar>
         {value === 0 && <RemoteDataGrid />}
         {value === 1 && <LocalDataGrid />}
-        {value === 2 && <RemoteGridList />}
+        {value === 2 && <CustomLayoutDataGrid />}
+        {value === 3 && <RemoteGridList />}
       </div>
     );
   }

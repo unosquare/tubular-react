@@ -1,7 +1,7 @@
 import { IconButton, Menu, MenuItem, Toolbar } from '@material-ui/core';
 import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core/styles';
 
-import { FileDownload, Print } from '@material-ui/icons';
+import { CloudDownload, Print } from '@material-ui/icons';
 
 import * as React from 'react';
 
@@ -68,9 +68,10 @@ class GridToolbar extends React.Component<IProps, IState> {
         {({ state, actions }) =>
           <Toolbar>
             <div className={classes.spacer} />
+            {this.props.children}
             {toolbarOptions.exportButton &&
               <IconButton disabled={state.filteredRecordCount === 0} onClick={this.handleExportMenu}>
-                <FileDownload />
+                <CloudDownload />
               </IconButton>}
             {toolbarOptions.printButton &&
               <IconButton disabled={state.filteredRecordCount === 0} onClick={this.handlePrintMenu} >
