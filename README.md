@@ -72,7 +72,7 @@ render() {
   <DataGrid
           gridName='table'
           bodyRenderer={
-            (row: any, index: any) =>
+            (row: any, index: any, columns: ColumnModel[]) =>
               <TableRow hover={true} key={index}>
                 <TableCell padding={'default'}>
                   {row.OrderID}

@@ -10,7 +10,9 @@ import {
 
 import {
   ITubularHttpClient,
-  TubularHttpClient
+  TubularHttpClient,
+  renderCellContent,
+  renderCells
 } from './utils';
 
 import {
@@ -29,5 +31,7 @@ export {
   withLocalDataSource,
   withRemoteDataSource,
   ITubularHttpClient,
-  TubularHttpClient
+  TubularHttpClient,
+  renderCellContent,
+  renderCells
 };

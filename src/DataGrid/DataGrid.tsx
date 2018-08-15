@@ -4,6 +4,7 @@ import {
 } from '@material-ui/core';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import * as React from 'react';
+import { ColumnModel } from 'tubular-common';
 
 import GridBody from './GridBody';
 import GridHeader from './GridHeader';
@@ -28,7 +29,7 @@ const styles = (theme: Theme) => createStyles(
 interface IProps extends WithStyles<typeof styles> {
   gridName?: string;
   toolbarOptions?: ToolbarOptions;
-  bodyRenderer?(column: any, index: number): any;
+  bodyRenderer?(column: any, index: number, columns: ColumnModel[]): any;
   footerRenderer?(aggregate: any): any;
 }
 
