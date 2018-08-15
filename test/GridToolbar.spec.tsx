@@ -1,7 +1,7 @@
 import IconButton from '@material-ui/core/IconButton';
 import { createMount } from '@material-ui/core/test-utils';
 import Toolbar from '@material-ui/core/Toolbar';
-import DownloadIcon from '@material-ui/icons/FileDownload';
+import CloudDownload from '@material-ui/icons/CloudDownload';
 import PrintIcon from '@material-ui/icons/Print';
 
 import GridToolbar from '../src/DataGrid/GridToolbar';
@@ -42,7 +42,7 @@ describe('<GridToolbar/>', () => {
           gridName={'testGrid'}
         />
       );
-      expect(wrapper.find(IconButton).find(DownloadIcon)).toHaveLength(1);
+      expect(wrapper.find(IconButton).find(CloudDownload)).toHaveLength(1);
     });
 
     test('should not render a export button when is set to false', () => {
