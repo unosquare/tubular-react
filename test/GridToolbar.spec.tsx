@@ -54,7 +54,7 @@ describe('<GridToolbar/>', () => {
           gridName={'testGrid'}
         />
       );
-      expect(wrapper.find(IconButton).find(DownloadIcon)).toHaveLength(0);
+      expect(wrapper.find(IconButton).find(CloudDownload)).toHaveLength(0);
     });
   });
 
