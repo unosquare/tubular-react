@@ -4,12 +4,13 @@ import {
 } from '@material-ui/core';
 import { Warning } from '@material-ui/icons';
 import * as React from 'react';
+import { ColumnModel } from 'tubular-common';
 
 import { DataSourceContext } from '../DataSource';
 import { renderCells } from '../utils';
 
 interface IProps {
-    bodyRenderer?(row: any, index: number): any;
+    bodyRenderer?(row: any, index: number, columns: ColumnModel[]): any;
 }
 
 const GridBody: React.SFC<IProps> = ({ bodyRenderer }) => {
@@ -19,7 +20,7 @@ const GridBody: React.SFC<IProps> = ({ bodyRenderer }) => {
                 <TableBody>
                     {state.data.map((row: any, rowIndex: number) => (
                         bodyRenderer
-                            ? bodyRenderer(row, rowIndex)
+                            ? bodyRenderer(row, rowIndex, state.columns)
                             : <TableRow hover={true} key={rowIndex}>
                                 {
                                     renderCells(state.columns, row)
