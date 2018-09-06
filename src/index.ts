@@ -10,9 +10,9 @@ import {
 
 import {
   ITubularHttpClient,
-  TubularHttpClient,
   renderCellContent,
-  renderCells
+  renderCells,
+  TubularHttpClient
 } from './utils';
 
 import {
