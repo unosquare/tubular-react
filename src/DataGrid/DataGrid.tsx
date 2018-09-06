@@ -1,8 +1,17 @@
 import {
-  LinearProgress, Paper, Table, TableFooter,
-  TableHead, TableRow
+  LinearProgress,
+  Paper,
+  Table,
+  TableFooter,
+  TableHead,
+  TableRow
 } from '@material-ui/core';
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
+import {
+  createStyles,
+  Theme,
+  withStyles,
+  WithStyles
+} from '@material-ui/core/styles';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
 
@@ -14,8 +23,8 @@ import Paginator from './Paginator';
 import { DataSourceContext } from '../DataSource';
 import ToolbarOptions from '../Models/ToolbarOptions';
 
-const styles = (theme: Theme) => createStyles(
-  {
+const styles = (theme?: Theme) =>
+  createStyles({
     progress: {
       height: theme.spacing.unit * 2
     },
@@ -33,48 +42,56 @@ interface IProps extends WithStyles<typeof styles> {
   footerRenderer?(aggregate: any): any;
 }
 
-const DataGrid: React.SFC<IProps> = ({ classes, bodyRenderer, footerRenderer, toolbarOptions, gridName, children }) => {
+const DataGrid: React.SFC<IProps> = ({
+  classes,
+  bodyRenderer,
+  footerRenderer,
+  toolbarOptions,
+  gridName,
+  children
+}) => {
   toolbarOptions = toolbarOptions || new ToolbarOptions();
 
   return (
     <DataSourceContext.Consumer>
-      {({ state }) =>
+      {({ state }) => (
         <Paper className={classes.root}>
           <GridToolbar
             toolbarOptions={toolbarOptions}
             gridName={gridName || 'Grid'}
           >
-          {children}
+            {children}
           </GridToolbar>
           <div className={classes.progress}>
             {state.isLoading && <LinearProgress />}
           </div>
           <Table>
             <TableHead>
-              {toolbarOptions.topPager &&
+              {toolbarOptions.topPager && (
                 <TableRow>
                   <Paginator
                     rowsPerPageOptions={toolbarOptions.rowsPerPageOptions}
                     advancePagination={toolbarOptions.advancePagination}
                   />
                 </TableRow>
-              }
+              )}
               <GridHeader />
             </TableHead>
             <GridBody bodyRenderer={bodyRenderer} />
             <TableFooter>
               {footerRenderer && footerRenderer(state.aggregate)}
-              {toolbarOptions.bottomPager &&
+              {toolbarOptions.bottomPager && (
                 <TableRow>
                   <Paginator
                     rowsPerPageOptions={toolbarOptions.rowsPerPageOptions}
                     advancePagination={toolbarOptions.advancePagination}
                   />
                 </TableRow>
-              }
+              )}
             </TableFooter>
           </Table>
-        </Paper>}
+        </Paper>
+      )}
     </DataSourceContext.Consumer>
   );
 };

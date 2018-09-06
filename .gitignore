@@ -74,3 +74,5 @@ package-lock.json
 .next
 /sample/app/*.map
 /dist
+
+yarn\.lock
