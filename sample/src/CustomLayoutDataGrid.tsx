@@ -10,14 +10,11 @@ import DataGrid, {
 } from '../../src';
 import columns from './data/columns';
 import localData from './data/localData';
+import IGridState from './IGridState';
 
 const toolbarOptions = new ToolbarOptions();
 
-class CustomLayoutDataGrid extends React.Component<any, any> {
-  public state = {
-    errorMessage: null as any
-  };
-
+class CustomLayoutDataGrid extends React.Component<{}, IGridState> {
   public componentWillReceiveProps(nextProps: any) {
     this.setState({ errorMessage: nextProps.error });
   }

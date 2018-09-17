@@ -21,24 +21,23 @@ import GridToolbar from './GridToolbar';
 import Paginator from './Paginator';
 
 import { DataSourceContext } from '../DataSource';
-import ToolbarOptions from '../Models/ToolbarOptions';
+import { ToolbarOptions } from '../Models';
 
-const styles = (theme?: Theme) =>
-  createStyles({
-    progress: {
-      height: theme.spacing.unit * 2
-    },
-    root: {
-      marginTop: theme.spacing.unit * 3,
-      overflowX: 'auto',
-      width: '100%'
-    }
-  });
+const styles = ({ spacing }) => createStyles({
+  progress: {
+    height: spacing.unit * 2
+  },
+  root: {
+    marginTop: spacing.unit * 3,
+    overflowX: 'auto',
+    width: '100%'
+  }
+});
 
 interface IProps extends WithStyles<typeof styles> {
   gridName?: string;
   toolbarOptions?: ToolbarOptions;
-  bodyRenderer?(column: any, index: number, columns: ColumnModel[]): any;
+  bodyRenderer?(row: any, index: number, columns: ColumnModel[]): any;
   footerRenderer?(aggregate: any): any;
 }
 

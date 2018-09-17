@@ -38,8 +38,6 @@ $ npm install tubular-react --save
 
 You can start using `DataGrid` with this sample code. The grid will connect to a remote datasource or have a local datasource depending of how you export your class. The available exports that you can use are [`withRemoteDataSource`](#export-withRemoteDataSource) and [`withLocalDataSource`](##export-withLocalDataSource).
 
-**Make sure you add the export**
-
 ```js
 import React from "react";
 import ReactDOM from "react-dom";
@@ -61,44 +59,46 @@ const SampleGrid = withRemoteDataSource(
 );
 
 ReactDOM.render(<SampleGrid />, document.getElementById("root"));
-
-// export default use withLocalDataSource or withRemoteDataSource
 ```
 
 The following snippet shows how to use a custom body and a custom footer:
 
 ```jsx
-render() {
-  <DataGrid
-          gridName='table'
-          bodyRenderer={
-            (row: any, index: any, columns: ColumnModel[]) =>
-              <TableRow hover={true} key={index}>
-                <TableCell padding={'default'}>
-                  {row.OrderID}
-                </TableCell>
-                <TableCell padding={'default'}>
-                  {row.CustomerName}
-                </TableCell>
-                <TableCell padding={'default'}>
-                  {row.ShipperCity}
-                </TableCell>
-              </TableRow>
-          }
-          footerRenderer={
-            (aggregates: any) =>
-              <TableRow>
-                <TableCell>Total: </TableCell>
-                <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
-              </TableRow>
-          }
-  />
-}
-
-// export default use withLocalDataSource or withRemoteDataSource
+const CustomBodyGrid = withRemoteDataSource(
+  () => {
+    return (
+      <DataGrid
+              gridName='table'
+              bodyRenderer={
+                (row: any, index: any, columns: ColumnModel[]) =>
+                  <TableRow hover={true} key={index}>
+                    <TableCell padding={'default'}>
+                      {row.OrderID}
+                    </TableCell>
+                    <TableCell padding={'default'}>
+                      {row.CustomerName}
+                    </TableCell>
+                    <TableCell padding={'default'}>
+                      {row.ShipperCity}
+                    </TableCell>
+                  </TableRow>
+              }
+              footerRenderer={
+                (aggregate: any) =>
+                  <TableRow>
+                    <TableCell>Total: </TableCell>
+                    <TableCell>{aggregate && aggregate.CustomerName}</TableCell>
+                  </TableRow>
+              }
+      />
+  }),
+  columns,
+  "https://tubular.azurewebsites.net/api/orders/paged"
+);
 ```
 
 ### Export `withRemoteDataSource`
+
 Exporting your `DataGrid` using `withRemoteDataSource` HOC will need both a URL and a `ColumnModel` array.
 
 ```js
@@ -106,6 +106,7 @@ export default withRemoteDataSource(CustomComponent, columns, 'http://tubular.az
 ```
 
 ### Export `withLocalDataSource`
+
 Exporting your `DataGrid` using `withLocalDataSource` HOC will need both an array of data objects and a `ColumnModel` array. See this [example](https://github.com/unosquare/tubular-react/blob/master/sample/src/local/localData.ts) of how to define the array of objects.
 
 ```js
@@ -131,8 +132,8 @@ These are all the available properties (and their default values) for the `Toolb
 
 | Name | Type | Default Value | Description |
 |------------------|----------------------------------------|-----------------|----------------------------------------------|
-| `itemsPerPage`         | `number`    | 10                  | It should be a number that is inside the `rowsPerPageOptions` array.|
-|`rowsPerPageOptions`   | `array`     | [10, 20, 50, 100]   | The options that are going to be shown in the `Page size` dropdown.|
+| `itemsPerPage`        | `number`    | 10                  | It should be a number that is inside the `rowsPerPageOptions` array.|
+| `rowsPerPageOptions`  | `array`     | [10, 20, 50, 100]   | The options that are going to be shown in the `Page size` dropdown.|
 | `bottomPager`         | `bool`      | `true`              | - |
 | `exportButton`        | `bool`      | `true`              | - |
 | `searchText`          | `bool`      | `true`              | - |
@@ -141,7 +142,8 @@ These are all the available properties (and their default values) for the `Toolb
 
 _If you don't define some of the optional props described above, these will use their defaults values. In the case of `bodyRenderer`, the grid will display its default body; if the `footerRenderer` is not defined, the footer will not be displayed._
 
-### `ColumnModel` 
+### `ColumnModel`
+
 It represents a `DataGrid` column and its constructor requires a name identifier as well as an object of column options with the following properties:
 
 | Name | Type | Default Value | Description | Options   |

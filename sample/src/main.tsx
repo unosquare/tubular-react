@@ -43,7 +43,7 @@ class Main extends React.Component<any, any> {
           <img
             className={classes.logo}
             src='https://unosquare.github.io/tubular-react/static/tubular.png'
-            alt='Tubular'
+            alt='Tubular React'
           />
           <Tabs value={value} onChange={this.handleChange}>
             <Tab label='Remote DataGrid' />
