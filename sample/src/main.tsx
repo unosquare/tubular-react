@@ -9,7 +9,7 @@ import LocalDataGrid from './localDataGrid';
 import RemoteDataGrid from './remoteDataGrid';
 import RemoteGridList from './remoteGridList';
 
-const styles = (theme: any) => ({
+const styles = ({palette}: any) => ({
   logo: {
     color: 'rgb(255, 255, 255)',
     display: 'block',
@@ -19,7 +19,7 @@ const styles = (theme: any) => ({
     width: 150
   },
   root: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: palette.background.paper,
     flexGrow: 1
   }
 });

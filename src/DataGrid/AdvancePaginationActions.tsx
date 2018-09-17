@@ -5,11 +5,11 @@ import { FirstPage, KeyboardArrowLeft, KeyboardArrowRight, LastPage } from '@mat
 
 import * as React from 'react';
 
-const styles = (theme: Theme) => createStyles(
+const styles = ({ spacing }: Theme) => createStyles(
   {
     root: {
       flexShrink: 0,
-      marginLeft: theme.spacing.unit * 2.5
+      marginLeft: spacing.unit * 2.5
     }
   }
 );

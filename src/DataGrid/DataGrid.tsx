@@ -23,7 +23,7 @@ import Paginator from './Paginator';
 import { DataSourceContext } from '../DataSource';
 import { ToolbarOptions } from '../Models';
 
-const styles = ({ spacing }) => createStyles({
+const styles = ({ spacing }: Theme) => createStyles({
   progress: {
     height: spacing.unit * 2
   },
@@ -95,4 +95,4 @@ const DataGrid: React.SFC<IProps> = ({
   );
 };
 
-export default withStyles(styles)(DataGrid);
+export default withStyles(styles, { withTheme: true })(DataGrid);
