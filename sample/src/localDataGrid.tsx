@@ -32,7 +32,6 @@ class LocalDataGrid extends React.Component<{}, {}> {
           />
         }
         <DataGrid
-          gridName='Tubular-React'
         />
       </div>
     );
