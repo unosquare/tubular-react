@@ -14,8 +14,8 @@ import {
     TextSearchInput,
     withRemoteDataSource
 } from '../../src';
-import columns from './data/columns';
 import CustomHttpClient from './CustomHttpClient';
+import columns from './data/columns';
 
 const styles: any = {
     progress: {

@@ -6,7 +6,7 @@ const columns = [
             DataType: ColumnDataType.NUMERIC,
             Filtering: true,
             IsKey: true,
-            Label: 'ID',
+            Label: 'Id',
             SortDirection: ColumnSortDirection.ASCENDING,
             SortOrder: 1,
             Sortable: true

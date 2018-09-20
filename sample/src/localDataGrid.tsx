@@ -8,9 +8,7 @@ import DataGrid, {
 import columns from './data/columns';
 import localData from './data/localData';
 
-const toolbarOptions = new ToolbarOptions();
-
-class LocalDataGrid extends React.Component<any, any> {
+class LocalDataGrid extends React.Component<{}, {}> {
   public state = {
     errorMessage: null as any
   };
@@ -34,8 +32,6 @@ class LocalDataGrid extends React.Component<any, any> {
           />
         }
         <DataGrid
-          gridName='Tubular-React'
-          toolbarOptions={toolbarOptions}
         />
       </div>
     );
