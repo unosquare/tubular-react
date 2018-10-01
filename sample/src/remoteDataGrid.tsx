@@ -76,4 +76,4 @@ class RemoteDataGrid extends React.Component<any, any> {
   }
 }
 
-export default withRemoteDataSource(RemoteDataGrid, columns, 'https://tubular.azurewebsites.net/api/das/paged');
+export default withRemoteDataSource(RemoteDataGrid, columns, 'https://tubular.azurewebsites.net/api/orders/paged');
