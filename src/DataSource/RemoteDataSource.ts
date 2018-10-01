@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { GridRequest } from 'tubular-common';
-import ITubularHttpClient from '../utils/ITubularHttpClient';
-import TubularHttpClient from '../utils/TubularHttpClient';
+import { ITubularHttpClient, TubularHttpClient } from '../utils';
 import BaseDataSource from './BaseDataSource';
 import IBaseDataSourceState from './IBaseDataSourceState';
 

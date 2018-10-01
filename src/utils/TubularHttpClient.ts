@@ -32,6 +32,7 @@ export default class TubularHttpClient implements ITubularHttpClient {
         }
 
         (objRequest as Request).headers.append('Content-Type', 'application/json;charset=utf-8');
+
         return new Request(objRequest.url,
             {
                 body: JSON.stringify(gridRequest),
@@ -58,8 +59,15 @@ export default class TubularHttpClient implements ITubularHttpClient {
         this.request = TubularHttpClient.resolveRequest(request);
     }
 
-    public fetch(gridRequest: GridRequest): Promise<any> {
-        return fetch(TubularHttpClient.getRequest(this.request, gridRequest))
-            .then((response) => response.json());
+    public async fetch(gridRequest: GridRequest): Promise<any> {
+        const response = await fetch(TubularHttpClient.getRequest(this.request, gridRequest));
+
+        if (response.status >= 200 && response.status < 300) {
+            const responseBody: string = await response.text();
+
+            return responseBody ? JSON.parse(responseBody) : {};
+        }
+
+        throw new Error('Invalid request');
     }
 }
