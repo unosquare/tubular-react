@@ -36,7 +36,8 @@ export default abstract class BaseDataSource extends React.Component<
       this.state.page === nextState.page &&
       this.state.data.length === nextState.data.length &&
       this.state.anchorFilter === nextState.anchorFilter &&
-      this.state.isLoading === nextState.isLoading
+      this.state.isLoading === nextState.isLoading &&
+      this.state.activeColumn === nextState.activeColumn
     ) {
       return false;
     }
