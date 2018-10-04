@@ -8,7 +8,7 @@ import { ColumnDataType, CompareOperators } from 'tubular-common';
 const dropdown = {
   marginLeft: '10%',
   marginTop: '5%',
-  width: '80%',
+  width: '80%'
 };
 
 const BooleanInputOperators = [
@@ -31,7 +31,12 @@ const ColumnDataTypeToHtmlType = {
   string: 'text'
 };
 
-const getValue = (dataType: ColumnDataType, operator: CompareOperators, value: string, handleTextFieldChange: any) => {
+const getValue = (
+  dataType: ColumnDataType,
+  operator: CompareOperators,
+  value: string,
+  handleTextFieldChange: any
+) => {
   switch (dataType) {
     case ColumnDataType.DATE:
       if (value) {
@@ -47,19 +52,37 @@ const getValue = (dataType: ColumnDataType, operator: CompareOperators, value: s
       handleTextFieldChange(format(new Date(), 'YYYY-MM-DD[T]HH:mm'));
       return '';
     case ColumnDataType.BOOLEAN:
-      return operator === CompareOperators.NONE ? ''
-        : (typeof (value) === 'boolean' ? (value === true ? 'true' : 'false') : value);
+      return operator === CompareOperators.NONE
+        ? ''
+        : typeof value === 'boolean'
+          ? value === true
+            ? 'true'
+            : 'false'
+          : value;
     default:
-      return operator === CompareOperators.NONE ? '' : (value || '');
+      return operator === CompareOperators.NONE ? '' : value || '';
   }
 };
 
-const DialogInput: React.SFC<IProps> = ({ column, handleTextFieldChange, isPrimary }) => {
-  const value = getValue(column.DataType, column.Operator,
-    isPrimary ? column.Filter.Text : column.Filter.Argument[0], handleTextFieldChange);
-  const disabled = isPrimary ? column.Filter.Operator === CompareOperators.NONE : false;
+const DialogInput: React.SFC<IProps> = ({
+  column,
+  handleTextFieldChange,
+  isPrimary
+}) => {
+  const value =
+    getValue(
+      column.DataType,
+      column.Operator,
+      isPrimary ? column.Filter.Text : column.Filter.Argument[0],
+      handleTextFieldChange
+    ) || '';
+  const disabled = isPrimary
+    ? column.Filter.Operator === CompareOperators.NONE
+    : false;
   const label = isPrimary
-    ? (column.Filter.Operator !== CompareOperators.BETWEEN ? 'Value' : 'First Value')
+    ? column.Filter.Operator !== CompareOperators.BETWEEN
+      ? 'Value'
+      : 'First Value'
     : 'Second Value';
 
   return (
@@ -73,11 +96,12 @@ const DialogInput: React.SFC<IProps> = ({ column, handleTextFieldChange, isPrima
       type={(ColumnDataTypeToHtmlType as any)[column.DataType]}
       onChange={(e: any) => handleTextFieldChange(e.target.value)}
     >
-      {column.DataType === ColumnDataType.BOOLEAN && BooleanInputOperators.map((option) => (
-        <MenuItem key={option.Value} value={option.Value}>
-          {option.Title}
-        </MenuItem>
-      ))}
+      {column.DataType === ColumnDataType.BOOLEAN &&
+        BooleanInputOperators.map((option) => (
+          <MenuItem key={option.Value} value={option.Value}>
+            {option.Title}
+          </MenuItem>
+        ))}
     </TextField>
   );
 };
