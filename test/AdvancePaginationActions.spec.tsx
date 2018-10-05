@@ -14,18 +14,18 @@ describe('TablePaginationActions', () => {
     mount = createMount();
   });
 
-  test('should render 9 \'<IconButton />\' when has 10 of 500 records to show by page', () => {
+  test('should render 10 \'<IconButton />\' when has 10 of 500 records to show by page', () => {
     const wrapper = mount(
       <AdvancePaginationActions
         classes={{}}
         count={500}
         page={0}
-        itemsPerPage={10}
+        rowsPerPage={10}
         onChangePage={context.actions.updatePage}
       />
     );
 
-    expect(wrapper.find(IconButton)).toHaveLength(9);
+    expect(wrapper.find(IconButton)).toHaveLength(10);
   });
 
   test('should have the disabled prop from \'First Page\' as true', () => {
@@ -34,7 +34,7 @@ describe('TablePaginationActions', () => {
         classes={{}}
         count={500}
         page={0}
-        itemsPerPage={10}
+        rowsPerPage={10}
         onChangePage={context.actions.updatePage}
       />
     );
@@ -51,7 +51,7 @@ describe('TablePaginationActions', () => {
         classes={{}}
         count={500}
         page={2}
-        itemsPerPage={10}
+        rowsPerPage={10}
         onChangePage={context.actions.updatePage}
       />
     );
@@ -68,7 +68,7 @@ describe('TablePaginationActions', () => {
         classes={{}}
         count={500}
         page={49}
-        itemsPerPage={10}
+        rowsPerPage={10}
         onChangePage={context.actions.updatePage}
       />
     );
@@ -85,7 +85,7 @@ describe('TablePaginationActions', () => {
         classes={{}}
         count={500}
         page={47}
-        itemsPerPage={10}
+        rowsPerPage={10}
         onChangePage={context.actions.updatePage}
       />
     );
@@ -102,7 +102,7 @@ describe('TablePaginationActions', () => {
         classes={{}}
         count={500}
         page={49}
-        itemsPerPage={10}
+        rowsPerPage={10}
         onChangePage={context.actions.updatePage}
       />
     );
@@ -119,7 +119,7 @@ describe('TablePaginationActions', () => {
         classes={{}}
         count={500}
         page={0}
-        itemsPerPage={10}
+        rowsPerPage={10}
         onChangePage={context.actions.updatePage}
       />
     );
@@ -136,12 +136,12 @@ describe('TablePaginationActions', () => {
         classes={{}}
         count={500}
         page={49}
-        itemsPerPage={10}
+        rowsPerPage={10}
         onChangePage={context.actions.updatePage}
       />
     );
 
-    const nextPage = wrapper.find(IconButton).at(7);
+    const nextPage = wrapper.find(IconButton).at(8);
 
     nextPage.simulate('click');
     expect(nextPage.props().disabled).toBe(true);
@@ -153,7 +153,7 @@ describe('TablePaginationActions', () => {
         classes={{}}
         count={500}
         page={34}
-        itemsPerPage={10}
+        rowsPerPage={10}
         onChangePage={context.actions.updatePage}
       />
     );
@@ -170,7 +170,7 @@ describe('TablePaginationActions', () => {
         classes={{}}
         count={500}
         page={33}
-        itemsPerPage={10}
+        rowsPerPage={10}
         onChangePage={context.actions.updatePage}
       />
     );
