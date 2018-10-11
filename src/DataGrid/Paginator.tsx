@@ -23,7 +23,7 @@ const Paginator: React.SFC<IProps> = ({ rowsPerPageOptions, advancePagination })
       const props = {
         count: state.filteredRecordCount,
         labelDisplayedRows: message(state.totalRecordCount, state.filteredRecordCount),
-        onChangePage: (e: any, p: any) => actions.updatePage(p),
+        onChangePage: (e: any, p: any) => actions.updatePage(p - 1),
         onChangeRowsPerPage: (e: any) => actions.updateItemPerPage(Number(e.target.value)),
         page: state.page,
         rowsPerPage: state.itemsPerPage,

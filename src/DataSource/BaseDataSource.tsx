@@ -20,7 +20,7 @@ export default abstract class BaseDataSource extends React.Component<
     isLoading: false,
     itemsPerPage: 10,
     multiSort: false,
-    page: 0,
+    page: -1,
     searchText: '',
     totalRecordCount: 0
   });
@@ -71,7 +71,7 @@ export default abstract class BaseDataSource extends React.Component<
             filteredRecordCount: response.FilteredRecordCount || 0,
             isLoading: false,
             itemsPerPage,
-            page,
+            page: response.CurrentPage,
             searchText,
             totalRecordCount: response.TotalRecordCount || 0
           });
