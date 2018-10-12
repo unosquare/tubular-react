@@ -34,7 +34,7 @@ const getPages = (currentPage: any, totalRows: any, itemsPerPage: any) => {
   const pages = [];
 
   // Default page limits
-  const totalPages = Math.round(totalRows / itemsPerPage);
+  const totalPages = Math.ceil(totalRows / itemsPerPage);
   let startPage = 1;
   let endPage = totalPages;
   const maxSize = 6;
