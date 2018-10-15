@@ -15,6 +15,10 @@ import IGridState from './IGridState';
 const toolbarOptions = new ToolbarOptions();
 
 class CustomLayoutDataGrid extends React.Component<{}, IGridState> {
+  public state = {
+    errorMessage: null as any
+  };
+
   public componentWillReceiveProps(nextProps: any) {
     this.setState({ errorMessage: nextProps.error });
   }
@@ -68,12 +72,13 @@ class CustomLayoutDataGrid extends React.Component<{}, IGridState> {
                 <TableCell />
                 <TableCell />
                 <TableCell />
+                <TableCell />
               </TableRow>
           }
         >
-        <IconButton>
-            <InsertEmoticon />
-        </IconButton>
+          <IconButton>
+              <InsertEmoticon />
+          </IconButton>
         </DataGrid>
       </div>
     );
