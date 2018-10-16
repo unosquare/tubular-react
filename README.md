@@ -24,9 +24,9 @@ Please visit the [Tubular GitHub Page](http://unosquare.github.io/tubular) to le
 
 ## Dependencies
 
-* [Material UI Core](https://material-ui.com/) - Version: 3.1.0
+* [Material UI Core](https://material-ui.com/) - Version: 3.1.0.
 * [React](https://reactjs.org/) - Version: 16.5.1
-* [Tubular Common](https://github.com/unosquare/tubular-common) - Version: 1.2.1
+* [Tubular Common](https://github.com/unosquare/tubular-common) - Version: 1.2.1.
 
 ## Installation
 
@@ -36,13 +36,14 @@ $ npm install tubular-react --save
 
 ## Using the `<DataGrid />` component
 
-You can start using `DataGrid` with this sample code. The grid will connect to a remote datasource or have a local datasource depending of how you export your class. The available exports that you can use are [`withRemoteDataSource`](#export-withRemoteDataSource) and [`withLocalDataSource`](##export-withLocalDataSource).
+You can start using `DataGrid` with this sample code. The grid will connect to a remote datasource or have a local datasource depending of how you export your class. The available exports that you can use are [`withRemoteDataSource`](#export-withremotedatasource) and [`withLocalDataSource`](#export-withlocaldatasource).
 
 ```js
 import React from "react";
 import ReactDOM from "react-dom";
 
-import DataGrid, { withRemoteDataSource, ColumnModel } from "tubular-react";
+import DataGrid, { withRemoteDataSource } from "tubular-react";
+import { ColumnModel } from 'tubular-common';
 
 const columns = [
   new ColumnModel("OrderID"),
@@ -107,7 +108,7 @@ export default withRemoteDataSource(CustomComponent, columns, 'http://tubular.az
 
 ### Export `withLocalDataSource`
 
-Exporting your `DataGrid` using `withLocalDataSource` HOC will need both an array of data objects and a `ColumnModel` array. See this [example](https://github.com/unosquare/tubular-react/blob/master/sample/src/local/localData.ts) of how to define the array of objects.
+Exporting your `DataGrid` using `withLocalDataSource` HOC will need both an array of data objects and a `ColumnModel` array. See this [example](https://github.com/unosquare/tubular-react/blob/master/sample/src/data/localData.ts) of how to define the array of objects.
 
 ```js
 export default withLocalDataSource(LocalDataGrid, columns, localData);
@@ -132,8 +133,9 @@ These are all the available properties (and their default values) for the `Toolb
 
 | Name | Type | Default Value | Description |
 |------------------|----------------------------------------|-----------------|----------------------------------------------|
-| `itemsPerPage`        | `number`    | 10                  | It should be a number that is inside the `rowsPerPageOptions` array.|
+| `rowsPerPage`        | `number`    | 10                  | It should be a number that is inside the `rowsPerPageOptions` array.|
 | `rowsPerPageOptions`  | `array`     | [10, 20, 50, 100]   | The options that are going to be shown in the `Page size` dropdown.|
+| `advancePagination`   | `bool`      | `true`              | - |
 | `bottomPager`         | `bool`      | `true`              | - |
 | `exportButton`        | `bool`      | `true`              | - |
 | `searchText`          | `bool`      | `true`              | - |
@@ -153,11 +155,13 @@ It represents a `DataGrid` column and its constructor requires a name identifier
 | `Filter`        | `bool`                |        `false`          | Enables filtering.|-|
 | `IsKey`         | `bool`                |        `false`          | Defines if a column is an identifier or not. |-|
 | `Label`         | `string`              | The name of the column  | Column label that will be shown. |-|
+| `Name`          | `string`              |-|-|-|
 | `Searchable`    | `bool`                |        `true`           | Indicates that a column can be used to search upon. |-|
 | `SortDirection` |`ColumnSortDirection`  |        `NONE`           |-| `NONE`, `ASCENDING`, `DESCENDING` |
 | `SortOrder`     | `number`              |         `-1`            |-|-|
 | `Sortable`      | `bool`                |        `false`          | Determines if a column can be sorted. |-|
 | `Visible`       | `bool`                |        `true`           | Specifies if a column should be shown. |-|
+| `hasFilter`          | `bool`                |-|-|-|
 
 ## Run integrated sample
 

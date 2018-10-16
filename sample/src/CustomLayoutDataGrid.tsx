@@ -20,6 +20,7 @@ class CustomLayoutDataGrid extends React.Component<{}, IGridState> {
     super(props);
     this.state = { errorMessage: '' };
   }
+
   public componentWillReceiveProps(nextProps: any) {
     this.setState({ errorMessage: nextProps.error });
   }
@@ -57,18 +58,20 @@ class CustomLayoutDataGrid extends React.Component<{}, IGridState> {
             </TableRow>
           )}
           toolbarOptions={toolbarOptions}
-          footerRenderer={(aggregates: any) => (
-            <TableRow>
-              <TableCell>Total: </TableCell>
-              <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
-              <TableCell />
-              <TableCell />
-              <TableCell />
-            </TableRow>
-          )}
+          footerRenderer={
+            (aggregates: any) =>
+              <TableRow>
+                <TableCell>Total: </TableCell>
+                <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
+                <TableCell />
+                <TableCell />
+                <TableCell />
+                <TableCell />
+              </TableRow>
+          }
         >
           <IconButton>
-            <InsertEmoticon />
+              <InsertEmoticon />
           </IconButton>
         </DataGrid>
       </div>
