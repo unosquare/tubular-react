@@ -71,7 +71,7 @@ export default abstract class BaseDataSource extends React.Component<
             filteredRecordCount: response.FilteredRecordCount || 0,
             isLoading: false,
             itemsPerPage,
-            page,
+            page: response.CurrentPage - 1,
             searchText,
             totalRecordCount: response.TotalRecordCount || 0
           });
