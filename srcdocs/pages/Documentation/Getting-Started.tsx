@@ -27,7 +27,7 @@ const styles = {
 // tslint:disable-next-line:max-line-length
 const basicFeatures = "import * as React from 'react';\n\nimport { TableCell, TableRow } from '@material-ui/core';\nimport { CheckBox, CheckBoxOutlineBlank } from '@material-ui/icons';\nimport { format } from 'date-fns';\nimport DataGrid, {\n    AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection, withRemoteDataSource } from '../../src';\n\n//  First, at all, you must define your columns model.\nconst columns = [\n    new ColumnModel('OrderID',\n        {\n            DataType: ColumnDataType.NUMERIC,\n            Filtering: true,\n            IsKey: true,\n            Label: 'ID',\n            SortDirection: ColumnSortDirection.ASCENDING,\n            SortOrder: 1,\n            Sortable: true\n        }\n    ),\n    new ColumnModel('CustomerName',\n        {\n            Aggregate: AggregateFunctions.COUNT,\n            Filtering: true,\n            Searchable: true,\n            Sortable: true\n        }\n    ),\n    new ColumnModel('ShippedDate',\n        {\n            DataType: ColumnDataType.DATE_TIME,\n            Filtering: true,\n            Sortable: true\n        }\n    ),\n    new ColumnModel('ShipperCity'),\n    new ColumnModel('Amount',\n        {\n            DataType: ColumnDataType.NUMERIC,\n            Sortable: true\n        }\n    ),\n    new ColumnModel('IsShipped',\n        {\n            DataType: ColumnDataType.BOOLEAN,\n            Filtering: true,\n            Sortable: true\n        }\n    )\n];\nconst MyComponent = () => {\n        return (\n            <div className='root'>\n                <DataGrid\n                    gridName='Tubular-React'\n                />\n            </div>\n        );\n};\n\n/*\n Use the component withRemoteDataSource to wrap your component\n and columns definition among the data obtained from the URL.\n\n withRemoteDataSource will set an initial context for your grid.\n*/\nexport default withRemoteDataSource(MyComponent, columns, 'https://tubular.azurewebsites.net/api/orders/paged');\n";
 
-export default withStyles(styles)((props) => {
+const GettingStarted = (props: any) => {
     const { classes } = props;
     return (
         <div>
@@ -60,10 +60,15 @@ export default withStyles(styles)((props) => {
                                     <a href='https://date-fns.org/'>date-fns - Version: 1.29.0</a>
                                 </li>
                                 <li>
-                                    <a href='https://material-ui.com/'>Material-UI - Version: 1.2.0.</a>
+                                    <a href='https://material-ui.com/'>Material-UI - Version: 3.1.0</a>
                                 </li>
                                 <li>
-                                    <a href='https://reactjs.org/'>React - Version: 16.4.1</a>
+                                    <a href='https://reactjs.org/'>React - Version: 16.5.1</a>
+                                </li>
+                                <li>
+                                    <a href='https://github.com/unosquare/tubular-common'>
+                                        Tubular Common - Version: 1.2.1
+                                    </a>
                                 </li>
                             </ul>
                         </Typography>
@@ -77,15 +82,21 @@ export default withStyles(styles)((props) => {
                         <SyntaxHighligther language='tsx' style={docco} className={classes.code}>
                             {'npm install tubular-react --save'}
                         </SyntaxHighligther>
-                        <br/>
+                        <br />
                         <Typography variant='headline' paragraph={true}>
                             Usage
                         </Typography>
                         <Typography variant='subheading' paragraph={true}>
                             Tubular React is an extension of Material-UI which offers until now a couple of useful
                             components:
-                            <br/><code className={classes.codeTag}>{'<DataGrid />'}</code> and <code className={classes.codeTag}>{'<GridList />'}</code>.
-                            <br/>
+                            <br />
+                            <code className={classes.codeTag}>
+                                {'<DataGrid />'}
+                            </code> and
+                            <code className={classes.codeTag}>
+                                {'<GridList />'}
+                            </code>.
+                            <br />
                             These components supply an organized and nice way to represent your data,
                             you can populate them from a server-side data source or
                             a local data source as an array.
@@ -102,4 +113,6 @@ export default withStyles(styles)((props) => {
             </Grid>
         </div>
     );
-});
+};
+
+export default withStyles(styles)(GettingStarted);

@@ -1,6 +1,7 @@
 import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { createStyles, Theme, withStyles } from '@material-ui/core/styles';
 import * as React from 'react';
+import { ToolbarOptions } from '../../src';
 
 const styles = (theme: Theme) => createStyles (
     {
@@ -16,7 +17,7 @@ const styles = (theme: Theme) => createStyles (
     }
 );
 
-export default withStyles(styles)((props) => {
+const ToolBarOptionsProps = (props: any) => {
 
     const { classes } = props;
 
@@ -110,4 +111,6 @@ export default withStyles(styles)((props) => {
             </Table>
         </Paper>
     );
-});
+};
+
+export default withStyles(styles)(ToolBarOptionsProps);

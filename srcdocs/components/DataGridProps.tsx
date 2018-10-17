@@ -16,7 +16,7 @@ const styles = (theme: Theme) => createStyles(
     }
 );
 
-export default withStyles(styles)((props) => {
+const DataGridProps = (props: any) => {
 
     const { classes } = props;
 
@@ -72,4 +72,6 @@ export default withStyles(styles)((props) => {
             </Table>
         </Paper>
     );
-});
+};
+
+export default withStyles(styles)(DataGridProps);

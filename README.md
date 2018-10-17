@@ -24,6 +24,7 @@ Please visit the [Tubular GitHub Page](http://unosquare.github.io/tubular) to le
 
 ## Dependencies
 
+* [date-fns](https://date-fns.org/) - Version: 1.29.0
 * [Material UI Core](https://material-ui.com/) - Version: 3.1.0.
 * [React](https://reactjs.org/) - Version: 16.5.1
 * [Tubular Common](https://github.com/unosquare/tubular-common) - Version: 1.2.1.

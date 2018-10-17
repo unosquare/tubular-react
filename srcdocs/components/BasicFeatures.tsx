@@ -1,7 +1,9 @@
 import * as React from 'react';
 
 import DataGrid, {
-    AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection, withRemoteDataSource } from '../../src';
+    withRemoteDataSource } from '../../src';
+
+import { AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection } from 'tubular-common';
 
 //  First, at all, you must define your columns model.
 const columns = [

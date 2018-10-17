@@ -1,5 +1,4 @@
-import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
-import { createStyles, Theme, withStyles } from '@material-ui/core/styles';
+import { createStyles, Table, TableBody, TableCell, TableHead, TableRow, Theme, withStyles } from '@material-ui/core';
 import * as React from 'react';
 
 const styles = (theme: Theme) => createStyles (
@@ -16,7 +15,7 @@ const styles = (theme: Theme) => createStyles (
     }
 );
 
-export default withStyles(styles)((props) => {
+const ColumnModelTable = (props: any) => {
 
     const { classes } = props;
 
@@ -127,4 +126,6 @@ export default withStyles(styles)((props) => {
             </TableBody>
         </Table>
     );
-});
+};
+
+export default withStyles(styles)(ColumnModelTable);

@@ -5,6 +5,8 @@ import * as React from 'react';
 import SyntaxHighligther from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/styles/hljs';
 
+import { quickStart } from '../../utils/codeSnipetExamples';
+
 const styles = {
     code: {
         fontSize: 15,
@@ -36,9 +38,9 @@ const styles = {
     }
 };
 // tslint:disable-next-line:max-line-length
-const quickStart = "import React from 'react';\nimport ReactDOM from 'react-dom';\n\nimport DataGrid, { withRemoteDataSource, ColumnModel } from 'tubular-react';\n\nconst columns = [\n  new ColumnModel('OrderID'),\n  new ColumnModel('CustomerName'),\n  new ColumnModel('ShipperCity')\n];\n\nconst SampleGrid = withRemoteDataSource(\n  () => {\n    return <DataGrid />;\n  },\n  columns,\n  'https://tubular.azurewebsites.net/api/orders/paged'\n);\n\nReactDOM.render(<SampleGrid />, document.getElementById('root'));";
+// const quickStart = "import React from 'react';\nimport ReactDOM from 'react-dom';\n\nimport DataGrid, { withRemoteDataSource } from 'tubular-react';\nimport { ColumnModel } from 'tubular-common';\n\nconst columns = [\n  new ColumnModel('OrderID'),\n  new ColumnModel('CustomerName'),\n  new ColumnModel('ShipperCity')\n];\n\nconst SampleGrid = withRemoteDataSource(\n  () => {\n    return <DataGrid />;\n  },\n  columns,\n  'https://tubular.azurewebsites.net/api/orders/paged'\n);\n\nReactDOM.render(<SampleGrid />, document.getElementById('root'));";
 
-export default withStyles(styles)((props) => {
+const Home = (props: any) => {
     const { classes } = props;
     return (
         <div>
@@ -46,7 +48,7 @@ export default withStyles(styles)((props) => {
                 <Paper className={classes.paper}>
                     <Typography variant='display1'>
                         What is it?
-                        </Typography>
+                    </Typography>
                     <Divider />
                     <Typography paragraph={true} variant='subheading' className={classes.content}>
                         Tubular React is a set of ReactJS components designed to rapidly build modern
@@ -57,11 +59,11 @@ export default withStyles(styles)((props) => {
                         Another very styled and useful component is the grid list that renders a set of cards with
                         the general information allowing good data visualization and quickly searching,
                         besides it has almost the same grid functionalities.
-                        </Typography>
+                    </Typography>
                     <br />
                     <Typography variant='display1'>
                         Features
-                        </Typography>
+                    </Typography>
                     <Divider />
                     <Typography paragraph={true} variant='subheading' className={classes.content}>
                         <Typography variant='headline'>
@@ -101,7 +103,7 @@ export default withStyles(styles)((props) => {
                     <br />
                     <Typography variant='display1'>
                         Dependencies
-                        </Typography>
+                    </Typography>
                     <Divider />
                     <Typography paragraph={true} variant='subheading' >
                         <ul>
@@ -109,10 +111,15 @@ export default withStyles(styles)((props) => {
                                 <a href='https://date-fns.org/'>date-fns - Version: 1.29.0</a>
                             </li>
                             <li>
-                                <a href='https://material-ui.com/'>Material-UI - Version: 1.4.0</a>
+                                <a href='https://material-ui.com/'>Material-UI - Version: 3.1.0</a>
                             </li>
                             <li>
-                                <a href='https://reactjs.org/'>React - Version: 16.4.1</a>
+                                <a href='https://reactjs.org/'>React - Version: 16.5.1</a>
+                            </li>
+                            <li>
+                                <a href='https://github.com/unosquare/tubular-common'>
+                                    Tubular Common - Version: 1.2.1
+                                </a>
                             </li>
                         </ul>
                     </Typography>
@@ -124,7 +131,7 @@ export default withStyles(styles)((props) => {
                     <Typography paragraph={true} variant='subheading' className={classes.content}>
                         <SyntaxHighligther language='tsx' style={docco} className={classes.code}>
                             $ npm install tubular-react --save
-                            </SyntaxHighligther>
+                        </SyntaxHighligther>
                     </Typography>
                     <br />
                     <Typography variant='display1'>
@@ -142,4 +149,6 @@ export default withStyles(styles)((props) => {
             </Grid>
         </div>
     );
-});
+};
+
+export default withStyles(styles)(Home);

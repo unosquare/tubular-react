@@ -16,7 +16,7 @@ const styles = {
     }
 };
 
-export default withStyles(styles)((props) => {
+const ColumnModel = (props: any) => {
     const { classes } = props;
     return (
         <div>
@@ -36,4 +36,6 @@ export default withStyles(styles)((props) => {
             </Grid>
         </div>
     );
-});
+};
+
+export default withStyles(styles)(ColumnModel);

@@ -22,7 +22,7 @@ const styles = {
     }
 };
 
-export default withStyles(styles)((props) => {
+const Props = (props: any) => {
     const { classes } = props;
     return (
         <div>
@@ -78,4 +78,6 @@ export default withStyles(styles)((props) => {
             </Grid>
         </div>
     );
-});
+};
+
+export default withStyles(styles)(Props);
