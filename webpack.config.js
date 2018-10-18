@@ -48,12 +48,9 @@ module.exports = env => {
   switch(env.NODE_ENV) {
     case 'docs':
       return docsConfig;
-    break;
     case 'sample':
       return sampleConfig;
-    break;
     default:
       return 'Define a NODE_ENV variable like --env.NODE_ENV=xvariable';
-    break;
   }
 }
