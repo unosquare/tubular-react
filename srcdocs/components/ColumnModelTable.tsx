@@ -32,6 +32,13 @@ const ColumnModelTable = (props: any) => {
             </TableHead>
             <TableBody>
                 <TableRow hover={true}>
+                    <TableCell><code className={classes.code}>Name</code></TableCell>
+                    <TableCell><code className={classes.code}>string</code></TableCell>
+                    <TableCell>NONE</TableCell>
+                    <TableCell>This is required and represents a property of the entity which we are binding</TableCell>
+                    <TableCell>-</TableCell>
+                </TableRow>
+                <TableRow hover={true}>
                     <TableCell><code className={classes.code}>Aggregate</code></TableCell>
                     <TableCell><code className={classes.code}>AggregateFunctions</code></TableCell>
                     <TableCell><code className={classes.code}>NONE</code></TableCell>
@@ -85,13 +92,6 @@ const ColumnModelTable = (props: any) => {
                     <TableCell>-</TableCell>
                 </TableRow>
                 <TableRow hover={true}>
-                    <TableCell><code className={classes.code}>Name</code></TableCell>
-                    <TableCell><code className={classes.code}>string</code></TableCell>
-                    <TableCell>-</TableCell>
-                    <TableCell>-</TableCell>
-                    <TableCell>-</TableCell>
-                </TableRow>
-                <TableRow hover={true}>
                     <TableCell><code className={classes.code}>Searchable</code></TableCell>
                     <TableCell><code className={classes.code}>bool</code></TableCell>
                     <TableCell><code className={classes.code}>true</code></TableCell>
@@ -133,8 +133,8 @@ const ColumnModelTable = (props: any) => {
                 <TableRow hover={true}>
                     <TableCell><code className={classes.code}>hasFilter</code></TableCell>
                     <TableCell><code className={classes.code}>bool</code></TableCell>
-                    <TableCell>-</TableCell>
-                    <TableCell>-</TableCell>
+                    <TableCell>false</TableCell>
+                    <TableCell>Indicates if the column has a filter applied</TableCell>
                     <TableCell>-</TableCell>
                 </TableRow>
             </TableBody>
