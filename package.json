@@ -69,8 +69,7 @@
     "date-fns": "^1.29.0",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
-    "tubular-common": "1.2.1",
-    "typeface-roboto": "0.0.54"
+    "tubular-common": "1.2.1"
   },
   "devDependencies": {
     "@types/enzyme": "^3.1.14",

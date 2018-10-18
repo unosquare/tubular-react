@@ -49,8 +49,8 @@ class SampleGridList extends React.Component<any, any> {
                                 <TableRow>
                                     <TableCell>
                                         <GridList cellHeight={180} cols={5}>
-                                            {state.data.map((dato) => (
-                                                <GridListTile key={dato.OrderID}>
+                                            {state.data.map((item) => (
+                                                <GridListTile key={item.OrderID}>
                                                     <Card>
                                                         <CardContent>
                                                             <Typography
@@ -58,13 +58,13 @@ class SampleGridList extends React.Component<any, any> {
                                                                 variant='headline'
                                                                 component='h2'
                                                             >
-                                                                {dato.OrderID} - {dato.CustomerName}
+                                                                {item.OrderID} - {item.CustomerName}
                                                             </Typography>
                                                             <Typography component='p'>
-                                                                {dato.ShipperCity}
+                                                                {item.ShipperCity}
                                                             </Typography>
                                                             <Typography component='p'>
-                                                                {format(dato.ShippedDate, 'MMM D YYYY')}
+                                                                {format(item.ShippedDate, 'MMM D YYYY')}
                                                             </Typography>
                                                         </CardContent>
                                                         <CardActions>

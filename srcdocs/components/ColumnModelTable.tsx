@@ -85,6 +85,13 @@ const ColumnModelTable = (props: any) => {
                     <TableCell>-</TableCell>
                 </TableRow>
                 <TableRow hover={true}>
+                    <TableCell><code className={classes.code}>Name</code></TableCell>
+                    <TableCell><code className={classes.code}>string</code></TableCell>
+                    <TableCell>-</TableCell>
+                    <TableCell>-</TableCell>
+                    <TableCell>-</TableCell>
+                </TableRow>
+                <TableRow hover={true}>
                     <TableCell><code className={classes.code}>Searchable</code></TableCell>
                     <TableCell><code className={classes.code}>bool</code></TableCell>
                     <TableCell><code className={classes.code}>true</code></TableCell>
@@ -121,6 +128,13 @@ const ColumnModelTable = (props: any) => {
                     <TableCell><code className={classes.code}>bool</code></TableCell>
                     <TableCell><code className={classes.code}>true</code></TableCell>
                     <TableCell>Specifies if a column should be shown</TableCell>
+                    <TableCell>-</TableCell>
+                </TableRow>
+                <TableRow hover={true}>
+                    <TableCell><code className={classes.code}>hasFilter</code></TableCell>
+                    <TableCell><code className={classes.code}>bool</code></TableCell>
+                    <TableCell>-</TableCell>
+                    <TableCell>-</TableCell>
                     <TableCell>-</TableCell>
                 </TableRow>
             </TableBody>

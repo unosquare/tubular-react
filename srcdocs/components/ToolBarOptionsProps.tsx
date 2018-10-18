@@ -99,7 +99,7 @@ const ToolBarOptionsProps = (props: any) => {
                         </TableCell>
                     </TableRow>
                     <TableRow hover={true}>
-                        <TableCell><code className={classes.code}>itemsPerPage</code></TableCell>
+                        <TableCell><code className={classes.code}>rowsPerPage</code></TableCell>
                         <TableCell><code className={classes.code}>number</code></TableCell>
                         <TableCell><code className={classes.code}>10</code></TableCell>
                         <TableCell>

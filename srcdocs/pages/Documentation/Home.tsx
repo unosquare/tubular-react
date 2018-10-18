@@ -143,7 +143,7 @@ const Home = (props: any) => {
                         <SyntaxHighligther language='tsx' style={docco} className={classes.code}>
                             {quickStart}
                         </SyntaxHighligther>
-                        <em>Try it in <a href='https://codesandbox.io/s/6jror6xv9w' target='_blank'>CodeSandbox</a></em>
+                        <em>Try it in <a href='https://codesandbox.io/s/8nq86w080' target='_blank'>CodeSandbox</a></em>
                     </Typography>
                 </Paper>
             </Grid>
