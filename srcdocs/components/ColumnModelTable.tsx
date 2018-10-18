@@ -130,13 +130,6 @@ const ColumnModelTable = (props: any) => {
                     <TableCell>Specifies if a column should be shown</TableCell>
                     <TableCell>-</TableCell>
                 </TableRow>
-                <TableRow hover={true}>
-                    <TableCell><code className={classes.code}>HasFilter</code></TableCell>
-                    <TableCell><code className={classes.code}>bool</code></TableCell>
-                    <TableCell>false</TableCell>
-                    <TableCell>Indicates if the column has a filter applied</TableCell>
-                    <TableCell>-</TableCell>
-                </TableRow>
             </TableBody>
         </Table>
     );

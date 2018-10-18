@@ -162,7 +162,6 @@ It represents a `DataGrid` column and its constructor requires a name identifier
 | `SortOrder`     | `number`              |         `-1`            |-|-|
 | `Sortable`      | `bool`                |        `false`          | Determines if a column can be sorted. |-|
 | `Visible`       | `bool`                |        `true`           | Specifies if a column should be shown. |-|
-| `HasFilter`     | `bool`                |        `false`          | Indicates if the column has a filter applied. |-|
 
 ## Run integrated sample
 
