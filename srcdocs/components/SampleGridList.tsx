@@ -8,7 +8,9 @@ import { Button } from '@material-ui/core';
 import { Table, TableBody, TableCell, TableFooter, TableRow } from '@material-ui/core';
 import { format } from 'date-fns';
 import * as React from 'react';
-import columns from '../../sample/src/data/columns';
+
+import columns from '../utils/columns';
+
 import {
     DataSourceContext,
     Paginator,
