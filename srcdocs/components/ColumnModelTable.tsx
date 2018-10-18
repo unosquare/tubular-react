@@ -131,7 +131,7 @@ const ColumnModelTable = (props: any) => {
                     <TableCell>-</TableCell>
                 </TableRow>
                 <TableRow hover={true}>
-                    <TableCell><code className={classes.code}>hasFilter</code></TableCell>
+                    <TableCell><code className={classes.code}>HasFilter</code></TableCell>
                     <TableCell><code className={classes.code}>bool</code></TableCell>
                     <TableCell>false</TableCell>
                     <TableCell>Indicates if the column has a filter applied</TableCell>
