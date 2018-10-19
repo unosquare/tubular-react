@@ -34,7 +34,7 @@ const Props = (props: any) => {
                 </Hidden>
                 <Grid item={true} xs={12} md={9}>
                     <Paper className={classes.paper}>
-                        <Typography variant='display1' paragraph={true}>Data grid props</Typography>
+                        <Typography variant='display1' paragraph={true}>DataGrid props</Typography>
                         <Divider />
                         <br />
                         <Typography variant='subheading'>
@@ -59,7 +59,7 @@ const Props = (props: any) => {
                     </Paper>
                     <br />
                     <Paper className={classes.paper}>
-                        <Typography variant='display1' paragraph={true}>Tool bar options</Typography>
+                        <Typography variant='display1' paragraph={true}>Toolbar options</Typography>
                         <Divider />
                         <br />
                         <Typography variant='subheading'>

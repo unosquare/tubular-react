@@ -36,7 +36,7 @@ const DataGridProps = (props: any) => {
                         <TableCell><code className={classes.code}>gridName</code></TableCell>
                         <TableCell><code className={classes.code}>string</code></TableCell>
                         <TableCell>-</TableCell>
-                        <TableCell><strong>Otional</strong></TableCell>
+                        <TableCell><strong>Optional</strong></TableCell>
                     </TableRow>
                     <TableRow hover={true}>
                         <TableCell><code className={classes.code}>toolbarOptions</code></TableCell>

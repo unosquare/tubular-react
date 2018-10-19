@@ -38,7 +38,7 @@ const ToolBarOptionsProps = (props: any) => {
                         <TableCell><code className={classes.code}>boolean</code></TableCell>
                         <TableCell><code className={classes.code}>true</code></TableCell>
                         <TableCell>
-                            <strong>Otional. </strong>
+                            <strong>Optional. </strong>
                             It shows advanced pagination with numbers of the page to navigate between pages,
                             also display the navigation buttons to the last or first page.
                             Otherwise, show a simple pagination with two directions arrows
