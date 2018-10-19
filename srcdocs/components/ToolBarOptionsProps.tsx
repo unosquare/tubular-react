@@ -104,7 +104,7 @@ const ToolBarOptionsProps = (props: any) => {
                         <TableCell><code className={classes.code}>10</code></TableCell>
                         <TableCell>
                             <strong>Optional. </strong>
-                            Initial valor that represent the number of rows per page.
+                            Initial valor that represent the number of rows per page. It should be a number that is inside the <em>rowsPerPageOptions</em> array.
                         </TableCell>
                     </TableRow>
                 </TableBody>

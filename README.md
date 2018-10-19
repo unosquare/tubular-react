@@ -123,10 +123,10 @@ These are all the available props (and their default values) for the `<DataGrid 
 
 | Name | Type | Default Value | Description |
 |------------------|----------------------------------------|-----------------|----------------------------------------------|
-| `gridName`        | `string`          | -         | - |
-| `toolbarOptions`  | `ToolbarOptions`  | defaults  | It should be an instance of ToolbarOptions |                                                |
-| `bodyRenderer`    | `function`        | -         | - |
-| `footerRenderer`  | `function`        | -         | - |
+| `gridName`        | `string`          | `Grid`    | `Optional`. |
+| `toolbarOptions`  | `ToolbarOptions`  | `new ToolBarOptions()`  | `Optional`. It should be an instance of `ToolbarOptions`. This encapsulates useful options. |                                                |
+| `bodyRenderer`    | `function`        | -         | `Optional`. It takes a function with 3 parameters `(row: any, index: number, columns: ColumnModel[])` to map all rows. |
+| `footerRenderer`  | `function`        | -         | `Optional`. It takes an aggregate function to show in a foot row the results from the aggregate function. |
 
 ### `ToolbarOptions` class
 
@@ -134,14 +134,16 @@ These are all the available properties (and their default values) for the `Toolb
 
 | Name | Type | Default Value | Description |
 |------------------|----------------------------------------|-----------------|----------------------------------------------|
-| `rowsPerPage`        | `number`    | 10                  | It should be a number that is inside the `rowsPerPageOptions` array.|
-| `rowsPerPageOptions`  | `array`     | [10, 20, 50, 100]   | The options that are going to be shown in the `Page size` dropdown.|
-| `advancePagination`   | `bool`      | `true`              | - |
-| `bottomPager`         | `bool`      | `true`              | - |
-| `exportButton`        | `bool`      | `true`              | - |
-| `searchText`          | `bool`      | `true`              | - |
-| `topPager`            | `bool`      | `true`              | - |
-| `printButton`         | `bool`      | `true`              | - |
+
+| `advancePagination`   | `bool`      | `true`              | `Optional`. It shows advanced pagination with numbers of the page to navigate between pages, also display the navigation buttons to the last or first page. Otherwise, show a simple pagination with two directions arrows for advance or go back a page. |
+| `bottomPager`         | `bool`      | `true`              | `Optional`. It shows pagination bar in the bottom of the grid. |
+| `exportButton`        | `bool`      | `true`              | `Optional`. It shows the export button. |
+| `searchText`          | `bool`      | `true`              | `Optional`. It shows the search text input. |
+| `topPager`            | `bool`      | `true`              | `Optional`. It shows pagination bar in the top of the grid. |
+| `printButton`         | `bool`      | `true`              | `Optional`. It shows the print button. |
+| `rowsPerPageOptions`  | `array`     | [10, 20, 50, 100]   | `Optional`. It shows a combo with a set of values that represent the number of rows per page. |
+| `rowsPerPage`         | `number`    | 10                  | `Optional`. Initial value that represents the number of rows per page. It should be a number that is inside the `rowsPerPageOptions` array. |
+
 
 _If you don't define some of the optional props described above, these will use their defaults values. In the case of `bodyRenderer`, the grid will display its default body; if the `footerRenderer` is not defined, the footer will not be displayed._
 

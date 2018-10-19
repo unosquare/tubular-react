@@ -161,7 +161,7 @@ class SampleFeatures extends React.Component {
         )}
         <DataGrid
           gridName="Tubular-React"
-          bodyRenderer={(row: any, index: any) => (
+          bodyRenderer={(row: any, index: number, columns: ColumnModel[]) => (
             <TableRow hover={true} key={index}>
               <TableCell padding="default">{row.OrderID}</TableCell>
               <TableCell padding="default">{row.CustomerName}</TableCell>
