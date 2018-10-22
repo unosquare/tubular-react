@@ -64,7 +64,7 @@ const DataGridProps = (props: any) => {
                         <TableCell>-</TableCell>
                         <TableCell>
                             <strong>Optional.</strong>
-                            It takes an aggregate function to show in a foot row the results from the aggregate function.
+                            It takes an aggregate function with 1 parameter <code className={classes.code}>(aggregate: any)</code> to show in a foot row the results from the aggregate function.
                             <em>see sample Full grid features</em>
                         </TableCell>
                     </TableRow>

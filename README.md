@@ -126,7 +126,7 @@ These are all the available props (and their default values) for the `<DataGrid 
 | `gridName`        | `string`          | `Grid`    | `Optional`. |
 | `toolbarOptions`  | `ToolbarOptions`  | `new ToolBarOptions()`  | `Optional`. It should be an instance of `ToolbarOptions`. This encapsulates useful options. |                                                |
 | `bodyRenderer`    | `function`        | -         | `Optional`. It takes a function with 3 parameters `(row: any, index: number, columns: ColumnModel[])` to map all rows. |
-| `footerRenderer`  | `function`        | -         | `Optional`. It takes an aggregate function to show in a foot row the results from the aggregate function. |
+| `footerRenderer`  | `function`        | -         | `Optional`. It takes an aggregate function with 1 parameter `(aggregate: any)` to show in a foot row the results from the aggregate function. |
 
 ### `ToolbarOptions` class
 
