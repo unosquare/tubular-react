@@ -1,6 +1,7 @@
 import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { createStyles, Theme, withStyles } from '@material-ui/core/styles';
 import * as React from 'react';
+import { ToolbarOptions } from '../../src';
 
 const styles = (theme: Theme) => createStyles (
     {
@@ -16,7 +17,7 @@ const styles = (theme: Theme) => createStyles (
     }
 );
 
-export default withStyles(styles)((props) => {
+const ToolBarOptionsProps = (props: any) => {
 
     const { classes } = props;
 
@@ -37,7 +38,7 @@ export default withStyles(styles)((props) => {
                         <TableCell><code className={classes.code}>boolean</code></TableCell>
                         <TableCell><code className={classes.code}>true</code></TableCell>
                         <TableCell>
-                            <strong>Otional. </strong>
+                            <strong>Optional. </strong>
                             It shows advanced pagination with numbers of the page to navigate between pages,
                             also display the navigation buttons to the last or first page.
                             Otherwise, show a simple pagination with two directions arrows
@@ -98,16 +99,18 @@ export default withStyles(styles)((props) => {
                         </TableCell>
                     </TableRow>
                     <TableRow hover={true}>
-                        <TableCell><code className={classes.code}>itemsPerPage</code></TableCell>
+                        <TableCell><code className={classes.code}>rowsPerPage</code></TableCell>
                         <TableCell><code className={classes.code}>number</code></TableCell>
                         <TableCell><code className={classes.code}>10</code></TableCell>
                         <TableCell>
                             <strong>Optional. </strong>
-                            Initial valor that represent the number of rows per page.
+                            Initial valor that represent the number of rows per page. It should be a number that is inside the <em>rowsPerPageOptions</em> array.
                         </TableCell>
                     </TableRow>
                 </TableBody>
             </Table>
         </Paper>
     );
-});
+};
+
+export default withStyles(styles)(ToolBarOptionsProps);

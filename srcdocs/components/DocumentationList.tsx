@@ -17,7 +17,7 @@ const styles = {
     }
 };
 
-export default withStyles(styles)((props) => {
+const DocumentationList = (props: any) => {
     const { classes } = props;
     return (
         <Paper className={classes.paper}>
@@ -49,4 +49,6 @@ export default withStyles(styles)((props) => {
             </List>
         </Paper>
     );
-});
+};
+
+export default withStyles(styles)(DocumentationList);
