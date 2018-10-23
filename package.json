@@ -4,14 +4,16 @@
   "description": "Unosquare Tubular React",
   "main": "dist/index.js",
   "scripts": {
-    "build:docs": "webpack --env.NODE_ENV=docs --mode=production --progress",
+    "build:docs": "parcel build ./srcdocs/index.html --no-source-maps -d ./docs",
     "build": "tsc --p ./tsconfigs/tsconfig.tubular.json",
-    "sample": "webpack --env.NODE_ENV=sample --mode=development --progress",
-    "start": "webpack-dev-server --env.NODE_ENV=sample --open --progress",
+    "start": "parcel ./sample/app/index.html --open --port 9000 --no-source-maps",
+    "start-docs":"parcel ./srcdocs/index.html --no-source-maps --port 8080 --open -d ./docs",
     "lint": "tslint src/**/*.ts src/**/*.tsx",
     "test": "jest",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
-    "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov"
+    "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov",
+    "prebuild:docs": "del /s /q  .\\docs\\*",
+    "prestart-docs": "del /s /q  .\\docs\\*"
   },
   "jest": {
     "automock": false,
@@ -93,6 +95,7 @@
     "jest-fetch-mock": "^1.6.6",
     "jsdom": "^12.0.0",
     "nyc": "^13.0.1",
+    "parcel-bundler": "^1.10.3",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-syntax-highlighter": "^8.0.1",
@@ -105,11 +108,7 @@
     "tslint": "^5.11.0",
     "tslint-react": "^3.6.0",
     "typescript": "^3.0.3",
-    "vinyl-source-stream": "^2.0.0",
-    "watchify": "^3.11.0",
-    "webpack": "^4.19.0",
-    "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.8"
+    "vinyl-source-stream": "^2.0.0"
   },
   "peerDependencies": {
     "react": "^15.0.0 || ^16.0.0",
