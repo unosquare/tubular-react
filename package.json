@@ -4,7 +4,7 @@
   "description": "Unosquare Tubular React",
   "main": "dist/index.js",
   "scripts": {
-    "build:docs": "parcel build ./srcdocs/index.html --no-source-maps -d ./docs",
+    "build:docs": "parcel build ./srcdocs/index.html --no-source-maps --public-url /tubular-react/ -d ./docs",
     "build": "tsc --p ./tsconfigs/tsconfig.tubular.json",
     "start": "parcel ./sample/app/index.html --open --port 9000 --no-source-maps",
     "start-docs": "parcel ./srcdocs/index.html --no-source-maps --port 8080 --open -d ./docs",
@@ -80,7 +80,6 @@
     "@types/react-router": "^4.0.31",
     "@types/react-router-dom": "^4.3.1",
     "@types/react-syntax-highlighter": "0.0.6",
-    "@types/vinyl": "^2.0.2",
     "coveralls": "^3.0.2",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.5.0",
