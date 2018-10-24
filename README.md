@@ -122,7 +122,7 @@ export default withLocalDataSource(LocalDataGrid, columns, localData);
 These are all the available props (and their default values) for the `<DataGrid />` component.
 
 | Name | Type | Default Value | Description |
-|------------------|----------------------------------------|-----------------|----------------------------------------------|
+|------|------|---------------|-------------|
 | `gridName`        | `string`          | `Grid`    | `Optional`. |
 | `toolbarOptions`  | `ToolbarOptions`  | `new ToolBarOptions()`  | `Optional`. It should be an instance of `ToolbarOptions`. This encapsulates useful options. |                                                |
 | `bodyRenderer`    | `function`        | -         | `Optional`. It takes a function with 3 parameters `(row: any, index: number, columns: ColumnModel[])` to map all rows. |
@@ -133,8 +133,7 @@ These are all the available props (and their default values) for the `<DataGrid 
 These are all the available properties (and their default values) for the `ToolbarOptions` class.
 
 | Name | Type | Default Value | Description |
-|------------------|----------------------------------------|-----------------|----------------------------------------------|
-
+|------|------|---------------|-------------|
 | `advancePagination`   | `bool`      | `true`              | `Optional`. It shows advanced pagination with numbers of the page to navigate between pages, also display the navigation buttons to the last or first page. Otherwise, show a simple pagination with two directions arrows for advance or go back a page. |
 | `bottomPager`         | `bool`      | `true`              | `Optional`. It shows pagination bar in the bottom of the grid. |
 | `exportButton`        | `bool`      | `true`              | `Optional`. It shows the export button. |
