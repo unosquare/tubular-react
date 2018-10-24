@@ -23,7 +23,7 @@ const DocumentationList = (props: any) => {
         <Paper className={classes.paper}>
             <List>
                 <Typography variant='headline'>
-                    Introduction
+                    Documentation
                         </Typography>
                 <Divider />
                 <Link to='/Documentation/getting-started' className={classes.link}>
@@ -31,19 +31,19 @@ const DocumentationList = (props: any) => {
                         <ListItemText primary='Getting Started' />
                     </ListItem>
                 </Link>
-                <Link to='/Documentation/columnmodel' className={classes.link}>
-                    <ListItem button={true}>
-                        <ListItemText primary='Column Model' />
-                    </ListItem>
-                </Link>
                 <Link to='/Documentation/datasource' className={classes.link}>
                     <ListItem button={true}>
-                            <ListItemText primary='Data Source' />
+                        <ListItemText primary='Data Source' />
                     </ListItem>
                 </Link>
                 <Link to='/Documentation/props' className={classes.link}>
                     <ListItem button={true}>
                         <ListItemText primary='Props' />
+                    </ListItem>
+                </Link>
+                <Link to='/Documentation/columnmodel' className={classes.link}>
+                    <ListItem button={true}>
+                        <ListItemText primary='Column Model' />
                     </ListItem>
                 </Link>
             </List>
