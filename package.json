@@ -43,15 +43,12 @@
       ".tsx"
     ],
     "exclude": [
-      "next.config.js",
       "test/**/*.*",
       "dist/**/*.*",
       "sample/**/*.*",
       "docs/**/*.*",
       "pages/**/*.*",
-      "srcdocs/**/*.*",
-      "src/Util/index.js",
-      "webpack.config.js"
+      "srcdocs/**/*.*"
     ],
     "all": true
   },
@@ -84,9 +81,6 @@
     "@types/react-router-dom": "^4.3.1",
     "@types/react-syntax-highlighter": "0.0.6",
     "@types/vinyl": "^2.0.2",
-    "@zeit/next-typescript": "1.1.0",
-    "browser-sync": "^2.24.7",
-    "browserify": "^16.2.2",
     "coveralls": "^3.0.2",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.5.0",
@@ -103,8 +97,7 @@
     "ts-jest": "^23.1.4",
     "tslint": "^5.11.0",
     "tslint-react": "^3.6.0",
-    "typescript": "^3.0.3",
-    "vinyl-source-stream": "^2.0.0"
+    "typescript": "^3.0.3"
   },
   "peerDependencies": {
     "react": "^15.0.0 || ^16.0.0",
