@@ -1,4 +1,4 @@
 export default interface IDataGridProps {
-    error?: string,
-    refresh: Function
+    error?: string;
+    refresh: () => void;
 }
