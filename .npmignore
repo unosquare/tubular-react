@@ -80,3 +80,4 @@ tslint.json
 webpack.config.js
 tsconfigs
 __mocks__
+.cache
