@@ -191,7 +191,7 @@ export default abstract class BaseDataSource extends React.Component<
 
   public render() {
     const WrappedComponet = this.getWrappedComponent();
-
+    const props = Object.assign({}, this.props, {refresh: this.retrieveData()})
     return (
       <DataSourceContext.Provider
         value={{
@@ -199,7 +199,7 @@ export default abstract class BaseDataSource extends React.Component<
           state: { ...this.state }
         }}
       >
-        <WrappedComponet error={this.state.error} {...this.props} />
+        <WrappedComponet error={this.state.error} {...props} />
       </DataSourceContext.Provider>
     );
   }
