@@ -3,12 +3,12 @@ import * as React from 'react';
 import { Snackbar } from '@material-ui/core';
 import DataGrid, {
   ToolbarOptions,
-  withLocalDataSource
+  withLocalDataSource,
+  IDataGridProps, 
+  IDataGridState
 } from '../../src';
 import columns from './data/columns';
 import localData from './data/localData';
-import IDataGridProps from './data/IDataGridProps';
-import IDataGridState from './IDataGridState';
 
 
 class LocalDataGrid extends React.Component<IDataGridProps, IDataGridState> {

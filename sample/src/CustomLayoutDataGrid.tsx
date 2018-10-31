@@ -8,11 +8,9 @@ import {
 } from '@material-ui/icons';
 
 import { format } from 'date-fns';
-import DataGrid, { ToolbarOptions, withLocalDataSource } from '../../src';
+import DataGrid, { ToolbarOptions, withLocalDataSource, IDataGridProps, IDataGridState } from '../../src';
 import columns from './data/columns';
 import localData from './data/localData';
-import IDataGridProps from './data/IDataGridProps';
-import IDataGridState from './IDataGridState';
 
 
 const toolbarOptions = new ToolbarOptions();

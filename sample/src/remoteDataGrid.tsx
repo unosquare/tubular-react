@@ -5,11 +5,12 @@ import { CheckBox, CheckBoxOutlineBlank } from '@material-ui/icons';
 import { format } from 'date-fns';
 import DataGrid, {
   ToolbarOptions,
-  withRemoteDataSource
+  withRemoteDataSource,
+  IDataGridProps, 
+  IDataGridState
 } from '../../src';
 import columns from './data/columns';
-import IDataGridProps from './data/IDataGridProps';
-import IDataGridState from './IDataGridState';
+
 
 
 const toolbarOptions = new ToolbarOptions();

@@ -12,12 +12,13 @@ import {
     DataSourceContext,
     Paginator,
     TextSearchInput,
-    withRemoteDataSource
+    withRemoteDataSource,
+    IDataGridProps, 
+    IDataGridState
 } from '../../src';
 import CustomHttpClient from './CustomHttpClient';
 import columns from './data/columns';
-import IDataGridProps from './data/IDataGridProps';
-import IDataGridState from './IDataGridState';
+
 
 const styles: any = {
     progress: {
