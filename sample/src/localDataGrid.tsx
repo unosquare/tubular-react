@@ -7,15 +7,16 @@ import DataGrid, {
 } from '../../src';
 import columns from './data/columns';
 import localData from './data/localData';
-import ICommonProps from './data/ICommonProps';
-import IGridState from './IGridState';
+import IDataGridProps from './data/IDataGridProps';
+import IDataGridState from './IDataGridState';
 
-class LocalDataGrid extends React.Component<ICommonProps, IGridState> {
+
+class LocalDataGrid extends React.Component<IDataGridProps, IDataGridState> {
   public state = {
     errorMessage: null as any
   };
 
-  public componentWillReceiveProps(nextProps: ICommonProps) {
+  public componentWillReceiveProps(nextProps: IDataGridProps) {
     this.setState({ errorMessage: nextProps.error });
   }
 

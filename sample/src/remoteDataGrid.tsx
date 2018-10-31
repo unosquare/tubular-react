@@ -8,17 +8,18 @@ import DataGrid, {
   withRemoteDataSource
 } from '../../src';
 import columns from './data/columns';
-import ICommonProps from './data/ICommonProps';
-import IGridState from './IGridState';
+import IDataGridProps from './data/IDataGridProps';
+import IDataGridState from './IDataGridState';
+
 
 const toolbarOptions = new ToolbarOptions();
 
-class RemoteDataGrid extends React.Component<ICommonProps, IGridState> {
+class RemoteDataGrid extends React.Component<IDataGridProps, IDataGridState> {
   public state = {
     errorMessage: null as string
   };
 
-  public componentWillReceiveProps(nextProps: ICommonProps) {
+  public componentWillReceiveProps(nextProps: IDataGridProps) {
     this.setState({ errorMessage: nextProps.error });
   }
 

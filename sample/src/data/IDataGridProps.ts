@@ -1,4 +1,4 @@
-export default interface ICommonProps {
+export default interface IDataGridProps {
     error?: string,
     refresh: Function
 }

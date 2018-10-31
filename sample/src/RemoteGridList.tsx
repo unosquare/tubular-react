@@ -16,6 +16,8 @@ import {
 } from '../../src';
 import CustomHttpClient from './CustomHttpClient';
 import columns from './data/columns';
+import IDataGridProps from './data/IDataGridProps';
+import IDataGridState from './IDataGridState';
 
 const styles: any = {
     progress: {
@@ -27,12 +29,12 @@ const styles: any = {
     }
 };
 
-class RemoteGridList extends React.Component<any, any> {
+class RemoteGridList extends React.Component<IDataGridProps, IDataGridState> {
     public state = {
         errorMessage: null as any
     };
 
-    public componentWillReceiveProps(nextProps: any) {
+    public componentWillReceiveProps(nextProps: IDataGridProps) {
         this.setState({ errorMessage: nextProps.error });
     }
 

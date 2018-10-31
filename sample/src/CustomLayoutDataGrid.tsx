@@ -11,18 +11,19 @@ import { format } from 'date-fns';
 import DataGrid, { ToolbarOptions, withLocalDataSource } from '../../src';
 import columns from './data/columns';
 import localData from './data/localData';
-import IGridState from './IGridState';
-import ICommonProps from './data/ICommonProps';
+import IDataGridProps from './data/IDataGridProps';
+import IDataGridState from './IDataGridState';
+
 
 const toolbarOptions = new ToolbarOptions();
 
-class CustomLayoutDataGrid extends React.Component<ICommonProps, IGridState> {
+class CustomLayoutDataGrid extends React.Component<IDataGridProps, IDataGridState> {
   private constructor(props: any) {
     super(props);
     this.state = { errorMessage: '' };
   }
 
-  public componentWillReceiveProps(nextProps: any) {
+  public componentWillReceiveProps(nextProps: IDataGridProps) {
     this.setState({ errorMessage: nextProps.error });
   }
 
