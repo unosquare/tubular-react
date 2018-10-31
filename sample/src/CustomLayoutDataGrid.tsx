@@ -12,10 +12,11 @@ import DataGrid, { ToolbarOptions, withLocalDataSource } from '../../src';
 import columns from './data/columns';
 import localData from './data/localData';
 import IGridState from './IGridState';
+import ICommonProps from './data/ICommonProps';
 
 const toolbarOptions = new ToolbarOptions();
 
-class CustomLayoutDataGrid extends React.Component<{}, IGridState> {
+class CustomLayoutDataGrid extends React.Component<ICommonProps, IGridState> {
   private constructor(props: any) {
     super(props);
     this.state = { errorMessage: '' };

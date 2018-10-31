@@ -8,21 +8,22 @@ import DataGrid, {
   withRemoteDataSource
 } from '../../src';
 import columns from './data/columns';
+import ICommonProps from './data/ICommonProps';
+import IGridState from './IGridState';
 
 const toolbarOptions = new ToolbarOptions();
 
-class RemoteDataGrid extends React.Component<any, any> {
+class RemoteDataGrid extends React.Component<ICommonProps, IGridState> {
   public state = {
-    errorMessage: null as any
+    errorMessage: null as string
   };
 
-  public componentWillReceiveProps(nextProps: any) {
+  public componentWillReceiveProps(nextProps: ICommonProps) {
     this.setState({ errorMessage: nextProps.error });
   }
 
   public render() {
     const { errorMessage } = this.state;
-    console.log(this.props)
     return (
       <div className='root'>
         {errorMessage &&
@@ -71,6 +72,7 @@ class RemoteDataGrid extends React.Component<any, any> {
                 <TableCell />
               </TableRow>
           }
+          
         />
       </div>
     );
