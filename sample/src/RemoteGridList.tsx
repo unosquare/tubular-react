@@ -12,10 +12,13 @@ import {
     DataSourceContext,
     Paginator,
     TextSearchInput,
-    withRemoteDataSource
+    withRemoteDataSource,
+    IDataGridProps, 
+    IDataGridState
 } from '../../src';
 import CustomHttpClient from './CustomHttpClient';
 import columns from './data/columns';
+
 
 const styles: any = {
     progress: {
@@ -27,12 +30,12 @@ const styles: any = {
     }
 };
 
-class RemoteGridList extends React.Component<any, any> {
+class RemoteGridList extends React.Component<IDataGridProps, IDataGridState> {
     public state = {
         errorMessage: null as any
     };
 
-    public componentWillReceiveProps(nextProps: any) {
+    public componentWillReceiveProps(nextProps: IDataGridProps) {
         this.setState({ errorMessage: nextProps.error });
     }
 

@@ -21,6 +21,8 @@ import {
   withRemoteDataSource
 } from './DataSource';
 
+import { IDataGridProps, IDataGridState } from './DataGridInterfaces';
+
 export default DataGrid;
 
 export {
@@ -33,5 +35,7 @@ export {
   ITubularHttpClient,
   TubularHttpClient,
   renderCellContent,
-  renderCells
+  renderCells,
+  IDataGridProps,
+  IDataGridState
 };

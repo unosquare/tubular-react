@@ -3,17 +3,20 @@ import * as React from 'react';
 import { Snackbar } from '@material-ui/core';
 import DataGrid, {
   ToolbarOptions,
-  withLocalDataSource
+  withLocalDataSource,
+  IDataGridProps, 
+  IDataGridState
 } from '../../src';
 import columns from './data/columns';
 import localData from './data/localData';
 
-class LocalDataGrid extends React.Component<{}, {}> {
+
+class LocalDataGrid extends React.Component<IDataGridProps, IDataGridState> {
   public state = {
     errorMessage: null as any
   };
 
-  public componentWillReceiveProps(nextProps: any) {
+  public componentWillReceiveProps(nextProps: IDataGridProps) {
     this.setState({ errorMessage: nextProps.error });
   }
 

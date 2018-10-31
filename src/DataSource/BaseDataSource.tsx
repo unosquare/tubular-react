@@ -5,7 +5,6 @@ import { ColumnModel, GridRequest, GridResponse } from 'tubular-common';
 
 import { DataSourceContext } from './DataSourceContext';
 import IBaseDataSourceState from './IBaseDataSourceState';
-
 export default abstract class BaseDataSource extends React.Component<
   {},
   IBaseDataSourceState
@@ -191,7 +190,6 @@ export default abstract class BaseDataSource extends React.Component<
 
   public render() {
     const WrappedComponet = this.getWrappedComponent();
-
     return (
       <DataSourceContext.Provider
         value={{
@@ -199,7 +197,7 @@ export default abstract class BaseDataSource extends React.Component<
           state: { ...this.state }
         }}
       >
-        <WrappedComponet error={this.state.error} {...this.props} />
+        <WrappedComponet error={this.state.error} refresh={() => this.retrieveData.bind(this)} {...this.props}  />
       </DataSourceContext.Provider>
     );
   }

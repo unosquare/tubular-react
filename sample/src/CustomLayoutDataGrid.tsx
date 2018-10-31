@@ -8,20 +8,20 @@ import {
 } from '@material-ui/icons';
 
 import { format } from 'date-fns';
-import DataGrid, { ToolbarOptions, withLocalDataSource } from '../../src';
+import DataGrid, { ToolbarOptions, withLocalDataSource, IDataGridProps, IDataGridState } from '../../src';
 import columns from './data/columns';
 import localData from './data/localData';
-import IGridState from './IGridState';
+
 
 const toolbarOptions = new ToolbarOptions();
 
-class CustomLayoutDataGrid extends React.Component<{}, IGridState> {
+class CustomLayoutDataGrid extends React.Component<IDataGridProps, IDataGridState> {
   private constructor(props: any) {
     super(props);
     this.state = { errorMessage: '' };
   }
 
-  public componentWillReceiveProps(nextProps: any) {
+  public componentWillReceiveProps(nextProps: IDataGridProps) {
     this.setState({ errorMessage: nextProps.error });
   }
 
