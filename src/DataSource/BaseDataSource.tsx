@@ -197,7 +197,7 @@ export default abstract class BaseDataSource extends React.Component<
           state: { ...this.state }
         }}
       >
-        <WrappedComponet {...{error:this.state.error, refresh:() => this.retrieveData.bind(this) }}  />
+        <WrappedComponet error={this.state.error} refresh={() => this.retrieveData.bind(this)} {...this.props}  />
       </DataSourceContext.Provider>
     );
   }
