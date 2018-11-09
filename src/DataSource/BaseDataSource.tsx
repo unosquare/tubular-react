@@ -36,7 +36,8 @@ export default abstract class BaseDataSource extends React.Component<
       this.state.data.length === nextState.data.length &&
       this.state.anchorFilter === nextState.anchorFilter &&
       this.state.isLoading === nextState.isLoading &&
-      this.state.activeColumn === nextState.activeColumn
+      this.state.activeColumn === nextState.activeColumn &&
+      this.state.searchText === nextState.searchText
     ) {
       return false;
     }
@@ -71,7 +72,6 @@ export default abstract class BaseDataSource extends React.Component<
             isLoading: false,
             itemsPerPage,
             page: response.CurrentPage - 1,
-            searchText,
             totalRecordCount: response.TotalRecordCount || 0
           });
         },
@@ -146,12 +146,8 @@ export default abstract class BaseDataSource extends React.Component<
         this.retrieveData({ itemsPerPage }),
       updatePage: (page: number) => this.retrieveData({ page }),
       updateSearchText: (searchText: string) => {
-        if (!searchText) {
-          this.retrieveData({ searchText });
-        } else {
-          this.setState({ searchText });
-          this.handleSearchText(searchText);
-        }
+        this.setState({ searchText });
+        this.handleSearchText(searchText);
       }
     };
   }
@@ -197,7 +193,11 @@ export default abstract class BaseDataSource extends React.Component<
           state: { ...this.state }
         }}
       >
-        <WrappedComponet error={this.state.error} refresh={() => this.retrieveData.bind(this)} {...this.props}  />
+        <WrappedComponet
+          error={this.state.error}
+          refresh={() => this.retrieveData.bind(this)}
+          {...this.props}
+        />
       </DataSourceContext.Provider>
     );
   }
