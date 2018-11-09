@@ -8,7 +8,7 @@ import IBaseDataSourceState from './IBaseDataSourceState';
 export default abstract class BaseDataSource extends React.Component<
   {},
   IBaseDataSourceState
-> {
+  > {
   public state = this.setInitialState({
     activeColumn: null,
     aggregate: {},
@@ -46,7 +46,7 @@ export default abstract class BaseDataSource extends React.Component<
 
   public abstract getAllRecords(request: GridRequest): Promise<object>;
 
-  public retrieveData(options: any = {}): Promise<any> {
+  public async retrieveData(options: any = {}): Promise<any> {
     this.setState({ isLoading: true });
     const columns = options.columns || this.state.columns;
     const itemsPerPage = options.itemsPerPage || this.state.itemsPerPage;
@@ -57,29 +57,25 @@ export default abstract class BaseDataSource extends React.Component<
         ? this.state.searchText
         : options.searchText;
 
-    return this.getAllRecords(
-      new GridRequest(columns, itemsPerPage, page, searchText)
-    )
-      .then(
-        (response: GridResponse) => {
-          this.setState({
-            activeColumn: null,
-            aggregate: response.AggregationPayload,
-            columns,
-            data: response.Payload,
-            error: null,
-            filteredRecordCount: response.FilteredRecordCount || 0,
-            isLoading: false,
-            itemsPerPage,
-            page: response.CurrentPage - 1,
-            searchText,
-            totalRecordCount: response.TotalRecordCount || 0
-          });
-        },
-        (reject: any) =>
-          this.setState({ isLoading: false, error: reject.message || reject })
-      )
-      .catch((err: any) => this.setState({ isLoading: false, error: err }));
+    try {
+      const response: any = await this.getAllRecords(new GridRequest(columns, itemsPerPage, page, searchText));
+
+      this.setState({
+        activeColumn: null,
+        aggregate: response.AggregationPayload,
+        columns,
+        data: response.Payload,
+        error: null,
+        filteredRecordCount: response.FilteredRecordCount || 0,
+        isLoading: false,
+        itemsPerPage,
+        page: response.CurrentPage - 1,
+        searchText,
+        totalRecordCount: response.TotalRecordCount || 0
+      });
+    } catch (reject) {
+      return this.setState({ isLoading: false, error: reject.message || reject });
+    }
   }
 
   public getActions() {
