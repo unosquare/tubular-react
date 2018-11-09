@@ -36,7 +36,8 @@ export default abstract class BaseDataSource extends React.Component<
       this.state.data.length === nextState.data.length &&
       this.state.anchorFilter === nextState.anchorFilter &&
       this.state.isLoading === nextState.isLoading &&
-      this.state.activeColumn === nextState.activeColumn
+      this.state.activeColumn === nextState.activeColumn &&
+      this.state.searchText === nextState.searchText
     ) {
       return false;
     }
@@ -197,7 +198,11 @@ export default abstract class BaseDataSource extends React.Component<
           state: { ...this.state }
         }}
       >
-        <WrappedComponet error={this.state.error} refresh={() => this.retrieveData.bind(this)} {...this.props}  />
+        <WrappedComponet
+          error={this.state.error}
+          refresh={() => this.retrieveData.bind(this)}
+          {...this.props}
+        />
       </DataSourceContext.Provider>
     );
   }

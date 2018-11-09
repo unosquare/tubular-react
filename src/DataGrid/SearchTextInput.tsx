@@ -1,4 +1,9 @@
-import { FormControl, IconButton, Input, InputAdornment } from '@material-ui/core';
+import {
+  FormControl,
+  IconButton,
+  Input,
+  InputAdornment
+} from '@material-ui/core';
 
 import { Close, Search } from '@material-ui/icons';
 
@@ -7,16 +12,16 @@ import * as React from 'react';
 import { DataSourceContext } from '../DataSource';
 
 const styles: any = {
-    formControl: {
-      margin: '10px',
-      width: 250
-    }
-  };
+  formControl: {
+    margin: '10px',
+    width: 250
+  }
+};
 
 const SearchTextInput: React.SFC = () => {
   return (
     <DataSourceContext.Consumer>
-      {({ state, actions }) =>
+      {({ state, actions }) => (
         <FormControl style={styles.formControl}>
           <Input
             fullWidth={true}
@@ -29,15 +34,17 @@ const SearchTextInput: React.SFC = () => {
               </InputAdornment>
             }
             endAdornment={
-              state.searchText !== '' &&
-              <InputAdornment position='end'>
-                <IconButton onClick={() => actions.updateSearchText('')}>
-                  <Close />
-                </IconButton>
-              </InputAdornment>
+              state.searchText !== '' && (
+                <InputAdornment position='end'>
+                  <IconButton onClick={() => actions.updateSearchText('')}>
+                    <Close />
+                  </IconButton>
+                </InputAdornment>
+              )
             }
           />
-        </FormControl>}
+        </FormControl>
+      )}
     </DataSourceContext.Consumer>
   );
 };
