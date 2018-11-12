@@ -143,7 +143,6 @@ These are all the available properties (and their default values) for the `Toolb
 | `rowsPerPageOptions`  | `array`     | [10, 20, 50, 100]   | `Optional`. It shows a combo with a set of values that represent the number of rows per page. |
 | `rowsPerPage`         | `number`    | 10                  | `Optional`. Initial value that represents the number of rows per page. It should be a number that is inside the `rowsPerPageOptions` array. |
 
-
 _If you don't define some of the optional props described above, these will use their defaults values. In the case of `bodyRenderer`, the grid will display its default body; if the `footerRenderer` is not defined, the footer will not be displayed._
 
 ### `ColumnModel`
@@ -155,7 +154,7 @@ It represents a `DataGrid` column and its constructor requires a name identifier
 | `Name`          | `string`              |         `NONE`          | This is required and represents a property of the entity which we are binding. |-|
 | `Aggregate`     | `AggregateFunctions`  |         `NONE`          | The aggregation function that will be applied to this column. | `NONE`, `SUM`, `AVERAGE`, `COUNT`, `DISTINCT_COUNT`, `MAX`, `MIN` |
 | `DataType`      | `ColumnDataType`      |       `STRING`          | The column type. | `STRING`, `NUMERIC`, `BOOLEAN`, `DATE`, `DATE_TIME`, `DATE_TIME_UTC` |
-| `Filter`        | `bool`                |        `false`          | Enables filtering.|-|
+| `Filterable`        | `bool`                |        `false`          | Enables filtering.|-|
 | `IsKey`         | `bool`                |        `false`          | Defines if a column is an identifier or not. |-|
 | `Label`         | `string`              | The name of the column  | Column label that will be shown. |-|
 | `Searchable`    | `bool`                |        `true`           | Indicates that a column can be used to search upon. |-|
