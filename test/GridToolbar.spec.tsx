@@ -12,7 +12,7 @@ import { ToolbarOptions } from '../src';
 jest.mock('../src/DataSource/DataSourceContext');
 
 describe('<GridToolbar/>', () => {
-  let mount;
+  let mount: any;
   let toolbarOptions;
 
   beforeEach(() => {
@@ -49,10 +49,7 @@ describe('<GridToolbar/>', () => {
       toolbarOptions = new ToolbarOptions();
       toolbarOptions.exportButton = false;
       const wrapper = mount(
-        <GridToolbar
-          toolbarOptions={toolbarOptions}
-          gridName={'testGrid'}
-        />
+        <GridToolbar toolbarOptions={toolbarOptions} gridName={'testGrid'} />
       );
       expect(wrapper.find(IconButton).find(CloudDownload)).toHaveLength(0);
     });
@@ -73,10 +70,7 @@ describe('<GridToolbar/>', () => {
       toolbarOptions = new ToolbarOptions();
       toolbarOptions.printButton = false;
       const wrapper = mount(
-        <GridToolbar
-          toolbarOptions={toolbarOptions}
-          gridName={'testGrid'}
-        />
+        <GridToolbar toolbarOptions={toolbarOptions} gridName={'testGrid'} />
       );
       expect(wrapper.find(IconButton).find(PrintIcon)).toHaveLength(0);
     });
