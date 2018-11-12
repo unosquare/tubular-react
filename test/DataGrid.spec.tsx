@@ -8,7 +8,7 @@ import DataGrid from '../src/DataGrid/DataGrid';
 jest.mock('../src/DataSource/DataSourceContext');
 
 describe('<DataGrid />', () => {
-  let mount;
+  let mount: any;
 
   beforeEach(() => {
     jest.resetModules();
@@ -35,22 +35,26 @@ describe('<DataGrid />', () => {
   });
 
   test('should render TableBody', () => {
-    const wrapper =  mount(<DataGrid />).find(TableBody);
+    const wrapper = mount(<DataGrid />).find(TableBody);
     expect(wrapper).toHaveLength(1);
   });
 
   test('should render TableBody default ten rows', () => {
-    const wrapper =  mount(<DataGrid />).find(TableBody).find(TableRow);
+    const wrapper = mount(<DataGrid />)
+      .find(TableBody)
+      .find(TableRow);
     expect(wrapper).toHaveLength(10);
   });
 
   test('should render TableFooter', () => {
-    const wrapper =  mount(<DataGrid />).find(TableFooter);
+    const wrapper = mount(<DataGrid />).find(TableFooter);
     expect(wrapper).toHaveLength(1);
   });
 
   test('should render TableFooter one row', () => {
-    const wrapper =  mount(<DataGrid />).find(TableFooter).find(TableRow);
+    const wrapper = mount(<DataGrid />)
+      .find(TableFooter)
+      .find(TableRow);
     expect(wrapper).toHaveLength(1);
   });
 });

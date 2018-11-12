@@ -3,11 +3,11 @@ import * as React from 'react';
 import { Snackbar, TableCell, TableRow } from '@material-ui/core';
 import { CheckBox, CheckBoxOutlineBlank } from '@material-ui/icons';
 import { format } from 'date-fns';
-import columns from '../utils/columns';
 import DataGrid, {
     ToolbarOptions,
     withRemoteDataSource
 } from '../../src';
+import columns from '../utils/columns';
 
 class SampleFeatures extends React.Component {
     public state = {

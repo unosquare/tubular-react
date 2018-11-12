@@ -6,7 +6,7 @@ import context from '../src/DataSource/__mocks__/testHelpers';
 jest.mock('../src/DataSource/DataSourceContext');
 
 describe('TablePaginationActions', () => {
-  let mount;
+  let mount: any;
 
   beforeEach(() => {
     jest.resetModules();
@@ -14,7 +14,7 @@ describe('TablePaginationActions', () => {
     mount = createMount();
   });
 
-  test('should render 10 \'<IconButton />\' when has 10 of 500 records to show by page', () => {
+  test("should render 10 '<IconButton />' when has 10 of 500 records to show by page", () => {
     const wrapper = mount(
       <AdvancePaginationActions
         classes={{}}
@@ -28,7 +28,7 @@ describe('TablePaginationActions', () => {
     expect(wrapper.find(IconButton)).toHaveLength(10);
   });
 
-  test('should have the disabled prop from \'First Page\' as true', () => {
+  test("should have the disabled prop from 'First Page' as true", () => {
     const wrapper = mount(
       <AdvancePaginationActions
         classes={{}}
@@ -45,7 +45,7 @@ describe('TablePaginationActions', () => {
     expect(firstPage.props().disabled).toBe(true);
   });
 
-  test('should have the disabled prop from \'First Page\' as false', () => {
+  test("should have the disabled prop from 'First Page' as false", () => {
     const wrapper = mount(
       <AdvancePaginationActions
         classes={{}}
@@ -62,7 +62,7 @@ describe('TablePaginationActions', () => {
     expect(firstPage.props().disabled).toBe(false);
   });
 
-  test('should have the disabled prop from \'Last Page\' as true', () => {
+  test("should have the disabled prop from 'Last Page' as true", () => {
     const wrapper = mount(
       <AdvancePaginationActions
         classes={{}}
@@ -79,7 +79,7 @@ describe('TablePaginationActions', () => {
     expect(lastPage.props().disabled).toBe(true);
   });
 
-  test('should have the disabled prop from \'Last Page\' as false', () => {
+  test("should have the disabled prop from 'Last Page' as false", () => {
     const wrapper = mount(
       <AdvancePaginationActions
         classes={{}}
@@ -96,7 +96,7 @@ describe('TablePaginationActions', () => {
     expect(lastPage.props().disabled).toBe(false);
   });
 
-  test('should have the disabled prop from \'Previous Page\' as false', () => {
+  test("should have the disabled prop from 'Previous Page' as false", () => {
     const wrapper = mount(
       <AdvancePaginationActions
         classes={{}}
@@ -113,7 +113,7 @@ describe('TablePaginationActions', () => {
     expect(previousPage.props().disabled).toBe(false);
   });
 
-  test('should have the disabled prop from \'Previous Page\' as true', () => {
+  test("should have the disabled prop from 'Previous Page' as true", () => {
     const wrapper = mount(
       <AdvancePaginationActions
         classes={{}}
@@ -130,7 +130,7 @@ describe('TablePaginationActions', () => {
     expect(previousPage.props().disabled).toBe(true);
   });
 
-  test('should have the disable prop from \'Next Page\' as true', () => {
+  test("should have the disable prop from 'Next Page' as true", () => {
     const wrapper = mount(
       <AdvancePaginationActions
         classes={{}}
@@ -147,7 +147,7 @@ describe('TablePaginationActions', () => {
     expect(nextPage.props().disabled).toBe(true);
   });
 
-  test('should have the disable prop from \'Next Page\' as false', () => {
+  test("should have the disable prop from 'Next Page' as false", () => {
     const wrapper = mount(
       <AdvancePaginationActions
         classes={{}}
@@ -164,7 +164,7 @@ describe('TablePaginationActions', () => {
     expect(nextPage.props().disabled).toBe(false);
   });
 
-  test('should trigger the onClick event when \'Page#\' is clicked', () => {
+  test("should trigger the onClick event when 'Page#' is clicked", () => {
     const wrapper = mount(
       <AdvancePaginationActions
         classes={{}}

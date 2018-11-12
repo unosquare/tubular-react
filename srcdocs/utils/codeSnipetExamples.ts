@@ -1,5 +1,4 @@
-export const quickStart =
-`import React from 'react';
+export const quickStart = `import React from 'react';
 import ReactDOM from 'react-dom';
 
 import DataGrid, { withRemoteDataSource } from 'tubular-react';
@@ -21,8 +20,7 @@ const SampleGrid = withRemoteDataSource(
 
 ReactDOM.render(<SampleGrid />, document.getElementById('root'));`;
 
-export const basicFeatures =
-`import * as React from 'react';
+export const basicFeatures = `import * as React from 'react';
 
 import DataGrid, {
     withRemoteDataSource } from 'tubular-react';
@@ -90,8 +88,7 @@ const MyComponent = () => {
 */
 export default withRemoteDataSource(MyComponent, columns, 'http://tubular.azurewebsites.net/api/orders/paged');`;
 
-export const simpleFeatures =
-`import React from "react";
+export const simpleFeatures = `import React from "react";
 import { Snackbar, TableCell, TableRow } from "@material-ui/core";
 import { CheckBox, CheckBoxOutlineBlank } from "@material-ui/icons";
 import { format } from "date-fns";
@@ -199,8 +196,7 @@ export default withRemoteDataSource(
   "https://tubular.azurewebsites.net/api/orders/paged"
 );`;
 
-export const gridList =
-`import React from "react";
+export const gridList = `import React from "react";
 import ReactDOM from "react-dom";
 import { LinearProgress, Paper } from "@material-ui/core";
 import { Card, CardActions, CardContent } from "@material-ui/core";
@@ -218,7 +214,9 @@ import {
   DataSourceContext,
   Paginator,
   TextSearchInput,
-  withRemoteDataSource
+  withRemoteDataSource,
+  IDataGridState,
+  IDataGridProps
 } from "tubular-react";
 import {
   AggregateFunctions,
@@ -270,11 +268,18 @@ const styles: any = {
   }
 };
 
-class SampleGridList extends React.Component<any, any> {
+class SampleGridList extends React.Component<IDataGridProps, IDataGridState> {
   state = { errorMessage: null };
 
-  componentWillReceiveProps(nextProps: any) {
-    this.setState({ errorMessage: nextProps.error });
+
+  static getDerivedStateFromProps(
+    props: IDataGridProps,
+    state: IDataGridState
+  ) {
+    if (props.error !== state.errorMessage) {
+      return { errorMessage: props.error };
+    }
+    return null;
   }
 
   render() {
