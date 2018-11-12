@@ -8,21 +8,33 @@ import {
 } from '@material-ui/icons';
 
 import { format } from 'date-fns';
-import DataGrid, { ToolbarOptions, withLocalDataSource, IDataGridProps, IDataGridState } from '../../src';
+import DataGrid, {
+  ToolbarOptions,
+  withLocalDataSource,
+  IDataGridProps,
+  IDataGridState
+} from '../../src';
 import columns from './data/columns';
 import localData from './data/localData';
 
-
 const toolbarOptions = new ToolbarOptions();
 
-class CustomLayoutDataGrid extends React.Component<IDataGridProps, IDataGridState> {
+class CustomLayoutDataGrid extends React.Component<
+  IDataGridProps,
+  IDataGridState
+> {
   private constructor(props: any) {
     super(props);
     this.state = { errorMessage: '' };
   }
-
-  public componentWillReceiveProps(nextProps: IDataGridProps) {
-    this.setState({ errorMessage: nextProps.error });
+  static getDerivedStateFromProps(
+    props: IDataGridProps,
+    state: IDataGridState
+  ) {
+    if (props.error !== state.errorMessage) {
+      return { errorMessage: props.error };
+    }
+    return null;
   }
 
   public render() {
@@ -58,20 +70,19 @@ class CustomLayoutDataGrid extends React.Component<IDataGridProps, IDataGridStat
             </TableRow>
           )}
           toolbarOptions={toolbarOptions}
-          footerRenderer={
-            (aggregates: any) =>
-              <TableRow>
-                <TableCell>Total: </TableCell>
-                <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
-                <TableCell />
-                <TableCell />
-                <TableCell />
-                <TableCell />
-              </TableRow>
-          }
+          footerRenderer={(aggregates: any) => (
+            <TableRow>
+              <TableCell>Total: </TableCell>
+              <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
+              <TableCell />
+              <TableCell />
+              <TableCell />
+              <TableCell />
+            </TableRow>
+          )}
         >
           <IconButton>
-              <InsertEmoticon />
+            <InsertEmoticon />
           </IconButton>
         </DataGrid>
       </div>
