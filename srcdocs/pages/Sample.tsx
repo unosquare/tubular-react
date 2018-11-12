@@ -10,8 +10,7 @@ import { Collapse } from '@material-ui/core';
 import { IconButton, Tooltip } from '@material-ui/core';
 import CodeIcon from '@material-ui/icons/Code';
 import CreateIcon from '@material-ui/icons/Create';
-import SyntaxHighligther from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/styles/hljs';
+import Highligther from 'react-highlighter';
 import GitHubIcon from '../components/Github';
 
 import * as React from 'react';
@@ -127,13 +126,9 @@ export default withStyles(styles)(
                     </div>
                     <Collapse in={this.state.openBasic} timeout="auto">
                       <Paper>
-                        <SyntaxHighligther
-                          language="tsx"
-                          style={docco}
-                          className={classes.code}
-                        >
+                        <Highligther language="tsx" className={classes.code}>
                           {basicFeatures}
-                        </SyntaxHighligther>
+                        </Highligther>
                       </Paper>
                     </Collapse>
                     <BasicFeatures />
@@ -185,13 +180,9 @@ export default withStyles(styles)(
                     </div>
                     <Collapse in={this.state.openSample} timeout="auto">
                       <Paper>
-                        <SyntaxHighligther
-                          language="tsx"
-                          style={docco}
-                          className={classes.code}
-                        >
+                        <Highligther language="tsx" className={classes.code}>
                           {simpleFeatures}
-                        </SyntaxHighligther>
+                        </Highligther>
                       </Paper>
                     </Collapse>
                     <SampleFeatures />
@@ -241,13 +232,9 @@ export default withStyles(styles)(
                     </div>
                     <Collapse in={this.state.openGridList} timeout="auto">
                       <Paper>
-                        <SyntaxHighligther
-                          language="tsx"
-                          style={docco}
-                          className={classes.code}
-                        >
+                        <Highligther language="tsx" className={classes.code}>
                           {gridList}
-                        </SyntaxHighligther>
+                        </Highligther>
                       </Paper>
                     </Collapse>
                     <SampleGridList />

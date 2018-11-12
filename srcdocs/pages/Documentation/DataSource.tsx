@@ -9,8 +9,7 @@ import {
 import { withStyles } from '@material-ui/core/styles';
 
 import * as React from 'react';
-import SyntaxHighligther from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/styles/hljs';
+import Highligther from 'react-highlighter';
 import DocumentationList from '../../components/DocumentationList';
 
 const styles = {
@@ -75,13 +74,9 @@ const DataSource = (props: any) => {
               array and a <code className={classes.code}>URL</code> which
               represent a service.
               <br />
-              <SyntaxHighligther
-                language="tsx"
-                style={docco}
-                className={classes.code}
-              >
+              <Highligther language="tsx" className={classes.code}>
                 {remoteDataSource}
-              </SyntaxHighligther>
+              </Highligther>
               <br />
               <Typography variant="headline" gutterBottom={true}>
                 <code className={classes.code}>LocalDataSource</code>
@@ -92,13 +87,9 @@ const DataSource = (props: any) => {
               array and an <code className={classes.code}>Array</code>of
               objects.
               <br />
-              <SyntaxHighligther
-                language="tsx"
-                style={docco}
-                className={classes.code}
-              >
+              <Highligther language="tsx" className={classes.code}>
                 {localDataSource}
-              </SyntaxHighligther>
+              </Highligther>
               See this
               <Button color="primary" href={localDataLink} target="_blank">
                 example

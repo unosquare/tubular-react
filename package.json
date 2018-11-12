@@ -20,7 +20,7 @@
   "jest": {
     "automock": false,
     "setupFiles": [
-      "./test/setupTest.js"
+      "<rootDir>/test/setupTest.js"
     ],
     "moduleFileExtensions": [
       "ts",
@@ -79,9 +79,9 @@
     "@types/prop-types": "^15.5.6",
     "@types/react": "^16.4.18",
     "@types/react-dom": "^16.0.9",
+    "@types/react-highlighter": "^0.3.4",
     "@types/react-router": "^4.4.1",
     "@types/react-router-dom": "^4.3.1",
-    "@types/react-syntax-highlighter": "0.0.8",
     "coveralls": "^3.0.2",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.0",
@@ -90,9 +90,9 @@
     "jsdom": "^13.0.0",
     "nyc": "^13.1.0",
     "parcel-bundler": "^1.10.3",
+    "react-highlighter": "^0.4.3",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "react-syntax-highlighter": "^10.0.1",
     "react-test-renderer": "^16.6.1",
     "router5": "^6.6.2",
     "ts-jest": "^23.10.4",

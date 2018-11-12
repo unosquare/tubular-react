@@ -2,8 +2,7 @@ import { Button, Divider, Grid, Paper, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 import * as React from 'react';
-import SyntaxHighligther from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/styles/hljs';
+import Highligther from 'react-highlighter';
 
 import { quickStart } from '../../utils/codeSnipetExamples';
 
@@ -140,13 +139,9 @@ const Home = (props: any) => {
             variant="subheading"
             className={classes.content}
           >
-            <SyntaxHighligther
-              language="tsx"
-              style={docco}
-              className={classes.code}
-            >
+            <Highligther language="tsx" className={classes.code}>
               $ npm install tubular-react --save
-            </SyntaxHighligther>
+            </Highligther>
           </Typography>
           <br />
           <Typography variant="display1">Usage</Typography>
@@ -158,13 +153,9 @@ const Home = (props: any) => {
           >
             Here is a quick example to get you started, <b>it's all you need</b>
             :
-            <SyntaxHighligther
-              language="tsx"
-              style={docco}
-              className={classes.code}
-            >
+            <Highligther language="tsx" className={classes.code}>
               {quickStart}
-            </SyntaxHighligther>
+            </Highligther>
             <em>
               Try it in{' '}
               <a href="https://codesandbox.io/s/8nq86w080" target="_blank">

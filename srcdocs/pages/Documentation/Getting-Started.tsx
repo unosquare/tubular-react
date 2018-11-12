@@ -2,8 +2,7 @@ import { Divider, Grid, Hidden, Paper, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 import * as React from 'react';
-import SyntaxHighligther from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/styles/hljs';
+import Highligther from 'react-highlighter';
 import DocumentationList from '../../components/DocumentationList';
 import { basicFeatures } from '../../utils/codeSnipetExamples';
 
@@ -86,13 +85,9 @@ const GettingStarted = (props: any) => {
               <code className={classes.codeTag}>package.json</code>{' '}
               dependencies, run:
             </Typography>
-            <SyntaxHighligther
-              language="tsx"
-              style={docco}
-              className={classes.code}
-            >
+            <Highligther language="tsx" className={classes.code}>
               {'npm install tubular-react --save'}
-            </SyntaxHighligther>
+            </Highligther>
             <br />
             <Typography variant="headline" paragraph={true}>
               Usage
@@ -116,13 +111,9 @@ const GettingStarted = (props: any) => {
               Here is a quick example with all basic features to get you
               started:
             </Typography>
-            <SyntaxHighligther
-              language="tsx"
-              style={docco}
-              className={classes.code}
-            >
+            <Highligther language="tsx" className={classes.code}>
               {basicFeatures}
-            </SyntaxHighligther>
+            </Highligther>
           </Paper>
         </Grid>
       </Grid>
