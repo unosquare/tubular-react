@@ -2,14 +2,13 @@ import * as React from 'react';
 
 import { Snackbar } from '@material-ui/core';
 import DataGrid, {
+  IDataGridProps,
+  IDataGridState,
   ToolbarOptions,
-  withLocalDataSource,
-  IDataGridProps, 
-  IDataGridState
+  withLocalDataSource
 } from '../../src';
 import columns from './data/columns';
 import localData from './data/localData';
-
 
 class LocalDataGrid extends React.Component<IDataGridProps, IDataGridState> {
   public state = {
