@@ -48,13 +48,13 @@ const DataSource = (props: any) => {
         </Hidden>
         <Grid item={true} xs={12} md={9}>
           <Paper className={classes.paper}>
-            <Typography variant="display1" paragraph={true}>
+            <Typography variant='display1' paragraph={true}>
               {' '}
               Data Source{' '}
             </Typography>
             <Divider />
             <br />
-            <Typography variant="subheading">
+            <Typography variant='subheading'>
               <code className={classes.code}>{'<DataGrid />'}</code> requires a
               wrapper component to retrieve data. Depends on if we use a local
               data source or a remote data source, these wrappers are:
@@ -65,7 +65,7 @@ const DataSource = (props: any) => {
               <code className={classes.code}>DataGrid</code> component.
               <br />
               <br />
-              <Typography variant="headline" gutterBottom={true}>
+              <Typography variant='headline' gutterBottom={true}>
                 <code className={classes.code}>withRemoteDataSource</code>
               </Typography>
               <code className={classes.code}>withRemoteDataSource</code>
@@ -74,11 +74,11 @@ const DataSource = (props: any) => {
               array and a <code className={classes.code}>URL</code> which
               represent a service.
               <br />
-              <Highligther language="tsx" className={classes.code}>
+              <Highligther language='tsx' className={classes.code}>
                 {remoteDataSource}
               </Highligther>
               <br />
-              <Typography variant="headline" gutterBottom={true}>
+              <Typography variant='headline' gutterBottom={true}>
                 <code className={classes.code}>LocalDataSource</code>
               </Typography>
               <code className={classes.code}>withLocalDataSource</code>
@@ -87,11 +87,11 @@ const DataSource = (props: any) => {
               array and an <code className={classes.code}>Array</code>of
               objects.
               <br />
-              <Highligther language="tsx" className={classes.code}>
+              <Highligther language='tsx' className={classes.code}>
                 {localDataSource}
               </Highligther>
               See this
-              <Button color="primary" href={localDataLink} target="_blank">
+              <Button color='primary' href={localDataLink} target='_blank'>
                 example
               </Button>
               of how to define the array of objects.

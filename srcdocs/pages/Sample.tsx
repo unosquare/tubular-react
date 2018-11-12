@@ -69,13 +69,13 @@ export default withStyles(styles)(
     };
     public handleClickBasic = () => {
       this.setState({ openBasic: !this.state.openBasic });
-    };
+    }
     public handleClickSample = () => {
       this.setState({ openSample: !this.state.openSample });
-    };
+    }
     public handleClickGrid = () => {
       this.setState({ openGridList: !this.state.openGridList });
-    };
+    }
 
     public render() {
       const { classes } = this.props;
@@ -84,24 +84,24 @@ export default withStyles(styles)(
           <Grid container={true} spacing={24} className={classes.container}>
             <Grid item={true} xs={12} className={classes.paper}>
               <Paper className={classes.paper}>
-                <Typography variant="display1">Samples</Typography>
+                <Typography variant='display1'>Samples</Typography>
                 <Divider />
                 <br />
                 <Grid item={true} xs={12} className={classes.paper}>
-                  <Typography variant="headline" gutterBottom={true}>
+                  <Typography variant='headline' gutterBottom={true}>
                     Basic grid features
                   </Typography>
-                  <Typography variant="subheading">
+                  <Typography variant='subheading'>
                     Very basic grid sample
                   </Typography>
                   <Grid item={true} xs={12}>
                     <div style={bar}>
-                      <Tooltip title="Tubular GitHub Repo">
+                      <Tooltip title='Tubular GitHub Repo'>
                         <IconButton
-                          component="a"
-                          href="https://github.com/unosquare/tubular-react"
-                          target="_blank"
-                          color="inherit"
+                          component='a'
+                          href='https://github.com/unosquare/tubular-react'
+                          target='_blank'
+                          color='inherit'
                         >
                           <GitHubIcon />
                         </IconButton>
@@ -113,20 +113,20 @@ export default withStyles(styles)(
                           <CodeIcon />
                         </IconButton>
                       </Tooltip>
-                      <Tooltip title="Edit in CodeSandbox">
+                      <Tooltip title='Edit in CodeSandbox'>
                         <IconButton
-                          component="a"
-                          href="https://codesandbox.io/s/7j653z5050"
-                          target="_blank"
-                          color="inherit"
+                          component='a'
+                          href='https://codesandbox.io/s/7j653z5050'
+                          target='_blank'
+                          color='inherit'
                         >
                           <CreateIcon />
                         </IconButton>
                       </Tooltip>
                     </div>
-                    <Collapse in={this.state.openBasic} timeout="auto">
+                    <Collapse in={this.state.openBasic} timeout='auto'>
                       <Paper>
-                        <Highligther language="tsx" className={classes.code}>
+                        <Highligther language='tsx' className={classes.code}>
                           {basicFeatures}
                         </Highligther>
                       </Paper>
@@ -136,10 +136,10 @@ export default withStyles(styles)(
                 </Grid>
                 <Divider />
                 <Grid item={true} xs={12} className={classes.paper}>
-                  <Typography variant="headline" gutterBottom={true}>
+                  <Typography variant='headline' gutterBottom={true}>
                     Full grid features
                   </Typography>
-                  <Typography variant="subheading">
+                  <Typography variant='subheading'>
                     The grid can be extended to include features like sorting,
                     filtering, free-text searches, move across the pages and
                     change the number of rows per page Although easily you can
@@ -148,12 +148,12 @@ export default withStyles(styles)(
                   </Typography>
                   <Grid item={true} xs={12}>
                     <div style={bar}>
-                      <Tooltip title="Tubular GitHub Repo">
+                      <Tooltip title='Tubular GitHub Repo'>
                         <IconButton
-                          component="a"
-                          href="https://github.com/unosquare/tubular-react"
-                          target="_blank"
-                          color="inherit"
+                          component='a'
+                          href='https://github.com/unosquare/tubular-react'
+                          target='_blank'
+                          color='inherit'
                         >
                           <GitHubIcon />
                         </IconButton>
@@ -167,20 +167,20 @@ export default withStyles(styles)(
                           <CodeIcon />
                         </IconButton>
                       </Tooltip>
-                      <Tooltip title="Edit in CodeSandbox">
+                      <Tooltip title='Edit in CodeSandbox'>
                         <IconButton
-                          component="a"
-                          href="https://codesandbox.io/s/v1m749xk40"
-                          target="_blank"
-                          color="inherit"
+                          component='a'
+                          href='https://codesandbox.io/s/v1m749xk40'
+                          target='_blank'
+                          color='inherit'
                         >
                           <CreateIcon />
                         </IconButton>
                       </Tooltip>
                     </div>
-                    <Collapse in={this.state.openSample} timeout="auto">
+                    <Collapse in={this.state.openSample} timeout='auto'>
                       <Paper>
-                        <Highligther language="tsx" className={classes.code}>
+                        <Highligther language='tsx' className={classes.code}>
                           {simpleFeatures}
                         </Highligther>
                       </Paper>
@@ -190,22 +190,22 @@ export default withStyles(styles)(
                 </Grid>
                 <Divider />
                 <Grid item={true} xs={12} className={classes.paper}>
-                  <Typography variant="headline" gutterBottom={true}>
+                  <Typography variant='headline' gutterBottom={true}>
                     Give another presentation to your data.
                   </Typography>
-                  <Typography variant="subheading">
+                  <Typography variant='subheading'>
                     You can provide to your data a styled view that allows you
                     perform free-text searches and immediately reflect the
                     changes over your data.
                   </Typography>
                   <Grid item={true} xs={12}>
                     <div style={bar}>
-                      <Tooltip title="Tubular GitHub Repo">
+                      <Tooltip title='Tubular GitHub Repo'>
                         <IconButton
-                          component="a"
-                          href="https://github.com/unosquare/tubular-react"
-                          target="_blank"
-                          color="inherit"
+                          component='a'
+                          href='https://github.com/unosquare/tubular-react'
+                          target='_blank'
+                          color='inherit'
                         >
                           <GitHubIcon />
                         </IconButton>
@@ -219,20 +219,20 @@ export default withStyles(styles)(
                           <CodeIcon />
                         </IconButton>
                       </Tooltip>
-                      <Tooltip title="Edit in CodeSandbox">
+                      <Tooltip title='Edit in CodeSandbox'>
                         <IconButton
-                          component="a"
-                          href="https://codesandbox.io/s/5z9rx5lp34"
-                          target="_blank"
-                          color="inherit"
+                          component='a'
+                          href='https://codesandbox.io/s/5z9rx5lp34'
+                          target='_blank'
+                          color='inherit'
                         >
                           <CreateIcon />
                         </IconButton>
                       </Tooltip>
                     </div>
-                    <Collapse in={this.state.openGridList} timeout="auto">
+                    <Collapse in={this.state.openGridList} timeout='auto'>
                       <Paper>
-                        <Highligther language="tsx" className={classes.code}>
+                        <Highligther language='tsx' className={classes.code}>
                           {gridList}
                         </Highligther>
                       </Paper>

@@ -36,63 +36,63 @@ const GettingStarted = (props: any) => {
         </Hidden>
         <Grid item={true} xs={12} md={9}>
           <Paper className={classes.paper}>
-            <Typography variant="display1" paragraph={true}>
+            <Typography variant='display1' paragraph={true}>
               Getting Started
             </Typography>
             <Divider />
             <br />
-            <Typography variant="headline" paragraph={true}>
+            <Typography variant='headline' paragraph={true}>
               Installation
             </Typography>
-            <Typography variant="subheading" paragraph={true}>
+            <Typography variant='subheading' paragraph={true}>
               Tubular-React is available as an{' '}
               <a
-                href="https://www.npmjs.com/package/tubular-react"
-                target="_blank"
+                href='https://www.npmjs.com/package/tubular-react'
+                target='_blank'
               >
                 npm package
               </a>
               .
             </Typography>
-            <Typography variant="headline" paragraph={true}>
+            <Typography variant='headline' paragraph={true}>
               Dependencies
             </Typography>
-            <Typography variant="body1" paragraph={true}>
+            <Typography variant='body1' paragraph={true}>
               <ul>
                 <li>
-                  <a href="https://date-fns.org/">date-fns - Version: 1.29.0</a>
+                  <a href='https://date-fns.org/'>date-fns - Version: 1.29.0</a>
                 </li>
                 <li>
-                  <a href="https://material-ui.com/">
+                  <a href='https://material-ui.com/'>
                     Material-UI - Version: 3.1.0
                   </a>
                 </li>
                 <li>
-                  <a href="https://reactjs.org/">React - Version: 16.5.1</a>
+                  <a href='https://reactjs.org/'>React - Version: 16.5.1</a>
                 </li>
                 <li>
-                  <a href="https://github.com/unosquare/tubular-common">
+                  <a href='https://github.com/unosquare/tubular-common'>
                     Tubular Common - Version: 1.2.1
                   </a>
                 </li>
               </ul>
             </Typography>
-            <Typography variant="headline" paragraph={true}>
+            <Typography variant='headline' paragraph={true}>
               npm
             </Typography>
-            <Typography variant="body1" paragraph={true}>
+            <Typography variant='body1' paragraph={true}>
               To install and save in your
               <code className={classes.codeTag}>package.json</code>{' '}
               dependencies, run:
             </Typography>
-            <Highligther language="tsx" className={classes.code}>
+            <Highligther language='tsx' className={classes.code}>
               {'npm install tubular-react --save'}
             </Highligther>
             <br />
-            <Typography variant="headline" paragraph={true}>
+            <Typography variant='headline' paragraph={true}>
               Usage
             </Typography>
-            <Typography variant="subheading" paragraph={true}>
+            <Typography variant='subheading' paragraph={true}>
               Tubular React is an extension of Material-UI which offers until
               now a couple of useful components:
               <br />
@@ -103,15 +103,15 @@ const GettingStarted = (props: any) => {
               your data, you can populate them from a server-side data source or
               a local data source as an array.
             </Typography>
-            <Typography variant="headline" paragraph={true}>
+            <Typography variant='headline' paragraph={true}>
               {' '}
               Quick Start{' '}
             </Typography>
-            <Typography variant="body1" paragraph={true}>
+            <Typography variant='body1' paragraph={true}>
               Here is a quick example with all basic features to get you
               started:
             </Typography>
-            <Highligther language="tsx" className={classes.code}>
+            <Highligther language='tsx' className={classes.code}>
               {basicFeatures}
             </Highligther>
           </Paper>

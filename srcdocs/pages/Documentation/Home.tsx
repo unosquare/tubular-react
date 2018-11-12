@@ -44,11 +44,11 @@ const Home = (props: any) => {
     <div>
       <Grid container={true} spacing={24} className={classes.container}>
         <Paper className={classes.paper}>
-          <Typography variant="display1">What is it?</Typography>
+          <Typography variant='display1'>What is it?</Typography>
           <Divider />
           <Typography
             paragraph={true}
-            variant="subheading"
+            variant='subheading'
             className={classes.content}
           >
             Tubular React is a set of ReactJS components designed to rapidly
@@ -61,14 +61,14 @@ const Home = (props: any) => {
             searching, besides it has almost the same grid functionalities.
           </Typography>
           <br />
-          <Typography variant="display1">Features</Typography>
+          <Typography variant='display1'>Features</Typography>
           <Divider />
           <Typography
             paragraph={true}
-            variant="subheading"
+            variant='subheading'
             className={classes.content}
           >
-            <Typography variant="headline">
+            <Typography variant='headline'>
               The main component is a <em>grid</em> with multiple options:
             </Typography>
             <ul>
@@ -91,7 +91,7 @@ const Home = (props: any) => {
             table and more.
             <br />
             <br />
-            <Typography variant="headline">
+            <Typography variant='headline'>
               <em>Grid list</em> component allows you to perform some of the
               same options as:
             </Typography>
@@ -109,56 +109,56 @@ const Home = (props: any) => {
             which helps you to quickly find information.
           </Typography>
           <br />
-          <Typography variant="display1">Dependencies</Typography>
+          <Typography variant='display1'>Dependencies</Typography>
           <Divider />
-          <Typography paragraph={true} variant="subheading">
+          <Typography paragraph={true} variant='subheading'>
             <ul>
               <li>
-                <a href="https://date-fns.org/">date-fns - Version: 1.29.0</a>
+                <a href='https://date-fns.org/'>date-fns - Version: 1.29.0</a>
               </li>
               <li>
-                <a href="https://material-ui.com/">
+                <a href='https://material-ui.com/'>
                   Material-UI - Version: 3.1.0
                 </a>
               </li>
               <li>
-                <a href="https://reactjs.org/">React - Version: 16.5.1</a>
+                <a href='https://reactjs.org/'>React - Version: 16.5.1</a>
               </li>
               <li>
-                <a href="https://github.com/unosquare/tubular-common">
+                <a href='https://github.com/unosquare/tubular-common'>
                   Tubular Common - Version: 1.2.1
                 </a>
               </li>
             </ul>
           </Typography>
           <br />
-          <Typography variant="display1">npm Installation</Typography>
+          <Typography variant='display1'>npm Installation</Typography>
           <Divider />
           <Typography
             paragraph={true}
-            variant="subheading"
+            variant='subheading'
             className={classes.content}
           >
-            <Highligther language="tsx" className={classes.code}>
+            <Highligther language='tsx' className={classes.code}>
               $ npm install tubular-react --save
             </Highligther>
           </Typography>
           <br />
-          <Typography variant="display1">Usage</Typography>
+          <Typography variant='display1'>Usage</Typography>
           <Divider />
           <Typography
             paragraph={true}
-            variant="subheading"
+            variant='subheading'
             className={classes.content}
           >
             Here is a quick example to get you started, <b>it's all you need</b>
             :
-            <Highligther language="tsx" className={classes.code}>
+            <Highligther language='tsx' className={classes.code}>
               {quickStart}
             </Highligther>
             <em>
               Try it in{' '}
-              <a href="https://codesandbox.io/s/8nq86w080" target="_blank">
+              <a href='https://codesandbox.io/s/8nq86w080' target='_blank'>
                 CodeSandbox
               </a>
             </em>

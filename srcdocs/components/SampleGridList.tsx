@@ -32,11 +32,8 @@ const styles: any = {
 };
 
 class SampleGridList extends React.Component<any, any> {
-  public state = {
-    errorMessage: null as any
-  };
 
-  static getDerivedStateFromProps(props, state) {
+  public static getDerivedStateFromProps(props, state) {
     if (props.error !== state.errorMessage) {
       return {
         errorMessage: props.error
@@ -45,6 +42,9 @@ class SampleGridList extends React.Component<any, any> {
 
     return null;
   }
+  public state = {
+    errorMessage: null as any
+  };
 
   public render() {
     return (
@@ -62,26 +62,26 @@ class SampleGridList extends React.Component<any, any> {
                 <TableRow>
                   <TableCell>
                     <GridList cellHeight={180} cols={5}>
-                      {state.data.map(item => (
+                      {state.data.map((item) => (
                         <GridListTile key={item.OrderID}>
                           <Card>
                             <CardContent>
                               <Typography
                                 gutterBottom={true}
-                                variant="headline"
-                                component="h2"
+                                variant='headline'
+                                component='h2'
                               >
                                 {item.OrderID} - {item.CustomerName}
                               </Typography>
-                              <Typography component="p">
+                              <Typography component='p'>
                                 {item.ShipperCity}
                               </Typography>
-                              <Typography component="p">
+                              <Typography component='p'>
                                 {format(item.ShippedDate, 'MMM D YYYY')}
                               </Typography>
                             </CardContent>
                             <CardActions>
-                              <Button size="small" color="primary">
+                              <Button size='small' color='primary'>
                                 Learn More
                               </Button>
                             </CardActions>
