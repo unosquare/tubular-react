@@ -71,7 +71,7 @@ const ColumnModelTable = (props: any) => {
                     </TableCell>
                 </TableRow>
                 <TableRow hover={true}>
-                    <TableCell><code className={classes.code}>Filtering</code></TableCell>
+                    <TableCell><code className={classes.code}>Filterable</code></TableCell>
                     <TableCell><code className={classes.code}>bool</code></TableCell>
                     <TableCell><code className={classes.code}>false</code></TableCell>
                     <TableCell>Enables filtering</TableCell>
