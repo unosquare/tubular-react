@@ -38,7 +38,7 @@ const GridHeader: React.SFC = () => {
               </Tooltip>
               )
               : (column.Label);
-            const filter = column.Filter &&
+            const filter = column.Filterable &&
               (<IconButton id={column.Name} onClick={(e) => actions.setActiveColumn(column, e)} >
                 <FilterList
                   color={(column.Filter.HasFilter && column.Filter.Operator !== CompareOperators.NONE)

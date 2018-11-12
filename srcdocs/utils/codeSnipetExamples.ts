@@ -32,7 +32,7 @@ const columns = [
     new ColumnModel('OrderID',
         {
             DataType: ColumnDataType.NUMERIC,
-            Filtering: true,
+            Filterable: true,
             IsKey: true,
             Label: 'ID',
             SortDirection: ColumnSortDirection.ASCENDING,
@@ -43,7 +43,7 @@ const columns = [
     new ColumnModel('CustomerName',
         {
             Aggregate: AggregateFunctions.COUNT,
-            Filtering: true,
+            Filterable: true,
             Searchable: true,
             Sortable: true
         }
@@ -51,7 +51,7 @@ const columns = [
     new ColumnModel('ShippedDate',
         {
             DataType: ColumnDataType.DATE_TIME,
-            Filtering: true,
+            Filterable: true,
             Sortable: true
         }
     ),
@@ -65,7 +65,7 @@ const columns = [
     new ColumnModel('IsShipped',
         {
             DataType: ColumnDataType.BOOLEAN,
-            Filtering: true,
+            Filterable: true,
             Sortable: true
         }
     )
@@ -104,7 +104,7 @@ import {
 const columns = [
   new ColumnModel("OrderID", {
     DataType: ColumnDataType.NUMERIC,
-    Filtering: true,
+    Filterable: true,
     IsKey: true,
     Label: "ID",
     SortDirection: ColumnSortDirection.ASCENDING,
@@ -113,13 +113,13 @@ const columns = [
   }),
   new ColumnModel("CustomerName", {
     Aggregate: AggregateFunctions.COUNT,
-    Filtering: true,
+    Filterable: true,
     Searchable: true,
     Sortable: true
   }),
   new ColumnModel("ShippedDate", {
     DataType: ColumnDataType.DATE_TIME,
-    Filtering: true,
+    Filterable: true,
     Sortable: true
   }),
   new ColumnModel("ShipperCity"),
@@ -129,7 +129,7 @@ const columns = [
   }),
   new ColumnModel("IsShipped", {
     DataType: ColumnDataType.BOOLEAN,
-    Filtering: true,
+    Filterable: true,
     Sortable: true
   })
 ];
@@ -228,7 +228,7 @@ import {
 const columns = [
   new ColumnModel("OrderID", {
     DataType: ColumnDataType.NUMERIC,
-    Filtering: true,
+    Filterable: true,
     IsKey: true,
     Label: "ID",
     SortDirection: ColumnSortDirection.ASCENDING,
@@ -237,13 +237,13 @@ const columns = [
   }),
   new ColumnModel("CustomerName", {
     Aggregate: AggregateFunctions.COUNT,
-    Filtering: true,
+    Filterable: true,
     Searchable: true,
     Sortable: true
   }),
   new ColumnModel("ShippedDate", {
     DataType: ColumnDataType.DATE_TIME,
-    Filtering: true,
+    Filterable: true,
     Sortable: true
   }),
   new ColumnModel("ShipperCity"),
@@ -253,7 +253,7 @@ const columns = [
   }),
   new ColumnModel("IsShipped", {
     DataType: ColumnDataType.BOOLEAN,
-    Filtering: true,
+    Filterable: true,
     Sortable: true
   })
 ];
