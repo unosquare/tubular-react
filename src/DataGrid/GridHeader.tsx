@@ -50,7 +50,7 @@ const GridHeader: React.SFC = () => {
               ) : (
                 column.Label
               );
-              const filter = column.Filter && (
+              const filter = column.Filterable && (
                 <IconButton
                   id={column.Name}
                   onClick={(e) => actions.setActiveColumn(column, e)}

@@ -141,7 +141,7 @@ export default withStyles(styles)(
                   </Typography>
                   <Typography variant='subheading'>
                     The grid can be extended to include features like sorting,
-                    filtering, free-text searches, move across the pages and
+                    Filterable, free-text searches, move across the pages and
                     change the number of rows per page Although easily you can
                     print or export the current view or entire dataset to CSV
                     using client-side only.

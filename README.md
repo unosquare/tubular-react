@@ -154,7 +154,7 @@ It represents a `DataGrid` column and its constructor requires a name identifier
 | `Name`          | `string`              |         `NONE`          | This is required and represents a property of the entity which we are binding. |-|
 | `Aggregate`     | `AggregateFunctions`  |         `NONE`          | The aggregation function that will be applied to this column. | `NONE`, `SUM`, `AVERAGE`, `COUNT`, `DISTINCT_COUNT`, `MAX`, `MIN` |
 | `DataType`      | `ColumnDataType`      |       `STRING`          | The column type. | `STRING`, `NUMERIC`, `BOOLEAN`, `DATE`, `DATE_TIME`, `DATE_TIME_UTC` |
-| `Filterable`        | `bool`                |        `false`          | Enables filtering.|-|
+| `Filterable`        | `bool`                |        `false`          | Enables Filterable.|-|
 | `IsKey`         | `bool`                |        `false`          | Defines if a column is an identifier or not. |-|
 | `Label`         | `string`              | The name of the column  | Column label that will be shown. |-|
 | `Searchable`    | `bool`                |        `true`           | Indicates that a column can be used to search upon. |-|

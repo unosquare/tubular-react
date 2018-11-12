@@ -54,7 +54,7 @@ const Home = (props: any) => {
             Tubular React is a set of ReactJS components designed to rapidly
             build modern web applications. The centerpiece of Tubular is its
             fully templated grid with lots of features such as server-side
-            pagination, searching text, multi-column sorting, and filtering,
+            pagination, searching text, multi-column sorting, and Filterable,
             built-in export to CSV or been printed. Another very styled and
             useful component is the grid list that renders a set of cards with
             the general information allowing good data visualization and quickly
