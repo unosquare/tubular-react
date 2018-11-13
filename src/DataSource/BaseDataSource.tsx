@@ -146,12 +146,8 @@ export default abstract class BaseDataSource extends React.Component<
         this.retrieveData({ itemsPerPage }),
       updatePage: (page: number) => this.retrieveData({ page }),
       updateSearchText: (searchText: string) => {
-        if (!searchText) {
-          this.retrieveData({ searchText });
-        } else {
           this.setState({ searchText });
           this.handleSearchText(searchText);
-        }
       }
     };
   }

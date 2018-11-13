@@ -27,7 +27,7 @@ const GridBody: React.SFC<IProps> = ({ bodyRenderer }) => {
                                 }
                             </TableRow>
                     ))}
-                    {state.filteredRecordCount === 0 &&
+                    {state.filteredRecordCount === 0 && !state.isLoading &&
                         (<TableRow>
                             <TableCell colSpan={state.columns.filter((col: any) => col.Visible).length}>
                                 <Typography style={{ paddingLeft: '15px' }} variant='body2' gutterBottom={true}>
