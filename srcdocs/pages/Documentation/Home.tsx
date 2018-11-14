@@ -2,7 +2,7 @@ import { Button, Divider, Grid, Paper, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 import * as React from 'react';
-import Highligther from 'react-highlighter';
+import Highlight from 'react-highlight';
 
 import { quickStart } from '../../utils/codeSnipetExamples';
 
@@ -139,9 +139,9 @@ const Home = (props: any) => {
             variant='subheading'
             className={classes.content}
           >
-            <Highligther language='tsx' className={classes.code}>
+            <Highlight language='javascript' className={classes.code}>
               $ npm install tubular-react --save
-            </Highligther>
+            </Highlight>
           </Typography>
           <br />
           <Typography variant='display1'>Usage</Typography>
@@ -153,9 +153,9 @@ const Home = (props: any) => {
           >
             Here is a quick example to get you started, <b>it's all you need</b>
             :
-            <Highligther language='tsx' className={classes.code}>
+            <Highlight language='javascript' className={classes.code}>
               {quickStart}
-            </Highligther>
+            </Highlight>
             <em>
               Try it in{' '}
               <a href='https://codesandbox.io/s/8nq86w080' target='_blank'>
