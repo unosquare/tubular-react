@@ -10,7 +10,7 @@ import { Collapse } from '@material-ui/core';
 import { IconButton, Tooltip } from '@material-ui/core';
 import CodeIcon from '@material-ui/icons/Code';
 import CreateIcon from '@material-ui/icons/Create';
-import Highligther from 'react-highlighter';
+import Highlight from 'react-highlight';
 import GitHubIcon from '../components/Github';
 
 import * as React from 'react';
@@ -126,9 +126,9 @@ export default withStyles(styles)(
                     </div>
                     <Collapse in={this.state.openBasic} timeout='auto'>
                       <Paper>
-                        <Highligther language='tsx' className={classes.code}>
+                        <Highlight language='javascript' className={classes.code}>
                           {basicFeatures}
-                        </Highligther>
+                        </Highlight>
                       </Paper>
                     </Collapse>
                     <BasicFeatures />
@@ -180,9 +180,9 @@ export default withStyles(styles)(
                     </div>
                     <Collapse in={this.state.openSample} timeout='auto'>
                       <Paper>
-                        <Highligther language='tsx' className={classes.code}>
+                        <Highlight language='javascript' className={classes.code}>
                           {simpleFeatures}
-                        </Highligther>
+                        </Highlight>
                       </Paper>
                     </Collapse>
                     <SampleFeatures />
@@ -232,9 +232,9 @@ export default withStyles(styles)(
                     </div>
                     <Collapse in={this.state.openGridList} timeout='auto'>
                       <Paper>
-                        <Highligther language='tsx' className={classes.code}>
+                        <Highlight language='javascript' className={classes.code}>
                           {gridList}
-                        </Highligther>
+                        </Highlight>
                       </Paper>
                     </Collapse>
                     <SampleGridList />

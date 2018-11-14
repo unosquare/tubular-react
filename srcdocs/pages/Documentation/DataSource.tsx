@@ -9,7 +9,7 @@ import {
 import { withStyles } from '@material-ui/core/styles';
 
 import * as React from 'react';
-import Highligther from 'react-highlighter';
+import Highlight from 'react-highlight';
 import DocumentationList from '../../components/DocumentationList';
 
 const styles = {
@@ -74,9 +74,9 @@ const DataSource = (props: any) => {
               array and a <code className={classes.code}>URL</code> which
               represent a service.
               <br />
-              <Highligther language='tsx' className={classes.code}>
+              <Highlight language='tsx' className={classes.code}>
                 {remoteDataSource}
-              </Highligther>
+              </Highlight>
               <br />
               <Typography variant='headline' gutterBottom={true}>
                 <code className={classes.code}>LocalDataSource</code>
@@ -87,9 +87,9 @@ const DataSource = (props: any) => {
               array and an <code className={classes.code}>Array</code>of
               objects.
               <br />
-              <Highligther language='tsx' className={classes.code}>
+              <Highlight language='tsx' className={classes.code}>
                 {localDataSource}
-              </Highligther>
+              </Highlight>
               See this
               <Button color='primary' href={localDataLink} target='_blank'>
                 example
