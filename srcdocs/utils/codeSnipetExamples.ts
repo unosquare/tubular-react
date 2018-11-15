@@ -74,13 +74,7 @@ const columns = [
 ];
 const MyComponent = () => {
         
-      <DataGrid gridName='Tubular-React'>
-        <IconButton color='default' />
-          <Brightness7Rounded
-            onClick={() => alert('Happy codes, have a nice day')}
-          />
-        </IconButton>
-      </DataGrid>                   
+      <DataGrid gridName='Tubular-React'/>              
 };
  
 
@@ -92,46 +86,46 @@ const MyComponent = () => {
 */
 export default withRemoteDataSource(MyComponent, columns, 'http://tubular.azurewebsites.net/api/orders/paged');`;
 
-export const simpleFeatures = `import React from "react";
-import { Snackbar, TableCell, TableRow } from "@material-ui/core";
-import { CheckBox, CheckBoxOutlineBlank } from "@material-ui/icons";
-import { format } from "date-fns";
-import DataGrid, { ToolbarOptions, withRemoteDataSource } from "tubular-react";
+export const simpleFeatures = `import React from 'react';
+import { Snackbar, TableCell, TableRow } from '@material-ui/core';
+import { CheckBox, CheckBoxOutlineBlank } from '@material-ui/icons';
+import { format } from 'date-fns';
+import DataGrid, { ToolbarOptions, withRemoteDataSource } from 'tubular-react';
 
 import {
   AggregateFunctions,
   ColumnDataType,
   ColumnModel,
   ColumnSortDirection
-} from "tubular-common";
+} from 'tubular-common';
 
 const columns = [
-  new ColumnModel("OrderID", {
+  new ColumnModel('OrderID', {
     DataType: ColumnDataType.NUMERIC,
     Filterable: true,
     IsKey: true,
-    Label: "ID",
+    Label: 'ID',
     SortDirection: ColumnSortDirection.ASCENDING,
     SortOrder: 1,
     Sortable: true
   }),
-  new ColumnModel("CustomerName", {
+  new ColumnModel('CustomerName', {
     Aggregate: AggregateFunctions.COUNT,
     Filterable: true,
     Searchable: true,
     Sortable: true
   }),
-  new ColumnModel("ShippedDate", {
+  new ColumnModel('ShippedDate', {
     DataType: ColumnDataType.DATE_TIME,
     Filterable: true,
     Sortable: true
   }),
-  new ColumnModel("ShipperCity"),
-  new ColumnModel("Amount", {
+  new ColumnModel('ShipperCity'),
+  new ColumnModel('Amount', {
     DataType: ColumnDataType.NUMERIC,
     Sortable: true
   }),
-  new ColumnModel("IsShipped", {
+  new ColumnModel('IsShipped', {
     DataType: ColumnDataType.BOOLEAN,
     Filterable: true,
     Sortable: true
@@ -150,30 +144,30 @@ class SampleFeatures extends React.Component {
   render() {
     const { errorMessage } = this.state;
     return (
-      <div className="root">
+      <div className='root'>
         {errorMessage && (
           <Snackbar
-            anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            style={{ paddingTop: "10px" }}
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            style={{ paddingTop: '10px' }}
             open={true}
-            ContentProps={{ "aria-describedby": "message-id" }}
-            message={<span id="message-id">{errorMessage}</span>}
+            ContentProps={{ 'aria-describedby': 'message-id' }}
+            message={<span id='message-id'>{errorMessage}</span>}
           />
         )}
         <DataGrid
-          gridName="Tubular-React"
+          gridName='Tubular-React'
           bodyRenderer={(row: any, index: number, columns: ColumnModel[]) => (
             <TableRow hover={true} key={index}>
-              <TableCell padding="default">{row.OrderID}</TableCell>
-              <TableCell padding="default">{row.CustomerName}</TableCell>
-              <TableCell padding="default">
-                {format(row.ShippedDate, "MMMM Do YYYY, h:mm:ss a")}
+              <TableCell padding='default'>{row.OrderID}</TableCell>
+              <TableCell padding='default'>{row.CustomerName}</TableCell>
+              <TableCell padding='default'>
+                {format(row.ShippedDate, 'MMMM Do YYYY, h:mm:ss a')}
               </TableCell>
-              <TableCell padding="default">{row.ShipperCity}</TableCell>
-              <TableCell padding="default" numeric={true}>
+              <TableCell padding='default'>{row.ShipperCity}</TableCell>
+              <TableCell padding='default' numeric={true}>
                 {row.Amount || 0}
               </TableCell>
-              <TableCell padding="default">
+              <TableCell padding='default'>
                 {row.IsShipped ? <CheckBox /> : <CheckBoxOutlineBlank />}
               </TableCell>
             </TableRow>
@@ -197,23 +191,23 @@ class SampleFeatures extends React.Component {
 export default withRemoteDataSource(
   SampleFeatures,
   columns,
-  "https://tubular.azurewebsites.net/api/orders/paged"
+  'https://tubular.azurewebsites.net/api/orders/paged'
 );`;
 
-export const gridList = `import React from "react";
-import ReactDOM from "react-dom";
-import { LinearProgress, Paper } from "@material-ui/core";
-import { Card, CardActions, CardContent } from "@material-ui/core";
-import { GridList, GridListTile, Typography } from "@material-ui/core";
-import { Button } from "@material-ui/core";
+export const gridList = `import React from 'react';
+import ReactDOM from 'react-dom';
+import { LinearProgress, Paper } from '@material-ui/core';
+import { Card, CardActions, CardContent } from '@material-ui/core';
+import { GridList, GridListTile, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import {
   Table,
   TableBody,
   TableCell,
   TableFooter,
   TableRow
-} from "@material-ui/core";
-import { format } from "date-fns";
+} from '@material-ui/core';
+import { format } from 'date-fns';
 import {
   DataSourceContext,
   Paginator,
@@ -221,41 +215,41 @@ import {
   withRemoteDataSource,
   IDataGridState,
   IDataGridProps
-} from "tubular-react";
+} from 'tubular-react';
 import {
   AggregateFunctions,
   ColumnDataType,
   ColumnModel,
   ColumnSortDirection
-} from "tubular-common";
+} from 'tubular-common';
 
 const columns = [
-  new ColumnModel("OrderID", {
+  new ColumnModel('OrderID', {
     DataType: ColumnDataType.NUMERIC,
     Filterable: true,
     IsKey: true,
-    Label: "ID",
+    Label: 'ID',
     SortDirection: ColumnSortDirection.ASCENDING,
     SortOrder: 1,
     Sortable: true
   }),
-  new ColumnModel("CustomerName", {
+  new ColumnModel('CustomerName', {
     Aggregate: AggregateFunctions.COUNT,
     Filterable: true,
     Searchable: true,
     Sortable: true
   }),
-  new ColumnModel("ShippedDate", {
+  new ColumnModel('ShippedDate', {
     DataType: ColumnDataType.DATE_TIME,
     Filterable: true,
     Sortable: true
   }),
-  new ColumnModel("ShipperCity"),
-  new ColumnModel("Amount", {
+  new ColumnModel('ShipperCity'),
+  new ColumnModel('Amount', {
     DataType: ColumnDataType.NUMERIC,
     Sortable: true
   }),
-  new ColumnModel("IsShipped", {
+  new ColumnModel('IsShipped', {
     DataType: ColumnDataType.BOOLEAN,
     Filterable: true,
     Sortable: true
@@ -264,11 +258,11 @@ const columns = [
 
 const styles: any = {
   progress: {
-    height: "20px"
+    height: '20px'
   },
   search: {
-    margin: "15px 10px 10px 10px",
-    textAlign: "right"
+    margin: '15px 10px 10px 10px',
+    textAlign: 'right'
   }
 };
 
@@ -308,20 +302,20 @@ class SampleGridList extends React.Component<IDataGridProps, IDataGridState> {
                             <CardContent>
                               <Typography
                                 gutterBottom={true}
-                                variant="headline"
-                                component="h2"
+                                variant='headline'
+                                component='h2'
                               >
                                 {item.OrderID} - {item.CustomerName}
                               </Typography>
-                              <Typography component="p">
+                              <Typography component='p'>
                                 {item.ShipperCity}
                               </Typography>
-                              <Typography component="p">
-                                {format(item.ShippedDate, "MMM D YYYY")}
+                              <Typography component='p'>
+                                {format(item.ShippedDate, 'MMM D YYYY')}
                               </Typography>
                             </CardContent>
                             <CardActions>
-                              <Button size="small" color="primary">
+                              <Button size='small' color='primary'>
                                 Learn More
                               </Button>
                             </CardActions>
@@ -348,5 +342,66 @@ class SampleGridList extends React.Component<IDataGridProps, IDataGridState> {
 export default withRemoteDataSource(
   SampleGridList,
   columns,
-  "https://tubular.azurewebsites.net/api/orders/paged"
+  'https://tubular.azurewebsites.net/api/orders/paged'
 );`;
+
+export const buttonFeatures = `import * as React from 'react';
+
+import DataGrid, { withRemoteDataSource } from 'tubular-react';
+import { AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection } from 'tubular-common';
+import { IconButton } from '@material-ui/core';
+import { Brightness7Rounded } from '@material-ui/icons';
+
+//  First of all, you must define your columns model.
+const columns = [
+    new ColumnModel('OrderID',
+        {
+            DataType: ColumnDataType.NUMERIC,
+            Filterable: true,
+            IsKey: true,
+            Label: 'ID',
+            SortDirection: ColumnSortDirection.ASCENDING,
+            SortOrder: 1,
+            Sortable: true
+        }
+    ),
+    new ColumnModel('CustomerName',
+        {
+            Aggregate: AggregateFunctions.COUNT,
+            Filterable: true,
+            Searchable: true,
+            Sortable: true
+        }
+    ),
+    new ColumnModel('ShippedDate',
+        {
+            DataType: ColumnDataType.DATE_TIME,
+            Filterable: true,
+            Sortable: true
+        }
+    ),
+    new ColumnModel('ShipperCity'),
+    new ColumnModel('Amount',
+        {
+            DataType: ColumnDataType.NUMERIC,
+            Sortable: true
+        }
+    ),
+    new ColumnModel('IsShipped',
+        {
+            DataType: ColumnDataType.BOOLEAN,
+            Filterable: true,
+            Sortable: true
+        }
+    )
+];
+const MyComponent = () => {
+        
+      <DataGrid gridName='Tubular-React'>              
+      <IconButton color='default' />
+          <Brightness7Rounded
+            onClick={() => alert('Happy codes, have a nice day')}
+          />
+        </IconButton>
+      </DataGrid>
+};`;

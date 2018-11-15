@@ -5,8 +5,9 @@ import * as React from 'react';
 import Highlight from 'react-highlight';
 import DocumentationList from '../../components/DocumentationList';
 import { basicFeatures } from '../../utils/codeSnipetExamples';
+import { buttonFeatures } from '../../utils/codeSnipetExamples';
 
-import 'highlight.js/styles/an-old-hope.css'
+import 'highlight.js/styles/an-old-hope.css';
 
 const styles = {
   code: {
@@ -115,6 +116,32 @@ const GettingStarted = (props: any) => {
             </Typography>
             <Highlight language='javascript' className={classes.code}>
               {basicFeatures}
+            </Highlight>
+            <Typography variant='headline' paragraph={true}>
+              Aditional Buttons
+            </Typography>
+            <Typography variant='subheading' paragraph={true}>
+              You can add functionalities to the `DataGrid` including extra
+              buttons that can perform an action according to your requirements.
+              Just need include an IconButton Component from @material-ui and
+              define the icon or button that you need between `DataGrid` tags
+              and specify the action to perform.
+              <br />
+              <Highlight language='javascript' className={classes.code}>
+                {`
+              <IconButton color='default' />
+              <Brightness7Rounded
+                onClick={() => alert('Happy codes, have a nice day')}
+                />
+              </IconButton>
+              `}
+              </Highlight>
+            </Typography>
+            <Typography variant='body1' paragraph={true}>
+              Here is a code snippet with an example:
+            </Typography>
+            <Highlight language='javascript' className={classes.code}>
+              {buttonFeatures}
             </Highlight>
           </Paper>
         </Grid>

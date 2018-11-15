@@ -69,7 +69,8 @@ class SampleFeatures extends React.Component {
                 alert('I can help you to add features to your datagrid.')
               }
             />
-            <IconButton color='default' />
+          </IconButton>
+          <IconButton color='default'>
             <Brightness7Rounded
               onClick={() => alert('Happy codes, have a nice day')}
             />
