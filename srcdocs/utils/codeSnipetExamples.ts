@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import DataGrid, { withRemoteDataSource } from 'tubular-react';
 import { ColumnModel } from 'tubular-common';
 import { IconButton, Tooltip } from '@material-ui/core';
-import { Brightness7Rounded } from '@material-ui/icons';
 
 const columns = [
     new ColumnModel('OrderID'),
@@ -344,64 +343,3 @@ export default withRemoteDataSource(
   columns,
   'https://tubular.azurewebsites.net/api/orders/paged'
 );`;
-
-export const buttonFeatures = `import * as React from 'react';
-
-import DataGrid, { withRemoteDataSource } from 'tubular-react';
-import { AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection } from 'tubular-common';
-import { IconButton } from '@material-ui/core';
-import { Brightness7Rounded } from '@material-ui/icons';
-
-//  First of all, you must define your columns model.
-const columns = [
-    new ColumnModel('OrderID',
-        {
-            DataType: ColumnDataType.NUMERIC,
-            Filterable: true,
-            IsKey: true,
-            Label: 'ID',
-            SortDirection: ColumnSortDirection.ASCENDING,
-            SortOrder: 1,
-            Sortable: true
-        }
-    ),
-    new ColumnModel('CustomerName',
-        {
-            Aggregate: AggregateFunctions.COUNT,
-            Filterable: true,
-            Searchable: true,
-            Sortable: true
-        }
-    ),
-    new ColumnModel('ShippedDate',
-        {
-            DataType: ColumnDataType.DATE_TIME,
-            Filterable: true,
-            Sortable: true
-        }
-    ),
-    new ColumnModel('ShipperCity'),
-    new ColumnModel('Amount',
-        {
-            DataType: ColumnDataType.NUMERIC,
-            Sortable: true
-        }
-    ),
-    new ColumnModel('IsShipped',
-        {
-            DataType: ColumnDataType.BOOLEAN,
-            Filterable: true,
-            Sortable: true
-        }
-    )
-];
-const MyComponent = () => {
-        
-      <DataGrid gridName='Tubular-React'>              
-      <IconButton color='default' />
-          <Brightness7Rounded
-            onClick={() => alert('Happy codes, have a nice day')}
-          />
-        </IconButton>
-      </DataGrid>
-};`;

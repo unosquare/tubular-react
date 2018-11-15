@@ -5,8 +5,7 @@ import * as React from 'react';
 import Highlight from 'react-highlight';
 import DocumentationList from '../../components/DocumentationList';
 import { basicFeatures } from '../../utils/codeSnipetExamples';
-import { buttonFeatures } from '../../utils/codeSnipetExamples';
-
+ 
 import 'highlight.js/styles/an-old-hope.css';
 
 const styles = {
@@ -118,7 +117,7 @@ const GettingStarted = (props: any) => {
               {basicFeatures}
             </Highlight>
             <Typography variant='headline' paragraph={true}>
-              Aditional Buttons
+              Extend Grid Functionalities
             </Typography>
             <Typography variant='subheading' paragraph={true}>
               You can add functionalities to the `DataGrid` including extra
@@ -137,12 +136,6 @@ const GettingStarted = (props: any) => {
               `}
               </Highlight>
             </Typography>
-            <Typography variant='body1' paragraph={true}>
-              Here is a code snippet with an example:
-            </Typography>
-            <Highlight language='javascript' className={classes.code}>
-              {buttonFeatures}
-            </Highlight>
           </Paper>
         </Grid>
       </Grid>
