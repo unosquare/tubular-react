@@ -9,7 +9,7 @@ import {
 } from '@material-ui/icons';
 import { format } from 'date-fns';
 import DataGrid, { ToolbarOptions, withRemoteDataSource } from '../../src';
-import { IconButton, Tooltip } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
 import columns from '../utils/columns';
 
 class SampleFeatures extends React.Component {
