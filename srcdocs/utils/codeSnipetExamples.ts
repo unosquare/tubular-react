@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 
 import DataGrid, { withRemoteDataSource } from 'tubular-react';
 import { ColumnModel } from 'tubular-common';
+import { IconButton, Tooltip } from '@material-ui/core';
+import { Brightness7Rounded } from '@material-ui/icons';
 
 const columns = [
     new ColumnModel('OrderID'),
@@ -75,7 +77,13 @@ const MyComponent = () => {
             <div className='root'>
                 <DataGrid
                     gridName='Tubular-React'
-                />
+                >
+                <IconButton color='default' />
+                  <Brightness7Rounded
+                    onClick={() => alert('Happy codes, have a nice day')}
+                  />
+                  </IconButton>
+                </DataGrid>
             </div>
         );
 };

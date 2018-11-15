@@ -18,6 +18,7 @@ import * as React from 'react';
 import BasicFeatures from '../../srcdocs/components/BasicFeatures';
 import SampleFeatures from '../../srcdocs/components/SampleFeatures';
 import SampleGridList from '../../srcdocs/components/SampleGridList';
+import SampleButtonsFeatures from '../../srcdocs/components/SampleButtonsFeatures';
 import {
   basicFeatures,
   gridList,
@@ -240,7 +241,64 @@ export default withStyles(styles)(
                     <SampleGridList />
                   </Grid>
                 </Grid>
+                <Divider /> 
+
+                 <Grid item={true} xs={12} className={classes.paper}>
+                  <Typography variant='headline' gutterBottom={true}>
+                  How to include functionality buttons on 'ToolbarOptions'
+                  </Typography>
+                  <Typography variant='subheading'>
+                  You can add functionalities to the DataGrid including extra
+                    buttons that can perform an action according to your
+                    requirements. Just need include an IconButton Component from
+                    @material-ui and define the icon or button that you need
+                    between DataGrid tags and specify the action to perform.
+                  </Typography>
+                  <Grid item={true} xs={12}>
+                    <div style={bar}>
+                      <Tooltip title='Tubular GitHub Repo'>
+                        <IconButton
+                          component='a'
+                          href='https://github.com/unosquare/tubular-react'
+                          target='_blank'
+                          color='inherit'
+                        >
+                          <GitHubIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip
+                        title={this.state.openBasic ? 'Hide Code' : 'View Code'}
+                      >
+                        <IconButton onClick={this.handleClickBasic}>
+                          <CodeIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title='Edit in CodeSandbox'>
+                        <IconButton
+                          component='a'
+                          href='https://codesandbox.io/s/7j653z5050'
+                          target='_blank'
+                          color='inherit'
+                        >
+                          <CreateIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </div>
+                    <Collapse in={this.state.openBasic} timeout='auto'>
+                      <Paper>
+                        <Highlight language='javascript' className={classes.code}>
+                          {basicFeatures}
+                        </Highlight>
+                      </Paper>
+                    </Collapse>
+                    <SampleButtonsFeatures />
+                    <BasicFeatures />
+                  </Grid>
+                </Grid>
                 <Divider />
+
+                
+                               
               </Paper>
             </Grid>
           </Grid>
