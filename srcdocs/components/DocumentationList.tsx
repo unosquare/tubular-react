@@ -22,7 +22,7 @@ const DocumentationList = (props: any) => {
     return (
         <Paper className={classes.paper}>
             <List>
-                <Typography variant='headline'>
+                <Typography variant='h5'>
                     Documentation
                         </Typography>
                 <Divider />

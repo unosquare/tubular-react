@@ -304,7 +304,7 @@ class SampleGridList extends React.Component<IDataGridProps, IDataGridState> {
                             <CardContent>
                               <Typography
                                 gutterBottom={true}
-                                variant="headline"
+                                variant="h5"
                                 component="h2"
                               >
                                 {item.OrderID} - {item.CustomerName}

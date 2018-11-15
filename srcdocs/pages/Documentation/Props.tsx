@@ -34,10 +34,10 @@ const Props = (props: any) => {
                 </Hidden>
                 <Grid item={true} xs={12} md={9}>
                     <Paper className={classes.paper}>
-                        <Typography variant='display1' paragraph={true}>DataGrid props</Typography>
+                        <Typography variant='h4' paragraph={true}>DataGrid props</Typography>
                         <Divider />
                         <br />
-                        <Typography variant='subheading'>
+                        <Typography variant='h6'>
                             It's important to use <code className={classes.code}>withRemoteDataSource</code> or
                             <code className={classes.code}>withLocalDataSource</code> according to the case
                             to fill the <code className={classes.code}>{'<DataGrid />'}</code> component
@@ -48,7 +48,7 @@ const Props = (props: any) => {
                         </Typography>
                         <DataGridProps />
                         <br />
-                        <Typography variant='subheading'>
+                        <Typography variant='h6'>
                             <i>If you don't define some of the optional props described above,
                             these will not be shown. In the case of </i>
                             <code className={classes.code}>bodyRenderer</code>,
@@ -59,17 +59,17 @@ const Props = (props: any) => {
                     </Paper>
                     <br />
                     <Paper className={classes.paper}>
-                        <Typography variant='display1' paragraph={true}>Toolbar options</Typography>
+                        <Typography variant='h4' paragraph={true}>Toolbar options</Typography>
                         <Divider />
                         <br />
-                        <Typography variant='subheading'>
+                        <Typography variant='h6'>
                             If you need personalite the grid adding, removing
                             or modifying  fetures, <code className={classes.code}>ToolBarOptions Class</code>
                             provides several options.
                         </Typography>
                         <ToolBarOptionsProps />
                         <br />
-                        <Typography variant='subheading'>
+                        <Typography variant='h6'>
                             <i>If you don't define some of the optional props described above,
                             these will set with the default values.</i>
                         </Typography>
