@@ -73,20 +73,16 @@ const columns = [
     )
 ];
 const MyComponent = () => {
-        return (
-            <div className='root'>
-                <DataGrid
-                    gridName='Tubular-React'
-                >
-                <IconButton color='default' />
-                  <Brightness7Rounded
-                    onClick={() => alert('Happy codes, have a nice day')}
-                  />
-                  </IconButton>
-                </DataGrid>
-            </div>
-        );
+        
+      <DataGrid gridName='Tubular-React'>
+        <IconButton color='default' />
+          <Brightness7Rounded
+            onClick={() => alert('Happy codes, have a nice day')}
+          />
+        </IconButton>
+      </DataGrid>                   
 };
+ 
 
 /*
  Use the component withRemoteDataSource to wrap your component

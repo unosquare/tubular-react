@@ -6,6 +6,8 @@ import Highlight from 'react-highlight';
 import DocumentationList from '../../components/DocumentationList';
 import { basicFeatures } from '../../utils/codeSnipetExamples';
 
+import 'highlight.js/styles/an-old-hope.css'
+
 const styles = {
   code: {
     fontSize: 15
