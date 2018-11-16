@@ -1,12 +1,11 @@
 import { Divider, Grid, Hidden, Paper, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
+import 'highlight.js/styles/an-old-hope.css';
 import * as React from 'react';
 import Highlight from 'react-highlight';
 import DocumentationList from '../../components/DocumentationList';
 import { basicFeatures } from '../../utils/codeSnipetExamples';
- 
-import 'highlight.js/styles/an-old-hope.css';
 
 const styles = {
   code: {
