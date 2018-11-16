@@ -200,7 +200,7 @@ export default withStyles(styles)(
                 <Divider />
                 <Grid item={true} xs={12} className={classes.paper}>
                   <Typography variant='headline' gutterBottom={true}>
-                    How to include functionality buttons next to the 'ToolbarOptions'
+                    How to include functionality buttons
                   </Typography>
                   <Typography variant='subheading'>
                     You can add functionalities to the DataGrid including extra
