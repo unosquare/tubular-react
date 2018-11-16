@@ -10,7 +10,7 @@
     "start:docs": "parcel ./srcdocs/index.html --no-source-maps --port 8080 --open -d ./docs",
     "lint": "tslint src/**/*.ts src/**/*.tsx",
     "test": "jest",
-    "coverage": "nyc npm test && nyc report --reporter=lcov && cat ./coverage/lcov.info | codacy-coverage",
+    "coverage": "nyc --reporter=lcov jest && cat ./coverage/lcov.info | codacy-coverage",
     "prebuild:docs": "del /s /q  .\\docs\\*",
     "prestart:docs": "del /s /q  .\\docs\\*",
     "postbuild:docs": "xcopy .\\srcdocs\\static .\\docs\\static\\",
