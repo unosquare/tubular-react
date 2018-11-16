@@ -16,9 +16,11 @@ import GitHubIcon from '../components/Github';
 import * as React from 'react';
 
 import BasicFeatures from '../../srcdocs/components/BasicFeatures';
+import SampleButtonsFeatures from '../../srcdocs/components/SampleButtonsFeatures';
 import SampleFeatures from '../../srcdocs/components/SampleFeatures';
 import SampleGridList from '../../srcdocs/components/SampleGridList';
-import SampleButtonsFeatures from '../../srcdocs/components/SampleButtonsFeatures';
+import 'highlight.js/styles/an-old-hope.css';
+
 import {
   basicFeatures,
   gridList,

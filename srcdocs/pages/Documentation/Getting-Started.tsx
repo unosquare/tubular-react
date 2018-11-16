@@ -120,7 +120,7 @@ const GettingStarted = (props: any) => {
               Extend Grid Functionalities
             </Typography>
             <Typography variant='subheading' paragraph={true}>
-              You can add functionalities to the `DataGrid` including extra
+              You can add functionalities to the `DataGrid`, including extra
               buttons that can perform an action according to your requirements.
               Just need include an IconButton Component from @material-ui and
               define the icon or button that you need between `DataGrid` tags
@@ -128,7 +128,7 @@ const GettingStarted = (props: any) => {
               <br />
               <Highlight language='javascript' className={classes.code}>
                 {`
-                const MyComponent = () => {
+              const MyComponent = () => {
 
               <DataGrid gridName='Tubular-React'>
               <IconButton color='default' />

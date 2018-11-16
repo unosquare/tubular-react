@@ -145,7 +145,7 @@ These are all the available properties (and their default values) for the `Toolb
 
 _If you don't define some of the optional props described above, these will use their defaults values. In the case of `bodyRenderer`, the grid will display its default body; if the `footerRenderer` is not defined, the footer will not be displayed._
 
-### How to include functionality buttons on `ToolbarOptions`
+### How to include functionality buttons
 
 You can add functionalities to the `DataGrid` including extra buttons that can perform an action according to your requirements. Just need include an IconButton Component from @material-ui and define the icon or button that you need between `DataGrid` tags and specify the action to perform.
 
