@@ -128,6 +128,8 @@ const GettingStarted = (props: any) => {
               <br />
               <Highlight language='javascript' className={classes.code}>
                 {`
+                const MyComponent = () => {
+
               <DataGrid gridName='Tubular-React'>
               <IconButton color='default' />
               <Brightness7Rounded
@@ -135,6 +137,8 @@ const GettingStarted = (props: any) => {
                 />
               </IconButton>
               </DataGrid>
+
+            };
               `}
               </Highlight>
             </Typography>
