@@ -87,14 +87,14 @@ export default withStyles(styles)(
           <Grid container={true} spacing={24} className={classes.container}>
             <Grid item={true} xs={12} className={classes.paper}>
               <Paper className={classes.paper}>
-                <Typography variant='display1'>Samples</Typography>
+                <Typography variant='h4'>Samples</Typography>
                 <Divider />
                 <br />
                 <Grid item={true} xs={12} className={classes.paper}>
-                  <Typography variant='headline' gutterBottom={true}>
+                  <Typography variant='h5' gutterBottom={true}>
                     Basic grid features
                   </Typography>
-                  <Typography variant='subheading'>
+                  <Typography variant='h6'>
                     Very basic grid sample
                   </Typography>
                   <Grid item={true} xs={12}>
@@ -142,10 +142,10 @@ export default withStyles(styles)(
                 </Grid>
                 <Divider />
                 <Grid item={true} xs={12} className={classes.paper}>
-                  <Typography variant='headline' gutterBottom={true}>
+                  <Typography variant='h5' gutterBottom={true}>
                     Full grid features
                   </Typography>
-                  <Typography variant='subheading'>
+                  <Typography variant='h6'>
                     The grid can be extended to include features like sorting,
                     Filterable, free-text searches, move across the pages and
                     change the number of rows per page Although easily you can
@@ -199,10 +199,10 @@ export default withStyles(styles)(
                 </Grid>
                 <Divider />
                 <Grid item={true} xs={12} className={classes.paper}>
-                  <Typography variant='headline' gutterBottom={true}>
+                  <Typography variant='h5' gutterBottom={true}>
                     How to include functionality buttons
                   </Typography>
-                  <Typography variant='subheading'>
+                  <Typography variant='h6'>
                     You can add functionalities to the DataGrid including extra
                     buttons that can perform an action according to your
                     requirements. Just need include an IconButton Component from
@@ -254,10 +254,10 @@ export default withStyles(styles)(
                 </Grid>
                 <Divider />
                 <Grid item={true} xs={12} className={classes.paper}>
-                  <Typography variant='headline' gutterBottom={true}>
+                  <Typography variant='h5' gutterBottom={true}>
                     Give another presentation to your data.
                   </Typography>
-                  <Typography variant='subheading'>
+                  <Typography variant='h6'>
                     You can provide to your data a styled view that allows you
                     perform free-text searches and immediately reflect the
                     changes over your data.
