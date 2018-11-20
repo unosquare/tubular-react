@@ -69,7 +69,7 @@ export default withStyles(styles)(
       openSample: false,
       showCode: false,
       value: 'one'
-    }
+    };
     public handleClickBasic = () => {
       this.setState({ openBasic: !this.state.openBasic });
     }
