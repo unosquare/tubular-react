@@ -69,7 +69,7 @@ class RemoteGridList extends React.Component<IDataGridProps, IDataGridState> {
                             <CardContent>
                               <Typography
                                 gutterBottom={true}
-                                variant="h5"
+                                variant="headline"
                                 component="h2"
                               >
                                 {dato.OrderID} - {dato.CustomerName}

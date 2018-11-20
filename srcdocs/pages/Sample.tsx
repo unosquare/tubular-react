@@ -15,9 +15,12 @@ import GitHubIcon from '../components/Github';
 
 import * as React from 'react';
 
+import 'highlight.js/styles/an-old-hope.css';
 import BasicFeatures from '../../srcdocs/components/BasicFeatures';
+import SampleButtonsFeatures from '../../srcdocs/components/SampleButtonsFeatures';
 import SampleFeatures from '../../srcdocs/components/SampleFeatures';
 import SampleGridList from '../../srcdocs/components/SampleGridList';
+
 import {
   basicFeatures,
   gridList,
@@ -103,7 +106,7 @@ export default withStyles(styles)(
                           target='_blank'
                           color='inherit'
                         >
-                          <GitHubIcon />
+                        <GitHubIcon />
                         </IconButton>
                       </Tooltip>
                       <Tooltip
@@ -126,7 +129,10 @@ export default withStyles(styles)(
                     </div>
                     <Collapse in={this.state.openBasic} timeout='auto'>
                       <Paper>
-                        <Highlight language='javascript' className={classes.code}>
+                        <Highlight
+                          language='javascript'
+                          className={classes.code}
+                        >
                           {basicFeatures}
                         </Highlight>
                       </Paper>
@@ -180,12 +186,70 @@ export default withStyles(styles)(
                     </div>
                     <Collapse in={this.state.openSample} timeout='auto'>
                       <Paper>
-                        <Highlight language='javascript' className={classes.code}>
+                        <Highlight
+                          language='javascript'
+                          className={classes.code}
+                        >
                           {simpleFeatures}
                         </Highlight>
                       </Paper>
                     </Collapse>
                     <SampleFeatures />
+                  </Grid>
+                </Grid>
+                <Divider />
+                <Grid item={true} xs={12} className={classes.paper}>
+                  <Typography variant='h5' gutterBottom={true}>
+                    How to include functionality buttons
+                  </Typography>
+                  <Typography variant='h6'>
+                    You can add functionalities to the DataGrid including extra
+                    buttons that can perform an action according to your
+                    requirements. Just need include an IconButton Component from
+                    @material-ui and define the icon or button that you need
+                    between DataGrid tags and specify the action to perform.
+                  </Typography>
+                  <Grid item={true} xs={12}>
+                    <div style={bar}>
+                      <Tooltip title='Tubular GitHub Repo'>
+                        <IconButton
+                          component='a'
+                          href='https://github.com/unosquare/tubular-react'
+                          target='_blank'
+                          color='inherit'
+                        >
+                          <GitHubIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip
+                        title={this.state.openBasic ? 'Hide Code' : 'View Code'}
+                      >
+                        <IconButton onClick={this.handleClickBasic}>
+                          <CodeIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title='Edit in CodeSandbox'>
+                        <IconButton
+                          component='a'
+                          href='https://codesandbox.io/s/7j653z5050'
+                          target='_blank'
+                          color='inherit'
+                        >
+                          <CreateIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </div>
+                    <Collapse in={this.state.openBasic} timeout='auto'>
+                      <Paper>
+                        <Highlight
+                          language='javascript'
+                          className={classes.code}
+                        >
+                          {basicFeatures}
+                        </Highlight>
+                      </Paper>
+                    </Collapse>
+                    <SampleButtonsFeatures />
                   </Grid>
                 </Grid>
                 <Divider />
@@ -232,7 +296,10 @@ export default withStyles(styles)(
                     </div>
                     <Collapse in={this.state.openGridList} timeout='auto'>
                       <Paper>
-                        <Highlight language='javascript' className={classes.code}>
+                        <Highlight
+                          language='javascript'
+                          className={classes.code}
+                        >
                           {gridList}
                         </Highlight>
                       </Paper>

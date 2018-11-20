@@ -145,6 +145,40 @@ These are all the available properties (and their default values) for the `Toolb
 
 _If you don't define some of the optional props described above, these will use their defaults values. In the case of `bodyRenderer`, the grid will display its default body; if the `footerRenderer` is not defined, the footer will not be displayed._
 
+### How to include functionality buttons
+
+You can add functionalities to the `DataGrid` including extra buttons that can perform an action according to your requirements. Just need include an IconButton Component from @material-ui and define the icon or button that you need between `DataGrid` tags and specify the action to perform.
+
+The following snippet shows how to include an Add Button:
+
+```tsx
+import * as React from "react";
+import AddIcon from "@material-ui/icons/Add";
+import { IconButton } from "@material-ui/core";
+import DataGrid, {withLocalDataSource} from "tubular-react";
+
+const LocalDataGrid = withRemoteDataSource(
+  () => {
+    return  
+    <DataGrid>
+        <IconButton color="default">
+          <AddIcon
+              onClick={() =>
+              console.log('Add new record')
+                }
+          />
+        </IconButton>         
+    </DataGrid>;
+  },
+  columns,
+  "https://tubular.azurewebsites.net/api/orders/paged"
+);
+}
+
+```
+
+
+
 ### `ColumnModel`
 
 It represents a `DataGrid` column and its constructor requires a name identifier as well as an object of column options with the following properties:

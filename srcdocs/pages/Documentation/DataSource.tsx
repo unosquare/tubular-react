@@ -4,12 +4,15 @@ import {
   Grid,
   Hidden,
   Paper,
-  Typography
+  Typography,
+  WithStyles,
+  withStyles
 } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
 
+import 'highlight.js/styles/an-old-hope.css';
 import * as React from 'react';
 import Highlight from 'react-highlight';
+
 import DocumentationList from '../../components/DocumentationList';
 
 const styles = {
@@ -26,6 +29,7 @@ const styles = {
     padding: 10
   }
 };
+
 // tslint:disable-next-line:max-line-length
 const remoteDataSource =
   "... \nconst MyComponent = () => {\n        return (\n            <div className='root'>\n                <DataGrid\n                    gridName='Tubular-React'\n                />\n            </div>\n        );\n};\n\n\n/*\n Use the component withRemoteDataSource to wrap your component\n and columns definition among the data obtained from the URL.\n\n withRemoteDataSource will set an initial context for your grid.\n*/\nexport default withRemoteDataSource(BasicFeatures, columns, 'https://tubular.azurewebsites.net/api/orders/paged');\n";
@@ -48,13 +52,13 @@ const DataSource = (props: any) => {
         </Hidden>
         <Grid item={true} xs={12} md={9}>
           <Paper className={classes.paper}>
-            <Typography variant='h4' paragraph={true}>
+            <Typography variant='display1' paragraph={true}>
               {' '}
               Data Source{' '}
             </Typography>
             <Divider />
             <br />
-            <Typography variant='h6'>
+            <Typography variant='subheading'>
               <code className={classes.code}>{'<DataGrid />'}</code> requires a
               wrapper component to retrieve data. Depends on if we use a local
               data source or a remote data source, these wrappers are:
@@ -65,7 +69,7 @@ const DataSource = (props: any) => {
               <code className={classes.code}>DataGrid</code> component.
               <br />
               <br />
-              <Typography variant='h5' gutterBottom={true}>
+              <Typography variant='headline' gutterBottom={true}>
                 <code className={classes.code}>withRemoteDataSource</code>
               </Typography>
               <code className={classes.code}>withRemoteDataSource</code>
@@ -74,11 +78,11 @@ const DataSource = (props: any) => {
               array and a <code className={classes.code}>URL</code> which
               represent a service.
               <br />
-              <Highlight language='tsx' className={classes.code}>
+              <Highlight language='javascript' className={'an-old-hope'}>
                 {remoteDataSource}
               </Highlight>
               <br />
-              <Typography variant='h5' gutterBottom={true}>
+              <Typography variant='headline' gutterBottom={true}>
                 <code className={classes.code}>LocalDataSource</code>
               </Typography>
               <code className={classes.code}>withLocalDataSource</code>
@@ -87,7 +91,7 @@ const DataSource = (props: any) => {
               array and an <code className={classes.code}>Array</code>of
               objects.
               <br />
-              <Highlight language='tsx' className={classes.code}>
+              <Highlight language='javascript' className={'an-old-hope'}>
                 {localDataSource}
               </Highlight>
               See this
@@ -103,4 +107,4 @@ const DataSource = (props: any) => {
   );
 };
 
-export default withStyles(styles)(DataSource);
+export default withStyles(styles)(DataSource) ;
