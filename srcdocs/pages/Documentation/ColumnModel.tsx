@@ -28,7 +28,7 @@ const ColumnModel = (props: any) => {
                 </Hidden>
                 <Grid item={true} xs={12} md={9}>
                     <Paper className={classes.paper} style={{ overflowX: 'auto'}}>
-                        <Typography variant='display1' paragraph={true}> Column Model </Typography>
+                        <Typography variant='h4' paragraph={true}> Column Model </Typography>
                         <Divider />
                         <ColumnModelList />
                     </Paper>

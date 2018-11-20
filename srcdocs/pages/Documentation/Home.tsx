@@ -44,11 +44,11 @@ const Home = (props: any) => {
     <div>
       <Grid container={true} spacing={24} className={classes.container}>
         <Paper className={classes.paper}>
-          <Typography variant='display1'>What is it?</Typography>
+          <Typography variant='h4'>What is it?</Typography>
           <Divider />
           <Typography
             paragraph={true}
-            variant='subheading'
+            variant='h6'
             className={classes.content}
           >
             Tubular React is a set of ReactJS components designed to rapidly
@@ -61,14 +61,14 @@ const Home = (props: any) => {
             searching, besides it has almost the same grid functionalities.
           </Typography>
           <br />
-          <Typography variant='display1'>Features</Typography>
+          <Typography variant='h4'>Features</Typography>
           <Divider />
           <Typography
             paragraph={true}
-            variant='subheading'
+            variant='h6'
             className={classes.content}
           >
-            <Typography variant='headline'>
+            <Typography variant='h5'>
               The main component is a <em>grid</em> with multiple options:
             </Typography>
             <ul>
@@ -91,7 +91,7 @@ const Home = (props: any) => {
             table and more.
             <br />
             <br />
-            <Typography variant='headline'>
+            <Typography variant='h5'>
               <em>Grid list</em> component allows you to perform some of the
               same options as:
             </Typography>
@@ -109,9 +109,9 @@ const Home = (props: any) => {
             which helps you to quickly find information.
           </Typography>
           <br />
-          <Typography variant='display1'>Dependencies</Typography>
+          <Typography variant='h4'>Dependencies</Typography>
           <Divider />
-          <Typography paragraph={true} variant='subheading'>
+          <Typography paragraph={true} variant='h6'>
             <ul>
               <li>
                 <a href='https://date-fns.org/'>date-fns - Version: 1.29.0</a>
@@ -132,11 +132,11 @@ const Home = (props: any) => {
             </ul>
           </Typography>
           <br />
-          <Typography variant='display1'>npm Installation</Typography>
+          <Typography variant='h4'>npm Installation</Typography>
           <Divider />
           <Typography
             paragraph={true}
-            variant='subheading'
+            variant='h6'
             className={classes.content}
           >
             <Highlight language='javascript' className={classes.code}>
@@ -144,11 +144,11 @@ const Home = (props: any) => {
             </Highlight>
           </Typography>
           <br />
-          <Typography variant='display1'>Usage</Typography>
+          <Typography variant='h4'>Usage</Typography>
           <Divider />
           <Typography
             paragraph={true}
-            variant='subheading'
+            variant='h6'
             className={classes.content}
           >
             Here is a quick example to get you started, <b>it's all you need</b>
