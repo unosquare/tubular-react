@@ -69,16 +69,16 @@ export default withStyles(styles)(
       openSample: false,
       showCode: false,
       value: 'one'
-    };
+    }
     public handleClickBasic = () => {
       this.setState({ openBasic: !this.state.openBasic });
-    };
+    }
     public handleClickSample = () => {
       this.setState({ openSample: !this.state.openSample });
-    };
+    }
     public handleClickGrid = () => {
       this.setState({ openGridList: !this.state.openGridList });
-    };
+    }
 
     public render() {
       const { classes } = this.props;
@@ -106,7 +106,7 @@ export default withStyles(styles)(
                           target='_blank'
                           color='inherit'
                         >
-                          <GitHubIcon />
+                        <GitHubIcon />
                         </IconButton>
                       </Tooltip>
                       <Tooltip
