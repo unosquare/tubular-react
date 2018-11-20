@@ -68,7 +68,7 @@ class SampleGridList extends React.Component<any, any> {
                             <CardContent>
                               <Typography
                                 gutterBottom={true}
-                                variant='h5'
+                                variant='headline'
                                 component='h2'
                               >
                                 {item.OrderID} - {item.CustomerName}

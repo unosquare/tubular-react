@@ -37,15 +37,15 @@ const GettingStarted = (props: any) => {
         </Hidden>
         <Grid item={true} xs={12} md={9}>
           <Paper className={classes.paper}>
-            <Typography variant='h4' paragraph={true}>
+            <Typography variant='display1' paragraph={true}>
               Getting Started
             </Typography>
             <Divider />
             <br />
-            <Typography variant='h5' paragraph={true}>
+            <Typography variant='headline' paragraph={true}>
               Installation
             </Typography>
-            <Typography variant='h6' paragraph={true}>
+            <Typography variant='subheading' paragraph={true}>
               Tubular-React is available as an{' '}
               <a
                 href='https://www.npmjs.com/package/tubular-react'
@@ -55,7 +55,7 @@ const GettingStarted = (props: any) => {
               </a>
               .
             </Typography>
-            <Typography variant='h5' paragraph={true}>
+            <Typography variant='headline' paragraph={true}>
               Dependencies
             </Typography>
             <Typography variant='body1' paragraph={true}>
@@ -78,7 +78,7 @@ const GettingStarted = (props: any) => {
                 </li>
               </ul>
             </Typography>
-            <Typography variant='h5' paragraph={true}>
+            <Typography variant='headline' paragraph={true}>
               npm
             </Typography>
             <Typography variant='body1' paragraph={true}>
@@ -90,10 +90,10 @@ const GettingStarted = (props: any) => {
               {'npm install tubular-react --save'}
             </Highlight>
             <br />
-            <Typography variant='h5' paragraph={true}>
+            <Typography variant='headline' paragraph={true}>
               Usage
             </Typography>
-            <Typography variant='h6' paragraph={true}>
+            <Typography variant='subheading' paragraph={true}>
               Tubular React is an extension of Material-UI which offers until
               now a couple of useful components:
               <br />
@@ -104,7 +104,7 @@ const GettingStarted = (props: any) => {
               your data, you can populate them from a server-side data source or
               a local data source as an array.
             </Typography>
-            <Typography variant='h5' paragraph={true}>
+            <Typography variant='headline' paragraph={true}>
               {' '}
               Quick Start{' '}
             </Typography>
