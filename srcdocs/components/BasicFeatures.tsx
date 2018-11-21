@@ -11,7 +11,6 @@ const MyComponent = () => {
         exportButton: false,
         printButton: false,
         searchText: false,
-        topPager: false,
     };
         return (
             <div className='root'>
