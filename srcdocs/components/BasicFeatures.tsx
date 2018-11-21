@@ -1,14 +1,22 @@
 import * as React from 'react';
 import DataGrid, {
+    ToolbarOptions,
     withRemoteDataSource } from '../../src';
 
 import columns from '../utils/columns';
 
 const MyComponent = () => {
+    const toolbarOptions = {
+        advancePagination: false,
+        exportButton: false,
+        printButton: false,
+        searchText: false,
+    }
         return (
             <div className='root'>
                 <DataGrid
                     gridName='Tubular-React'
+                    toolbarOptions={new ToolbarOptions(toolbarOptions)}
                 />
             </div>
         );
