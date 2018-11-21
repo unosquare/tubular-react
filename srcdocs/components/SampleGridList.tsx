@@ -94,7 +94,7 @@ class SampleGridList extends React.Component<any, any> {
               </TableBody>
               <TableFooter>
                 <TableRow>
-                  <Paginator advancePagination={false} />
+                  <Paginator advancePagination={true} />
                 </TableRow>
               </TableFooter>
             </Table>
