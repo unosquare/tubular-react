@@ -19,7 +19,6 @@ export default class ToolbarOptions {
        this.rowsPerPageOptions = [10, 20, 50, 100];
        this.itemsPerPage = 10;
 
-
        if (options){
            Object.keys(options).forEach((element) => {
                this[element] = options[element];
