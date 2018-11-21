@@ -14,13 +14,6 @@ class SampleFeatures extends React.Component {
         errorMessage: null as any
     };
 
-    private toolbarOptions = {
-        advancePagination: false,
-        exportButton: false,
-        printButton: false,
-        searchText: false,
-    };
-
     public componentWillReceiveProps(nextProps: any) {
         this.setState({ errorMessage: nextProps.error });
     }
@@ -64,7 +57,7 @@ class SampleFeatures extends React.Component {
                                 </TableCell>
                             </TableRow>
                     }
-                    toolbarOptions={new ToolbarOptions(this.toolbarOptions)}
+                    toolbarOptions={new ToolbarOptions()}
                     footerRenderer={
                         (aggregates: any) =>
                             <TableRow>
