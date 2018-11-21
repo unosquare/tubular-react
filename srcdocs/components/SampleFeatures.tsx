@@ -19,7 +19,7 @@ class SampleFeatures extends React.Component {
         exportButton: false,
         printButton: false,
         searchText: false,
-    }
+    };
 
     public componentWillReceiveProps(nextProps: any) {
         this.setState({ errorMessage: nextProps.error });

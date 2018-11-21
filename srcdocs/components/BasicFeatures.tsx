@@ -11,7 +11,7 @@ const MyComponent = () => {
         exportButton: false,
         printButton: false,
         searchText: false,
-    }
+    };
         return (
             <div className='root'>
                 <DataGrid
