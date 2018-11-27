@@ -158,7 +158,7 @@ const Home = (props: any) => {
             </Highlight>
             <em>
               Try it in{' '}
-              <a href='https://codesandbox.io/s/8nq86w080' target='_blank'>
+              <a href='https://codesandbox.io/s/3rqq6l04jq' target='_blank'>
                 CodeSandbox
               </a>
             </em>
