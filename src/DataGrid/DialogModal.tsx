@@ -39,7 +39,7 @@ const DialogModal: React.SFC = () => {
             {({ state, actions }) =>
                 <Popover
                     open={Boolean(state.anchorFilter)}
-                    onClose={actions.handleClose}
+                    onClose={() => actions.setFilter(clearFilterPatch)}
                     anchorEl={state.anchorFilter}
                     anchorOrigin={{
                         horizontal: 'center',
