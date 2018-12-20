@@ -6,7 +6,7 @@ import { DataSourceContext } from '../DataSource';
 
 const dropdown = {
   marginLeft: '10%',
-  width: '80%'
+  width: '80%',
 };
 
 const OperatorsDropdown: React.SFC = () => {

@@ -4,17 +4,14 @@ import { Snackbar } from '@material-ui/core';
 import DataGrid, {
   IDataGridProps,
   IDataGridState,
-  ToolbarOptions,
   withLocalDataSource,
-  IDataGridProps,
-  IDataGridState
 } from '../../src';
 import columns from './data/columns';
 import localData from './data/localData';
 
 class LocalDataGrid extends React.Component<IDataGridProps, IDataGridState> {
   public state = {
-    errorMessage: null as any
+    errorMessage: null as any,
   };
 
   static getDerivedStateFromProps(
@@ -31,14 +28,14 @@ class LocalDataGrid extends React.Component<IDataGridProps, IDataGridState> {
     const { errorMessage } = this.state;
 
     return (
-      <div className="root">
+      <div className='root'>
         {errorMessage && (
           <Snackbar
             anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
             style={{ paddingTop: '10px' }}
             open={true}
             ContentProps={{ 'aria-describedby': 'message-id' }}
-            message={<span id="message-id">{errorMessage}</span>}
+            message={<span id='message-id'>{errorMessage}</span>}
           />
         )}
         <DataGrid />

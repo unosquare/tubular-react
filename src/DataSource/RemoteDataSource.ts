@@ -14,7 +14,7 @@ const withRemoteDataSource = (
       return {
         ...value,
         columns,
-        itemsPerPage
+        itemsPerPage,
       };
     }
 

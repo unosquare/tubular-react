@@ -27,7 +27,7 @@ export default class TubularHttpClient implements ITubularHttpClient {
                 {
                     body: JSON.stringify(gridRequest),
                     headers: new Headers({ 'Content-Type': 'application/json;charset=utf-8' }),
-                    method: 'POST'
+                    method: 'POST',
                 });
         }
 
@@ -37,7 +37,7 @@ export default class TubularHttpClient implements ITubularHttpClient {
             {
                 body: JSON.stringify(gridRequest),
                 headers: (objRequest as Request).headers,
-                method: (objRequest as Request).method
+                method: (objRequest as Request).method,
             });
     }
 

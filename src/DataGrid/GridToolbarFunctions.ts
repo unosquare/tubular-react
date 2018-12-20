@@ -1,13 +1,20 @@
-import { format } from 'date-fns';
+import { format, getYear, parse } from 'date-fns';
 import { ColumnDataType } from 'tubular-common';
 
 const cellValue = (cellDataType: string, cell: any) => {
     switch (cellDataType) {
         case ColumnDataType.DATE:
-            return format(cell, 'MMMM Do YYYY') || '';
+            if (!cell) {
+                return '';
+            }
+            return getYear(parse(cell)) > 0 ? format(cell, 'M/D/YYYY') : '';
         case ColumnDataType.DATE_TIME:
         case ColumnDataType.DATE_TIME_UTC:
-            return format(cell, 'MMMM Do YYYY, h:mm:ss a') || '';
+            if (!cell) {
+                return '';
+            }
+
+            return getYear(parse(cell)) > 0 ? format(cell, 'M/D/YYYY h:mm A') : '';
         case ColumnDataType.BOOLEAN:
             return (cell === true ? 'Yes' : 'No');
         default:
@@ -67,7 +74,7 @@ function exportFile(gridResult: any, columns: any) {
         processRow(columns.map((x: any) => x.Label), columns, true));
 
     const fileURL = URL.createObjectURL(new Blob([`\uFEFF${csvFile}`], {
-        type: 'text/csv;charset=utf-8;'
+        type: 'text/csv;charset=utf-8;',
     }));
 
     const downloadLink = document.createElement('a');

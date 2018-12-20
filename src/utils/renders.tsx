@@ -1,7 +1,7 @@
 import { TableCell } from '@material-ui/core';
 import { CheckBox, CheckBoxOutlineBlank } from '@material-ui/icons';
 
-import { format } from 'date-fns';
+import { format, getYear, parse } from 'date-fns';
 import * as React from 'react';
 import { ColumnDataType, ColumnModel } from 'tubular-common';
 
@@ -10,10 +10,16 @@ export const renderCellContent: any = (column: ColumnModel, row: any) => {
         case ColumnDataType.NUMERIC:
             return row[column.Name] || 0;
         case ColumnDataType.DATE:
-            return format(row[column.Name], 'MMMM Do YYYY') || '';
+            if (!row[column.Name]) {
+                return '';
+            }
+            return getYear(parse(row[column.Name])) > 0 ? format(row[column.Name], 'M/D/YYYY') : '';
         case ColumnDataType.DATE_TIME:
         case ColumnDataType.DATE_TIME_UTC:
-            return format(row[column.Name], 'MMMM Do YYYY, h:mm:ss a') || '';
+            if (!row[column.Name]) {
+                return '';
+            }
+            return getYear(parse(row[column.Name])) > 0 ? format(row[column.Name], 'M/D/YYYY h:mm A') : '';
         case ColumnDataType.BOOLEAN:
             return row[column.Name] === true ? <CheckBox /> : <CheckBoxOutlineBlank />;
         default:
@@ -31,6 +37,6 @@ export const renderCells: any = (columns: ColumnModel[], row: any) => {
                 >
                     {renderCellContent(column, row)}
                 </TableCell>
-            )
+            ),
         );
 };

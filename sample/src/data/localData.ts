@@ -30,14 +30,14 @@ const localData = [
   {
     OrderID: 5,
     CustomerName: 'Super La Playa',
-    ShippedDate: '2016-04-23T10:00:00',
+    ShippedDate: null,
     ShipperCity: 'Leon, GTO, Mexico',
     Amount: 174.00
   },
   {
     OrderID: 6,
     CustomerName: 'OXXO',
-    ShippedDate: '2016-12-22T08:00:00',
+    ShippedDate: '',
     ShipperCity: 'Guadalajara, JAL, Mexico',
     Amount: 92.00
   },

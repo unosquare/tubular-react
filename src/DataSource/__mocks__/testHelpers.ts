@@ -2,7 +2,7 @@ import {
   AggregateFunctions,
   ColumnDataType,
   ColumnModel,
-  ColumnSortDirection
+  ColumnSortDirection,
 } from 'tubular-common';
 
 const context = {
@@ -11,7 +11,7 @@ const context = {
     setActiveColumn: jest.fn().mockReturnValue('CustomerName'),
     sortColumn: jest.fn().mockReturnValue('OrderID'),
     updatePage: jest.fn(),
-    updateSearchText: jest.fn().mockReturnValue('search')
+    updateSearchText: jest.fn().mockReturnValue('search'),
   },
   state: {
     aggregate: null as any,
@@ -23,19 +23,19 @@ const context = {
         Label: 'Order ID',
         SortDirection: ColumnSortDirection.ASCENDING,
         SortOrder: 1,
-        Sortable: true
+        Sortable: true,
       }),
       new ColumnModel('CustomerName', {
         Aggregate: AggregateFunctions.COUNT,
         Filterable: true,
-        Searchable: true
+        Searchable: true,
       }),
       new ColumnModel('ShippedDate', {
         DataType: ColumnDataType.DATE_TIME,
-        Filterable: true
+        Filterable: true,
       }),
       new ColumnModel('ShipperCity'),
-      new ColumnModel('Amount', { DataType: ColumnDataType.NUMERIC })
+      new ColumnModel('Amount', { DataType: ColumnDataType.NUMERIC }),
     ],
     data: [
       [1, 'Microsoft', '2016-03-19T19:00:00', 'Guadalajara, JAL, Mexico', 300],
@@ -47,14 +47,14 @@ const context = {
       [7, 'Unosquare LLC', '2016-11-11T18:00:00', 'Leon, GTO, Mexico', 50],
       [8, 'Unosquare LLC', '2016-11-08T18:00:00', 'Portland, OR, USA', 9],
       [9, 'Vesta', '2016-11-07T18:00:00', 'Guadalajara, JAL, Mexico', 108],
-      [10, 'Unosquare LLC', '2016-11-05T18:00:00', 'Portland, OR, USA', 15]
+      [10, 'Unosquare LLC', '2016-11-05T18:00:00', 'Portland, OR, USA', 15],
     ],
     filteredRecordCount: 10,
     isLoading: false,
     itemsPerPage: 10,
     page: 0,
-    searchText: ''
-  }
+    searchText: '',
+  },
 };
 
 export default context;

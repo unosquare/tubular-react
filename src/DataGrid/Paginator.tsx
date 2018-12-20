@@ -12,7 +12,7 @@ interface IProps {
 const message = (totalRecordCount: any, filteredRecordCount: any) => ({
   from,
   to,
-  count
+  count,
 }: any) =>
   totalRecordCount === filteredRecordCount
     ? `${from}-${to} of ${count}`
@@ -22,7 +22,7 @@ const message = (totalRecordCount: any, filteredRecordCount: any) => ({
 
 const Paginator: React.SFC<IProps> = ({
   rowsPerPageOptions,
-  advancePagination
+  advancePagination,
 }) => (
   <DataSourceContext.Consumer>
     {({ state, actions }) => {
@@ -30,14 +30,14 @@ const Paginator: React.SFC<IProps> = ({
         count: state.filteredRecordCount,
         labelDisplayedRows: message(
           state.totalRecordCount,
-          state.filteredRecordCount
+          state.filteredRecordCount,
         ),
         onChangePage: (e: any, p: any) => actions.updatePage(p),
         onChangeRowsPerPage: (e: any) =>
           actions.updateItemPerPage(Number(e.target.value)),
         page: state.page,
         rowsPerPage: state.itemsPerPage,
-        rowsPerPageOptions: rowsPerPageOptions || [10, 20, 50]
+        rowsPerPageOptions: rowsPerPageOptions || [10, 20, 50],
       } as any;
 
       if (advancePagination) {

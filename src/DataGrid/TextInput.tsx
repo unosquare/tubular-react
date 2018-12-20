@@ -13,20 +13,23 @@ interface IProps {
 const TextInput: React.SFC<IProps> =
   ({ activeFilter, disabled, handleApply, handleTextFieldChange, label, value }) => {
 
-  return(
-    <div style={{ padding: '15px 20px 5px 20px' }}>
-      <Input
-        disabled={disabled}
-        style={{ width: '100%' }}
-        id={activeFilter}
-        placeholder={label}
-        value={value}
-        onKeyUp={(e) => e.key === 'Enter' && handleApply()}
-        onChange={(event) => handleTextFieldChange(event.target.value)}
-      />
-      <br />
-    </div>
-  );
-};
+    const handleOnChange = (e: any) => handleTextFieldChange(e.target.value);
+    const handleOnKeyUp = (e: any) => e.key === 'Enter' && handleApply();
+
+    return (
+      <div style={{ padding: '15px 20px 5px 20px' }}>
+        <Input
+          disabled={disabled}
+          style={{ width: '100%' }}
+          id={activeFilter}
+          placeholder={label}
+          value={value}
+          onKeyUp={handleOnKeyUp}
+          onChange={handleOnChange}
+        />
+        <br />
+      </div>
+    );
+  };
 
 export default TextInput;

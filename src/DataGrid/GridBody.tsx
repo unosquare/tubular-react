@@ -1,6 +1,6 @@
 import {
     TableBody, TableCell, TableRow,
-    Typography
+    Typography,
 } from '@material-ui/core';
 import { Warning } from '@material-ui/icons';
 import * as React from 'react';
