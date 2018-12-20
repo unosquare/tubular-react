@@ -18,7 +18,7 @@ const GridBody: React.SFC<IProps> = ({ bodyRenderer, onRowClick }) => {
     // tslint:disable-next-line:no-empty
     const onRowClickProxy = onRowClick ? onRowClick : () => { };
     const cursorStyle = onRowClick ? 'pointer' : 'auto';
-    
+
     return (
         <DataSourceContext.Consumer>
             {({ state }) =>
