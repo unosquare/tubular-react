@@ -7,5 +7,5 @@ interface IDataSourceContext {
 }
 export const DataSourceContext = React.createContext<IDataSourceContext>({
     actions: null,
-    state: null
+    state: null,
 });

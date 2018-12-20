@@ -4,5 +4,5 @@ import TextSearchInput from './SearchTextInput';
 export default DataGrid;
 export {
   Paginator,
-  TextSearchInput
+  TextSearchInput,
 };

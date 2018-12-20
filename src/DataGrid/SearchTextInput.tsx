@@ -2,7 +2,7 @@ import {
   FormControl,
   IconButton,
   Input,
-  InputAdornment
+  InputAdornment,
 } from '@material-ui/core';
 
 import { Close, Search } from '@material-ui/icons';
@@ -14,8 +14,8 @@ import { DataSourceContext } from '../DataSource';
 const styles: any = {
   formControl: {
     margin: '10px',
-    width: 250
-  }
+    width: 250,
+  },
 };
 
 const SearchTextInput: React.SFC = () => {
