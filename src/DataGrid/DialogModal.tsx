@@ -22,7 +22,7 @@ const createFilterPatch = (activeColumn: any) => {
     return {
         Argument: [filterArgument],
         HasFilter: true,
-        Text: filterText
+        Text: filterText,
     };
 };
 
@@ -30,7 +30,7 @@ const clearFilterPatch = {
     Argument: [''],
     HasFilter: false,
     Operator: CompareOperators.NONE,
-    Text: ''
+    Text: '',
 };
 
 const DialogModal: React.SFC = () => {

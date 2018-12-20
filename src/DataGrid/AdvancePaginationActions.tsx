@@ -3,14 +3,14 @@ import {
   createStyles,
   Theme,
   withStyles,
-  WithStyles
+  WithStyles,
 } from '@material-ui/core/styles';
 
 import {
   FirstPage,
   KeyboardArrowLeft,
   KeyboardArrowRight,
-  LastPage
+  LastPage,
 } from '@material-ui/icons';
 
 import * as React from 'react';
@@ -19,8 +19,8 @@ const styles = ({ spacing }: Theme) =>
   createStyles({
     root: {
       flexShrink: 0,
-      marginLeft: spacing.unit * 2.5
-    }
+      marginLeft: spacing.unit * 2.5,
+    },
   });
 
 interface IProps extends WithStyles<typeof styles> {
@@ -66,7 +66,7 @@ const AdvancePaginationActions: React.SFC<IProps> = ({
   count,
   page,
   rowsPerPage,
-  onChangePage
+  onChangePage,
 }) => {
   const pages = getPages(page, count, rowsPerPage);
   return (
@@ -121,5 +121,5 @@ const AdvancePaginationActions: React.SFC<IProps> = ({
 };
 
 export default withStyles(styles, { withTheme: true })(
-  AdvancePaginationActions
+  AdvancePaginationActions,
 );

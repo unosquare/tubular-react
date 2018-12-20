@@ -3,7 +3,7 @@ import {
   TableCell,
   TableRow,
   TableSortLabel,
-  Tooltip
+  Tooltip,
 } from '@material-ui/core';
 
 import { ArrowDownward, ArrowUpward, FilterList } from '@material-ui/icons';
@@ -15,7 +15,7 @@ import DialogModal from './DialogModal';
 
 const arrowStyle = {
   marginLeft: '5px',
-  width: '15px'
+  width: '15px',
 };
 
 const GridHeader: React.SFC = () => {

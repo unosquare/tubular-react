@@ -21,25 +21,25 @@ interface IProps {
 
 const styles: any = {
   spacer: {
-    flex: '1 1 100%'
-  }
+    flex: '1 1 100%',
+  },
 };
 
 class GridToolbar extends React.Component<IProps, IState> {
   public state = {
     anchorExport: null as HTMLElement,
-    anchorPrint: null as HTMLElement
+    anchorPrint: null as HTMLElement,
   };
 
   public handleExportMenu = (event: React.MouseEvent<HTMLElement>): void => {
     this.setState({
-      anchorExport: event ? event.currentTarget : null
+      anchorExport: event ? event.currentTarget : null,
     });
   }
 
   public handlePrintMenu = (event: React.MouseEvent<HTMLElement>): void => {
     this.setState({
-      anchorPrint: event ? event.currentTarget : null
+      anchorPrint: event ? event.currentTarget : null,
     });
   }
 

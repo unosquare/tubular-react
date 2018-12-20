@@ -3,5 +3,5 @@ import withLocalDataSource from './LocalDataSource';
 import withRemoteDataSource from './RemoteDataSource';
 
 export {
-    DataSourceContext, withLocalDataSource, withRemoteDataSource
-  };
+  DataSourceContext, withLocalDataSource, withRemoteDataSource,
+};

@@ -1,24 +1,24 @@
 import DataGrid,
 {
   Paginator,
-  TextSearchInput
+  TextSearchInput,
 } from './DataGrid';
 
 import {
-  ToolbarOptions
+  ToolbarOptions,
 } from './Models';
 
 import {
   ITubularHttpClient,
   renderCellContent,
   renderCells,
-  TubularHttpClient
+  TubularHttpClient,
 } from './utils';
 
 import {
   DataSourceContext,
   withLocalDataSource,
-  withRemoteDataSource
+  withRemoteDataSource,
 } from './DataSource';
 
 import { IDataGridProps, IDataGridState } from './DataGridInterfaces';
@@ -37,5 +37,5 @@ export {
   renderCellContent,
   renderCells,
   IDataGridProps,
-  IDataGridState
+  IDataGridState,
 };

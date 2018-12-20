@@ -4,13 +4,13 @@ import {
   Table,
   TableFooter,
   TableHead,
-  TableRow
+  TableRow,
 } from '@material-ui/core';
 import {
   createStyles,
   Theme,
   withStyles,
-  WithStyles
+  WithStyles,
 } from '@material-ui/core/styles';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
@@ -25,13 +25,13 @@ import { ToolbarOptions } from '../Models';
 
 const styles = ({ spacing }: Theme) => createStyles({
   progress: {
-    height: spacing.unit * 2
+    height: spacing.unit * 2,
   },
   root: {
     marginTop: spacing.unit * 3,
     overflowX: 'auto',
-    width: '100%'
-  }
+    width: '100%',
+  },
 });
 
 interface IProps extends WithStyles<typeof styles> {
@@ -47,7 +47,7 @@ const DataGrid: React.SFC<IProps> = ({
   footerRenderer,
   toolbarOptions,
   gridName,
-  children
+  children,
 }) => {
   toolbarOptions = toolbarOptions || new ToolbarOptions();
 

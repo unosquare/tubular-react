@@ -8,12 +8,12 @@ import { ColumnDataType, CompareOperators } from 'tubular-common';
 const dropdown = {
   marginLeft: '10%',
   marginTop: '5%',
-  width: '80%'
+  width: '80%',
 };
 
 const BooleanInputOperators = [
   { Value: 'true', Title: 'True' },
-  { Value: 'false', Title: 'False' }
+  { Value: 'false', Title: 'False' },
 ];
 
 interface IProps {
@@ -28,14 +28,14 @@ const ColumnDataTypeToHtmlType = {
   datetime: 'datetime-local',
   datetimeutc: 'datetime-local',
   numeric: 'number',
-  string: 'text'
+  string: 'text',
 };
 
 const getValue = (
   dataType: ColumnDataType,
   operator: CompareOperators,
   value: string,
-  handleTextFieldChange: any
+  handleTextFieldChange: any,
 ) => {
   switch (dataType) {
     case ColumnDataType.DATE:
@@ -67,14 +67,14 @@ const getValue = (
 const DialogInput: React.SFC<IProps> = ({
   column,
   handleTextFieldChange,
-  isPrimary
+  isPrimary,
 }) => {
   const value =
     getValue(
       column.DataType,
       column.Operator,
       isPrimary ? column.Filter.Text : column.Filter.Argument[0],
-      handleTextFieldChange
+      handleTextFieldChange,
     ) || '';
   const disabled = isPrimary
     ? column.Filter.Operator === CompareOperators.NONE

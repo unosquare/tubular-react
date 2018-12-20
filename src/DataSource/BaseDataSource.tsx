@@ -21,7 +21,7 @@ export default abstract class BaseDataSource extends React.Component<
     multiSort: false,
     page: 0,
     searchText: '',
-    totalRecordCount: 0
+    totalRecordCount: 0,
   });
 
   constructor(props: any) {
@@ -46,7 +46,7 @@ export default abstract class BaseDataSource extends React.Component<
 
   public abstract getAllRecords(request: GridRequest): Promise<object>;
 
-  public retrieveData(options: any = {}): Promise<any> {
+  public retrieveData = (options: any = {}): Promise<any> => {
     this.setState({ isLoading: true });
     const columns = options.columns || this.state.columns;
     const itemsPerPage = options.itemsPerPage || this.state.itemsPerPage;
@@ -58,7 +58,7 @@ export default abstract class BaseDataSource extends React.Component<
         : options.searchText;
 
     return this.getAllRecords(
-      new GridRequest(columns, itemsPerPage, page, searchText)
+      new GridRequest(columns, itemsPerPage, page, searchText),
     )
       .then(
         (response: GridResponse) => {
@@ -72,11 +72,11 @@ export default abstract class BaseDataSource extends React.Component<
             isLoading: false,
             itemsPerPage,
             page: response.CurrentPage - 1,
-            totalRecordCount: response.TotalRecordCount || 0
+            totalRecordCount: response.TotalRecordCount || 0,
           });
         },
         (reject: any) =>
-          this.setState({ isLoading: false, error: reject.message || reject })
+          this.setState({ isLoading: false, error: reject.message || reject }),
       )
       .catch((err: any) => this.setState({ isLoading: false, error: err }));
   }
@@ -90,7 +90,7 @@ export default abstract class BaseDataSource extends React.Component<
 
         if (allRows) {
           this.getAllRecords(
-            new GridRequest(this.state.columns, -1, 0, this.state.searchText)
+            new GridRequest(this.state.columns, -1, 0, this.state.searchText),
           ).then(({ Payload }: any) => exportFunc(Payload, this.state.columns));
         } else {
           exportFunc(this.state.data, this.state.columns);
@@ -102,25 +102,25 @@ export default abstract class BaseDataSource extends React.Component<
             ...prevState.activeColumn,
             Filter: {
               ...prevState.activeColumn.Filter,
-              ...value
-            }
-          }
+              ...value,
+            },
+          },
         }));
       },
       setActiveColumn: (column: any, event: React.MouseEvent<HTMLElement>) => {
         this.setState(
           {
             activeColumn: column,
-            anchorFilter: event ? event.currentTarget : null
+            anchorFilter: event ? event.currentTarget : null,
           },
-          () => document.getElementById(column.Name).blur()
+          () => document.getElementById(column.Name).blur(),
         );
       },
       setFilter: (value: any) => {
         this.setState({ anchorFilter: null });
         const columns = [...this.state.columns];
         const column = columns.find(
-          (c: ColumnModel) => c.Name === this.state.activeColumn.Name
+          (c: ColumnModel) => c.Name === this.state.activeColumn.Name,
         );
         if (!column) {
           return;
@@ -128,7 +128,7 @@ export default abstract class BaseDataSource extends React.Component<
 
         column.Filter = {
           ...this.state.activeColumn.Filter,
-          ...value
+          ...value,
         };
 
         this.retrieveData({ columns });
@@ -137,7 +137,7 @@ export default abstract class BaseDataSource extends React.Component<
         const columns = ColumnModel.sortColumnArray(
           property,
           [...this.state.columns],
-          this.state.multiSort
+          this.state.multiSort,
         );
 
         this.retrieveData({ columns });
@@ -148,7 +148,7 @@ export default abstract class BaseDataSource extends React.Component<
       updateSearchText: (searchText: string) => {
           this.setState({ searchText });
           this.handleSearchText(searchText);
-      }
+      },
     };
   }
 
@@ -190,12 +190,12 @@ export default abstract class BaseDataSource extends React.Component<
       <DataSourceContext.Provider
         value={{
           actions: this.getActions(),
-          state: { ...this.state }
+          state: { ...this.state },
         }}
       >
         <WrappedComponet
           error={this.state.error}
-          refresh={() => this.retrieveData.bind(this)}
+          refresh={this.retrieveData}
           {...this.props}
         />
       </DataSourceContext.Provider>
