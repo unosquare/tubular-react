@@ -37,8 +37,10 @@ const styles = ({ spacing }: Theme) => createStyles({
 interface IProps extends WithStyles<typeof styles> {
   gridName?: string;
   toolbarOptions?: ToolbarOptions;
-  bodyRenderer?(row: any, index: number, columns: ColumnModel[]): any;
-  footerRenderer?(aggregate: any): any;
+
+  bodyRenderer?(row: any, index: number, columns: ColumnModel[]): void;
+  footerRenderer?(aggregate: any): void;
+  onRowClick?(ev: any): any;
 }
 
 const DataGrid: React.SFC<IProps> = ({
@@ -48,6 +50,7 @@ const DataGrid: React.SFC<IProps> = ({
   toolbarOptions,
   gridName,
   children,
+  onRowClick,
 }) => {
   toolbarOptions = toolbarOptions || new ToolbarOptions();
 
@@ -76,7 +79,10 @@ const DataGrid: React.SFC<IProps> = ({
               )}
               <GridHeader />
             </TableHead>
-            <GridBody bodyRenderer={bodyRenderer} />
+            <GridBody
+              bodyRenderer={bodyRenderer}
+              onRowClick={onRowClick}
+            />
             <TableFooter>
               {footerRenderer && footerRenderer(state.aggregate)}
               {toolbarOptions.bottomPager && (

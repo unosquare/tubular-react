@@ -26,6 +26,8 @@ class LocalDataGrid extends React.Component<IDataGridProps, IDataGridState> {
 
   public render() {
     const { errorMessage } = this.state;
+    // tslint:disable-next-line:no-console
+    const onClick = (row: any) => () => console.log(row);
 
     return (
       <div className='root'>
@@ -38,7 +40,9 @@ class LocalDataGrid extends React.Component<IDataGridProps, IDataGridState> {
             message={<span id='message-id'>{errorMessage}</span>}
           />
         )}
-        <DataGrid />
+        <DataGrid
+          onRowClick={onClick}
+        />
       </div>
     );
   }
