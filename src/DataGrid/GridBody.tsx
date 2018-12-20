@@ -43,7 +43,8 @@ const GridBody: React.SFC<IProps> = ({ bodyRenderer, onRowClick }) => {
                                 <Typography
                                     style={{ paddingLeft: '15px' }}
                                     variant='body2'
-                                    gutterBottom={true}>
+                                    gutterBottom={true}
+                                >
                                     <Warning /> No records found
                                 </Typography>
                             </TableCell>
