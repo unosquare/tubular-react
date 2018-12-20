@@ -8,6 +8,7 @@ import CustomLayoutDataGrid from './CustomLayoutDataGrid';
 import LocalDataGrid from './localDataGrid';
 import RemoteDataGrid from './remoteDataGrid';
 import RemoteGridList from './remoteGridList';
+import ErrorBoundary from './ErrorBoundary';
 
 const styles = ({palette}: any) => ({
   logo: {
@@ -16,7 +17,7 @@ const styles = ({palette}: any) => ({
     fontFamily: 'Roboto',
     height: 50,
     maxWidth: 150,
-    width: 150
+    width: 150,
   },
   root: {
     backgroundColor: palette.background.paper,
@@ -38,6 +39,7 @@ class Main extends React.Component<any, any> {
     const { value } = this.state;
 
     return (
+      <ErrorBoundary>
       <div className={classes.root}>
         <AppBar position='static'>
           <img
@@ -57,6 +59,7 @@ class Main extends React.Component<any, any> {
         {value === 2 && <CustomLayoutDataGrid />}
         {value === 3 && <RemoteGridList />}
       </div>
+      </ErrorBoundary>
     );
   }
 }

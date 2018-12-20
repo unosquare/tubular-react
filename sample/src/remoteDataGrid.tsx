@@ -4,32 +4,34 @@ import { Snackbar, TableCell, TableRow } from '@material-ui/core';
 import { CheckBox, CheckBoxOutlineBlank } from '@material-ui/icons';
 import { format } from 'date-fns';
 import DataGrid, {
+  IDataGridProps,
+  IDataGridState,
   ToolbarOptions,
   withRemoteDataSource,
-  IDataGridProps,
-  IDataGridState
 } from '../../src';
 import columns from './data/columns';
 
 const toolbarOptions = new ToolbarOptions();
 
 class RemoteDataGrid extends React.Component<IDataGridProps, IDataGridState> {
-  public state = {
-    errorMessage: null as string
-  };
-
   static getDerivedStateFromProps(
     props: IDataGridProps,
-    state: IDataGridState
+    state: IDataGridState,
   ) {
     if (props.error !== state.errorMessage) {
       return { errorMessage: props.error };
     }
+
     return null;
   }
 
+  public state = {
+    errorMessage: null as string,
+  };
+
   public render() {
     const { errorMessage } = this.state;
+
     return (
       <div className="root">
         {errorMessage && (

@@ -10,10 +10,15 @@ import { DataSourceContext } from '../DataSource';
 import { renderCells } from '../utils';
 
 interface IProps {
-    bodyRenderer?(row: any, index: number, columns: ColumnModel[]): any;
+    bodyRenderer?(row: any, index: number, columns: ColumnModel[]): void;
+    onRowClick?(ev: any): any;
 }
 
-const GridBody: React.SFC<IProps> = ({ bodyRenderer }) => {
+const GridBody: React.SFC<IProps> = ({ bodyRenderer, onRowClick }) => {
+    // tslint:disable-next-line:no-empty
+    const onRowClickProxy = onRowClick ? onRowClick : () => { };
+    const cursorStyle = onRowClick ? 'pointer' : 'auto';
+
     return (
         <DataSourceContext.Consumer>
             {({ state }) =>
@@ -21,16 +26,25 @@ const GridBody: React.SFC<IProps> = ({ bodyRenderer }) => {
                     {state.data.map((row: any, rowIndex: number) => (
                         bodyRenderer
                             ? bodyRenderer(row, rowIndex, state.columns)
-                            : <TableRow hover={true} key={rowIndex}>
-                                {
-                                    renderCells(state.columns, row)
-                                }
+                            : <TableRow
+                                hover={true}
+                                key={rowIndex}
+                                onClick={onRowClickProxy(row)}
+                                style={{ cursor: cursorStyle }}
+                            >
+                                {renderCells(state.columns, row)}
                             </TableRow>
                     ))}
                     {state.filteredRecordCount === 0 && !state.isLoading &&
                         (<TableRow>
-                            <TableCell colSpan={state.columns.filter((col: any) => col.Visible).length}>
-                                <Typography style={{ paddingLeft: '15px' }} variant='body2' gutterBottom={true}>
+                            <TableCell
+                                colSpan={state.columns.filter((col: any) => col.Visible).length}
+                            >
+                                <Typography
+                                    style={{ paddingLeft: '15px' }}
+                                    variant='body2'
+                                    gutterBottom={true}
+                                >
                                     <Warning /> No records found
                                 </Typography>
                             </TableCell>
