@@ -19,6 +19,9 @@ const styles: any = {
 };
 
 const SearchTextInput: React.SFC = () => {
+  const onChange = (callback: any) => (e: any) => callback(e.target.value);
+  const onClear = (callback: any) => () => callback('');
+
   return (
     <DataSourceContext.Consumer>
       {({ state, actions }) => (
@@ -27,7 +30,7 @@ const SearchTextInput: React.SFC = () => {
             fullWidth={true}
             type='text'
             value={state.searchText}
-            onChange={(e: any) => actions.updateSearchText(e.target.value)}
+            onChange={onChange(actions.updateSearchText)}
             startAdornment={
               <InputAdornment position='end'>
                 <Search />
@@ -36,7 +39,7 @@ const SearchTextInput: React.SFC = () => {
             endAdornment={
               state.searchText !== '' && (
                 <InputAdornment position='end'>
-                  <IconButton onClick={() => actions.updateSearchText('')}>
+                  <IconButton onClick={onClear(actions.updateSearchText)}>
                     <Close />
                   </IconButton>
                 </InputAdornment>

@@ -108,8 +108,7 @@ export default abstract class BaseDataSource extends React.Component<
         }));
       },
       setActiveColumn: (column: any, event: React.MouseEvent<HTMLElement>) => {
-        this.setState(
-          {
+        this.setState({
             activeColumn: column,
             anchorFilter: event ? event.currentTarget : null,
           },
