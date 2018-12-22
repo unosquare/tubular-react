@@ -18,6 +18,9 @@ const arrowStyle = {
   width: '15px',
 };
 
+const sort = (callback: any, columnName: string) => () => callback(columnName);
+const handleClick = (callback: any, column: string) => (e: any) => callback(column, e);
+
 const GridHeader: React.SFC = () => {
   return (
     <DataSourceContext.Consumer>
@@ -34,7 +37,7 @@ const GridHeader: React.SFC = () => {
                   enterDelay={300}
                 >
                   <TableSortLabel
-                    onClick={() => actions.sortColumn(column.Name)}
+                    onClick={sort(actions.sortColumn, column.Name)}
                   >
                     {column.Label}
                     {column.SortDirection === ColumnSortDirection.ASCENDING ? (
@@ -53,7 +56,7 @@ const GridHeader: React.SFC = () => {
               const filter = column.Filterable && (
                 <IconButton
                   id={column.Name}
-                  onClick={(e) => actions.setActiveColumn(column, e)}
+                  onClick={handleClick(actions.setActiveColumn, column)}
                 >
                   <FilterList
                     color={
