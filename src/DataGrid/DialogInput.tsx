@@ -85,6 +85,8 @@ const DialogInput: React.SFC<IProps> = ({
       : 'First Value'
     : 'Second Value';
 
+  const handleChange = (e: any) => handleTextFieldChange(e.target.value);
+
   return (
     <TextField
       select={column.DataType === ColumnDataType.BOOLEAN}
@@ -94,7 +96,7 @@ const DialogInput: React.SFC<IProps> = ({
       value={value}
       label={label}
       type={(ColumnDataTypeToHtmlType as any)[column.DataType]}
-      onChange={(e: any) => handleTextFieldChange(e.target.value)}
+      onChange={handleChange}
     >
       {column.DataType === ColumnDataType.BOOLEAN &&
         BooleanInputOperators.map((option) => (

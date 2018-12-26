@@ -47,14 +47,19 @@ class GridToolbar extends React.Component<IProps, IState> {
     const { toolbarOptions, gridName } = this.props;
     const { anchorExport, anchorPrint } = this.state;
 
-    const partialExportCsv = (data: any, columns: any) => {
-      exportGrid('csv', data, columns, gridName);
+    const partialExport = (type: string) => (data: any, columns: any) => {
+      exportGrid(type, data, columns, gridName);
       this.handleExportMenu(null);
     };
-    const partialPrint = (data: any, columns: any) => {
-      exportGrid('print', data, columns, gridName);
-      this.handlePrintMenu(null);
-    };
+
+    const exportCurrentCsv = (callback: any) => () => callback(false, partialExport('csv'));
+    const exportAllCsv = (callback: any) => () => callback(true, partialExport('csv'));
+
+    const printCurrent = (callback: any) => () => callback(false, partialExport('print'));
+    const printAll = (callback: any) => () => callback(true, partialExport('print'));
+
+    const closeExport = () => this.handleExportMenu(null);
+    const closePrint = () => this.handlePrintMenu(null);
 
     return (
       <DataSourceContext.Consumer>
@@ -83,12 +88,12 @@ class GridToolbar extends React.Component<IProps, IState> {
               <Menu
                 anchorEl={anchorExport}
                 open={Boolean(anchorExport)}
-                onClose={() => this.handleExportMenu(null)}
+                onClose={closeExport}
               >
-                <MenuItem onClick={() => { actions.exportTo(false, partialExportCsv); }}>
+                <MenuItem onClick={exportCurrentCsv}>
                   Current rows
                 </MenuItem>
-                <MenuItem onClick={() => { actions.exportTo(true, partialExportCsv); }}>
+                <MenuItem onClick={exportAllCsv}>
                   All rows
                 </MenuItem>
               </Menu>
@@ -97,12 +102,12 @@ class GridToolbar extends React.Component<IProps, IState> {
               <Menu
                 anchorEl={anchorPrint}
                 open={Boolean(anchorPrint)}
-                onClose={() => this.handlePrintMenu(null)}
+                onClose={closePrint}
               >
-                <MenuItem onClick={() => { actions.exportTo(false, partialPrint); }}>
+                <MenuItem onClick={printCurrent}>
                   Current rows
                 </MenuItem>
-                <MenuItem onClick={() => { actions.exportTo(true, partialPrint); }}>
+                <MenuItem onClick={printAll}>
                   All rows
                 </MenuItem>
               </Menu>

@@ -69,19 +69,30 @@ const AdvancePaginationActions: React.SFC<IProps> = ({
   onChangePage,
 }) => {
   const pages = getPages(page, count, rowsPerPage);
+  const lastPage = Math.ceil(count / rowsPerPage) - 1;
+  const gotoPage = (value: number) => (e: any) => onChangePage(e, value);
+
+  const gotoFirstPage = gotoPage(0);
+  const gotoPrevPage = gotoPage(page - 1);
+  const gotoNextPage = gotoPage(page + 1);
+  const gotoLastPage = gotoPage(Math.max(0, lastPage));
+
+  const canNotBack = page === 0;
+  const canNotFwd = page === lastPage;
+
   return (
     <div className={classes.root}>
       <IconButton
-        onClick={(e) => onChangePage(e, 0)}
-        disabled={page === 0}
+        onClick={gotoFirstPage}
+        disabled={canNotBack}
         aria-label='First Page'
       >
         <FirstPage />
       </IconButton>
 
       <IconButton
-        onClick={(e) => onChangePage(e, page - 1)}
-        disabled={page === 0}
+        onClick={gotoPrevPage}
+        disabled={canNotBack}
         aria-label='Previous Page'
       >
         <KeyboardArrowLeft />
@@ -90,7 +101,7 @@ const AdvancePaginationActions: React.SFC<IProps> = ({
       {pages.map((value) => (
         <IconButton
           key={value}
-          onClick={(e) => onChangePage(e, value)}
+          onClick={gotoPage(value)}
           disabled={value >= Math.ceil(count / rowsPerPage)}
           aria-label={`Page ${value + 1}`}
           color={value === page ? 'primary' : 'default'}
@@ -100,18 +111,16 @@ const AdvancePaginationActions: React.SFC<IProps> = ({
       ))}
 
       <IconButton
-        onClick={(e) => onChangePage(e, page + 1)}
-        disabled={page === Math.ceil(count / rowsPerPage) - 1}
+        onClick={gotoNextPage}
+        disabled={canNotFwd}
         aria-label='Next Page'
       >
         <KeyboardArrowRight />
       </IconButton>
 
       <IconButton
-        onClick={(e) =>
-          onChangePage(e, Math.max(0, Math.ceil(count / rowsPerPage) - 1))
-        }
-        disabled={page === Math.ceil(count / rowsPerPage) - 1}
+        onClick={gotoLastPage}
+        disabled={canNotFwd}
         aria-label='Last Page'
       >
         <LastPage />
