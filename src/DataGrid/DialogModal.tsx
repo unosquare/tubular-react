@@ -34,8 +34,8 @@ const clearFilterPatch = {
 };
 
 const clearFilter = (callback: any) => () => callback(clearFilterPatch);
-const handleInput = (callback: any) => (e) => callback({ Text: e });
-const handleBetweenInput = (callback: any) => (e) => callback({ Argument: [e] });
+const handleInput = (callback: any) => (e: any) => callback({ Text: e });
+const handleBetweenInput = (callback: any) => (e: any) => callback({ Argument: [e] });
 const submit = (callback: any, column: any) => () => callback(createFilterPatch(column));
 
 const DialogModal: React.SFC = () => (
