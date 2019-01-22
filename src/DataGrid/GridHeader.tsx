@@ -1,12 +1,12 @@
-import {
-  IconButton,
-  TableCell,
-  TableRow,
-  TableSortLabel,
-  Tooltip,
-} from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
+import Tooltip from '@material-ui/core/Tooltip';
 
-import { ArrowDownward, ArrowUpward, FilterList } from '@material-ui/icons';
+import ArrowDownward from '@material-ui/icons/ArrowDownward';
+import ArrowUpward from '@material-ui/icons/ArrowUpward';
+import FilterList from '@material-ui/icons/FilterList';
 
 import * as React from 'react';
 import { ColumnSortDirection, CompareOperators } from 'tubular-common';
@@ -44,15 +44,15 @@ const GridHeader: React.SFC = () => {
                       <ArrowUpward style={arrowStyle} />
                     ) : column.SortDirection ===
                       ColumnSortDirection.DESCENDING ? (
-                      <ArrowDownward style={arrowStyle} />
-                    ) : (
-                      <div style={arrowStyle} />
-                    )}
+                          <ArrowDownward style={arrowStyle} />
+                        ) : (
+                          <div style={arrowStyle} />
+                        )}
                   </TableSortLabel>
                 </Tooltip>
               ) : (
-                column.Label
-              );
+                  column.Label
+                );
               const filter = column.Filterable && (
                 <IconButton
                   id={column.Name}
@@ -61,7 +61,7 @@ const GridHeader: React.SFC = () => {
                   <FilterList
                     color={
                       column.Filter.HasFilter &&
-                      column.Filter.Operator !== CompareOperators.NONE
+                        column.Filter.Operator !== CompareOperators.NONE
                         ? 'action'
                         : 'disabled'
                     }

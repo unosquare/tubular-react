@@ -1,5 +1,9 @@
-import { IconButton, Menu, MenuItem, Toolbar } from '@material-ui/core';
-import { CloudDownload, Print } from '@material-ui/icons';
+import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Toolbar from '@material-ui/core/Toolbar';
+import CloudDownload from '@material-ui/icons/CloudDownload';
+import Print from '@material-ui/icons/Print';
 
 import * as React from 'react';
 

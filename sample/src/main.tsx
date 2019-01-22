@@ -5,10 +5,10 @@ import Tabs from '@material-ui/core/Tabs';
 import * as React from 'react';
 
 import CustomLayoutDataGrid from './CustomLayoutDataGrid';
+import ErrorBoundary from './ErrorBoundary';
 import LocalDataGrid from './localDataGrid';
 import RemoteDataGrid from './remoteDataGrid';
 import RemoteGridList from './remoteGridList';
-import ErrorBoundary from './ErrorBoundary';
 
 const styles = ({palette}: any) => ({
   logo: {
@@ -21,8 +21,8 @@ const styles = ({palette}: any) => ({
   },
   root: {
     backgroundColor: palette.background.paper,
-    flexGrow: 1
-  }
+    flexGrow: 1,
+  },
 });
 
 class Main extends React.Component<any, any> {

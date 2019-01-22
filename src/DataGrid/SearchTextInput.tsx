@@ -1,11 +1,10 @@
-import {
-  FormControl,
-  IconButton,
-  Input,
-  InputAdornment,
-} from '@material-ui/core';
+import FormControl from '@material-ui/core/FormControl';
+import IconButton from '@material-ui/core/IconButton';
+import Input from '@material-ui/core/Input';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
-import { Close, Search } from '@material-ui/icons';
+import Close from '@material-ui/icons/Close';
+import Search from '@material-ui/icons/Search';
 
 import * as React from 'react';
 

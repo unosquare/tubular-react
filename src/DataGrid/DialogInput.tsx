@@ -1,7 +1,8 @@
 import { format } from 'date-fns';
 import * as React from 'react';
 
-import { MenuItem, TextField } from '@material-ui/core';
+import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
 
 import { ColumnDataType, CompareOperators } from 'tubular-common';
 

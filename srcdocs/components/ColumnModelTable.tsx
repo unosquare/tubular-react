@@ -6,7 +6,7 @@ import {
   TableHead,
   TableRow,
   Theme,
-  withStyles
+  withStyles,
 } from '@material-ui/core';
 import * as React from 'react';
 
@@ -14,13 +14,13 @@ const styles = (theme: Theme) =>
   createStyles({
     code: {
       background: '#F8F8FF',
-      fontSize: 14
+      fontSize: 14,
     },
     root: {
       marginTop: theme.spacing.unit * 3,
       overflowX: 'auto',
-      width: '100%'
-    }
+      width: '100%',
+    },
   });
 
 const ColumnModelTable = (props: any) => {

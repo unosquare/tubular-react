@@ -1,11 +1,10 @@
-import {
-  LinearProgress,
-  Paper,
-  Table,
-  TableFooter,
-  TableHead,
-  TableRow,
-} from '@material-ui/core';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import TableFooter from '@material-ui/core/TableFooter';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+
 import {
   createStyles,
   Theme,

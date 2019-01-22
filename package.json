@@ -1,10 +1,11 @@
 {
   "name": "tubular-react",
-  "version": "0.8.0",
+  "version": "0.8.2",
   "description": "Unosquare Tubular React",
   "main": "dist/index.js",
   "scripts": {
     "build:docs": "parcel build ./srcdocs/index.html --no-source-maps --public-url /tubular-react/ -d ./docs",
+    "build:sample": "parcel build ./sample/app/index.html --no-source-maps",
     "build": "tsc --p ./tsconfigs/tsconfig.tubular.json",
     "start": "parcel ./sample/app/index.html --open --port 9000 --no-source-maps",
     "start:docs": "parcel ./srcdocs/index.html --no-source-maps --port 8080 --open -d ./docs",
@@ -12,8 +13,6 @@
     "test": "jest",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov",
-    "prebuild:docs": "del /s /q  .\\docs\\*",
-    "prestart:docs": "del /s /q  .\\docs\\*",
     "postbuild:docs": "xcopy .\\srcdocs\\static .\\docs\\static\\",
     "poststart:docs": "xcopy .\\srcdocs\\static .\\docs\\static\\"
   },
@@ -66,43 +65,48 @@
   },
   "homepage": "https://github.com/unosquare/tubular-react#readme",
   "dependencies": {
-    "@material-ui/core": "^3.4.0",
-    "@material-ui/icons": "^3.0.1",
-    "date-fns": "^1.29.0",
-    "react": "^16.6.1",
-    "react-dom": "^16.6.1",
+    "@material-ui/core": "^3.9.0",
+    "@material-ui/icons": "^3.0.2",
+    "date-fns": "^1.30.1",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
     "tubular-common": "^1.4.0"
   },
   "devDependencies": {
     "@types/enzyme": "^3.1.15",
     "@types/enzyme-adapter-react-16": "^1.0.3",
-    "@types/jest": "^23.3.9",
-    "@types/prop-types": "^15.5.6",
-    "@types/react": "^16.4.18",
-    "@types/react-dom": "^16.0.9",
+    "@types/jest": "^23.3.13",
+    "@types/prop-types": "^15.5.8",
+    "@types/react": "^16.7.20",
+    "@types/react-dom": "^16.0.11",
     "@types/react-highlighter": "^0.3.4",
-    "@types/react-router": "^4.4.1",
+    "@types/react-router": "^4.4.3",
     "@types/react-router-dom": "^4.3.1",
     "coveralls": "^3.0.2",
-    "enzyme": "^3.7.0",
-    "enzyme-adapter-react-16": "^1.7.0",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1",
     "jest": "^23.6.0",
     "jest-fetch-mock": "^2.1.0",
-    "jsdom": "^13.0.0",
+    "jsdom": "^13.1.0",
     "nyc": "^13.1.0",
-    "parcel-bundler": "^1.10.3",
+    "parcel-bundler": "^1.11.0",
+    "parcel-plugin-clean-easy": "^1.0.2",
     "react-highlight": "^0.12.0",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "react-test-renderer": "^16.6.1",
-    "router5": "^7.0.0",
-    "ts-jest": "^23.10.4",
-    "tslint": "^5.11.0",
+    "react-test-renderer": "^16.7.0",
+    "router5": "^7.0.1",
+    "ts-jest": "^23.10.5",
+    "tslint": "^5.12.1",
     "tslint-react": "^3.6.0",
-    "typescript": "^3.1.6"
+    "typescript": "^3.2.4"
   },
   "peerDependencies": {
     "react": "^15.0.0 || ^16.0.0",
     "react-dom": "^15.0.0 || ^16.0.0"
-  }
+  },
+  "parcelCleanPaths": [
+    "dist",
+    "docs/*.*"
+  ]
 }

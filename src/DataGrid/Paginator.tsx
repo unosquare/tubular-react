@@ -1,4 +1,4 @@
-import { TablePagination } from '@material-ui/core';
+import TablePagination from '@material-ui/core/TablePagination';
 import * as React from 'react';
 import AdvancePaginationActions from './AdvancePaginationActions';
 

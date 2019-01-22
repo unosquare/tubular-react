@@ -1,4 +1,4 @@
-import { Input } from '@material-ui/core';
+import Input from '@material-ui/core/Input';
 import * as React from 'react';
 
 interface IProps {

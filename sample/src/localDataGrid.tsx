@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Snackbar } from '@material-ui/core';
+import Snackbar from '@material-ui/core/Snackbar';
 import DataGrid, {
   IDataGridProps,
   IDataGridState,

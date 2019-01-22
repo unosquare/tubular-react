@@ -1,5 +1,9 @@
 
-import { Button, Card, CardActions, CardContent, Popover } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Popover from '@material-ui/core/Popover';
 import * as React from 'react';
 import { DataSourceContext } from '../DataSource';
 import DialogInput from './DialogInput';

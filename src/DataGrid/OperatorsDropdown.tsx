@@ -1,6 +1,8 @@
 import * as React from 'react';
 
-import { Input, MenuItem, Select } from '@material-ui/core';
+import Input from '@material-ui/core/Input';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import { ColumnModel } from 'tubular-common';
 import { DataSourceContext } from '../DataSource';
 
@@ -9,7 +11,7 @@ const dropdown = {
   width: '80%',
 };
 
-const onChange = (callback: any) => (e: any) => callback({ Operator: e.target.value });
+const onChange = (callback: any) => ({ target }: any) => callback({ Operator: target.value });
 const getValue = (op: string) => !op || op === '' ? 'None' : op;
 
 const OperatorsDropdown: React.SFC = () => (

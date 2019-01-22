@@ -1,5 +1,6 @@
-import { TableCell } from '@material-ui/core';
-import { CheckBox, CheckBoxOutlineBlank } from '@material-ui/icons';
+import TableCell from '@material-ui/core/TableCell';
+import CheckBox from '@material-ui/icons/CheckBox';
+import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 
 import { format, getYear, parse } from 'date-fns';
 import * as React from 'react';
@@ -27,8 +28,9 @@ export const renderCellContent: any = (column: ColumnModel, row: any) => {
     }
 };
 
-export const renderCells: any = (columns: ColumnModel[], row: any) => {
-    return columns.filter((col: any) => col.Visible)
+export const renderCells: any = (columns: ColumnModel[], row: any) =>
+    columns
+        .filter((col: any) => col.Visible)
         .map((column: ColumnModel, colIndex: number) =>
             (
                 <TableCell
@@ -39,4 +41,3 @@ export const renderCells: any = (columns: ColumnModel[], row: any) => {
                 </TableCell>
             ),
         );
-};
