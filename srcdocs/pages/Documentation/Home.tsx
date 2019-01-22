@@ -152,7 +152,7 @@ const Home = ({ classes }: any) => (
               {quickStart}
             </Highlight>
             <em>
-              Try it in{' '}
+              Try it in
               <a href='https://codesandbox.io/s/3rqq6l04jq' target='_blank'>
                 CodeSandbox
               </a>

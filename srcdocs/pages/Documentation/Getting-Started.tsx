@@ -43,7 +43,7 @@ const GettingStarted = ({ classes }: any) => (
           Installation
             </Typography>
         <Typography variant='subheading' paragraph={true}>
-          Tubular-React is available as an{' '}
+          Tubular-React is available as an
           <a
             href='https://www.npmjs.com/package/tubular-react'
             target='_blank'
@@ -79,7 +79,7 @@ const GettingStarted = ({ classes }: any) => (
             </Typography>
         <Typography variant='body1' paragraph={true}>
           To install and save in your
-              <code className={classes.codeTag}>package.json</code>{' '}
+              <code className={classes.codeTag}>package.json</code>
           dependencies, run:
             </Typography>
         <Highlight language='javascript' className={classes.code}>
@@ -101,8 +101,8 @@ const GettingStarted = ({ classes }: any) => (
           a local data source as an array.
             </Typography>
         <Typography variant='headline' paragraph={true}>
-          {' '}
-          Quick Start{' '}
+          
+          Quick Start
         </Typography>
         <Typography variant='body1' paragraph={true}>
           Here is a quick example with all basic features to get you

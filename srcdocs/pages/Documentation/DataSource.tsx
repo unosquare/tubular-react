@@ -50,8 +50,8 @@ const DataSource = ({ classes }: any) => (
     <Grid item={true} xs={12} md={9}>
       <Paper className={classes.paper}>
         <Typography variant='display1' paragraph={true}>
-          {' '}
-          Data Source{' '}
+          
+          Data Source
         </Typography>
         <Divider />
         <br />
@@ -59,9 +59,9 @@ const DataSource = ({ classes }: any) => (
           <code className={classes.code}>{'<DataGrid />'}</code> requires a
           wrapper component to retrieve data. Depends on if we use a local
           data source or a remote data source, these wrappers are:
-              <code className={classes.code}>withRemoteDataSource</code>{' '}
-          component or the{' '}
-          <code className={classes.code}>withLocalDataSource</code>{' '}
+              <code className={classes.code}>withRemoteDataSource</code>
+          component or the
+          <code className={classes.code}>withLocalDataSource</code>
           component, which deals with data retrieval on the
               <code className={classes.code}>DataGrid</code> component.
               <br />
@@ -70,8 +70,8 @@ const DataSource = ({ classes }: any) => (
             <code className={classes.code}>withRemoteDataSource</code>
           </Typography>
           <code className={classes.code}>withRemoteDataSource</code>
-          needs our <code className={classes.code}>DataGrid</code>{' '}
-          component, a <code className={classes.code}>ColumnModel</code>{' '}
+          needs our <code className={classes.code}>DataGrid</code>
+          component, a <code className={classes.code}>ColumnModel</code>
           array and a <code className={classes.code}>URL</code> which
           represent a service.
               <br />
@@ -83,8 +83,8 @@ const DataSource = ({ classes }: any) => (
             <code className={classes.code}>LocalDataSource</code>
           </Typography>
           <code className={classes.code}>withLocalDataSource</code>
-          needs our <code className={classes.code}>DataGrid</code>{' '}
-          component, a <code className={classes.code}>ColumnModel</code>{' '}
+          needs our <code className={classes.code}>DataGrid</code>
+          component, a <code className={classes.code}>ColumnModel</code>
           array and an <code className={classes.code}>Array</code>of
           objects.
               <br />
