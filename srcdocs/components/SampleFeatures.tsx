@@ -1,17 +1,18 @@
 import * as React from 'react';
 
 import { Snackbar, TableCell, TableRow } from '@material-ui/core';
-import { CheckBox, CheckBoxOutlineBlank } from '@material-ui/icons';
+import CheckBox from '@material-ui/icons/CheckBox';
+import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 import { format } from 'date-fns';
 import DataGrid, {
     ToolbarOptions,
-    withRemoteDataSource
+    withRemoteDataSource,
 } from '../../src';
 import columns from '../utils/columns';
 
 class SampleFeatures extends React.Component {
     public state = {
-        errorMessage: null as any
+        errorMessage: null as any,
     };
 
     public componentWillReceiveProps(nextProps: any) {
@@ -34,8 +35,8 @@ class SampleFeatures extends React.Component {
                 <DataGrid
                     gridName='Tubular-React'
                     bodyRenderer={
-                        (row: any, index: any) =>
-                            <TableRow hover={true} key={index}>
+                        (row: any) =>
+                            <TableRow hover={true} key={row}>
                                 <TableCell padding='default'>
                                     {row.OrderID}
                                 </TableCell>

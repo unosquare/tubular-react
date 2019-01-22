@@ -1,20 +1,18 @@
 import * as React from 'react';
 
 import { Snackbar, TableCell, TableRow } from '@material-ui/core';
-import {
-  CheckBox,
-  CheckBoxOutlineBlank,
-  Mood,
-  Brightness7Rounded
-} from '@material-ui/icons';
+import IconButton from '@material-ui/core/IconButton';
+import Brightness7Rounded from '@material-ui/icons/Brightness7Rounded';
+import CheckBox from '@material-ui/icons/CheckBox';
+import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
+import Mood from '@material-ui/icons/Mood';
 import { format } from 'date-fns';
 import DataGrid, { ToolbarOptions, withRemoteDataSource } from '../../src';
-import { IconButton } from '@material-ui/core';
 import columns from '../utils/columns';
 
 class SampleFeatures extends React.Component {
   public state = {
-    errorMessage: null as any
+    errorMessage: null as any,
   };
 
   public componentWillReceiveProps(nextProps: any) {
@@ -36,8 +34,8 @@ class SampleFeatures extends React.Component {
         )}
         <DataGrid
           gridName='Tubular-React'
-          bodyRenderer={(row: any, index: any) => (
-            <TableRow hover={true} key={index}>
+          bodyRenderer={(row: any) => (
+            <TableRow hover={true} key={row}>
               <TableCell padding='default'>{row.OrderID}</TableCell>
               <TableCell padding='default'>{row.CustomerName}</TableCell>
               <TableCell padding='default'>
@@ -84,5 +82,5 @@ class SampleFeatures extends React.Component {
 export default withRemoteDataSource(
   SampleFeatures,
   columns,
-  'https://tubular.azurewebsites.net/api/orders/paged'
+  'https://tubular.azurewebsites.net/api/orders/paged',
 );

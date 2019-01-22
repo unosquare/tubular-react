@@ -6,7 +6,7 @@ import {
   Paper,
   Typography,
   WithStyles,
-  withStyles
+  withStyles,
 } from '@material-ui/core';
 
 import 'highlight.js/styles/an-old-hope.css';
@@ -18,16 +18,16 @@ import DocumentationList from '../../components/DocumentationList';
 const styles = {
   code: {
     background: '#F8F8FF',
-    padding: '6px'
+    padding: '6px',
   },
   container: {
     margin: '0',
     padding: 30,
-    width: '100%'
+    width: '100%',
   },
   paper: {
-    padding: 10
-  }
+    padding: 10,
+  },
 };
 
 // tslint:disable-next-line:max-line-length
@@ -40,71 +40,66 @@ const localDataSource =
 const localDataLink =
   'https://github.com/unosquare/tubular-react/blob/master/sample/src/data/localData.ts';
 
-const DataSource = (props: any) => {
-  const { classes } = props;
-  return (
-    <div>
-      <Grid container={true} spacing={24} className={classes.container}>
-        <Hidden smDown={true}>
-          <Grid item={true} xs={3}>
-            <DocumentationList />
-          </Grid>
-        </Hidden>
-        <Grid item={true} xs={12} md={9}>
-          <Paper className={classes.paper}>
-            <Typography variant='display1' paragraph={true}>
-              {' '}
-              Data Source{' '}
-            </Typography>
-            <Divider />
-            <br />
-            <Typography variant='subheading'>
-              <code className={classes.code}>{'<DataGrid />'}</code> requires a
-              wrapper component to retrieve data. Depends on if we use a local
-              data source or a remote data source, these wrappers are:
+const DataSource = ({ classes }: any) => (
+  <Grid container={true} spacing={24} className={classes.container}>
+    <Hidden smDown={true}>
+      <Grid item={true} xs={3}>
+        <DocumentationList />
+      </Grid>
+    </Hidden>
+    <Grid item={true} xs={12} md={9}>
+      <Paper className={classes.paper}>
+        <Typography variant='display1' paragraph={true}>
+          {' '}
+          Data Source{' '}
+        </Typography>
+        <Divider />
+        <br />
+        <Typography variant='subheading'>
+          <code className={classes.code}>{'<DataGrid />'}</code> requires a
+          wrapper component to retrieve data. Depends on if we use a local
+          data source or a remote data source, these wrappers are:
               <code className={classes.code}>withRemoteDataSource</code>{' '}
-              component or the{' '}
-              <code className={classes.code}>withLocalDataSource</code>{' '}
-              component, which deals with data retrieval on the
+          component or the{' '}
+          <code className={classes.code}>withLocalDataSource</code>{' '}
+          component, which deals with data retrieval on the
               <code className={classes.code}>DataGrid</code> component.
               <br />
+          <br />
+          <Typography variant='headline' gutterBottom={true}>
+            <code className={classes.code}>withRemoteDataSource</code>
+          </Typography>
+          <code className={classes.code}>withRemoteDataSource</code>
+          needs our <code className={classes.code}>DataGrid</code>{' '}
+          component, a <code className={classes.code}>ColumnModel</code>{' '}
+          array and a <code className={classes.code}>URL</code> which
+          represent a service.
               <br />
-              <Typography variant='headline' gutterBottom={true}>
-                <code className={classes.code}>withRemoteDataSource</code>
-              </Typography>
-              <code className={classes.code}>withRemoteDataSource</code>
-              needs our <code className={classes.code}>DataGrid</code>{' '}
-              component, a <code className={classes.code}>ColumnModel</code>{' '}
-              array and a <code className={classes.code}>URL</code> which
-              represent a service.
+          <Highlight language='javascript' className={'an-old-hope'}>
+            {remoteDataSource}
+          </Highlight>
+          <br />
+          <Typography variant='headline' gutterBottom={true}>
+            <code className={classes.code}>LocalDataSource</code>
+          </Typography>
+          <code className={classes.code}>withLocalDataSource</code>
+          needs our <code className={classes.code}>DataGrid</code>{' '}
+          component, a <code className={classes.code}>ColumnModel</code>{' '}
+          array and an <code className={classes.code}>Array</code>of
+          objects.
               <br />
-              <Highlight language='javascript' className={'an-old-hope'}>
-                {remoteDataSource}
-              </Highlight>
-              <br />
-              <Typography variant='headline' gutterBottom={true}>
-                <code className={classes.code}>LocalDataSource</code>
-              </Typography>
-              <code className={classes.code}>withLocalDataSource</code>
-              needs our <code className={classes.code}>DataGrid</code>{' '}
-              component, a <code className={classes.code}>ColumnModel</code>{' '}
-              array and an <code className={classes.code}>Array</code>of
-              objects.
-              <br />
-              <Highlight language='javascript' className={'an-old-hope'}>
-                {localDataSource}
-              </Highlight>
-              See this
+          <Highlight language='javascript' className={'an-old-hope'}>
+            {localDataSource}
+          </Highlight>
+          See this
               <Button color='primary' href={localDataLink} target='_blank'>
-                example
+            example
               </Button>
-              of how to define the array of objects.
+          of how to define the array of objects.
             </Typography>
-          </Paper>
-        </Grid>
-      </Grid>
-    </div>
-  );
-};
+      </Paper>
+    </Grid>
+  </Grid>
+);
 
-export default withStyles(styles)(DataSource) ;
+export default withStyles(styles)(DataSource);

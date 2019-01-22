@@ -50,7 +50,9 @@ const DataGridProps = ({ classes }: any) => (
                     <TableCell>
                         <strong>Optional.</strong>
                         It takes a function with 3 parameters
-                            <code className={classes.code}>(row: any, index: number, columns: ColumnModel[])</code> to map all rows.
+                            <code className={classes.code}>
+                            (row: any, index: number, columns: ColumnModel[])
+                            </code> to map all rows.
                             <em>see sample Full grid features</em>
                     </TableCell>
                 </TableRow>
@@ -60,7 +62,10 @@ const DataGridProps = ({ classes }: any) => (
                     <TableCell>-</TableCell>
                     <TableCell>
                         <strong>Optional.</strong>
-                        It takes an aggregate function with 1 parameter <code className={classes.code}>(aggregate: any)</code> to show in a foot row the results from the aggregate function.
+                        It takes an aggregate function with 1 parameter
+                        <code className={classes.code}>
+                            (aggregate: any)
+                        </code> to show in a foot row the results from the aggregate function.
                             <em>see sample Full grid features</em>
                     </TableCell>
                 </TableRow>

@@ -72,10 +72,9 @@ const columns = [
     )
 ];
 const MyComponent = () => {
-        
-      <DataGrid gridName='Tubular-React'/>              
+
+      <DataGrid gridName='Tubular-React'/>
 };
- 
 
 /*
  Use the component withRemoteDataSource to wrap your component
@@ -87,7 +86,8 @@ export default withRemoteDataSource(MyComponent, columns, 'http://tubular.azurew
 
 export const simpleFeatures = `import React from 'react';
 import { Snackbar, TableCell, TableRow } from '@material-ui/core';
-import { CheckBox, CheckBoxOutlineBlank } from '@material-ui/icons';
+import CheckBox from '@material-ui/icons/CheckBox';
+import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 import { format } from 'date-fns';
 import DataGrid, { ToolbarOptions, withRemoteDataSource } from 'tubular-react';
 
@@ -142,6 +142,7 @@ class SampleFeatures extends React.Component {
 
   render() {
     const { errorMessage } = this.state;
+
     return (
       <div className='root'>
         {errorMessage && (
@@ -156,7 +157,7 @@ class SampleFeatures extends React.Component {
         <DataGrid
           gridName='Tubular-React'
           bodyRenderer={(row: any, index: number, columns: ColumnModel[]) => (
-            <TableRow hover={true} key={index}>
+            <TableRow hover={true} key={row}>
               <TableCell padding='default'>{row.OrderID}</TableCell>
               <TableCell padding='default'>{row.CustomerName}</TableCell>
               <TableCell padding='default'>

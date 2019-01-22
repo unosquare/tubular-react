@@ -10,6 +10,7 @@
     "start": "parcel ./sample/app/index.html --open --port 9000 --no-source-maps",
     "start:docs": "parcel ./srcdocs/index.html --no-source-maps --port 8080 --open -d ./docs",
     "lint": "tslint src/**/*.ts src/**/*.tsx",
+    "lint:docs": "tslint srcdocs/**/*.ts srcdocs/**/*.tsx",
     "test": "jest",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov",

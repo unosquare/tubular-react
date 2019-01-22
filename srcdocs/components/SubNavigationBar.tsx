@@ -3,30 +3,33 @@ import { Collapse, List, ListItem, ListItemIcon, ListItemText, WithStyles } from
 import { AppBar, Divider, Drawer, IconButton, Toolbar, Tooltip } from '@material-ui/core';
 import { createStyles, Theme, withStyles } from '@material-ui/core/styles';
 
-import { ChevronLeft, ExpandLess, ExpandMore, Menu } from '@material-ui/icons';
+import ChevronLeft from '@material-ui/icons/ChevronLeft';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import Menu from '@material-ui/icons/Menu';
 
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import GitHubIcon from './Github';
 
-const styles = (theme: Theme) => createStyles({
+const styles = () => createStyles({
     flex: {
         flex: 1,
-        textAlign: 'center'
+        textAlign: 'center',
     },
     image: {
-        maxWidth: 100
+        maxWidth: 100,
     },
     logo: {
         flex: 1,
-        maxWidth: 150
+        maxWidth: 150,
     },
     nested: {
-        marginLeft: 10
+        marginLeft: 10,
     },
     spacer: {
-        flex: '1 1 100%'
-    }
+        flex: '1 1 100%',
+    },
 });
 
 interface IProps extends  WithStyles<typeof styles> {}
@@ -40,7 +43,7 @@ export default withStyles(styles)(class extends React.Component<IProps, IState> 
 
     public state = {
         openDrawer: false,
-        openList: false
+        openList: false,
     };
 
     public toggleDrawer = (open: boolean) => () => {

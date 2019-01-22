@@ -9,11 +9,11 @@ const styles = {
     container: {
         margin: '0',
         padding: 30,
-        width: '100%'
+        width: '100%',
     },
     paper: {
-        padding: 10
-    }
+        padding: 10,
+    },
 };
 
 const ColumnModel = (props: any) => {

@@ -4,7 +4,7 @@ import {
   Paper,
   Typography,
   WithStyles,
-  withStyles
+  withStyles,
 } from '@material-ui/core';
 import { Collapse } from '@material-ui/core';
 import { IconButton, Tooltip } from '@material-ui/core';
@@ -24,33 +24,33 @@ import SampleGridList from '../../srcdocs/components/SampleGridList';
 import {
   basicFeatures,
   gridList,
-  simpleFeatures
+  simpleFeatures,
 } from '../utils/codeSnipetExamples';
 
 const styles = {
   code: {
-    fontSize: 15
+    fontSize: 15,
   },
   container: {
     margin: '0',
     padding: 30,
-    width: '100%'
+    width: '100%',
   },
   content: {
-    marginTop: 10
+    marginTop: 10,
   },
   icon: {
     height: 24,
     viewBox: '0 0 24 24',
-    width: 24
+    width: 24,
   },
   paper: {
-    padding: 20
-  }
+    padding: 20,
+  },
 };
 
 const bar: any = {
-  textAlign: 'right'
+  textAlign: 'right',
 };
 
 interface IState {
@@ -68,7 +68,7 @@ export default withStyles(styles)(
       openGridList: false,
       openSample: false,
       showCode: false,
-      value: 'one'
+      value: 'one',
     };
     public handleClickBasic = () => {
       this.setState({ openBasic: !this.state.openBasic });
@@ -314,5 +314,5 @@ export default withStyles(styles)(
         </div>
       );
     }
-  }
+  },
 );

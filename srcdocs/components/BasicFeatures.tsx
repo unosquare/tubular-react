@@ -1,7 +1,8 @@
 import * as React from 'react';
 import DataGrid, {
     ToolbarOptions,
-    withRemoteDataSource } from '../../src';
+    withRemoteDataSource,
+} from '../../src';
 
 import columns from '../utils/columns';
 
@@ -12,14 +13,15 @@ const MyComponent = () => {
         printButton: false,
         searchText: false,
     };
-        return (
-            <div className='root'>
-                <DataGrid
-                    gridName='Tubular-React'
-                    toolbarOptions={new ToolbarOptions(toolbarOptions)}
-                />
-            </div>
-        );
+
+    return (
+        <div className='root'>
+            <DataGrid
+                gridName='Tubular-React'
+                toolbarOptions={new ToolbarOptions(toolbarOptions)}
+            />
+        </div>
+    );
 };
 
 /*

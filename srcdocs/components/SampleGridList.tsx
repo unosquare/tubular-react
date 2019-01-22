@@ -7,7 +7,7 @@ import {
   TableBody,
   TableCell,
   TableFooter,
-  TableRow
+  TableRow,
 } from '@material-ui/core';
 import { format } from 'date-fns';
 import * as React from 'react';
@@ -18,17 +18,17 @@ import {
   DataSourceContext,
   Paginator,
   TextSearchInput,
-  withRemoteDataSource
+  withRemoteDataSource,
 } from '../../src';
 
 const styles: any = {
   progress: {
-    height: '20px'
+    height: '20px',
   },
   search: {
     margin: '15px 10px 10px 10px',
-    textAlign: 'right'
-  }
+    textAlign: 'right',
+  },
 };
 
 class SampleGridList extends React.Component<any, any> {
@@ -36,14 +36,14 @@ class SampleGridList extends React.Component<any, any> {
   public static getDerivedStateFromProps(props, state) {
     if (props.error !== state.errorMessage) {
       return {
-        errorMessage: props.error
+        errorMessage: props.error,
       };
     }
 
     return null;
   }
   public state = {
-    errorMessage: null as any
+    errorMessage: null as any,
   };
 
   public render() {
@@ -108,5 +108,5 @@ class SampleGridList extends React.Component<any, any> {
 export default withRemoteDataSource(
   SampleGridList,
   columns,
-  'https://tubular.azurewebsites.net/api/orders/paged'
+  'https://tubular.azurewebsites.net/api/orders/paged',
 );

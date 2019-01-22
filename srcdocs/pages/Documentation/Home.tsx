@@ -1,4 +1,4 @@
-import { Button, Divider, Grid, Paper, Typography } from '@material-ui/core';
+import { Divider, Grid, Paper, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 import * as React from 'react';
@@ -8,40 +8,35 @@ import { quickStart } from '../../utils/codeSnipetExamples';
 
 const styles = {
   code: {
-    fontSize: 15
+    fontSize: 15,
   },
   codeTag: {
     background: '#F8F8FF',
-    padding: '6px'
+    padding: '6px',
   },
   container: {
     margin: '0',
     padding: 30,
-    width: '100%'
+    width: '100%',
   },
   content: {
-    marginTop: 10
+    marginTop: 10,
   },
   image: {
     marginLeft: '25%',
-    maxWidth: 300
+    maxWidth: 300,
   },
   paper: {
     minHeight: '300px',
-    padding: 30
+    padding: 30,
   },
   paperSmall: {
     minHeight: '115px',
-    padding: 30
-  }
+    padding: 30,
+  },
 };
-// tslint:disable-next-line:max-line-length
-// const quickStart = "import React from 'react';\nimport ReactDOM from 'react-dom';\n\nimport DataGrid, { withRemoteDataSource } from 'tubular-react';\nimport { ColumnModel } from 'tubular-common';\n\nconst columns = [\n  new ColumnModel('OrderID'),\n  new ColumnModel('CustomerName'),\n  new ColumnModel('ShipperCity')\n];\n\nconst SampleGrid = withRemoteDataSource(\n  () => {\n    return <DataGrid />;\n  },\n  columns,\n  'https://tubular.azurewebsites.net/api/orders/paged'\n);\n\nReactDOM.render(<SampleGrid />, document.getElementById('root'));";
 
-const Home = (props: any) => {
-  const { classes } = props;
-  return (
-    <div>
+const Home = ({ classes }: any) => (
       <Grid container={true} spacing={24} className={classes.container}>
         <Paper className={classes.paper}>
           <Typography variant='display1'>What is it?</Typography>
@@ -165,8 +160,6 @@ const Home = (props: any) => {
           </Typography>
         </Paper>
       </Grid>
-    </div>
   );
-};
 
 export default withStyles(styles)(Home);
