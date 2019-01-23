@@ -15,7 +15,7 @@ interface IProps {
     onRowClick?(ev: any): any;
 }
 
-const GridBody: React.SFC<IProps> = ({ bodyRenderer, onRowClick }) => {
+const GridBody: React.FunctionComponent<IProps> = ({ bodyRenderer, onRowClick }) => {
     // tslint:disable-next-line:no-empty
     const onRowClickProxy = onRowClick ? onRowClick : () => { };
     const cursorStyle = onRowClick ? 'pointer' : 'auto';

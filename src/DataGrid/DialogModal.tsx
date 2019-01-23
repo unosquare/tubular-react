@@ -42,7 +42,7 @@ const handleInput = (callback: any) => (e: any) => callback({ Text: e });
 const handleBetweenInput = (callback: any) => (e: any) => callback({ Argument: [e] });
 const submit = (callback: any, column: any) => () => callback(createFilterPatch(column));
 
-const DialogModal: React.SFC = () => (
+const DialogModal: React.FunctionComponent = () => (
     <DataSourceContext.Consumer>
         {({ state, actions }) =>
             <Popover

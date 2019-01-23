@@ -10,7 +10,7 @@ interface IProps {
   handleTextFieldChange(event: any): void;
 }
 
-const TextInput: React.SFC<IProps> =
+const TextInput: React.FunctionComponent<IProps> =
   ({ activeFilter, disabled, handleApply, handleTextFieldChange, label, value }) => {
 
     const handleOnChange = (e: any) => handleTextFieldChange(e.target.value);

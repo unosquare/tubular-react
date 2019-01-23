@@ -42,7 +42,7 @@ interface IProps extends WithStyles<typeof styles> {
   onRowClick?(ev: any): any;
 }
 
-const DataGrid: React.SFC<IProps> = ({
+const DataGrid: React.FunctionComponent<IProps> = ({
   classes,
   bodyRenderer,
   footerRenderer,

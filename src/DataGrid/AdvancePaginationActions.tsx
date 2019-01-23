@@ -59,7 +59,7 @@ const getPages = (currentPage: any, totalRows: any, itemsPerPage: any) => {
   return pages;
 };
 
-const AdvancePaginationActions: React.SFC<IProps> = ({
+const AdvancePaginationActions: React.FunctionComponent<IProps> = ({
   classes,
   count,
   page,

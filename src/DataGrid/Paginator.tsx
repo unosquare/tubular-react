@@ -20,7 +20,7 @@ const message = (totalRecordCount: any, filteredRecordCount: any) => ({
       ? '0 records found'
       : `${from} to ${to} of ${count} from ${totalRecordCount} records`;
 
-const Paginator: React.SFC<IProps> = ({
+const Paginator: React.FunctionComponent<IProps> = ({
   rowsPerPageOptions,
   advancePagination,
 }) => (

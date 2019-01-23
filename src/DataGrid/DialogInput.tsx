@@ -65,7 +65,7 @@ const getValue = (
   }
 };
 
-const DialogInput: React.SFC<IProps> = ({
+const DialogInput: React.FunctionComponent<IProps> = ({
   column,
   handleTextFieldChange,
   isPrimary,

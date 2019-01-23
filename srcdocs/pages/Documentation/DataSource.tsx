@@ -50,7 +50,6 @@ const DataSource = ({ classes }: any) => (
     <Grid item={true} xs={12} md={9}>
       <Paper className={classes.paper}>
         <Typography variant='display1' paragraph={true}>
-          
           Data Source
         </Typography>
         <Divider />

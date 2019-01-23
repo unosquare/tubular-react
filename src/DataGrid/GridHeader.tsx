@@ -21,7 +21,7 @@ const arrowStyle = {
 const sort = (callback: any, columnName: string) => () => callback(columnName);
 const handleClick = (callback: any, column: string) => (e: any) => callback(column, e);
 
-const GridHeader: React.SFC = () => {
+const GridHeader: React.FunctionComponent = () => {
   return (
     <DataSourceContext.Consumer>
       {({ actions, state }) => (

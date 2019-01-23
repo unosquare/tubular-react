@@ -17,7 +17,7 @@ const styles: any = {
   },
 };
 
-const SearchTextInput: React.SFC = () => {
+const SearchTextInput: React.FunctionComponent = () => {
   const onChange = (callback: any) => (e: any) => callback(e.target.value);
   const onClear = (callback: any) => () => callback('');
 

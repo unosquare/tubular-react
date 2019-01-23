@@ -14,7 +14,7 @@ const dropdown = {
 const onChange = (callback: any) => ({ target }: any) => callback({ Operator: target.value });
 const getValue = (op: string) => !op || op === '' ? 'None' : op;
 
-const OperatorsDropdown: React.SFC = () => (
+const OperatorsDropdown: React.FunctionComponent = () => (
   <DataSourceContext.Consumer>
     {({ state, actions }) => (
       <Select
