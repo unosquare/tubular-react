@@ -20,7 +20,7 @@ const styles = {
 const DocumentationList = ({ classes }: any) => (
     <Paper className={classes.paper}>
         <List>
-            <Typography variant='headline'>
+            <Typography variant='h5'>
                 Documentation
                         </Typography>
             <Divider />
