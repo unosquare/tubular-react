@@ -9,9 +9,11 @@ import {
 } from './Models';
 
 import {
+  FetchHandler,
   ITubularHttpClient,
   renderCellContent,
   renderCells,
+  ShallowHttpClient,
   TubularHttpClient,
 } from './utils';
 
@@ -27,12 +29,14 @@ export default DataGrid;
 
 export {
   DataSourceContext,
+  FetchHandler,
   Paginator,
   TextSearchInput,
   ToolbarOptions,
   withLocalDataSource,
   withRemoteDataSource,
   ITubularHttpClient,
+  ShallowHttpClient,
   TubularHttpClient,
   renderCellContent,
   renderCells,
