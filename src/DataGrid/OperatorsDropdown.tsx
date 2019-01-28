@@ -19,7 +19,7 @@ const OperatorsDropdown: React.FunctionComponent = () => (
     {({ state, actions }) => (
       <Select
         style={dropdown}
-        value={getValue(state.activeColumn.Filter)}
+        value={getValue(state.activeColumn.Filter.Operator)}
         onChange={onChange(actions.handleFilterChange)}
         input={<Input name={state.activeColumn.Name} />}
       >
