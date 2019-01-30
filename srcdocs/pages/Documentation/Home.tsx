@@ -1,10 +1,10 @@
-import { Divider, Grid, Paper, Typography } from '@material-ui/core';
+import { Divider, Grid, Link, Paper, Table, TableBody, TableHead, TableRow, TableCell, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 import * as React from 'react';
 import Highlight from 'react-highlight';
 
-import { basicFeatures, buttonFeatures } from '../../utils/codeSnipetExamples';
+import { basicFeatures } from '../../utils/codeSnipetExamples';
 
 const styles = {
   code: {
@@ -35,6 +35,39 @@ const styles = {
     padding: 30,
   },
 };
+
+let id = 0;
+function createData(name, type, language, description, url) {
+  id += 1;
+  return { id, name, type, language, description, url };
+}
+
+const rows = [
+  createData('Tubular for AngularJS (formerly Tubular)', 'Library', 'AngularJs',
+  'Tubular provides a set of directives and services using AngularJS as framework.',
+  'https://github.com/unosquare/tubular'),
+  createData('Tubular for Angular6 (formerly Tubular2)', 'Library', 'Angular6',
+  'New Tubular2 with Angular6 (Angular2) and Angular Material 2.',
+  'https://github.com/unosquare/tubular2'),
+  createData('Tubular Common', 'Library', 'Javascript/Typescript	',
+    'Tubular Common provides TypeScript and Javascript models and data transformer to use any Tubular DataGrid component with an array of Javascript objects.',
+    'https://github.com/unosquare/tubular-common'),
+  createData('Tubular Dotnet', 'Backend library', 'C#/.NET Core',
+    'Tubular provides .NET Framework and .NET Core Library to create REST service to use with Tubular Angular Components easily with any WebApi library (ASP.NET Web API for example).',
+    'https://github.com/unosquare/tubular-dotnet'),
+  createData('Tubular Nodejs', 'Backend Library', '	Javascript',
+    'Tubular Node.js provides an easy way to integrate Tubular Angular Components easily with any Node.js WebApi library.',
+    'https://github.com/unosquare/tubular-nodejs'),
+  createData('Tubular Boilerplate C#', 'Boilerplate	', '	C#',
+    'Tubular Directives Boilerplate (includes AngularJS and Bootstrap).',
+    'https://github.com/unosquare/tubular-boilerplate-csharp'),
+  createData('Tubular Boilerplate', 'Boilerplate', 'Javascript/AngularJS',
+    'Tubular Directives Boilerplate (includes AngularJS and Bootstrap).',
+    'https://github.com/unosquare/tubular-boilerplate'),
+  createData('Tubular ASP.NET Core 2.0 Boilerplate', 'Boilerplate', '	C#/.NET Core',
+    'Tubular Directives Boilerplate (includes AngularJS and Bootstrap).',
+    'https://github.com/unosquare/tubular-aspnet-core-boilerplate'),
+];
 
 const Home = ({ classes }: any) => (
   <Grid container={true} spacing={24} className={classes.container}>
@@ -104,7 +137,7 @@ const Home = ({ classes }: any) => (
         which helps you to quickly find information.
           </Typography>
       <br />
-      <Typography variant='h4' paragraph={true}>
+      <Typography variant='h4'>
         Installation
       </Typography>
       <Divider />
@@ -149,7 +182,7 @@ const Home = ({ classes }: any) => (
         {'npm install tubular-react --save'}
       </Highlight>
       <br />
-      <Typography variant='h4' paragraph={true}>
+      <Typography variant='h4'>
         Usage
       </Typography>
       <Divider />
@@ -201,6 +234,31 @@ const Home = ({ classes }: any) => (
               `}
         </Highlight>
       </Typography>
+      <br/>
+      <Typography variant='h4'>
+        Related projects
+      </Typography>
+      <Divider />
+      <Table className={classes.table}>
+        <TableHead>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell>Type</TableCell>
+            <TableCell>Language/Tech</TableCell>
+            <TableCell>Description</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map(row => (
+            <TableRow key={row.id}>
+                <TableCell><a href={row.url}>{row.name}</a></TableCell>
+                <TableCell>{row.type}</TableCell>
+                <TableCell>{row.language}</TableCell>
+                <TableCell>{row.description}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </Paper>
   </Grid>
 );
