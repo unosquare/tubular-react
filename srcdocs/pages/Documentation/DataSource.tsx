@@ -48,12 +48,12 @@ const DataSource = ({ classes }: any) => (
     </Hidden>
     <Grid item={true} xs={12} md={9}>
       <Paper className={classes.paper}>
-        <Typography variant='display1' paragraph={true}>
+        <Typography variant='h4' paragraph={true}>
           Data Source
         </Typography>
         <Divider />
         <br />
-        <Typography variant='subheading'>
+        <Typography variant='subtitle1'>
           <code className={classes.codeTag}>{'<DataGrid />'}</code> requires a
           wrapper component to retrieve data. Depends on if we use a local
           data source or a remote data source, these wrappers are:
@@ -64,7 +64,7 @@ const DataSource = ({ classes }: any) => (
               <code className={classes.codeTag}>DataGrid</code> component.
               <br />
           <br />
-          <Typography variant='headline' gutterBottom={true}>
+          <Typography variant='h5' gutterBottom={true}>
             <code className={classes.codeTag}>withRemoteDataSource</code>
           </Typography>
           <code className={classes.codeTag}>withRemoteDataSource</code>
@@ -77,7 +77,7 @@ const DataSource = ({ classes }: any) => (
             {remoteDataSource}
           </Highlight>
           <br />
-          <Typography variant='headline' gutterBottom={true}>
+          <Typography variant='h5' gutterBottom={true}>
             <code className={classes.codeTag}>LocalDataSource</code>
           </Typography>
           <code className={classes.codeTag}>withLocalDataSource</code>

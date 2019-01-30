@@ -30,11 +30,11 @@ export const renderCellContent: any = (column: ColumnModel, row: any) => {
 
 export const renderCells: any = (columns: ColumnModel[], row: any) =>
     columns
-        .filter((col: any) => col.Visible)
-        .map((column: ColumnModel, colIndex: number) =>
+        .filter((col: ColumnModel) => col.Visible)
+        .map((column: ColumnModel) =>
             (
                 <TableCell
-                    key={colIndex}
+                    key={column.Name}
                     padding={column.Label === '' ? 'none' : 'default'}
                 >
                     {renderCellContent(column, row)}

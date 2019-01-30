@@ -33,15 +33,15 @@ const GettingStarted = ({ classes }: any) => (
     </Hidden>
     <Grid item={true} xs={12} md={9}>
       <Paper className={classes.paper}>
-        <Typography variant='display1' paragraph={true}>
+        <Typography variant='h4' paragraph={true}>
           Getting Started
             </Typography>
         <Divider />
         <br />
-        <Typography variant='headline' paragraph={true}>
+        <Typography variant='h5' paragraph={true}>
           Installation
             </Typography>
-        <Typography variant='subheading' paragraph={true}>
+        <Typography variant='subtitle1' paragraph={true}>
           Tubular-React is available as an
           <a
             href='https://www.npmjs.com/package/tubular-react'
@@ -50,7 +50,7 @@ const GettingStarted = ({ classes }: any) => (
             npm package
           </a>
         </Typography>
-        <Typography variant='headline' paragraph={true}>
+        <Typography variant='h5' paragraph={true}>
           Dependencies
             </Typography>
         <Typography variant='body1' paragraph={true}>
@@ -73,7 +73,7 @@ const GettingStarted = ({ classes }: any) => (
             </li>
           </ul>
         </Typography>
-        <Typography variant='headline' paragraph={true}>
+        <Typography variant='h5' paragraph={true}>
           npm
             </Typography>
         <Typography variant='body1' paragraph={true}>
@@ -85,10 +85,10 @@ const GettingStarted = ({ classes }: any) => (
           {'npm install tubular-react --save'}
         </Highlight>
         <br />
-        <Typography variant='headline' paragraph={true}>
+        <Typography variant='h5' paragraph={true}>
           Usage
             </Typography>
-        <Typography variant='subheading' paragraph={true}>
+        <Typography variant='subtitle1' paragraph={true}>
           Tubular React is an extension of Material-UI which offers until
           now a couple of useful components:
               <br />
@@ -99,7 +99,7 @@ const GettingStarted = ({ classes }: any) => (
           your data, you can populate them from a server-side data source or
           a local data source as an array.
             </Typography>
-        <Typography variant='headline' paragraph={true}>
+        <Typography variant='h5' paragraph={true}>
           
           Quick Start
         </Typography>
@@ -110,10 +110,10 @@ const GettingStarted = ({ classes }: any) => (
         <Highlight language='javascript' className={classes.code}>
           {basicFeatures}
         </Highlight>
-        <Typography variant='headline' paragraph={true}>
+        <Typography variant='h5' paragraph={true}>
           Extend Grid Functionalities
             </Typography>
-        <Typography variant='subheading' paragraph={true}>
+        <Typography variant='subtitle1' paragraph={true}>
           You can add functionalities to the `DataGrid`, including extra
           buttons that can perform an action according to your requirements.
           You just need to include the IconButton Component from @material-ui and
