@@ -1,13 +1,11 @@
 import {
-    AppBar, Collapse, Divider, Drawer, IconButton, List, ListItem,
-    ListItemIcon, ListItemText, Theme, Toolbar, Tooltip, WithStyles,
+    AppBar, Divider, Drawer, IconButton, List, ListItem,
+    ListItemIcon, ListItemText, Toolbar, Tooltip, WithStyles,
     withStyles,
 } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
 import Menu from '@material-ui/icons/Menu';
 
 import * as  React from 'react';
@@ -88,64 +86,36 @@ const NavigationBar =
                     </AppBar>
                     <Drawer variant='persistent' open={this.state.openDrawer} onClose={this.toggleDrawer(false)}>
                         <List>
-                            <Tooltip title='Close'>
-                                <ListItem button={true} onClick={this.toggleDrawer(false)}>
-                                    <ListItemIcon><ChevronLeft /></ListItemIcon>
-                                </ListItem>
-                            </Tooltip>
-                            <Divider />
-                            <Link to='/' className={classes.link}>
-                                <ListItem button={true} onClick={this.toggleDrawer(false)}>
-                                    <ListItemText primary='Home' />
-                                </ListItem>
-                            </Link>
-                            <Link to='/sample' className={classes.link}>
-                                <ListItem button={true} onClick={this.toggleDrawer(false)}>
-                                    <ListItemText primary='Samples' />
-                                </ListItem>
-                            </Link>
-                            {/* <ListItem button={true} onClick={this.toggleDrawer(false)}/> */}
-                            <ListItem button={true} onClick={this.toggleList(!this.state.openList)}>
-                                <ListItemText primary='Documentation' />
-                                {this.state.openList ? <ExpandLess /> : <ExpandMore />}
+                        <Tooltip title='Close'>
+                            <ListItem button={true} onClick={this.toggleDrawer(false)}>
+                                <ListItemIcon><ChevronLeft /></ListItemIcon>
                             </ListItem>
-                            <Collapse in={this.state.openList} timeout='auto' unmountOnExit={true}>
-                                <List component='div' disablePadding={true}>
-                                    <Link to='/documentation/getting-started' className={classes.link}>
-                                        <ListItem button={true} onClick={this.toggleDrawer(false)}>
-                                            <ListItemText primary='Getting Started' />
-                                        </ListItem>
-                                    </Link>
-                                    <Link to='/documentation/columnmodel' className={classes.link}>
-                                        <ListItem button={true} onClick={this.toggleDrawer(false)}>
-                                            <ListItemText primary='Column Model' />
-                                        </ListItem>
-                                    </Link>
-                                    <Link to='/documentation/datasource' className={classes.link}>
-                                        <ListItem button={true} onClick={this.toggleDrawer(false)}>
-                                            <ListItemText primary='Data Source' />
-                                        </ListItem>
-                                    </Link>
-                                    <Link to='/documentation/props' className={classes.link}>
-                                        <ListItem button={true} onClick={this.toggleDrawer(false)}>
-                                            <ListItemText primary='Props' />
-                                        </ListItem>
-                                    </Link>
-                                </List>
-                            </Collapse>
-                            <Divider />
-                            <ListItem
-                                button={true}
-                                component='a'
-                                href='https://www.unosquare.com/'
-                                target='_blank'
-                                onClick={this.toggleDrawer(false)}
-                            >
-                                <img
-                                    className={classes.image}
-                                    src='https://unosquare.github.io/tubular-react/static/logoUnosquare.png'
-                                    alt='Unosquare'
-                                />
+                        </Tooltip>
+                        <Divider />
+                        <ListItem button={true} onClick={this.toggleDrawer(false)}>
+                            <Link to='/' className={classes.link}>
+                                <ListItemText primary='Home' />
+                            </Link>
+                        </ListItem>
+                        <ListItem button={true} onClick={this.toggleDrawer(false)}>
+                            <Link to='/Sample' className={classes.link}>
+                                <ListItemText primary='Grid Samples' />
+                            </Link>
+                        </ListItem>
+                        <ListItem button={true} onClick={this.toggleDrawer(false)}>
+                            <Link to='/ComponentAPI' className={classes.link}>
+                                <ListItemText primary='ComponentAPI' />
+                            </Link>
+                        </ListItem>
+                        <Divider />
+                        <ListItem
+                            button={true}
+                            component='a'
+                            href='https://www.unosquare.com/'
+                            target='_blank'
+                            onClick={this.toggleDrawer(false)}
+                        >
+                                <img className={classes.image} src='../../static/unosquare_logo.svg' alt='Unosquare' />
                             </ListItem>
                         </List>
                     </Drawer>

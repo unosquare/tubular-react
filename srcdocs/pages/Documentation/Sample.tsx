@@ -11,22 +11,22 @@ import { IconButton, Tooltip } from '@material-ui/core';
 import CodeIcon from '@material-ui/icons/Code';
 import CreateIcon from '@material-ui/icons/Create';
 import Highlight from 'react-highlight';
-import GitHubIcon from '../components/Github';
+import GitHubIcon from '../../components/Github';
 
 import * as React from 'react';
 
 import 'highlight.js/styles/an-old-hope.css';
-import BasicFeatures from '../../srcdocs/components/BasicFeatures';
-import SampleButtonsFeatures from '../../srcdocs/components/SampleButtonsFeatures';
-import SampleFeatures from '../../srcdocs/components/SampleFeatures';
-import SampleGridList from '../../srcdocs/components/SampleGridList';
+import BasicFeatures from '../../components/BasicFeatures';
+import SampleButtonsFeatures from '../../components/SampleButtonsFeatures';
+import SampleFeatures from '../../components/SampleFeatures';
+import SampleGridList from '../../components/SampleGridList';
 
 import {
   basicFeatures,
   buttonFeatures,
   gridList,
   simpleFeatures,
-} from '../utils/codeSnipetExamples';
+} from '../../utils/codeSnipetExamples';
 
 const styles = {
   code: {
