@@ -59,8 +59,8 @@ const Props = ({ classes }: any) => (
                 <Divider />
                 <br />
                 <Typography variant='subheading'>
-                    If you need personalite the grid adding, removing
-                            or modifying  fetures, <code className={classes.code}>ToolBarOptions Class</code>
+                    If you need to personalize the grid adding, removing
+                            or modifying  features, <code className={classes.code}>ToolBarOptions Class</code>
                     provides several options.
                         </Typography>
                 <ToolBarOptionsProps />

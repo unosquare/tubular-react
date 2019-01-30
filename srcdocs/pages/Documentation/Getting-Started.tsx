@@ -1,6 +1,5 @@
 import { Divider, Grid, Hidden, Paper, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-
 import 'highlight.js/styles/an-old-hope.css';
 import * as React from 'react';
 import Highlight from 'react-highlight';
@@ -117,7 +116,7 @@ const GettingStarted = ({ classes }: any) => (
         <Typography variant='subheading' paragraph={true}>
           You can add functionalities to the `DataGrid`, including extra
           buttons that can perform an action according to your requirements.
-          Just need include an IconButton Component from @material-ui and
+          You just need to include the IconButton Component from @material-ui and
           define the icon or button that you need between `DataGrid` tags
           and specify the action to perform.
               <br />

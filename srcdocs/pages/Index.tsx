@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Switch } from 'react-router';
-import { HashRouter, Link, Redirect, Route } from 'react-router-dom';
+import { HashRouter, Redirect, Route } from 'react-router-dom';
 import NavigationBar from '../components/NavigationBar';
 import ColumnModel from './Documentation/ColumnModel';
 import DataSource from './Documentation/DataSource';
