@@ -3,9 +3,9 @@ import * as ReactDOM from 'react-dom';
 import { Switch } from 'react-router';
 import { HashRouter, Route } from 'react-router-dom';
 import NavigationBar from '../components/NavigationBar';
+import ComponentAPI from './Documentation/ComponentAPI';
 import Home from './Documentation/Home';
 import Sample from './Documentation/Sample';
-import ComponentAPI from './Documentation/ComponentAPI';
 
 class App extends React.Component {
   public render() {

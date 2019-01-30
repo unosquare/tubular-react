@@ -1,4 +1,4 @@
-import { Divider, Grid, Link, Paper, Table, TableBody, TableHead, TableRow, TableCell, Typography } from '@material-ui/core';
+import { Divider, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 import * as React from 'react';
@@ -42,13 +42,14 @@ function createData(name, type, language, description, url) {
   return { id, name, type, language, description, url };
 }
 
+// tslint:disable-next-line:max-line-length
 const rows = [
   createData('Tubular for AngularJS (formerly Tubular)', 'Library', 'AngularJs',
-  'Tubular provides a set of directives and services using AngularJS as framework.',
-  'https://github.com/unosquare/tubular'),
+    'Tubular provides a set of directives and services using AngularJS as framework.',
+    'https://github.com/unosquare/tubular'),
   createData('Tubular for Angular6 (formerly Tubular2)', 'Library', 'Angular6',
-  'New Tubular2 with Angular6 (Angular2) and Angular Material 2.',
-  'https://github.com/unosquare/tubular2'),
+    'New Tubular2 with Angular6 (Angular2) and Angular Material 2.',
+    'https://github.com/unosquare/tubular2'),
   createData('Tubular Common', 'Library', 'Javascript/Typescript	',
     'Tubular Common provides TypeScript and Javascript models and data transformer to use any Tubular DataGrid component with an array of Javascript objects.',
     'https://github.com/unosquare/tubular-common'),
@@ -72,7 +73,7 @@ const rows = [
 const Home = ({ classes }: any) => (
   <Grid container={true} spacing={24} className={classes.container}>
     <Paper className={classes.paper}>
-      <img src="..\..\static\tubularRed.png" />
+      <img src='..\..\static\tubularRed.png' />
       <Divider />
       <Typography
         paragraph={true}
@@ -147,7 +148,7 @@ const Home = ({ classes }: any) => (
           target='_blank'
         >
           npm package
-          </a>
+        </a>
       </Typography>
       <Typography variant='h5' paragraph={true}>
         Dependencies
@@ -234,7 +235,7 @@ const Home = ({ classes }: any) => (
               `}
         </Highlight>
       </Typography>
-      <br/>
+      <br />
       <Typography variant='h4'>
         Related projects
       </Typography>
@@ -249,12 +250,12 @@ const Home = ({ classes }: any) => (
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
+          {rows.map((row) => (
             <TableRow key={row.id}>
-                <TableCell><a href={row.url}>{row.name}</a></TableCell>
-                <TableCell>{row.type}</TableCell>
-                <TableCell>{row.language}</TableCell>
-                <TableCell>{row.description}</TableCell>
+              <TableCell><a href={row.url}>{row.name}</a></TableCell>
+              <TableCell>{row.type}</TableCell>
+              <TableCell>{row.language}</TableCell>
+              <TableCell>{row.description}</TableCell>
             </TableRow>
           ))}
         </TableBody>

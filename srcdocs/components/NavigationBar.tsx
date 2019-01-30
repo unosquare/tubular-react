@@ -86,35 +86,35 @@ const NavigationBar =
                     </AppBar>
                     <Drawer variant='persistent' open={this.state.openDrawer} onClose={this.toggleDrawer(false)}>
                         <List>
-                        <Tooltip title='Close'>
+                            <Tooltip title='Close'>
+                                <ListItem button={true} onClick={this.toggleDrawer(false)}>
+                                    <ListItemIcon><ChevronLeft /></ListItemIcon>
+                                </ListItem>
+                            </Tooltip>
+                            <Divider />
                             <ListItem button={true} onClick={this.toggleDrawer(false)}>
-                                <ListItemIcon><ChevronLeft /></ListItemIcon>
+                                <Link to='/' className={classes.link}>
+                                    <ListItemText primary='Home' />
+                                </Link>
                             </ListItem>
-                        </Tooltip>
-                        <Divider />
-                        <ListItem button={true} onClick={this.toggleDrawer(false)}>
-                            <Link to='/' className={classes.link}>
-                                <ListItemText primary='Home' />
-                            </Link>
-                        </ListItem>
-                        <ListItem button={true} onClick={this.toggleDrawer(false)}>
-                            <Link to='/Sample' className={classes.link}>
-                                <ListItemText primary='Grid Samples' />
-                            </Link>
-                        </ListItem>
-                        <ListItem button={true} onClick={this.toggleDrawer(false)}>
-                            <Link to='/ComponentAPI' className={classes.link}>
-                                <ListItemText primary='ComponentAPI' />
-                            </Link>
-                        </ListItem>
-                        <Divider />
-                        <ListItem
-                            button={true}
-                            component='a'
-                            href='https://www.unosquare.com/'
-                            target='_blank'
-                            onClick={this.toggleDrawer(false)}
-                        >
+                            <ListItem button={true} onClick={this.toggleDrawer(false)}>
+                                <Link to='/Sample' className={classes.link}>
+                                    <ListItemText primary='Grid Samples' />
+                                </Link>
+                            </ListItem>
+                            <ListItem button={true} onClick={this.toggleDrawer(false)}>
+                                <Link to='/ComponentAPI' className={classes.link}>
+                                    <ListItemText primary='ComponentAPI' />
+                                </Link>
+                            </ListItem>
+                            <Divider />
+                            <ListItem
+                                button={true}
+                                component='a'
+                                href='https://www.unosquare.com/'
+                                target='_blank'
+                                onClick={this.toggleDrawer(false)}
+                            >
                                 <img className={classes.image} src='../../static/unosquare_logo.svg' alt='Unosquare' />
                             </ListItem>
                         </List>

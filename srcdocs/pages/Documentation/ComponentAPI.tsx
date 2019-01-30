@@ -3,8 +3,8 @@ import { withStyles } from '@material-ui/core/styles';
 
 import * as React from 'react';
 import Highlight from 'react-highlight';
-import DataGridProps from '../../components/DataGridProps';
 import ColumnModelList from '../../components/ColumnModelTable';
+import DataGridProps from '../../components/DataGridProps';
 import ToolBarOptionsProps from '../../components/ToolBarOptionsProps';
 
 const styles = {
