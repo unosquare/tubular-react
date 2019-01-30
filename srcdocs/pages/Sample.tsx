@@ -23,6 +23,7 @@ import SampleGridList from '../../srcdocs/components/SampleGridList';
 
 import {
   basicFeatures,
+  buttonFeatures,
   gridList,
   simpleFeatures,
 } from '../utils/codeSnipetExamples';
@@ -55,6 +56,7 @@ const bar: any = {
 
 interface IState {
   openBasic: boolean;
+  openSampleFeatures: boolean;
   openSample: boolean;
   openGridList: boolean;
   showCode: boolean;
@@ -66,6 +68,7 @@ export default withStyles(styles)(
     public state = {
       openBasic: false,
       openGridList: false,
+      openSampleFeatures: false,
       openSample: false,
       showCode: false,
       value: 'one',
@@ -75,6 +78,9 @@ export default withStyles(styles)(
     }
     public handleClickSample = () => {
       this.setState({ openSample: !this.state.openSample });
+    }
+    public handleClickSampleFeatures = () => {
+      this.setState({ openSampleFeatures: !this.state.openSampleFeatures });
     }
     public handleClickGrid = () => {
       this.setState({ openGridList: !this.state.openGridList });
@@ -91,11 +97,13 @@ export default withStyles(styles)(
                 <Divider />
                 <br />
                 <Grid item={true} xs={12} className={classes.paper}>
-                  <Typography variant='h5' gutterBottom={true}>
-                    Basic grid features
+                <Typography variant='h5' gutterBottom={true}>
+                    Very basic grid sample
                   </Typography>
                   <Typography variant='h6'>
-                    Very basic grid sample
+                  Basic grid with sorting, paging and filtering functionalities. Showing how
+                  different data types are displayed. To implement it you must declare each column and
+                  their own funcionalities.
                   </Typography>
                   <Grid item={true} xs={12}>
                     <div style={bar}>
@@ -147,9 +155,9 @@ export default withStyles(styles)(
                   </Typography>
                   <Typography variant='h6'>
                     The grid can be extended to include features like sorting,
-                    Filterable, free-text searches, move across the pages and
-                    change the number of rows per page Although easily you can
-                    print or export the current view or entire dataset to CSV
+                    filtering, free-text searches, paging and
+                    change the number of rows per page. Also, you can 
+                    easily print or export the current view or entire dataset to CSV
                     using client-side only.
                   </Typography>
                   <Grid item={true} xs={12}>
@@ -205,7 +213,7 @@ export default withStyles(styles)(
                   <Typography variant='h6'>
                     You can add functionalities to the DataGrid including extra
                     buttons that can perform an action according to your
-                    requirements. Just need include an IconButton Component from
+                    requirements. You just need to include the IconButton Component from
                     @material-ui and define the icon or button that you need
                     between DataGrid tags and specify the action to perform.
                   </Typography>
@@ -222,9 +230,9 @@ export default withStyles(styles)(
                         </IconButton>
                       </Tooltip>
                       <Tooltip
-                        title={this.state.openBasic ? 'Hide Code' : 'View Code'}
+                        title={this.state.openSampleFeatures ? 'Hide Code' : 'View Code'}
                       >
-                        <IconButton onClick={this.handleClickBasic}>
+                        <IconButton onClick={this.handleClickSampleFeatures}>
                           <CodeIcon />
                         </IconButton>
                       </Tooltip>
@@ -239,13 +247,13 @@ export default withStyles(styles)(
                         </IconButton>
                       </Tooltip>
                     </div>
-                    <Collapse in={this.state.openBasic} timeout='auto'>
+                    <Collapse in={this.state.openSampleFeatures} timeout='auto'>
                       <Paper>
                         <Highlight
                           language='javascript'
                           className={classes.code}
                         >
-                          {basicFeatures}
+                          {buttonFeatures}
                         </Highlight>
                       </Paper>
                     </Collapse>

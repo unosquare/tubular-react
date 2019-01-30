@@ -8,15 +8,14 @@ import {
   WithStyles,
   withStyles,
 } from '@material-ui/core';
-
 import 'highlight.js/styles/an-old-hope.css';
 import * as React from 'react';
 import Highlight from 'react-highlight';
-
 import DocumentationList from '../../components/DocumentationList';
 
-const styles = {
-  code: {
+
+const styles = {  
+  codeTag: {
     background: '#F8F8FF',
     padding: '6px',
   },
@@ -55,23 +54,23 @@ const DataSource = ({ classes }: any) => (
         <Divider />
         <br />
         <Typography variant='subtitle1'>
-          <code className={classes.code}>{'<DataGrid />'}</code> requires a
+          <code className={classes.codeTag}>{'<DataGrid />'}</code> requires a
           wrapper component to retrieve data. Depends on if we use a local
           data source or a remote data source, these wrappers are:
-              <code className={classes.code}>withRemoteDataSource</code>
+              <code className={classes.codeTag}>withRemoteDataSource</code>
           component or the
-          <code className={classes.code}>withLocalDataSource</code>
+          <code className={classes.codeTag}>withLocalDataSource</code>
           component, which deals with data retrieval on the
-              <code className={classes.code}>DataGrid</code> component.
+              <code className={classes.codeTag}>DataGrid</code> component.
               <br />
           <br />
           <Typography variant='h5' gutterBottom={true}>
-            <code className={classes.code}>withRemoteDataSource</code>
+            <code className={classes.codeTag}>withRemoteDataSource</code>
           </Typography>
-          <code className={classes.code}>withRemoteDataSource</code>
-          needs our <code className={classes.code}>DataGrid</code>
-          component, a <code className={classes.code}>ColumnModel</code>
-          array and a <code className={classes.code}>URL</code> which
+          <code className={classes.codeTag}>withRemoteDataSource</code>
+          needs our <code className={classes.codeTag}>DataGrid</code>
+          component, a <code className={classes.codeTag}>ColumnModel</code>
+          array and a <code className={classes.codeTag}>URL</code> which
           represent a service.
               <br />
           <Highlight language='javascript' className={'an-old-hope'}>
@@ -79,12 +78,12 @@ const DataSource = ({ classes }: any) => (
           </Highlight>
           <br />
           <Typography variant='h5' gutterBottom={true}>
-            <code className={classes.code}>LocalDataSource</code>
+            <code className={classes.codeTag}>LocalDataSource</code>
           </Typography>
-          <code className={classes.code}>withLocalDataSource</code>
-          needs our <code className={classes.code}>DataGrid</code>
-          component, a <code className={classes.code}>ColumnModel</code>
-          array and an <code className={classes.code}>Array</code>of
+          <code className={classes.codeTag}>withLocalDataSource</code>
+          needs our <code className={classes.codeTag}>DataGrid</code>
+          component, a <code className={classes.codeTag}>ColumnModel</code>
+          array and an <code className={classes.codeTag}>Array</code>of
           objects.
               <br />
           <Highlight language='javascript' className={'an-old-hope'}>

@@ -84,6 +84,86 @@ const MyComponent = () => {
 */
 export default withRemoteDataSource(MyComponent, columns, 'http://tubular.azurewebsites.net/api/orders/paged');`;
 
+export const buttonFeatures = `import * as React from 'react';
+import IconButton from '@material-ui/core/IconButton';
+import Brightness7Rounded from '@material-ui/icons/Brightness7Rounded';
+import Mood from '@material-ui/icons/Mood';
+
+import DataGrid, {
+    withRemoteDataSource } from 'tubular-react';
+
+import { AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection } from 'tubular-common';
+
+//  First of all, you must define your columns model.
+const columns = [
+    new ColumnModel('OrderID',
+        {
+            DataType: ColumnDataType.NUMERIC,
+            Filterable: true,
+            IsKey: true,
+            Label: 'ID',
+            SortDirection: ColumnSortDirection.ASCENDING,
+            SortOrder: 1,
+            Sortable: true
+        }
+    ),
+    new ColumnModel('CustomerName',
+        {
+            Aggregate: AggregateFunctions.COUNT,
+            Filterable: true,
+            Searchable: true,
+            Sortable: true
+        }
+    ),
+    new ColumnModel('ShippedDate',
+        {
+            DataType: ColumnDataType.DATE_TIME,
+            Filterable: true,
+            Sortable: true
+        }
+    ),
+    new ColumnModel('ShipperCity'),
+    new ColumnModel('Amount',
+        {
+            DataType: ColumnDataType.NUMERIC,
+            Sortable: true
+        }
+    ),
+    new ColumnModel('IsShipped',
+        {
+            DataType: ColumnDataType.BOOLEAN,
+            Filterable: true,
+            Sortable: true
+        }
+    )
+];
+const MyComponent = () => {
+
+      <DataGrid gridName='Tubular-React'>
+        <IconButton color='default'>
+          <Mood
+            onClick={() =>
+              alert('I can help you to add features to your datagrid.')
+            }
+          />
+        </IconButton>
+        <IconButton color='default'>
+          <Brightness7Rounded
+            onClick={() => alert('Happy codes, have a nice day')}
+          />
+        </IconButton>
+      </DataGrid>
+};
+
+/*
+ Use the component withRemoteDataSource to wrap your component
+ and columns definition among the data obtained from the URL.
+
+ withRemoteDataSource will set an initial context for your grid.
+*/
+export default withRemoteDataSource(MyComponent, columns, 'http://tubular.azurewebsites.net/api/orders/paged');`;
+
+
 export const simpleFeatures = `import React from 'react';
 import { Snackbar, TableCell, TableRow } from '@material-ui/core';
 import CheckBox from '@material-ui/icons/CheckBox';
