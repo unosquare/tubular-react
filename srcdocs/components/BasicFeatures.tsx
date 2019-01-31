@@ -30,4 +30,4 @@ const MyComponent = () => {
 
  withRemoteDataSource will set an initial context for your grid.
 */
-export default withRemoteDataSource(MyComponent, columns, 'http://tubular.azurewebsites.net/api/orders/paged');
+export default withRemoteDataSource(MyComponent, columns, 'https://tubular.azurewebsites.net/api/orders/paged');

@@ -115,7 +115,7 @@ const NavigationBar =
                                 target='_blank'
                                 onClick={this.toggleDrawer(false)}
                             >
-                                <img className={classes.image} src='../../static/unosquare_logo.svg' alt='Unosquare' />
+                                <img className={classes.image} src='https://unosquare.github.io/tubular-react/static/unosquare_logo.svg' alt='Unosquare' />
                             </ListItem>
                         </List>
                     </Drawer>
