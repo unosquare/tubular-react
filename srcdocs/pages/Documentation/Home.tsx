@@ -42,7 +42,6 @@ function createData(name, type, language, description, url) {
   return { id, name, type, language, description, url };
 }
 
-// tslint:disable-next-line:max-line-length
 const rows = [
   createData('Tubular for AngularJS (formerly Tubular)', 'Library', 'AngularJs',
     'Tubular provides a set of directives and services using AngularJS as framework.',
@@ -73,7 +72,7 @@ const rows = [
 const Home = ({ classes }: any) => (
   <Grid container={true} spacing={24} className={classes.container}>
     <Paper className={classes.paper}>
-      <img src='..\..\static\tubularRed.png' />
+    <img src='https://unosquare.github.io/tubular-react/static/tubularRed.png'/>
       <Divider />
       <Typography
         paragraph={true}
