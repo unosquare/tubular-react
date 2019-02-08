@@ -36,7 +36,7 @@ class SampleFeatures extends React.Component {
                     gridName='Tubular-React'
                     bodyRenderer={
                         (row: any) =>
-                            <TableRow hover={true} key={row}>
+                            <TableRow hover={true} key={row.OrderID}>
                                 <TableCell padding='default'>
                                     {row.OrderID}
                                 </TableCell>
@@ -49,7 +49,7 @@ class SampleFeatures extends React.Component {
                                 <TableCell padding='default'>
                                     {row.ShipperCity}
                                 </TableCell>
-                                <TableCell padding='default' numeric={true}>
+                                <TableCell padding='default' align={'right'}>
                                     {row.Amount || 0}
                                 </TableCell>
                                 <TableCell padding='default'>

@@ -28,6 +28,17 @@ export const renderCellContent: any = (column: ColumnModel, row: any) => {
     }
 };
 
+export const renderCellAlign: any = (column: ColumnModel) => {
+    switch (column.DataType) {
+        case ColumnDataType.NUMERIC:
+            return 'right';
+        case ColumnDataType.BOOLEAN:
+            return 'center';
+        default:
+            return 'inherit';
+    }
+};
+
 export const renderCells: any = (columns: ColumnModel[], row: any) =>
     columns
         .filter((col: ColumnModel) => col.Visible)
@@ -36,6 +47,7 @@ export const renderCells: any = (columns: ColumnModel[], row: any) =>
                 <TableCell
                     key={column.Name}
                     padding={column.Label === '' ? 'none' : 'default'}
+                    align={renderCellAlign(column)}
                 >
                     {renderCellContent(column, row)}
                 </TableCell>

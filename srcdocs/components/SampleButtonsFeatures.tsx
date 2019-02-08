@@ -35,14 +35,14 @@ class SampleFeatures extends React.Component {
         <DataGrid
           gridName='Tubular-React'
           bodyRenderer={(row: any) => (
-            <TableRow hover={true} key={row}>
+            <TableRow hover={true} key={row.OrderID}>
               <TableCell padding='default'>{row.OrderID}</TableCell>
               <TableCell padding='default'>{row.CustomerName}</TableCell>
               <TableCell padding='default'>
                 {format(row.ShippedDate, 'MMMM Do YYYY, h:mm:ss a')}
               </TableCell>
               <TableCell padding='default'>{row.ShipperCity}</TableCell>
-              <TableCell padding='default' numeric={true}>
+              <TableCell padding='default' align={'right'}>
                 {row.Amount || 0}
               </TableCell>
               <TableCell padding='default'>
