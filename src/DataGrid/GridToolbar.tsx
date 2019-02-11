@@ -13,11 +13,6 @@ import { exportGrid } from './GridToolbarFunctions';
 
 import SearchTextInput from './SearchTextInput';
 
-interface IState {
-  anchorExport?: HTMLElement;
-  anchorPrint?: HTMLElement;
-}
-
 interface IProps {
   toolbarOptions: ToolbarOptions;
   gridName: string;
@@ -29,97 +24,84 @@ const styles: any = {
   },
 };
 
-class GridToolbar extends React.Component<IProps, IState> {
-  public state = {
-    anchorExport: null as HTMLElement,
-    anchorPrint: null as HTMLElement,
+const GridToolbar: React.FunctionComponent<IProps> = ({ toolbarOptions, gridName, children }) => {
+  const { actions, state } = React.useContext(DataSourceContext);
+
+  const [anchorExport, setAnchorExport] = React.useState(null);
+  const [anchorPrint, setAnchorPrint] = React.useState(null);
+
+  const handleExportMenu = (event: React.MouseEvent<HTMLElement>): void =>
+    setAnchorExport(event ? event.currentTarget : null);
+
+  const handlePrintMenu = (event: React.MouseEvent<HTMLElement>): void =>
+    setAnchorPrint(event ? event.currentTarget : null);
+
+  const closeExport = () => setAnchorExport(null);
+  const closePrint = () => setAnchorPrint(null);
+
+  const partialExport = (type: string) => (data: any, columns: any) => {
+    exportGrid(type, data, columns, gridName);
+    closeExport();
+    closePrint();
   };
 
-  public handleExportMenu = (event: React.MouseEvent<HTMLElement>): void => {
-    this.setState({
-      anchorExport: event ? event.currentTarget : null,
-    });
-  }
+  const exportCurrentCsv = () => actions.exportTo(false, partialExport('csv'));
+  const exportAllCsv = () => actions.exportTo(true, partialExport('csv'));
 
-  public handlePrintMenu = (event: React.MouseEvent<HTMLElement>): void => {
-    this.setState({
-      anchorPrint: event ? event.currentTarget : null,
-    });
-  }
+  const printCurrent = () => actions.exportTo(false, partialExport('print'));
+  const printAll = () => actions.exportTo(true, partialExport('print'));
 
-  public render() {
-    const { toolbarOptions, gridName } = this.props;
-    const { anchorExport, anchorPrint } = this.state;
-
-    const partialExport = (type: string) => (data: any, columns: any) => {
-      exportGrid(type, data, columns, gridName);
-      this.handleExportMenu(null);
-    };
-
-    const exportCurrentCsv = (callback: any) => () => callback(false, partialExport('csv'));
-    const exportAllCsv = (callback: any) => () => callback(true, partialExport('csv'));
-
-    const printCurrent = (callback: any) => () => callback(false, partialExport('print'));
-    const printAll = (callback: any) => () => callback(true, partialExport('print'));
-
-    const closeExport = () => this.handleExportMenu(null);
-    const closePrint = () => this.handlePrintMenu(null);
-
-    return (
-      <DataSourceContext.Consumer>
-        {({ state, actions }) =>
-          <Toolbar>
-            <div style={styles.spacer} />
-            {this.props.children}
-            {toolbarOptions.exportButton &&
-              <IconButton
-                disabled={state.filteredRecordCount === 0}
-                onClick={this.handleExportMenu}
-              >
-                <CloudDownload />
-              </IconButton>}
-            {toolbarOptions.printButton &&
-              <IconButton
-                disabled={state.filteredRecordCount === 0}
-                onClick={this.handlePrintMenu}
-              >
-                <Print />
-              </IconButton>}
-            {toolbarOptions.searchText &&
-              <SearchTextInput />
-            }
-            {toolbarOptions.exportButton &&
-              <Menu
-                anchorEl={anchorExport}
-                open={Boolean(anchorExport)}
-                onClose={closeExport}
-              >
-                <MenuItem onClick={exportCurrentCsv}>
-                  Current rows
-                </MenuItem>
-                <MenuItem onClick={exportAllCsv}>
-                  All rows
-                </MenuItem>
-              </Menu>
-            }
-            {toolbarOptions.printButton &&
-              <Menu
-                anchorEl={anchorPrint}
-                open={Boolean(anchorPrint)}
-                onClose={closePrint}
-              >
-                <MenuItem onClick={printCurrent}>
-                  Current rows
-                </MenuItem>
-                <MenuItem onClick={printAll}>
-                  All rows
-                </MenuItem>
-              </Menu>
-            }
-          </Toolbar>}
-      </DataSourceContext.Consumer>
-    );
-  }
-}
+  return (
+    <Toolbar>
+      <div style={styles.spacer} />
+      {children}
+      {toolbarOptions.exportButton &&
+        <IconButton
+          disabled={state.filteredRecordCount === 0}
+          onClick={handleExportMenu}
+        >
+          <CloudDownload />
+        </IconButton>}
+      {toolbarOptions.printButton &&
+        <IconButton
+          disabled={state.filteredRecordCount === 0}
+          onClick={handlePrintMenu}
+        >
+          <Print />
+        </IconButton>}
+      {toolbarOptions.searchText &&
+        <SearchTextInput />
+      }
+      {toolbarOptions.exportButton &&
+        <Menu
+          anchorEl={anchorExport}
+          open={Boolean(anchorExport)}
+          onClose={closeExport}
+        >
+          <MenuItem onClick={exportCurrentCsv}>
+            Current rows
+          </MenuItem>
+          <MenuItem onClick={exportAllCsv}>
+            All rows
+          </MenuItem>
+        </Menu>
+      }
+      {toolbarOptions.printButton &&
+        <Menu
+          anchorEl={anchorPrint}
+          open={Boolean(anchorPrint)}
+          onClose={closePrint}
+        >
+          <MenuItem onClick={printCurrent}>
+            Current rows
+          </MenuItem>
+          <MenuItem onClick={printAll}>
+            All rows
+          </MenuItem>
+        </Menu>
+      }
+    </Toolbar>
+  );
+};
 
 export default GridToolbar;

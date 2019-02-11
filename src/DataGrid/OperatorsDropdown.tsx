@@ -1,8 +1,7 @@
 import * as React from 'react';
 
-import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import TextField from '@material-ui/core/TextField';
 import { ColumnModel } from 'tubular-common';
 import { DataSourceContext } from '../DataSource';
 
@@ -11,26 +10,29 @@ const dropdown = {
   width: '80%',
 };
 
-const onChange = (callback: any) => ({ target }: any) => callback({ Operator: target.value });
 const getValue = (op: string) => !op || op === '' ? 'None' : op;
 
-const OperatorsDropdown: React.FunctionComponent = () => (
-  <DataSourceContext.Consumer>
-    {({ state, actions }) => (
-      <Select
-        style={dropdown}
-        value={getValue(state.activeColumn.Filter.Operator)}
-        onChange={onChange(actions.handleFilterChange)}
-        input={<Input name={state.activeColumn.Name} />}
-      >
-        {ColumnModel.getOperators(state.activeColumn).map((row: any) => (
+const OperatorsDropdown: React.FunctionComponent = () => {
+  const { actions, state } = React.useContext(DataSourceContext);
+  const onChange = ({ target }: any) => actions.handleFilterChange({ Operator: target.value });
+
+  return (
+    <TextField
+      style={dropdown}
+      select={true}
+      value={getValue(state.activeColumn.Filter.Operator)}
+      onChange={onChange}
+      label='Operator'
+    >
+      {ColumnModel
+        .getOperators(state.activeColumn)
+        .map((row: any) => (
           <MenuItem key={row.Value} value={row.Value}>
             {row.Title}
           </MenuItem>
         ))}
-      </Select>
-    )}
-  </DataSourceContext.Consumer>
-);
+    </TextField>
+  );
+};
 
 export default OperatorsDropdown;

@@ -4,17 +4,14 @@ import { ColumnDataType } from 'tubular-common';
 const cellValue = (cellDataType: string, cell: any) => {
     switch (cellDataType) {
         case ColumnDataType.DATE:
-            if (!cell) {
-                return '';
-            }
-            return getYear(parse(cell)) > 0 ? format(cell, 'M/D/YYYY') : '';
+            return !cell
+                ? ''
+                : getYear(parse(cell)) > 0 ? format(cell, 'M/D/YYYY') : '';
         case ColumnDataType.DATE_TIME:
         case ColumnDataType.DATE_TIME_UTC:
-            if (!cell) {
-                return '';
-            }
-
-            return getYear(parse(cell)) > 0 ? format(cell, 'M/D/YYYY h:mm A') : '';
+            return !cell
+                ? ''
+                : getYear(parse(cell)) > 0 ? format(cell, 'M/D/YYYY h:mm A') : '';
         case ColumnDataType.BOOLEAN:
             return (cell === true ? 'Yes' : 'No');
         default:
@@ -22,25 +19,24 @@ const cellValue = (cellDataType: string, cell: any) => {
     }
 };
 
-const objToArray = (row: any) => {
-    return row instanceof Object
-        ? Object.keys(row).map((key: any) => row[key])
-        : row;
-};
+const objToArray = (row: any) => row instanceof Object
+    ? Object.keys(row).map((key: any) => row[key])
+    : row;
 
 const processRow = (row: any, columns: any[], ignoreType: boolean) => {
-    const finalVal = objToArray(row).reduce((prev: any, value: any, i: any) => {
-        if (!columns[i].Visible) { return; }
+    const finalVal = objToArray(row)
+        .reduce((prev: any, value: any, i: any) => {
+            if (!columns[i].Visible) { return; }
 
-        let result = cellValue(ignoreType ? ColumnDataType.STRING : columns[i].DataType, value)
-            .replace(/"/g, '""');
+            let result = cellValue(ignoreType ? ColumnDataType.STRING : columns[i].DataType, value)
+                .replace(/"/g, '""');
 
-        if (result.search(/("|,|\n)/g) >= 0) {
-            result = `"${result}"`;
-        }
+            if (result.search(/("|,|\n)/g) >= 0) {
+                result = `"${result}"`;
+            }
 
-        return `${prev}${i > 0 ? ',' : ''}${result}`;
-    }, '');
+            return `${prev}${i > 0 ? ',' : ''}${result}`;
+        }, '');
 
     return `${finalVal}\n`;
 };

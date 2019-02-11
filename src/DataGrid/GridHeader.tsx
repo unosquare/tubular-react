@@ -18,70 +18,73 @@ const arrowStyle = {
   width: '15px',
 };
 
-const sort = (callback: any, columnName: string) => () => callback(columnName);
-const handleClick = (callback: any, column: string) => (e: any) => callback(column, e);
+const GridHeaderCell: React.FunctionComponent<any> = ({ column }: any) => {
+  const { actions } = React.useContext(DataSourceContext);
+  const sort = () => actions.sortColumn(column.Name);
+  const handleClick = (e: any) => actions.setActiveColumn(column, e);
 
-const GridHeader: React.FunctionComponent = () => {
+  const render = column.Sortable ? (
+    <Tooltip
+      title='Click to sort. Press Ctrl to sort by multiple columns'
+      placement='bottom-start'
+      enterDelay={300}
+    >
+      <TableSortLabel
+        onClick={sort}
+      >
+        {column.Label}
+        {column.SortDirection === ColumnSortDirection.ASCENDING ? (
+          <ArrowUpward style={arrowStyle} />
+        ) : column.SortDirection ===
+          ColumnSortDirection.DESCENDING ? (
+              <ArrowDownward style={arrowStyle} />
+            ) : (
+              <div style={arrowStyle} />
+            )}
+      </TableSortLabel>
+    </Tooltip>
+  ) : (
+      column.Label
+    );
+
+  const filter = column.Filterable && (
+    <IconButton
+      id={column.Name}
+      onClick={handleClick}
+    >
+      <FilterList
+        color={
+          column.Filter.HasFilter &&
+            column.Filter.Operator !== CompareOperators.NONE
+            ? 'action'
+            : 'disabled'
+        }
+      />
+    </IconButton>
+  );
+
   return (
-    <DataSourceContext.Consumer>
-      {({ actions, state }) => (
-        <TableRow>
-          {state.activeColumn && <DialogModal />}
-          {state.columns
-            .filter((col: any) => col.Visible)
-            .map((column: any) => {
-              const render = column.Sortable ? (
-                <Tooltip
-                  title='Click to sort. Press Ctrl to sort by multiple columns'
-                  placement='bottom-start'
-                  enterDelay={300}
-                >
-                  <TableSortLabel
-                    onClick={sort(actions.sortColumn, column.Name)}
-                  >
-                    {column.Label}
-                    {column.SortDirection === ColumnSortDirection.ASCENDING ? (
-                      <ArrowUpward style={arrowStyle} />
-                    ) : column.SortDirection ===
-                      ColumnSortDirection.DESCENDING ? (
-                          <ArrowDownward style={arrowStyle} />
-                        ) : (
-                          <div style={arrowStyle} />
-                        )}
-                  </TableSortLabel>
-                </Tooltip>
-              ) : (
-                  column.Label
-                );
-              const filter = column.Filterable && (
-                <IconButton
-                  id={column.Name}
-                  onClick={handleClick(actions.setActiveColumn, column)}
-                >
-                  <FilterList
-                    color={
-                      column.Filter.HasFilter &&
-                        column.Filter.Operator !== CompareOperators.NONE
-                        ? 'action'
-                        : 'disabled'
-                    }
-                  />
-                </IconButton>
-              );
-
-              return (
-                <TableCell
-                  key={column.Label}
-                  padding={column.Label === '' ? 'none' : 'default'}
-                >
-                  {render}
-                  {filter}
-                </TableCell>
-              );
-            })}
-        </TableRow>
-      )}
-    </DataSourceContext.Consumer>
+    <TableCell
+      key={column.Label}
+      padding={column.Label === '' ? 'none' : 'default'}
+    >
+      {render}
+      {filter}
+    </TableCell>
   );
 };
+
+const GridHeader: React.FunctionComponent = () => {
+  const { state } = React.useContext(DataSourceContext);
+
+  return (
+    <TableRow>
+      {state.activeColumn && <DialogModal />}
+      {state.columns
+        .filter((col: any) => col.Visible)
+        .map((column: any) => <GridHeaderCell key={column.Name} column={column} />)}
+    </TableRow>
+  );
+};
+
 export default GridHeader;

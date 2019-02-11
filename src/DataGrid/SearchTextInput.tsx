@@ -18,36 +18,34 @@ const styles: any = {
 };
 
 const SearchTextInput: React.FunctionComponent = () => {
-  const onChange = (callback: any) => (e: any) => callback(e.target.value);
-  const onClear = (callback: any) => () => callback('');
+  const { actions, state } = React.useContext(DataSourceContext);
+
+  const onChange = (e: any) => actions.updateSearchText(e.target.value);
+  const onClear = () => actions.updateSearchText('');
 
   return (
-    <DataSourceContext.Consumer>
-      {({ state, actions }) => (
-        <FormControl style={styles.formControl}>
-          <Input
-            fullWidth={true}
-            type='text'
-            value={state.searchText}
-            onChange={onChange(actions.updateSearchText)}
-            startAdornment={
+      <FormControl style={styles.formControl}>
+        <Input
+          fullWidth={true}
+          type='text'
+          value={state.searchText}
+          onChange={onChange}
+          startAdornment={
+            <InputAdornment position='end'>
+              <Search />
+            </InputAdornment>
+          }
+          endAdornment={
+            state.searchText !== '' && (
               <InputAdornment position='end'>
-                <Search />
+                <IconButton onClick={onClear}>
+                  <Close />
+                </IconButton>
               </InputAdornment>
-            }
-            endAdornment={
-              state.searchText !== '' && (
-                <InputAdornment position='end'>
-                  <IconButton onClick={onClear(actions.updateSearchText)}>
-                    <Close />
-                  </IconButton>
-                </InputAdornment>
-              )
-            }
-          />
-        </FormControl>
-      )}
-    </DataSourceContext.Consumer>
+            )
+          }
+        />
+      </FormControl>
   );
 };
 

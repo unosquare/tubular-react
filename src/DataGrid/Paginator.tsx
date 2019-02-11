@@ -23,30 +23,28 @@ const message = (totalRecordCount: any, filteredRecordCount: any) => ({
 const Paginator: React.FunctionComponent<IProps> = ({
   rowsPerPageOptions,
   advancePagination,
-}) => (
-  <DataSourceContext.Consumer>
-    {({ state, actions }) => {
-      const props = {
-        count: state.filteredRecordCount,
-        labelDisplayedRows: message(
-          state.totalRecordCount,
-          state.filteredRecordCount,
-        ),
-        onChangePage: (e: any, p: any) => actions.updatePage(p),
-        onChangeRowsPerPage: (e: any) =>
-          actions.updateItemPerPage(Number(e.target.value)),
-        page: state.page,
-        rowsPerPage: state.itemsPerPage,
-        rowsPerPageOptions: rowsPerPageOptions || [10, 20, 50],
-      } as any;
+}) => {
+  const { actions, state } = React.useContext(DataSourceContext);
 
-      if (advancePagination) {
-        props.ActionsComponent = AdvancePaginationActions;
-      }
+  const props = {
+    count: state.filteredRecordCount,
+    labelDisplayedRows: message(
+      state.totalRecordCount,
+      state.filteredRecordCount,
+    ),
+    onChangePage: (e: any, p: any) => actions.updatePage(p),
+    onChangeRowsPerPage: (e: any) =>
+      actions.updateItemPerPage(Number(e.target.value)),
+    page: state.page,
+    rowsPerPage: state.itemsPerPage,
+    rowsPerPageOptions: rowsPerPageOptions || [10, 20, 50],
+  } as any;
 
-      return <TablePagination {...props} />;
-    }}
-  </DataSourceContext.Consumer>
-);
+  if (advancePagination) {
+    props.ActionsComponent = AdvancePaginationActions;
+  }
+
+  return <TablePagination {...props} />;
+};
 
 export default Paginator;

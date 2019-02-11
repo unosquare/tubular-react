@@ -15,43 +15,47 @@ interface IProps {
     onRowClick?(ev: any): any;
 }
 
+const getStyles = (isPointer: boolean) => ({
+    row: { cursor: isPointer ? 'pointer' : 'auto' },
+    title: { paddingLeft: '15px' },
+});
+
 const GridBody: React.FunctionComponent<IProps> = ({ bodyRenderer, onRowClick }) => {
+    const { state } = React.useContext(DataSourceContext);
     // tslint:disable-next-line:no-empty
     const onRowClickProxy = onRowClick ? onRowClick : () => { };
-    const cursorStyle = onRowClick ? 'pointer' : 'auto';
+    const styles = getStyles(Boolean(onRowClick));
 
     return (
-        <DataSourceContext.Consumer>
-            {({ state }) =>
-                <TableBody>
-                    {state.data.map((row: any, rowIndex: number) => (
-                        bodyRenderer
-                            ? bodyRenderer(row, rowIndex, state.columns)
-                            : <TableRow
-                                hover={true}
-                                key={rowIndex}
-                                onClick={onRowClickProxy(row)}
-                                style={{ cursor: cursorStyle }}
-                            >
-                                {renderCells(state.columns, row)}
-                            </TableRow>
-                    ))}
-                    {state.filteredRecordCount === 0 && !state.isLoading &&
-                        (<TableRow>
-                            <TableCell
-                                colSpan={state.columns.filter((col: any) => col.Visible).length}
-                            >
-                                <Typography
-                                    style={{ paddingLeft: '15px' }}
-                                    variant='body2'
-                                    gutterBottom={true}
-                                >
-                                    <Warning /> No records found
-                                </Typography>
-                            </TableCell>
-                        </TableRow>)}
-                </TableBody>}
-        </DataSourceContext.Consumer>);
+        <TableBody>
+            {state.data
+                .map((row: any, rowIndex: number) => (
+                    bodyRenderer
+                        ? bodyRenderer(row, rowIndex, state.columns)
+                        : <TableRow
+                            hover={true}
+                            key={rowIndex}
+                            onClick={onRowClickProxy(row)}
+                            style={styles.row}
+                        >
+                            {renderCells(state.columns, row)}
+                        </TableRow>
+                ))}
+            {state.filteredRecordCount === 0 && !state.isLoading &&
+                (<TableRow>
+                    <TableCell
+                        colSpan={state.columns.filter((col: any) => col.Visible).length}
+                    >
+                        <Typography
+                            style={styles.title}
+                            variant='body2'
+                            gutterBottom={true}
+                        >
+                            <Warning /> No records found
+                        </Typography>
+                    </TableCell>
+                </TableRow>)}
+        </TableBody>);
 };
 
 export default GridBody;
