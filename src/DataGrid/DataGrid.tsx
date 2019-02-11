@@ -42,6 +42,46 @@ interface IProps extends WithStyles<typeof styles> {
   onRowClick?(ev: any): any;
 }
 
+export const DataGridTable: React.FunctionComponent<any> = ({
+  bodyRenderer,
+  footerRenderer,
+  toolbarOptions,
+  onRowClick,
+}) => {
+  const { state } = React.useContext(DataSourceContext);
+
+  return (
+    <Table>
+      <TableHead>
+        {toolbarOptions.topPager && (
+          <TableRow>
+            <Paginator
+              rowsPerPageOptions={toolbarOptions.rowsPerPageOptions}
+              advancePagination={toolbarOptions.advancePagination}
+            />
+          </TableRow>
+        )}
+        <GridHeader />
+      </TableHead>
+      <GridBody
+        bodyRenderer={bodyRenderer}
+        onRowClick={onRowClick}
+      />
+      <TableFooter>
+        {footerRenderer && footerRenderer(state.aggregate)}
+        {toolbarOptions.bottomPager && (
+          <TableRow>
+            <Paginator
+              rowsPerPageOptions={toolbarOptions.rowsPerPageOptions}
+              advancePagination={toolbarOptions.advancePagination}
+            />
+          </TableRow>
+        )}
+      </TableFooter>
+    </Table>
+  );
+};
+
 const DataGrid: React.FunctionComponent<IProps> = ({
   classes,
   bodyRenderer,
@@ -51,52 +91,28 @@ const DataGrid: React.FunctionComponent<IProps> = ({
   children,
   onRowClick,
 }) => {
+  const { state } = React.useContext(DataSourceContext);
+
   toolbarOptions = toolbarOptions || new ToolbarOptions();
 
   return (
-    <DataSourceContext.Consumer>
-      {({ state }) => (
-        <Paper className={classes.root}>
-          <GridToolbar
-            toolbarOptions={toolbarOptions}
-            gridName={gridName || 'Grid'}
-          >
-            {children}
-          </GridToolbar>
-          <div className={classes.progress}>
-            {state.isLoading && <LinearProgress />}
-          </div>
-          <Table>
-            <TableHead>
-              {toolbarOptions.topPager && (
-                <TableRow>
-                  <Paginator
-                    rowsPerPageOptions={toolbarOptions.rowsPerPageOptions}
-                    advancePagination={toolbarOptions.advancePagination}
-                  />
-                </TableRow>
-              )}
-              <GridHeader />
-            </TableHead>
-            <GridBody
-              bodyRenderer={bodyRenderer}
-              onRowClick={onRowClick}
-            />
-            <TableFooter>
-              {footerRenderer && footerRenderer(state.aggregate)}
-              {toolbarOptions.bottomPager && (
-                <TableRow>
-                  <Paginator
-                    rowsPerPageOptions={toolbarOptions.rowsPerPageOptions}
-                    advancePagination={toolbarOptions.advancePagination}
-                  />
-                </TableRow>
-              )}
-            </TableFooter>
-          </Table>
-        </Paper>
-      )}
-    </DataSourceContext.Consumer>
+    <Paper className={classes.root}>
+      <GridToolbar
+        toolbarOptions={toolbarOptions}
+        gridName={gridName || 'Grid'}
+      >
+        {children}
+      </GridToolbar>
+      <div className={classes.progress}>
+        {state.isLoading && <LinearProgress />}
+      </div>
+      <DataGridTable
+        toolbarOptions={toolbarOptions}
+        bodyRenderer={bodyRenderer}
+        footerRenderer={footerRenderer}
+        onRowClick={onRowClick}
+      />
+    </Paper>
   );
 };
 
