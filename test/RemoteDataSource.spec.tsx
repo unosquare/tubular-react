@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
-import * as React from 'react';
 import * as fetch from 'jest-fetch-mock';
+import * as React from 'react';
 import { withRemoteDataSource } from '../src';
 import { validColumnsSample } from './utils/columns';
 import { simpleRecordsExpected } from './utils/responses';
@@ -10,7 +10,7 @@ describe('<RemoteDataSource />', () => {
   const TestComponent = withRemoteDataSource(
     () => <span />,
     validColumnsSample,
-    'url'
+    'url',
   );
 
   beforeEach(() => {
@@ -24,7 +24,7 @@ describe('<RemoteDataSource />', () => {
     expect(component.props()).toBeDefined();
   });
 
-  test('Should contain data with valid url', done => {
+  test('Should contain data with valid url', (done) => {
     fetch.mockResponse(JSON.stringify(simpleRecordsExpected));
 
     const component = shallow(<TestComponent />);
@@ -34,7 +34,7 @@ describe('<RemoteDataSource />', () => {
     });
   });
 
-  test('Should have error with invalid url', done => {
+  test('Should have error with invalid url', (done) => {
     fetch.mockReject(new Error('Bad Request'));
 
     const component = shallow(<TestComponent />);

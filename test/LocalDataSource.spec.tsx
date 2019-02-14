@@ -10,7 +10,7 @@ describe('<LocalDataSource />', () => {
     () => <span />,
     validColumnsSample,
     localData,
-    10
+    10,
   );
 
   test('Should mount with valid props', () => {
@@ -25,7 +25,7 @@ describe('<LocalDataSource />', () => {
     expect(component.state('columns')).toEqual(validColumnsSample);
   });
 
-  test('Should contain data', done => {
+  test('Should contain data', (done) => {
     const component = shallow(<TestComponent />);
 
     (component.instance() as any).retrieveData().then(() => {
@@ -34,7 +34,7 @@ describe('<LocalDataSource />', () => {
     });
   });
 
-  test('Should throw error with invalid source', done => {
+  test('Should throw error with invalid source', (done) => {
     const component = shallow(<TestComponent />);
 
     (component.instance() as any).retrieveData().then(() => {

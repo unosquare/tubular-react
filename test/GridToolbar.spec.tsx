@@ -29,7 +29,7 @@ describe('<GridToolbar/>', () => {
       <GridToolbar
         toolbarOptions={new ToolbarOptions()}
         gridName={'testGrid'}
-      />
+      />,
     );
     expect(wrapper.find(Toolbar)).toHaveLength(1);
   });
@@ -40,7 +40,7 @@ describe('<GridToolbar/>', () => {
         <GridToolbar
           toolbarOptions={new ToolbarOptions()}
           gridName={'testGrid'}
-        />
+        />,
       );
       expect(wrapper.find(IconButton).find(CloudDownload)).toHaveLength(1);
     });
@@ -49,7 +49,7 @@ describe('<GridToolbar/>', () => {
       toolbarOptions = new ToolbarOptions();
       toolbarOptions.exportButton = false;
       const wrapper = mount(
-        <GridToolbar toolbarOptions={toolbarOptions} gridName={'testGrid'} />
+        <GridToolbar toolbarOptions={toolbarOptions} gridName={'testGrid'} />,
       );
       expect(wrapper.find(IconButton).find(CloudDownload)).toHaveLength(0);
     });
@@ -61,7 +61,7 @@ describe('<GridToolbar/>', () => {
         <GridToolbar
           toolbarOptions={new ToolbarOptions()}
           gridName={'testGrid'}
-        />
+        />,
       );
       expect(wrapper.find(IconButton).find(PrintIcon)).toHaveLength(1);
     });
@@ -70,7 +70,7 @@ describe('<GridToolbar/>', () => {
       toolbarOptions = new ToolbarOptions();
       toolbarOptions.printButton = false;
       const wrapper = mount(
-        <GridToolbar toolbarOptions={toolbarOptions} gridName={'testGrid'} />
+        <GridToolbar toolbarOptions={toolbarOptions} gridName={'testGrid'} />,
       );
       expect(wrapper.find(IconButton).find(PrintIcon)).toHaveLength(0);
     });
