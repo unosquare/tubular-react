@@ -9,15 +9,13 @@ export default class CustomHttpClient implements ITubularHttpClient {
     this.request = TubularHttpClient.resolveRequest(request);
   }
 
-  public fetch(gridRequest: GridRequest): Promise<any> {
-    return fetch(TubularHttpClient.getRequest(this.request, gridRequest))
-      .then((response) => response.json())
-      .then((data) => {
-        // We simulate always one page
-        data.TotalPages = 1;
-        data.TotalRecordCount = 10;
-        data.FilteredRecordCount = 10;
-        return data;
-      });
+  public async fetch(gridRequest: GridRequest): Promise<any> {
+    const response = await fetch(TubularHttpClient.getRequest(this.request, gridRequest));
+    const data = await response.json();
+    // We simulate always one page
+    data.TotalPages = 1;
+    data.TotalRecordCount = 10;
+    data.FilteredRecordCount = 10;
+    return data;
   }
 }

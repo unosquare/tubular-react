@@ -66,8 +66,8 @@ class RemoteGridList extends React.Component<IDataGridProps, IDataGridState> {
                 <TableRow>
                   <TableCell>
                     <GridList cellHeight={180} cols={5}>
-                      {state.data.map((dato) => (
-                        <GridListTile key={dato.OrderID}>
+                      {state.data.map((row) => (
+                        <GridListTile key={row.OrderID}>
                           <Card>
                             <CardContent>
                               <Typography
@@ -75,13 +75,13 @@ class RemoteGridList extends React.Component<IDataGridProps, IDataGridState> {
                                 variant='h5'
                                 component='h2'
                               >
-                                {dato.OrderID} - {dato.CustomerName}
+                                {row.OrderID} - {row.CustomerName}
                               </Typography>
                               <Typography component='p'>
-                                {dato.ShipperCity}
+                                {row.ShipperCity}
                               </Typography>
                               <Typography component='p'>
-                                {format(dato.ShippedDate, 'MMM D YYYY')}
+                                {format(row.ShippedDate, 'MMM D YYYY')}
                               </Typography>
                             </CardContent>
                             <CardActions>

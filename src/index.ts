@@ -1,5 +1,6 @@
 import DataGrid,
 {
+  DataGridTable,
   Paginator,
   TextSearchInput,
 } from './DataGrid';
@@ -29,6 +30,7 @@ export default DataGrid;
 
 export {
   DataSourceContext,
+  DataGridTable,
   FetchHandler,
   Paginator,
   TextSearchInput,

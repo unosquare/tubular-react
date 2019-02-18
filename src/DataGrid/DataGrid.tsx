@@ -1,39 +1,27 @@
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableFooter from '@material-ui/core/TableFooter';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core/styles';
+import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
 
-import GridBody from './GridBody';
-import GridHeader from './GridHeader';
+import DataGridTable from './DataGridTable';
 import GridToolbar from './GridToolbar';
-import Paginator from './Paginator';
 
 import { DataSourceContext } from '../DataSource';
 import { ToolbarOptions } from '../Models';
 
-const styles = ({ spacing }: Theme) => createStyles({
+const useStyles = makeStyles((theme) => ({
   progress: {
-    height: spacing.unit * 2,
+    height: theme.spacing.unit * 2,
   },
   root: {
-    marginTop: spacing.unit * 3,
+    marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
     width: '100%',
   },
-});
+}));
 
-interface IProps extends WithStyles<typeof styles> {
+interface IProps {
   gridName?: string;
   toolbarOptions?: ToolbarOptions;
 
@@ -42,48 +30,7 @@ interface IProps extends WithStyles<typeof styles> {
   onRowClick?(ev: any): any;
 }
 
-export const DataGridTable: React.FunctionComponent<any> = ({
-  bodyRenderer,
-  footerRenderer,
-  toolbarOptions,
-  onRowClick,
-}) => {
-  const { state } = React.useContext(DataSourceContext);
-
-  return (
-    <Table>
-      <TableHead>
-        {toolbarOptions.topPager && (
-          <TableRow>
-            <Paginator
-              rowsPerPageOptions={toolbarOptions.rowsPerPageOptions}
-              advancePagination={toolbarOptions.advancePagination}
-            />
-          </TableRow>
-        )}
-        <GridHeader />
-      </TableHead>
-      <GridBody
-        bodyRenderer={bodyRenderer}
-        onRowClick={onRowClick}
-      />
-      <TableFooter>
-        {footerRenderer && footerRenderer(state.aggregate)}
-        {toolbarOptions.bottomPager && (
-          <TableRow>
-            <Paginator
-              rowsPerPageOptions={toolbarOptions.rowsPerPageOptions}
-              advancePagination={toolbarOptions.advancePagination}
-            />
-          </TableRow>
-        )}
-      </TableFooter>
-    </Table>
-  );
-};
-
 const DataGrid: React.FunctionComponent<IProps> = ({
-  classes,
   bodyRenderer,
   footerRenderer,
   toolbarOptions,
@@ -91,6 +38,7 @@ const DataGrid: React.FunctionComponent<IProps> = ({
   children,
   onRowClick,
 }) => {
+  const classes = useStyles();
   const { state } = React.useContext(DataSourceContext);
 
   toolbarOptions = toolbarOptions || new ToolbarOptions();
@@ -116,4 +64,4 @@ const DataGrid: React.FunctionComponent<IProps> = ({
   );
 };
 
-export default withStyles(styles, { withTheme: true })(DataGrid);
+export default DataGrid;

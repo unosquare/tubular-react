@@ -1,15 +1,16 @@
 import * as React from 'react';
 
-import IconButton from '@material-ui/core/IconButton';
 import Snackbar from '@material-ui/core/Snackbar';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import Typography from '@material-ui/core/Typography';
+
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
-import InsertEmoticon from '@material-ui/icons/InsertEmoticon';
 
 import { format } from 'date-fns';
-import DataGrid, {
+import {
+  DataGridTable,
   IDataGridProps,
   IDataGridState,
   ToolbarOptions,
@@ -18,7 +19,7 @@ import DataGrid, {
 import columns from './data/columns';
 import localData from './data/localData';
 
-const toolbarOptions = new ToolbarOptions();
+const toolbarOptions = new ToolbarOptions({ bottomPager: false });
 
 class CustomLayoutDataGrid extends React.Component<
   IDataGridProps,
@@ -40,6 +41,33 @@ class CustomLayoutDataGrid extends React.Component<
 
   public render() {
     const { errorMessage } = this.state;
+    const bodyRenderer = (row: any) => (
+      <TableRow hover={true} key={row.OrderID}>
+        <TableCell padding='default'>{row.OrderID}</TableCell>
+        <TableCell padding='default'>{row.CustomerName}</TableCell>
+        <TableCell padding='default'>
+          {format(row.ShippedDate, 'MMMM Do YYYY, h:mm:ss a')}
+        </TableCell>
+        <TableCell padding='default'>{row.ShipperCity}</TableCell>
+        <TableCell padding='default' align={'right'}>
+          {row.Amount || 0}
+        </TableCell>
+        <TableCell padding='default'>
+          {row.IsShipped ? <CheckBox /> : <CheckBoxOutlineBlank />}
+        </TableCell>
+      </TableRow>
+    );
+
+    const footerRenderer = (aggregates: any) => (
+      <TableRow>
+        <TableCell>Total: </TableCell>
+        <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
+        <TableCell />
+        <TableCell />
+        <TableCell />
+        <TableCell />
+      </TableRow>
+    );
 
     return (
       <div className='root'>
@@ -52,40 +80,12 @@ class CustomLayoutDataGrid extends React.Component<
             message={<span id='message-id'>{errorMessage}</span>}
           />
         )}
-        <DataGrid
-          gridName='Tubular-React'
-          bodyRenderer={(row: any) => (
-            <TableRow hover={true} key={row.OrderID}>
-              <TableCell padding='default'>{row.OrderID}</TableCell>
-              <TableCell padding='default'>{row.CustomerName}</TableCell>
-              <TableCell padding='default'>
-                {format(row.ShippedDate, 'MMMM Do YYYY, h:mm:ss a')}
-              </TableCell>
-              <TableCell padding='default'>{row.ShipperCity}</TableCell>
-              <TableCell padding='default' align={'right'}>
-                {row.Amount || 0}
-              </TableCell>
-              <TableCell padding='default'>
-                {row.IsShipped ? <CheckBox /> : <CheckBoxOutlineBlank />}
-              </TableCell>
-            </TableRow>
-          )}
+        <Typography variant='h4'>No card grid!</Typography>
+        <DataGridTable
+          bodyRenderer={bodyRenderer}
           toolbarOptions={toolbarOptions}
-          footerRenderer={(aggregates: any) => (
-            <TableRow>
-              <TableCell>Total: </TableCell>
-              <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
-              <TableCell />
-              <TableCell />
-              <TableCell />
-              <TableCell />
-            </TableRow>
-          )}
-        >
-          <IconButton>
-            <InsertEmoticon />
-          </IconButton>
-        </DataGrid>
+          footerRenderer={footerRenderer}
+        />
       </div>
     );
   }

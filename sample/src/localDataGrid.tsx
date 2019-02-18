@@ -10,9 +10,6 @@ import columns from './data/columns';
 import localData from './data/localData';
 
 class LocalDataGrid extends React.Component<IDataGridProps, IDataGridState> {
-  public state = {
-    errorMessage: null as any,
-  };
 
   static getDerivedStateFromProps(
     props: IDataGridProps,
@@ -23,6 +20,9 @@ class LocalDataGrid extends React.Component<IDataGridProps, IDataGridState> {
     }
     return null;
   }
+  public state = {
+    errorMessage: null as any,
+  };
 
   public render() {
     const { errorMessage } = this.state;

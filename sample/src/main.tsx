@@ -1,7 +1,8 @@
 import AppBar from '@material-ui/core/AppBar';
-import withStyles from '@material-ui/core/styles/withStyles';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
+import makeStyles from '@material-ui/styles/makeStyles';
+
 import * as React from 'react';
 
 import CustomLayoutDataGrid from './CustomLayoutDataGrid';
@@ -10,11 +11,10 @@ import LocalDataGrid from './localDataGrid';
 import RemoteDataGrid from './remoteDataGrid';
 import RemoteGridList from './remoteGridList';
 
-const styles = ({palette}: any) => ({
+const useStyles = makeStyles(({ palette }: any) => ({
   logo: {
     color: 'rgb(255, 255, 255)',
     display: 'block',
-    fontFamily: 'Roboto',
     height: 50,
     maxWidth: 150,
     width: 150,
@@ -23,23 +23,16 @@ const styles = ({palette}: any) => ({
     backgroundColor: palette.background.paper,
     flexGrow: 1,
   },
-});
+}));
 
-class Main extends React.Component<any, any> {
-  public state = {
-    value: 0,
-  };
+const Main: React.FunctionComponent = () => {
+  const classes = useStyles();
+  const [currentValue, setValue] = React.useState(0);
 
-  public handleChange = (event: any, value: any) => {
-    this.setState({ value });
-  }
+  const handleChange = (event: any, value: any) => setValue(value);
 
-  public render() {
-    const { classes } = this.props;
-    const { value } = this.state;
-
-    return (
-      <ErrorBoundary>
+  return (
+    <ErrorBoundary>
       <div className={classes.root}>
         <AppBar position='static'>
           <img
@@ -47,21 +40,20 @@ class Main extends React.Component<any, any> {
             src='https://unosquare.github.io/tubular-react/static/tubular.png'
             alt='Tubular React'
           />
-          <Tabs value={value} onChange={this.handleChange}>
+          <Tabs value={currentValue} onChange={handleChange}>
             <Tab label='Remote DataGrid' />
             <Tab label='Local DataGrid' />
             <Tab label='Custom DataGrid' />
             <Tab label='Grid List' />
           </Tabs>
         </AppBar>
-        {value === 0 && <RemoteDataGrid />}
-        {value === 1 && <LocalDataGrid />}
-        {value === 2 && <CustomLayoutDataGrid />}
-        {value === 3 && <RemoteGridList />}
+        {currentValue === 0 && <RemoteDataGrid />}
+        {currentValue === 1 && <LocalDataGrid />}
+        {currentValue === 2 && <CustomLayoutDataGrid />}
+        {currentValue === 3 && <RemoteGridList />}
       </div>
-      </ErrorBoundary>
-    );
-  }
-}
+    </ErrorBoundary>
+  );
+};
 
-export default withStyles(styles)(Main);
+export default Main;
