@@ -1,7 +1,7 @@
 import { IconButton } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import React, { useState } from 'react';
-import DataGrid from './DataGrid';
+import DataGrid from '../DataGrid/DataGrid';
 
 /**
  * This method handle a generic modal to
@@ -20,11 +20,17 @@ import DataGrid from './DataGrid';
  * }
  */
 
-const DataGridWithRemoteDataSource: React.FunctionComponent = (props: any) => {
+interface IDataGridWithRemoteDataSource {
+    refresh?: () => Promise<any>;
+    openModalOnClick?(): void;
+    onClick?(ev: any): void;
+  }
+
+const DataGridWithRemoteDataSource: React.FunctionComponent<IDataGridWithRemoteDataSource> = (props) => {
     const [modalOpen, setModalOpen] = useState(false);
     const [rowInfo, setRowInfo] = useState(null);
 
-    const onClick = (row: any) => () => {
+    const onRowClick = (row: any) => () => {
         if (props.openModalOnClick) {
             setModalOpen(true);
         }
@@ -54,7 +60,7 @@ const DataGridWithRemoteDataSource: React.FunctionComponent = (props: any) => {
 
     return (
         <React.Fragment>
-            <DataGrid onRowClick={onClick}>
+            <DataGrid onRowClick={onRowClick}>
                 <IconButton onClick={onAdd}>
                     <AddIcon />
                 </IconButton>

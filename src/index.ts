@@ -1,7 +1,6 @@
 import DataGrid,
 {
   DataGridTable,
-  DataGridWithRemoteDataSource,
   Paginator,
   TextSearchInput,
 } from './DataGrid';
@@ -24,6 +23,10 @@ import {
   withLocalDataSource,
   withRemoteDataSource,
 } from './DataSource';
+
+import {
+  DataGridWithRemoteDataSource,
+} from './Implementations';
 
 import { IDataGridProps, IDataGridState } from './DataGridInterfaces';
 
