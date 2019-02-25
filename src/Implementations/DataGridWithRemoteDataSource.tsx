@@ -1,4 +1,4 @@
-import { IconButton } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import React, { useState } from 'react';
 import DataGrid from '../DataGrid/DataGrid';
