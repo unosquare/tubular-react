@@ -1,6 +1,7 @@
 import DataGrid,
 {
   DataGridTable,
+  DataGridWithRemoteDataSource,
   Paginator,
   TextSearchInput,
 } from './DataGrid';
@@ -31,6 +32,7 @@ export default DataGrid;
 export {
   DataSourceContext,
   DataGridTable,
+  DataGridWithRemoteDataSource,
   FetchHandler,
   Paginator,
   TextSearchInput,
