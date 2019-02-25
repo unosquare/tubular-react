@@ -24,6 +24,10 @@ import {
   withRemoteDataSource,
 } from './DataSource';
 
+import {
+  DataGridWithRemoteDataSource,
+} from './Implementations';
+
 import { IDataGridProps, IDataGridState } from './DataGridInterfaces';
 
 export default DataGrid;
@@ -31,6 +35,7 @@ export default DataGrid;
 export {
   DataSourceContext,
   DataGridTable,
+  DataGridWithRemoteDataSource,
   FetchHandler,
   Paginator,
   TextSearchInput,
