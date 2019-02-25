@@ -1,11 +1,11 @@
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
-import React, { useState } from 'react';
 import DataGrid from '../DataGrid/DataGrid';
 
+import * as React from 'react';
+
 /**
- * This method handle a generic modal to
- * save data in a form.
+ * This component handle a generic modal to save data in a form.
  *
  * The following parameter are sent to its children.
  *   onClose: an Event to close the modal
@@ -19,7 +19,6 @@ import DataGrid from '../DataGrid/DataGrid';
  *  openModalOnClick: This parameter is suposed to be a boolean. If true, it will open the modal in the onClick event
  * }
  */
-
 interface IDataGridWithRemoteDataSource {
     refresh?: () => Promise<any>;
     openModalOnClick?(): void;
@@ -27,8 +26,8 @@ interface IDataGridWithRemoteDataSource {
   }
 
 const DataGridWithRemoteDataSource: React.FunctionComponent<IDataGridWithRemoteDataSource> = (props) => {
-    const [modalOpen, setModalOpen] = useState(false);
-    const [rowInfo, setRowInfo] = useState(null);
+    const [modalOpen, setModalOpen] = React.useState(false);
+    const [rowInfo, setRowInfo] = React.useState(null);
 
     const onRowClick = (row: any) => () => {
         if (props.openModalOnClick) {
