@@ -21,7 +21,7 @@ import * as React from 'react';
  */
 interface IDataGridWithRemoteDataSource {
     refresh?: () => Promise<any>;
-    openModalOnClick?(): void;
+    openModalOnClick?: boolean;
     onClick?(ev: any): void;
   }
 
