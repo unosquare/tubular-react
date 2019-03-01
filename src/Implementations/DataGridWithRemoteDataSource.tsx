@@ -17,11 +17,13 @@ import * as React from 'react';
  * @param props {
  *  onClick: this function will be called when the user click any row, It sends the row information
  *  openModalOnClick: This parameter is suposed to be a boolean. If true, it will open the modal in the onClick event
+ *  addIcon: This parameter is a boolean. If true, it add an icon to open the modal
  * }
  */
 interface IDataGridWithRemoteDataSource {
     refresh?: () => Promise<any>;
     openModalOnClick?: boolean;
+    addIcon?: boolean;
     onClick?(ev: any): void;
   }
 
@@ -60,9 +62,11 @@ const DataGridWithRemoteDataSource: React.FunctionComponent<IDataGridWithRemoteD
     return (
         <React.Fragment>
             <DataGrid onRowClick={onRowClick}>
+                {props.addIcon &&
                 <IconButton onClick={onAdd}>
                     <AddIcon />
                 </IconButton>
+                }
             </DataGrid>
             {childrenWithExtraProp}
         </React.Fragment>
