@@ -25,7 +25,7 @@ const styles: any = {
   },
 };
 
-export const ExportButton: React.FunctionComponent<any> = ({ type, gridName }) => {
+export const ExportButton: React.FunctionComponent<any> = ({ type, gridName, toolTip }) => {
   const { actions, state } = React.useContext(DataSourceContext);
   const [anchorPrint, setAnchorPrint] = React.useState(null);
 
@@ -49,11 +49,11 @@ export const ExportButton: React.FunctionComponent<any> = ({ type, gridName }) =
         onClick={handlePrintMenu}
       >
         {type === 'print' ?
-          <Tooltip title='Print'>
+          <Tooltip title={toolTip}>
             <Print />
           </Tooltip>
           :
-          <Tooltip title='Download'>
+          <Tooltip title={toolTip}>
             <CloudDownload />
           </Tooltip>
         }
@@ -78,8 +78,20 @@ const GridToolbar: React.FunctionComponent<IProps> = ({ toolbarOptions, gridName
   <Toolbar>
     <div style={styles.spacer} />
     {children}
-    {toolbarOptions.exportButton && <ExportButton type='csv' gridName={gridName} />}
-    {toolbarOptions.printButton && <ExportButton type='print' gridName={gridName} />}
+    {toolbarOptions.exportButton &&
+    <ExportButton
+      type='csv'
+      gridName={gridName}
+      toolTip={toolbarOptions.exportButtonToolTip}
+    />
+    }
+    {toolbarOptions.printButton &&
+    <ExportButton
+      type='print'
+      gridName={gridName}
+      toolTip={toolbarOptions.printButtonToolTip}
+    />
+    }
     {toolbarOptions.searchText && <SearchTextInput />}
   </Toolbar>
 );
