@@ -7,8 +7,6 @@ export default class ToolbarOptions {
     public topPager: boolean;
     public rowsPerPageOptions: number[];
     public itemsPerPage: number;
-    public exportButtonToolTip: string;
-    public printButtonToolTip: string;
 
     constructor(options?: any) {
         this.advancePagination = options && 'advancePagination' in options ? options.advancePagination : true;
