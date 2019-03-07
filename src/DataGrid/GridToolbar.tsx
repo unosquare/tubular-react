@@ -78,20 +78,8 @@ const GridToolbar: React.FunctionComponent<IProps> = ({ toolbarOptions, gridName
   <Toolbar>
     <div style={styles.spacer} />
     {children}
-    {toolbarOptions.exportButton &&
-    <ExportButton
-      type='csv'
-      gridName={gridName}
-      toolTip={toolbarOptions.exportButtonToolTip}
-    />
-    }
-    {toolbarOptions.printButton &&
-    <ExportButton
-      type='print'
-      gridName={gridName}
-      toolTip={toolbarOptions.printButtonToolTip}
-    />
-    }
+    {toolbarOptions.exportButton && <ExportButton type='csv' gridName={gridName} />}
+    {toolbarOptions.printButton && <ExportButton type='print' gridName={gridName} />}
     {toolbarOptions.searchText && <SearchTextInput />}
   </Toolbar>
 );
