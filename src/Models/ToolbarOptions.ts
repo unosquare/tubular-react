@@ -21,9 +21,5 @@ export default class ToolbarOptions {
             ? options.rowsPerPageOptions
             : [10, 20, 50, 100];
         this.itemsPerPage = options && 'itemsPerPage' in options ? options.itemsPerPage : 10;
-        this.exportButtonToolTip = options && 'exportButtonToolTip' in options ?
-        options.exportButtonToolTip : 'Download';
-        this.printButtonToolTip = options && 'printButtonToolTip' in options ?
-        options.printButtonToolTip : 'Print';
     }
 }

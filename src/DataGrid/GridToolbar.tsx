@@ -49,11 +49,11 @@ export const ExportButton: React.FunctionComponent<any> = ({ type, gridName, too
         onClick={handlePrintMenu}
       >
         {type === 'print' ?
-          <Tooltip title={toolTip}>
+          <Tooltip title={toolTip || 'Print'}>
             <Print />
           </Tooltip>
           :
-          <Tooltip title={toolTip}>
+          <Tooltip title={toolTip || 'Download'}>
             <CloudDownload />
           </Tooltip>
         }
