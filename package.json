@@ -1,6 +1,6 @@
 {
   "name": "tubular-react",
-  "version": "0.10.5",
+  "version": "0.10.6",
   "description": "Unosquare Tubular React",
   "main": "dist/index.js",
   "scripts": {
@@ -98,8 +98,6 @@
     "tslint": "^5.13.1",
     "tslint-react": "^3.6.0",
     "typescript": "^3.3.3333"
-  },
-  "peerDependencies": {
   },
   "parcelCleanPaths": [
     "docs/*.*",
