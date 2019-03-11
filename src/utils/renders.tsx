@@ -1,10 +1,15 @@
 import TableCell from '@material-ui/core/TableCell';
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
-
-import { format, getYear, parse } from 'date-fns';
 import * as React from 'react';
 import { ColumnDataType, ColumnModel } from 'tubular-common';
+
+// tslint:disable-next-line: no-var-requires
+const format = require('date-fns/format');
+// tslint:disable-next-line: no-var-requires
+const getYear = require('date-fns/get_year');
+// tslint:disable-next-line: no-var-requires
+const parse = require('date-fns/parse');
 
 export const renderCellContent: any = (column: ColumnModel, row: any) => {
     switch (column.DataType) {

@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 
-import { format } from 'date-fns';
 import {
   DataGridTable,
   IDataGridProps,
@@ -19,6 +18,8 @@ import {
 import columns from './data/columns';
 import localData from './data/localData';
 
+// tslint:disable-next-line: no-var-requires
+const format = require('date-fns/format');
 const toolbarOptions = new ToolbarOptions({ bottomPager: false });
 
 class CustomLayoutDataGrid extends React.Component<

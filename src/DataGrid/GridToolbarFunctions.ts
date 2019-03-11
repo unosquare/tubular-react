@@ -1,5 +1,11 @@
-import { format, getYear, parse } from 'date-fns';
 import { ColumnDataType } from 'tubular-common';
+
+// tslint:disable-next-line: no-var-requires
+const format = require('date-fns/format');
+// tslint:disable-next-line: no-var-requires
+const getYear = require('date-fns/get_year');
+// tslint:disable-next-line: no-var-requires
+const parse = require('date-fns/parse');
 
 const cellValue = (cellDataType: string, cell: any) => {
     switch (cellDataType) {

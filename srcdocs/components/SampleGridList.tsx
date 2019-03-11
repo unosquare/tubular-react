@@ -1,4 +1,3 @@
-import { LinearProgress, Paper } from '@material-ui/core';
 import { Card, CardActions, CardContent } from '@material-ui/core';
 import { GridList, GridListTile, Typography } from '@material-ui/core';
 import { Button } from '@material-ui/core';
@@ -9,7 +8,9 @@ import {
   TableFooter,
   TableRow,
 } from '@material-ui/core';
-import { format } from 'date-fns';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Paper from '@material-ui/core/Paper';
+import format from 'date-fns/format';
 import * as React from 'react';
 
 import columns from '../utils/columns';

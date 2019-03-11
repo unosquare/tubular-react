@@ -6,7 +6,7 @@ import Brightness7Rounded from '@material-ui/icons/Brightness7Rounded';
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 import Mood from '@material-ui/icons/Mood';
-import { format } from 'date-fns';
+import format from 'date-fns/format';
 import DataGrid, { ToolbarOptions, withRemoteDataSource } from '../../src';
 import columns from '../utils/columns';
 
