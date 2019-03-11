@@ -26,6 +26,7 @@ interface IDataGridWithRemoteDataSource {
     openModalOnClick?: boolean;
     addIcon?: boolean;
     onClick?(ev: any): void;
+    addLabel?: string;
 }
 
 const DataGridWithRemoteDataSource: React.FunctionComponent<IDataGridWithRemoteDataSource> = (props) => {
@@ -64,7 +65,7 @@ const DataGridWithRemoteDataSource: React.FunctionComponent<IDataGridWithRemoteD
         <React.Fragment>
             <DataGrid onRowClick={onRowClick}>
                 {props.addIcon &&
-                    <Tooltip title={'Add'}>
+                    <Tooltip title={props.addLabel || 'Add'}>
                         <IconButton onClick={onAdd}>
                             <AddIcon />
                         </IconButton>
