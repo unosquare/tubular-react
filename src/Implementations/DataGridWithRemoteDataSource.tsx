@@ -2,6 +2,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import DataGrid from '../DataGrid/DataGrid';
 
+import Tooltip from '@material-ui/core/Tooltip';
 import * as React from 'react';
 
 /**
@@ -25,7 +26,8 @@ interface IDataGridWithRemoteDataSource {
     openModalOnClick?: boolean;
     addIcon?: boolean;
     onClick?(ev: any): void;
-  }
+    addLabel?: string;
+}
 
 const DataGridWithRemoteDataSource: React.FunctionComponent<IDataGridWithRemoteDataSource> = (props) => {
     const [modalOpen, setModalOpen] = React.useState(false);
@@ -63,9 +65,11 @@ const DataGridWithRemoteDataSource: React.FunctionComponent<IDataGridWithRemoteD
         <React.Fragment>
             <DataGrid onRowClick={onRowClick}>
                 {props.addIcon &&
-                <IconButton onClick={onAdd}>
-                    <AddIcon />
-                </IconButton>
+                    <Tooltip title={props.addLabel || 'Add'}>
+                        <IconButton onClick={onAdd}>
+                            <AddIcon />
+                        </IconButton>
+                    </Tooltip>
                 }
             </DataGrid>
             {childrenWithExtraProp}
