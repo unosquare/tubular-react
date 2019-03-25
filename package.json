@@ -1,6 +1,6 @@
 {
   "name": "tubular-react",
-  "version": "0.10.6",
+  "version": "0.10.7",
   "description": "Unosquare Tubular React",
   "main": "dist/index.js",
   "scripts": {
@@ -89,7 +89,7 @@
     "jest-fetch-mock": "^2.1.1",
     "jsdom": "^13.2.0",
     "nyc": "^13.3.0",
-    "parcel-bundler": "^1.11.0",
+    "parcel-bundler": "^1.12.3",
     "parcel-plugin-clean-easy": "^1.0.2",
     "react-highlight": "^0.12.0",
     "react-router": "^4.3.1",
