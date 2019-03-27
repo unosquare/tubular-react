@@ -55,7 +55,8 @@ const GridBody: React.FunctionComponent<IProps> = ({ bodyRenderer, onRowClick })
                         </Typography>
                     </TableCell>
                 </TableRow>)}
-        </TableBody>);
+        </TableBody>
+    );
 };
 
 export default GridBody;
