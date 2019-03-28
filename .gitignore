@@ -77,3 +77,4 @@ package-lock.json
 /dist
 
 yarn\.lock
+distsample
