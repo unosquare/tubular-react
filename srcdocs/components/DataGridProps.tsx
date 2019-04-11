@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme: any) => ({
         fontSize: 14,
     },
     root: {
-        marginTop: theme.spacing.unit * 3,
         overflowX: 'auto',
         width: '100%',
     },

@@ -11,11 +11,7 @@ import { DataSourceContext } from '../DataSource';
 import { ToolbarOptions } from '../Models';
 
 const useStyles = makeStyles((theme) => ({
-  progress: {
-    height: theme.spacing.unit * 2,
-  },
   root: {
-    marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
     width: '100%',
   },

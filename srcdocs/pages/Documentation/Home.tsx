@@ -72,7 +72,7 @@ const rows = [
 const Home = ({ classes }: any) => (
   <Grid container={true} spacing={24} className={classes.container}>
     <Paper className={classes.paper}>
-    <img src='https://unosquare.github.io/tubular-react/static/tubularRed.png'/>
+      <img src='https://unosquare.github.io/tubular-react/static/tubularRed.png' />
       <Divider />
       <Typography
         paragraph={true}

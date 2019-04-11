@@ -17,6 +17,7 @@ import * as React from 'react';
 
 import 'highlight.js/styles/an-old-hope.css';
 import BasicFeatures from '../../components/BasicFeatures';
+import GridDialog from '../../components/GridDialog';
 import SampleButtonsFeatures from '../../components/SampleButtonsFeatures';
 import SampleFeatures from '../../components/SampleFeatures';
 import SampleGridList from '../../components/SampleGridList';
@@ -24,6 +25,7 @@ import SampleGridList from '../../components/SampleGridList';
 import {
   basicFeatures,
   buttonFeatures,
+  gridDialog,
   gridList,
   simpleFeatures,
 } from '../../utils/codeSnipetExamples';
@@ -67,9 +69,10 @@ export default withStyles(styles)(
   class extends React.Component<WithStyles<keyof typeof styles>, IState> {
     public state = {
       openBasic: false,
+      openGridDialog: false,
       openGridList: false,
-      openSampleFeatures: false,
       openSample: false,
+      openSampleFeatures: false,
       showCode: false,
       value: 'one',
     };
@@ -84,6 +87,9 @@ export default withStyles(styles)(
     }
     public handleClickGrid = () => {
       this.setState({ openGridList: !this.state.openGridList });
+    }
+    public handleClickGridDialog = () => {
+      this.setState({ openGridDialog: !this.state.openGridDialog });
     }
 
     public render() {
@@ -316,6 +322,59 @@ export default withStyles(styles)(
                   </Grid>
                 </Grid>
                 <Divider />
+                <Grid item={true} xs={12} className={classes.paper}>
+                  <Typography variant='h5' gutterBottom={true}>
+                    Add a Dialog to you grid.
+                  </Typography>
+                  <Typography variant='h6'>
+                    You can use DataGridWithRemoteDataSource to add a Dialog to the grid,
+                    it will pass all the clicked row data to it.
+                  </Typography>
+                  <Grid item={true} xs={12}>
+                    <div style={bar}>
+                      <Tooltip title='Tubular GitHub Repo'>
+                        <IconButton
+                          component='a'
+                          href='https://github.com/unosquare/tubular-react'
+                          target='_blank'
+                          color='inherit'
+                        >
+                          <GitHubIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip
+                        title={
+                          this.state.openGridDialog ? 'Hide Code' : 'View Code'
+                        }
+                      >
+                        <IconButton onClick={this.handleClickGridDialog}>
+                          <CodeIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title='Edit in CodeSandbox'>
+                        <IconButton
+                          component='a'
+                          href='https://codesandbox.io/s/8ywpr3ooq8'
+                          target='_blank'
+                          color='inherit'
+                        >
+                          <CreateIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </div>
+                    <Collapse in={this.state.openGridDialog} timeout='auto'>
+                      <Paper>
+                        <Highlight
+                          language='javascript'
+                          className={classes.code}
+                        >
+                          {gridDialog}
+                        </Highlight>
+                      </Paper>
+                    </Collapse>
+                    <GridDialog />
+                  </Grid>
+                </Grid>
               </Paper>
             </Grid>
           </Grid>

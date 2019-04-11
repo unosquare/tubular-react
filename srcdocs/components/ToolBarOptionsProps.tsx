@@ -8,7 +8,6 @@ const styles = (theme: Theme) => createStyles({
         fontSize: 14,
     },
     root: {
-        marginTop: theme.spacing.unit * 3,
         overflowX: 'auto',
         width: '100%',
     },
