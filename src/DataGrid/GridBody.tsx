@@ -11,7 +11,7 @@ import { DataSourceContext } from '../DataSource';
 import { renderCells } from '../utils';
 
 interface IProps {
-    bodyRenderer?(row: any, index: number, columns: ColumnModel[]): void;
+    bodyRenderer?(row: any, index: number, columns: ColumnModel[], onRowClickProxy: (ev: any) => any): void;
     onRowClick?(ev: any): any;
 }
 
@@ -26,36 +26,44 @@ const GridBody: React.FunctionComponent<IProps> = ({ bodyRenderer, onRowClick })
     const onRowClickProxy = onRowClick ? onRowClick : () => { };
     const styles = getStyles(Boolean(onRowClick));
 
+    if (!bodyRenderer) {
+        bodyRenderer = (row, rowIndex, columns, proxyClick) => (
+            <TableRow
+                hover={true}
+                key={rowIndex}
+                onClick={proxyClick(row)}
+                style={styles.row}
+            >
+                {renderCells(columns, row)}
+            </TableRow>
+        );
+    }
+
+    const noDataRow = (
+        <TableRow>
+            <TableCell
+                colSpan={state.columns.filter((col: any) => col.Visible).length}
+            >
+                <Typography
+                    style={styles.title}
+                    variant='body2'
+                    gutterBottom={true}
+                >
+                    <Warning /> No records found
+                </Typography>
+            </TableCell>
+        </TableRow>
+    );
+
     return (
         <TableBody>
-            {state.data
-                .map((row: any, rowIndex: number) => (
-                    bodyRenderer
-                        ? bodyRenderer(row, rowIndex, state.columns)
-                        : <TableRow
-                            hover={true}
-                            key={rowIndex}
-                            onClick={onRowClickProxy(row)}
-                            style={styles.row}
-                        >
-                            {renderCells(state.columns, row)}
-                        </TableRow>
-                ))}
-            {state.filteredRecordCount === 0 && !state.isLoading &&
-                (<TableRow>
-                    <TableCell
-                        colSpan={state.columns.filter((col: any) => col.Visible).length}
-                    >
-                        <Typography
-                            style={styles.title}
-                            variant='body2'
-                            gutterBottom={true}
-                        >
-                            <Warning /> No records found
-                        </Typography>
-                    </TableCell>
-                </TableRow>)}
-        </TableBody>);
+            {state.filteredRecordCount === 0 && !state.isLoading
+                ? noDataRow
+                : state.data
+                    .map((row: any, rowIndex: number) => bodyRenderer(row, rowIndex, state.columns, onRowClickProxy))
+            }
+        </TableBody>
+    );
 };
 
 export default GridBody;

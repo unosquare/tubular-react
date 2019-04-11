@@ -168,7 +168,7 @@ export const simpleFeatures = `import React from 'react';
 import { Snackbar, TableCell, TableRow } from '@material-ui/core';
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
-import { format } from 'date-fns';
+import format from 'date-fns/format';
 import DataGrid, { ToolbarOptions, withRemoteDataSource } from 'tubular-react';
 
 import {
@@ -276,7 +276,6 @@ export default withRemoteDataSource(
 
 export const gridList = `import React from 'react';
 import ReactDOM from 'react-dom';
-import { LinearProgress, Paper } from '@material-ui/core';
 import { Card, CardActions, CardContent } from '@material-ui/core';
 import { GridList, GridListTile, Typography } from '@material-ui/core';
 import { Button } from '@material-ui/core';
@@ -287,7 +286,9 @@ import {
   TableFooter,
   TableRow
 } from '@material-ui/core';
-import { format } from 'date-fns';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Paper from '@material-ui/core/Paper';
+import format from 'date-fns/format';
 import {
   DataSourceContext,
   Paginator,

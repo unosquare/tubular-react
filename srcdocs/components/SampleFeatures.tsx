@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Snackbar, TableCell, TableRow } from '@material-ui/core';
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
-import { format } from 'date-fns';
+import format from 'date-fns/format';
 import DataGrid, {
     ToolbarOptions,
     withRemoteDataSource,

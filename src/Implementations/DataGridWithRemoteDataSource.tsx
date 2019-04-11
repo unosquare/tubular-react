@@ -2,6 +2,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import DataGrid from '../DataGrid/DataGrid';
 
+import Tooltip from '@material-ui/core/Tooltip';
 import * as React from 'react';
 
 /**
@@ -18,14 +19,17 @@ import * as React from 'react';
  *  onClick: this function will be called when the user click any row, It sends the row information
  *  openModalOnClick: This parameter is suposed to be a boolean. If true, it will open the modal in the onClick event
  *  addIcon: This parameter is a boolean. If true, it add an icon to open the modal
+ *  addLabel: This parameter is a string. Indicate the tooltip label to show hover add icon.
  * }
  */
 interface IDataGridWithRemoteDataSource {
     refresh?: () => Promise<any>;
     openModalOnClick?: boolean;
     addIcon?: boolean;
+    addLabel?: string;
+    bodyRenderer?: any;
     onClick?(ev: any): void;
-  }
+}
 
 const DataGridWithRemoteDataSource: React.FunctionComponent<IDataGridWithRemoteDataSource> = (props) => {
     const [modalOpen, setModalOpen] = React.useState(false);
@@ -42,6 +46,7 @@ const DataGridWithRemoteDataSource: React.FunctionComponent<IDataGridWithRemoteD
             props.onClick(row);
         }
     };
+
     const onClose = () => {
         setModalOpen(false);
         props.refresh();
@@ -61,11 +66,13 @@ const DataGridWithRemoteDataSource: React.FunctionComponent<IDataGridWithRemoteD
 
     return (
         <React.Fragment>
-            <DataGrid onRowClick={onRowClick}>
+            <DataGrid bodyRenderer={props.bodyRenderer} onRowClick={onRowClick}>
                 {props.addIcon &&
-                <IconButton onClick={onAdd}>
-                    <AddIcon />
-                </IconButton>
+                    <Tooltip title={props.addLabel || 'Add'}>
+                        <IconButton onClick={onAdd}>
+                            <AddIcon />
+                        </IconButton>
+                    </Tooltip>
                 }
             </DataGrid>
             {childrenWithExtraProp}

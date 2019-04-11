@@ -2,6 +2,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Toolbar from '@material-ui/core/Toolbar';
+import Tooltip from '@material-ui/core/Tooltip';
 import CloudDownload from '@material-ui/icons/CloudDownload';
 import Print from '@material-ui/icons/Print';
 
@@ -24,7 +25,7 @@ const styles: any = {
   },
 };
 
-export const ExportButton: React.FunctionComponent<any> = ({ type, gridName }) => {
+export const ExportButton: React.FunctionComponent<any> = ({ type, gridName, toolTip }) => {
   const { actions, state } = React.useContext(DataSourceContext);
   const [anchorPrint, setAnchorPrint] = React.useState(null);
 
@@ -47,7 +48,15 @@ export const ExportButton: React.FunctionComponent<any> = ({ type, gridName }) =
         disabled={state.filteredRecordCount === 0}
         onClick={handlePrintMenu}
       >
-        {type === 'print' ? <Print /> : <CloudDownload />}
+        {type === 'print' ?
+          <Tooltip title={toolTip || 'Print'}>
+            <Print />
+          </Tooltip>
+          :
+          <Tooltip title={toolTip || 'Download'}>
+            <CloudDownload />
+          </Tooltip>
+        }
       </IconButton>
       <Menu
         anchorEl={anchorPrint}

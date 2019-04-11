@@ -6,7 +6,6 @@ import TableRow from '@material-ui/core/TableRow';
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 
-import { format } from 'date-fns';
 import DataGrid, {
   IDataGridProps,
   IDataGridState,
@@ -14,6 +13,9 @@ import DataGrid, {
   withRemoteDataSource,
 } from '../../src';
 import columns from './data/columns';
+
+// tslint:disable-next-line: no-var-requires
+const format = require('date-fns/format');
 
 const toolbarOptions = new ToolbarOptions();
 

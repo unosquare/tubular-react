@@ -1,11 +1,11 @@
-import { format } from 'date-fns';
-import * as React from 'react';
-
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
+import * as React from 'react';
 
 import { ColumnDataType, CompareOperators } from 'tubular-common';
 
+// tslint:disable-next-line: no-var-requires
+const format = require('date-fns/format');
 const dropdown = {
   marginLeft: '10%',
   marginTop: '5%',
