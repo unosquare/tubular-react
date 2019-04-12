@@ -511,9 +511,7 @@ const GridDialog = () => {
       'https://tubular.azurewebsites.net/api/orders/paged');
 
   return (
-      <div className='root'>
-          <Grid />
-      </div>
+    <Grid />
   );
 };
 
