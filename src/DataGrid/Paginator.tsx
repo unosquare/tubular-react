@@ -1,4 +1,4 @@
-import TablePagination from '@material-ui/core/TablePagination';
+import TablePagination, { TablePaginationBaseProps } from '@material-ui/core/TablePagination';
 import * as React from 'react';
 import AdvancePaginationActions from './AdvancePaginationActions';
 
@@ -20,9 +20,10 @@ const message = (totalRecordCount: any, filteredRecordCount: any) => ({
       ? '0 records found'
       : `${from} to ${to} of ${count} from ${totalRecordCount} records`;
 
-const Paginator: React.FunctionComponent<IProps> = ({
+const Paginator: React.FunctionComponent<IProps & TablePaginationBaseProps> = ({
   rowsPerPageOptions,
   advancePagination,
+  ...rest
 }) => {
   const { actions, state } = React.useContext(DataSourceContext);
 
@@ -38,6 +39,7 @@ const Paginator: React.FunctionComponent<IProps> = ({
     page: state.page,
     rowsPerPage: state.itemsPerPage,
     rowsPerPageOptions: rowsPerPageOptions || [10, 20, 50],
+    ...rest,
   } as any;
 
   if (advancePagination) {

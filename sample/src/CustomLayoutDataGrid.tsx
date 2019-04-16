@@ -10,8 +10,10 @@ import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 
 import {
   DataGridTable,
+  GridToolbar,
   IDataGridProps,
   IDataGridState,
+  Paginator,
   ToolbarOptions,
   withLocalDataSource,
 } from '../../src';
@@ -20,7 +22,7 @@ import localData from './data/localData';
 
 // tslint:disable-next-line: no-var-requires
 const format = require('date-fns/format');
-const toolbarOptions = new ToolbarOptions({ bottomPager: false });
+const toolbarOptions = new ToolbarOptions({ bottomPager: false, topPager: false });
 
 class CustomLayoutDataGrid extends React.Component<
   IDataGridProps,
@@ -82,6 +84,16 @@ class CustomLayoutDataGrid extends React.Component<
           />
         )}
         <Typography variant='h4'>No card grid!</Typography>
+        <GridToolbar
+          toolbarOptions={toolbarOptions}
+          gridName={'Grid'}
+        >
+          <Paginator
+              component='div'
+              rowsPerPageOptions={toolbarOptions.rowsPerPageOptions}
+              advancePagination={toolbarOptions.advancePagination}
+          />
+        </GridToolbar>
         <DataGridTable
           bodyRenderer={bodyRenderer}
           toolbarOptions={toolbarOptions}

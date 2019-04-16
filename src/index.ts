@@ -1,6 +1,7 @@
 import DataGrid,
 {
   DataGridTable,
+  GridToolbar,
   Paginator,
   TextSearchInput,
 } from './DataGrid';
@@ -37,6 +38,7 @@ export {
   DataGridTable,
   DataGridWithRemoteDataSource,
   FetchHandler,
+  GridToolbar,
   Paginator,
   TextSearchInput,
   ToolbarOptions,
