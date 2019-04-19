@@ -1,30 +1,25 @@
-import {
-  createStyles,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Theme,
-  withStyles,
-} from '@material-ui/core';
-import * as React from 'react';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import makeStyles from '@material-ui/Styles/makeStyles';
 
-const styles = (theme: Theme) =>
-  createStyles({
-    code: {
-      background: '#F8F8FF',
-      fontSize: 14,
-    },
-    root: {
-      marginTop: theme.spacing.unit * 3,
-      overflowX: 'auto',
-      width: '100%',
-    },
-  });
+import React from 'react';
 
-const ColumnModelTable = (props: any) => {
-  const { classes } = props;
+const useStyles = makeStyles((theme: any) => ({
+  code: {
+    background: '#F8F8FF',
+    fontSize: 14,
+  },
+  root: {
+    overflowX: 'auto',
+    width: '100%',
+  },
+}));
+
+const ColumnModelTable: React.FunctionComponent = () => {
+  const classes = useStyles();
 
   return (
     <Table>
@@ -211,4 +206,4 @@ const ColumnModelTable = (props: any) => {
   );
 };
 
-export default withStyles(styles)(ColumnModelTable);
+export default ColumnModelTable;

@@ -425,3 +425,94 @@ export default withRemoteDataSource(
   columns,
   'https://tubular.azurewebsites.net/api/orders/paged'
 );`;
+
+export const gridDialog = `import * as React from 'react';
+
+import {
+    DataGridWithRemoteDataSource,
+    withRemoteDataSource } from 'tubular-react';
+
+import { AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection } from 'tubular-common';
+
+const columns = [
+    new ColumnModel('OrderID',
+        {
+            DataType: ColumnDataType.NUMERIC,
+            Filterable: true,
+            IsKey: true,
+            Label: 'ID',
+            SortDirection: ColumnSortDirection.ASCENDING,
+            SortOrder: 1,
+            Sortable: true
+        }
+    ),
+    new ColumnModel('CustomerName',
+        {
+            Aggregate: AggregateFunctions.COUNT,
+            Filterable: true,
+            Searchable: true,
+            Sortable: true
+        }
+    ),
+    new ColumnModel('ShippedDate',
+        {
+            DataType: ColumnDataType.DATE_TIME,
+            Filterable: true,
+            Sortable: true
+        }
+    ),
+    new ColumnModel('ShipperCity'),
+    new ColumnModel('Amount',
+        {
+            DataType: ColumnDataType.NUMERIC,
+            Sortable: true
+        }
+    ),
+    new ColumnModel('IsShipped',
+        {
+            DataType: ColumnDataType.BOOLEAN,
+            Filterable: true,
+            Sortable: true
+        }
+    )
+];
+
+//The Dialog
+const RowDialog = ({ onClose, open, row }) => (
+  <React.Fragment>
+      <Dialog open={open} onClose={onClose}>
+          {row ?
+              <React.Fragment>
+                  <DialogTitle>Customer: {row.CustomerName}</DialogTitle>
+                  <DialogContent>This package comes from: {row.ShipperCity}</DialogContent>
+              </React.Fragment>
+              :
+              <React.Fragment>
+                  <DialogTitle>Add Entry</DialogTitle>
+                  <DialogContent>Here you can add an entry!</DialogContent>
+              </React.Fragment>
+          }
+      </Dialog>
+  </React.Fragment>
+);
+
+const GridDialog = () => {
+  const Grid = withRemoteDataSource(
+      (prop: any) => (
+          <DataGridWithRemoteDataSource
+              openModalOnClick={true}
+              addIcon={true}
+              refresh={prop.refresh}
+          >
+              <RowDialog />
+          </DataGridWithRemoteDataSource>
+      ),
+      columns,
+      'https://tubular.azurewebsites.net/api/orders/paged');
+
+  return (
+    <Grid />
+  );
+};
+
+export default GridDialog`;
