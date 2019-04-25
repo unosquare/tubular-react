@@ -14,8 +14,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 import {
-  DataSourceContext,
   DataGridProvider,
+  DataSourceContext,
   IDataGridProps,
   IDataGridState,
   Paginator,
