@@ -7,17 +7,18 @@ import * as React from 'react';
 
 import GridBody from './GridBody';
 import GridHeader from './GridHeader';
-import Paginator from './Paginator';
+import { Paginator } from './Paginator';
 
 import { DataSourceContext } from '../DataSource';
+import { DataGridContext } from './DataGridContext';
 
-const DataGridTable: React.FunctionComponent<any> = ({
+export const DataGridTable: React.FunctionComponent<any> = ({
     bodyRenderer,
     footerRenderer,
-    toolbarOptions,
     onRowClick,
 }) => {
     const { state } = React.useContext(DataSourceContext);
+    const { toolbarOptions } = React.useContext(DataGridContext);
 
     return (
         <Table>
@@ -50,5 +51,3 @@ const DataGridTable: React.FunctionComponent<any> = ({
         </Table>
     );
 };
-
-export default DataGridTable;

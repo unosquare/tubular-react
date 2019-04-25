@@ -1,13 +1,8 @@
 import TablePagination, { TablePaginationBaseProps } from '@material-ui/core/TablePagination';
 import * as React from 'react';
-import AdvancePaginationActions from './AdvancePaginationActions';
-
 import { DataSourceContext } from '../DataSource';
-
-interface IProps {
-  rowsPerPageOptions?: number[];
-  advancePagination?: boolean;
-}
+import AdvancePaginationActions from './AdvancePaginationActions';
+import { DataGridContext } from './DataGridContext';
 
 const message = (totalRecordCount: any, filteredRecordCount: any) => ({
   from,
@@ -20,14 +15,11 @@ const message = (totalRecordCount: any, filteredRecordCount: any) => ({
       ? '0 records found'
       : `${from} to ${to} of ${count} from ${totalRecordCount} records`;
 
-const Paginator: React.FunctionComponent<IProps & TablePaginationBaseProps> = ({
-  rowsPerPageOptions,
-  advancePagination,
-  ...rest
-}) => {
+export const Paginator: React.FunctionComponent<TablePaginationBaseProps> = (props) => {
   const { actions, state } = React.useContext(DataSourceContext);
+  const { toolbarOptions } = React.useContext(DataGridContext);
 
-  const props = {
+  const newProps = {
     count: state.filteredRecordCount,
     labelDisplayedRows: message(
       state.totalRecordCount,
@@ -38,15 +30,13 @@ const Paginator: React.FunctionComponent<IProps & TablePaginationBaseProps> = ({
       actions.updateItemPerPage(Number(e.target.value)),
     page: state.page,
     rowsPerPage: state.itemsPerPage,
-    rowsPerPageOptions: rowsPerPageOptions || [10, 20, 50],
-    ...rest,
+    rowsPerPageOptions: toolbarOptions.rowsPerPageOptions || [10, 20, 50],
+    ...props,
   } as any;
 
-  if (advancePagination) {
-    props.ActionsComponent = AdvancePaginationActions;
+  if (toolbarOptions.advancePagination) {
+    newProps.ActionsComponent = AdvancePaginationActions;
   }
 
-  return <TablePagination {...props} />;
+  return <TablePagination {...newProps} />;
 };
-
-export default Paginator;
