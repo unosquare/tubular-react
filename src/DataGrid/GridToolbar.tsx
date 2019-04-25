@@ -10,7 +10,7 @@ const styles: any = {
   },
 };
 
-const GridToolbar: React.FunctionComponent = ({ children }: any) => {
+export const GridToolbar: React.FunctionComponent = ({ children }: any) => {
   const { toolbarOptions, gridName } = React.useContext(DataGridContext);
 
   return (
@@ -23,5 +23,3 @@ const GridToolbar: React.FunctionComponent = ({ children }: any) => {
     </Toolbar>
   );
 };
-
-export default GridToolbar;

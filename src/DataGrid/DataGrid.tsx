@@ -5,9 +5,8 @@ import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
 
 import { DataSourceContext } from '../DataSource';
+import { DataGridTable, GridToolbar } from './';
 import { DataGridProvider, IDataGridContext } from './DataGridContext';
-import DataGridTable from './DataGridTable';
-import GridToolbar from './GridToolbar';
 
 const useStyles = makeStyles(({ spacing }: any) => ({
   progress: {
@@ -49,7 +48,6 @@ const DataGrid: React.FunctionComponent<IProps> = ({
           {state.isLoading && <LinearProgress />}
         </div>
         <DataGridTable
-          toolbarOptions={toolbarOptions}
           bodyRenderer={bodyRenderer}
           footerRenderer={footerRenderer}
           onRowClick={onRowClick}

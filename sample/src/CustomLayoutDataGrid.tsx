@@ -9,6 +9,7 @@ import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 
 import {
+  DataGridProvider,
   DataGridTable,
   GridToolbar,
   IDataGridProps,
@@ -73,7 +74,7 @@ class CustomLayoutDataGrid extends React.Component<
     );
 
     return (
-      <div className='root'>
+      <DataGridProvider gridName='CustomLayout' toolbarOptions={toolbarOptions}>
         {errorMessage && (
           <Snackbar
             anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
@@ -84,22 +85,16 @@ class CustomLayoutDataGrid extends React.Component<
           />
         )}
         <Typography variant='h4'>No card grid!</Typography>
-        <GridToolbar
-          toolbarOptions={toolbarOptions}
-          gridName={'Grid'}
-        >
+        <GridToolbar>
           <Paginator
               component='div'
-              rowsPerPageOptions={toolbarOptions.rowsPerPageOptions}
-              advancePagination={toolbarOptions.advancePagination}
           />
         </GridToolbar>
         <DataGridTable
           bodyRenderer={bodyRenderer}
-          toolbarOptions={toolbarOptions}
           footerRenderer={footerRenderer}
         />
-      </div>
+      </DataGridProvider>
     );
   }
 }
