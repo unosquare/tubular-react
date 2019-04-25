@@ -2,7 +2,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import * as React from 'react';
 import { DataGridContext } from './DataGridContext';
 import { ExportButton } from './ExportButton';
-import SearchTextInput from './SearchTextInput';
+import { SearchTextInput } from './SearchTextInput';
 
 const styles: any = {
   spacer: {

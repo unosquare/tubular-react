@@ -18,7 +18,7 @@ import columns from '../utils/columns';
 import {
   DataSourceContext,
   Paginator,
-  TextSearchInput,
+  SearchTextInput,
   withRemoteDataSource,
 } from '../../src';
 
@@ -53,7 +53,7 @@ class SampleGridList extends React.Component<any, any> {
         {({ state }) => (
           <Paper>
             <div style={styles.search}>
-              <TextSearchInput />
+              <SearchTextInput />
             </div>
             <div style={styles.progress}>
               {state.isLoading && <LinearProgress />}

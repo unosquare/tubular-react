@@ -291,7 +291,7 @@ import format from 'date-fns/format';
 import {
   DataSourceContext,
   Paginator,
-  TextSearchInput,
+  SearchTextInput,
   withRemoteDataSource,
   IDataGridState,
   IDataGridProps
@@ -366,7 +366,7 @@ class SampleGridList extends React.Component<IDataGridProps, IDataGridState> {
         {({ state }) => (
           <Paper>
             <div style={styles.search}>
-              <TextSearchInput />
+              <SearchTextInput />
             </div>
             <div style={styles.progress}>
               {state.isLoading && <LinearProgress />}
