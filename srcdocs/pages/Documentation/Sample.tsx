@@ -12,14 +12,12 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import CodeIcon from '@material-ui/icons/Code';
 import CreateIcon from '@material-ui/icons/Create';
+import 'highlight.js/styles/an-old-hope.css';
+import * as React from 'react';
 import Highlight from 'react-highlight';
 import { Link } from 'react-router-dom';
-import GitHubIcon from '../../components/Github';
-
-import * as React from 'react';
-
-import 'highlight.js/styles/an-old-hope.css';
 import BasicFeatures from '../../components/BasicFeatures';
+import GitHubIcon from '../../components/Github';
 import GridDialog from '../../components/GridDialog';
 import SampleButtonsFeatures from '../../components/SampleButtonsFeatures';
 import SampleFeatures from '../../components/SampleFeatures';
@@ -108,7 +106,7 @@ export default withStyles(styles)(
       const { classes } = this.props;
       return (
         <div>
-          <Grid container={true} spacing={24} className={classes.container}>
+          <Grid container={true} className={classes.container}>
             <Grid item={true} xs={10} className={classes.paper}>
               <Paper className={classes.paper} id='simple-grid'>
                 <Typography variant='h4'>Samples</Typography>
@@ -399,10 +397,10 @@ export default withStyles(styles)(
                   <ListItemText primary='Basic Grid' />
                 </ListItem>
                 <ListItem component={Link} to='#full-grid'>
-                  <ListItemText primary='Full Grid Features' />
+                  <ListItemText primary='Features' />
                 </ListItem>
                 <ListItem component={Link} to='#func-btns'>
-                  <ListItemText primary='Functionality Buttons' />
+                  <ListItemText primary='Toolbar Buttons' />
                 </ListItem>
                 <ListItem component={Link} to='#grid-list'>
                   <ListItemText primary='Grid List' />

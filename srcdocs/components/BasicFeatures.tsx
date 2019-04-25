@@ -6,23 +6,21 @@ import DataGrid, {
 
 import columns from '../utils/columns';
 
-const MyComponent = () => {
-    const toolbarOptions = {
-        advancePagination: false,
-        exportButton: false,
-        printButton: false,
-        searchText: false,
-    };
-
-    return (
-        <div className='root'>
-            <DataGrid
-                gridName='Tubular-React'
-                toolbarOptions={new ToolbarOptions(toolbarOptions)}
-            />
-        </div>
-    );
+const toolbarOptions = {
+    advancePagination: false,
+    exportButton: false,
+    printButton: false,
+    searchText: false,
 };
+
+const MyComponent = () => (
+    <div className='root'>
+        <DataGrid
+            gridName='Tubular-React'
+            toolbarOptions={new ToolbarOptions(toolbarOptions)}
+        />
+    </div>
+);
 
 /*
  Use the component withRemoteDataSource to wrap your component

@@ -163,7 +163,6 @@ const MyComponent = () => {
 */
 export default withRemoteDataSource(MyComponent, columns, 'http://tubular.azurewebsites.net/api/orders/paged');`;
 
-
 export const simpleFeatures = `import React from 'react';
 import { Snackbar, TableCell, TableRow } from '@material-ui/core';
 import CheckBox from '@material-ui/icons/CheckBox';
