@@ -4,10 +4,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import makeStyles from '@material-ui/Styles/makeStyles';
+import * as React from 'react';
 
-import React from 'react';
-
-const useStyles = makeStyles((theme: any) => ({
+const useStyles = makeStyles(() => ({
   code: {
     background: '#F8F8FF',
     fontSize: 14,
@@ -18,7 +17,7 @@ const useStyles = makeStyles((theme: any) => ({
   },
 }));
 
-const ColumnModelTable: React.FunctionComponent = () => {
+export default () => {
   const classes = useStyles();
 
   return (
@@ -205,5 +204,3 @@ const ColumnModelTable: React.FunctionComponent = () => {
     </Table>
   );
 };
-
-export default ColumnModelTable;

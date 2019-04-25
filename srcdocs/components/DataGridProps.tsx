@@ -5,10 +5,10 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import makeStyles from '@material-ui/styles/makeStyles';
-import React from 'react';
+import * as React from 'react';
 import { TextAsCode } from './StyledComponents';
 
-const useStyles = makeStyles((theme: any) => ({
+const useStyles = makeStyles(() => ({
     code: {
         background: '#F8F8FF',
         fontSize: 14,
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: any) => ({
     },
 }));
 
-const DataGridProps: React.FunctionComponent = () => {
+export default () => {
     const classes = useStyles();
 
     return (
@@ -35,7 +35,7 @@ const DataGridProps: React.FunctionComponent = () => {
                 </TableHead>
                 <TableBody>
                     <TableRow hover={true}>
-                        <TableCell>{TextAsCode('gridName')}</TableCell>
+                        <TableCell><code className={classes.code}>gridName</code></TableCell>
                         <TableCell><code className={classes.code}>string</code></TableCell>
                         <TableCell>Grid</TableCell>
                         <TableCell><strong>Optional</strong></TableCell>
@@ -89,5 +89,3 @@ const DataGridProps: React.FunctionComponent = () => {
         </Paper>
     );
 };
-
-export default DataGridProps;
