@@ -4,23 +4,22 @@ import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
 
+import { DataSourceContext } from '../DataSource';
+import { DataGridProvider, IDataGridContext } from './DataGridContext';
 import DataGridTable from './DataGridTable';
 import GridToolbar from './GridToolbar';
 
-import { DataSourceContext } from '../DataSource';
-import { ToolbarOptions } from '../Models';
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ spacing }: any) => ({
+  progress: {
+    height: spacing.unit * 2,
+  },
   root: {
     overflowX: 'auto',
     width: '100%',
   },
 }));
 
-interface IProps {
-  gridName?: string;
-  toolbarOptions?: ToolbarOptions;
-
+interface IProps extends IDataGridContext {
   bodyRenderer?(row: any, index: number, columns: ColumnModel[]): void;
   footerRenderer?(aggregate: any): void;
   onRowClick?(ev: any): any;
@@ -37,26 +36,26 @@ const DataGrid: React.FunctionComponent<IProps> = ({
   const classes = useStyles();
   const { state } = React.useContext(DataSourceContext);
 
-  toolbarOptions = toolbarOptions || new ToolbarOptions();
-
   return (
-    <Paper className={classes.root}>
-      <GridToolbar
-        toolbarOptions={toolbarOptions}
-        gridName={gridName || 'Grid'}
-      >
-        {children}
-      </GridToolbar>
-      <div className={classes.progress}>
-        {state.isLoading && <LinearProgress />}
-      </div>
-      <DataGridTable
-        toolbarOptions={toolbarOptions}
-        bodyRenderer={bodyRenderer}
-        footerRenderer={footerRenderer}
-        onRowClick={onRowClick}
-      />
-    </Paper>
+    <DataGridProvider
+      toolbarOptions={toolbarOptions}
+      gridName={gridName}
+    >
+      <Paper className={classes.root}>
+        <GridToolbar>
+          {children}
+        </GridToolbar>
+        <div className={classes.progress}>
+          {state.isLoading && <LinearProgress />}
+        </div>
+        <DataGridTable
+          toolbarOptions={toolbarOptions}
+          bodyRenderer={bodyRenderer}
+          footerRenderer={footerRenderer}
+          onRowClick={onRowClick}
+        />
+      </Paper>
+    </DataGridProvider>
   );
 };
 
