@@ -277,7 +277,7 @@ export const gridList = `import React from 'react';
 import ReactDOM from 'react-dom';
 import { Card, CardActions, CardContent } from '@material-ui/core';
 import { GridList, GridListTile, Typography } from '@material-ui/core';
-import { Button } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import {
   Table,
   TableBody,
@@ -408,7 +408,7 @@ class SampleGridList extends React.Component<IDataGridProps, IDataGridState> {
               </TableBody>
               <TableFooter>
                 <TableRow>
-                  <Paginator advancePagination={false} />
+                  <Paginator />
                 </TableRow>
               </TableFooter>
             </Table>

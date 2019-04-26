@@ -25,10 +25,7 @@ export const DataGridTable: React.FunctionComponent<any> = ({
             <TableHead>
                 {toolbarOptions.topPager && (
                     <TableRow>
-                        <Paginator
-                            rowsPerPageOptions={toolbarOptions.rowsPerPageOptions}
-                            advancePagination={toolbarOptions.advancePagination}
-                        />
+                        <Paginator />
                     </TableRow>
                 )}
                 <GridHeader />
@@ -41,10 +38,7 @@ export const DataGridTable: React.FunctionComponent<any> = ({
                 {footerRenderer && footerRenderer(state.aggregate)}
                 {toolbarOptions.bottomPager && (
                     <TableRow>
-                        <Paginator
-                            rowsPerPageOptions={toolbarOptions.rowsPerPageOptions}
-                            advancePagination={toolbarOptions.advancePagination}
-                        />
+                        <Paginator />
                     </TableRow>
                 )}
             </TableFooter>
