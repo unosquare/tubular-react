@@ -18,7 +18,7 @@ export default abstract class BaseDataSource extends React.Component<
     error: null as any,
     filteredRecordCount: 0,
     isLoading: false,
-    itemsPerPage: 10,
+    itemsPerPage: null,
     multiSort: false,
     page: 0,
     searchText: '',
@@ -187,8 +187,6 @@ export default abstract class BaseDataSource extends React.Component<
   }
 
   public componentDidMount() {
-    this.retrieveData();
-
     document.addEventListener('keydown', (event) => this.handleKeyDown(event));
     document.addEventListener('keyup', (event) => this.handleKeyUp(event));
   }

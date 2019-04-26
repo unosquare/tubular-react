@@ -12,13 +12,17 @@ export interface IDataGridContext {
 export const DataGridContext = React.createContext<IDataGridContext>(null);
 
 export const DataGridProvider = ({ gridName, toolbarOptions, children }: any) => {
+    const [ isLoaded, setLoaded ] = React.useState(false);
     const { actions } = React.useContext(DataSourceContext);
     const state: IDataGridContext = {
         gridName: gridName || `Grid${counter++}`,
         toolbarOptions: toolbarOptions || new ToolbarOptions(),
     };
 
-    actions.updateItemPerPage(state.toolbarOptions.itemsPerPage);
+    if (!isLoaded) {
+        actions.updateItemPerPage(state.toolbarOptions.itemsPerPage);
+        setLoaded(true);
+    }
 
     return (
         <DataGridContext.Provider value={state}>
