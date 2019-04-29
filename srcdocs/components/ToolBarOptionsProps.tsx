@@ -63,6 +63,16 @@ export default () => {
                         </TableCell>
                     </TableRow>
                     <TableRow hover={true}>
+                        <TableCell><code className={classes.code}>itemsPerPage</code></TableCell>
+                        <TableCell><code className={classes.code}>number</code></TableCell>
+                        <TableCell><code className={classes.code}>10</code></TableCell>
+                        <TableCell>
+                            <strong>Optional. </strong>
+                            Initial valor that represent the number of rows per page.
+                        It should be a number that is inside the <em>rowsPerPageOptions</em> array.
+                        </TableCell>
+                    </TableRow>
+                    <TableRow hover={true}>
                         <TableCell><code className={classes.code}>printButton</code></TableCell>
                         <TableCell><code className={classes.code}>boolean</code></TableCell>
                         <TableCell><code className={classes.code}>true</code></TableCell>
@@ -96,16 +106,6 @@ export default () => {
                         <TableCell>
                             <strong>Optional. </strong>
                             It shows a combo with a set of values that represent the number of rows per page.
-                        </TableCell>
-                    </TableRow>
-                    <TableRow hover={true}>
-                        <TableCell><code className={classes.code}>rowsPerPage</code></TableCell>
-                        <TableCell><code className={classes.code}>number</code></TableCell>
-                        <TableCell><code className={classes.code}>10</code></TableCell>
-                        <TableCell>
-                            <strong>Optional. </strong>
-                            Initial valor that represent the number of rows per page.
-                        It should be a number that is inside the <em>rowsPerPageOptions</em> array.
                         </TableCell>
                     </TableRow>
                 </TableBody>

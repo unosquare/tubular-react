@@ -24,7 +24,7 @@ const styles = ({ spacing }: Theme) =>
 interface IProps extends WithStyles<typeof styles> {
   count: number;
   page: number;
-  rowsPerPage: number;
+  itemsPerPage: number;
   onChangePage(event: React.MouseEvent<HTMLElement>, page: number): void;
 }
 
@@ -63,11 +63,11 @@ const AdvancePaginationActions: React.FunctionComponent<IProps> = ({
   classes,
   count,
   page,
-  rowsPerPage,
+  itemsPerPage,
   onChangePage,
 }) => {
-  const pages = getPages(page, count, rowsPerPage);
-  const lastPage = Math.ceil(count / rowsPerPage) - 1;
+  const pages = getPages(page, count, itemsPerPage);
+  const lastPage = Math.ceil(count / itemsPerPage) - 1;
   const gotoPage = (value: number) => (e: any) => onChangePage(e, value);
 
   const gotoFirstPage = gotoPage(0);
@@ -100,7 +100,7 @@ const AdvancePaginationActions: React.FunctionComponent<IProps> = ({
         <IconButton
           key={value}
           onClick={gotoPage(value)}
-          disabled={value >= Math.ceil(count / rowsPerPage)}
+          disabled={value >= Math.ceil(count / itemsPerPage)}
           aria-label={`Page ${value + 1}`}
           color={value === page ? 'primary' : 'default'}
         >
