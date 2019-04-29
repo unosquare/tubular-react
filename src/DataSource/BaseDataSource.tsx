@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { debounce } from '../utils/debounce';
 
-import { ColumnModel, GridRequest, GridResponse } from 'tubular-common';
+import { ColumnModel, GridRequest } from 'tubular-common';
 
 import { DataSourceContext } from './DataSourceContext';
 import IBaseDataSourceState from './IBaseDataSourceState';
@@ -18,7 +18,7 @@ export default abstract class BaseDataSource extends React.Component<
     error: null as any,
     filteredRecordCount: 0,
     isLoading: false,
-    itemsPerPage: 10,
+    itemsPerPage: null,
     multiSort: false,
     page: 0,
     searchText: '',
@@ -144,9 +144,16 @@ export default abstract class BaseDataSource extends React.Component<
 
         this.retrieveData({ columns });
       },
-      updateItemPerPage: (itemsPerPage: number) =>
-        this.retrieveData({ itemsPerPage }),
-      updatePage: (page: number) => this.retrieveData({ page }),
+      updateItemPerPage: (itemsPerPage: number) => {
+        if (this.state.itemsPerPage !== itemsPerPage) {
+          this.retrieveData({ itemsPerPage });
+        }
+      },
+      updatePage: (page: number) => {
+        if (this.state.page !== page) {
+          this.retrieveData({ page });
+        }
+      },
       updateSearchText: (searchText: string) => {
         this.setState({ searchText });
         this.handleSearchText(searchText);
@@ -180,8 +187,6 @@ export default abstract class BaseDataSource extends React.Component<
   }
 
   public componentDidMount() {
-    this.retrieveData();
-
     document.addEventListener('keydown', (event) => this.handleKeyDown(event));
     document.addEventListener('keyup', (event) => this.handleKeyUp(event));
   }

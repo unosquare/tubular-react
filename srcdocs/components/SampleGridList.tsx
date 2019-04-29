@@ -1,6 +1,5 @@
 import { Card, CardActions, CardContent } from '@material-ui/core';
 import { GridList, GridListTile, Typography } from '@material-ui/core';
-import { Button } from '@material-ui/core';
 import {
   Table,
   TableBody,
@@ -8,6 +7,7 @@ import {
   TableFooter,
   TableRow,
 } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from '@material-ui/core/Paper';
 import format from 'date-fns/format';
@@ -95,7 +95,7 @@ class SampleGridList extends React.Component<any, any> {
               </TableBody>
               <TableFooter>
                 <TableRow>
-                  <Paginator advancePagination={false} />
+                  <Paginator />
                 </TableRow>
               </TableFooter>
             </Table>

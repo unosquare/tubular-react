@@ -138,11 +138,11 @@ These are all the available properties (and their default values) for the `Toolb
 | `advancePagination`   | `bool`      | `true`              | `Optional`. It shows advanced pagination with numbers of the page to navigate between pages, also display the navigation buttons to the last or first page. Otherwise, show a simple pagination with two directions arrows for advance or go back a page. |
 | `bottomPager`         | `bool`      | `true`              | `Optional`. It shows pagination bar in the bottom of the grid. |
 | `exportButton`        | `bool`      | `true`              | `Optional`. It shows the export button. |
+| `itemsPerPage`         | `number`    | 10                  | `Optional`. Initial value that represents the number of rows per page. It should be a number that is inside the `rowsPerPageOptions` array. |
 | `searchText`          | `bool`      | `true`              | `Optional`. It shows the search text input. |
 | `topPager`            | `bool`      | `true`              | `Optional`. It shows pagination bar in the top of the grid. |
 | `printButton`         | `bool`      | `true`              | `Optional`. It shows the print button. |
 | `rowsPerPageOptions`  | `array`     | [10, 20, 50, 100]   | `Optional`. It shows a combo with a set of values that represent the number of rows per page. |
-| `rowsPerPage`         | `number`    | 10                  | `Optional`. Initial value that represents the number of rows per page. It should be a number that is inside the `rowsPerPageOptions` array. |
 
 _If you don't define some of the optional props described above, these will use their defaults values. In the case of `bodyRenderer`, the grid will display its default body; if the `footerRenderer` is not defined, the footer will not be displayed._
 

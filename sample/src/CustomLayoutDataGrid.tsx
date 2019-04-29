@@ -23,7 +23,12 @@ import localData from './data/localData';
 
 // tslint:disable-next-line: no-var-requires
 const format = require('date-fns/format');
-const toolbarOptions = new ToolbarOptions({ bottomPager: false, topPager: false });
+const toolbarOptions = new ToolbarOptions({
+  advancePagination: false,
+  bottomPager: false,
+  rowsPerPageOptions: [5, 10],
+  topPager: false,
+});
 
 class CustomLayoutDataGrid extends React.Component<
   IDataGridProps,
@@ -87,7 +92,7 @@ class CustomLayoutDataGrid extends React.Component<
         <Typography variant='h4'>No card grid!</Typography>
         <GridToolbar>
           <Paginator
-              component='div'
+            component='div'
           />
         </GridToolbar>
         <DataGridTable

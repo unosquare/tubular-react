@@ -1,4 +1,4 @@
-import { SvgIcon } from '@material-ui/core';
+import SvgIcon from '@material-ui/core/SvgIcon';
 import * as React from 'react';
 // tslint:disable:max-line-length
 export default (props: any) => (

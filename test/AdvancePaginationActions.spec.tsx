@@ -20,7 +20,7 @@ describe('TablePaginationActions', () => {
         classes={{}}
         count={500}
         page={0}
-        rowsPerPage={10}
+        itemsPerPage={10}
         onChangePage={context.actions.updatePage}
       />,
     );
@@ -34,7 +34,7 @@ describe('TablePaginationActions', () => {
         classes={{}}
         count={500}
         page={0}
-        rowsPerPage={10}
+        itemsPerPage={10}
         onChangePage={context.actions.updatePage}
       />,
     );
@@ -51,7 +51,7 @@ describe('TablePaginationActions', () => {
         classes={{}}
         count={500}
         page={2}
-        rowsPerPage={10}
+        itemsPerPage={10}
         onChangePage={context.actions.updatePage}
       />,
     );
@@ -68,7 +68,7 @@ describe('TablePaginationActions', () => {
         classes={{}}
         count={500}
         page={49}
-        rowsPerPage={10}
+        itemsPerPage={10}
         onChangePage={context.actions.updatePage}
       />,
     );
@@ -85,7 +85,7 @@ describe('TablePaginationActions', () => {
         classes={{}}
         count={500}
         page={47}
-        rowsPerPage={10}
+        itemsPerPage={10}
         onChangePage={context.actions.updatePage}
       />,
     );
@@ -102,7 +102,7 @@ describe('TablePaginationActions', () => {
         classes={{}}
         count={500}
         page={49}
-        rowsPerPage={10}
+        itemsPerPage={10}
         onChangePage={context.actions.updatePage}
       />,
     );
@@ -119,7 +119,7 @@ describe('TablePaginationActions', () => {
         classes={{}}
         count={500}
         page={0}
-        rowsPerPage={10}
+        itemsPerPage={10}
         onChangePage={context.actions.updatePage}
       />,
     );
@@ -136,7 +136,7 @@ describe('TablePaginationActions', () => {
         classes={{}}
         count={500}
         page={49}
-        rowsPerPage={10}
+        itemsPerPage={10}
         onChangePage={context.actions.updatePage}
       />,
     );
@@ -153,7 +153,7 @@ describe('TablePaginationActions', () => {
         classes={{}}
         count={500}
         page={34}
-        rowsPerPage={10}
+        itemsPerPage={10}
         onChangePage={context.actions.updatePage}
       />,
     );
@@ -170,7 +170,7 @@ describe('TablePaginationActions', () => {
         classes={{}}
         count={500}
         page={33}
-        rowsPerPage={10}
+        itemsPerPage={10}
         onChangePage={context.actions.updatePage}
       />,
     );

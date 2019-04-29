@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { GridRequest } from 'tubular-common';
 import { ITubularHttpClient, TubularHttpClient } from '../utils';
 import BaseDataSource from './BaseDataSource';
@@ -7,14 +6,12 @@ import IBaseDataSourceState from './IBaseDataSourceState';
 const withRemoteDataSource = (
   WrappedComponent: any,
   columns: any,
-  request: string | Request | ITubularHttpClient,
-  itemsPerPage = 10) => {
+  request: string | Request | ITubularHttpClient) => {
   return class extends BaseDataSource {
     public setInitialState(value: any): IBaseDataSourceState {
       return {
         ...value,
         columns,
-        itemsPerPage,
       };
     }
 
@@ -22,7 +19,7 @@ const withRemoteDataSource = (
       return WrappedComponent;
     }
 
-    public getAllRecords(gridRequest: GridRequest): Promise<object> {
+    public async getAllRecords(gridRequest: GridRequest): Promise<object> {
       const httpCast = request as ITubularHttpClient;
       let httpClient: ITubularHttpClient;
 
@@ -32,15 +29,14 @@ const withRemoteDataSource = (
         httpClient = new TubularHttpClient(request);
       }
 
-      return httpClient.fetch(gridRequest)
-        .then((data) => {
-          if (!TubularHttpClient.isValidResponse(data)) {
-            throw new Error('Server response is a invalid Tubular object');
-          }
+      const data = await httpClient.fetch(gridRequest);
+      if (!TubularHttpClient.isValidResponse(data)) {
+        throw new Error('Server response is a invalid Tubular object');
+      }
 
-          data.Payload = data.Payload.map((row: any) => TubularHttpClient.parsePayload(row, gridRequest.Columns));
-          return data;
-        });
+      data.Payload = data.Payload.map((row: any) => TubularHttpClient.parsePayload(row, gridRequest.Columns));
+
+      return data;
     }
   };
 };

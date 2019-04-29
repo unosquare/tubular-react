@@ -15,9 +15,11 @@ export default class ToolbarOptions {
         this.printButton = options && 'printButton' in options ? options.printButton : true;
         this.searchText = options && 'searchText' in options ? options.searchText : true;
         this.topPager = options && 'topPager' in options ? options.topPager : true;
-        this.rowsPerPageOptions = options && 'rowsPerPageOptions' in options
+        this.rowsPerPageOptions = options && 'rowsPerPageOptions' in options && options.rowsPerPageOptions.length > 0
             ? options.rowsPerPageOptions
             : [10, 20, 50, 100];
-        this.itemsPerPage = options && 'itemsPerPage' in options ? options.itemsPerPage : 10;
+        this.itemsPerPage = options && 'itemsPerPage' in options
+            ? options.itemsPerPage
+            : this.rowsPerPageOptions[0];
     }
 }
