@@ -202,7 +202,7 @@ export default abstract class BaseDataSource extends React.Component<
     );
   }
 
-  private async processRequest(options: any) {
+  public async processRequest(options: any) {
     const columns = options.columns || this.state.columns;
     const itemsPerPage = options.itemsPerPage || this.state.itemsPerPage;
     const page =
