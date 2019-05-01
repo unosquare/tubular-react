@@ -41,5 +41,6 @@ export const Paginator: React.FunctionComponent<TablePaginationBaseProps> = (pro
   if (toolbarOptions.advancePagination) {
     newProps.ActionsComponent = AdvancePaginationActions;
   }
+  
   return <TablePagination {...newProps} />;
 };

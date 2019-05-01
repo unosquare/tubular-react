@@ -1,11 +1,5 @@
 import IconButton from '@material-ui/core/IconButton';
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core/styles';
-
+import makeStyles from '@material-ui/styles/makeStyles';
 import FirstPage from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
@@ -13,31 +7,30 @@ import LastPage from '@material-ui/icons/LastPage';
 
 import * as React from 'react';
 
-const styles = ({ spacing }: Theme) =>
-  createStyles({
+const useStyles = makeStyles(({ spacing }: any) => ({
     root: {
       flexShrink: 0,
       marginLeft: spacing.unit * 2.5,
     },
-  });
+  }));
 
-interface IProps extends WithStyles<typeof styles> {
+interface IProps {
   count: number;
   page: number;
-  itemsPerPage: number;
+  rowsPerPage: number;
   onChangePage(event: React.MouseEvent<HTMLElement>, page: number): void;
 }
 
-const getPages = (currentPage: any, totalRows: any, itemsPerPage: any) => {
+const getPages = (currentPage: any, totalRows: any, rowsPerPage: any) => {
   const pages = [];
 
   // Default page limits
-  const totalPages = Math.ceil(totalRows / itemsPerPage);
+  const totalPages = Math.ceil(totalRows / rowsPerPage);
   let startPage = 1;
   let endPage = totalPages;
   const maxSize = 6;
   const isMaxSized = maxSize < totalPages;
-
+  
   // recompute if maxSize
   if (isMaxSized) {
     // Current page is displayed in the middle of the visible ones
@@ -60,14 +53,14 @@ const getPages = (currentPage: any, totalRows: any, itemsPerPage: any) => {
 };
 
 const AdvancePaginationActions: React.FunctionComponent<IProps> = ({
-  classes,
   count,
   page,
-  itemsPerPage,
+  rowsPerPage,
   onChangePage,
 }) => {
-  const pages = getPages(page, count, itemsPerPage);
-  const lastPage = Math.ceil(count / itemsPerPage) - 1;
+  const classes = useStyles();
+  const pages = getPages(page, count, rowsPerPage);
+  const lastPage = Math.ceil(count / rowsPerPage) - 1;
   const gotoPage = (value: number) => (e: any) => onChangePage(e, value);
 
   const gotoFirstPage = gotoPage(0);
@@ -100,7 +93,7 @@ const AdvancePaginationActions: React.FunctionComponent<IProps> = ({
         <IconButton
           key={value}
           onClick={gotoPage(value)}
-          disabled={value >= Math.ceil(count / itemsPerPage)}
+          disabled={value >= Math.ceil(count / rowsPerPage)}
           aria-label={`Page ${value + 1}`}
           color={value === page ? 'primary' : 'default'}
         >
@@ -127,6 +120,4 @@ const AdvancePaginationActions: React.FunctionComponent<IProps> = ({
   );
 };
 
-export default withStyles(styles, { withTheme: true })(
-  AdvancePaginationActions,
-);
+export default AdvancePaginationActions;
