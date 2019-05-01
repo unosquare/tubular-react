@@ -121,7 +121,12 @@ export default abstract class BaseDataSource extends React.Component<
           payload.columns = storage.getColumns();
         }
 
-        this.retrieveData(payload, storage);
+        if (storage.getTextSearch()) {
+          this.setState({ searchText: storage.getTextSearch() }, () => this.retrieveData(payload, storage));
+        }
+        else {
+          this.retrieveData(payload, storage);
+        }
       },
       sortColumn: (property: string) => {
         const columns = ColumnModel.sortColumnArray(
@@ -214,6 +219,7 @@ export default abstract class BaseDataSource extends React.Component<
 
         this.state.storage.setPage(response.CurrentPage - 1);
         this.state.storage.setColumns(columns);
+        this.state.storage.setTextSearch(searchText);
 
         this.setState({
           activeColumn: null,

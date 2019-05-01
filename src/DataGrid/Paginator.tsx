@@ -22,7 +22,7 @@ export const Paginator: React.FunctionComponent<TablePaginationBaseProps> = (pro
   if (!state.itemsPerPage) {
     return null;
   }
-  
+
   const newProps = {
     count: state.filteredRecordCount,
     labelDisplayedRows: message(
@@ -41,6 +41,6 @@ export const Paginator: React.FunctionComponent<TablePaginationBaseProps> = (pro
   if (toolbarOptions.advancePagination) {
     newProps.ActionsComponent = AdvancePaginationActions;
   }
-  
+
   return <TablePagination {...newProps} />;
 };

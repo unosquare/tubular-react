@@ -1,18 +1,17 @@
 import IconButton from '@material-ui/core/IconButton';
-import makeStyles from '@material-ui/styles/makeStyles';
 import FirstPage from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPage from '@material-ui/icons/LastPage';
-
+import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
 
 const useStyles = makeStyles(({ spacing }: any) => ({
-    root: {
-      flexShrink: 0,
-      marginLeft: spacing.unit * 2.5,
-    },
-  }));
+  root: {
+    flexShrink: 0,
+    marginLeft: spacing.unit * 2.5,
+  },
+}));
 
 interface IProps {
   count: number;
@@ -30,7 +29,7 @@ const getPages = (currentPage: any, totalRows: any, rowsPerPage: any) => {
   let endPage = totalPages;
   const maxSize = 6;
   const isMaxSized = maxSize < totalPages;
-  
+
   // recompute if maxSize
   if (isMaxSized) {
     // Current page is displayed in the middle of the visible ones
