@@ -3,6 +3,7 @@ import { debounce } from '../utils/debounce';
 
 import { ColumnModel, GridRequest } from 'tubular-common';
 
+import IDataGridStorage from '../DataGridInterfaces/IDataGridStorage';
 import { DataSourceContext } from './DataSourceContext';
 import IBaseDataSourceState from './IBaseDataSourceState';
 
@@ -22,6 +23,7 @@ export default abstract class BaseDataSource extends React.Component<
     multiSort: false,
     page: 0,
     searchText: '',
+    storage: null,
     totalRecordCount: 0,
   });
 
@@ -47,41 +49,14 @@ export default abstract class BaseDataSource extends React.Component<
 
   public abstract getAllRecords(request: GridRequest): Promise<object>;
 
-  public retrieveData = async (options: any = {}): Promise<any> => {
-    this.setState({ isLoading: true });
-    const columns = options.columns || this.state.columns;
-    const itemsPerPage = options.itemsPerPage || this.state.itemsPerPage;
-    const page =
-      typeof options.page === 'undefined' ? this.state.page : options.page;
-    const searchText =
-      typeof options.searchText === 'undefined'
-        ? this.state.searchText
-        : options.searchText;
+  public retrieveData = async (options: any = {}, storage?: IDataGridStorage): Promise<any> => {
+    const stateUpdate: any = { isLoading: true };
 
-    try {
-      try {
-        const response: any = await this.getAllRecords(new GridRequest(columns, itemsPerPage, page, searchText));
+    if (storage) {
+      stateUpdate.storage = storage;
+    }
 
-        this.setState({
-          activeColumn: null,
-          aggregate: response.AggregationPayload,
-          columns,
-          data: response.Payload,
-          error: null,
-          filteredRecordCount: response.FilteredRecordCount || 0,
-          isLoading: false,
-          itemsPerPage,
-          page: response.CurrentPage - 1,
-          totalRecordCount: response.TotalRecordCount || 0,
-        });
-      }
-      catch (reject) {
-        return this.setState({ isLoading: false, error: reject.message || reject });
-      }
-    }
-    catch (err) {
-      return this.setState({ isLoading: false, error: err });
-    }
+    this.setState(stateUpdate, () => this.processRequest(options));
   }
 
   public getActions() {
@@ -134,6 +109,19 @@ export default abstract class BaseDataSource extends React.Component<
         };
 
         this.retrieveData({ columns });
+      },
+      setInitialData: (itemsPerPage: number, storage: IDataGridStorage) => {
+        const payload: any = { itemsPerPage };
+
+        if (storage.getPage()) {
+          payload.page = storage.getPage();
+        }
+
+        if (storage.getColumns()) {
+          payload.columns = storage.getColumns();
+        }
+
+        this.retrieveData(payload, storage);
       },
       sortColumn: (property: string) => {
         const columns = ColumnModel.sortColumnArray(
@@ -207,5 +195,45 @@ export default abstract class BaseDataSource extends React.Component<
         />
       </DataSourceContext.Provider>
     );
+  }
+
+  private async processRequest(options: any) {
+    const columns = options.columns || this.state.columns;
+    const itemsPerPage = options.itemsPerPage || this.state.itemsPerPage;
+    const page =
+      typeof options.page === 'undefined' ? this.state.page : options.page;
+    const searchText =
+      typeof options.searchText === 'undefined'
+        ? this.state.searchText
+        : options.searchText;
+
+    try {
+      try {
+        const request = new GridRequest(columns, itemsPerPage, page, searchText);
+        const response: any = await this.getAllRecords(request);
+
+        this.state.storage.setPage(response.CurrentPage - 1);
+        this.state.storage.setColumns(columns);
+
+        this.setState({
+          activeColumn: null,
+          aggregate: response.AggregationPayload,
+          columns,
+          data: response.Payload,
+          error: null,
+          filteredRecordCount: response.FilteredRecordCount || 0,
+          isLoading: false,
+          itemsPerPage,
+          page: response.CurrentPage - 1,
+          totalRecordCount: response.TotalRecordCount || 0,
+        });
+      }
+      catch (reject) {
+        return this.setState({ isLoading: false, error: reject.message || reject });
+      }
+    }
+    catch (err) {
+      return this.setState({ isLoading: false, error: err });
+    }
   }
 }

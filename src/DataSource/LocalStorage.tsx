@@ -1,10 +1,10 @@
 import { ColumnModel } from 'tubular-common';
 import { IDataGridStorage } from '../DataGridInterfaces';
 
-export class LocalStorage implements IDataGridStorage {
+export default class LocalStorage implements IDataGridStorage {
     private name: string;
 
-    public LocalStorage(name: string) {
+    public constructor(name: string) {
         this.name = name;
 
         if (!window || !window.localStorage) {
