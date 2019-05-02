@@ -4,6 +4,7 @@ import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
 
+import { IDataGridStorage } from '../DataGridInterfaces';
 import { DataSourceContext } from '../DataSource';
 import { DataGridTable, GridToolbar } from './';
 import { DataGridProvider, IDataGridContext } from './DataGridContext';
@@ -19,6 +20,8 @@ const useStyles = makeStyles(({ spacing }: any) => ({
 }));
 
 interface IProps extends IDataGridContext {
+  storage?: IDataGridStorage;
+
   bodyRenderer?(row: any, index: number, columns: ColumnModel[]): void;
   footerRenderer?(aggregate: any): void;
   onRowClick?(ev: any): any;
@@ -31,6 +34,7 @@ const DataGrid: React.FunctionComponent<IProps> = ({
   gridName,
   children,
   onRowClick,
+  storage,
 }) => {
   const classes = useStyles();
   const { state } = React.useContext(DataSourceContext);
@@ -39,6 +43,7 @@ const DataGrid: React.FunctionComponent<IProps> = ({
     <DataGridProvider
       toolbarOptions={toolbarOptions}
       gridName={gridName}
+      storage={storage}
     >
       <Paper className={classes.root}>
         <GridToolbar>

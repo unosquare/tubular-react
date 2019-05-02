@@ -9,15 +9,12 @@ import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 import DataGrid, {
   IDataGridProps,
   IDataGridState,
-  ToolbarOptions,
   withRemoteDataSource,
 } from '../../src';
 import columns from './data/columns';
 
 // tslint:disable-next-line: no-var-requires
 const format = require('date-fns/format');
-
-const toolbarOptions = new ToolbarOptions();
 
 class RemoteDataGrid extends React.Component<IDataGridProps, IDataGridState> {
   public static getDerivedStateFromProps(
@@ -67,7 +64,6 @@ class RemoteDataGrid extends React.Component<IDataGridProps, IDataGridState> {
               </TableCell>
             </TableRow>
           )}
-          toolbarOptions={toolbarOptions}
           footerRenderer={(aggregates: any) => (
             <TableRow>
               <TableCell>Total: </TableCell>
