@@ -128,6 +128,7 @@ These are all the available props (and their default values) for the `<DataGrid 
 | `bodyRenderer`    | `function`        | -         | `Optional`. It takes a function with 4 parameters `(row: any, index: number, columns: ColumnModel[], onRowClickProxy: (ev: any) => any)` to map all rows. |
 | `footerRenderer`  | `function`        | -         | `Optional`. It takes an aggregate function with 1 parameter `(aggregate: any)` to show in a foot row the results from the aggregate function. |
 | `onRowClick`  | `function`        | -         | `Optional`. Use this event handler to receive the clicked row. |
+| `storage`  | `IDataGridStorage`        | `LocalStorage`         | `Optional`. Use this prop to set the settings storage. |
 
 ### `ToolbarOptions` class
 
