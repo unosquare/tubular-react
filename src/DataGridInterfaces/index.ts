@@ -1,4 +1,5 @@
 import IDataGridProps from './IDataGridProps';
 import IDataGridState from './IDataGridState';
+import IDataGridStorage from './IDataGridStorage';
 
-export {IDataGridProps, IDataGridState};
+export {IDataGridProps, IDataGridState, IDataGridStorage};

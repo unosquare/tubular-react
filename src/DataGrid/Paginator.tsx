@@ -19,6 +19,10 @@ export const Paginator: React.FunctionComponent<TablePaginationBaseProps> = (pro
   const { actions, state } = React.useContext(DataSourceContext);
   const { toolbarOptions } = React.useContext(DataGridContext);
 
+  if (!state.itemsPerPage) {
+    return null;
+  }
+
   const newProps = {
     count: state.filteredRecordCount,
     labelDisplayedRows: message(

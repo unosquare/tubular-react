@@ -1,4 +1,5 @@
 import { ColumnModel } from 'tubular-common';
+import IDataGridStorage from '../DataGridInterfaces/IDataGridStorage';
 
 export default interface IBaseDataSourceState {
     activeColumn: any;
@@ -13,5 +14,6 @@ export default interface IBaseDataSourceState {
     itemsPerPage: number;
     page: number;
     searchText: any;
+    storage: IDataGridStorage;
     totalRecordCount: any;
 }
