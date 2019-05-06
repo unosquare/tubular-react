@@ -17,6 +17,8 @@ import columns from '../utils/columns';
 
 import {
   DataSourceContext,
+  DataGridProvider,
+  ToolbarOptions,
   Paginator,
   SearchTextInput,
   withRemoteDataSource,
@@ -51,55 +53,57 @@ class SampleGridList extends React.Component<any, any> {
     return (
       <DataSourceContext.Consumer>
         {({ state }) => (
-          <Paper>
-            <div style={styles.search}>
-              <SearchTextInput />
-            </div>
-            <div style={styles.progress}>
-              {state.isLoading && <LinearProgress />}
-            </div>
-            <Table>
-              <TableBody>
-                <TableRow>
-                  <TableCell>
-                    <GridList cellHeight={180} cols={5}>
-                      {state.data.map((item) => (
-                        <GridListTile key={item.OrderID}>
-                          <Card>
-                            <CardContent>
-                              <Typography
-                                gutterBottom={true}
-                                variant='h5'
-                                component='h2'
-                              >
-                                {item.OrderID} - {item.CustomerName}
-                              </Typography>
-                              <Typography component='p'>
-                                {item.ShipperCity}
-                              </Typography>
-                              <Typography component='p'>
-                                {format(item.ShippedDate, 'MMM D YYYY')}
-                              </Typography>
-                            </CardContent>
-                            <CardActions>
-                              <Button size='small' color='primary'>
-                                Learn More
+          <DataGridProvider gridName='SampleGridList' toolbarOptions={new ToolbarOptions()}>
+            <Paper>
+              <div style={styles.search}>
+                <SearchTextInput />
+              </div>
+              <div style={styles.progress}>
+                {state.isLoading && <LinearProgress />}
+              </div>
+              <Table>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>
+                      <GridList cellHeight={180} cols={5}>
+                        {state.data.map((item) => (
+                          <GridListTile key={item.OrderID}>
+                            <Card>
+                              <CardContent>
+                                <Typography
+                                  gutterBottom={true}
+                                  variant='h5'
+                                  component='h2'
+                                >
+                                  {item.OrderID} - {item.CustomerName}
+                                </Typography>
+                                <Typography component='p'>
+                                  {item.ShipperCity}
+                                </Typography>
+                                <Typography component='p'>
+                                  {format(item.ShippedDate, 'MMM D YYYY')}
+                                </Typography>
+                              </CardContent>
+                              <CardActions>
+                                <Button size='small' color='primary'>
+                                  Learn More
                               </Button>
-                            </CardActions>
-                          </Card>
-                        </GridListTile>
-                      ))}
-                    </GridList>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <Paginator />
-                </TableRow>
-              </TableFooter>
-            </Table>
-          </Paper>
+                              </CardActions>
+                            </Card>
+                          </GridListTile>
+                        ))}
+                      </GridList>
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+                <TableFooter>
+                  <TableRow>
+                    <Paginator />
+                  </TableRow>
+                </TableFooter>
+              </Table>
+            </Paper>
+          </DataGridProvider>
         )}
       </DataSourceContext.Consumer>
     );

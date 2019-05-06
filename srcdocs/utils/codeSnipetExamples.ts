@@ -23,9 +23,7 @@ ReactDOM.render(<SampleGrid />, document.getElementById('root'));`;
 
 export const basicFeatures = `import * as React from 'react';
 
-import DataGrid, {
-    withRemoteDataSource } from 'tubular-react';
-
+import { DataGridProvider, DataGridTable, ToolbarOptions, withRemoteDataSource } from 'tubular-react';
 import { AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection } from 'tubular-common';
 
 //  First of all, you must define your columns model.
@@ -71,10 +69,20 @@ const columns = [
         }
     )
 ];
-const MyComponent = () => {
 
-      <DataGrid gridName='Tubular-React'/>
-};
+const toolbarOptions = new ToolbarOptions();
+toolbarOptions.advancePagination = false;
+toolbarOptions.exportButton = false;
+toolbarOptions.printButton = false;
+toolbarOptions.searchText = false;
+
+const MyComponent = () => (
+    <div className='root'>
+        <DataGridProvider gridName='BasicFeatures' toolbarOptions={toolbarOptions}>
+            <DataGridTable />
+        </DataGridProvider>
+    </div>
+);
 
 /*
  Use the component withRemoteDataSource to wrap your component
@@ -89,8 +97,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Brightness7Rounded from '@material-ui/icons/Brightness7Rounded';
 import Mood from '@material-ui/icons/Mood';
 
-import DataGrid, {
-    withRemoteDataSource } from 'tubular-react';
+import { DataGridProvider, DataGridTable, ToolbarOptions, withRemoteDataSource } from 'tubular-react';
 
 import { AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection } from 'tubular-common';
 
@@ -138,21 +145,41 @@ const columns = [
     )
 ];
 const MyComponent = () => {
-
-      <DataGrid gridName='Tubular-React'>
-        <IconButton color='default'>
-          <Mood
-            onClick={() =>
-              alert('I can help you to add features to your datagrid.')
-            }
-          />
-        </IconButton>
-        <IconButton color='default'>
-          <Brightness7Rounded
-            onClick={() => alert('Happy codes, have a nice day')}
-          />
-        </IconButton>
-      </DataGrid>
+  <DataGridProvider gridName='SampleButtons' toolbarOptions={new ToolbarOptions()}>
+  <DataGridTable
+    bodyRenderer={(row: any) => (
+      <TableRow hover={true} key={row.OrderID}>
+        <TableCell padding='default'>{row.OrderID}</TableCell>
+        <TableCell padding='default'>{row.CustomerName}</TableCell>
+        <TableCell padding='default'>
+          {format(row.ShippedDate, 'MMMM Do YYYY, h:mm:ss a')}
+        </TableCell>
+        <TableCell padding='default'>{row.ShipperCity}</TableCell>
+        <TableCell padding='default' align={'right'}>
+          {row.Amount || 0}
+        </TableCell>
+        <TableCell padding='default'>
+          {row.IsShipped ? <CheckBox /> : <CheckBoxOutlineBlank />}
+        </TableCell>
+      </TableRow>
+    )}
+    footerRenderer={(aggregates: any) => (
+      <TableRow>
+        <TableCell>Total: </TableCell>
+        <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
+        <TableCell />
+        <TableCell />
+        <TableCell />
+      </TableRow>
+    )}
+  />
+  <IconButton color='default' onClick={() => alert('I can help you to add features to your datagrid.')}>
+    <Mood />
+  </IconButton>
+  <IconButton color='default' onClick={() => alert('Happy codes, have a nice day')}>
+    <Brightness7Rounded />
+  </IconButton>
+</DataGridProvider>
 };
 
 /*
@@ -168,7 +195,7 @@ import { Snackbar, TableCell, TableRow } from '@material-ui/core';
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 import format from 'date-fns/format';
-import DataGrid, { ToolbarOptions, withRemoteDataSource } from 'tubular-react';
+import { DataGridProvider, DataGridTable, ToolbarOptions, withRemoteDataSource } from 'tubular-react';
 
 import {
   AggregateFunctions,
@@ -233,36 +260,44 @@ class SampleFeatures extends React.Component {
             message={<span id='message-id'>{errorMessage}</span>}
           />
         )}
-        <DataGrid
-          gridName='Tubular-React'
-          bodyRenderer={(row: any, index: number, columns: ColumnModel[]) => (
-            <TableRow hover={true} key={row}>
-              <TableCell padding='default'>{row.OrderID}</TableCell>
-              <TableCell padding='default'>{row.CustomerName}</TableCell>
-              <TableCell padding='default'>
-                {format(row.ShippedDate, 'MMMM Do YYYY, h:mm:ss a')}
-              </TableCell>
-              <TableCell padding='default'>{row.ShipperCity}</TableCell>
-              <TableCell padding='default' numeric={true}>
-                {row.Amount || 0}
-              </TableCell>
-              <TableCell padding='default'>
-                {row.IsShipped ? <CheckBox /> : <CheckBoxOutlineBlank />}
-              </TableCell>
-            </TableRow>
-          )}
-          toolbarOptions={new ToolbarOptions()}
-          footerRenderer={(aggregates: any) => (
-            <TableRow>
-              <TableCell>Total: </TableCell>
-              <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
-              <TableCell />
-              <TableCell />
-              <TableCell />
-            </TableRow>
-          )}
+        <DataGridProvider gridName='SampleFeatures' toolbarOptions={new ToolbarOptions()}>
+        <DataGridTable
+            bodyRenderer={
+                (row: any) =>
+                    <TableRow hover={true} key={row.OrderID}>
+                        <TableCell padding='default'>
+                            {row.OrderID}
+                        </TableCell>
+                        <TableCell padding='default'>
+                            {row.CustomerName}
+                        </TableCell>
+                        <TableCell padding='default'>
+                            {format(row.ShippedDate, 'MMMM Do YYYY, h:mm:ss a')}
+                        </TableCell>
+                        <TableCell padding='default'>
+                            {row.ShipperCity}
+                        </TableCell>
+                        <TableCell padding='default' align={'right'}>
+                            {row.Amount || 0}
+                        </TableCell>
+                        <TableCell padding='default'>
+                            {row.IsShipped ? <CheckBox />
+                                : <CheckBoxOutlineBlank />}
+                        </TableCell>
+                    </TableRow>
+            }
+            footerRenderer={
+                (aggregates: any) =>
+                    <TableRow>
+                        <TableCell>Total: </TableCell>
+                        <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
+                        <TableCell />
+                        <TableCell />
+                        <TableCell />
+                    </TableRow>
+            }
         />
-      </div>
+    </DataGridProvider>
     );
   }
 }
@@ -288,13 +323,13 @@ import {
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from '@material-ui/core/Paper';
 import format from 'date-fns/format';
-import {
+import import {
   DataSourceContext,
+  DataGridProvider,
+  ToolbarOptions,
   Paginator,
   SearchTextInput,
   withRemoteDataSource,
-  IDataGridState,
-  IDataGridProps
 } from 'tubular-react';
 import {
   AggregateFunctions,
@@ -364,55 +399,57 @@ class SampleGridList extends React.Component<IDataGridProps, IDataGridState> {
     return (
       <DataSourceContext.Consumer>
         {({ state }) => (
-          <Paper>
-            <div style={styles.search}>
-              <SearchTextInput />
-            </div>
-            <div style={styles.progress}>
-              {state.isLoading && <LinearProgress />}
-            </div>
-            <Table>
-              <TableBody>
-                <TableRow>
-                  <TableCell>
-                    <GridList cellHeight={180} cols={5}>
-                      {state.data.map(item => (
-                        <GridListTile key={item.OrderID}>
-                          <Card>
-                            <CardContent>
-                              <Typography
-                                gutterBottom={true}
-                                variant='headline'
-                                component='h2'
-                              >
-                                {item.OrderID} - {item.CustomerName}
-                              </Typography>
-                              <Typography component='p'>
-                                {item.ShipperCity}
-                              </Typography>
-                              <Typography component='p'>
-                                {format(item.ShippedDate, 'MMM D YYYY')}
-                              </Typography>
-                            </CardContent>
-                            <CardActions>
-                              <Button size='small' color='primary'>
-                                Learn More
+          <DataGridProvider gridName='SampleGridList' toolbarOptions={new ToolbarOptions()}>
+            <Paper>
+              <div style={styles.search}>
+                <SearchTextInput />
+              </div>
+              <div style={styles.progress}>
+                {state.isLoading && <LinearProgress />}
+              </div>
+              <Table>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>
+                      <GridList cellHeight={180} cols={5}>
+                        {state.data.map((item) => (
+                          <GridListTile key={item.OrderID}>
+                            <Card>
+                              <CardContent>
+                                <Typography
+                                  gutterBottom={true}
+                                  variant='h5'
+                                  component='h2'
+                                >
+                                  {item.OrderID} - {item.CustomerName}
+                                </Typography>
+                                <Typography component='p'>
+                                  {item.ShipperCity}
+                                </Typography>
+                                <Typography component='p'>
+                                  {format(item.ShippedDate, 'MMM D YYYY')}
+                                </Typography>
+                              </CardContent>
+                              <CardActions>
+                                <Button size='small' color='primary'>
+                                  Learn More
                               </Button>
-                            </CardActions>
-                          </Card>
-                        </GridListTile>
-                      ))}
-                    </GridList>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <Paginator />
-                </TableRow>
-              </TableFooter>
-            </Table>
-          </Paper>
+                              </CardActions>
+                            </Card>
+                          </GridListTile>
+                        ))}
+                      </GridList>
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+                <TableFooter>
+                  <TableRow>
+                    <Paginator />
+                  </TableRow>
+                </TableFooter>
+              </Table>
+            </Paper>
+          </DataGridProvider>
         )}
       </DataSourceContext.Consumer>
     );
