@@ -6,7 +6,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
-import { TextAsCode } from './StyledComponents';
 
 const useStyles = makeStyles(() => ({
     code: {
@@ -82,6 +81,15 @@ export default () => {
                         <TableCell>
                             <strong>Optional.</strong>
                             Use this event handler to receive the clicked row.
+                        </TableCell>
+                    </TableRow>
+                    <TableRow hover={true}>
+                        <TableCell><code className={classes.code}>storage</code></TableCell>
+                        <TableCell><code className={classes.code}>IDataGridStorage</code></TableCell>
+                        <TableCell>LocalStorage</TableCell>
+                        <TableCell>
+                            <strong>Optional.</strong>
+                            Use this prop to set the settings storage.
                         </TableCell>
                     </TableRow>
                 </TableBody>

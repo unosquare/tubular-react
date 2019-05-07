@@ -29,7 +29,7 @@ class SampleFeatures extends React.Component {
                         message={<span id='message-id'>{errorMessage}</span>}
                     />
                 }
-                <DataGridProvider gridName='SampleFeatures' toolbarOptions={new ToolbarOptions()}>
+                <DataGridProvider gridName='SampleFeatures' toolbarOptions={new ToolbarOptions()} id='full-grid'>
                     <DataGridTable
                         bodyRenderer={
                             (row: any) =>

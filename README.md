@@ -22,6 +22,26 @@ Check the documentation and samples in [Tubular React website](https://unosquare
 
 Please visit the [Tubular GitHub Page](http://unosquare.github.io/tubular) to learn how quickly you can start coding. See [Related projects](#related-projects) below to discover more Tubular libraries and backend solutions.
 
+Table of contents
+=================
+
+  * [Dependencies](#dependencies)  
+  * [💾Installation](#installation)
+  * [Usages](#datagrid)
+    * [DataGrid](#datagrid)
+    * [DataGridProvider](#datagridprovider)
+    * [Export withRemoteDataSource](#export-withremotedatasource)
+    * [Export withLocalDataSource](#export-withlocaldatasource)
+    * [DataGrid Props](#datagrid-props)
+    * [DataGridProvider Props](#datagridprovider-props)
+    * [DataGridTable Props](#datagridtable-props)
+    * [ToolbarOptions](#toolbaroptions-class)
+    * [ColumnModel](#columnmodel)
+  * [Examples](#how-to-include-functionality-buttons)
+    * [How to include functionality buttons](#how-to-include-functionality-buttons)
+    * [Run integrated sample](#run-integrated-sample)
+  * [Related projects](#related-projects)
+
 ## Dependencies
 
 * [date-fns](https://date-fns.org/) - Version: 1.29.0
@@ -35,7 +55,7 @@ Please visit the [Tubular GitHub Page](http://unosquare.github.io/tubular) to le
 $ npm install tubular-react --save
 ```
 
-## Using the `<DataGrid />` component
+### `DataGrid`
 
 You can start using `DataGrid` with this sample code. The grid will connect to a remote datasource or have a local datasource depending of how you export your class. The available exports that you can use are [`withRemoteDataSource`](#export-withremotedatasource) and [`withLocalDataSource`](#export-withlocaldatasource).
 
@@ -54,7 +74,9 @@ const columns = [
 
 const SampleGrid = withRemoteDataSource(
   () => {
-    return <DataGrid />;
+    return (
+      <DataGrid />
+    )
   },
   columns,
   "https://tubular.azurewebsites.net/api/orders/paged"
@@ -63,36 +85,41 @@ const SampleGrid = withRemoteDataSource(
 ReactDOM.render(<SampleGrid />, document.getElementById("root"));
 ```
 
+### `DataGridProvider`
+
+You can start using `DataGridProvider` with this sample code. You need to provide a `DataGridTable` component, in this case, it renders a custom body and footer. The grid will connect to a remote datasource or have a local datasource depending of how you export your class. The available exports that you can use are [`withRemoteDataSource`](#export-withremotedatasource) and [`withLocalDataSource`](#export-withlocaldatasource).
+
 The following snippet shows how to use a custom body and a custom footer:
 
 ```jsx
 const CustomBodyGrid = withRemoteDataSource(
   () => {
     return (
-      <DataGrid
-              gridName='table'
-              bodyRenderer={
-                (row: any, index: any, columns: ColumnModel[]) =>
-                  <TableRow hover={true} key={index}>
-                    <TableCell padding={'default'}>
-                      {row.OrderID}
-                    </TableCell>
-                    <TableCell padding={'default'}>
-                      {row.CustomerName}
-                    </TableCell>
-                    <TableCell padding={'default'}>
-                      {row.ShipperCity}
-                    </TableCell>
-                  </TableRow>
-              }
-              footerRenderer={
-                (aggregate: any) =>
-                  <TableRow>
-                    <TableCell>Total: </TableCell>
-                    <TableCell>{aggregate && aggregate.CustomerName}</TableCell>
-                  </TableRow>
-              }
-      />
+    <DataGridProvider gridName='SampleGrid' toolbarOptions={new ToolbarOptions()}>
+        <DataGridTable 
+          bodyRenderer={
+                  (row: any, index: any, columns: ColumnModel[]) =>
+                    <TableRow hover={true} key={index}>
+                      <TableCell padding={'default'}>
+                        {row.OrderID}
+                      </TableCell>
+                      <TableCell padding={'default'}>
+                        {row.CustomerName}
+                      </TableCell>
+                      <TableCell padding={'default'}>
+                        {row.ShipperCity}
+                      </TableCell>
+                    </TableRow>
+                }
+                footerRenderer={
+                  (aggregate: any) =>
+                    <TableRow>
+                      <TableCell>Total: </TableCell>
+                      <TableCell>{aggregate && aggregate.CustomerName}</TableCell>
+                    </TableRow>
+                }
+        />
+      </DataGridProvider>
   }),
   columns,
   "https://tubular.azurewebsites.net/api/orders/paged"
@@ -115,7 +142,8 @@ Exporting your `DataGrid` using `withLocalDataSource` HOC will need both an arra
 export default withLocalDataSource(LocalDataGrid, columns, localData);
 ```
 
-**And you can use it like your name you component `<CustomComponent />`**
+**And you can use it like you named your component `<CustomComponent />`**
+
 
 ### `DataGrid` props
 
@@ -123,12 +151,34 @@ These are all the available props (and their default values) for the `<DataGrid 
 
 | Name | Type | Default Value | Description |
 |------|------|---------------|-------------|
+| `bodyRenderer`    | `function`        | -         | `Optional`. It takes a function with 4 parameters `(row: any, index: number, columns: ColumnModel[], onRowClickProxy: (ev: any) => any)` to map all rows. |
+| `footerRenderer`  | `function`        | -         | `Optional`. It takes an aggregate function with 1 parameter `(aggregate: any)` to show in a foot row the results from the aggregate function. |
+| `gridName`        | `string`          | `Grid`    | `Optional`. |
+| `onRowClick`  | `function`        | -         | `Optional`. Use this event handler to receive the clicked row. |
+| `toolbarOptions`  | `ToolbarOptions`  | `new ToolBarOptions()`  | `Optional`. It should be an instance of `ToolbarOptions`. This encapsulates useful options. |                                                |
+| `storage`  | `IDataGridStorage`        | `LocalStorage`         | `Optional`. Use this prop to set the settings storage. |
+
+### `DataGridProvider` props
+
+These are all the available props (and their default values) for the `<DataGridProvider />` component.
+
+| Name | Type | Default Value | Description |
+|------|------|---------------|-------------|
 | `gridName`        | `string`          | `Grid`    | `Optional`. |
 | `toolbarOptions`  | `ToolbarOptions`  | `new ToolBarOptions()`  | `Optional`. It should be an instance of `ToolbarOptions`. This encapsulates useful options. |                                                |
+| `storage`  | `IDataGridStorage`        | `LocalStorage`         | `Optional`. Use this prop to set the settings storage. |
+
+
+### `DataGridTable` props
+
+These are all the available props (and their default values) for the `<DataGridProvider />` component.
+
+| Name | Type | Default Value | Description |
+|------|------|---------------|-------------|
 | `bodyRenderer`    | `function`        | -         | `Optional`. It takes a function with 4 parameters `(row: any, index: number, columns: ColumnModel[], onRowClickProxy: (ev: any) => any)` to map all rows. |
 | `footerRenderer`  | `function`        | -         | `Optional`. It takes an aggregate function with 1 parameter `(aggregate: any)` to show in a foot row the results from the aggregate function. |
 | `onRowClick`  | `function`        | -         | `Optional`. Use this event handler to receive the clicked row. |
-| `storage`  | `IDataGridStorage`        | `LocalStorage`         | `Optional`. Use this prop to set the settings storage. |
+
 
 ### `ToolbarOptions` class
 
@@ -149,7 +199,7 @@ _If you don't define some of the optional props described above, these will use 
 
 ### How to include functionality buttons
 
-You can add functionalities to the `DataGrid` including extra buttons that can perform an action according to your requirements. Just need include an IconButton Component from @material-ui and define the icon or button that you need between `DataGrid` tags and specify the action to perform.
+You can add functionalities to the `DataGridProvider` including extra buttons that can perform an action according to your requirements. Just need include an IconButton Component from @material-ui and define the icon or button that you need between `DataGridProvider` tags and specify the action to perform.
 
 The following snippet shows how to include an Add Button:
 
@@ -157,20 +207,16 @@ The following snippet shows how to include an Add Button:
 import * as React from "react";
 import AddIcon from "@material-ui/icons/Add";
 import { IconButton } from "@material-ui/core";
-import DataGrid, {withLocalDataSource} from "tubular-react";
+import DataGrid,{ withRemoteDataSource } from "tubular-react";
 
 const LocalDataGrid = withRemoteDataSource(
   () => {
     return  
-    <DataGrid>
-        <IconButton color="default">
-          <AddIcon
-              onClick={() =>
-              console.log('Add new record')
-                }
-          />
-        </IconButton>         
-    </DataGrid>;
+     <DataGrid>
+        <IconButton color='default' onClick={() => alert('I can help you to add features to your datagrid.')}>
+          <AddIcon />
+        </IconButton>
+      </DataGrid>
   },
   columns,
   "https://tubular.azurewebsites.net/api/orders/paged"

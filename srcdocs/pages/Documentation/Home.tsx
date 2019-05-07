@@ -144,11 +144,11 @@ export default () => {
             <br />
           <em>Grid list</em> provide a styled and fancy view over your data,
           which helps you to quickly find information.
-          </Typography>
         <br />
+        </Typography>
         <Typography variant='h4'>
           Installation
-      </Typography>
+        </Typography>
         <Divider />
         <Typography variant='subtitle1' paragraph={true}>
           Tubular-React is available as a <a
@@ -229,17 +229,16 @@ export default () => {
               <br />
           <Highlight language='javascript' className={classes.code}>
             {`
-              const MyComponent = () => {
+const MyComponent = () => {
 
-              <DataGrid gridName='Tubular-React'>
-                <IconButton color='default' />
-                  <Brightness7Rounded
-                    onClick={() => alert('Happy codes, have a nice day')}
-                  />
-                </IconButton>
-              </DataGrid>
-
-            };
+  <DataGrid gridName='Tubular-React'>
+    <IconButton color='default' />
+      <Brightness7Rounded
+        onClick={() => alert('Happy codes, have a nice day')}
+      />
+    </IconButton>
+  </DataGrid>
+};
               `}
           </Highlight>
         </Typography>

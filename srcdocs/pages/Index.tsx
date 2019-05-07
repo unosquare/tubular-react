@@ -1,7 +1,7 @@
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import * as React from 'react';
 import { render } from 'react-dom';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { UnoTheme } from 'uno-material-ui';
 import NavigationBar from '../components/NavigationBar';
 import ComponentAPI from './Documentation/ComponentAPI';

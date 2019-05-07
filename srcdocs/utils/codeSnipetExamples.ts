@@ -13,7 +13,9 @@ const columns = [
 
 const SampleGrid = withRemoteDataSource(
     () => {
-        return <DataGrid />;
+        return (
+          <DataGrid/>
+        );
     },
     columns,
     'https://tubular.azurewebsites.net/api/orders/paged'
@@ -23,7 +25,7 @@ ReactDOM.render(<SampleGrid />, document.getElementById('root'));`;
 
 export const basicFeatures = `import * as React from 'react';
 
-import { DataGridProvider, DataGridTable, ToolbarOptions, withRemoteDataSource } from 'tubular-react';
+import DataGrid, { ToolbarOptions, withRemoteDataSource } from 'tubular-react';
 import { AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection } from 'tubular-common';
 
 //  First of all, you must define your columns model.
@@ -78,9 +80,7 @@ toolbarOptions.searchText = false;
 
 const MyComponent = () => (
     <div className='root'>
-        <DataGridProvider gridName='BasicFeatures' toolbarOptions={toolbarOptions}>
-            <DataGridTable />
-        </DataGridProvider>
+        <DataGrid gridName='BasicFeatures' toolbarOptions={toolbarOptions} />
     </div>
 );
 
