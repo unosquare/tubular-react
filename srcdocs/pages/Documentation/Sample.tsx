@@ -15,7 +15,7 @@ import CreateIcon from '@material-ui/icons/Create';
 import 'highlight.js/styles/an-old-hope.css';
 import * as React from 'react';
 import Highlight from 'react-highlight';
-import { Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 import BasicFeatures from '../../components/BasicFeatures';
 import GitHubIcon from '../../components/Github';
 import GridDialog from '../../components/GridDialog';
@@ -47,6 +47,9 @@ const styles = {
     height: 24,
     viewBox: '0 0 24 24',
     width: 24,
+  },
+  link: {
+    textDecoration: 'none',
   },
   paper: {
     padding: 20,
@@ -113,6 +116,7 @@ export default withStyles(styles)(
                 <Divider />
                 <br />
                 <Grid item={true} xs={12} className={classes.paper}>
+                  <a id='simple-grid' />
                   <Typography variant='h5' gutterBottom={true}>
                     Very basic grid sample
                   </Typography>
@@ -166,6 +170,7 @@ export default withStyles(styles)(
                 </Grid>
                 <Divider />
                 <Grid item={true} xs={12} className={classes.paper}>
+                  <a id='full-grid' />
                   <Typography variant='h5' gutterBottom={true}>
                     Full grid features
                   </Typography>
@@ -223,6 +228,7 @@ export default withStyles(styles)(
                 </Grid>
                 <Divider />
                 <Grid item={true} xs={12} className={classes.paper}>
+                  <a id='func-btns' />
                   <Typography variant='h5' gutterBottom={true}>
                     How to include functionality buttons
                   </Typography>
@@ -278,6 +284,7 @@ export default withStyles(styles)(
                 </Grid>
                 <Divider />
                 <Grid item={true} xs={12} className={classes.paper}>
+                  <a id='grid-list' />
                   <Typography variant='h5' gutterBottom={true}>
                     Give another presentation to your data.
                   </Typography>
@@ -333,6 +340,7 @@ export default withStyles(styles)(
                 </Grid>
                 <Divider />
                 <Grid item={true} xs={12} className={classes.paper}>
+                  <a id='grid-dialog' />
                   <Typography variant='h5' gutterBottom={true}>
                     Add a Dialog to you grid.
                   </Typography>
@@ -393,20 +401,30 @@ export default withStyles(styles)(
                 subheader={<ListSubheader component='div'>Content</ListSubheader>}
                 className={classes.root}
               >
-                <ListItem component={Link} to='#simple-grid'>
-                  <ListItemText primary='Basic Grid' />
+                <ListItem>
+                  <HashLink className={classes.link} to='/Sample#simple-grid'>
+                    <ListItemText primary='Basic Grid' />
+                  </HashLink>
                 </ListItem>
-                <ListItem component={Link} to='#full-grid'>
-                  <ListItemText primary='Features' />
+                <ListItem>
+                  <HashLink className={classes.link} to='/Sample#full-grid'>
+                    <ListItemText primary='Features' />
+                  </HashLink>
                 </ListItem>
-                <ListItem component={Link} to='#func-btns'>
-                  <ListItemText primary='Toolbar Buttons' />
+                <ListItem>
+                  <HashLink className={classes.link} to='/Sample#func-btns'>
+                    <ListItemText primary='Toolbar Buttons' />
+                  </HashLink>
                 </ListItem>
-                <ListItem component={Link} to='#grid-list'>
-                  <ListItemText primary='Grid List' />
+                <ListItem>
+                  <HashLink className={classes.link} to='/Sample#grid-list'>
+                    <ListItemText primary='Grid List' />
+                  </HashLink>
                 </ListItem>
-                <ListItem component={Link} to='#grid-dialog'>
-                  <ListItemText primary='Grid with Dialog' />
+                <ListItem>
+                  <HashLink className={classes.link} to='/Sample#grid-dialog'>
+                    <ListItemText primary='Grid with Dialog' />
+                  </HashLink>
                 </ListItem>
               </List>
             </Grid>

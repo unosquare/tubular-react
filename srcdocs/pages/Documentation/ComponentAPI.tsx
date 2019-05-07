@@ -8,6 +8,7 @@ import * as React from 'react';
 import Highlight from 'react-highlight';
 import ColumnModelList from '../../components/ColumnModelTable';
 import DataGridProps from '../../components/DataGridProps';
+import DataGridTableProps from '../../components/DataGridTableProps';
 import ToolBarOptionsProps from '../../components/ToolBarOptionsProps';
 
 const useStyles = makeStyles(() => ({
@@ -48,19 +49,36 @@ export default () => {
             </Grid>
             <Grid item={true} xs={12}>
                 <Paper className={classes.paper}>
-                    <Typography variant='h4' paragraph={true}>DataGrid props</Typography>
+                    <Typography variant='h4' paragraph={true}>DataGridProvider props</Typography>
                     <Divider />
                     <br />
                     <Typography variant='subtitle1'>
                         It's important to use <code className={classes.codeTag}>withRemoteDataSource</code> or
                             <code className={classes.codeTag}>withLocalDataSource</code> according to the case
-                            to fill the <code className={classes.codeTag}>{'<DataGrid />'}</code> component
-            with the data.
+                            to fill the <code className={classes.codeTag}>{'<DataGridProvider />'}</code> component
+                        with the data.
                             <br />
                         These are all the available props (and their default values) for the
-                            <code className={classes.codeTag}>{'<DataGrid />'}</code> component.
+                            <code className={classes.codeTag}>{'<DataGridProvider />'}</code> component.
                         </Typography>
                     <DataGridProps />
+                    <br />
+                    <Typography variant='subtitle1'>
+                        <i>If you don't define some of the optional props described above,
+                            these will not be shown.</i>
+                    </Typography>
+                </Paper>
+            </Grid>
+            <Grid item={true} xs={12}>
+                <Paper className={classes.paper}>
+                    <Typography variant='h4' paragraph={true}>DataGridTable props</Typography>
+                    <Divider />
+                    <br />
+                    <Typography variant='subtitle1'>
+                        These are all the available props (and their default values) for the
+                            <code className={classes.codeTag}>{'<DataGridTable />'}</code> component.
+                        </Typography>
+                    <DataGridTableProps />
                     <br />
                     <Typography variant='subtitle1'>
                         <i>If you don't define some of the optional props described above,
