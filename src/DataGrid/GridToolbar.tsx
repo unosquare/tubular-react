@@ -6,7 +6,7 @@ import { SearchTextInput } from './SearchTextInput';
 
 const styles: any = {
   spacer: {
-    flex: '1 1 50%',
+    flex: '1 1 45%',
   },
 };
 
