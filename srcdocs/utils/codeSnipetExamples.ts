@@ -14,9 +14,7 @@ const columns = [
 const SampleGrid = withRemoteDataSource(
     () => {
         return (
-          <DataGridProvider toolbarOptions={new ToolbarOptions()}>
-            <DataGridTable/>
-          <DataGridProvider>
+          <DataGrid/>
         );
     },
     columns,
@@ -82,9 +80,7 @@ toolbarOptions.searchText = false;
 
 const MyComponent = () => (
     <div className='root'>
-        <DataGridProvider gridName='BasicFeatures' toolbarOptions={toolbarOptions}>
-            <DataGridTable />
-        </DataGridProvider>
+        <DataGrid gridName='BasicFeatures' toolbarOptions={toolbarOptions} />
     </div>
 );
 

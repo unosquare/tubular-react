@@ -144,11 +144,11 @@ export default () => {
             <br />
           <em>Grid list</em> provide a styled and fancy view over your data,
           which helps you to quickly find information.
-          </Typography>
         <br />
+        </Typography>
         <Typography variant='h4'>
           Installation
-      </Typography>
+        </Typography>
         <Divider />
         <Typography variant='subtitle1' paragraph={true}>
           Tubular-React is available as a <a
@@ -221,26 +221,24 @@ export default () => {
           Extend Grid Functionalities
             </Typography>
         <Typography variant='subtitle1' paragraph={true}>
-          You can add functionalities to the `DataGridProvider`, including extra
+          You can add functionalities to the `DataGrid`, including extra
           buttons that can perform an action according to your requirements.
           You just need to include the IconButton Component from @material-ui and
-          define the icon or button that you need between `DataGridProvider` tags
+          define the icon or button that you need between `DataGrid` tags
           and specify the action to perform.
               <br />
           <Highlight language='javascript' className={classes.code}>
             {`
-              const MyComponent = () => {
+const MyComponent = () => {
 
-              <DataGridProvider gridName='Tubular-React'>
-                <DataGridTable />
-                <IconButton color='default' />
-                  <Brightness7Rounded
-                    onClick={() => alert('Happy codes, have a nice day')}
-                  />
-                </IconButton>
-              </DataGridProvider>
-
-            };
+  <DataGrid gridName='Tubular-React'>
+    <IconButton color='default' />
+      <Brightness7Rounded
+        onClick={() => alert('Happy codes, have a nice day')}
+      />
+    </IconButton>
+  </DataGrid>
+};
               `}
           </Highlight>
         </Typography>
