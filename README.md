@@ -85,6 +85,11 @@ const SampleGrid = withRemoteDataSource(
 ReactDOM.render(<SampleGrid />, document.getElementById("root"));
 ```
 
+This is a preview of the previous code:
+
+![DataGrid](https://user-images.githubusercontent.com/25437790/57318742-a7a2b200-70c0-11e9-8d5b-aaf2107bd059.gif)
+
+
 ### `DataGridProvider`
 
 You can start using `DataGridProvider` with this sample code. You need to provide a `DataGridTable` component, in this case, it renders a custom body and footer. The grid will connect to a remote datasource or have a local datasource depending of how you export your class. The available exports that you can use are [`withRemoteDataSource`](#export-withremotedatasource) and [`withLocalDataSource`](#export-withlocaldatasource).
@@ -125,6 +130,10 @@ const CustomBodyGrid = withRemoteDataSource(
   "https://tubular.azurewebsites.net/api/orders/paged"
 );
 ```
+
+This is a preview of the previous code:
+
+![CustomBodyGrid](https://user-images.githubusercontent.com/25437790/57318738-a4a7c180-70c0-11e9-8c3c-9aca3d63fff1.gif)
 
 ### Export `withRemoteDataSource`
 
