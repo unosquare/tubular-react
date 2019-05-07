@@ -402,27 +402,27 @@ export default withStyles(styles)(
                 className={classes.root}
               >
                 <ListItem>
-                  <HashLink className={classes.link} to='/Sample#simple-grid'>
+                  <HashLink className={classes.link} to='/tubular-react/Sample#simple-grid'>
                     <ListItemText primary='Basic Grid' />
                   </HashLink>
                 </ListItem>
                 <ListItem>
-                  <HashLink className={classes.link} to='/Sample#full-grid'>
+                  <HashLink className={classes.link} to='/tubular-react/Sample#full-grid'>
                     <ListItemText primary='Features' />
                   </HashLink>
                 </ListItem>
                 <ListItem>
-                  <HashLink className={classes.link} to='/Sample#func-btns'>
+                  <HashLink className={classes.link} to='/tubular-react/Sample#func-btns'>
                     <ListItemText primary='Toolbar Buttons' />
                   </HashLink>
                 </ListItem>
                 <ListItem>
-                  <HashLink className={classes.link} to='/Sample#grid-list'>
+                  <HashLink className={classes.link} to='/tubular-react/Sample#grid-list'>
                     <ListItemText primary='Grid List' />
                   </HashLink>
                 </ListItem>
                 <ListItem>
-                  <HashLink className={classes.link} to='/Sample#grid-dialog'>
+                  <HashLink className={classes.link} to='/tubular-react/Sample#grid-dialog'>
                     <ListItemText primary='Grid with Dialog' />
                   </HashLink>
                 </ListItem>
