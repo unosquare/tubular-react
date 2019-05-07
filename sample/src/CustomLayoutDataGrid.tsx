@@ -89,7 +89,7 @@ class CustomLayoutDataGrid extends React.Component<
             message={<span id='message-id'>{errorMessage}</span>}
           />
         )}
-        <Typography variant='h4'>No card grid!</Typography>
+        <Typography style={{ margin: '25px', marginBottom: '10px' }} variant='h4'>No card grid!</Typography>
         <GridToolbar>
           <Paginator
             component='div'
