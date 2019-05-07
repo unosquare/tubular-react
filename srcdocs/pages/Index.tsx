@@ -13,9 +13,9 @@ const App = () => (
     <Router>
       <NavigationBar />
       <Switch>
-        <Route exact={true} path='/' component={Home} />
-        <Route path='/sample' component={Sample} />
-        <Route path='/componentAPI/' component={ComponentAPI} />
+        <Route exact={true} path='/tubular-react/' component={Home} />
+        <Route path='/tubular-react/sample' component={Sample} />
+        <Route path='/tubular-react/componentAPI/' component={ComponentAPI} />
       </Switch>
     </Router>
   </ThemeProvider>

@@ -93,17 +93,17 @@ const NavigationBar =
                             </Tooltip>
                             <Divider />
                             <ListItem button={true} onClick={this.toggleDrawer(false)}>
-                                <Link to='/' className={classes.link}>
+                                <Link to='/tubular-react/' className={classes.link}>
                                     <ListItemText primary='Home' />
                                 </Link>
                             </ListItem>
                             <ListItem button={true} onClick={this.toggleDrawer(false)}>
-                                <Link to='/Sample' className={classes.link}>
+                                <Link to='/tubular-react/Sample' className={classes.link}>
                                     <ListItemText primary='Grid Samples' />
                                 </Link>
                             </ListItem>
                             <ListItem button={true} onClick={this.toggleDrawer(false)}>
-                                <Link to='/ComponentAPI' className={classes.link}>
+                                <Link to='/tubular-react/ComponentAPI' className={classes.link}>
                                     <ListItemText primary='ComponentAPI' />
                                 </Link>
                             </ListItem>
