@@ -1,7 +1,7 @@
 export const quickStart = `import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { DataGridProvider, DataGridTable, ToolbarOptions, withRemoteDataSource } from 'tubular-react';
+import DataGrid, { withRemoteDataSource } from 'tubular-react';
 import { ColumnModel } from 'tubular-common';
 import { IconButton, Tooltip } from '@material-ui/core';
 
@@ -25,7 +25,7 @@ ReactDOM.render(<SampleGrid />, document.getElementById('root'));`;
 
 export const basicFeatures = `import * as React from 'react';
 
-import { DataGridProvider, DataGridTable, ToolbarOptions, withRemoteDataSource } from 'tubular-react';
+import DataGrid, { ToolbarOptions, withRemoteDataSource } from 'tubular-react';
 import { AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection } from 'tubular-common';
 
 //  First of all, you must define your columns model.
