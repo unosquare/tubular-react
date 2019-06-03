@@ -9,7 +9,7 @@ import * as React from 'react';
 const useStyles = makeStyles(({ spacing }: any) => ({
   root: {
     flexShrink: 0,
-    marginLeft: spacing.unit * 2.5,
+    marginLeft: spacing(2.5),
   },
 }));
 
