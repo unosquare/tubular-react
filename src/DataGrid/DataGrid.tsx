@@ -11,7 +11,7 @@ import { DataGridProvider, IDataGridContext } from './DataGridContext';
 
 const useStyles = makeStyles(({ spacing }: any) => ({
   progress: {
-    height: spacing.unit * 2,
+    height: spacing(2),
   },
   root: {
     overflowX: 'auto',
