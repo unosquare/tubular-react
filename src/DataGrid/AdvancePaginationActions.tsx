@@ -6,12 +6,11 @@ import LastPage from '@material-ui/icons/LastPage';
 import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
 
-const useStyles = makeStyles(({ spacing }: any) => ({
+const useStyles = makeStyles({
   root: {
     flexShrink: 0,
-    marginLeft: spacing(2.5),
   },
-}));
+});
 
 interface IProps {
   count: number;
@@ -51,13 +50,13 @@ const getPages = (currentPage: any, totalRows: any, rowsPerPage: any) => {
   return pages;
 };
 
-const AdvancePaginationActions: React.FunctionComponent<IProps> = ({
+const AdvancePaginationActions: React.FunctionComponent<IProps> = (props, {
   count,
   page,
   rowsPerPage,
   onChangePage,
 }) => {
-  const classes = useStyles();
+  const classes = useStyles(props);
   const pages = getPages(page, count, rowsPerPage);
   const lastPage = Math.ceil(count / rowsPerPage) - 1;
   const gotoPage = (value: number) => (e: any) => onChangePage(e, value);

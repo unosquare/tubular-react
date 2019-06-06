@@ -7,7 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
-import makeStyles from '@material-ui/Styles/makeStyles';
+import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
 import Highlight from 'react-highlight';
 import { basicFeatures } from '../../utils/codeSnipetExamples';

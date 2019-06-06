@@ -9,15 +9,12 @@ import { DataSourceContext } from '../DataSource';
 import { DataGridTable, GridToolbar } from './';
 import { DataGridProvider, IDataGridContext } from './DataGridContext';
 
-const useStyles = makeStyles(({ spacing }: any) => ({
-  progress: {
-    height: spacing(2),
-  },
+const useStyles = makeStyles({
   root: {
     overflowX: 'auto',
     width: '100%',
   },
-}));
+});
 
 interface IProps extends IDataGridContext {
   storage?: IDataGridStorage;
@@ -27,7 +24,7 @@ interface IProps extends IDataGridContext {
   onRowClick?(ev: any): any;
 }
 
-const DataGrid: React.FunctionComponent<IProps> = ({
+const DataGrid: React.FunctionComponent<IProps> = (props, {
   bodyRenderer,
   footerRenderer,
   toolbarOptions,
@@ -36,7 +33,7 @@ const DataGrid: React.FunctionComponent<IProps> = ({
   onRowClick,
   storage,
 }) => {
-  const classes = useStyles();
+  const classes = useStyles(props);
   const { state } = React.useContext(DataSourceContext);
 
   return (
@@ -49,7 +46,7 @@ const DataGrid: React.FunctionComponent<IProps> = ({
         <GridToolbar>
           {children}
         </GridToolbar>
-        <div className={classes.progress}>
+        <div>
           {state.isLoading && <LinearProgress />}
         </div>
         <DataGridTable
