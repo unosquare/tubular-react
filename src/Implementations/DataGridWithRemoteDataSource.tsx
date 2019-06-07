@@ -28,6 +28,7 @@ interface IDataGridWithRemoteDataSource {
     addIcon?: boolean;
     addLabel?: string;
     bodyRenderer?: any;
+    gridName?: string;
     onClick?(ev: any): void;
 }
 
@@ -66,7 +67,7 @@ const DataGridWithRemoteDataSource: React.FunctionComponent<IDataGridWithRemoteD
 
     return (
         <React.Fragment>
-            <DataGrid bodyRenderer={props.bodyRenderer} onRowClick={onRowClick}>
+            <DataGrid bodyRenderer={props.bodyRenderer} onRowClick={onRowClick} gridName={props.gridName}>
                 {props.addIcon &&
                     <Tooltip title={props.addLabel || 'Add'}>
                         <IconButton onClick={onAdd}>
