@@ -21,6 +21,7 @@ const styles: any = () => createStyles({
         maxWidth: 100,
     },
     link: {
+        color: '#000',
         textDecoration: 'none',
     },
     logo: {
@@ -92,21 +93,21 @@ const NavigationBar =
                                 </ListItem>
                             </Tooltip>
                             <Divider />
-                            <ListItem button={true} onClick={this.toggleDrawer(false)}>
-                                <Link to='/tubular-react/' className={classes.link}>
+                            <Link to='/tubular-react/' className={classes.link}>
+                                <ListItem button={true} onClick={this.toggleDrawer(false)}>
                                     <ListItemText primary='Home' />
-                                </Link>
-                            </ListItem>
-                            <ListItem button={true} onClick={this.toggleDrawer(false)}>
-                                <Link to='/tubular-react/Sample' className={classes.link}>
+                                </ListItem>
+                            </Link>
+                            <Link to='/tubular-react/Sample' className={classes.link}>
+                                <ListItem button={true} onClick={this.toggleDrawer(false)}>
                                     <ListItemText primary='Grid Samples' />
-                                </Link>
-                            </ListItem>
-                            <ListItem button={true} onClick={this.toggleDrawer(false)}>
-                                <Link to='/tubular-react/ComponentAPI' className={classes.link}>
+                                </ListItem>
+                            </Link>
+                            <Link to='/tubular-react/ComponentAPI' className={classes.link}>
+                                <ListItem button={true} onClick={this.toggleDrawer(false)}>
                                     <ListItemText primary='ComponentAPI' />
-                                </Link>
-                            </ListItem>
+                                </ListItem>
+                            </Link>
                             <Divider />
                             <ListItem
                                 button={true}

@@ -7,7 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
-import makeStyles from '@material-ui/Styles/makeStyles';
+import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
 import Highlight from 'react-highlight';
 import { basicFeatures } from '../../utils/codeSnipetExamples';
@@ -31,6 +31,10 @@ const useStyles = makeStyles(() => ({
   image: {
     marginLeft: '25%',
     maxWidth: 300,
+  },
+  link: {
+    color: '#165ffb',
+    textDecoration: 'none',
   },
   paper: {
     minHeight: '300px',
@@ -154,6 +158,7 @@ export default () => {
           Tubular-React is available as a <a
             href='https://www.npmjs.com/package/tubular-react'
             target='_blank'
+            className={classes.link}
           >
             npm package
         </a>
@@ -164,18 +169,18 @@ export default () => {
         <Typography variant='body1' paragraph={true}>
           <ul>
             <li>
-              <a href='https://date-fns.org/'>date-fns - Version: 1.29.0</a>
+              <a href='https://date-fns.org/' className={classes.link}>date-fns - Version: 1.29.0</a>
             </li>
             <li>
-              <a href='https://material-ui.com/'>
+              <a href='https://material-ui.com/' className={classes.link}>
                 Material-UI - Version: 3.1.0
                   </a>
             </li>
             <li>
-              <a href='https://reactjs.org/'>React - Version: 16.5.1</a>
+              <a href='https://reactjs.org/' className={classes.link}>React - Version: 16.5.1</a>
             </li>
             <li>
-              <a href='https://github.com/unosquare/tubular-common'>
+              <a href='https://github.com/unosquare/tubular-common' className={classes.link}>
                 Tubular Common - Version: 1.2.1
                   </a>
             </li>
@@ -259,7 +264,7 @@ const MyComponent = () => {
           <TableBody>
             {rows.map((row) => (
               <TableRow key={row.id}>
-                <TableCell><a href={row.url}>{row.name}</a></TableCell>
+                <TableCell><a href={row.url} className={classes.link}>{row.name}</a></TableCell>
                 <TableCell>{row.type}</TableCell>
                 <TableCell>{row.language}</TableCell>
                 <TableCell>{row.description}</TableCell>

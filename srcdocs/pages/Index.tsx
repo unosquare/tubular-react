@@ -1,3 +1,5 @@
+import '../vendor';
+
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import * as React from 'react';
 import { render } from 'react-dom';

@@ -49,6 +49,7 @@ const styles = {
     width: 24,
   },
   link: {
+    color: '#000',
     textDecoration: 'none',
   },
   paper: {
