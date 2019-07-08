@@ -1,8 +1,19 @@
+import { makeStyles } from '@material-ui/core/styles';
 import TablePagination, { TablePaginationBaseProps } from '@material-ui/core/TablePagination';
 import * as React from 'react';
 import { DataSourceContext } from '../DataSource';
 import AdvancePaginationActions from './AdvancePaginationActions';
 import { DataGridContext } from './DataGridContext';
+
+const useStyles = makeStyles({
+  caption: {
+    flexShrink: '1',
+  },
+  root: {
+    height: '65px',
+    maxWidth: '95%',
+  },
+});
 
 const message = (totalRecordCount: any, filteredRecordCount: any) => ({
   from,
@@ -18,6 +29,7 @@ const message = (totalRecordCount: any, filteredRecordCount: any) => ({
 export const Paginator: React.FunctionComponent<TablePaginationBaseProps> = (props) => {
   const { actions, state } = React.useContext(DataSourceContext);
   const { toolbarOptions } = React.useContext(DataGridContext);
+  const classes = useStyles();
 
   if (!state.itemsPerPage) {
     return null;
@@ -42,5 +54,9 @@ export const Paginator: React.FunctionComponent<TablePaginationBaseProps> = (pro
     newProps.ActionsComponent = AdvancePaginationActions;
   }
 
-  return <TablePagination {...newProps} />;
+  return <TablePagination classes={{
+    caption: classes.caption,
+    root: classes.root,
+  }}
+  {...newProps} />;
 };
