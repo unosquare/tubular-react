@@ -74,8 +74,8 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "tubular-common": "^1.4.1",
-    "uno-material-ui": "^1.0.0",
-    "uno-react": "^0.7.1"
+    "uno-material-ui": "^1.0.3",
+    "uno-react": "^0.7.3"
   },
   "devDependencies": {
     "@types/enzyme": "^3.9.3",
