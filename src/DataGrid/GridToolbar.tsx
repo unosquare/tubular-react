@@ -15,7 +15,7 @@ const styles: any = {
 };
 
 const outerWidth = 800;
-const timeout = 1000;
+const timeout = 400;
 
 export const GridToolbar: React.FunctionComponent = ({ children }: any) => {
   const { toolbarOptions, gridName } = React.useContext(DataGridContext);

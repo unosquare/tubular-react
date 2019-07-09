@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: any) => ({
 }));
 
 const outerWidth = 800;
-const timeout = 1000;
+const timeout = 400;
 
 interface IProps extends IDataGridContext {
   storage?: IDataGridStorage;
@@ -69,7 +69,6 @@ const DataGrid: React.FunctionComponent<IProps> = (props, {
           <GridList
             cellHeight='auto'
             cols={1}
-            className={classes.mobileGrid}
           >
             {
               state.data.map((row: any, index: any) =>

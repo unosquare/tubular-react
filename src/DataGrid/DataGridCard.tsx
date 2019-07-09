@@ -3,8 +3,10 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
+import LabelImportant from '@material-ui/icons/LabelImportant';
 import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
 import { ColumnDataType } from 'tubular-common';
@@ -31,10 +33,7 @@ const useStyles = makeStyles(({ palette }: any) => ({
         flexDirection: 'column',
         flexGrow: 1,
         fontWeight: 'bold',
-        marginBottom: '3px',
-        marginLeft: '2px',
-        marginRight: '4px',
-        marginTop: '2px',
+        margin: '4px',
         textAlign: 'right',
         width: '50%',
     },
@@ -52,8 +51,9 @@ const useStyles = makeStyles(({ palette }: any) => ({
     },
 }));
 
-export const DataGridCard = ({ columns, item, onClickCallback }) => {
-    const classes = useStyles();
+export const DataGridCard = (props) => {
+    const { columns, item, onClickCallback } = props;
+    const classes = useStyles(props);
 
     return (
         <Card className={classes.cardMobile}>
@@ -89,13 +89,16 @@ export const DataGridCard = ({ columns, item, onClickCallback }) => {
                 }
                 <CardActions className={classes.cardActions}>
                     {onClickCallback &&
-                        <Button
-                            size='small'
-                            onClick={onClickCallback}
+                     <Tooltip title='Action'>
+                        <IconButton
                             className={classes.cardBtn}
+                            color='default'
+                            onClick={onClickCallback}
+                            size='small'
                         >
-                            <b>Edit</b>
-                        </Button>
+                            <LabelImportant />
+                        </IconButton>
+                    </Tooltip>
                     }
                 </CardActions>
             </CardContent>
