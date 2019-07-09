@@ -55,9 +55,5 @@ export const Paginator: React.FunctionComponent<TablePaginationBaseProps> = (pro
     newProps.ActionsComponent = AdvancePaginationActions;
   }
 
-  return <TablePagination classes={{
-    caption: classes.caption,
-    root: classes.root,
-  }}
-  {...newProps} />;
+  return (<TablePagination classes={{caption: classes.caption, root: classes.root }} {...newProps} /> );
 };

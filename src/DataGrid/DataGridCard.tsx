@@ -83,7 +83,7 @@ export const DataGridCard = ({ columns, item, onClickCallback }) => {
                             : item[column.Name]
                             : item[column.Name]
                         }
-                    </Typography>
+                        </Typography>
                     </div>
                     ))
                 }
