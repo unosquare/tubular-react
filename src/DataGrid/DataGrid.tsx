@@ -15,9 +15,6 @@ import { DataGridProvider, IDataGridContext } from './DataGridContext';
 import { Paginator } from './Paginator';
 
 const useStyles = makeStyles((theme: any) => ({
-  mobileSpacer: {
-    flexShrink: '1',
-  },
   root: {
     overflowX: 'auto',
     width: '100%',
@@ -86,9 +83,7 @@ const DataGrid: React.FunctionComponent<IProps> = (props, {
                 ))
             }
           </GridList>
-          <div className={classes.mobileSpacer}>
           <Paginator />
-          </div>
         </Paper>
       </DataGridProvider>
     );

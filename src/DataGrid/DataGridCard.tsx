@@ -61,10 +61,20 @@ export const DataGridCard = ({ columns, item, onClickCallback }) => {
                 {
                     columns.map((column: any, index: any) => (
                     <div className={classes.dataRow} key={index}>
-                        <div className={classes.dataLabel}>
+                        <Typography
+                            component='div'
+                            variant='body2'
+                            color='textSecondary'
+                            className={classes.dataLabel}
+                        >
                             {humanize(column.Name)}:
-                        </div>
-                        <div className={classes.dataValue}>
+                        </Typography>
+                        <Typography
+                            component='div'
+                            variant='body2'
+                            color='textSecondary'
+                            className={classes.dataValue}
+                        >
                         {
                             column.DataType === ColumnDataType.BOOLEAN ?
                             <input type='checkbox' checked={item[column.Name]} disabled={true}/>
@@ -73,7 +83,7 @@ export const DataGridCard = ({ columns, item, onClickCallback }) => {
                             : item[column.Name]
                             : item[column.Name]
                         }
-                    </div>
+                    </Typography>
                     </div>
                     ))
                 }
@@ -91,5 +101,4 @@ export const DataGridCard = ({ columns, item, onClickCallback }) => {
             </CardContent>
         </Card>
     );
-
 };
