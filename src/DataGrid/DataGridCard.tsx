@@ -4,7 +4,6 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import LabelImportant from '@material-ui/icons/LabelImportant';
 import makeStyles from '@material-ui/styles/makeStyles';
@@ -89,7 +88,6 @@ export const DataGridCard = (props) => {
                 }
                 <CardActions className={classes.cardActions}>
                     {onClickCallback &&
-                     <Tooltip title='Action'>
                         <IconButton
                             className={classes.cardBtn}
                             color='default'
@@ -98,7 +96,6 @@ export const DataGridCard = (props) => {
                         >
                             <LabelImportant />
                         </IconButton>
-                    </Tooltip>
                     }
                 </CardActions>
             </CardContent>
