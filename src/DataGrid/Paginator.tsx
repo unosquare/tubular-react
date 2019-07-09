@@ -8,9 +8,10 @@ import { DataGridContext } from './DataGridContext';
 const useStyles = makeStyles({
   caption: {
     flexShrink: '1',
+    height: '55px',
   },
   root: {
-    height: '65px',
+    height: '75px',
     maxWidth: '95%',
   },
 });
