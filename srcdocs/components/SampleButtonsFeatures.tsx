@@ -7,7 +7,7 @@ import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 import Mood from '@material-ui/icons/Mood';
 import format from 'date-fns/format';
-import { DataGridProvider, DataGridTable, ToolbarOptions, withRemoteDataSource } from '../../src';
+import DataGrid, { withRemoteDataSource } from '../../src';
 import columns from '../utils/columns';
 
 class SampleFeatures extends React.Component {
@@ -32,41 +32,43 @@ class SampleFeatures extends React.Component {
             message={<span id='message-id'>{errorMessage}</span>}
           />
         )}
-        <DataGridProvider gridName='SampleButtons' toolbarOptions={new ToolbarOptions()}>
-          <DataGridTable
-            bodyRenderer={(row: any) => (
-              <TableRow hover={true} key={row.OrderID}>
-                <TableCell padding='default'>{row.OrderID}</TableCell>
-                <TableCell padding='default'>{row.CustomerName}</TableCell>
-                <TableCell padding='default'>
-                  {format(row.ShippedDate, 'MMMM Do YYYY, h:mm:ss a')}
-                </TableCell>
-                <TableCell padding='default'>{row.ShipperCity}</TableCell>
-                <TableCell padding='default' align={'right'}>
-                  {row.Amount || 0}
-                </TableCell>
-                <TableCell padding='default'>
-                  {row.IsShipped ? <CheckBox /> : <CheckBoxOutlineBlank />}
-                </TableCell>
-              </TableRow>
-            )}
-            footerRenderer={(aggregates: any) => (
-              <TableRow>
-                <TableCell>Total: </TableCell>
-                <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
-                <TableCell />
-                <TableCell />
-                <TableCell />
-              </TableRow>
-            )}
-          />
-          <IconButton color='default' onClick={() => alert('I can help you to add features to your datagrid.')}>
-            <Mood />
-          </IconButton>
-          <IconButton color='default' onClick={() => alert('Happy codes, have a nice day')}>
-            <Brightness7Rounded />
-          </IconButton>
-        </DataGridProvider>
+        <DataGrid
+          bodyRenderer={(row: any) => (
+            <TableRow hover={true} key={row.OrderID}>
+              <TableCell padding='default'>{row.OrderID}</TableCell>
+              <TableCell padding='default'>{row.CustomerName}</TableCell>
+              <TableCell padding='default'>
+                {format(row.ShippedDate, 'MMMM Do YYYY, h:mm:ss a')}
+              </TableCell>
+              <TableCell padding='default'>{row.ShipperCity}</TableCell>
+              <TableCell padding='default' align={'right'}>
+                {row.Amount || 0}
+              </TableCell>
+              <TableCell padding='default'>
+                {row.IsShipped ? <CheckBox /> : <CheckBoxOutlineBlank />}
+              </TableCell>
+            </TableRow>
+          )}
+          footerRenderer={(aggregates: any) => (
+            <TableRow>
+              <TableCell>Total: </TableCell>
+              <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
+              <TableCell />
+              <TableCell />
+              <TableCell />
+            </TableRow>
+          )}
+          gridName='SampleButtons'
+        >
+          <React.Fragment>
+              <IconButton color='default' onClick={() => alert('I can help you to add features to your datagrid.')}>
+                <Mood />
+              </IconButton>
+              <IconButton color='default' onClick={() => alert('Happy codes, have a nice day')}>
+                <Brightness7Rounded />
+              </IconButton>
+            </React.Fragment>
+        </DataGrid>
       </div >
     );
   }

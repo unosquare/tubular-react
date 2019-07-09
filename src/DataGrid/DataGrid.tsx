@@ -1,6 +1,5 @@
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from '@material-ui/core/Paper';
-import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
 
@@ -8,13 +7,6 @@ import { IDataGridStorage } from '../DataGridInterfaces';
 import { DataSourceContext } from '../DataSource';
 import { DataGridTable, GridToolbar } from './';
 import { DataGridProvider, IDataGridContext } from './DataGridContext';
-
-const useStyles = makeStyles({
-  root: {
-    overflowX: 'auto',
-    width: '100%',
-  },
-});
 
 interface IProps extends IDataGridContext {
   storage?: IDataGridStorage;
@@ -24,7 +16,7 @@ interface IProps extends IDataGridContext {
   onRowClick?(ev: any): any;
 }
 
-const DataGrid: React.FunctionComponent<IProps> = (props, {
+const DataGrid: React.FunctionComponent<IProps> = ({
   bodyRenderer,
   footerRenderer,
   toolbarOptions,
@@ -33,7 +25,6 @@ const DataGrid: React.FunctionComponent<IProps> = (props, {
   onRowClick,
   storage,
 }) => {
-  const classes = useStyles(props);
   const { state } = React.useContext(DataSourceContext);
 
   return (
@@ -42,7 +33,7 @@ const DataGrid: React.FunctionComponent<IProps> = (props, {
       gridName={gridName}
       storage={storage}
     >
-      <Paper className={classes.root}>
+      <Paper style={{ overflowX: 'auto', width: '100%' }}>
         <GridToolbar>
           {children}
         </GridToolbar>

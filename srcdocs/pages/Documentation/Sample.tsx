@@ -339,61 +339,6 @@ export default withStyles(styles)(
                     <SampleGridList />
                   </Grid>
                 </Grid>
-                <Divider />
-                <Grid item={true} xs={12} className={classes.paper}>
-                  <a id='grid-dialog' />
-                  <Typography variant='h5' gutterBottom={true}>
-                    Add a Dialog to you grid.
-                  </Typography>
-                  <Typography variant='h6'>
-                    You can use DataGridWithRemoteDataSource to add a Dialog to the grid,
-                    it will pass all the clicked row data to it.
-                  </Typography>
-                  <Grid item={true} xs={12}>
-                    <div style={bar}>
-                      <Tooltip title='Tubular GitHub Repo'>
-                        <IconButton
-                          component='a'
-                          href='https://github.com/unosquare/tubular-react'
-                          target='_blank'
-                          color='inherit'
-                        >
-                          <GitHubIcon />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip
-                        title={
-                          this.state.openGridDialog ? 'Hide Code' : 'View Code'
-                        }
-                      >
-                        <IconButton onClick={this.handleClickGridDialog}>
-                          <CodeIcon />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title='Edit in CodeSandbox'>
-                        <IconButton
-                          component='a'
-                          href='https://codesandbox.io/s/8ywpr3ooq8'
-                          target='_blank'
-                          color='inherit'
-                        >
-                          <CreateIcon />
-                        </IconButton>
-                      </Tooltip>
-                    </div>
-                    <Collapse in={this.state.openGridDialog} timeout='auto'>
-                      <Paper>
-                        <Highlight
-                          language='javascript'
-                          className={classes.code}
-                        >
-                          {gridDialog}
-                        </Highlight>
-                      </Paper>
-                    </Collapse>
-                    <GridDialog />
-                  </Grid>
-                </Grid>
               </Paper>
             </Grid>
             <Grid item={true} xs={2} className={classes.paper}>
@@ -420,11 +365,6 @@ export default withStyles(styles)(
                 <ListItem>
                   <HashLink className={classes.link} to='/tubular-react/Sample#grid-list'>
                     <ListItemText primary='Grid List' />
-                  </HashLink>
-                </ListItem>
-                <ListItem>
-                  <HashLink className={classes.link} to='/tubular-react/Sample#grid-dialog'>
-                    <ListItemText primary='Grid with Dialog' />
                   </HashLink>
                 </ListItem>
               </List>

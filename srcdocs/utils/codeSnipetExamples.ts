@@ -145,41 +145,43 @@ const columns = [
     )
 ];
 const MyComponent = () => {
-  <DataGridProvider gridName='SampleButtons' toolbarOptions={new ToolbarOptions()}>
-  <DataGridTable
-    bodyRenderer={(row: any) => (
-      <TableRow hover={true} key={row.OrderID}>
-        <TableCell padding='default'>{row.OrderID}</TableCell>
-        <TableCell padding='default'>{row.CustomerName}</TableCell>
-        <TableCell padding='default'>
-          {format(row.ShippedDate, 'MMMM Do YYYY, h:mm:ss a')}
-        </TableCell>
-        <TableCell padding='default'>{row.ShipperCity}</TableCell>
-        <TableCell padding='default' align={'right'}>
-          {row.Amount || 0}
-        </TableCell>
-        <TableCell padding='default'>
-          {row.IsShipped ? <CheckBox /> : <CheckBoxOutlineBlank />}
-        </TableCell>
-      </TableRow>
-    )}
-    footerRenderer={(aggregates: any) => (
-      <TableRow>
-        <TableCell>Total: </TableCell>
-        <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
-        <TableCell />
-        <TableCell />
-        <TableCell />
-      </TableRow>
-    )}
-  />
-  <IconButton color='default' onClick={() => alert('I can help you to add features to your datagrid.')}>
-    <Mood />
-  </IconButton>
-  <IconButton color='default' onClick={() => alert('Happy codes, have a nice day')}>
-    <Brightness7Rounded />
-  </IconButton>
-</DataGridProvider>
+  <DataGrid
+          bodyRenderer={(row: any) => (
+            <TableRow hover={true} key={row.OrderID}>
+              <TableCell padding='default'>{row.OrderID}</TableCell>
+              <TableCell padding='default'>{row.CustomerName}</TableCell>
+              <TableCell padding='default'>
+                {format(row.ShippedDate, 'MMMM Do YYYY, h:mm:ss a')}
+              </TableCell>
+              <TableCell padding='default'>{row.ShipperCity}</TableCell>
+              <TableCell padding='default' align={'right'}>
+                {row.Amount || 0}
+              </TableCell>
+              <TableCell padding='default'>
+                {row.IsShipped ? <CheckBox /> : <CheckBoxOutlineBlank />}
+              </TableCell>
+            </TableRow>
+          )}
+          footerRenderer={(aggregates: any) => (
+            <TableRow>
+              <TableCell>Total: </TableCell>
+              <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
+              <TableCell />
+              <TableCell />
+              <TableCell />
+            </TableRow>
+          )}
+          gridName='SampleButtons'
+        >
+          <React.Fragment>
+              <IconButton color='default' onClick={() => alert('I can help you to add features to your datagrid.')}>
+                <Mood />
+              </IconButton>
+              <IconButton color='default' onClick={() => alert('Happy codes, have a nice day')}>
+                <Brightness7Rounded />
+              </IconButton>
+            </React.Fragment>
+        </DataGrid>
 };
 
 /*
@@ -461,94 +463,3 @@ export default withRemoteDataSource(
   columns,
   'https://tubular.azurewebsites.net/api/orders/paged'
 );`;
-
-export const gridDialog = `import * as React from 'react';
-
-import {
-    DataGridWithRemoteDataSource,
-    withRemoteDataSource } from 'tubular-react';
-
-import { AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection } from 'tubular-common';
-
-const columns = [
-    new ColumnModel('OrderID',
-        {
-            DataType: ColumnDataType.NUMERIC,
-            Filterable: true,
-            IsKey: true,
-            Label: 'ID',
-            SortDirection: ColumnSortDirection.ASCENDING,
-            SortOrder: 1,
-            Sortable: true
-        }
-    ),
-    new ColumnModel('CustomerName',
-        {
-            Aggregate: AggregateFunctions.COUNT,
-            Filterable: true,
-            Searchable: true,
-            Sortable: true
-        }
-    ),
-    new ColumnModel('ShippedDate',
-        {
-            DataType: ColumnDataType.DATE_TIME,
-            Filterable: true,
-            Sortable: true
-        }
-    ),
-    new ColumnModel('ShipperCity'),
-    new ColumnModel('Amount',
-        {
-            DataType: ColumnDataType.NUMERIC,
-            Sortable: true
-        }
-    ),
-    new ColumnModel('IsShipped',
-        {
-            DataType: ColumnDataType.BOOLEAN,
-            Filterable: true,
-            Sortable: true
-        }
-    )
-];
-
-//The Dialog
-const RowDialog = ({ onClose, open, row }) => (
-  <React.Fragment>
-      <Dialog open={open} onClose={onClose}>
-          {row ?
-              <React.Fragment>
-                  <DialogTitle>Customer: {row.CustomerName}</DialogTitle>
-                  <DialogContent>This package comes from: {row.ShipperCity}</DialogContent>
-              </React.Fragment>
-              :
-              <React.Fragment>
-                  <DialogTitle>Add Entry</DialogTitle>
-                  <DialogContent>Here you can add an entry!</DialogContent>
-              </React.Fragment>
-          }
-      </Dialog>
-  </React.Fragment>
-);
-
-const GridDialog = () => {
-  const Grid = withRemoteDataSource(
-      (prop: any) => (
-          <DataGridWithRemoteDataSource
-              openModalOnClick={true}
-              addIcon={true}
-              refresh={prop.refresh}
-          >
-              <RowDialog />
-          </DataGridWithRemoteDataSource>
-      ),
-      columns,
-      'https://tubular.azurewebsites.net/api/orders/paged');
-
-  return (
-    <Grid />
-  );
-};
-
-export default GridDialog`;
