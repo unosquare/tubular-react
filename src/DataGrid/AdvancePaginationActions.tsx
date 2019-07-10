@@ -56,7 +56,7 @@ const AdvancePaginationActions: React.FunctionComponent<IProps> = ({
   rowsPerPage,
   onChangePage,
 }) => {
-  const classes = useStyles();
+  const classes = useStyles({});
   const pages = getPages(page, count, rowsPerPage);
   const lastPage = Math.ceil(count / rowsPerPage) - 1;
   const gotoPage = (value: number) => (e: any) => onChangePage(e, value);

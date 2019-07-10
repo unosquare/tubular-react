@@ -30,7 +30,7 @@ const message = (totalRecordCount: any, filteredRecordCount: any) => ({
 export const Paginator: React.FunctionComponent<TablePaginationBaseProps> = (props) => {
   const { actions, state } = React.useContext(DataSourceContext);
   const { toolbarOptions } = React.useContext(DataGridContext);
-  const classes = useStyles();
+  const classes = useStyles({});
 
   if (!state.itemsPerPage) {
     return null;

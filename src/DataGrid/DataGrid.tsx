@@ -41,7 +41,7 @@ const DataGrid: React.FunctionComponent<IProps> = ({
   onRowClick,
   storage,
 }) => {
-  const classes = useStyles();
+  const classes = useStyles({});
   const { state } = React.useContext(DataSourceContext);
   const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
 
