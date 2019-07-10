@@ -50,7 +50,10 @@ const DataGridWithRemoteDataSource: React.FunctionComponent<IDataGridWithRemoteD
 
     const onClose = () => {
         setModalOpen(false);
-        props.refresh();
+
+        if (props.refresh) {
+            props.refresh();
+        }
     };
 
     const onAdd = () => {

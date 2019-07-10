@@ -6,7 +6,7 @@ import TableRow from '@material-ui/core/TableRow';
 import makeStyles from '@material-ui/Styles/makeStyles';
 import * as React from 'react';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles({
   code: {
     background: '#F8F8FF',
     fontSize: 14,

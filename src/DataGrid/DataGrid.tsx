@@ -10,16 +10,16 @@ import { useResolutionSwitch } from 'uno-react';
 import { IDataGridStorage } from '../DataGridInterfaces';
 import { DataSourceContext } from '../DataSource';
 import ToolbarOptions from '../Models/ToolbarOptions';
-import {  DataGridCard, DataGridTable, GridToolbar } from './';
+import { DataGridCard, DataGridTable, GridToolbar } from './';
 import { DataGridProvider, IDataGridContext } from './DataGridContext';
 import { Paginator } from './Paginator';
 
-const useStyles = makeStyles((theme: any) => ({
+const useStyles = makeStyles({
   root: {
     overflowX: 'auto',
     width: '100%',
   },
-}));
+});
 
 const outerWidth = 800;
 const timeout = 400;
@@ -32,7 +32,7 @@ interface IProps extends IDataGridContext {
   onRowClick?(ev: any): any;
 }
 
-const DataGrid: React.FunctionComponent<IProps> = (props, {
+const DataGrid: React.FunctionComponent<IProps> = ({
   bodyRenderer,
   footerRenderer,
   toolbarOptions,
@@ -41,7 +41,7 @@ const DataGrid: React.FunctionComponent<IProps> = (props, {
   onRowClick,
   storage,
 }) => {
-  const classes = useStyles(props);
+  const classes = useStyles();
   const { state } = React.useContext(DataSourceContext);
   const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
 
