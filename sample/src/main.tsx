@@ -46,14 +46,12 @@ const Main: React.FunctionComponent = () => {
             <Tab label='Local DataGrid' />
             <Tab label='Custom DataGrid' />
             <Tab label='Grid List' />
-            <Tab label='Grid with Dialog' />
           </Tabs>
         </AppBar>
         {currentValue === 0 && <RemoteDataGrid />}
         {currentValue === 1 && <LocalDataGrid />}
         {currentValue === 2 && <CustomLayoutDataGrid />}
         {currentValue === 3 && <RemoteGridList />}
-        {currentValue === 4 && <DataGridWithDialog />}
       </div>
     </ErrorBoundary>
   );
