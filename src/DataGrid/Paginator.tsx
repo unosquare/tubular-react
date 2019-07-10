@@ -1,6 +1,7 @@
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import TablePagination, { TablePaginationBaseProps } from '@material-ui/core/TablePagination';
 import * as React from 'react';
+import { useResolutionSwitch } from 'uno-react';
 import { DataSourceContext } from '../DataSource';
 import AdvancePaginationActions from './AdvancePaginationActions';
 import { DataGridContext } from './DataGridContext';
@@ -16,6 +17,9 @@ const useStyles = makeStyles({
   },
 });
 
+const outerWidth = 800;
+const timeout = 400;
+
 const message = (totalRecordCount: any, filteredRecordCount: any) => ({
   from,
   to,
@@ -30,6 +34,7 @@ const message = (totalRecordCount: any, filteredRecordCount: any) => ({
 export const Paginator: React.FunctionComponent<TablePaginationBaseProps> = (props) => {
   const { actions, state } = React.useContext(DataSourceContext);
   const { toolbarOptions } = React.useContext(DataGridContext);
+  const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
   const classes = useStyles({});
 
   if (!state.itemsPerPage) {
@@ -55,5 +60,10 @@ export const Paginator: React.FunctionComponent<TablePaginationBaseProps> = (pro
     newProps.ActionsComponent = AdvancePaginationActions;
   }
 
-  return (<TablePagination classes={{caption: classes.caption, root: classes.root }} {...newProps} /> );
+  return (
+    <TablePagination
+      classes={{ caption: isMobileResolution && classes.caption, root: classes.root }}
+      {...newProps}
+    />
+  );
 };
