@@ -1,5 +1,4 @@
 import GridList from '@material-ui/core/GridList';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from '@material-ui/core/Paper';
 import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
@@ -94,7 +93,7 @@ const DataGrid: React.FunctionComponent<IProps> = ({
       gridName={gridName}
       storage={storage}
     >
-      <Paper className={classes.root}>
+      <Paper style={{ overflowX: 'auto', width: '100%' }}>
         <GridToolbar>
           {children}
         </GridToolbar>
