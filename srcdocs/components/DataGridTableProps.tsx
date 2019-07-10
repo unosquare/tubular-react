@@ -7,7 +7,7 @@ import TableRow from '@material-ui/core/TableRow';
 import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles({
     code: {
         background: '#F8F8FF',
         fontSize: 14,
@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
         overflowX: 'auto',
         width: '100%',
     },
-}));
+});
 
 export default () => {
     const classes = useStyles();

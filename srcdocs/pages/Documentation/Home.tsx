@@ -12,7 +12,7 @@ import * as React from 'react';
 import Highlight from 'react-highlight';
 import { basicFeatures } from '../../utils/codeSnipetExamples';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles({
   code: {
     fontSize: 15,
   },
@@ -44,7 +44,7 @@ const useStyles = makeStyles(() => ({
     minHeight: '115px',
     padding: 30,
   },
-}));
+});
 
 let id = 0;
 function createData(name, type, language, description, url) {
