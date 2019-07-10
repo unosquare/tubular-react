@@ -50,7 +50,7 @@ const useStyles = makeStyles(({ palette }: any) => ({
 
 export const DataGridCard = (props) => {
     const { columns, item, onClickCallback } = props;
-    const classes = useStyles(props);
+    const classes = useStyles({});
 
     return (
         <Card className={classes.cardMobile}>

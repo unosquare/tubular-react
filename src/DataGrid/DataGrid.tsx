@@ -1,5 +1,6 @@
 import GridList from '@material-ui/core/GridList';
 import Paper from '@material-ui/core/Paper';
+import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
 import { FixedLinearProgress } from 'uno-material-ui';
@@ -11,6 +12,13 @@ import ToolbarOptions from '../Models/ToolbarOptions';
 import { DataGridCard, DataGridTable, GridToolbar } from './';
 import { DataGridProvider, IDataGridContext } from './DataGridContext';
 import { Paginator } from './Paginator';
+
+const useStyles = makeStyles({
+  root: {
+    overflowX: 'auto',
+    width: '100%',
+  },
+});
 
 const outerWidth = 800;
 const timeout = 400;
@@ -32,6 +40,7 @@ const DataGrid: React.FunctionComponent<IProps> = ({
   onRowClick,
   storage,
 }) => {
+  const classes = useStyles({});
   const { state } = React.useContext(DataSourceContext);
   const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
 
@@ -51,7 +60,7 @@ const DataGrid: React.FunctionComponent<IProps> = ({
         gridName={gridName}
         storage={storage}
       >
-        <Paper style={{overflowX: 'auto', width: '100%'}}>
+        <Paper className={classes.root}>
           <GridToolbar>
             {children}
           </GridToolbar>

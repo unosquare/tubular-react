@@ -12,7 +12,7 @@ import DataGridProviderProps from '../../components/DataGridProviderProps';
 import DataGridTableProps from '../../components/DataGridTableProps';
 import ToolBarOptionsProps from '../../components/ToolBarOptionsProps';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles({
     codeTag: {
         background: '#F8F8FF',
         padding: '6px',
@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
     paper: {
         padding: 10,
     },
-}));
+});
 
 const remoteDataSource =
     // tslint:disable-next-line:max-line-length
@@ -57,7 +57,7 @@ export default () => {
                         It's important to use <code className={classes.codeTag}>withRemoteDataSource</code> or
                             <code className={classes.codeTag}>withLocalDataSource</code> according to the case
                             to fill the <code className={classes.codeTag}>{'<DataGrid />'}</code> component
-                        with the data.
+                    with the data.
                             <br />
                         These are all the available props (and their default values) for the
                             <code className={classes.codeTag}>{'<DataGrid />'}</code> component.
@@ -82,8 +82,8 @@ export default () => {
                     <Typography variant='subtitle1'>
                         Use this component with <code className={classes.codeTag}>{'<DataGridTable />'}</code> to
                         use a custom layout in your grid. It's important to use <code className={classes.codeTag}>
-                        withRemoteDataSource</code> or <code className={classes.codeTag}>withLocalDataSource</code> 
-                        according to the case  to fill the <code className={classes.codeTag}>{'<DataGridProvider />'}</code> 
+                            withRemoteDataSource</code> or <code className={classes.codeTag}>withLocalDataSource</code>
+                        according to the case  to fill the <code className={classes.codeTag}>{'<DataGridProvider />'}</code>
                         component with the data.
                             <br />
                         These are all the available props (and their default values) for the
