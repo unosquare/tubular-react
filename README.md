@@ -44,10 +44,10 @@ Table of contents
 
 ## Dependencies
 
-* [date-fns](https://date-fns.org/) - Version: 1.29.0
-* [Material UI Core](https://material-ui.com/) - Version: >3
+* [date-fns](https://date-fns.org/) - Version: 1.30.1
+* [Material UI Core](https://material-ui.com/) - Version: 4.2.0
 * [React](https://reactjs.org/) - Version: >16.8
-* [Tubular Common](https://github.com/unosquare/tubular-common) - Version: 1.2.1.
+* [Tubular Common](https://github.com/unosquare/tubular-common) - Version: 1.4.1.
 
 ## Installation
 

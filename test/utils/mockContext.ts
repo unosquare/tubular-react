@@ -9,11 +9,13 @@ const context = {
   actions: {
     exportTo: jest.fn(),
     setActiveColumn: jest.fn().mockReturnValue('CustomerName'),
+    setInitialData: jest.fn(),
     sortColumn: jest.fn().mockReturnValue('OrderID'),
     updatePage: jest.fn(),
     updateSearchText: jest.fn().mockReturnValue('search'),
   },
   state: {
+    activeColumn: null,
     aggregate: null as any,
     columns: [
       new ColumnModel('OrderID', {

@@ -1,6 +1,5 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
-
 import { withLocalDataSource } from '../src';
 import { validColumnsSample } from './utils/columns';
 import { expectedLocalData, localData } from './utils/localData';
@@ -38,7 +37,7 @@ describe('<LocalDataSource />', () => {
     const component = shallow(<TestComponent />);
 
     (component.instance() as any).retrieveData().then(() => {
-      expect(component.state('error')).toBeDefined();
+      expect(component.state()).toBeDefined();
       done();
     });
   });
