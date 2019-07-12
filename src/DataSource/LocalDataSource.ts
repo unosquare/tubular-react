@@ -9,7 +9,6 @@ const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, i
       return {
         ...value,
         columns,
-        data: source,
         itemsPerPage,
       };
     }

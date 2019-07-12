@@ -24,13 +24,12 @@ describe('<LocalDataSource />', () => {
     expect(component.state('columns')).toEqual(validColumnsSample);
   });
 
-  test('Should contain data', (done) => {
+  test('Should contain data', async (done) => {
     const component = shallow(<TestComponent />);
 
-    (component.instance() as any).retrieveData().then(() => {
-      expect(component.state('data')).toEqual(expectedLocalData);
-      done();
-    });
+    await (component.instance() as any).processRequest({});
+    expect(component.state('data')).toEqual(expectedLocalData);
+    done();
   });
 
   test('Should throw error with invalid source', (done) => {

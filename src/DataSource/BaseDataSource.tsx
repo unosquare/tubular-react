@@ -6,6 +6,7 @@ import { ColumnModel, GridRequest } from 'tubular-common';
 import IDataGridStorage from '../DataGridInterfaces/IDataGridStorage';
 import { DataSourceContext } from './DataSourceContext';
 import IBaseDataSourceState from './IBaseDataSourceState';
+import { NullStorage } from '.';
 
 export default abstract class BaseDataSource extends React.Component<
   {},
@@ -23,7 +24,7 @@ export default abstract class BaseDataSource extends React.Component<
     multiSort: false,
     page: 0,
     searchText: '',
-    storage: null,
+    storage: new NullStorage(),
     totalRecordCount: 0,
   });
 
@@ -233,12 +234,15 @@ export default abstract class BaseDataSource extends React.Component<
           page: response.CurrentPage - 1,
           totalRecordCount: response.TotalRecordCount || 0,
         });
+        console.log(response.Payload);
       }
       catch (reject) {
+        console.log('Catch 1');
         return this.setState({ isLoading: false, error: reject.message || reject });
       }
     }
     catch (err) {
+      console.log('Catch 2');
       return this.setState({ isLoading: false, error: err });
     }
   }
