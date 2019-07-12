@@ -24,14 +24,13 @@ describe('<RemoteDataSource />', () => {
     expect(component.props()).toBeDefined();
   });
 
-  test('Should contain data with valid url', (done) => {
+  test('Should contain data with valid url', async (done) => {
     fetch.mockResponse(JSON.stringify(simpleRecordsExpected));
 
     const component = shallow(<TestComponent />);
-    (component.instance() as any).retrieveData().then(() => {
-      expect(component.state('data')).toEqual(simpleRecordsExpected.Payload);
-      done();
-    });
+    await (component.instance() as any).processRequest({});
+    expect(component.state('data')).toEqual(simpleRecordsExpected.Payload);
+    done();
   });
 
   test('Should have error with invalid url', (done) => {

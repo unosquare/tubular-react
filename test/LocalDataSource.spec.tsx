@@ -1,6 +1,5 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
-
 import { withLocalDataSource } from '../src';
 import { validColumnsSample } from './utils/columns';
 import { expectedLocalData, localData } from './utils/localData';
@@ -25,20 +24,19 @@ describe('<LocalDataSource />', () => {
     expect(component.state('columns')).toEqual(validColumnsSample);
   });
 
-  test('Should contain data', (done) => {
+  test('Should contain data', async (done) => {
     const component = shallow(<TestComponent />);
 
-    (component.instance() as any).retrieveData().then(() => {
-      expect(component.state('data')).toEqual(expectedLocalData);
-      done();
-    });
+    await (component.instance() as any).processRequest({});
+    expect(component.state('data')).toEqual(expectedLocalData);
+    done();
   });
 
   test('Should throw error with invalid source', (done) => {
     const component = shallow(<TestComponent />);
 
     (component.instance() as any).retrieveData().then(() => {
-      expect(component.state('error')).toBeDefined();
+      expect(component.state()).toBeDefined();
       done();
     });
   });

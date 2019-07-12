@@ -2,8 +2,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { createMount } from '@material-ui/core/test-utils';
 import * as React from 'react';
 import AdvancePaginationActions from '../src/DataGrid/AdvancePaginationActions';
-import context from '../src/DataSource/__mocks__/testHelpers';
-jest.mock('../src/DataSource/DataSourceContext');
+import MockContext from './utils/mockContext';
 
 describe('TablePaginationActions', () => {
   let mount: any;
@@ -15,28 +14,30 @@ describe('TablePaginationActions', () => {
   });
 
   test('should render 10 \'<IconButton />\' when has 10 of 500 records to show by page', () => {
-    const wrapper = mount(
+    const wrapper = mount((
       <AdvancePaginationActions
         classes={{}}
         count={500}
         page={0}
-        itemsPerPage={10}
-        onChangePage={context.actions.updatePage}
-      />,
+        rowsPerPage={10}
+        onChangePage={MockContext.actions.updatePage}
+      />
+    ),
     );
 
     expect(wrapper.find(IconButton)).toHaveLength(10);
   });
 
   test('should have the disabled prop from \'First Page\' as true', () => {
-    const wrapper = mount(
+    const wrapper = mount((
       <AdvancePaginationActions
         classes={{}}
         count={500}
         page={0}
-        itemsPerPage={10}
-        onChangePage={context.actions.updatePage}
-      />,
+        rowsPerPage={10}
+        onChangePage={MockContext.actions.updatePage}
+      />
+    ),
     );
 
     const firstPage = wrapper.find(IconButton).at(0);
@@ -46,14 +47,15 @@ describe('TablePaginationActions', () => {
   });
 
   test('should have the disabled prop from \'First Page\' as false', () => {
-    const wrapper = mount(
+    const wrapper = mount((
       <AdvancePaginationActions
         classes={{}}
         count={500}
         page={2}
-        itemsPerPage={10}
-        onChangePage={context.actions.updatePage}
-      />,
+        rowsPerPage={10}
+        onChangePage={MockContext.actions.updatePage}
+      />
+    ),
     );
 
     const firstPage = wrapper.find(IconButton).at(0);
@@ -63,14 +65,15 @@ describe('TablePaginationActions', () => {
   });
 
   test('should have the disabled prop from \'Last Page\' as true', () => {
-    const wrapper = mount(
+    const wrapper = mount((
       <AdvancePaginationActions
         classes={{}}
         count={500}
         page={49}
-        itemsPerPage={10}
-        onChangePage={context.actions.updatePage}
-      />,
+        rowsPerPage={10}
+        onChangePage={MockContext.actions.updatePage}
+      />
+    ),
     );
 
     const lastPage = wrapper.find(IconButton).at(8);
@@ -80,14 +83,15 @@ describe('TablePaginationActions', () => {
   });
 
   test('should have the disabled prop from \'Last Page\' as false', () => {
-    const wrapper = mount(
+    const wrapper = mount((
       <AdvancePaginationActions
         classes={{}}
         count={500}
         page={47}
-        itemsPerPage={10}
-        onChangePage={context.actions.updatePage}
-      />,
+        rowsPerPage={10}
+        onChangePage={MockContext.actions.updatePage}
+      />
+    ),
     );
 
     const lastPage = wrapper.find(IconButton).at(8);
@@ -97,14 +101,15 @@ describe('TablePaginationActions', () => {
   });
 
   test('should have the disabled prop from \'Previous Page\' as false', () => {
-    const wrapper = mount(
+    const wrapper = mount((
       <AdvancePaginationActions
         classes={{}}
         count={500}
         page={49}
-        itemsPerPage={10}
-        onChangePage={context.actions.updatePage}
-      />,
+        rowsPerPage={10}
+        onChangePage={MockContext.actions.updatePage}
+      />
+    ),
     );
 
     const previousPage = wrapper.find(IconButton).at(1);
@@ -114,14 +119,15 @@ describe('TablePaginationActions', () => {
   });
 
   test('should have the disabled prop from \'Previous Page\' as true', () => {
-    const wrapper = mount(
+    const wrapper = mount((
       <AdvancePaginationActions
         classes={{}}
         count={500}
         page={0}
-        itemsPerPage={10}
-        onChangePage={context.actions.updatePage}
-      />,
+        rowsPerPage={10}
+        onChangePage={MockContext.actions.updatePage}
+      />
+    ),
     );
 
     const previousPage = wrapper.find(IconButton).at(1);
@@ -131,14 +137,15 @@ describe('TablePaginationActions', () => {
   });
 
   test('should have the disable prop from \'Next Page\' as true', () => {
-    const wrapper = mount(
+    const wrapper = mount((
       <AdvancePaginationActions
         classes={{}}
         count={500}
         page={49}
-        itemsPerPage={10}
-        onChangePage={context.actions.updatePage}
-      />,
+        rowsPerPage={10}
+        onChangePage={MockContext.actions.updatePage}
+      />
+    ),
     );
 
     const nextPage = wrapper.find(IconButton).at(8);
@@ -148,14 +155,15 @@ describe('TablePaginationActions', () => {
   });
 
   test('should have the disable prop from \'Next Page\' as false', () => {
-    const wrapper = mount(
+    const wrapper = mount((
       <AdvancePaginationActions
         classes={{}}
         count={500}
         page={34}
-        itemsPerPage={10}
-        onChangePage={context.actions.updatePage}
-      />,
+        rowsPerPage={10}
+        onChangePage={MockContext.actions.updatePage}
+      />
+    ),
     );
 
     const nextPage = wrapper.find(IconButton).at(7);
@@ -165,18 +173,19 @@ describe('TablePaginationActions', () => {
   });
 
   test('should trigger the onClick event when \'Page#\' is clicked', () => {
-    const wrapper = mount(
+    const wrapper = mount((
       <AdvancePaginationActions
         classes={{}}
         count={500}
         page={33}
-        itemsPerPage={10}
-        onChangePage={context.actions.updatePage}
-      />,
+        rowsPerPage={10}
+        onChangePage={MockContext.actions.updatePage}
+      />
+    ),
     );
 
     const page = wrapper.find(IconButton).at(4);
     page.simulate('click');
-    expect(context.actions.updatePage.mock.calls.length).toBeGreaterThan(0);
+    expect(MockContext.actions.updatePage.mock.calls.length).toBeGreaterThan(0);
   });
 });

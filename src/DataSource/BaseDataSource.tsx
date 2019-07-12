@@ -6,6 +6,7 @@ import { ColumnModel, GridRequest } from 'tubular-common';
 import IDataGridStorage from '../DataGridInterfaces/IDataGridStorage';
 import { DataSourceContext } from './DataSourceContext';
 import IBaseDataSourceState from './IBaseDataSourceState';
+import NullStorage from './NullStorage';
 
 export default abstract class BaseDataSource extends React.Component<
   {},
@@ -23,7 +24,7 @@ export default abstract class BaseDataSource extends React.Component<
     multiSort: false,
     page: 0,
     searchText: '',
-    storage: null,
+    storage: new NullStorage(),
     totalRecordCount: 0,
   });
 
