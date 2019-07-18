@@ -1,5 +1,5 @@
 import * as React from 'react'; // Keep it
-import Transformer, { GridRequest } from 'tubular-common';
+import Transformer, { GridRequest, GridResponse } from 'tubular-common';
 import BaseDataSource from './BaseDataSource';
 import IBaseDataSourceState from './IBaseDataSourceState';
 
@@ -17,7 +17,7 @@ const withLocalDataSource = (WrappedComponent: any, columns: any, source: any, i
       return WrappedComponent;
     }
 
-    public getAllRecords(request: GridRequest): Promise<object> {
+    public getAllRecords(request: GridRequest): Promise<GridResponse> {
       return new Promise((resolve, reject) => {
         try {
           resolve(Transformer.getResponse(request, source));

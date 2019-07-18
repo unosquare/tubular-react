@@ -1,4 +1,4 @@
-import { GridRequest } from 'tubular-common';
+import { GridRequest, GridResponse } from 'tubular-common';
 import { ITubularHttpClient, TubularHttpClient } from '../utils';
 import BaseDataSource from './BaseDataSource';
 import IBaseDataSourceState from './IBaseDataSourceState';
@@ -19,7 +19,7 @@ const withRemoteDataSource = (
       return WrappedComponent;
     }
 
-    public async getAllRecords(gridRequest: GridRequest): Promise<object> {
+    public async getAllRecords(gridRequest: GridRequest): Promise<GridResponse> {
       const httpCast = request as ITubularHttpClient;
       let httpClient: ITubularHttpClient;
 
