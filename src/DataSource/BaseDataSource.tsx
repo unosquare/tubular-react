@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { debounce } from '../utils/debounce';
 
-import { ColumnModel, GridRequest } from 'tubular-common';
+import { ColumnModel, GridRequest, GridResponse } from 'tubular-common';
 
 import IDataGridStorage from '../DataGridInterfaces/IDataGridStorage';
 import { DataSourceContext } from './DataSourceContext';
@@ -48,7 +48,7 @@ export default abstract class BaseDataSource extends React.Component<
     return true;
   }
 
-  public abstract getAllRecords(request: GridRequest): Promise<object>;
+  public abstract getAllRecords(request: GridRequest): Promise<GridResponse>;
 
   public retrieveData = async (options: any = {}, storage?: IDataGridStorage): Promise<any> => {
     const stateUpdate: any = { isLoading: true };
@@ -217,6 +217,9 @@ export default abstract class BaseDataSource extends React.Component<
       try {
         const request = new GridRequest(columns, itemsPerPage, page, searchText);
         const response: any = await this.getAllRecords(request);
+
+        const maxPage = Math.ceil(response.TotalRecordCount / itemsPerPage);
+        response.CurrentPage = response.CurrentPage > maxPage ? maxPage : response.CurrentPage;
 
         this.state.storage.setPage(response.CurrentPage - 1);
         this.state.storage.setColumns(columns);
