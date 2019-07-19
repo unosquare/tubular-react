@@ -46,8 +46,6 @@ const RemoteGridList: React.FunctionComponent = () => {
 
   const grid = useDataGrid(columns, {}, dataSource);
 
-  console.log(grid);
-
   return (
     <DataGridProvider
       gridName='RemoteGridList'

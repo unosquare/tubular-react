@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ColumnModel, GridRequest, CompareOperators } from "tubular-common";
+import { ColumnModel, CompareOperators, GridRequest } from 'tubular-common';
 import IBaseDataSourceState from '../DataSource/IBaseDataSourceState';
 import NullStorage from '../DataSource/NullStorage';
 
@@ -57,7 +57,7 @@ const useDataGrid = (initColumns: ColumnModel[], config: IBaseDataSourceState, g
                 });
             }
             catch (reject) {
-                console.log("error first try")
+                console.log("error first try", reject)
             }
         }
         catch (err) {
