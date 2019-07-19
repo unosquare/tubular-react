@@ -130,15 +130,42 @@ const useDataGrid = (initColumns: ColumnModel[], config: IBaseDataSourceState, g
                     retrieveData({ page });
                 }
             },
+            handleFilterChange: (value: any) => {
+                setState({
+                    ...getState,
+                    activeColumn: {
+                        ...getState.activeColumn,
+                        Filter: {
+                            ...getState.activeColumn.Filter,
+                            ...value,
+                        },
+                    },
+                });
+            },
             processRequest,
             setActiveColumn: (column: any, event: React.MouseEvent<HTMLElement>) => {
                 setState({
                     ...getState,
                     activeColumn: column,
                     anchorFilter: event ? event.currentTarget : null,
-                },
-                    // () => document.getElementById(column.Name).blur(),
+                });
+            },
+            setFilter: (value: any) => {
+                setState({ ...getState, anchorFilter: null });
+                const columns = [...this.state.columns];
+                const column = columns.find(
+                    (c: ColumnModel) => c.Name === this.state.activeColumn.Name,
                 );
+                if (!column) {
+                    return;
+                }
+
+                column.Filter = {
+                    ...getState.activeColumn.Filter,
+                    ...value,
+                };
+
+                this.retrieveData({ columns });
             },
             sortColumn: (property: string) => {
                 const columns = ColumnModel.sortColumnArray(
@@ -153,6 +180,9 @@ const useDataGrid = (initColumns: ColumnModel[], config: IBaseDataSourceState, g
                 if (getState.itemsPerPage !== itemsPerPage) {
                     retrieveData({ itemsPerPage });
                 }
+            },
+            updateSearchText: (searchText: string) => {
+                retrieveData({ searchText });
             },
         },
         state: getState,
