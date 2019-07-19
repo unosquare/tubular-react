@@ -18,10 +18,9 @@ const arrowStyle = {
   width: '15px',
 };
 
-const GridHeaderCell: React.FunctionComponent<any> = ({ column }: any) => {
-  const { actions } = React.useContext(DataSourceContext);
-  const sort = () => actions.sortColumn(column.Name);
-  const handleClick = (e: any) => actions.setActiveColumn(column, e);
+const GridHeaderCell: React.FunctionComponent<any> = ({ column, sortColumn, setActiveColumn }: any) => {
+  const sort = () => sortColumn(column.Name);
+  const handleClick = (e: any) => setActiveColumn(column, e);
 
   const render = column.Sortable ? (
     <Tooltip
@@ -74,15 +73,20 @@ const GridHeaderCell: React.FunctionComponent<any> = ({ column }: any) => {
   );
 };
 
-const GridHeader: React.FunctionComponent = () => {
-  const { state } = React.useContext(DataSourceContext);
-
+const GridHeader: React.FunctionComponent = ({ grid }: any) => {
   return (
     <TableRow>
-      {state.activeColumn && <DialogModal />}
-      {state.columns
+      {/* {activeColumn && <DialogModal />} */}
+      {grid.state.columns
         .filter((col: any) => col.Visible)
-        .map((column: any) => <GridHeaderCell key={column.Name} column={column} />)}
+        .map((column: any) =>
+          <GridHeaderCell
+            key={column.Name}
+            column={column}
+            sortColumn={grid.api.sortColumn}
+            setActiveColumn={grid.api.setActiveColumn}
+          />
+        )}
     </TableRow>
   );
 };

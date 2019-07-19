@@ -5,13 +5,11 @@ import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
 import { FixedLinearProgress } from 'uno-material-ui';
 import { useResolutionSwitch } from 'uno-react';
-
 import { IDataGridStorage } from '../DataGridInterfaces';
-import { DataSourceContext } from '../DataSource';
+import useDataGrid from '../Hooks/useDataGrid';
 import ToolbarOptions from '../Models/ToolbarOptions';
 import { DataGridCard, DataGridTable, GridToolbar } from './';
 import { DataGridProvider, IDataGridContext } from './DataGridContext';
-import { Paginator } from './Paginator';
 
 const useStyles = makeStyles({
   root: {
@@ -24,16 +22,20 @@ const outerWidth = 800;
 const timeout = 400;
 
 interface IProps extends IDataGridContext {
+  columns: ColumnModel[];
+  dataSource: any;
   storage?: IDataGridStorage;
-
   bodyRenderer?(row: any, index: number, columns: ColumnModel[]): void;
   footerRenderer?(aggregate: any): void;
   onRowClick?(ev: any): any;
+
 }
 
 const DataGrid: React.FunctionComponent<IProps> = ({
   bodyRenderer,
+  columns,
   footerRenderer,
+  dataSource,
   toolbarOptions,
   gridName,
   children,
@@ -41,7 +43,7 @@ const DataGrid: React.FunctionComponent<IProps> = ({
   storage,
 }) => {
   const classes = useStyles({});
-  const { state } = React.useContext(DataSourceContext);
+  const grid = useDataGrid(columns, {}, dataSource);
   const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
 
   if (isMobileResolution) {
@@ -64,16 +66,16 @@ const DataGrid: React.FunctionComponent<IProps> = ({
           <GridToolbar>
             {children}
           </GridToolbar>
-          <FixedLinearProgress isLoading={state.isLoading} />
+          <FixedLinearProgress isLoading={grid.state.isLoading} />
           <GridList
             cellHeight='auto'
             cols={1}
           >
             {
-              state.data.map((row: any, index: any) =>
+              grid.state.data.map((row: any, index: any) =>
                 (
                   <DataGridCard
-                    columns={state.columns}
+                    columns={grid.state.columns}
                     item={row}
                     onClickCallback={onRowClick}
                     key={index}
@@ -81,7 +83,7 @@ const DataGrid: React.FunctionComponent<IProps> = ({
                 ))
             }
           </GridList>
-          <Paginator />
+          {/* <Paginator /> */}
         </Paper>
       </DataGridProvider>
     );
@@ -94,11 +96,9 @@ const DataGrid: React.FunctionComponent<IProps> = ({
       storage={storage}
     >
       <Paper style={{ overflowX: 'auto', width: '100%' }}>
-        <GridToolbar>
-          {children}
-        </GridToolbar>
-        <FixedLinearProgress isLoading={state.isLoading} />
+        <FixedLinearProgress isLoading={grid.state.isLoading} />
         <DataGridTable
+          grid={grid}
           bodyRenderer={bodyRenderer}
           footerRenderer={footerRenderer}
           onRowClick={onRowClick}

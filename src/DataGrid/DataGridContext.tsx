@@ -24,13 +24,13 @@ export const DataGridProvider = ({ gridName, toolbarOptions, storage, children }
         toolbarOptions: toolbarOptions || new ToolbarOptions(),
     };
 
-    if (!isLoaded) {
-        actions.setInitialData(
-            state.toolbarOptions.itemsPerPage,
-            state.storage,
-        );
-        setLoaded(true);
-    }
+    // if (!isLoaded) {
+    //     actions.setInitialData(
+    //         state.toolbarOptions.itemsPerPage,
+    //         state.storage,
+    //     );
+    //     setLoaded(true);
+    // }
 
     return (
         <DataGridContext.Provider value={state}>

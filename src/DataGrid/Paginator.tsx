@@ -2,7 +2,6 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import TablePagination, { TablePaginationBaseProps } from '@material-ui/core/TablePagination';
 import * as React from 'react';
 import { useResolutionSwitch } from 'uno-react';
-import { DataSourceContext } from '../DataSource';
 import AdvancePaginationActions from './AdvancePaginationActions';
 import { DataGridContext } from './DataGridContext';
 
@@ -31,11 +30,11 @@ const message = (totalRecordCount: any, filteredRecordCount: any) => ({
       ? '0 records found'
       : `${from} to ${to} of ${count} from ${totalRecordCount} records`;
 
-export const Paginator: React.FunctionComponent<TablePaginationBaseProps> = (props) => {
-  const { actions, state } = React.useContext(DataSourceContext);
+export const Paginator: React.FunctionComponent<any> = (props) => {
   const { toolbarOptions } = React.useContext(DataGridContext);
   const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
   const classes = useStyles({});
+  const { state, api } = props.grid;
 
   if (!state.itemsPerPage) {
     return null;
@@ -47,9 +46,9 @@ export const Paginator: React.FunctionComponent<TablePaginationBaseProps> = (pro
       state.totalRecordCount,
       state.filteredRecordCount,
     ),
-    onChangePage: (e: any, p: any) => actions.updatePage(p),
+    onChangePage: (e: any, p: any) => api.goToPage(p),
     onChangeRowsPerPage: (e: any) =>
-      actions.updateItemPerPage(Number(e.target.value)),
+      api.updateItemPerPage(Number(e.target.value)),
     page: state.page,
     rowsPerPage: state.itemsPerPage,
     rowsPerPageOptions: toolbarOptions.rowsPerPageOptions || [10, 20, 50],

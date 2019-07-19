@@ -11,6 +11,8 @@ import { DataSourceContext } from '../DataSource';
 import { renderCells } from '../utils';
 
 interface IProps {
+    grid: any;
+
     bodyRenderer?(row: any, index: number, columns: ColumnModel[], onRowClickProxy: (ev: any) => any): void;
     onRowClick?(ev: any): any;
 }
@@ -20,8 +22,7 @@ const getStyles = (isPointer: boolean) => ({
     title: { paddingLeft: '15px' },
 });
 
-const GridBody: React.FunctionComponent<IProps> = ({ bodyRenderer, onRowClick }) => {
-    const { state } = React.useContext(DataSourceContext);
+const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, onRowClick }) => {
     // tslint:disable-next-line:no-empty
     const onRowClickProxy = onRowClick ? onRowClick : () => { };
     const styles = getStyles(Boolean(onRowClick));
@@ -42,7 +43,7 @@ const GridBody: React.FunctionComponent<IProps> = ({ bodyRenderer, onRowClick })
     const noDataRow = (
         <TableRow>
             <TableCell
-                colSpan={state.columns.filter((col: any) => col.Visible).length}
+                colSpan={grid.state.columns.filter((col: any) => col.Visible).length}
             >
                 <Typography
                     style={styles.title}
@@ -57,10 +58,11 @@ const GridBody: React.FunctionComponent<IProps> = ({ bodyRenderer, onRowClick })
 
     return (
         <TableBody>
-            {state.filteredRecordCount === 0 && !state.isLoading
+            {grid.state.filteredRecordCount === 0 && !grid.state.isLoading
                 ? noDataRow
-                : state.data
-                    .map((row: any, rowIndex: number) => bodyRenderer(row, rowIndex, state.columns, onRowClickProxy))
+                : grid.state.data
+                    .map((row: any, rowIndex: number) =>
+                        bodyRenderer(row, rowIndex, grid.state.columns, onRowClickProxy))
             }
         </TableBody>
     );

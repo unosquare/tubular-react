@@ -1,51 +1,32 @@
 import * as React from 'react';
 
 import Snackbar from '@material-ui/core/Snackbar';
-import DataGrid, {
-  IDataGridProps,
-  IDataGridState,
-  withLocalDataSource,
-} from '../../src';
+import DataGrid, { withLocalDataSource } from '../../src';
+import useLocalDataSource from '../../src/Hooks/useLocalDatasource';
 import columns from './data/columns';
 import localData from './data/localData';
 
-class LocalDataGrid extends React.Component<IDataGridProps, IDataGridState> {
+const LocalDataGrid: React.FunctionComponent = () => {
+  const [getErrorMessage, setErrorMessage] = React.useState(null as string);
+  const [dataSource] = useLocalDataSource(localData);
 
-  static getDerivedStateFromProps(
-    props: IDataGridProps,
-    state: IDataGridState
-  ) {
-    if (props.error !== state.errorMessage) {
-      return { errorMessage: props.error };
-    }
-    return null;
-  }
-  public state = {
-    errorMessage: null as any,
-  };
-
-  public render() {
-    const { errorMessage } = this.state;
-    // tslint:disable-next-line:no-console
-    const onClick = (row: any) => () => console.log(row);
-
-    return (
-      <div className='root'>
-        {errorMessage && (
-          <Snackbar
-            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-            style={{ paddingTop: '10px' }}
-            open={true}
-            ContentProps={{ 'aria-describedby': 'message-id' }}
-            message={<span id='message-id'>{errorMessage}</span>}
-          />
-        )}
-        <DataGrid
-          onRowClick={onClick}
+  return (
+    <div className='root'>
+      {getErrorMessage && (
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          style={{ paddingTop: '10px' }}
+          open={true}
+          ContentProps={{ 'aria-describedby': 'message-id' }}
+          message={<span id='message-id'>{getErrorMessage}</span>}
         />
-      </div>
-    );
-  }
-}
+      )}
+      <DataGrid
+        columns={columns}
+        dataSource={dataSource}
+      />
+    </div>
+  );
+};
 
 export default withLocalDataSource(LocalDataGrid, columns, localData);

@@ -9,38 +9,26 @@ import GridBody from './GridBody';
 import GridHeader from './GridHeader';
 import { Paginator } from './Paginator';
 
-import { DataSourceContext } from '../DataSource';
-import { DataGridContext } from './DataGridContext';
-
 export const DataGridTable: React.FunctionComponent<any> = ({
     bodyRenderer,
     footerRenderer,
+    grid,
     onRowClick,
 }) => {
-    const { state } = React.useContext(DataSourceContext);
-    const { toolbarOptions } = React.useContext(DataGridContext);
-
     return (
         <Table>
             <TableHead>
-                {toolbarOptions.topPager && (
-                    <TableRow>
-                        <Paginator />
-                    </TableRow>
-                )}
-                <GridHeader />
+                <TableRow>
+                    <Paginator grid={grid} />
+                </TableRow>
+                <GridHeader grid={grid} />
             </TableHead>
-            <GridBody
-                bodyRenderer={bodyRenderer}
-                onRowClick={onRowClick}
-            />
+            <GridBody grid={grid} bodyRenderer={bodyRenderer} />
             <TableFooter>
-                {footerRenderer && footerRenderer(state.aggregate)}
-                {toolbarOptions.bottomPager && (
-                    <TableRow>
-                        <Paginator />
-                    </TableRow>
-                )}
+                {footerRenderer && footerRenderer(grid.state.aggregate)}
+                <TableRow>
+                    <Paginator grid={grid} />
+                </TableRow>
             </TableFooter>
         </Table>
     );
