@@ -15,13 +15,11 @@ import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 import {
   DataGridProvider,
-  DataSourceContext,
-  IDataGridProps,
-  IDataGridState,
   Paginator,
   SearchTextInput,
-  withRemoteDataSource,
 } from '../../src';
+import useDataGrid from '../../src/Hooks/useDataGrid';
+import useRemoteDataSource from '../../src/Hooks/useRemoteDataSource';
 import CustomHttpClient from './CustomHttpClient';
 import columns from './data/columns';
 
@@ -37,84 +35,75 @@ const styles: any = {
     textAlign: 'right',
   },
 };
-
-class RemoteGridList extends React.Component<IDataGridProps, IDataGridState> {
-
-  public static getDerivedStateFromProps(
-    props: IDataGridProps,
-    state: IDataGridState,
-  ) {
-    if (props.error !== state.errorMessage) {
-      return { errorMessage: props.error };
-    }
-    return null;
-  }
-  public state = {
-    errorMessage: null as any,
-  };
-
-  public render() {
-    return (
-      <DataSourceContext.Consumer>
-        {({ state }) => (
-          <DataGridProvider>
-            <Paper>
-              <div style={styles.search}>
-                <SearchTextInput />
-              </div>
-              <div style={styles.progress}>
-                {state.isLoading && <LinearProgress />}
-              </div>
-              <Table>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>
-                      <GridList cellHeight={180} cols={5}>
-                        {state.data.map((row) => (
-                          <GridListTile key={row.OrderID}>
-                            <Card>
-                              <CardContent>
-                                <Typography
-                                  gutterBottom={true}
-                                  variant='h5'
-                                  component='h2'
-                                >
-                                  {row.OrderID} - {row.CustomerName}
-                                </Typography>
-                                <Typography component='p'>
-                                  {row.ShipperCity}
-                                </Typography>
-                                <Typography component='p'>
-                                  {format(row.ShippedDate, 'MMM D YYYY')}
-                                </Typography>
-                              </CardContent>
-                              <CardActions>
-                                <Button size='small' color='primary'>
-                                  Learn More
-                              </Button>
-                              </CardActions>
-                            </Card>
-                          </GridListTile>
-                        ))}
-                      </GridList>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-                <TableFooter>
-                  <TableRow>
-                    <Paginator />
-                  </TableRow>
-                </TableFooter>
-              </Table>
-            </Paper>
-          </DataGridProvider>
-        )}
-      </DataSourceContext.Consumer>
-    );
-  }
-}
-
 const httpClient = new CustomHttpClient(
   'https://tubular.azurewebsites.net/api/orders/paged',
 );
-export default withRemoteDataSource(RemoteGridList, columns, httpClient);
+
+const RemoteGridList: React.FunctionComponent = () => {
+
+  const [getErrorMessage, setErrorMessage] = React.useState(null as string);
+  const [dataSource] = useRemoteDataSource(httpClient);
+
+  const grid = useDataGrid(columns, {}, dataSource);
+
+  console.log(grid);
+
+  return (
+    <DataGridProvider
+      gridName='RemoteGridList'
+    >
+      <Paper>
+        <div style={styles.search}>
+          {/* <SearchTextInput /> */}
+        </div>
+        <div style={styles.progress}>
+          {grid.state.isLoading && <LinearProgress />}
+        </div>
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell>
+                <GridList cellHeight={180} cols={5}>
+                  {grid.state.data && grid.state.data.map((row) => (
+                    <GridListTile key={row.OrderID}>
+                      <Card>
+                        <CardContent>
+                          <Typography
+                            gutterBottom={true}
+                            variant='h5'
+                            component='h2'
+                          >
+                            {row.OrderID} - {row.CustomerName}
+                          </Typography>
+                          <Typography component='p'>
+                            {row.ShipperCity}
+                          </Typography>
+                          <Typography component='p'>
+                            {format(row.ShippedDate, 'MMM D YYYY')}
+                          </Typography>
+                        </CardContent>
+                        <CardActions>
+                          <Button size='small' color='primary'>
+                            Learn More
+                              </Button>
+                        </CardActions>
+                      </Card>
+                    </GridListTile>
+                  ))}
+                </GridList>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <Paginator grid={grid} />
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </Paper>
+
+    </DataGridProvider>
+  );
+};
+
+export default RemoteGridList;

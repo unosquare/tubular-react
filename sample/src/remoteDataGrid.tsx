@@ -42,6 +42,8 @@ const RemoteDataGrid: React.FunctionComponent = () => {
     </TableRow>
   );
 
+  console.log(columns)
+
   return (
     <div className='root'>
       <DataGrid

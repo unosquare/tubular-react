@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import Snackbar from '@material-ui/core/Snackbar';
-import DataGrid, { withLocalDataSource } from '../../src';
+import DataGrid from '../../src';
 import useLocalDataSource from '../../src/Hooks/useLocalDatasource';
 import columns from './data/columns';
 import localData from './data/localData';
@@ -29,4 +29,4 @@ const LocalDataGrid: React.FunctionComponent = () => {
   );
 };
 
-export default withLocalDataSource(LocalDataGrid, columns, localData);
+export default LocalDataGrid;

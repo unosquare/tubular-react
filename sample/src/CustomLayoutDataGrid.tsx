@@ -16,7 +16,6 @@ import {
   IDataGridState,
   Paginator,
   ToolbarOptions,
-  withLocalDataSource,
 } from '../../src';
 import columns from './data/columns';
 import localData from './data/localData';
@@ -104,4 +103,4 @@ class CustomLayoutDataGrid extends React.Component<
   }
 }
 
-export default withLocalDataSource(CustomLayoutDataGrid, columns, localData);
+export default CustomLayoutDataGrid;

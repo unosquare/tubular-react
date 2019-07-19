@@ -1,10 +1,9 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
-import { withLocalDataSource } from '../src';
 import { validColumnsSample } from './utils/columns';
 import { expectedLocalData, localData } from './utils/localData';
 
-describe('<LocalDataSource />', () => {
+xdescribe('<LocalDataSource />', () => {
   const TestComponent = withLocalDataSource(
     () => <span />,
     validColumnsSample,

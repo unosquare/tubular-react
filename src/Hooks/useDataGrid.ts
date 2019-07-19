@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ColumnModel, GridRequest } from "tubular-common";
+import { ColumnModel, GridRequest, CompareOperators } from "tubular-common";
 import IBaseDataSourceState from '../DataSource/IBaseDataSourceState';
 import NullStorage from '../DataSource/NullStorage';
 
@@ -69,8 +69,45 @@ const useDataGrid = (initColumns: ColumnModel[], config: IBaseDataSourceState, g
         processRequest(options);
     };
 
+    const initGrid = () => {
+        const payload: any = {};
+
+        if (getState.storage.getPage()) {
+            payload.page = getState.storage.getPage();
+        }
+
+        const columns = getState.columns;
+        const storedColumns = getState.storage.getColumns();
+
+        if (storedColumns) {
+            storedColumns.forEach((column) => {
+                const currentColumn = columns.find((col: ColumnModel) => col.Name === column.Name);
+
+                if (!currentColumn) {
+                    return;
+                }
+
+                currentColumn.Visible = column.Visible;
+
+                if (currentColumn.Filter !== null && currentColumn.Filter.Text !== null) {
+                    return;
+                }
+
+                if (column.Filter != null &&
+                    column.Filter.Text != null &&
+                    column.Filter.Operator !== CompareOperators.NONE) {
+                    currentColumn.Filter = column.Filter;
+                }
+            });
+        }
+
+        payload.columns = columns;
+
+        processRequest(payload);
+    };
+
     if (getState.data === null) {
-        processRequest({});
+        initGrid();
     }
 
     return {
