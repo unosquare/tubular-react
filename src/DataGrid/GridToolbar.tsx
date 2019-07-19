@@ -1,7 +1,6 @@
 import Toolbar from '@material-ui/core/Toolbar';
 import * as React from 'react';
 import { useResolutionSwitch } from 'uno-react';
-import { DataGridContext } from './DataGridContext';
 import { ExportButton } from './ExportButton';
 import { SearchTextInput } from './SearchTextInput';
 
@@ -17,8 +16,7 @@ const styles: any = {
 const outerWidth = 800;
 const timeout = 400;
 
-export const GridToolbar: React.FunctionComponent = ({ children }: any) => {
-  const { toolbarOptions, gridName } = React.useContext(DataGridContext);
+export const GridToolbar: React.FunctionComponent = ({ toolbarOptions, gridName, children }: any) => {
   const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
 
   return (

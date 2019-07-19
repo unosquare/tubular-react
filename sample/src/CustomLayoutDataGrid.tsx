@@ -65,7 +65,7 @@ const CustomLayoutDataGrid: React.FunctionComponent = () => {
   );
 
   return (
-    <DataGridProvider gridName='CustomLayout' toolbarOptions={toolbarOptions}>
+    <>
       {getErrorMessage && (
         <Snackbar
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
@@ -84,8 +84,9 @@ const CustomLayoutDataGrid: React.FunctionComponent = () => {
         grid={grid}
         bodyRenderer={bodyRenderer}
         footerRenderer={footerRenderer}
+        toolbarOptions={toolbarOptions}
       />
-    </DataGridProvider>
+    </>
   );
 };
 

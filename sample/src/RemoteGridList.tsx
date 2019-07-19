@@ -14,7 +14,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 import {
-  DataGridProvider,
   Paginator,
   SearchTextInput,
 } from '../../src';
@@ -47,60 +46,55 @@ const RemoteGridList: React.FunctionComponent = () => {
   const grid = useDataGrid(columns, {}, dataSource);
 
   return (
-    <DataGridProvider
-      gridName='RemoteGridList'
-    >
-      <Paper>
-        <div style={styles.search}>
-          {/* <SearchTextInput /> */}
-        </div>
-        <div style={styles.progress}>
-          {grid.state.isLoading && <LinearProgress />}
-        </div>
-        <Table>
-          <TableBody>
-            <TableRow>
-              <TableCell>
-                <GridList cellHeight={180} cols={5}>
-                  {grid.state.data && grid.state.data.map((row) => (
-                    <GridListTile key={row.OrderID}>
-                      <Card>
-                        <CardContent>
-                          <Typography
-                            gutterBottom={true}
-                            variant='h5'
-                            component='h2'
-                          >
-                            {row.OrderID} - {row.CustomerName}
-                          </Typography>
-                          <Typography component='p'>
-                            {row.ShipperCity}
-                          </Typography>
-                          <Typography component='p'>
-                            {format(row.ShippedDate, 'MMM D YYYY')}
-                          </Typography>
-                        </CardContent>
-                        <CardActions>
-                          <Button size='small' color='primary'>
-                            Learn More
+    <Paper>
+      <div style={styles.search}>
+        {/* <SearchTextInput /> */}
+      </div>
+      <div style={styles.progress}>
+        {grid.state.isLoading && <LinearProgress />}
+      </div>
+      <Table>
+        <TableBody>
+          <TableRow>
+            <TableCell>
+              <GridList cellHeight={180} cols={5}>
+                {grid.state.data && grid.state.data.map((row) => (
+                  <GridListTile key={row.OrderID}>
+                    <Card>
+                      <CardContent>
+                        <Typography
+                          gutterBottom={true}
+                          variant='h5'
+                          component='h2'
+                        >
+                          {row.OrderID} - {row.CustomerName}
+                        </Typography>
+                        <Typography component='p'>
+                          {row.ShipperCity}
+                        </Typography>
+                        <Typography component='p'>
+                          {format(row.ShippedDate, 'MMM D YYYY')}
+                        </Typography>
+                      </CardContent>
+                      <CardActions>
+                        <Button size='small' color='primary'>
+                          Learn More
                               </Button>
-                        </CardActions>
-                      </Card>
-                    </GridListTile>
-                  ))}
-                </GridList>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <Paginator grid={grid} />
-            </TableRow>
-          </TableFooter>
-        </Table>
-      </Paper>
-
-    </DataGridProvider>
+                      </CardActions>
+                    </Card>
+                  </GridListTile>
+                ))}
+              </GridList>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <Paginator grid={grid} />
+          </TableRow>
+        </TableFooter>
+      </Table>
+    </Paper>
   );
 };
 

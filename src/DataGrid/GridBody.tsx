@@ -7,7 +7,6 @@ import Warning from '@material-ui/icons/Warning';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
 
-import { DataSourceContext } from '../DataSource';
 import { renderCells } from '../utils';
 
 interface IProps {
