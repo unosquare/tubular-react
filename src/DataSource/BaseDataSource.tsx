@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { debounce } from '../utils/debounce';
 
-import { ColumnModel, GridRequest, GridResponse } from 'tubular-common';
+import { ColumnModel, CompareOperators, GridRequest, GridResponse } from 'tubular-common';
 
 import IDataGridStorage from '../DataGridInterfaces/IDataGridStorage';
 import { DataSourceContext } from './DataSourceContext';
@@ -118,9 +118,32 @@ export default abstract class BaseDataSource extends React.Component<
           payload.page = storage.getPage();
         }
 
-        if (storage.getColumns()) {
-          payload.columns = storage.getColumns();
+        const columns = this.state.columns;
+        const storedColumns = storage.getColumns();
+
+        if (storedColumns) {
+          storedColumns.forEach((column) => {
+            const currentColumn = columns.find((col: ColumnModel) => col.Name === column.Name);
+
+            if (!currentColumn) {
+              return;
+            }
+
+            currentColumn.Visible = column.Visible;
+
+            if (currentColumn.Filter !== null && currentColumn.Filter.Text !== null) {
+              return;
+            }
+
+            if (column.Filter != null &&
+              column.Filter.Text != null &&
+              column.Filter.Operator !== CompareOperators.NONE) {
+              currentColumn.Filter = column.Filter;
+            }
+          });
         }
+
+        payload.columns = columns;
 
         if (storage.getTextSearch()) {
           this.setState({ searchText: storage.getTextSearch() }, () => this.retrieveData(payload, storage));
