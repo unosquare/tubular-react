@@ -9,7 +9,6 @@ import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 
 import {
-  DataGridProvider,
   DataGridTable,
   GridToolbar,
   Paginator,

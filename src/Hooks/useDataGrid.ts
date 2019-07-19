@@ -112,6 +112,19 @@ const useDataGrid = (initColumns: ColumnModel[], config: IBaseDataSourceState, g
 
     return {
         api: {
+            exportTo: (allRows: boolean, exportFunc: any) => {
+                if (getState.filteredRecordCount === 0) {
+                    return;
+                }
+
+                if (allRows) {
+                    getAllRecords(
+                        new GridRequest(getState.columns, -1, 0, getState.searchText),
+                    ).then(({ Payload }: any) => exportFunc(Payload, getState.columns));
+                } else {
+                    exportFunc(getState.data, getState.columns);
+                }
+            },
             goToPage: (page: number) => {
                 if (getState.page !== page) {
                     retrieveData({ page });

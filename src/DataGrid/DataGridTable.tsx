@@ -13,7 +13,6 @@ export const DataGridTable: React.FunctionComponent<any> = ({
     bodyRenderer,
     footerRenderer,
     grid,
-    onRowClick,
 }) => {
     return (
         <Table>

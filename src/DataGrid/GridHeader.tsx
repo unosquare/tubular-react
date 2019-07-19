@@ -10,7 +10,6 @@ import FilterList from '@material-ui/icons/FilterList';
 
 import * as React from 'react';
 import { ColumnSortDirection, CompareOperators } from 'tubular-common';
-import { DataSourceContext } from '../DataSource';
 import DialogModal from './DialogModal';
 
 const arrowStyle = {
@@ -85,7 +84,7 @@ const GridHeader: React.FunctionComponent = ({ grid }: any) => {
             column={column}
             sortColumn={grid.api.sortColumn}
             setActiveColumn={grid.api.setActiveColumn}
-          />
+          />,
         )}
     </TableRow>
   );

@@ -86,13 +86,14 @@ const DataGrid: React.FunctionComponent<IProps> = ({
 
   return (
     <Paper style={{ overflowX: 'auto', width: '100%' }}>
+      <GridToolbar gridName={gridName} toolbarOptions={new ToolbarOptions()} grid={grid} />
       <FixedLinearProgress isLoading={grid.state.isLoading} />
       <DataGridTable
         grid={grid}
         bodyRenderer={bodyRenderer}
         footerRenderer={footerRenderer}
         onRowClick={onRowClick}
-        toolbarOptions={toolbarOptions}
+        toolbarOptions={new ToolbarOptions()}
         gridName={gridName}
         storage={storage}
       />

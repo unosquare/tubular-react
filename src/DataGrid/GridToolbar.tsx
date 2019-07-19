@@ -16,16 +16,27 @@ const styles: any = {
 const outerWidth = 800;
 const timeout = 400;
 
-export const GridToolbar: React.FunctionComponent = ({ toolbarOptions, gridName, children }: any) => {
+export const GridToolbar: React.FunctionComponent<any> = ({ toolbarOptions, gridName, grid }: any) => {
   const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
 
   return (
     <Toolbar>
       <div style={isMobileResolution ? styles.mobileSpacer : styles.spacer} />
-      {children}
-      {toolbarOptions.exportButton && <ExportButton type='csv' gridName={gridName} />}
-      {toolbarOptions.printButton && <ExportButton type='print' gridName={gridName} />}
-      {toolbarOptions.searchText && <SearchTextInput />}
+      {toolbarOptions.exportButton &&
+        <ExportButton
+          type='csv'
+          gridName={gridName}
+          exportTo={grid.api.exportTo}
+          filteredRecordCount={grid.state.filteredRecordCount}
+        />}
+      {toolbarOptions.printButton &&
+        <ExportButton
+          type='print'
+          gridName={gridName}
+          exportTo={grid.api.exportTo}
+          filteredRecordCount={grid.state.filteredRecordCount}
+        />}
+      {/* {toolbarOptions.searchText && <SearchTextInput />} */}
     </Toolbar>
   );
 };
