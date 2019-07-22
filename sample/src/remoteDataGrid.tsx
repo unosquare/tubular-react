@@ -17,7 +17,7 @@ const RemoteDataGrid: React.FunctionComponent = () => {
   const [dataSource] = useRemoteDataSource('https://tubular.azurewebsites.net/api/orders/paged');
   const bodyRenderer = (row: any) => (
     <TableRow hover={true} key={row.OrderID}>
-      <TableCell padding='default'>{row.OrderID} ff</TableCell>
+      <TableCell padding='default'>{row.OrderID}</TableCell>
       <TableCell padding='default'>{row.CustomerName}</TableCell>
       <TableCell padding='default'>
         {format(row.ShippedDate, 'MMMM Do YYYY, h:mm:ss a')}
@@ -34,7 +34,7 @@ const RemoteDataGrid: React.FunctionComponent = () => {
 
   const footerRenderer = (aggregates: any) => (
     <TableRow>
-      <TableCell>Totala: </TableCell>
+      <TableCell>Total: </TableCell>
       <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
       <TableCell />
       <TableCell />
@@ -42,13 +42,11 @@ const RemoteDataGrid: React.FunctionComponent = () => {
     </TableRow>
   );
 
-  console.log(columns)
-
   return (
     <div className='root'>
       <DataGrid
         gridName='Tubular-React'
-        columns={columns}
+        columns={[...columns]}
         dataSource={dataSource}
         bodyRenderer={bodyRenderer}
         footerRenderer={footerRenderer}

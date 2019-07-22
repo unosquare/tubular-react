@@ -72,7 +72,7 @@ const GridHeaderCell: React.FunctionComponent<any> = ({ column, sortColumn, setA
   );
 };
 
-const GridHeader: React.FunctionComponent = ({ grid }: any) => {
+const GridHeader: React.FunctionComponent<any> = ({ grid }: any) => {
   return (
     <TableRow>
       {/* {activeColumn && <DialogModal />} */}

@@ -1,5 +1,8 @@
 import GridList from '@material-ui/core/GridList';
 import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
@@ -8,7 +11,7 @@ import { useResolutionSwitch } from 'uno-react';
 import { IDataGridStorage } from '../DataGridInterfaces';
 import useDataGrid from '../Hooks/useDataGrid';
 import ToolbarOptions from '../Models/ToolbarOptions';
-import { DataGridCard, DataGridTable, GridToolbar } from './';
+import { DataGridCard, DataGridTable, GridToolbar, Paginator } from './';
 
 const useStyles = makeStyles({
   root: {
@@ -25,37 +28,36 @@ interface IProps {
   dataSource: any;
   gridName: string;
   storage?: IDataGridStorage;
-  toolbarOptions: any;
+  toolbarOptions?: ToolbarOptions;
   bodyRenderer?(row: any, index: number, columns: ColumnModel[]): void;
   footerRenderer?(aggregate: any): void;
   onRowClick?(ev: any): any;
-
 }
 
-const DataGrid: React.FunctionComponent<IProps> = ({
-  bodyRenderer,
-  columns,
-  footerRenderer,
-  dataSource,
-  toolbarOptions,
-  gridName,
-  children,
-  onRowClick,
-  storage,
-}) => {
+const DataGrid: React.FunctionComponent<IProps> = (props) => {
+  const {
+    bodyRenderer,
+    columns,
+    footerRenderer,
+    dataSource,
+    toolbarOptions = props.toolbarOptions || new ToolbarOptions(),
+    gridName,
+    children,
+    onRowClick,
+    storage,
+  } = props;
+
   const classes = useStyles({});
-  const grid = useDataGrid(columns, {}, dataSource);
+  const grid = useDataGrid(columns, { storage }, dataSource);
   const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
 
   if (isMobileResolution) {
-    const toolbarGridOptions = new ToolbarOptions({
-      advancePagination: false,
-      bottomPager: false,
-      exportButton: false,
-      printButton: false,
-      rowsPerPageOptions: [5, 10],
-      topPager: false,
-    });
+    toolbarOptions.advancePagination = false;
+    toolbarOptions.bottomPager = false;
+    toolbarOptions.exportButton = false;
+    toolbarOptions.printButton = false;
+    toolbarOptions.rowsPerPageOptions = [5, 10];
+    toolbarOptions.topPager = false;
 
     return (
       <Paper className={classes.root}>
@@ -84,19 +86,31 @@ const DataGrid: React.FunctionComponent<IProps> = ({
     );
   }
 
+  const paginator = (
+    <Table>
+      <TableHead>
+        <TableRow>
+          <Paginator grid={grid} />
+        </TableRow>
+      </TableHead>
+    </Table>
+  );
+
   return (
     <Paper style={{ overflowX: 'auto', width: '100%' }}>
-      <GridToolbar gridName={gridName} toolbarOptions={new ToolbarOptions()} grid={grid} />
-      <FixedLinearProgress isLoading={grid.state.isLoading} />
+      <GridToolbar gridName={gridName} toolbarOptions={toolbarOptions} grid={grid} />
+      {toolbarOptions.topPager && paginator}
+      {grid.state.isLoading && <FixedLinearProgress isLoading={grid.state.isLoading} />}
       <DataGridTable
         grid={grid}
         bodyRenderer={bodyRenderer}
         footerRenderer={footerRenderer}
         onRowClick={onRowClick}
-        toolbarOptions={new ToolbarOptions()}
+        toolbarOptions={toolbarOptions}
         gridName={gridName}
         storage={storage}
       />
+      {toolbarOptions.bottomPager && paginator}
     </Paper>
   );
 };

@@ -16,6 +16,7 @@ import * as React from 'react';
 import {
   Paginator,
   SearchTextInput,
+  LocalStorage,
 } from '../../src';
 import useDataGrid from '../../src/Hooks/useDataGrid';
 import useRemoteDataSource from '../../src/Hooks/useRemoteDataSource';
@@ -43,7 +44,7 @@ const RemoteGridList: React.FunctionComponent = () => {
   const [getErrorMessage, setErrorMessage] = React.useState(null as string);
   const [dataSource] = useRemoteDataSource(httpClient);
 
-  const grid = useDataGrid(columns, {}, dataSource);
+  const grid = useDataGrid(columns, { storage: new LocalStorage('RemoteGridList') }, dataSource);
 
   return (
     <Paper>

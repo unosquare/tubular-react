@@ -3,15 +3,17 @@ import { ColumnModel, CompareOperators, GridRequest } from 'tubular-common';
 import IBaseDataSourceState from '../DataSource/IBaseDataSourceState';
 import NullStorage from '../DataSource/NullStorage';
 
-const useDataGrid = (initColumns: ColumnModel[], config: IBaseDataSourceState, getAllRecords) => {
+const useDataGrid = (initColumns: ColumnModel[], config: any, getAllRecords) => {
+
     const [getState, setState] = React.useState<IBaseDataSourceState>({
         activeColumn: null,
         aggregate: null,
         anchorFilter: null,
         columns: initColumns,
-        data: null as [],
+        data: [],
         error: null,
         filteredRecordCount: 0,
+        initialized: false,
         isLoading: false,
         itemsPerPage: config.itemsPerPage || 10,
         multiSort: false,
@@ -22,6 +24,11 @@ const useDataGrid = (initColumns: ColumnModel[], config: IBaseDataSourceState, g
     });
 
     const processRequest = async (options: any) => {
+        setState({
+            ...getState,
+            isLoading: true,
+        });
+
         const columns = options.columns || getState.columns;
         const itemsPerPage = options.itemsPerPage || getState.itemsPerPage;
         const page =
@@ -50,6 +57,7 @@ const useDataGrid = (initColumns: ColumnModel[], config: IBaseDataSourceState, g
                     data: response.Payload,
                     error: null,
                     filteredRecordCount: response.FilteredRecordCount || 0,
+                    initialized: true,
                     isLoading: false,
                     itemsPerPage,
                     page: response.CurrentPage - 1,
@@ -106,7 +114,7 @@ const useDataGrid = (initColumns: ColumnModel[], config: IBaseDataSourceState, g
         processRequest(payload);
     };
 
-    if (getState.data === null) {
+    if (!getState.initialized && !getState.isLoading) {
         initGrid();
     }
 

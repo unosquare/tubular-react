@@ -9,6 +9,7 @@ export default interface IBaseDataSourceState {
     data: any[];
     error: any;
     filteredRecordCount: any;
+    initialized: boolean;
     isLoading: boolean;
     multiSort: boolean;
     itemsPerPage: number;
