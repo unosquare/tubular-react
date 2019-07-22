@@ -73,9 +73,16 @@ const GridHeaderCell: React.FunctionComponent<any> = ({ column, sortColumn, setA
 };
 
 const GridHeader: React.FunctionComponent<any> = ({ grid }: any) => {
+
   return (
     <TableRow>
-      {/* {activeColumn && <DialogModal />} */}
+      {grid.state.activeColumn &&
+        <DialogModal
+          activeColumn={grid.state.activeColumn}
+          anchorFilter={grid.state.anchorFilter}
+          setFilter={grid.api.setFilter}
+          handleFilterChange={grid.api.handleFilterChange}
+        />}
       {grid.state.columns
         .filter((col: any) => col.Visible)
         .map((column: any) =>

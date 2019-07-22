@@ -37,64 +37,63 @@ const clearFilterPatch = {
     Text: '',
 };
 
-const DialogModal: React.FunctionComponent = () => {
-    const { actions, state } = React.useContext(DataSourceContext);
+const DialogModal: React.FunctionComponent<any> =
+    ({ anchorFilter, activeColumn, setFilter, handleFilterChange }: any) => {
+        const clearFilter = () => setFilter(clearFilterPatch);
+        const handleInput = (e: any) => handleFilterChange({ Text: e });
+        const handleBetweenInput = (e: any) => handleFilterChange({ Argument: [e] });
+        const submit = () => setFilter(createFilterPatch(activeColumn));
 
-    const clearFilter = () => actions.setFilter(clearFilterPatch);
-    const handleInput = (e: any) => actions.handleFilterChange({ Text: e });
-    const handleBetweenInput = (e: any) => actions.handleFilterChange({ Argument: [e] });
-    const submit = () => actions.setFilter(createFilterPatch(state.activeColumn));
-
-    return (
-        <Popover
-            open={Boolean(state.anchorFilter)}
-            onClose={clearFilter}
-            anchorEl={state.anchorFilter}
-            anchorOrigin={{
-                horizontal: 'center',
-                vertical: 'bottom',
-            }}
-            transformOrigin={{
-                horizontal: 'center',
-                vertical: 'top',
-            }}
-        >
-            <Card >
-                <CardContent>
-                    <OperatorsDropdown />
-                    <DialogInput
-                        column={state.activeColumn}
-                        isPrimary={true}
-                        handleTextFieldChange={handleInput}
-                    />
-
-                    {state.activeColumn.Filter.Operator === CompareOperators.BETWEEN &&
+        return (
+            <Popover
+                open={Boolean(anchorFilter)}
+                onClose={clearFilter}
+                anchorEl={anchorFilter}
+                anchorOrigin={{
+                    horizontal: 'center',
+                    vertical: 'bottom',
+                }}
+                transformOrigin={{
+                    horizontal: 'center',
+                    vertical: 'top',
+                }}
+            >
+                <Card >
+                    <CardContent>
+                        <OperatorsDropdown activeColumn={activeColumn} handleFilterChange={handleFilterChange} />
                         <DialogInput
-                            column={state.activeColumn}
-                            isPrimary={false}
-                            handleTextFieldChange={handleBetweenInput}
-                        />}
-                </CardContent>
-                <CardActions>
-                    <Button
-                        size='medium'
-                        color='secondary'
-                        onClick={clearFilter}
-                    >
-                        Clear
-                    </Button>
-                    <Button
-                        size='medium'
-                        color='primary'
-                        onClick={submit}
-                        disabled={state.activeColumn.Filter.Operator === CompareOperators.NONE}
-                    >
-                        Apply
-                    </Button>
-                </CardActions>
-            </Card>
-        </Popover>
-    );
-};
+                            column={activeColumn}
+                            isPrimary={true}
+                            handleTextFieldChange={handleInput}
+                        />
+
+                        {activeColumn.Filter.Operator === CompareOperators.BETWEEN &&
+                            <DialogInput
+                                column={activeColumn}
+                                isPrimary={false}
+                                handleTextFieldChange={handleBetweenInput}
+                            />}
+                    </CardContent>
+                    <CardActions>
+                        <Button
+                            size='medium'
+                            color='secondary'
+                            onClick={clearFilter}
+                        >
+                            Clear
+                        </Button>
+                        <Button
+                            size='medium'
+                            color='primary'
+                            onClick={submit}
+                            disabled={activeColumn.Filter.Operator === CompareOperators.NONE}
+                        >
+                            Apply
+                        </Button>
+                    </CardActions>
+                </Card>
+            </Popover>
+        );
+    };
 
 export default DialogModal;

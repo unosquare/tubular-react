@@ -6,68 +6,55 @@ import { LocalStorage } from '../DataSource';
 
 const useDataGrid = (initColumns: ColumnModel[], config: any, getAllRecords) => {
 
-    const [getState, setState] = React.useState<IBaseDataSourceState>({
-        activeColumn: null,
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [getAnchorFilter, setAnchorFilter] = React.useState(null);
+    const [getColumns, setColumns] = React.useState(initColumns);
+    const [initialized, setInitialized] = React.useState(false);
+    const [getActiveColumn, setActiveColumn] = React.useState(null);
+    const [getMultiSort, setMultiSort] = React.useState(false);
+    const [getItemsPerPage, setItemsPerPage] = React.useState(config.itemsPerPage || 10);
+    const [getStorage, setStorage] = React.useState(config.storage || new NullStorage());
+    const [getPage, setPage] = React.useState(config.page || 0);
+
+    const [getState, setState] = React.useState<any>({
         aggregate: null,
-        anchorFilter: null,
-        columns: initColumns,
         data: [],
         error: null,
         filteredRecordCount: 0,
-        initialized: false,
-        isLoading: false,
-        itemsPerPage: config.itemsPerPage || 10,
-        multiSort: false,
-        page: config.page || 0,
-        searchText: config.searchText || '',
-        storage: config.storage || new NullStorage(),
         totalRecordCount: 0,
     });
 
-    if (getState.storage instanceof LocalStorage) {
-        getState.storage.setGridName(config.gridName);
+    if (getStorage instanceof LocalStorage) {
+        getStorage.setGridName(config.gridName);
     }
 
-    const processRequest = async (options: any) => {
-        setState({
-            ...getState,
-            isLoading: true,
-        });
-
-        const columns = options.columns || getState.columns;
-        const itemsPerPage = options.itemsPerPage || getState.itemsPerPage;
-        const page =
-            typeof options.page === 'undefined' ? getState.page : options.page;
-        const searchText =
-            typeof options.searchText === 'undefined'
-                ? getState.searchText
-                : options.searchText;
+    const processRequest = async () => {
+        setIsLoading(true);
 
         try {
             try {
-                const request = new GridRequest(columns, itemsPerPage, page, searchText);
+                // K2H: Check search text
+                const request = new GridRequest(getColumns, getItemsPerPage, getPage, '');
                 const response: any = await getAllRecords(request);
 
-                const maxPage = Math.ceil(response.TotalRecordCount / itemsPerPage);
+                const maxPage = Math.ceil(response.TotalRecordCount / getItemsPerPage);
                 response.CurrentPage = response.CurrentPage > maxPage ? maxPage : response.CurrentPage;
 
-                getState.storage.setPage(response.CurrentPage - 1);
-                getState.storage.setColumns(columns);
-                getState.storage.setTextSearch(searchText);
+                getStorage.setPage(response.CurrentPage - 1);
+                getStorage.setColumns(getColumns);
+                getStorage.setTextSearch('');
 
                 setState({
-                    ...getState,
                     aggregate: response.AggregationPayload,
-                    columns,
                     data: response.Payload,
                     error: null,
                     filteredRecordCount: response.FilteredRecordCount || 0,
-                    initialized: true,
-                    isLoading: false,
-                    itemsPerPage,
-                    page: response.CurrentPage - 1,
                     totalRecordCount: response.TotalRecordCount || 0,
                 });
+
+                setIsLoading(false);
+                setInitialized(true);
+                setPage(response.CurrentPage - 1);
             }
             catch (reject) {
                 console.log("error first try", reject)
@@ -79,20 +66,19 @@ const useDataGrid = (initColumns: ColumnModel[], config: any, getAllRecords) => 
     };
 
     const retrieveData = (options: any) => {
-        processRequest(options);
+        processRequest();
     };
 
     const initGrid = () => {
-        const payload: any = {};
-
-        if (getState.storage.getPage()) {
-            payload.page = getState.storage.getPage();
+        if (getStorage.getPage()) {
+            setPage(getStorage.getPage());
         }
 
-        const columns = getState.columns;
-        const storedColumns = getState.storage.getColumns();
+        const storedColumns = getStorage.getColumns();
 
         if (storedColumns) {
+            const columns = [...getColumns];
+
             storedColumns.forEach((column) => {
                 const currentColumn = columns.find((col: ColumnModel) => col.Name === column.Name);
 
@@ -112,16 +98,20 @@ const useDataGrid = (initColumns: ColumnModel[], config: any, getAllRecords) => 
                     currentColumn.Filter = column.Filter;
                 }
             });
+
+            setColumns(columns);
         }
 
-        payload.columns = columns;
-
-        processRequest(payload);
+        setInitialized(true);
     };
 
-    if (!getState.initialized && !getState.isLoading) {
+    if (!initialized) {
         initGrid();
     }
+
+    React.useEffect(() => {
+        processRequest();
+    }, [getColumns, getPage, getState.searchText, getItemsPerPage]);
 
     return {
         api: {
@@ -140,65 +130,68 @@ const useDataGrid = (initColumns: ColumnModel[], config: any, getAllRecords) => 
             },
             goToPage: (page: number) => {
                 if (getState.page !== page) {
-                    retrieveData({ page });
+                    setPage(page);
                 }
             },
             handleFilterChange: (value: any) => {
-                setState({
-                    ...getState,
-                    activeColumn: {
-                        ...getState.activeColumn,
-                        Filter: {
-                            ...getState.activeColumn.Filter,
-                            ...value,
-                        },
+                setActiveColumn({
+                    ...getActiveColumn,
+                    Filter: {
+                        ...getActiveColumn.Filter,
+                        ...value,
                     },
                 });
             },
             processRequest,
             setActiveColumn: (column: any, event: React.MouseEvent<HTMLElement>) => {
-                setState({
-                    ...getState,
-                    activeColumn: column,
-                    anchorFilter: event ? event.currentTarget : null,
-                });
+                setActiveColumn(column);
+                setAnchorFilter(event ? event.currentTarget : null);
             },
             setFilter: (value: any) => {
-                setState({ ...getState, anchorFilter: null });
-                const columns = [...this.state.columns];
+
+                const columns = [...getColumns];
                 const column = columns.find(
-                    (c: ColumnModel) => c.Name === this.state.activeColumn.Name,
+                    (c: ColumnModel) => c.Name === getActiveColumn.Name,
                 );
                 if (!column) {
                     return;
                 }
 
                 column.Filter = {
-                    ...getState.activeColumn.Filter,
+                    ...getActiveColumn.Filter,
                     ...value,
                 };
 
-                this.retrieveData({ columns });
+                setAnchorFilter(null);
+                setColumns([...columns]);
             },
             sortColumn: (property: string) => {
                 const columns = ColumnModel.sortColumnArray(
                     property,
-                    [...getState.columns],
-                    getState.multiSort,
+                    [...getColumns],
+                    getMultiSort,
                 );
 
-                retrieveData({ columns });
+                setColumns(columns);
             },
             updateItemPerPage: (itemsPerPage: number) => {
                 if (getState.itemsPerPage !== itemsPerPage) {
-                    retrieveData({ itemsPerPage });
+                    setItemsPerPage(itemsPerPage);
                 }
             },
             updateSearchText: (searchText: string) => {
                 retrieveData({ searchText });
             },
         },
-        state: getState,
+        state: {
+            ...getState,
+            activeColumn: getActiveColumn,
+            anchorFilter: getAnchorFilter,
+            columns: getColumns,
+            isLoading,
+            itemsPerPage: getItemsPerPage,
+            page: getPage,
+        },
     };
 
 };
