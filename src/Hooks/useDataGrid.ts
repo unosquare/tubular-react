@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ColumnModel, CompareOperators, GridRequest } from 'tubular-common';
 import IBaseDataSourceState from '../DataSource/IBaseDataSourceState';
 import NullStorage from '../DataSource/NullStorage';
+import { LocalStorage } from '../DataSource';
 
 const useDataGrid = (initColumns: ColumnModel[], config: any, getAllRecords) => {
 
@@ -22,6 +23,10 @@ const useDataGrid = (initColumns: ColumnModel[], config: any, getAllRecords) => 
         storage: config.storage || new NullStorage(),
         totalRecordCount: 0,
     });
+
+    if (getState.storage instanceof LocalStorage) {
+        getState.storage.setGridName(config.gridName);
+    }
 
     const processRequest = async (options: any) => {
         setState({

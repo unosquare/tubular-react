@@ -48,7 +48,7 @@ const DataGrid: React.FunctionComponent<IProps> = (props) => {
   } = props;
 
   const classes = useStyles({});
-  const grid = useDataGrid(columns, { storage }, dataSource);
+  const grid = useDataGrid(columns, { storage, gridName }, dataSource);
   const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
 
   if (isMobileResolution) {

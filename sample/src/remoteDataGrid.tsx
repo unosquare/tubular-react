@@ -5,7 +5,7 @@ import TableRow from '@material-ui/core/TableRow';
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 
-import DataGrid from '../../src';
+import DataGrid, { LocalStorage } from '../../src';
 import useRemoteDataSource from '../../src/Hooks/useRemoteDataSource';
 import columns from './data/columns';
 
@@ -50,6 +50,7 @@ const RemoteDataGrid: React.FunctionComponent = () => {
         dataSource={dataSource}
         bodyRenderer={bodyRenderer}
         footerRenderer={footerRenderer}
+        storage={new LocalStorage()}
       />
     </div>
   );
