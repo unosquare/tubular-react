@@ -65,10 +65,6 @@ const useDataGrid = (initColumns: ColumnModel[], config: any, getAllRecords) => 
         }
     };
 
-    const retrieveData = (options: any) => {
-        processRequest();
-    };
-
     const initGrid = () => {
         if (getStorage.getPage()) {
             setPage(getStorage.getPage());
@@ -183,7 +179,7 @@ const useDataGrid = (initColumns: ColumnModel[], config: any, getAllRecords) => 
                 }
             },
             updateSearchText: (searchText: string) => {
-                retrieveData({ searchText });
+                // retrieveData({ searchText });
             },
         },
         state: {
