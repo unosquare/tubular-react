@@ -147,6 +147,9 @@ const useDataGrid = (initColumns: ColumnModel[], config: any, getAllRecords) => 
                 setActiveColumn(column);
                 setAnchorFilter(event ? event.currentTarget : null);
             },
+            setAnchorFilter: (anchorEl) => {
+                setAnchorFilter(anchorEl);
+            },
             setFilter: (value: any) => {
 
                 const columns = [...getColumns];

@@ -38,16 +38,17 @@ const clearFilterPatch = {
 };
 
 const DialogModal: React.FunctionComponent<any> =
-    ({ anchorFilter, activeColumn, setFilter, handleFilterChange }: any) => {
+    ({ anchorFilter, activeColumn, setAnchorFilter, setFilter, handleFilterChange }: any) => {
         const clearFilter = () => setFilter(clearFilterPatch);
         const handleInput = (e: any) => handleFilterChange({ Text: e });
         const handleBetweenInput = (e: any) => handleFilterChange({ Argument: [e] });
         const submit = () => setFilter(createFilterPatch(activeColumn));
+        const onClose = () => { setAnchorFilter(null) }
 
         return (
             <Popover
                 open={Boolean(anchorFilter)}
-                onClose={clearFilter}
+                onClose={onClose}
                 anchorEl={anchorFilter}
                 anchorOrigin={{
                     horizontal: 'center',

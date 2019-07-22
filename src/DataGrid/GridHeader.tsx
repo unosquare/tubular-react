@@ -80,6 +80,7 @@ const GridHeader: React.FunctionComponent<any> = ({ grid }: any) => {
         <DialogModal
           activeColumn={grid.state.activeColumn}
           anchorFilter={grid.state.anchorFilter}
+          setAnchorFilter={grid.api.setAnchorFilter}
           setFilter={grid.api.setFilter}
           handleFilterChange={grid.api.handleFilterChange}
         />}
