@@ -29,6 +29,7 @@ const useDataGrid =
         const [getItemsPerPage, setItemsPerPage] = React.useState(config.itemsPerPage || 10);
         const [getStorage] = React.useState(config.storage || new NullStorage());
         const [getPage, setPage] = React.useState(config.page || 0);
+        const [getSearchText, setSearchText] = React.useState(config.searchText || '');
 
         const [getState, setState] = React.useState<any>({
             aggregate: null,
@@ -203,7 +204,10 @@ const useDataGrid =
                 columns: getColumns,
                 isLoading,
                 itemsPerPage: getItemsPerPage,
+                multiSort: getMultiSort,
                 page: getPage,
+                searchText: getSearchText,
+                storage: getStorage,
             },
         };
     };

@@ -10,10 +10,10 @@ import { localData } from './utils/localData';
 import { testHook } from './utils/testHook';
 
 let grid: { api: IDataGridApi, state: IBaseDataSourceState };
-let testComponent: ReactWrapper;
+
 beforeEach(() => {
     act(() => {
-        testComponent = testHook(() => {
+        testHook(() => {
             const [dataSource] = useLocalDataSource(localData);
             grid = useDataGrid(validColumnsSample, {
                 gridName: 'test_useDataGrid',
@@ -35,6 +35,10 @@ describe('useDataGrid', () => {
             expect(grid.state.aggregate).toMatchObject({ CustomerName: 22 });
         });
 
+        test('should have proper anchorFilter', () => {
+            expect(grid.state.anchorFilter).toBeNull();
+        });
+
         test('should have proper column properties', () => {
             expect(grid.state.activeColumn).toBeNull();
             expect(grid.state.columns).toBeDefined();
@@ -44,6 +48,42 @@ describe('useDataGrid', () => {
         test('should have proper data', () => {
             expect(grid.state.data).toBeDefined();
             expect(grid.state.data.length).toBe(10);
+        });
+
+        test('should have null error', () => {
+            expect(grid.state.error).toBeNull();
+        });
+
+        test('should have proper filteredRecordCount', () => {
+            expect(grid.state.filteredRecordCount).toBe(22);
+        });
+
+        test('should have proper isLoading', () => {
+            expect(grid.state.isLoading).toBe(false);
+        });
+
+        test('should have proper itemsPerPage', () => {
+            expect(grid.state.itemsPerPage).toBe(10);
+        });
+
+        test('should have proper multiSort', () => {
+            expect(grid.state.multiSort).toBe(false);
+        });
+
+        test('should have proper page', () => {
+            expect(grid.state.page).toBe(0);
+        });
+
+        test('should have proper searchText', () => {
+            expect(grid.state.searchText).toBe('');
+        });
+
+        test('should have proper storage', () => {
+            expect(grid.state.storage).toBeInstanceOf(LocalStorage);
+        });
+
+        test('should have proper totalRecordCount', () => {
+            expect(grid.state.totalRecordCount).toBe(22);
         });
     });
 
