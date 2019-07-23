@@ -14,6 +14,12 @@ import ToolbarOptions from '../Models/ToolbarOptions';
 import { DataGridCard, DataGridTable, GridToolbar, Paginator } from './';
 
 const useStyles = makeStyles({
+  linearProgress: {
+    height: '30px',
+    marginTop: '-10px',
+    position: 'absolute',
+    width: '100%',
+  },
   root: {
     overflowX: 'auto',
     width: '100%',
@@ -100,7 +106,11 @@ const DataGrid: React.FunctionComponent<IProps> = (props) => {
     <Paper style={{ overflowX: 'auto', width: '100%' }}>
       <GridToolbar gridName={gridName} toolbarOptions={toolbarOptions} grid={grid} />
       {toolbarOptions.topPager && paginator}
-      {grid.state.isLoading && <FixedLinearProgress isLoading={grid.state.isLoading} />}
+      {
+        <div className={classes.linearProgress}>
+          <FixedLinearProgress isLoading={grid.state.isLoading} />
+        </div>
+      }
       <DataGridTable
         grid={grid}
         bodyRenderer={bodyRenderer}
