@@ -44,18 +44,19 @@ const useDataGrid =
         }
 
         const api: IDataGridApi = {
-            exportTo: (allRows: boolean, exportFunc: any) => {
+            exportTo: async (allRows: boolean, exportFunc: any) => {
                 if (getState.filteredRecordCount === 0) {
                     return;
                 }
 
+                let payload: any[] = getState.data;
                 if (allRows) {
-                    getAllRecords(
-                        new GridRequest(getState.columns, -1, 0, getState.searchText),
-                    ).then(({ Payload }: any) => exportFunc(Payload, getState.columns));
-                } else {
-                    exportFunc(getState.data, getState.columns);
+                    const { Payload } =
+                        await getAllRecords(new GridRequest(getState.columns, -1, 0, getState.searchText));
+                    payload = Payload;
                 }
+
+                exportFunc(payload, getState.columns);
             },
             goToPage: (page: number) => {
                 if (getState.page !== page) {
@@ -147,13 +148,15 @@ const useDataGrid =
                 }
             },
             updateSearchText: (searchText: string) => {
-                // retrieveData({ searchText });
+                if (getSearchText !== searchText) {
+                    setSearchText(searchText);
+                }
             },
         };
 
         React.useEffect(() => {
             api.processRequest();
-        }, [getColumns, getPage, getState.searchText, getItemsPerPage]);
+        }, [getColumns, getPage, getSearchText, getItemsPerPage]);
 
         const initGrid = () => {
             if (getStorage.getPage()) {

@@ -16,34 +16,32 @@ const styles: any = {
   },
 };
 
-export const SearchTextInput: React.FunctionComponent = () => {
-  const { actions, state } = React.useContext(DataSourceContext);
-
-  const onChange = (e: any) => actions.updateSearchText(e.target.value);
-  const onClear = () => actions.updateSearchText('');
+export const SearchTextInput: React.FunctionComponent<any> = ({ searchText, updateSearchText }) => {
+  const onChange = (e: any) => updateSearchText(e.target.value);
+  const onClear = () => updateSearchText('');
 
   return (
-      <FormControl style={styles.formControl}>
-        <Input
-          fullWidth={true}
-          type='text'
-          value={state.searchText}
-          onChange={onChange}
-          startAdornment={
+    <FormControl style={styles.formControl}>
+      <Input
+        fullWidth={true}
+        type='text'
+        value={searchText}
+        onChange={onChange}
+        startAdornment={
+          <InputAdornment position='end'>
+            <Search />
+          </InputAdornment>
+        }
+        endAdornment={
+          searchText !== '' && (
             <InputAdornment position='end'>
-              <Search />
+              <IconButton onClick={onClear}>
+                <Close />
+              </IconButton>
             </InputAdornment>
-          }
-          endAdornment={
-            state.searchText !== '' && (
-              <InputAdornment position='end'>
-                <IconButton onClick={onClear}>
-                  <Close />
-                </IconButton>
-              </InputAdornment>
-            )
-          }
-        />
-      </FormControl>
+          )
+        }
+      />
+    </FormControl>
   );
 };

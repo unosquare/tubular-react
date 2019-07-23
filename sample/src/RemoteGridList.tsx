@@ -49,7 +49,7 @@ const RemoteGridList: React.FunctionComponent = () => {
   return (
     <Paper>
       <div style={styles.search}>
-        {/* <SearchTextInput /> */}
+        <SearchTextInput searchText={grid.state.searchText} updateSearchText={grid.api.updateSearchText} />
       </div>
       <div style={styles.progress}>
         {grid.state.isLoading && <LinearProgress />}
