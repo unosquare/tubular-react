@@ -4,7 +4,7 @@ import { act } from './utils/utils';
 import IBaseDataSourceState from '../src/DataSource/IBaseDataSourceState';
 import LocalStorage from '../src/DataSource/LocalStorage';
 import useDataGrid, { IDataGridApi } from '../src/Hooks/useDataGrid';
-import useLocalDataSource from '../src/Hooks/useLocalDatasource';
+import useLocalDataSource from '../src/Hooks/useLocalDataSource';
 import { validColumnsSample } from './utils/columns';
 import { localData } from './utils/localData';
 import { testHook } from './utils/testHook';
