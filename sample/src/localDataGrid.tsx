@@ -10,6 +10,7 @@ const LocalDataGrid: React.FunctionComponent = () => {
   const [getErrorMessage, setErrorMessage] = React.useState(null as string);
   const [dataSource] = useLocalDataSource(localData);
 
+  const handleError = (err) => setErrorMessage(err);
   return (
     <div className='root'>
       {getErrorMessage && (
@@ -26,6 +27,7 @@ const LocalDataGrid: React.FunctionComponent = () => {
         dataSource={dataSource}
         gridName='LocalDataGrid'
         storage={new LocalStorage()}
+        onError={handleError}
       />
     </div>
   );

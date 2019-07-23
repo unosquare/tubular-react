@@ -30,11 +30,11 @@ const useDataGrid =
         const [getStorage] = React.useState(config.storage || new NullStorage());
         const [getPage, setPage] = React.useState(config.page || 0);
         const [getSearchText, setSearchText] = React.useState(config.searchText || '');
+        const [getError, setError] = React.useState(null);
 
         const [getState, setState] = React.useState<any>({
             aggregate: null,
             data: [],
-            error: null,
             filteredRecordCount: 0,
             totalRecordCount: 0,
         });
@@ -76,36 +76,36 @@ const useDataGrid =
                 setIsLoading(true);
 
                 try {
-                    try {
-                        // K2H: Check search text
-                        const request = new GridRequest(getColumns, getItemsPerPage, getPage, getSearchText);
-                        const response: any = await getAllRecords(request);
+                    const request = new GridRequest(getColumns, getItemsPerPage, getPage, getSearchText);
+                    const response: any = await getAllRecords(request);
 
-                        const maxPage = Math.ceil(response.TotalRecordCount / getItemsPerPage);
-                        response.CurrentPage = response.CurrentPage > maxPage ? maxPage : response.CurrentPage;
+                    const maxPage = Math.ceil(response.TotalRecordCount / getItemsPerPage);
+                    response.CurrentPage = response.CurrentPage > maxPage ? maxPage : response.CurrentPage;
 
-                        getStorage.setPage(response.CurrentPage - 1);
-                        getStorage.setColumns(getColumns);
-                        getStorage.setTextSearch(getSearchText);
+                    getStorage.setPage(response.CurrentPage - 1);
+                    getStorage.setColumns(getColumns);
+                    getStorage.setTextSearch(getSearchText);
 
-                        setState({
-                            aggregate: response.AggregationPayload,
-                            data: response.Payload,
-                            error: null,
-                            filteredRecordCount: response.FilteredRecordCount || 0,
-                            totalRecordCount: response.TotalRecordCount || 0,
-                        });
 
-                        setIsLoading(false);
-                        setInitialized(true);
-                        setPage(response.CurrentPage - 1);
-                    }
-                    catch (reject) {
-                        // console.log("error first try", reject)
-                    }
+                    setState({
+                        aggregate: response.AggregationPayload,
+                        data: response.Payload,
+                        filteredRecordCount: response.FilteredRecordCount || 0,
+                        totalRecordCount: response.TotalRecordCount || 0,
+                    });
+
+                    setIsLoading(false);
+                    setInitialized(true);
+                    setError(null);
+                    setPage(response.CurrentPage - 1);
                 }
                 catch (err) {
-                    // console.log("error second try")
+                    if (config.onError) {
+                        config.onError(err);
+                    }
+
+                    setIsLoading(false);
+                    setError(err);
                 }
             },
             setActiveColumn: (column: any, event: React.MouseEvent<HTMLElement>) => {
@@ -203,6 +203,7 @@ const useDataGrid =
             activeColumn: getActiveColumn,
             anchorFilter: getAnchorFilter,
             columns: getColumns,
+            error: getError,
             initialized,
             isLoading,
             itemsPerPage: getItemsPerPage,

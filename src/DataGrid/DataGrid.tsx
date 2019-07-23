@@ -37,6 +37,7 @@ interface IProps {
   toolbarOptions?: ToolbarOptions;
   bodyRenderer?(row: any, index: number, columns: ColumnModel[]): void;
   footerRenderer?(aggregate: any): void;
+  onError?(err: any): void;
   onRowClick?(ev: any): any;
 }
 
@@ -49,12 +50,13 @@ const DataGrid: React.FunctionComponent<IProps> = (props) => {
     toolbarOptions = props.toolbarOptions || new ToolbarOptions(),
     gridName,
     children,
+    onError,
     onRowClick,
     storage,
   } = props;
 
   const classes = useStyles({});
-  const grid = useDataGrid(columns, { storage, gridName }, dataSource);
+  const grid = useDataGrid(columns, { storage, gridName, onError }, dataSource);
   const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
 
   if (isMobileResolution) {
