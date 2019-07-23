@@ -10,10 +10,10 @@ import { localData } from './utils/localData';
 import { testHook } from './utils/testHook';
 
 let grid: { api: IDataGridApi, state: IBaseDataSourceState };
-
+let testComponent: ReactWrapper;
 beforeEach(() => {
     act(() => {
-        testHook(() => {
+        testComponent = testHook(() => {
             const [dataSource] = useLocalDataSource(localData);
             grid = useDataGrid(validColumnsSample, {
                 gridName: 'test_useDataGrid',
@@ -87,4 +87,21 @@ describe('useDataGrid', () => {
         });
     });
 
+    // TODO: complete this suite
+    xdescribe('api interaction', () => {
+        test('it should change page', () => {
+
+            grid.api.goToPage(2);
+
+            act(() => {
+                testComponent.update();
+            });
+
+            // TODO: find a way to wait for processRequest to
+            // finished because enzyme is not really waiting for it
+            // to be completed
+
+            expect(grid.state.page).toBe(2);
+        });
+    });
 });

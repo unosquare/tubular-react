@@ -43,42 +43,117 @@ const useDataGrid =
             getStorage.setGridName(config.gridName);
         }
 
-        const processRequest = async () => {
-            setIsLoading(true);
+        const api: IDataGridApi = {
+            exportTo: (allRows: boolean, exportFunc: any) => {
+                if (getState.filteredRecordCount === 0) {
+                    return;
+                }
 
-            try {
+                if (allRows) {
+                    getAllRecords(
+                        new GridRequest(getState.columns, -1, 0, getState.searchText),
+                    ).then(({ Payload }: any) => exportFunc(Payload, getState.columns));
+                } else {
+                    exportFunc(getState.data, getState.columns);
+                }
+            },
+            goToPage: (page: number) => {
+                if (getState.page !== page) {
+                    setPage(page);
+                }
+            },
+            handleFilterChange: (value: any) => {
+                setActiveColumn({
+                    ...getActiveColumn,
+                    Filter: {
+                        ...getActiveColumn.Filter,
+                        ...value,
+                    },
+                });
+            },
+            processRequest: async () => {
+                setIsLoading(true);
+
                 try {
-                    // K2H: Check search text
-                    const request = new GridRequest(getColumns, getItemsPerPage, getPage, '');
-                    const response: any = await getAllRecords(request);
+                    try {
+                        // K2H: Check search text
+                        const request = new GridRequest(getColumns, getItemsPerPage, getPage, '');
+                        const response: any = await getAllRecords(request);
 
-                    const maxPage = Math.ceil(response.TotalRecordCount / getItemsPerPage);
-                    response.CurrentPage = response.CurrentPage > maxPage ? maxPage : response.CurrentPage;
+                        const maxPage = Math.ceil(response.TotalRecordCount / getItemsPerPage);
+                        response.CurrentPage = response.CurrentPage > maxPage ? maxPage : response.CurrentPage;
 
-                    getStorage.setPage(response.CurrentPage - 1);
-                    getStorage.setColumns(getColumns);
-                    getStorage.setTextSearch('');
+                        getStorage.setPage(response.CurrentPage - 1);
+                        getStorage.setColumns(getColumns);
+                        getStorage.setTextSearch('');
 
-                    setState({
-                        aggregate: response.AggregationPayload,
-                        data: response.Payload,
-                        error: null,
-                        filteredRecordCount: response.FilteredRecordCount || 0,
-                        totalRecordCount: response.TotalRecordCount || 0,
-                    });
+                        setState({
+                            aggregate: response.AggregationPayload,
+                            data: response.Payload,
+                            error: null,
+                            filteredRecordCount: response.FilteredRecordCount || 0,
+                            totalRecordCount: response.TotalRecordCount || 0,
+                        });
 
-                    setIsLoading(false);
-                    setInitialized(true);
-                    setPage(response.CurrentPage - 1);
+                        setIsLoading(false);
+                        setInitialized(true);
+                        setPage(response.CurrentPage - 1);
+                    }
+                    catch (reject) {
+                        // console.log("error first try", reject)
+                    }
                 }
-                catch (reject) {
-                    // console.log("error first try", reject)
+                catch (err) {
+                    // console.log("error second try")
                 }
-            }
-            catch (err) {
-                // console.log("error second try")
-            }
+            },
+            setActiveColumn: (column: any, event: React.MouseEvent<HTMLElement>) => {
+                setActiveColumn(column);
+                setAnchorFilter(event ? event.currentTarget : null);
+            },
+            setAnchorFilter: (anchorEl) => {
+                setAnchorFilter(anchorEl);
+            },
+            setFilter: (value: any) => {
+
+                const columns = [...getColumns];
+                const column = columns.find(
+                    (c: ColumnModel) => c.Name === getActiveColumn.Name,
+                );
+                if (!column) {
+                    return;
+                }
+
+                column.Filter = {
+                    ...getActiveColumn.Filter,
+                    ...value,
+                };
+
+                setAnchorFilter(null);
+                setColumns([...columns]);
+            },
+            sortColumn: (property: string) => {
+                const columns = ColumnModel.sortColumnArray(
+                    property,
+                    [...getColumns],
+                    getMultiSort,
+                );
+
+                setColumns(columns);
+            },
+            updateItemPerPage: (itemsPerPage: number) => {
+                if (getState.itemsPerPage !== itemsPerPage) {
+                    setItemsPerPage(itemsPerPage);
+                }
+            },
+            updateSearchText: (searchText: string) => {
+                // retrieveData({ searchText });
+            },
         };
+
+        React.useEffect(() => {
+            api.processRequest();
+        }, [getColumns, getPage, getState.searchText, getItemsPerPage]);
 
         const initGrid = () => {
             if (getStorage.getPage()) {
@@ -120,96 +195,25 @@ const useDataGrid =
             initGrid();
         }
 
-        React.useEffect(() => {
-            processRequest();
-        }, [getColumns, getPage, getState.searchText, getItemsPerPage]);
-
-        return {
-            api: {
-                exportTo: (allRows: boolean, exportFunc: any) => {
-                    if (getState.filteredRecordCount === 0) {
-                        return;
-                    }
-
-                    if (allRows) {
-                        getAllRecords(
-                            new GridRequest(getState.columns, -1, 0, getState.searchText),
-                        ).then(({ Payload }: any) => exportFunc(Payload, getState.columns));
-                    } else {
-                        exportFunc(getState.data, getState.columns);
-                    }
-                },
-                goToPage: (page: number) => {
-                    if (getState.page !== page) {
-                        setPage(page);
-                    }
-                },
-                handleFilterChange: (value: any) => {
-                    setActiveColumn({
-                        ...getActiveColumn,
-                        Filter: {
-                            ...getActiveColumn.Filter,
-                            ...value,
-                        },
-                    });
-                },
-                processRequest,
-                setActiveColumn: (column: any, event: React.MouseEvent<HTMLElement>) => {
-                    setActiveColumn(column);
-                    setAnchorFilter(event ? event.currentTarget : null);
-                },
-                setAnchorFilter: (anchorEl) => {
-                    setAnchorFilter(anchorEl);
-                },
-                setFilter: (value: any) => {
-
-                    const columns = [...getColumns];
-                    const column = columns.find(
-                        (c: ColumnModel) => c.Name === getActiveColumn.Name,
-                    );
-                    if (!column) {
-                        return;
-                    }
-
-                    column.Filter = {
-                        ...getActiveColumn.Filter,
-                        ...value,
-                    };
-
-                    setAnchorFilter(null);
-                    setColumns([...columns]);
-                },
-                sortColumn: (property: string) => {
-                    const columns = ColumnModel.sortColumnArray(
-                        property,
-                        [...getColumns],
-                        getMultiSort,
-                    );
-
-                    setColumns(columns);
-                },
-                updateItemPerPage: (itemsPerPage: number) => {
-                    if (getState.itemsPerPage !== itemsPerPage) {
-                        setItemsPerPage(itemsPerPage);
-                    }
-                },
-                updateSearchText: (searchText: string) => {
-                    // retrieveData({ searchText });
-                },
-            },
-            state: {
-                ...getState,
-                activeColumn: getActiveColumn,
-                anchorFilter: getAnchorFilter,
-                columns: getColumns,
-                isLoading,
-                itemsPerPage: getItemsPerPage,
-                multiSort: getMultiSort,
-                page: getPage,
-                searchText: getSearchText,
-                storage: getStorage,
-            },
+        const state = {
+            ...getState,
+            activeColumn: getActiveColumn,
+            anchorFilter: getAnchorFilter,
+            columns: getColumns,
+            isLoading,
+            itemsPerPage: getItemsPerPage,
+            multiSort: getMultiSort,
+            page: getPage,
+            searchText: getSearchText,
+            storage: getStorage,
         };
+
+        const result = {
+            api,
+            state,
+        };
+
+        return result;
     };
 
 export default useDataGrid;
