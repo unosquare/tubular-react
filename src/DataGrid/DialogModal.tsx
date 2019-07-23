@@ -43,7 +43,7 @@ const DialogModal: React.FunctionComponent<any> =
         const handleInput = (e: any) => handleFilterChange({ Text: e });
         const handleBetweenInput = (e: any) => handleFilterChange({ Argument: [e] });
         const submit = () => setFilter(createFilterPatch(activeColumn));
-        const onClose = () => { setAnchorFilter(null) }
+        const onClose = () => setAnchorFilter(null);
 
         return (
             <Popover

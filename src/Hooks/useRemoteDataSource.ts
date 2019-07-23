@@ -1,6 +1,6 @@
-import { GridRequest } from "tubular-common";
-import ITubularHttpClient from "../utils/ITubularHttpClient";
-import TubularHttpClient from "../utils/TubularHttpClient";
+import { GridRequest } from 'tubular-common';
+import ITubularHttpClient from '../utils/ITubularHttpClient';
+import TubularHttpClient from '../utils/TubularHttpClient';
 
 const useRemoteDataSource = (request: string | Request | ITubularHttpClient) => {
     const getAllRecords = async (gridRequest: GridRequest) => {

@@ -71,11 +71,11 @@ const useDataGrid =
                     setPage(response.CurrentPage - 1);
                 }
                 catch (reject) {
-                    console.log("error first try", reject)
+                    // console.log("error first try", reject)
                 }
             }
             catch (err) {
-                console.log("error second try")
+                // console.log("error second try")
             }
         };
 
