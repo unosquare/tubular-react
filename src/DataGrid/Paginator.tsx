@@ -47,7 +47,7 @@ export const Paginator: React.FunctionComponent<any> = ({ grid, rowsPerPageOptio
     onChangePage: (e: any, p: any) => api.goToPage(p),
     onChangeRowsPerPage: (e: any) =>
       api.updateItemPerPage(Number(e.target.value)),
-    page: state.page,
+    page: state.filteredRecordCount > 0 ? state.page : 0,
     rowsPerPage: state.itemsPerPage,
     rowsPerPageOptions: rowsPerPageOptions || [10, 20, 50],
   } as any;

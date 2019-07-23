@@ -203,6 +203,7 @@ const useDataGrid =
             activeColumn: getActiveColumn,
             anchorFilter: getAnchorFilter,
             columns: getColumns,
+            initialized,
             isLoading,
             itemsPerPage: getItemsPerPage,
             multiSort: getMultiSort,
