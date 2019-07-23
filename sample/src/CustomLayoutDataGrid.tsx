@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 
+import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
 import {
   DataGridTable,
   GridToolbar,
@@ -75,10 +77,17 @@ const CustomLayoutDataGrid: React.FunctionComponent = () => {
         />
       )}
       <Typography style={{ margin: '25px', marginBottom: '10px' }} variant='h4'>No card grid!</Typography>
-      <Paginator
-        component='div'
-        grid={grid}
-      />
+      <Table>
+        <TableHead>
+          <TableRow>
+            <Paginator
+              component='div'
+              grid={grid}
+            />
+          </TableRow>
+        </TableHead>
+      </Table>
+
       <DataGridTable
         grid={grid}
         bodyRenderer={bodyRenderer}

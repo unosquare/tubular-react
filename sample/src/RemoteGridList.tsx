@@ -44,7 +44,7 @@ const RemoteGridList: React.FunctionComponent = () => {
   const [getErrorMessage, setErrorMessage] = React.useState(null as string);
   const [dataSource] = useRemoteDataSource(httpClient);
 
-  const grid = useDataGrid(columns, { storage: new LocalStorage('RemoteGridList') }, dataSource);
+  const grid = useDataGrid(columns, { storage: new LocalStorage(), gridName: 'RemoteGridList' }, dataSource);
 
   return (
     <Paper>

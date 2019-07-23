@@ -78,7 +78,7 @@ const useDataGrid =
                 try {
                     try {
                         // K2H: Check search text
-                        const request = new GridRequest(getColumns, getItemsPerPage, getPage, '');
+                        const request = new GridRequest(getColumns, getItemsPerPage, getPage, getSearchText);
                         const response: any = await getAllRecords(request);
 
                         const maxPage = Math.ceil(response.TotalRecordCount / getItemsPerPage);
@@ -86,7 +86,7 @@ const useDataGrid =
 
                         getStorage.setPage(response.CurrentPage - 1);
                         getStorage.setColumns(getColumns);
-                        getStorage.setTextSearch('');
+                        getStorage.setTextSearch(getSearchText);
 
                         setState({
                             aggregate: response.AggregationPayload,
