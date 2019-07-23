@@ -86,7 +86,6 @@ const useDataGrid =
                     getStorage.setColumns(getColumns);
                     getStorage.setTextSearch(getSearchText);
 
-
                     setState({
                         aggregate: response.AggregationPayload,
                         data: response.Payload,
