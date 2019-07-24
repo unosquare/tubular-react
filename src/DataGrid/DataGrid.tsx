@@ -10,8 +10,10 @@ import { FixedLinearProgress } from 'uno-material-ui';
 import { useResolutionSwitch } from 'uno-react';
 import { IDataGridStorage } from '../DataGridInterfaces';
 import useDataGrid from '../Hooks/useDataGrid';
-import ToolbarOptions from '../Models/ToolbarOptions';
-import { DataGridCard, DataGridTable, GridToolbar, Paginator } from './';
+import { Paginator } from '../Pagination';
+import { GridToolbar } from '../Toolbar/GridToolbar';
+import { ToolbarOptions } from '../Toolbar/ToolbarOptions';
+import { DataGridCard, DataGridTable } from './';
 
 const useStyles = makeStyles({
   linearProgress: {
@@ -41,7 +43,7 @@ interface IProps {
   onRowClick?(ev: any): any;
 }
 
-const DataGrid: React.FunctionComponent<IProps> = (props) => {
+export const DataGrid: React.FunctionComponent<IProps> = (props) => {
   const {
     bodyRenderer,
     columns,
@@ -89,7 +91,7 @@ const DataGrid: React.FunctionComponent<IProps> = (props) => {
               ))
           }
         </GridList>
-        {/* <Paginator /> */}
+        <Paginator grid={grid} />
       </Paper>
     );
   }
@@ -123,5 +125,3 @@ const DataGrid: React.FunctionComponent<IProps> = (props) => {
     </Paper>
   );
 };
-
-export default DataGrid;

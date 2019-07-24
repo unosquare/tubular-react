@@ -65,7 +65,7 @@ const getValue = (
   }
 };
 
-const DialogInput: React.FunctionComponent<IProps> = ({
+export const DialogInput: React.FunctionComponent<IProps> = ({
   column,
   handleTextFieldChange,
   isPrimary,
@@ -108,5 +108,3 @@ const DialogInput: React.FunctionComponent<IProps> = ({
     </TextField>
   );
 };
-
-export default DialogInput;

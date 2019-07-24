@@ -13,11 +13,7 @@ import TableFooter from '@material-ui/core/TableFooter';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
-import {
-  LocalStorage,
-  Paginator,
-  SearchTextInput,
-} from '../../src';
+import { LocalStorage, Paginator, SearchTextInput } from '../../src';
 import useDataGrid from '../../src/Hooks/useDataGrid';
 import CustomHttpClient from './CustomHttpClient';
 import columns from './data/columns';

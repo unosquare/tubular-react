@@ -5,12 +5,13 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Popover from '@material-ui/core/Popover';
 import * as React from 'react';
-import DialogInput from './DialogInput';
+import { DialogInput } from './DialogInput';
 import OperatorsDropdown from './OperatorsDropdown';
 
-import { ColumnDataType, CompareOperators } from 'tubular-common';
+import { ColumnDataType, ColumnModel, CompareOperators } from 'tubular-common';
+import { IFilterWrapper } from '../DataGridInterfaces/IFilterWrapper';
 
-const createFilterPatch = (activeColumn: any) => {
+const createFilterPatch = (activeColumn: ColumnModel): IFilterWrapper => {
     let filterText = activeColumn.Filter.Text;
     let filterArgument = activeColumn.Filter.Argument[0];
 
@@ -25,19 +26,28 @@ const createFilterPatch = (activeColumn: any) => {
     return {
         Argument: [filterArgument],
         HasFilter: true,
+        Operator: CompareOperators.AUTO,
         Text: filterText,
     };
 };
 
-const clearFilterPatch = {
+const clearFilterPatch: IFilterWrapper = {
     Argument: [''],
     HasFilter: false,
     Operator: CompareOperators.NONE,
     Text: '',
 };
 
-const DialogModal: React.FunctionComponent<any> =
-    ({ anchorFilter, activeColumn, setAnchorFilter, setFilter, handleFilterChange }: any) => {
+interface IDialogModalProps {
+    anchorFilter: any;
+    activeColumn: ColumnModel;
+    setAnchorFilter: (anchorEl: HTMLElement) => void;
+    setFilter: (filter: IFilterWrapper) => void;
+    handleFilterChange: (value: any) => any;
+}
+
+export const DialogModal: React.FunctionComponent<IDialogModalProps> =
+    ({ anchorFilter, activeColumn, setAnchorFilter, setFilter, handleFilterChange }) => {
         const clearFilter = () => setFilter(clearFilterPatch);
         const handleInput = (e: any) => handleFilterChange({ Text: e });
         const handleBetweenInput = (e: any) => handleFilterChange({ Argument: [e] });
@@ -95,5 +105,3 @@ const DialogModal: React.FunctionComponent<any> =
             </Popover>
         );
     };
-
-export default DialogModal;

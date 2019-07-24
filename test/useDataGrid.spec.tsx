@@ -1,14 +1,13 @@
 import { ReactWrapper } from 'enzyme';
-import { act } from './utils/utils';
-
-import IBaseDataSourceState from '../src/DataSource/IBaseDataSourceState';
-import LocalStorage from '../src/DataSource/LocalStorage';
-import useDataGrid, { IDataGridApi } from '../src/Hooks/useDataGrid';
+import IDataGrid from '../src/DataGridInterfaces/IDataGrid';
+import LocalStorage from '../src/Storage/LocalStorage';
+import useDataGrid from '../src/Hooks/useDataGrid';
 import { validColumnsSample } from './utils/columns';
 import { localData } from './utils/localData';
 import { testHook } from './utils/testHook';
+import { act } from './utils/utils';
 
-let grid: { api: IDataGridApi, state: IBaseDataSourceState };
+let grid: IDataGrid;
 let testComponent: ReactWrapper;
 beforeEach(() => {
     act(() => {

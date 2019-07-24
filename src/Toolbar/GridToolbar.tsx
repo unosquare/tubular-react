@@ -1,11 +1,10 @@
 import Toolbar from '@material-ui/core/Toolbar';
 import * as React from 'react';
 import { useResolutionSwitch } from 'uno-react';
-import IBaseDataSourceState from '../DataSource/IBaseDataSourceState';
-import { IDataGridApi } from '../Hooks/useDataGrid';
-import { ToolbarOptions } from '../Models';
+import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
+import { SearchTextInput } from '../Filtering/SearchTextInput';
 import { ExportButton } from './ExportButton';
-import { SearchTextInput } from './SearchTextInput';
+import { ToolbarOptions } from './ToolbarOptions';
 
 const styles: any = {
   mobileSpacer: {
@@ -22,10 +21,10 @@ const timeout = 400;
 interface IProps {
   toolbarOptions: ToolbarOptions;
   gridName: string;
-  grid: { api: IDataGridApi, state: IBaseDataSourceState };
+  grid: IDataGrid;
 }
 
-export const GridToolbar: React.FunctionComponent<IProps> = ({ toolbarOptions, gridName, grid }: any) => {
+export const GridToolbar: React.FunctionComponent<IProps> = ({ toolbarOptions, gridName, grid }) => {
   const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
 
   return (

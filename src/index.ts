@@ -1,7 +1,6 @@
-import DataGrid from './DataGrid/DataGrid';
 export * from './DataGrid';
-export * from './Models';
 export * from './utils';
-export * from './DataSource';
+export * from './Storage';
 export * from './DataGridInterfaces';
-export default DataGrid;
+export * from './Pagination';
+export * from './Filtering';

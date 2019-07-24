@@ -10,12 +10,10 @@ import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
-import {
-  DataGridTable,
-  Paginator,
-  ToolbarOptions,
-} from '../../src';
+import { DataGridTable } from '../../src/DataGrid';
 import useDataGrid from '../../src/Hooks/useDataGrid';
+import { Paginator } from '../../src/Pagination';
+import { ToolbarOptions } from '../../src/Toolbar';
 import columns from './data/columns';
 import localData from './data/localData';
 
@@ -88,7 +86,6 @@ const CustomLayoutDataGrid: React.FunctionComponent = () => {
         grid={grid}
         bodyRenderer={bodyRenderer}
         footerRenderer={footerRenderer}
-        toolbarOptions={toolbarOptions}
       />
     </>
   );

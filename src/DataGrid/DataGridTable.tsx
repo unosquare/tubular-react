@@ -5,13 +5,12 @@ import TableHead from '@material-ui/core/TableHead';
 import * as React from 'react';
 
 import { ColumnModel } from 'tubular-common';
-import IBaseDataSourceState from '../DataSource/IBaseDataSourceState';
-import { IDataGridApi } from '../Hooks/useDataGrid';
-import GridBody from './GridBody';
-import GridHeader from './GridHeader';
+import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
+import { GridBody } from './GridBody';
+import { GridHeader } from './GridHeader';
 
 interface IProps {
-    grid: { api: IDataGridApi, state: IBaseDataSourceState };
+    grid: IDataGrid;
     bodyRenderer?(row: any, index: number, columns: ColumnModel[]): React.ReactNode;
     footerRenderer?(aggregate: any): React.ReactNode;
     onRowClick?(ev: any): any;

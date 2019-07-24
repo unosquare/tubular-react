@@ -11,7 +11,7 @@ const dropdown = {
 
 const getValue = (op: string) => !op || op === '' ? 'None' : op;
 
-const OperatorsDropdown: React.FunctionComponent<any> = ({ activeColumn, handleFilterChange }) => {
+export const OperatorsDropdown: React.FunctionComponent<any> = ({ activeColumn, handleFilterChange }) => {
   const onChange = ({ target }: any) => handleFilterChange({ Operator: target.value });
 
   return (
@@ -32,5 +32,3 @@ const OperatorsDropdown: React.FunctionComponent<any> = ({ activeColumn, handleF
     </TextField>
   );
 };
-
-export default OperatorsDropdown;

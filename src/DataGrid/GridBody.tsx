@@ -2,17 +2,14 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
-
 import Warning from '@material-ui/icons/Warning';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
-
-import IBaseDataSourceState from '../DataSource/IBaseDataSourceState';
-import { IDataGridApi } from '../Hooks/useDataGrid';
+import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
 import { renderCells } from '../utils';
 
 interface IProps {
-    grid: { api: IDataGridApi, state: IBaseDataSourceState };
+    grid: IDataGrid;
     bodyRenderer?(row: any, index: number, columns: ColumnModel[], onRowClickProxy: (ev: any) => any): React.ReactNode;
     onRowClick?(ev: any): any;
 }
@@ -22,7 +19,7 @@ const getStyles = (isPointer: boolean) => ({
     title: { paddingLeft: '15px' },
 });
 
-const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, onRowClick }) => {
+export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, onRowClick }) => {
     // tslint:disable-next-line:no-empty
     const onRowClickProxy = onRowClick ? onRowClick : () => { };
     const styles = getStyles(Boolean(onRowClick));
@@ -67,5 +64,3 @@ const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, onRowCl
         </TableBody>
     );
 };
-
-export default GridBody;

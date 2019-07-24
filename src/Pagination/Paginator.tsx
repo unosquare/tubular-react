@@ -1,8 +1,8 @@
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import TablePagination, { TablePaginationBaseProps } from '@material-ui/core/TablePagination';
+import TablePagination from '@material-ui/core/TablePagination';
 import * as React from 'react';
 import { useResolutionSwitch } from 'uno-react';
-import AdvancePaginationActions from './AdvancePaginationActions';
+import { AdvancePaginationActions } from './AdvancePaginationActions';
 
 const useStyles = makeStyles({
   caption: {

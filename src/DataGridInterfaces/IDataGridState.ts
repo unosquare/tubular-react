@@ -1,7 +1,7 @@
 import { ColumnModel } from 'tubular-common';
-import IDataGridStorage from '../DataGridInterfaces/IDataGridStorage';
+import { IDataGridStorage } from './IDataGridStorage';
 
-export default interface IBaseDataSourceState {
+export interface IDataGridState {
     activeColumn: any;
     aggregate: any;
     anchorFilter: any;

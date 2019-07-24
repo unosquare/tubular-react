@@ -1,23 +1,11 @@
 import * as React from 'react';
 import Transformer, { ColumnModel, CompareOperators, GridRequest, GridResponse } from 'tubular-common';
-import { LocalStorage } from '../DataSource';
-import IBaseDataSourceState from '../DataSource/IBaseDataSourceState';
-import NullStorage from '../DataSource/NullStorage';
+import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
+import { IDataGridApi } from '../DataGridInterfaces/IDataGridApi';
+import { LocalStorage } from '../Storage';
+import { NullStorage } from '../Storage/NullStorage';
 import ITubularHttpClient from '../utils/ITubularHttpClient';
 import TubularHttpClient from '../utils/TubularHttpClient';
-
-export interface IDataGridApi {
-    exportTo: (allRows: boolean, exportFunc: any) => void;
-    goToPage: (page: number) => void;
-    handleFilterChange: (value: any) => void;
-    processRequest: () => void;
-    setActiveColumn: (column: any, event: React.MouseEvent<HTMLElement>) => void;
-    setAnchorFilter: (anchorEl) => void;
-    setFilter: (value: any) => void;
-    sortColumn: (property: string) => void;
-    updateItemPerPage: (itemsPerPage: number) => void;
-    updateSearchText: (searchText: string) => void;
-}
 
 const getRemoteDataSource = (request: string | Request | ITubularHttpClient) =>
     async (gridRequest: GridRequest): Promise<GridResponse> => {
@@ -53,7 +41,7 @@ const getLocalDataSource = (source: any[]) =>
 
 const useDataGrid =
     (initColumns: ColumnModel[], config: any, source: any[] | string | Request | ITubularHttpClient)
-        : { api: IDataGridApi, state: IBaseDataSourceState } => {
+        : IDataGrid => {
 
         const [isLoading, setIsLoading] = React.useState(false);
         const [getAnchorFilter, setAnchorFilter] = React.useState(null);
@@ -88,11 +76,11 @@ const useDataGrid =
                 let payload: any[] = getState.data;
                 if (allRows) {
                     const { Payload } =
-                        await getAllRecords(new GridRequest(getState.columns, -1, 0, getState.searchText));
+                        await getAllRecords(new GridRequest(getColumns, -1, 0, getSearchText));
                     payload = Payload;
                 }
 
-                exportFunc(payload, getState.columns);
+                exportFunc(payload, getColumns);
             },
             goToPage: (page: number) => {
                 if (getState.page !== page) {
@@ -113,7 +101,7 @@ const useDataGrid =
 
                 try {
                     const request = new GridRequest(getColumns, getItemsPerPage, getPage, getSearchText);
-                    const response: any = await getAllRecords(request);
+                    const response: GridResponse = await getAllRecords(request);
 
                     const maxPage = Math.ceil(response.TotalRecordCount / getItemsPerPage);
                     response.CurrentPage = response.CurrentPage > maxPage ? maxPage : response.CurrentPage;
@@ -143,11 +131,11 @@ const useDataGrid =
                     setError(err);
                 }
             },
-            setActiveColumn: (column: any, event: React.MouseEvent<HTMLElement>) => {
+            setActiveColumn: (column: ColumnModel, event: React.MouseEvent<HTMLElement>) => {
                 setActiveColumn(column);
                 setAnchorFilter(event ? event.currentTarget : null);
             },
-            setAnchorFilter: (anchorEl) => {
+            setAnchorFilter: (anchorEl: HTMLElement) => {
                 setAnchorFilter(anchorEl);
             },
             setFilter: (value: any) => {

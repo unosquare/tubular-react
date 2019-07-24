@@ -5,7 +5,7 @@ import TableRow from '@material-ui/core/TableRow';
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 
-import DataGrid, { LocalStorage } from '../../src';
+import { DataGrid, LocalStorage } from '../../src';
 import columns from './data/columns';
 
 // tslint:disable-next-line: no-var-requires

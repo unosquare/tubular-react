@@ -50,7 +50,7 @@ const getPages = (currentPage: any, totalRows: any, rowsPerPage: any) => {
   return pages;
 };
 
-const AdvancePaginationActions: React.FunctionComponent<IProps> = ({
+export const AdvancePaginationActions: React.FunctionComponent<IProps> = ({
   count,
   page,
   rowsPerPage,
@@ -117,5 +117,3 @@ const AdvancePaginationActions: React.FunctionComponent<IProps> = ({
     </div>
   );
 };
-
-export default AdvancePaginationActions;

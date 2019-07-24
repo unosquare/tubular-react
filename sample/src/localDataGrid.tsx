@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import Snackbar from '@material-ui/core/Snackbar';
-import DataGrid, { LocalStorage } from '../../src';
+import { DataGrid, LocalStorage } from '../../src';
 import columns from './data/columns';
 import localData from './data/localData';
 
