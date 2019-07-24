@@ -7,12 +7,13 @@ import Warning from '@material-ui/icons/Warning';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
 
+import IBaseDataSourceState from '../DataSource/IBaseDataSourceState';
+import { IDataGridApi } from '../Hooks/useDataGrid';
 import { renderCells } from '../utils';
 
 interface IProps {
-    grid: any;
-
-    bodyRenderer?(row: any, index: number, columns: ColumnModel[], onRowClickProxy: (ev: any) => any): void;
+    grid: { api: IDataGridApi, state: IBaseDataSourceState };
+    bodyRenderer?(row: any, index: number, columns: ColumnModel[], onRowClickProxy: (ev: any) => any): React.ReactNode;
     onRowClick?(ev: any): any;
 }
 

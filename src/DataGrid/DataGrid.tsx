@@ -35,8 +35,8 @@ interface IProps {
   gridName: string;
   storage?: IDataGridStorage;
   toolbarOptions?: ToolbarOptions;
-  bodyRenderer?(row: any, index: number, columns: ColumnModel[]): void;
-  footerRenderer?(aggregate: any): void;
+  bodyRenderer?(row: any, index: number, columns: ColumnModel[]): React.ReactNode;
+  footerRenderer?(aggregate: any): React.ReactNode;
   onError?(err: any): void;
   onRowClick?(ev: any): any;
 }
@@ -118,9 +118,6 @@ const DataGrid: React.FunctionComponent<IProps> = (props) => {
         bodyRenderer={bodyRenderer}
         footerRenderer={footerRenderer}
         onRowClick={onRowClick}
-        toolbarOptions={toolbarOptions}
-        gridName={gridName}
-        storage={storage}
       />
       {toolbarOptions.bottomPager && paginator}
     </Paper>

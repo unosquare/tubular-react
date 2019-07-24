@@ -4,22 +4,28 @@ import TableHead from '@material-ui/core/TableHead';
 
 import * as React from 'react';
 
+import { ColumnModel } from 'tubular-common';
+import IBaseDataSourceState from '../DataSource/IBaseDataSourceState';
+import { IDataGridApi } from '../Hooks/useDataGrid';
 import GridBody from './GridBody';
 import GridHeader from './GridHeader';
 
-export const DataGridTable: React.FunctionComponent<any> = ({
-    bodyRenderer,
-    footerRenderer,
-    grid,
-}) => {
+interface IProps {
+    grid: { api: IDataGridApi, state: IBaseDataSourceState };
+    bodyRenderer?(row: any, index: number, columns: ColumnModel[]): React.ReactNode;
+    footerRenderer?(aggregate: any): React.ReactNode;
+    onRowClick?(ev: any): any;
+}
+
+export const DataGridTable: React.FunctionComponent<IProps> = (props) => {
     return (
         <Table>
             <TableHead>
-                <GridHeader grid={grid} />
+                <GridHeader grid={props.grid} />
             </TableHead>
-            <GridBody grid={grid} bodyRenderer={bodyRenderer} />
+            <GridBody grid={props.grid} bodyRenderer={props.bodyRenderer} onRowClick={props.onRowClick} />
             <TableFooter>
-                {footerRenderer && footerRenderer(grid.state.aggregate)}
+                {props.footerRenderer && props.footerRenderer(props.grid.state.aggregate)}
             </TableFooter>
         </Table>
     );

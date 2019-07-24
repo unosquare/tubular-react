@@ -1,6 +1,9 @@
 import Toolbar from '@material-ui/core/Toolbar';
 import * as React from 'react';
 import { useResolutionSwitch } from 'uno-react';
+import IBaseDataSourceState from '../DataSource/IBaseDataSourceState';
+import { IDataGridApi } from '../Hooks/useDataGrid';
+import { ToolbarOptions } from '../Models';
 import { ExportButton } from './ExportButton';
 import { SearchTextInput } from './SearchTextInput';
 
@@ -16,7 +19,13 @@ const styles: any = {
 const outerWidth = 800;
 const timeout = 400;
 
-export const GridToolbar: React.FunctionComponent<any> = ({ toolbarOptions, gridName, grid }: any) => {
+interface IProps {
+  toolbarOptions: ToolbarOptions;
+  gridName: string;
+  grid: { api: IDataGridApi, state: IBaseDataSourceState };
+}
+
+export const GridToolbar: React.FunctionComponent<IProps> = ({ toolbarOptions, gridName, grid }: any) => {
   const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
 
   return (
@@ -36,7 +45,8 @@ export const GridToolbar: React.FunctionComponent<any> = ({ toolbarOptions, grid
           exportTo={grid.api.exportTo}
           filteredRecordCount={grid.state.filteredRecordCount}
         />}
-      {/* {toolbarOptions.searchText && <SearchTextInput />} */}
+      {toolbarOptions.searchText &&
+        <SearchTextInput searchText={grid.state.searchText} updateSearchText={grid.api.updateSearchText} />}
     </Toolbar>
   );
 };
