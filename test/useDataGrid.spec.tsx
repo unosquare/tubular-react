@@ -1,7 +1,7 @@
 import { ReactWrapper } from 'enzyme';
-import IDataGrid from '../src/DataGridInterfaces/IDataGrid';
-import LocalStorage from '../src/Storage/LocalStorage';
+import { IDataGrid } from '../src/DataGridInterfaces/IDataGrid';
 import useDataGrid from '../src/Hooks/useDataGrid';
+import { LocalStorage } from '../src/Storage/LocalStorage';
 import { validColumnsSample } from './utils/columns';
 import { localData } from './utils/localData';
 import { testHook } from './utils/testHook';
