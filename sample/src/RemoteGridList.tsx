@@ -14,12 +14,11 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 import {
+  LocalStorage,
   Paginator,
   SearchTextInput,
-  LocalStorage,
 } from '../../src';
 import useDataGrid from '../../src/Hooks/useDataGrid';
-import useRemoteDataSource from '../../src/Hooks/useRemoteDataSource';
 import CustomHttpClient from './CustomHttpClient';
 import columns from './data/columns';
 
@@ -42,9 +41,7 @@ const httpClient = new CustomHttpClient(
 const RemoteGridList: React.FunctionComponent = () => {
 
   const [getErrorMessage, setErrorMessage] = React.useState(null as string);
-  const [dataSource] = useRemoteDataSource(httpClient);
-
-  const grid = useDataGrid(columns, { storage: new LocalStorage(), gridName: 'RemoteGridList' }, dataSource);
+  const grid = useDataGrid(columns, { storage: new LocalStorage(), gridName: 'RemoteGridList' }, httpClient);
 
   return (
     <Paper>

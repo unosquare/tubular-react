@@ -12,12 +12,10 @@ import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import {
   DataGridTable,
-  GridToolbar,
   Paginator,
   ToolbarOptions,
 } from '../../src';
 import useDataGrid from '../../src/Hooks/useDataGrid';
-import useLocalDataSource from '../../src/Hooks/useLocalDatasource';
 import columns from './data/columns';
 import localData from './data/localData';
 
@@ -33,9 +31,7 @@ const toolbarOptions = new ToolbarOptions({
 const CustomLayoutDataGrid: React.FunctionComponent = () => {
 
   const [getErrorMessage, setErrorMessage] = React.useState(null as string);
-  const [dataSource] = useLocalDataSource(localData);
-
-  const grid = useDataGrid(columns, {}, dataSource);
+  const grid = useDataGrid(columns, {}, localData);
 
   const bodyRenderer = (row: any) => (
     <TableRow hover={true} key={row.OrderID}>

@@ -1,8 +1,10 @@
 import * as React from 'react';
-import { ColumnModel, CompareOperators, GridRequest } from 'tubular-common';
+import Transformer, { ColumnModel, CompareOperators, GridRequest, GridResponse } from 'tubular-common';
 import { LocalStorage } from '../DataSource';
 import IBaseDataSourceState from '../DataSource/IBaseDataSourceState';
 import NullStorage from '../DataSource/NullStorage';
+import ITubularHttpClient from '../utils/ITubularHttpClient';
+import TubularHttpClient from '../utils/TubularHttpClient';
 
 export interface IDataGridApi {
     exportTo: (allRows: boolean, exportFunc: any) => void;
@@ -17,8 +19,41 @@ export interface IDataGridApi {
     updateSearchText: (searchText: string) => void;
 }
 
+const getRemoteDataSource = (request: string | Request | ITubularHttpClient) =>
+    async (gridRequest: GridRequest): Promise<GridResponse> => {
+        const httpCast = request as ITubularHttpClient;
+        let httpClient: ITubularHttpClient;
+
+        if (httpCast.request) {
+            httpClient = httpCast;
+        } else {
+            httpClient = new TubularHttpClient(request);
+        }
+
+        const data = await httpClient.fetch(gridRequest);
+        if (!TubularHttpClient.isValidResponse(data)) {
+            throw new Error('Server response is a invalid Tubular object');
+        }
+
+        data.Payload = data.Payload.map((row: any) => TubularHttpClient.parsePayload(row, gridRequest.Columns));
+
+        return data;
+    };
+
+const getLocalDataSource = (source: any[]) =>
+    (request: GridRequest): Promise<GridResponse> => {
+        return new Promise((resolve, reject) => {
+            try {
+                resolve(Transformer.getResponse(request, source));
+            } catch (error) {
+                reject(error);
+            }
+        });
+    };
+
 const useDataGrid =
-    (initColumns: ColumnModel[], config: any, getAllRecords): { api: IDataGridApi, state: IBaseDataSourceState } => {
+    (initColumns: ColumnModel[], config: any, source: any[] | string | Request | ITubularHttpClient)
+        : { api: IDataGridApi, state: IBaseDataSourceState } => {
 
         const [isLoading, setIsLoading] = React.useState(false);
         const [getAnchorFilter, setAnchorFilter] = React.useState(null);
@@ -31,6 +66,7 @@ const useDataGrid =
         const [getPage, setPage] = React.useState(config.page || 0);
         const [getSearchText, setSearchText] = React.useState(config.searchText || '');
         const [getError, setError] = React.useState(null);
+        const getAllRecords = source instanceof Array ? getLocalDataSource(source) : getRemoteDataSource(source);
 
         const [getState, setState] = React.useState<any>({
             aggregate: null,

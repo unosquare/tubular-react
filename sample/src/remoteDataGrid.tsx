@@ -6,7 +6,6 @@ import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 
 import DataGrid, { LocalStorage } from '../../src';
-import useRemoteDataSource from '../../src/Hooks/useRemoteDataSource';
 import columns from './data/columns';
 
 // tslint:disable-next-line: no-var-requires
@@ -14,7 +13,6 @@ const format = require('date-fns/format');
 
 const RemoteDataGrid: React.FunctionComponent = () => {
   const [getErrorMessage, setErrorMessage] = React.useState(null as string);
-  const [dataSource] = useRemoteDataSource('https://tubular.azurewebsites.net/api/orders/paged');
   const bodyRenderer = (row: any) => (
     <TableRow hover={true} key={row.OrderID}>
       <TableCell padding='default'>{row.OrderID}</TableCell>
@@ -47,7 +45,7 @@ const RemoteDataGrid: React.FunctionComponent = () => {
       <DataGrid
         gridName='Tubular-React'
         columns={[...columns]}
-        dataSource={dataSource}
+        dataSource='https://tubular.azurewebsites.net/api/orders/paged'
         bodyRenderer={bodyRenderer}
         footerRenderer={footerRenderer}
         storage={new LocalStorage()}
