@@ -69,7 +69,7 @@ const DataGrid: React.FunctionComponent<IProps> = (props) => {
 
     return (
       <Paper className={classes.root}>
-        <GridToolbar>
+        <GridToolbar toolbarOptions={toolbarOptions} grid={grid} gridName={gridName}>
           {children}
         </GridToolbar>
         <FixedLinearProgress isLoading={grid.state.isLoading} />

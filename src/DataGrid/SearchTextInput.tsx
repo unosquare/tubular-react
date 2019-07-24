@@ -7,8 +7,6 @@ import Search from '@material-ui/icons/Search';
 
 import * as React from 'react';
 
-import { DataSourceContext } from '../DataSource';
-
 const styles: any = {
   formControl: {
     margin: '10px',

@@ -5,7 +5,6 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Popover from '@material-ui/core/Popover';
 import * as React from 'react';
-import { DataSourceContext } from '../DataSource';
 import DialogInput from './DialogInput';
 import OperatorsDropdown from './OperatorsDropdown';
 

@@ -3,7 +3,6 @@ import * as React from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import { ColumnModel } from 'tubular-common';
-import { DataSourceContext } from '../DataSource';
 
 const dropdown = {
   marginLeft: '10%',
