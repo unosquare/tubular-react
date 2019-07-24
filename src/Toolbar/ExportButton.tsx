@@ -5,11 +5,15 @@ import Tooltip from '@material-ui/core/Tooltip';
 import CloudDownload from '@material-ui/icons/CloudDownload';
 import Print from '@material-ui/icons/Print';
 import * as React from 'react';
-import { DataSourceContext } from '../DataSource';
 import { exportGrid } from './GridToolbarFunctions';
 
-export const ExportButton: React.FunctionComponent<any> = ({ type, gridName, toolTip }) => {
-    const { actions, state } = React.useContext(DataSourceContext);
+export const ExportButton: React.FunctionComponent<any> = ({
+    type,
+    gridName,
+    toolTip,
+    exportTo,
+    filteredRecordCount,
+}) => {
     const [anchorPrint, setAnchorPrint] = React.useState(null);
 
     const handlePrintMenu = (event: React.MouseEvent<HTMLElement>): void =>
@@ -22,13 +26,13 @@ export const ExportButton: React.FunctionComponent<any> = ({ type, gridName, too
         closePrint();
     };
 
-    const printCurrent = () => actions.exportTo(false, partialExport);
-    const printAll = () => actions.exportTo(true, partialExport);
+    const printCurrent = () => exportTo(false, partialExport);
+    const printAll = () => exportTo(true, partialExport);
 
     return (
         <React.Fragment>
             <IconButton
-                disabled={state.filteredRecordCount === 0}
+                disabled={filteredRecordCount === 0}
                 onClick={handlePrintMenu}
             >
                 {type === 'print' ?

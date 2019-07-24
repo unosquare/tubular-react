@@ -1,19 +1,27 @@
 import GridList from '@material-ui/core/GridList';
 import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
 import { FixedLinearProgress } from 'uno-material-ui';
 import { useResolutionSwitch } from 'uno-react';
-
 import { IDataGridStorage } from '../DataGridInterfaces';
-import { DataSourceContext } from '../DataSource';
-import ToolbarOptions from '../Models/ToolbarOptions';
-import { DataGridCard, DataGridTable, GridToolbar } from './';
-import { DataGridProvider, IDataGridContext } from './DataGridContext';
-import { Paginator } from './Paginator';
+import useDataGrid from '../Hooks/useDataGrid';
+import { Paginator } from '../Pagination';
+import { GridToolbar } from '../Toolbar/GridToolbar';
+import { ToolbarOptions } from '../Toolbar/ToolbarOptions';
+import { DataGridCard, DataGridTable } from './';
 
 const useStyles = makeStyles({
+  linearProgress: {
+    height: '30px',
+    marginTop: '-10px',
+    position: 'absolute',
+    width: '100%',
+  },
   root: {
     overflowX: 'auto',
     width: '100%',
@@ -23,89 +31,95 @@ const useStyles = makeStyles({
 const outerWidth = 800;
 const timeout = 400;
 
-interface IProps extends IDataGridContext {
+interface IProps {
+  columns: ColumnModel[];
+  dataSource: any;
+  gridName: string;
   storage?: IDataGridStorage;
-
-  bodyRenderer?(row: any, index: number, columns: ColumnModel[]): void;
-  footerRenderer?(aggregate: any): void;
+  toolbarOptions?: ToolbarOptions;
+  bodyRenderer?(row: any, index: number, columns: ColumnModel[]): React.ReactNode;
+  footerRenderer?(aggregate: any): React.ReactNode;
+  onError?(err: any): void;
   onRowClick?(ev: any): any;
 }
 
-const DataGrid: React.FunctionComponent<IProps> = ({
-  bodyRenderer,
-  footerRenderer,
-  toolbarOptions,
-  gridName,
-  children,
-  onRowClick,
-  storage,
-}) => {
+export const DataGrid: React.FunctionComponent<IProps> = (props) => {
+  const {
+    bodyRenderer,
+    columns,
+    footerRenderer,
+    dataSource,
+    toolbarOptions = props.toolbarOptions || new ToolbarOptions(),
+    gridName,
+    children,
+    onError,
+    onRowClick,
+    storage,
+  } = props;
+
   const classes = useStyles({});
-  const { state } = React.useContext(DataSourceContext);
+  const grid = useDataGrid(columns, { storage, gridName, onError }, dataSource);
   const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
 
   if (isMobileResolution) {
-    const toolbarGridOptions = new ToolbarOptions({
-      advancePagination: false,
-      bottomPager: false,
-      exportButton: false,
-      printButton: false,
-      rowsPerPageOptions: [5, 10],
-      topPager: false,
-    });
+    toolbarOptions.advancePagination = false;
+    toolbarOptions.bottomPager = false;
+    toolbarOptions.exportButton = false;
+    toolbarOptions.printButton = false;
+    toolbarOptions.rowsPerPageOptions = [5, 10];
+    toolbarOptions.topPager = false;
 
     return (
-      <DataGridProvider
-        toolbarOptions={toolbarGridOptions}
-        gridName={gridName}
-        storage={storage}
-      >
-        <Paper className={classes.root}>
-          <GridToolbar>
-            {children}
-          </GridToolbar>
-          <FixedLinearProgress isLoading={state.isLoading} />
-          <GridList
-            cellHeight='auto'
-            cols={1}
-          >
-            {
-              state.data.map((row: any, index: any) =>
-                (
-                  <DataGridCard
-                    columns={state.columns}
-                    item={row}
-                    onClickCallback={onRowClick}
-                    key={index}
-                  />
-                ))
-            }
-          </GridList>
-          <Paginator />
-        </Paper>
-      </DataGridProvider>
+      <Paper className={classes.root}>
+        <GridToolbar toolbarOptions={toolbarOptions} grid={grid} gridName={gridName}>
+          {children}
+        </GridToolbar>
+        <FixedLinearProgress isLoading={grid.state.isLoading} />
+        <GridList
+          cellHeight='auto'
+          cols={1}
+        >
+          {
+            grid.state.data.map((row: any, index: any) =>
+              (
+                <DataGridCard
+                  columns={grid.state.columns}
+                  item={row}
+                  onClickCallback={onRowClick}
+                  key={index}
+                />
+              ))
+          }
+        </GridList>
+        <Paginator grid={grid} />
+      </Paper>
     );
   }
 
+  const paginator = (
+    <Table>
+      <TableHead>
+        <TableRow>
+          <Paginator grid={grid} />
+        </TableRow>
+      </TableHead>
+    </Table>
+  );
+
   return (
-    <DataGridProvider
-      toolbarOptions={toolbarOptions}
-      gridName={gridName}
-      storage={storage}
-    >
-      <Paper style={{ overflowX: 'auto', width: '100%' }}>
-        <GridToolbar>
-          {children}
-        </GridToolbar>
-        <FixedLinearProgress isLoading={state.isLoading} />
-        <DataGridTable
-          bodyRenderer={bodyRenderer}
-          footerRenderer={footerRenderer}
-          onRowClick={onRowClick}
-        />
-      </Paper>
-    </DataGridProvider>
+    <Paper style={{ overflowX: 'auto', width: '100%' }}>
+      <GridToolbar gridName={gridName} toolbarOptions={toolbarOptions} grid={grid} />
+      {toolbarOptions.topPager && paginator}
+      <div className={classes.linearProgress}>
+        <FixedLinearProgress isLoading={grid.state.isLoading} />
+      </div>
+      <DataGridTable
+        grid={grid}
+        bodyRenderer={bodyRenderer}
+        footerRenderer={footerRenderer}
+        onRowClick={onRowClick}
+      />
+      {toolbarOptions.bottomPager && paginator}
+    </Paper>
   );
 };
-
-export default DataGrid;

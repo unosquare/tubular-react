@@ -1,10 +1,8 @@
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import TablePagination, { TablePaginationBaseProps } from '@material-ui/core/TablePagination';
+import TablePagination from '@material-ui/core/TablePagination';
 import * as React from 'react';
 import { useResolutionSwitch } from 'uno-react';
-import { DataSourceContext } from '../DataSource';
-import AdvancePaginationActions from './AdvancePaginationActions';
-import { DataGridContext } from './DataGridContext';
+import { AdvancePaginationActions } from './AdvancePaginationActions';
 
 const useStyles = makeStyles({
   caption: {
@@ -31,11 +29,10 @@ const message = (totalRecordCount: any, filteredRecordCount: any) => ({
       ? '0 records found'
       : `${from} to ${to} of ${count} from ${totalRecordCount} records`;
 
-export const Paginator: React.FunctionComponent<TablePaginationBaseProps> = (props) => {
-  const { actions, state } = React.useContext(DataSourceContext);
-  const { toolbarOptions } = React.useContext(DataGridContext);
+export const Paginator: React.FunctionComponent<any> = ({ grid, rowsPerPageOptions, advancePagination }) => {
   const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
   const classes = useStyles({});
+  const { state, api } = grid;
 
   if (!state.itemsPerPage) {
     return null;
@@ -47,16 +44,15 @@ export const Paginator: React.FunctionComponent<TablePaginationBaseProps> = (pro
       state.totalRecordCount,
       state.filteredRecordCount,
     ),
-    onChangePage: (e: any, p: any) => actions.updatePage(p),
+    onChangePage: (e: any, p: any) => api.goToPage(p),
     onChangeRowsPerPage: (e: any) =>
-      actions.updateItemPerPage(Number(e.target.value)),
-    page: state.page,
+      api.updateItemPerPage(Number(e.target.value)),
+    page: state.filteredRecordCount > 0 ? state.page : 0,
     rowsPerPage: state.itemsPerPage,
-    rowsPerPageOptions: toolbarOptions.rowsPerPageOptions || [10, 20, 50],
-    ...props,
+    rowsPerPageOptions: rowsPerPageOptions || [10, 20, 50],
   } as any;
 
-  if (toolbarOptions.advancePagination) {
+  if (advancePagination) {
     newProps.ActionsComponent = AdvancePaginationActions;
   }
 

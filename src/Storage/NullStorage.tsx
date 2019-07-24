@@ -1,7 +1,7 @@
 import { ColumnModel } from 'tubular-common';
 import { IDataGridStorage } from '../DataGridInterfaces';
 
-export default class NullStorage implements IDataGridStorage {
+export class NullStorage implements IDataGridStorage {
     public setTextSearch(textSearch: string): void {
         // do nothing
     }

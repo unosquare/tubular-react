@@ -2,16 +2,15 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
-
 import Warning from '@material-ui/icons/Warning';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
-
-import { DataSourceContext } from '../DataSource';
+import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
 import { renderCells } from '../utils';
 
 interface IProps {
-    bodyRenderer?(row: any, index: number, columns: ColumnModel[], onRowClickProxy: (ev: any) => any): void;
+    grid: IDataGrid;
+    bodyRenderer?(row: any, index: number, columns: ColumnModel[], onRowClickProxy: (ev: any) => any): React.ReactNode;
     onRowClick?(ev: any): any;
 }
 
@@ -20,8 +19,7 @@ const getStyles = (isPointer: boolean) => ({
     title: { paddingLeft: '15px' },
 });
 
-const GridBody: React.FunctionComponent<IProps> = ({ bodyRenderer, onRowClick }) => {
-    const { state } = React.useContext(DataSourceContext);
+export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, onRowClick }) => {
     // tslint:disable-next-line:no-empty
     const onRowClickProxy = onRowClick ? onRowClick : () => { };
     const styles = getStyles(Boolean(onRowClick));
@@ -42,7 +40,7 @@ const GridBody: React.FunctionComponent<IProps> = ({ bodyRenderer, onRowClick })
     const noDataRow = (
         <TableRow>
             <TableCell
-                colSpan={state.columns.filter((col: any) => col.Visible).length}
+                colSpan={grid.state.columns.filter((col: any) => col.Visible).length}
             >
                 <Typography
                     style={styles.title}
@@ -57,13 +55,12 @@ const GridBody: React.FunctionComponent<IProps> = ({ bodyRenderer, onRowClick })
 
     return (
         <TableBody>
-            {state.filteredRecordCount === 0 && !state.isLoading
+            {grid.state.filteredRecordCount === 0 && !grid.state.isLoading
                 ? noDataRow
-                : state.data
-                    .map((row: any, rowIndex: number) => bodyRenderer(row, rowIndex, state.columns, onRowClickProxy))
+                : grid.state.data
+                    .map((row: any, rowIndex: number) =>
+                        bodyRenderer(row, rowIndex, grid.state.columns, onRowClickProxy))
             }
         </TableBody>
     );
 };
-
-export default GridBody;

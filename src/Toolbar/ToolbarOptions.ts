@@ -1,4 +1,4 @@
-export default class ToolbarOptions {
+export class ToolbarOptions {
     public advancePagination: boolean;
     public bottomPager: boolean;
     public exportButton: boolean;

@@ -1,46 +1,30 @@
 import Table from '@material-ui/core/Table';
 import TableFooter from '@material-ui/core/TableFooter';
 import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 
 import * as React from 'react';
 
-import GridBody from './GridBody';
-import GridHeader from './GridHeader';
-import { Paginator } from './Paginator';
+import { ColumnModel } from 'tubular-common';
+import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
+import { GridBody } from './GridBody';
+import { GridHeader } from './GridHeader';
 
-import { DataSourceContext } from '../DataSource';
-import { DataGridContext } from './DataGridContext';
+interface IProps {
+    grid: IDataGrid;
+    bodyRenderer?(row: any, index: number, columns: ColumnModel[]): React.ReactNode;
+    footerRenderer?(aggregate: any): React.ReactNode;
+    onRowClick?(ev: any): any;
+}
 
-export const DataGridTable: React.FunctionComponent<any> = ({
-    bodyRenderer,
-    footerRenderer,
-    onRowClick,
-}) => {
-    const { state } = React.useContext(DataSourceContext);
-    const { toolbarOptions } = React.useContext(DataGridContext);
-
+export const DataGridTable: React.FunctionComponent<IProps> = (props) => {
     return (
         <Table>
             <TableHead>
-                {toolbarOptions.topPager && (
-                    <TableRow>
-                        <Paginator />
-                    </TableRow>
-                )}
-                <GridHeader />
+                <GridHeader grid={props.grid} />
             </TableHead>
-            <GridBody
-                bodyRenderer={bodyRenderer}
-                onRowClick={onRowClick}
-            />
+            <GridBody grid={props.grid} bodyRenderer={props.bodyRenderer} onRowClick={props.onRowClick} />
             <TableFooter>
-                {footerRenderer && footerRenderer(state.aggregate)}
-                {toolbarOptions.bottomPager && (
-                    <TableRow>
-                        <Paginator />
-                    </TableRow>
-                )}
+                {props.footerRenderer && props.footerRenderer(props.grid.state.aggregate)}
             </TableFooter>
         </Table>
     );

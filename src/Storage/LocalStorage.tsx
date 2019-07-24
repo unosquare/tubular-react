@@ -1,15 +1,17 @@
 import { ColumnModel } from 'tubular-common';
 import { IDataGridStorage } from '../DataGridInterfaces';
 
-export default class LocalStorage implements IDataGridStorage {
-    private name: string;
+export class LocalStorage implements IDataGridStorage {
 
-    public constructor(name: string) {
-        this.name = name;
+    public constructor(private name?: string) {
 
         if (!window || !window.localStorage) {
             throw new Error('The localStorage is not present.');
         }
+    }
+
+    public setGridName(name: string) {
+        this.name = name;
     }
 
     public setTextSearch(textSearch: string): void {
