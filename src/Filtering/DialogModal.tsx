@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Popover from '@material-ui/core/Popover';
 import * as React from 'react';
 import { DialogInput } from './DialogInput';
-import OperatorsDropdown from './OperatorsDropdown';
+import { OperatorsDropdown } from './OperatorsDropdown';
 
 import { ColumnDataType, ColumnModel, CompareOperators } from 'tubular-common';
 import { IFilterWrapper } from '../DataGridInterfaces/IFilterWrapper';
