@@ -110,11 +110,9 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
     <Paper style={{ overflowX: 'auto', width: '100%' }}>
       <GridToolbar gridName={gridName} toolbarOptions={toolbarOptions} grid={grid} />
       {toolbarOptions.topPager && paginator}
-      {
-        <div className={classes.linearProgress}>
-          <FixedLinearProgress isLoading={grid.state.isLoading} />
-        </div>
-      }
+      <div className={classes.linearProgress}>
+        <FixedLinearProgress isLoading={grid.state.isLoading} />
+      </div>
       <DataGridTable
         grid={grid}
         bodyRenderer={bodyRenderer}
