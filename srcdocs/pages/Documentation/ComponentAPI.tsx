@@ -29,18 +29,18 @@ const useStyles = makeStyles({
 
 const remoteDataSource =
     // tslint:disable-next-line:max-line-length
-    "... \nconst MyComponent = () => {\n        return (\n            <div className='root'>\n                <DataGrid\n                    gridName='Tubular-React'\n                />\n            </div>\n        );\n};\n\n\n/*\n Use the component withRemoteDataSource to wrap your component\n and columns definition among the data obtained from the URL.\n\n withRemoteDataSource will set an initial context for your grid.\n*/\nexport default withRemoteDataSource(BasicFeatures, columns, 'https://tubular.azurewebsites.net/api/orders/paged');\n";
+    '... \nconst MyComponent = () => {\n        return (\n            <div className="root">\n                <DataGrid\n                    gridName="Tubular-React"\n                />\n            </div>\n        );\n};\n\n\n/*\n Use the component withRemoteDataSource to wrap your component\n and columns definition among the data obtained from the URL.\n\n withRemoteDataSource will set an initial context for your grid.\n*/\nexport default withRemoteDataSource(BasicFeatures, columns, "https://tubular.azurewebsites.net/api/orders/paged");\n';
 const localDataSource =
     // tslint:disable-next-line:max-line-length
-    "... \nconst MyComponent = () => {\n        return (\n            <div className='root'>\n                <DataGrid\n                    gridName='Tubular-React'\n                />\n            </div>\n        );\n};\n\n\nexport default withRemoteDataSource(BasicFeatures, columns, localData)";
+    '... \nconst MyComponent = () => {\n        return (\n            <div className="root">\n                <DataGrid\n                    gridName="Tubular-React"\n                />\n            </div>\n        );\n};\n\n\nexport default withRemoteDataSource(BasicFeatures, columns, localData)';
 const localDataLink =
     // tslint:disable-next-line:max-line-length
     'https://github.com/unosquare/tubular-react/blob/master/sample/src/data/localData.ts';
 
 export default () => {
-    const classes = useStyles();
+    const classes = useStyles({});
     return (
-        <Grid container={true} spacing={24} className={classes.container}>
+        <Grid container={true} className={classes.container}>
             <Grid item={true} xs={12}>
                 <Paper className={classes.paper} style={{ overflowX: 'auto' }}>
                     <Typography variant='h4' paragraph={true}> Column Model </Typography>

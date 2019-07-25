@@ -75,7 +75,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "tubular-common": "^1.4.1",
-    "uno-material-ui": "^1.2.1",
+    "uno-material-ui": "^1.2.2",
     "uno-react": "^0.7.3"
   },
   "devDependencies": {

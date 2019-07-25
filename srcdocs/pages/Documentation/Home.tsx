@@ -59,7 +59,7 @@ const rows = [
   createData('Tubular for Angular6 (formerly Tubular2)', 'Library', 'Angular6',
     'New Tubular2 with Angular6 (Angular2) and Angular Material 2.',
     'https://github.com/unosquare/tubular2'),
-  createData('Tubular Common', 'Library', 'Javascript/Typescript	',
+  createData('Tubular Common', 'Library', 'Javascript/Typescript',
     'Tubular Common provides TypeScript and Javascript models and data transformer to use any Tubular DataGrid component with an array of Javascript objects.',
     'https://github.com/unosquare/tubular-common'),
   createData('Tubular Dotnet', 'Backend library', 'C#/.NET Core',
@@ -68,22 +68,22 @@ const rows = [
   createData('Tubular Nodejs', 'Backend Library', '	Javascript',
     'Tubular Node.js provides an easy way to integrate Tubular Angular Components easily with any Node.js WebApi library.',
     'https://github.com/unosquare/tubular-nodejs'),
-  createData('Tubular Boilerplate C#', 'Boilerplate	', '	C#',
+  createData('Tubular Boilerplate C#', 'Boilerplate	', 'C#',
     'Tubular Directives Boilerplate (includes AngularJS and Bootstrap).',
     'https://github.com/unosquare/tubular-boilerplate-csharp'),
   createData('Tubular Boilerplate', 'Boilerplate', 'Javascript/AngularJS',
     'Tubular Directives Boilerplate (includes AngularJS and Bootstrap).',
     'https://github.com/unosquare/tubular-boilerplate'),
-  createData('Tubular ASP.NET Core 2.0 Boilerplate', 'Boilerplate', '	C#/.NET Core',
+  createData('Tubular ASP.NET Core 2.0 Boilerplate', 'Boilerplate', 'C#/.NET Core',
     'Tubular Directives Boilerplate (includes AngularJS and Bootstrap).',
     'https://github.com/unosquare/tubular-aspnet-core-boilerplate'),
 ];
 
 export default () => {
-  const classes = useStyles();
+  const classes = useStyles({});
 
   return (
-    <Grid container={true} spacing={24} className={classes.container}>
+    <Grid container={true} className={classes.container}>
       <Paper className={classes.paper}>
         <img src='https://unosquare.github.io/tubular-react/static/tubularRed.png' />
         <Divider />
@@ -155,13 +155,14 @@ export default () => {
         </Typography>
         <Divider />
         <Typography variant='subtitle1' paragraph={true}>
-          Tubular-React is available as a <a
+          Tubular-React is available as a
+          <a
             href='https://www.npmjs.com/package/tubular-react'
             target='_blank'
             className={classes.link}
           >
             npm package
-        </a>
+          </a>
         </Typography>
         <Typography variant='h5' paragraph={true}>
           Dependencies

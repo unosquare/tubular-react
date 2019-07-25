@@ -17,10 +17,7 @@ import { DataGridCard, DataGridTable } from './';
 
 const useStyles = makeStyles({
   linearProgress: {
-    height: '30px',
     marginTop: '-10px',
-    position: 'absolute',
-    width: '100%',
   },
   root: {
     overflowX: 'auto',
@@ -91,7 +88,11 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
               ))
           }
         </GridList>
-        <Paginator grid={grid} />
+        <Paginator
+          advancePagination={toolbarOptions.advancePagination}
+          rowsPerPageOptions={toolbarOptions.rowsPerPageOptions}
+          grid={grid}
+        />
       </Paper>
     );
   }
@@ -100,7 +101,11 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
     <Table>
       <TableHead>
         <TableRow>
-          <Paginator grid={grid} />
+        <Paginator
+          advancePagination={toolbarOptions.advancePagination}
+          rowsPerPageOptions={toolbarOptions.rowsPerPageOptions}
+          grid={grid}
+        />
         </TableRow>
       </TableHead>
     </Table>

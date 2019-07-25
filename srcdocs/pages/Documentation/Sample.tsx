@@ -18,16 +18,12 @@ import Highlight from 'react-highlight';
 import { HashLink } from 'react-router-hash-link';
 import BasicFeatures from '../../components/BasicFeatures';
 import GitHubIcon from '../../components/Github';
-import GridDialog from '../../components/GridDialog';
 import SampleButtonsFeatures from '../../components/SampleButtonsFeatures';
 import SampleFeatures from '../../components/SampleFeatures';
-import SampleGridList from '../../components/SampleGridList';
 
 import {
   basicFeatures,
   buttonFeatures,
-  gridDialog,
-  gridList,
   simpleFeatures,
 } from '../../utils/codeSnipetExamples';
 
@@ -284,61 +280,6 @@ export default withStyles(styles)(
                   </Grid>
                 </Grid>
                 <Divider />
-                <Grid item={true} xs={12} className={classes.paper}>
-                  <a id='grid-list' />
-                  <Typography variant='h5' gutterBottom={true}>
-                    Give another presentation to your data.
-                  </Typography>
-                  <Typography variant='h6'>
-                    You can provide to your data a styled view that allows you
-                    perform free-text searches and immediately reflect the
-                    changes over your data.
-                  </Typography>
-                  <Grid item={true} xs={12}>
-                    <div style={bar}>
-                      <Tooltip title='Tubular GitHub Repo'>
-                        <IconButton
-                          component='a'
-                          href='https://github.com/unosquare/tubular-react'
-                          target='_blank'
-                          color='inherit'
-                        >
-                          <GitHubIcon />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip
-                        title={
-                          this.state.openGridList ? 'Hide Code' : 'View Code'
-                        }
-                      >
-                        <IconButton onClick={this.handleClickGrid}>
-                          <CodeIcon />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title='Edit in CodeSandbox'>
-                        <IconButton
-                          component='a'
-                          href='https://codesandbox.io/s/8ywpr3ooq8'
-                          target='_blank'
-                          color='inherit'
-                        >
-                          <CreateIcon />
-                        </IconButton>
-                      </Tooltip>
-                    </div>
-                    <Collapse in={this.state.openGridList} timeout='auto'>
-                      <Paper>
-                        <Highlight
-                          language='javascript'
-                          className={classes.code}
-                        >
-                          {gridList}
-                        </Highlight>
-                      </Paper>
-                    </Collapse>
-                    <SampleGridList />
-                  </Grid>
-                </Grid>
               </Paper>
             </Grid>
             <Grid item={true} xs={2} className={classes.paper}>
@@ -360,11 +301,6 @@ export default withStyles(styles)(
                 <ListItem>
                   <HashLink className={classes.link} to='/tubular-react/Sample#func-btns'>
                     <ListItemText primary='Toolbar Buttons' />
-                  </HashLink>
-                </ListItem>
-                <ListItem>
-                  <HashLink className={classes.link} to='/tubular-react/Sample#grid-list'>
-                    <ListItemText primary='Grid List' />
                   </HashLink>
                 </ListItem>
               </List>

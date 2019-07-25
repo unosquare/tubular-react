@@ -23,74 +23,109 @@ const SampleGrid = withRemoteDataSource(
 
 ReactDOM.render(<SampleGrid />, document.getElementById('root'));`;
 
-export const basicFeatures = `import * as React from 'react';
+export const advancedPaginationGrid = `
+import * as React from 'react';
+import { DataGrid } from 'tubular-react';
+import { ColumnDataType, ColumnModel } from 'tubular-common';
 
-import DataGrid, { ToolbarOptions, withRemoteDataSource } from 'tubular-react';
-import { AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection } from 'tubular-common';
 
-//  First of all, you must define your columns model.
 const columns = [
-    new ColumnModel('OrderID',
-        {
-            DataType: ColumnDataType.NUMERIC,
-            Filterable: true,
-            IsKey: true,
-            Label: 'ID',
-            SortDirection: ColumnSortDirection.ASCENDING,
-            SortOrder: 1,
-            Sortable: true
-        }
-    ),
-    new ColumnModel('CustomerName',
-        {
-            Aggregate: AggregateFunctions.COUNT,
-            Filterable: true,
-            Searchable: true,
-            Sortable: true
-        }
-    ),
-    new ColumnModel('ShippedDate',
-        {
-            DataType: ColumnDataType.DATE_TIME,
-            Filterable: true,
-            Sortable: true
-        }
-    ),
-    new ColumnModel('ShipperCity'),
-    new ColumnModel('Amount',
-        {
-            DataType: ColumnDataType.NUMERIC,
-            Sortable: true
-        }
-    ),
-    new ColumnModel('IsShipped',
-        {
-            DataType: ColumnDataType.BOOLEAN,
-            Filterable: true,
-            Sortable: true
-        }
-    )
+  new ColumnModel('OrderID',
+      {
+          DataType: ColumnDataType.NUMERIC,
+          Label: 'ID',
+      }
+  ),
+  new ColumnModel('CustomerName'),
+  new ColumnModel('ShippedDate',
+      {
+          DataType: ColumnDataType.DATE_TIME,
+      }
+  ),
+  new ColumnModel('ShipperCity'),
+  new ColumnModel('Amount',
+      {
+          DataType: ColumnDataType.NUMERIC,
+      }
+  ),
+  new ColumnModel('IsShipped',
+      {
+          DataType: ColumnDataType.BOOLEAN,
+      }
+  )
 ];
 
-const toolbarOptions = new ToolbarOptions();
-toolbarOptions.advancePagination = false;
-toolbarOptions.exportButton = false;
-toolbarOptions.printButton = false;
-toolbarOptions.searchText = false;
+export default () => {
+  const toolbarOptions = new ToolbarOptions({
+      advancePagination: true,
+      bottomPager: false,
+      exportButton: false,
+      printButton: false,
+      searchText: false,
+      topPager: true,
+  });
 
-const MyComponent = () => (
-    <div className='root'>
-        <DataGrid gridName='BasicFeatures' toolbarOptions={toolbarOptions} />
-    </div>
-);
+  return (
+      <DataGrid
+          columns={columns}
+          dataSource={'https://tubular.azurewebsites.net/api/orders/paged'}
+          gridName='Grid'
+          toolbarOptions={toolbarOptions}
+      />
+  );
+};`;
 
-/*
- Use the component withRemoteDataSource to wrap your component
- and columns definition among the data obtained from the URL.
+export const basicPaginationGrid = `
+import * as React from 'react';
+import { DataGrid } from 'tubular-react';
+import { ColumnDataType, ColumnModel } from 'tubular-common';
 
- withRemoteDataSource will set an initial context for your grid.
-*/
-export default withRemoteDataSource(MyComponent, columns, 'http://tubular.azurewebsites.net/api/orders/paged');`;
+
+const columns = [
+  new ColumnModel('OrderID',
+      {
+          DataType: ColumnDataType.NUMERIC,
+          Label: 'ID',
+      }
+  ),
+  new ColumnModel('CustomerName'),
+  new ColumnModel('ShippedDate',
+      {
+          DataType: ColumnDataType.DATE_TIME,
+      }
+  ),
+  new ColumnModel('ShipperCity'),
+  new ColumnModel('Amount',
+      {
+          DataType: ColumnDataType.NUMERIC,
+      }
+  ),
+  new ColumnModel('IsShipped',
+      {
+          DataType: ColumnDataType.BOOLEAN,
+      }
+  )
+];
+
+export default () => {
+  const toolbarOptions = new ToolbarOptions({
+      advancePagination: false,
+      bottomPager: true,
+      exportButton: false,
+      printButton: false,
+      searchText: false,
+      topPager: true,
+  });
+
+  return (
+      <DataGrid
+          columns={columns}
+          dataSource={'https://tubular.azurewebsites.net/api/orders/paged'}
+          gridName='Grid'
+          toolbarOptions={toolbarOptions}
+      />
+  );
+};`;
 
 export const buttonFeatures = `import * as React from 'react';
 import IconButton from '@material-ui/core/IconButton';
