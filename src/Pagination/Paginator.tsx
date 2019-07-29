@@ -56,7 +56,7 @@ export const Paginator: React.FunctionComponent<any> = ({ grid, rowsPerPageOptio
   newProps.ActionsComponent = () => (
     <AdvancePaginationActions
       count={newProps.count}
-      isAdvance={advancePagination}
+      isAdvanced={advancePagination}
       isLoading={newProps.isLoading}
       onChangePage={newProps.onChangePage}
       page={newProps.page}

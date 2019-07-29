@@ -14,7 +14,7 @@ const useStyles = makeStyles({
 
 interface IProps {
   count: number;
-  isAdvance: boolean;
+  isAdvanced: boolean;
   isLoading: boolean;
   page: number;
   rowsPerPage: number;
@@ -54,7 +54,7 @@ const getPages = (currentPage: any, totalRows: any, rowsPerPage: any) => {
 
 export const AdvancePaginationActions: React.FunctionComponent<IProps> = ({
   count,
-  isAdvance,
+  isAdvanced,
   isLoading,
   page,
   rowsPerPage,
@@ -75,7 +75,7 @@ export const AdvancePaginationActions: React.FunctionComponent<IProps> = ({
 
   return (
     <div className={classes.root}>
-      {isAdvance &&
+      {isAdvanced &&
         <IconButton
           onClick={gotoFirstPage}
           disabled={canNotBack}
@@ -92,7 +92,7 @@ export const AdvancePaginationActions: React.FunctionComponent<IProps> = ({
         <KeyboardArrowLeft />
       </IconButton>
 
-      {isAdvance &&
+      {isAdvanced &&
         pages.map((value) => (
           <IconButton
             key={value}
@@ -114,7 +114,7 @@ export const AdvancePaginationActions: React.FunctionComponent<IProps> = ({
         <KeyboardArrowRight />
       </IconButton>
 
-      {isAdvance &&
+      {isAdvanced &&
         <IconButton
           onClick={gotoLastPage}
           disabled={canNotFwd}
