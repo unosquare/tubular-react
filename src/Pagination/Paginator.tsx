@@ -40,6 +40,7 @@ export const Paginator: React.FunctionComponent<any> = ({ grid, rowsPerPageOptio
 
   const newProps = {
     count: state.filteredRecordCount,
+    isLoading: state.isLoading,
     labelDisplayedRows: message(
       state.totalRecordCount,
       state.filteredRecordCount,
@@ -52,9 +53,16 @@ export const Paginator: React.FunctionComponent<any> = ({ grid, rowsPerPageOptio
     rowsPerPageOptions: rowsPerPageOptions || [10, 20, 50],
   } as any;
 
-  if (advancePagination) {
-    newProps.ActionsComponent = AdvancePaginationActions;
-  }
+  newProps.ActionsComponent = () => (
+    <AdvancePaginationActions
+      count={newProps.count}
+      isAdvance={advancePagination}
+      isLoading={newProps.isLoading}
+      onChangePage={newProps.onChangePage}
+      page={newProps.page}
+      rowsPerPage={newProps.rowsPerPage}
+    />
+  );
 
   return (
     <TablePagination

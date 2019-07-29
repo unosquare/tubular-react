@@ -14,6 +14,8 @@ const useStyles = makeStyles({
 
 interface IProps {
   count: number;
+  isAdvance: boolean;
+  isLoading: boolean;
   page: number;
   rowsPerPage: number;
   onChangePage(event: React.MouseEvent<HTMLElement>, page: number): void;
@@ -52,6 +54,8 @@ const getPages = (currentPage: any, totalRows: any, rowsPerPage: any) => {
 
 export const AdvancePaginationActions: React.FunctionComponent<IProps> = ({
   count,
+  isAdvance,
+  isLoading,
   page,
   rowsPerPage,
   onChangePage,
@@ -66,19 +70,20 @@ export const AdvancePaginationActions: React.FunctionComponent<IProps> = ({
   const gotoNextPage = gotoPage(page + 1);
   const gotoLastPage = gotoPage(Math.max(0, lastPage));
 
-  const canNotBack = page === 0;
-  const canNotFwd = page === lastPage;
+  const canNotBack = page === 0 || isLoading;
+  const canNotFwd = page === lastPage || isLoading;
 
   return (
     <div className={classes.root}>
-      <IconButton
-        onClick={gotoFirstPage}
-        disabled={canNotBack}
-        aria-label='First Page'
-      >
-        <FirstPage />
-      </IconButton>
-
+      {isAdvance &&
+        <IconButton
+          onClick={gotoFirstPage}
+          disabled={canNotBack}
+          aria-label='First Page'
+        >
+          <FirstPage />
+        </IconButton>
+      }
       <IconButton
         onClick={gotoPrevPage}
         disabled={canNotBack}
@@ -87,17 +92,19 @@ export const AdvancePaginationActions: React.FunctionComponent<IProps> = ({
         <KeyboardArrowLeft />
       </IconButton>
 
-      {pages.map((value) => (
-        <IconButton
-          key={value}
-          onClick={gotoPage(value)}
-          disabled={value >= Math.ceil(count / rowsPerPage)}
-          aria-label={`Page ${value + 1}`}
-          color={value === page ? 'primary' : 'default'}
-        >
-          {value + 1}
-        </IconButton>
-      ))}
+      {isAdvance &&
+        pages.map((value) => (
+          <IconButton
+            key={value}
+            onClick={gotoPage(value)}
+            disabled={value >= Math.ceil(count / rowsPerPage) || isLoading}
+            aria-label={`Page ${value + 1}`}
+            color={value === page ? 'primary' : 'default'}
+          >
+            {value + 1}
+          </IconButton>
+        ))
+      }
 
       <IconButton
         onClick={gotoNextPage}
@@ -107,13 +114,15 @@ export const AdvancePaginationActions: React.FunctionComponent<IProps> = ({
         <KeyboardArrowRight />
       </IconButton>
 
-      <IconButton
-        onClick={gotoLastPage}
-        disabled={canNotFwd}
-        aria-label='Last Page'
-      >
-        <LastPage />
-      </IconButton>
+      {isAdvance &&
+        <IconButton
+          onClick={gotoLastPage}
+          disabled={canNotFwd}
+          aria-label='Last Page'
+        >
+          <LastPage />
+        </IconButton>
+      }
     </div>
   );
 };
