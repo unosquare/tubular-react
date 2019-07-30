@@ -5,32 +5,12 @@ import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
 import { useToggle } from 'uno-react';
 import FeatureSample from '../../../components/FeatureSample';
-import AdvancedGrid from '../../../components/Pagination/AdvancedPaginationGrid';
-import BasicGrid from '../../../components/Pagination/BasicPaginationGrid';
+import {AdvancedPagination, BasicPagination} from '../../../components/Options/Pagination';
 import TableOfContent from '../../../components/TableOfContent';
-import { advancedPaginationGrid, basicPaginationGrid } from '../../../utils/codeSnipetExamples';
+import featuresStyles from '../../../utils/featuresStyles';
+import { advancedPaginationGrid, basicPaginationGrid } from '../../../utils/paginationCodeSamples';
 
-const useStyles = makeStyles(() => ({
-    container: {
-        margin: '0',
-        padding: '30px',
-        width: '100%',
-    },
-    content: {
-        marginTop: '10px',
-    },
-    description: {
-        marginTop: '20px',
-    },
-    link: {
-        color: '#000',
-        textDecoration: 'none',
-    },
-    paper: {
-        padding: '20px',
-        paddingTop: '0px',
-    },
-}));
+const useStyles = makeStyles(featuresStyles);
 
 export default () => {
     const classes = useStyles({});
@@ -52,7 +32,7 @@ export default () => {
         description: basicDescription,
         id: 'BasicPagination',
         open: openBasic,
-        sample: BasicGrid,
+        options: BasicPagination,
         toggle: toggleOpenBasic,
     };
 
@@ -61,7 +41,7 @@ export default () => {
         description: advancedDescription,
         id: 'AdvancedPagination',
         open: openAdvanced,
-        sample: AdvancedGrid,
+        options: AdvancedPagination,
         toggle: toggleOpenAdvanced,
     };
 

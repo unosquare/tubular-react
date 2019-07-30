@@ -20,6 +20,8 @@ const useStyles = makeStyles(({ palette }: any) => ({
         position: 'initial',
     },
     details: {
+        display: 'flex',
+        flexDirection: 'column',
         padding: '0px',
     },
     icon: {
@@ -65,9 +67,14 @@ export default () => {
                         <Typography>Features</Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails className={classes.details}>
-                        <Link to='/tubular-react/features/pagination' className={classes.lastLink}>
+                        <Link to='/tubular-react/features/pagination' className={classes.link}>
                             <ListItem button={true}>
                                 <ListItemText primary='Pagination' />
+                            </ListItem>
+                        </Link>
+                        <Link to='/tubular-react/features/toolbar' className={classes.lastLink}>
+                            <ListItem button={true}>
+                                <ListItemText primary='Toolbar' />
                             </ListItem>
                         </Link>
                         <Divider />

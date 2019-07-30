@@ -9,6 +9,7 @@ import 'highlight.js/styles/an-old-hope.css';
 import * as React from 'react';
 import Highlight from 'react-highlight';
 import { humanize } from 'uno-react';
+import CustomizableGrid from './CustomizableGrid';
 
 const useStyles = makeStyles({
     activeIcon: {
@@ -31,9 +32,6 @@ const useStyles = makeStyles({
         marginLeft: 'auto',
         padding: '0px',
         width: '40px',
-    },
-    paper: {
-        padding: 20,
     },
     row: {
         display: 'flex',
@@ -71,7 +69,7 @@ export default ({ data }: any) => {
                     </Highlight>
                 </Paper>
             </Collapse>
-            {data.sample()}
+            <CustomizableGrid toolbarOptions={data.options} />
         </div>
     );
 };
