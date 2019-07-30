@@ -10,8 +10,13 @@ import { renderCells } from '../utils';
 
 interface IProps {
     grid: IDataGrid;
-    bodyRenderer?(row: any, index: number, columns: ColumnModel[], onRowClickProxy: (ev: any) => any): React.ReactNode;
-    onRowClick?(ev: any): any;
+    bodyRenderer?(
+        row: any,
+        index: number,
+        columns: ColumnModel[],
+        onRowClickProxy: (ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => React.MouseEventHandler<any>,
+    ): React.ReactNode;
+    onRowClick?(ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>): React.MouseEventHandler<any>;
 }
 
 const getStyles = (isPointer: boolean) => ({
@@ -21,7 +26,9 @@ const getStyles = (isPointer: boolean) => ({
 
 export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, onRowClick }) => {
     // tslint:disable-next-line:no-empty
-    const onRowClickProxy = onRowClick ? onRowClick : () => { };
+    const onRowClickProxy: (ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => React.MouseEventHandler<any> =
+        onRowClick ? onRowClick : (ev: any) => ev;
+
     const styles = getStyles(Boolean(onRowClick));
 
     if (!bodyRenderer) {

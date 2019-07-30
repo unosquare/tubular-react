@@ -21,7 +21,7 @@ interface IProps {
   onChangePage(event: React.MouseEvent<HTMLElement>, page: number): void;
 }
 
-const getPages = (currentPage: any, totalRows: any, rowsPerPage: any) => {
+const getPages = (currentPage: number, totalRows: number, rowsPerPage: number) => {
   const pages = [];
 
   // Default page limits

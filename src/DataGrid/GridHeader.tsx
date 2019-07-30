@@ -13,12 +13,12 @@ import { DialogModal } from '../Filtering/DialogModal';
 interface IGridHeaderCellProps {
   column: ColumnModel;
   key: string;
-  setActiveColumn: (column: any, event: React.MouseEvent<HTMLElement>) => void;
+  setActiveColumn: (column: ColumnModel, event: React.MouseEvent<HTMLElement>) => void;
   sortColumn: (property: string) => void;
 }
 
 export const GridHeaderCell: React.FunctionComponent<IGridHeaderCellProps> =
-  ({ column, sortColumn, setActiveColumn }: any) => {
+  ({ column, sortColumn, setActiveColumn }) => {
     const sort = () => sortColumn(column.Name);
     const handleClick = (e: any) => setActiveColumn(column, e);
 
@@ -74,7 +74,7 @@ interface IProps {
   grid: IDataGrid;
 }
 
-export const GridHeader: React.FunctionComponent<IProps> = ({ grid }: any) => {
+export const GridHeader: React.FunctionComponent<IProps> = ({ grid }) => {
   const [anchorFilter, setAnchorFilter] = React.useState(null);
 
   const setActiveColumn = (column: ColumnModel, event: React.MouseEvent<HTMLElement>) => {
@@ -98,8 +98,8 @@ export const GridHeader: React.FunctionComponent<IProps> = ({ grid }: any) => {
           handleFilterChange={grid.api.handleFilterChange}
         />}
       {grid.state.columns
-        .filter((col: any) => col.Visible)
-        .map((column: any) =>
+        .filter((col: ColumnModel) => col.Visible)
+        .map((column: ColumnModel) =>
           <GridHeaderCell
             key={column.Name}
             column={column}
