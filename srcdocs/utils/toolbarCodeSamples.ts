@@ -30,25 +30,23 @@ const columns = [
   )
 ];
 
-export default () => {
-  const toolbarOptions = new ToolbarOptions({
-      advancePagination: false,
-      bottomPager: false,
-      exportButton: true,
-      printButton: false,
-      searchText: false,
-      topPager: false,
-  });
+const toolbarOptions = new ToolbarOptions({
+    advancePagination: false,
+    bottomPager: false,
+    exportButton: true,
+    printButton: false,
+    searchText: false,
+    topPager: false,
+});
 
-  return (
+export default () => (
       <DataGrid
           columns={columns}
           dataSource={'https://tubular.azurewebsites.net/api/orders/paged'}
           gridName='Grid'
           toolbarOptions={toolbarOptions}
       />
-  );
-};`;
+);`;
 
 export const printButtonGrid = `
 import * as React from 'react';
@@ -82,25 +80,23 @@ const columns = [
   )
 ];
 
-export default () => {
-  const toolbarOptions = new ToolbarOptions({
-      advancePagination: false,
-      bottomPager: false,
-      exportButton: false,
-      printButton: true,
-      searchText: false,
-      topPager: false,
-  });
+const toolbarOptions = new ToolbarOptions({
+    advancePagination: false,
+    bottomPager: false,
+    exportButton: false,
+    printButton: true,
+    searchText: false,
+    topPager: false,
+});
 
-  return (
+export default () => (
       <DataGrid
           columns={columns}
           dataSource={'https://tubular.azurewebsites.net/api/orders/paged'}
           gridName='Grid'
           toolbarOptions={toolbarOptions}
       />
-  );
-};`;
+);`;
 
 export const searchTextGrid = `
 import * as React from 'react';
@@ -137,22 +133,20 @@ const columns = [
   )
 ];
 
-export default () => {
-  const toolbarOptions = new ToolbarOptions({
-      advancePagination: false,
-      bottomPager: false,
-      exportButton: false,
-      printButton: false,
-      searchText: true,
-      topPager: false,
-  });
+const toolbarOptions = new ToolbarOptions({
+    advancePagination: false,
+    bottomPager: false,
+    exportButton: false,
+    printButton: false,
+    searchText: true,
+    topPager: false,
+});
 
-  return (
+export default () => (
       <DataGrid
           columns={columns}
           dataSource={'https://tubular.azurewebsites.net/api/orders/paged'}
           gridName='Grid'
           toolbarOptions={toolbarOptions}
       />
-  );
-};`;
+);`;
