@@ -7,6 +7,7 @@ import FilterList from '@material-ui/icons/FilterList';
 import * as React from 'react';
 import { ColumnModel, ColumnSortDirection, CompareOperators } from 'tubular-common';
 import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
+import { IFilterWrapper } from '../DataGridInterfaces/IFilterWrapper';
 import { DialogModal } from '../Filtering/DialogModal';
 
 interface IGridHeaderCellProps {
@@ -74,14 +75,26 @@ interface IProps {
 }
 
 export const GridHeader: React.FunctionComponent<IProps> = ({ grid }: any) => {
+  const [anchorFilter, setAnchorFilter] = React.useState(null);
+
+  const setActiveColumn = (column: ColumnModel, event: React.MouseEvent<HTMLElement>) => {
+    grid.api.setActiveColumn(column);
+    setAnchorFilter(event.currentTarget);
+  };
+
+  const setFilter = (filter: IFilterWrapper) => {
+    grid.api.setFilter(filter);
+    setAnchorFilter(null);
+  };
+
   return (
     <TableRow>
       {grid.state.activeColumn &&
         <DialogModal
           activeColumn={grid.state.activeColumn}
-          anchorFilter={grid.state.anchorFilter}
-          setAnchorFilter={grid.api.setAnchorFilter}
-          setFilter={grid.api.setFilter}
+          anchorFilter={anchorFilter}
+          setAnchorFilter={setAnchorFilter}
+          setFilter={setFilter}
           handleFilterChange={grid.api.handleFilterChange}
         />}
       {grid.state.columns
@@ -91,7 +104,7 @@ export const GridHeader: React.FunctionComponent<IProps> = ({ grid }: any) => {
             key={column.Name}
             column={column}
             sortColumn={grid.api.sortColumn}
-            setActiveColumn={grid.api.setActiveColumn}
+            setActiveColumn={setActiveColumn}
           />,
         )}
     </TableRow>

@@ -40,7 +40,6 @@ export const Paginator: React.FunctionComponent<any> = ({ grid, rowsPerPageOptio
 
   const newProps = {
     count: state.filteredRecordCount,
-    isLoading: state.isLoading,
     labelDisplayedRows: message(
       state.totalRecordCount,
       state.filteredRecordCount,

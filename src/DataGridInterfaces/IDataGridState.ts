@@ -4,7 +4,6 @@ import { IDataGridStorage } from './IDataGridStorage';
 export interface IDataGridState {
     activeColumn: any;
     aggregate: any;
-    anchorFilter: any;
     columns: ColumnModel[];
     data: any[];
     error: any;
