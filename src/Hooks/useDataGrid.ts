@@ -44,7 +44,6 @@ const useDataGrid =
         : IDataGrid => {
 
         const [isLoading, setIsLoading] = React.useState(false);
-        const [getAnchorFilter, setAnchorFilter] = React.useState(null);
         const [getColumns, setColumns] = React.useState(initColumns);
         const [initialized, setInitialized] = React.useState(false);
         const [getActiveColumn, setActiveColumn] = React.useState(null);
@@ -131,13 +130,7 @@ const useDataGrid =
                     setError(err);
                 }
             },
-            setActiveColumn: (column: ColumnModel, event: React.MouseEvent<HTMLElement>) => {
-                setActiveColumn(column);
-                setAnchorFilter(event ? event.currentTarget : null);
-            },
-            setAnchorFilter: (anchorEl: HTMLElement) => {
-                setAnchorFilter(anchorEl);
-            },
+            setActiveColumn,
             setFilter: (value: any) => {
 
                 const columns = [...getColumns];
@@ -153,7 +146,6 @@ const useDataGrid =
                     ...value,
                 };
 
-                setAnchorFilter(null);
                 setColumns([...columns]);
             },
             sortColumn: (property: string) => {
@@ -224,7 +216,6 @@ const useDataGrid =
         const state = {
             ...getState,
             activeColumn: getActiveColumn,
-            anchorFilter: getAnchorFilter,
             columns: getColumns,
             error: getError,
             initialized,

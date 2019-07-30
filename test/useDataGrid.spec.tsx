@@ -32,10 +32,6 @@ describe('useDataGrid', () => {
             expect(grid.state.aggregate).toMatchObject({ CustomerName: 22 });
         });
 
-        test('should have proper anchorFilter', () => {
-            expect(grid.state.anchorFilter).toBeNull();
-        });
-
         test('should have proper column properties', () => {
             expect(grid.state.activeColumn).toBeNull();
             expect(grid.state.columns).toBeDefined();

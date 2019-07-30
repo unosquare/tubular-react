@@ -4,7 +4,6 @@ export interface IDataGridApi {
     handleFilterChange: (value: any) => void;
     processRequest: () => void;
     setActiveColumn: (column: any, event: React.MouseEvent<HTMLElement>) => void;
-    setAnchorFilter: (anchorEl) => void;
     setFilter: (value: any) => void;
     sortColumn: (property: string) => void;
     updateItemPerPage: (itemsPerPage: number) => void;

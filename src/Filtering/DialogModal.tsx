@@ -26,7 +26,7 @@ const createFilterPatch = (activeColumn: ColumnModel): IFilterWrapper => {
     return {
         Argument: [filterArgument],
         HasFilter: true,
-        Operator: CompareOperators.AUTO,
+        Operator: activeColumn.Filter.Operator || CompareOperators.AUTO,
         Text: filterText,
     };
 };
