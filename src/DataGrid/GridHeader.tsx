@@ -3,20 +3,11 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Tooltip from '@material-ui/core/Tooltip';
-
-import ArrowDownward from '@material-ui/icons/ArrowDownward';
-import ArrowUpward from '@material-ui/icons/ArrowUpward';
 import FilterList from '@material-ui/icons/FilterList';
-
 import * as React from 'react';
 import { ColumnModel, ColumnSortDirection, CompareOperators } from 'tubular-common';
 import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
 import { DialogModal } from '../Filtering/DialogModal';
-
-const arrowStyle = {
-  marginLeft: '5px',
-  width: '15px',
-};
 
 interface IGridHeaderCellProps {
   column: ColumnModel;
@@ -30,6 +21,9 @@ export const GridHeaderCell: React.FunctionComponent<IGridHeaderCellProps> =
     const sort = () => sortColumn(column.Name);
     const handleClick = (e: any) => setActiveColumn(column, e);
 
+    const direction = column.SortDirection === ColumnSortDirection.ASCENDING ||
+      column.SortDirection === ColumnSortDirection.NONE ? 'asc' : 'desc';
+
     const render = column.Sortable ? (
       <Tooltip
         title='Click to sort. Press Ctrl to sort by multiple columns'
@@ -38,16 +32,10 @@ export const GridHeaderCell: React.FunctionComponent<IGridHeaderCellProps> =
       >
         <TableSortLabel
           onClick={sort}
+          direction={direction}
+          active={column.SortDirection !== ColumnSortDirection.NONE}
         >
           {column.Label}
-          {column.SortDirection === ColumnSortDirection.ASCENDING ? (
-            <ArrowUpward style={arrowStyle} />
-          ) : column.SortDirection ===
-            ColumnSortDirection.DESCENDING ? (
-                <ArrowDownward style={arrowStyle} />
-              ) : (
-                <div style={arrowStyle} />
-              )}
         </TableSortLabel>
       </Tooltip>
     ) : (
