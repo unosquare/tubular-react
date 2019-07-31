@@ -96,8 +96,8 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
     );
   }
 
-  const paginator = (
-    <Table>
+  const paginator = (position: string) => (
+    <Table data-testid={`${position}-paginator`}>
       <TableHead>
         <TableRow>
           <Paginator grid={grid} />
@@ -109,8 +109,8 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
   return (
     <Paper style={{ overflowX: 'auto', width: '100%' }}>
       <GridToolbar gridName={gridName} toolbarOptions={toolbarOptions} grid={grid} />
-      {toolbarOptions.topPager && paginator}
-      <div className={classes.linearProgress}>
+      {toolbarOptions.topPager && paginator('top')}
+      <div className={classes.linearProgress} data-testid='linear-progress'>
         <FixedLinearProgress isLoading={grid.state.isLoading} />
       </div>
       <DataGridTable
@@ -119,7 +119,7 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
         footerRenderer={footerRenderer}
         onRowClick={onRowClick}
       />
-      {toolbarOptions.bottomPager && paginator}
+      {toolbarOptions.bottomPager && paginator('bottom')}
     </Paper>
   );
 };
