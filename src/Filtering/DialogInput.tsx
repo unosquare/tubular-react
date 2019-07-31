@@ -2,7 +2,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import * as React from 'react';
 
-import { ColumnDataType, CompareOperators } from 'tubular-common';
+import { ColumnDataType, ColumnModel, CompareOperators } from 'tubular-common';
 
 // tslint:disable-next-line: no-var-requires
 const format = require('date-fns/format');
@@ -19,7 +19,7 @@ const BooleanInputOperators = [
 
 interface IProps {
   isPrimary: boolean;
-  column: any;
+  column: ColumnModel;
   handleTextFieldChange(value: string): void;
 }
 
@@ -73,7 +73,7 @@ export const DialogInput: React.FunctionComponent<IProps> = ({
   const value =
     getValue(
       column.DataType,
-      column.Operator,
+      column.Filter.Operator,
       isPrimary ? column.Filter.Text : column.Filter.Argument[0],
       handleTextFieldChange,
     ) || '';

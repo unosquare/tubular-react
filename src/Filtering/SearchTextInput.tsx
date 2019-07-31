@@ -14,6 +14,11 @@ const styles: any = {
   },
 };
 
+interface ISearchTextInput {
+  searchText: string;
+  updateSearchText: (value: string) => any;
+}
+
 export const SearchTextInput: React.FunctionComponent<any> = ({ searchText, updateSearchText }) => {
   const onChange = (e: any) => updateSearchText(e.target.value);
   const onClear = () => updateSearchText('');

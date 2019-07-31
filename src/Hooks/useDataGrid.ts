@@ -2,6 +2,9 @@ import * as React from 'react';
 import Transformer, { ColumnModel, CompareOperators, GridRequest, GridResponse } from 'tubular-common';
 import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
 import { IDataGridApi } from '../DataGridInterfaces/IDataGridApi';
+import { IDataGridConfig } from '../DataGridInterfaces/IDataGridConfig';
+import { IDataGridStorage } from '../DataGridInterfaces/IDataGridStorage';
+import { IFilterWrapper } from '../DataGridInterfaces/IFilterWrapper';
 import { LocalStorage } from '../Storage';
 import { NullStorage } from '../Storage/NullStorage';
 import ITubularHttpClient from '../utils/ITubularHttpClient';
@@ -40,22 +43,22 @@ const getLocalDataSource = (source: any[]) =>
     };
 
 const useDataGrid =
-    (initColumns: ColumnModel[], config: any, source: any[] | string | Request | ITubularHttpClient)
+    (initColumns: ColumnModel[], config: IDataGridConfig, source: any[] | string | Request | ITubularHttpClient)
         : IDataGrid => {
 
         const [isLoading, setIsLoading] = React.useState(false);
-        const [getColumns, setColumns] = React.useState(initColumns);
+        const [getColumns, setColumns] = React.useState<ColumnModel[]>(initColumns);
         const [initialized, setInitialized] = React.useState(false);
-        const [getActiveColumn, setActiveColumn] = React.useState(null);
+        const [getActiveColumn, setActiveColumn] = React.useState<ColumnModel>(null);
         const [getMultiSort, setMultiSort] = React.useState(false);
-        const [getItemsPerPage, setItemsPerPage] = React.useState(config.itemsPerPage || 10);
-        const [getStorage] = React.useState(config.storage || new NullStorage());
-        const [getPage, setPage] = React.useState(config.page || 0);
-        const [getSearchText, setSearchText] = React.useState(config.searchText || '');
+        const [getItemsPerPage, setItemsPerPage] = React.useState<number>(config.itemsPerPage || 10);
+        const [getStorage] = React.useState<IDataGridStorage>(config.storage || new NullStorage());
+        const [getPage, setPage] = React.useState<number>(config.page || 0);
+        const [getSearchText, setSearchText] = React.useState<string>(config.searchText || '');
         const [getError, setError] = React.useState(null);
         const getAllRecords = source instanceof Array ? getLocalDataSource(source) : getRemoteDataSource(source);
 
-        const [getState, setState] = React.useState<any>({
+        const [getState, setState] = React.useState({
             aggregate: null,
             data: [],
             filteredRecordCount: 0,
@@ -67,7 +70,7 @@ const useDataGrid =
         }
 
         const api: IDataGridApi = {
-            exportTo: async (allRows: boolean, exportFunc: any) => {
+            exportTo: async (allRows: boolean, exportFunc: (payload: any[], columns: ColumnModel[]) => void) => {
                 if (getState.filteredRecordCount === 0) {
                     return;
                 }
@@ -82,11 +85,11 @@ const useDataGrid =
                 exportFunc(payload, getColumns);
             },
             goToPage: (page: number) => {
-                if (getState.page !== page) {
+                if (getPage !== page) {
                     setPage(page);
                 }
             },
-            handleFilterChange: (value: any) => {
+            handleFilterChange: (value: IFilterWrapper) => {
                 setActiveColumn({
                     ...getActiveColumn,
                     Filter: {
@@ -131,7 +134,7 @@ const useDataGrid =
                 }
             },
             setActiveColumn,
-            setFilter: (value: any) => {
+            setFilter: (value: IFilterWrapper) => {
 
                 const columns = [...getColumns];
                 const column = columns.find(
@@ -158,7 +161,7 @@ const useDataGrid =
                 setColumns(columns);
             },
             updateItemPerPage: (itemsPerPage: number) => {
-                if (getState.itemsPerPage !== itemsPerPage) {
+                if (getItemsPerPage !== itemsPerPage) {
                     setItemsPerPage(itemsPerPage);
                 }
             },

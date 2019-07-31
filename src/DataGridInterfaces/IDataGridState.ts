@@ -2,18 +2,18 @@ import { ColumnModel } from 'tubular-common';
 import { IDataGridStorage } from './IDataGridStorage';
 
 export interface IDataGridState {
-    activeColumn: any;
+    activeColumn: ColumnModel;
     aggregate: any;
     columns: ColumnModel[];
     data: any[];
     error: any;
-    filteredRecordCount: any;
+    filteredRecordCount: number;
     initialized: boolean;
     isLoading: boolean;
     multiSort: boolean;
     itemsPerPage: number;
     page: number;
-    searchText: any;
+    searchText: string;
     storage: IDataGridStorage;
-    totalRecordCount: any;
+    totalRecordCount: number;
 }
