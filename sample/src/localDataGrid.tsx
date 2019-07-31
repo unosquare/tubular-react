@@ -12,6 +12,11 @@ const LocalDataGrid: React.FunctionComponent = () => {
   const toolbarOptions = new ToolbarOptions({
     customItems: <Button>Whatever</Button>,
   });
+
+  const rowClick = (row) => {
+    console.log("You clicked on a row: ", row);
+  };
+
   return (
     <div className='root'>
       {getErrorMessage && (
@@ -30,6 +35,7 @@ const LocalDataGrid: React.FunctionComponent = () => {
         storage={new LocalStorage()}
         onError={setErrorMessage}
         toolbarOptions={toolbarOptions}
+        onRowClick={rowClick}
       />
     </div>
   );

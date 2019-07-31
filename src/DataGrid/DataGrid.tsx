@@ -39,7 +39,7 @@ interface IProps {
   bodyRenderer?(row: object, index: number, columns: ColumnModel[]): React.ReactNode;
   footerRenderer?(aggregate: any): React.ReactNode;
   onError?(err: any): void;
-  onRowClick?(ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>): any;
+  onRowClick?(row: any): void;
 }
 
 export const DataGrid: React.FunctionComponent<IProps> = (props) => {
