@@ -10,6 +10,7 @@
     "start": "parcel ./sample/app/index.html --open --port 9000 --no-source-maps -d ./distsample",
     "debug": "parcel ./sample/app/index.html --open --port 9000 -d ./distsample",
     "start:docs": "parcel ./srcdocs/index.html --no-source-maps --port 8080 --open -d ./docs",
+    "check": "npm run build && npm test",
     "lint": "tslint src/**/*.ts src/**/*.tsx",
     "lint:docs": "tslint srcdocs/**/*.ts srcdocs/**/*.tsx",
     "test": "jest",

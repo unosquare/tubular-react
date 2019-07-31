@@ -14,9 +14,9 @@ interface IProps {
         row: any,
         index: number,
         columns: ColumnModel[],
-        onRowClickProxy: (ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => any,
+        onRowClickProxy: (row: any) => void,
     ): React.ReactNode;
-    onRowClick?(ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>): void;
+    onRowClick?(row: any): void;
 }
 
 const getStyles = (isPointer: boolean) => ({
@@ -25,18 +25,20 @@ const getStyles = (isPointer: boolean) => ({
 });
 
 export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, onRowClick }) => {
-    // tslint:disable-next-line:no-empty
-    const onRowClickProxy: (ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void =
-        onRowClick ? onRowClick : (ev: any) => ev;
+    const onRowClickProxy = (row: any) => (ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => {
+        if (onRowClick) {
+            onRowClick(row);
+        }
+    };
 
     const styles = getStyles(Boolean(onRowClick));
 
     if (!bodyRenderer) {
-        bodyRenderer = (row, rowIndex, columns, proxyClick) => (
+        bodyRenderer = (row, rowIndex, columns) => (
             <TableRow
                 hover={true}
                 key={rowIndex}
-                // onClick={proxyClick(row)}
+                onClick={onRowClickProxy(row)}
                 style={styles.row}
             >
                 {renderCells(columns, row)}
