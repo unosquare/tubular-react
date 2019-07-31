@@ -9,6 +9,7 @@ import { ColumnModel } from 'tubular-common';
 import { FixedLinearProgress } from 'uno-material-ui';
 import { useResolutionSwitch } from 'uno-react';
 import { IDataGridStorage } from '../DataGridInterfaces';
+import { IDataGridConfig } from '../DataGridInterfaces/IDataGridConfig';
 import useDataGrid from '../Hooks/useDataGrid';
 import { Paginator } from '../Pagination';
 import { GridToolbar } from '../Toolbar/GridToolbar';
@@ -49,14 +50,20 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
     dataSource,
     toolbarOptions = props.toolbarOptions || new ToolbarOptions(),
     gridName,
-    children,
     onError,
     onRowClick,
     storage,
   } = props;
 
   const classes = useStyles({});
-  const grid = useDataGrid(columns, { storage, gridName, onError }, dataSource);
+  const gridConfig: Partial<IDataGridConfig> = {
+    gridName,
+    itemsPerPage: toolbarOptions.itemsPerPage,
+    onError,
+    storage,
+  };
+
+  const grid = useDataGrid(columns, gridConfig, dataSource);
   const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
 
   if (isMobileResolution) {
@@ -96,8 +103,8 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
     );
   }
 
-  const paginator = (
-    <Table>
+  const paginator = (position: string) => (
+    <Table data-testid={`${position}-paginator`}>
       <TableHead>
         <TableRow>
           <Paginator
@@ -113,8 +120,8 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
   return (
     <Paper style={{ overflowX: 'auto', width: '100%' }}>
       <GridToolbar gridName={gridName} toolbarOptions={toolbarOptions} grid={grid} />
-      {toolbarOptions.topPager && paginator}
-      <div className={classes.linearProgress}>
+      {toolbarOptions.topPager && paginator('top')}
+      <div className={classes.linearProgress} data-testid='linear-progress'>
         <FixedLinearProgress isLoading={grid.state.isLoading} />
       </div>
       <DataGridTable
@@ -123,7 +130,7 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
         footerRenderer={footerRenderer}
         onRowClick={onRowClick}
       />
-      {toolbarOptions.bottomPager && paginator}
+      {toolbarOptions.bottomPager && paginator('bottom')}
     </Paper>
   );
 };

@@ -20,9 +20,6 @@
   },
   "jest": {
     "automock": false,
-    "setupFiles": [
-      "<rootDir>/test/setupTest.js"
-    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -32,7 +29,7 @@
       "^.+\\.(ts|tsx)$": "ts-jest"
     },
     "testMatch": [
-      "<rootDir>/test/**/useDataGrid.spec.(ts|tsx)"
+      "<rootDir>/test/**/DataGrid.spec.(ts|tsx)"
     ],
     "globals": {
       "ts-jest": {
@@ -79,19 +76,17 @@
     "uno-react": "^0.7.5"
   },
   "devDependencies": {
-    "@types/enzyme": "^3.10.3",
-    "@types/enzyme-adapter-react-16": "^1.0.5",
+    "@testing-library/react": "^8.0.6",
+    "@testing-library/react-hooks": "^1.1.0",
     "@types/jest": "^24.0.16",
+    "@types/node": "^12.6.8",
     "@types/react": "^16.8.23",
     "@types/react-dom": "^16.8.5",
     "@types/react-router": "^5.0.3",
     "@types/react-router-dom": "^4.3.4",
     "coveralls": "^3.0.5",
-    "enzyme": "^3.10.0",
-    "enzyme-adapter-react-16": "^1.14.0",
     "jest": "^24.8.0",
     "jest-fetch-mock": "^2.1.2",
-    "jsdom": "^15.1.1",
     "nyc": "^14.1.1",
     "parcel-bundler": "^1.12.3",
     "parcel-plugin-clean-easy": "^1.0.2",

@@ -28,7 +28,7 @@ export const GridToolbar: React.FunctionComponent<IProps> = ({ toolbarOptions, g
   const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
 
   return (
-    <Toolbar>
+    <Toolbar data-testid='grid-toolbar'>
       <div style={isMobileResolution ? styles.mobileSpacer : styles.spacer} />
       {toolbarOptions.customItems && toolbarOptions.customItems}
       {toolbarOptions.exportButton &&
@@ -37,6 +37,7 @@ export const GridToolbar: React.FunctionComponent<IProps> = ({ toolbarOptions, g
           gridName={gridName}
           exportTo={grid.api.exportTo}
           filteredRecordCount={grid.state.filteredRecordCount}
+          data-testid='export-button-csv'
         />}
       {toolbarOptions.printButton &&
         <ExportButton
@@ -44,9 +45,14 @@ export const GridToolbar: React.FunctionComponent<IProps> = ({ toolbarOptions, g
           gridName={gridName}
           exportTo={grid.api.exportTo}
           filteredRecordCount={grid.state.filteredRecordCount}
+          data-testid='export-button-print'
         />}
       {toolbarOptions.searchText &&
-        <SearchTextInput searchText={grid.state.searchText} updateSearchText={grid.api.updateSearchText} />}
+        <SearchTextInput
+          searchText={grid.state.searchText}
+          updateSearchText={grid.api.updateSearchText}
+          data-testid='search-text-input'
+        />}
     </Toolbar>
   );
 };

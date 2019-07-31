@@ -36,7 +36,7 @@ export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, 
             <TableRow
                 hover={true}
                 key={rowIndex}
-                onClick={proxyClick(row)}
+                // onClick={proxyClick(row)}
                 style={styles.row}
             >
                 {renderCells(columns, row)}
