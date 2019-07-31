@@ -4,6 +4,7 @@ import { DataGrid } from '../src/DataGrid';
 import { LocalStorage } from '../src/Storage/LocalStorage';
 import { validColumnsSample } from './utils/columns';
 import { localData } from './utils/localData';
+import { ToolbarOptions } from '../src/Toolbar/ToolbarOptions';
 
 const SUPPRESSED_PREFIXES = [
   'Warning: Do not await the result of calling ReactTestUtils.act(...)',
@@ -21,37 +22,74 @@ window.console.error = (...args: any[]) => {
   }
 };
 
+const getPaginatorButtons = (paginator) => {
+  const paginatorButtons = paginator.querySelectorAll('div.MuiTablePagination-actions button');
+  const back = paginatorButtons[0] as HTMLElement;
+  const next = paginatorButtons[1] as HTMLElement;
+
+  return {
+    back,
+    next,
+  };
+};
+
+const getGridStructure = (container) => {
+
+  const tables = container.getElementsByClassName('MuiTable-root');
+
+  const topPaginator = tables[0] as HTMLElement;
+  const dataGrid = tables[1] as HTMLElement;
+  const bottomPaginator = tables[2] as HTMLElement;
+
+  return {
+    bottomPaginator: { ...getPaginatorButtons(bottomPaginator) },
+    dataGrid,
+    topPaginator: { ...getPaginatorButtons(topPaginator) },
+  };
+};
+
 describe('DataGrid', () => {
 
-  const getPaginatorButtons = (paginator) => {
-    const paginatorButtons = paginator.querySelectorAll('div.MuiTablePagination-actions button');
-    const back = paginatorButtons[0] as HTMLElement;
-    const next = paginatorButtons[1] as HTMLElement;
+  describe('ToolbarOptions', () => {
+    let TheGrid: any;
 
-    return {
-      back,
-      next,
-    };
-  };
+    beforeEach(() => {
+      TheGrid = () => (
+        <DataGrid
+          columns={validColumnsSample}
+          dataSource={localData}
+          gridName='LocalDataGrid'
+          storage={new LocalStorage()}
+          toolbarOptions={new ToolbarOptions({
+            someOther: 1
+          })}
+        />
+      );
+    });
 
-  const getGridStructure = (container) => {
-
-    const tables = container.getElementsByClassName('MuiTable-root');
-
-    const topPaginator = tables[0] as HTMLElement;
-    const dataGrid = tables[1] as HTMLElement;
-    const bottomPaginator = tables[2] as HTMLElement;
-
-    return {
-      bottomPaginator: { ...getPaginatorButtons(bottomPaginator) },
-      dataGrid,
-      topPaginator: { ...getPaginatorButtons(topPaginator) },
-    };
-  };
-
-  describe('api interactions with DOM', () => {
     test('it should navigate over pages properly', async () => {
-      const FakeDataGrid = () => (
+      const { container } = render(<TheGrid />);
+      const gridStructure = getGridStructure(container);
+
+      expect(gridStructure.dataGrid.querySelector('tbody').querySelectorAll('tr').length).toBe(0);
+      await waitForDomChange({ container: container.getElementsByTagName('tbody')[0] });
+      expect(gridStructure.dataGrid.querySelector('tbody').querySelectorAll('tr').length).toBe(10);
+
+      fireEvent.click(gridStructure.topPaginator.next);
+      await waitForDomChange({ container: gridStructure.dataGrid });
+      expect(gridStructure.dataGrid.querySelector('tbody').querySelectorAll('tr').length).toBe(10);
+
+      fireEvent.click(gridStructure.topPaginator.next);
+      await waitForDomChange({ container: gridStructure.dataGrid });
+      expect(gridStructure.dataGrid.querySelector('tbody').querySelectorAll('tr').length).toBe(2);
+    });
+  });
+
+  describe('Paging', () => {
+    let TheGrid: any;
+
+    beforeEach(() => {
+      TheGrid = () => (
         <DataGrid
           columns={validColumnsSample}
           dataSource={localData}
@@ -59,8 +97,10 @@ describe('DataGrid', () => {
           storage={new LocalStorage()}
         />
       );
+    });
 
-      const { container } = render(<FakeDataGrid />);
+    test('it should navigate over pages properly', async () => {
+      const { container } = render(<TheGrid />);
       const gridStructure = getGridStructure(container);
 
       expect(gridStructure.dataGrid.querySelector('tbody').querySelectorAll('tr').length).toBe(0);

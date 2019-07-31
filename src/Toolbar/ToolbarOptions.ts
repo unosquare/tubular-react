@@ -8,7 +8,7 @@ export class ToolbarOptions {
     public rowsPerPageOptions: number[];
     public itemsPerPage: number;
 
-    constructor(options?: any) {
+    constructor(options?: Partial<ToolbarOptions>) {
         this.advancePagination = options && 'advancePagination' in options ? options.advancePagination : true;
         this.bottomPager = options && 'bottomPager' in options ? options.bottomPager : true;
         this.exportButton = options && 'exportButton' in options ? options.exportButton : true;
