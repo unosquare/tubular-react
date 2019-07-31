@@ -5,9 +5,18 @@ import Tooltip from '@material-ui/core/Tooltip';
 import CloudDownload from '@material-ui/icons/CloudDownload';
 import Print from '@material-ui/icons/Print';
 import * as React from 'react';
+import { ColumnModel } from 'tubular-common';
 import { exportGrid } from './GridToolbarFunctions';
 
-export const ExportButton: React.FunctionComponent<any> = ({
+interface IExportButtonProps {
+    type: string;
+    gridName: string;
+    filteredRecordCount: number;
+    toolTip?: string;
+    exportTo: (allRows: boolean, exportFunc: (payload: any[], columns: ColumnModel[]) => void) => void;
+}
+
+export const ExportButton: React.FunctionComponent<IExportButtonProps> = ({
     type,
     gridName,
     toolTip,
@@ -21,7 +30,7 @@ export const ExportButton: React.FunctionComponent<any> = ({
 
     const closePrint = () => setAnchorPrint(null);
 
-    const partialExport = (data: any, columns: any) => {
+    const partialExport = (data: any, columns: ColumnModel[]) => {
         exportGrid(type, data, columns, gridName);
         closePrint();
     };

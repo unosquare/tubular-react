@@ -3,32 +3,27 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Tooltip from '@material-ui/core/Tooltip';
-
-import ArrowDownward from '@material-ui/icons/ArrowDownward';
-import ArrowUpward from '@material-ui/icons/ArrowUpward';
 import FilterList from '@material-ui/icons/FilterList';
-
 import * as React from 'react';
 import { ColumnModel, ColumnSortDirection, CompareOperators } from 'tubular-common';
 import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
+import { IFilterWrapper } from '../DataGridInterfaces/IFilterWrapper';
 import { DialogModal } from '../Filtering/DialogModal';
-
-const arrowStyle = {
-  marginLeft: '5px',
-  width: '15px',
-};
 
 interface IGridHeaderCellProps {
   column: ColumnModel;
   key: string;
-  setActiveColumn: (column: any, event: React.MouseEvent<HTMLElement>) => void;
+  setActiveColumn: (column: ColumnModel, event: React.MouseEvent<HTMLElement>) => void;
   sortColumn: (property: string) => void;
 }
 
 export const GridHeaderCell: React.FunctionComponent<IGridHeaderCellProps> =
-  ({ column, sortColumn, setActiveColumn }: any) => {
+  ({ column, sortColumn, setActiveColumn }) => {
     const sort = () => sortColumn(column.Name);
     const handleClick = (e: any) => setActiveColumn(column, e);
+
+    const direction = column.SortDirection === ColumnSortDirection.ASCENDING ||
+      column.SortDirection === ColumnSortDirection.NONE ? 'asc' : 'desc';
 
     const render = column.Sortable ? (
       <Tooltip
@@ -38,16 +33,10 @@ export const GridHeaderCell: React.FunctionComponent<IGridHeaderCellProps> =
       >
         <TableSortLabel
           onClick={sort}
+          direction={direction}
+          active={column.SortDirection !== ColumnSortDirection.NONE}
         >
           {column.Label}
-          {column.SortDirection === ColumnSortDirection.ASCENDING ? (
-            <ArrowUpward style={arrowStyle} />
-          ) : column.SortDirection ===
-            ColumnSortDirection.DESCENDING ? (
-                <ArrowDownward style={arrowStyle} />
-              ) : (
-                <div style={arrowStyle} />
-              )}
         </TableSortLabel>
       </Tooltip>
     ) : (
@@ -85,25 +74,37 @@ interface IProps {
   grid: IDataGrid;
 }
 
-export const GridHeader: React.FunctionComponent<IProps> = ({ grid }: any) => {
+export const GridHeader: React.FunctionComponent<IProps> = ({ grid }) => {
+  const [anchorFilter, setAnchorFilter] = React.useState(null);
+
+  const setActiveColumn = (column: ColumnModel, event: React.MouseEvent<HTMLElement>) => {
+    grid.api.setActiveColumn(column);
+    setAnchorFilter(event.currentTarget);
+  };
+
+  const setFilter = (filter: IFilterWrapper) => {
+    grid.api.setFilter(filter);
+    setAnchorFilter(null);
+  };
+
   return (
     <TableRow>
       {grid.state.activeColumn &&
         <DialogModal
           activeColumn={grid.state.activeColumn}
-          anchorFilter={grid.state.anchorFilter}
-          setAnchorFilter={grid.api.setAnchorFilter}
-          setFilter={grid.api.setFilter}
+          anchorFilter={anchorFilter}
+          setAnchorFilter={setAnchorFilter}
+          setFilter={setFilter}
           handleFilterChange={grid.api.handleFilterChange}
         />}
       {grid.state.columns
-        .filter((col: any) => col.Visible)
-        .map((column: any) =>
+        .filter((col: ColumnModel) => col.Visible)
+        .map((column: ColumnModel) =>
           <GridHeaderCell
             key={column.Name}
             column={column}
             sortColumn={grid.api.sortColumn}
-            setActiveColumn={grid.api.setActiveColumn}
+            setActiveColumn={setActiveColumn}
           />,
         )}
     </TableRow>

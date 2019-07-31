@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export class ToolbarOptions {
     public advancePagination: boolean = true;
     public bottomPager: boolean = true;

@@ -30,6 +30,7 @@ export const GridToolbar: React.FunctionComponent<IProps> = ({ toolbarOptions, g
   return (
     <Toolbar data-testid='grid-toolbar'>
       <div style={isMobileResolution ? styles.mobileSpacer : styles.spacer} />
+      {toolbarOptions.customItems && toolbarOptions.customItems}
       {toolbarOptions.exportButton &&
         <ExportButton
           type='csv'

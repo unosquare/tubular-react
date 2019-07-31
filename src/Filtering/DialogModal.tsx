@@ -26,7 +26,7 @@ const createFilterPatch = (activeColumn: ColumnModel): IFilterWrapper => {
     return {
         Argument: [filterArgument],
         HasFilter: true,
-        Operator: CompareOperators.AUTO,
+        Operator: activeColumn.Filter.Operator || CompareOperators.AUTO,
         Text: filterText,
     };
 };
@@ -39,11 +39,11 @@ const clearFilterPatch: IFilterWrapper = {
 };
 
 interface IDialogModalProps {
-    anchorFilter: any;
+    anchorFilter: HTMLElement;
     activeColumn: ColumnModel;
     setAnchorFilter: (anchorEl: HTMLElement) => void;
     setFilter: (filter: IFilterWrapper) => void;
-    handleFilterChange: (value: any) => any;
+    handleFilterChange: (value: IFilterWrapper | any) => any;
 }
 
 export const DialogModal: React.FunctionComponent<IDialogModalProps> =

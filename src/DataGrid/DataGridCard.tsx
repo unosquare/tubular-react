@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import LabelImportant from '@material-ui/icons/LabelImportant';
 import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
-import { ColumnDataType } from 'tubular-common';
+import { ColumnDataType, ColumnModel } from 'tubular-common';
 import { humanize } from 'uno-react';
 
 const useStyles = makeStyles(({ palette }: any) => ({
@@ -56,32 +56,32 @@ export const DataGridCard = (props) => {
         <Card className={classes.cardMobile}>
             <CardContent>
                 {
-                    columns.map((column: any, index: any) => (
-                    <div className={classes.dataRow} key={index}>
-                        <Typography
-                            component='div'
-                            variant='body2'
-                            color='textSecondary'
-                            className={classes.dataLabel}
-                        >
-                            {humanize(column.Name)}:
-                        </Typography>
-                        <Typography
-                            component='div'
-                            variant='body2'
-                            color='textSecondary'
-                            className={classes.dataValue}
-                        >
-                        {
-                            column.DataType === ColumnDataType.BOOLEAN ?
-                            <input type='checkbox' checked={item[column.Name]} disabled={true}/>
-                            : column.DataType === ColumnDataType.STRING ?
-                            item[column.Name].length > 50 ? item[column.Name].substring(0, 50) + '...'
-                            : item[column.Name]
-                            : item[column.Name]
-                        }
-                        </Typography>
-                    </div>
+                    columns.map((column: ColumnModel, index: number) => (
+                        <div className={classes.dataRow} key={index}>
+                            <Typography
+                                component='div'
+                                variant='body2'
+                                color='textSecondary'
+                                className={classes.dataLabel}
+                            >
+                                {humanize(column.Name)}:
+                            </Typography>
+                            <Typography
+                                component='div'
+                                variant='body2'
+                                color='textSecondary'
+                                className={classes.dataValue}
+                            >
+                                {
+                                    column.DataType === ColumnDataType.BOOLEAN ?
+                                        <input type='checkbox' checked={item[column.Name]} disabled={true} />
+                                        : column.DataType === ColumnDataType.STRING ?
+                                            item[column.Name].length > 50 ? item[column.Name].substring(0, 50) + '...'
+                                                : item[column.Name]
+                                            : item[column.Name]
+                                }
+                            </Typography>
+                        </div>
                     ))
                 }
                 <CardActions className={classes.cardActions}>

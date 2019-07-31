@@ -13,14 +13,12 @@ import useDataGrid from '../Hooks/useDataGrid';
 import { Paginator } from '../Pagination';
 import { GridToolbar } from '../Toolbar/GridToolbar';
 import { ToolbarOptions } from '../Toolbar/ToolbarOptions';
+import ITubularHttpClient from '../utils/ITubularHttpClient';
 import { DataGridCard, DataGridTable } from './';
 
 const useStyles = makeStyles({
   linearProgress: {
-    height: '30px',
     marginTop: '-10px',
-    position: 'absolute',
-    width: '100%',
   },
   root: {
     overflowX: 'auto',
@@ -33,14 +31,14 @@ const timeout = 400;
 
 interface IProps {
   columns: ColumnModel[];
-  dataSource: any;
+  dataSource: any[] | string | Request | ITubularHttpClient;
   gridName: string;
   storage?: IDataGridStorage;
   toolbarOptions?: ToolbarOptions;
-  bodyRenderer?(row: any, index: number, columns: ColumnModel[]): React.ReactNode;
+  bodyRenderer?(row: object, index: number, columns: ColumnModel[]): React.ReactNode;
   footerRenderer?(aggregate: any): React.ReactNode;
   onError?(err: any): void;
-  onRowClick?(ev: any): any;
+  onRowClick?(ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>): any;
 }
 
 export const DataGrid: React.FunctionComponent<IProps> = (props) => {
@@ -71,16 +69,14 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
 
     return (
       <Paper className={classes.root}>
-        <GridToolbar toolbarOptions={toolbarOptions} grid={grid} gridName={gridName}>
-          {children}
-        </GridToolbar>
+        <GridToolbar toolbarOptions={toolbarOptions} grid={grid} gridName={gridName} />
         <FixedLinearProgress isLoading={grid.state.isLoading} />
         <GridList
           cellHeight='auto'
           cols={1}
         >
           {
-            grid.state.data.map((row: any, index: any) =>
+            grid.state.data.map((row: any, index: number) =>
               (
                 <DataGridCard
                   columns={grid.state.columns}
@@ -91,7 +87,11 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
               ))
           }
         </GridList>
-        <Paginator grid={grid} />
+        <Paginator
+          advancePagination={toolbarOptions.advancePagination}
+          rowsPerPageOptions={toolbarOptions.rowsPerPageOptions}
+          grid={grid}
+        />
       </Paper>
     );
   }
@@ -100,7 +100,11 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
     <Table data-testid={`${position}-paginator`}>
       <TableHead>
         <TableRow>
-          <Paginator grid={grid} />
+          <Paginator
+            advancePagination={toolbarOptions.advancePagination}
+            rowsPerPageOptions={toolbarOptions.rowsPerPageOptions}
+            grid={grid}
+          />
         </TableRow>
       </TableHead>
     </Table>

@@ -1,13 +1,17 @@
 import * as React from 'react';
 
+import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import { DataGrid, LocalStorage } from '../../src';
+import { ToolbarOptions } from '../../src/Toolbar/ToolbarOptions';
 import columns from './data/columns';
 import localData from './data/localData';
 
 const LocalDataGrid: React.FunctionComponent = () => {
   const [getErrorMessage, setErrorMessage] = React.useState(null as string);
-
+  const toolbarOptions = new ToolbarOptions({
+    customItems: <Button>Whatever</Button>,
+  });
   return (
     <div className='root'>
       {getErrorMessage && (
@@ -25,6 +29,7 @@ const LocalDataGrid: React.FunctionComponent = () => {
         gridName='LocalDataGrid'
         storage={new LocalStorage()}
         onError={setErrorMessage}
+        toolbarOptions={toolbarOptions}
       />
     </div>
   );
