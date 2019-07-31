@@ -1,6 +1,9 @@
+import { ReactNode } from 'react';
+
 export class ToolbarOptions {
     public advancePagination: boolean;
     public bottomPager: boolean;
+    public customItems: ReactNode;
     public exportButton: boolean;
     public printButton: boolean;
     public searchText: boolean;
@@ -9,6 +12,7 @@ export class ToolbarOptions {
     public itemsPerPage: number;
 
     constructor(options?: any) {
+        this.customItems = options && options.customItems;
         this.advancePagination = options && 'advancePagination' in options ? options.advancePagination : true;
         this.bottomPager = options && 'bottomPager' in options ? options.bottomPager : true;
         this.exportButton = options && 'exportButton' in options ? options.exportButton : true;

@@ -14,9 +14,9 @@ interface IProps {
         row: any,
         index: number,
         columns: ColumnModel[],
-        onRowClickProxy: (ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => React.MouseEventHandler<any>,
+        onRowClickProxy: (ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => any,
     ): React.ReactNode;
-    onRowClick?(ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>): React.MouseEventHandler<any>;
+    onRowClick?(ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>): void;
 }
 
 const getStyles = (isPointer: boolean) => ({
@@ -26,7 +26,7 @@ const getStyles = (isPointer: boolean) => ({
 
 export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, onRowClick }) => {
     // tslint:disable-next-line:no-empty
-    const onRowClickProxy: (ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => React.MouseEventHandler<any> =
+    const onRowClickProxy: (ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void =
         onRowClick ? onRowClick : (ev: any) => ev;
 
     const styles = getStyles(Boolean(onRowClick));

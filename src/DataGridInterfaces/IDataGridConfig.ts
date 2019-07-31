@@ -7,5 +7,5 @@ export interface IDataGridConfig {
     searchText?: string;
     gridName?: string;
 
-    onError: (error: any) => void;
+    onError?: (error: any) => void;
 }
