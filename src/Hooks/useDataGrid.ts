@@ -43,8 +43,11 @@ const getLocalDataSource = (source: any[]) =>
     };
 
 const useDataGrid =
-    (initColumns: ColumnModel[], config: IDataGridConfig, source: any[] | string | Request | ITubularHttpClient)
-        : IDataGrid => {
+    (
+        initColumns: ColumnModel[],
+        config: Partial<IDataGridConfig>,
+        source: any[] | string | Request | ITubularHttpClient,
+    ): IDataGrid => {
 
         const [isLoading, setIsLoading] = React.useState(false);
         const [getColumns, setColumns] = React.useState<ColumnModel[]>(initColumns);

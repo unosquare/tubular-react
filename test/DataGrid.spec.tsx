@@ -22,31 +22,6 @@ window.console.error = (...args: any[]) => {
   }
 };
 
-const getPaginatorButtons = (paginator) => {
-  const paginatorButtons = paginator.querySelectorAll('div.MuiTablePagination-actions button');
-  const back = paginatorButtons[0] as HTMLElement;
-  const next = paginatorButtons[1] as HTMLElement;
-
-  return {
-    back,
-    next,
-  };
-};
-
-const getGridStructure = (container, getByTestId: (text: Matcher, options?: MatcherOptions) => HTMLElement) => {
-
-  const tables = container.getElementsByClassName('MuiTable-root');
-  const topPaginator = getByTestId('top-paginator');
-  const bottomPaginator = getByTestId('bottom-paginator');
-  const dataGrid = tables[1] as HTMLElement;
-
-  return {
-    bottomPaginator: bottomPaginator ? { ...getPaginatorButtons(bottomPaginator) } : null,
-    dataGrid,
-    topPaginator: topPaginator ? { ...getPaginatorButtons(topPaginator) } : null,
-  };
-};
-
 const setup = (toolbarOptions?: ToolbarOptions) => {
 
   const MyGrid = () => (
@@ -109,28 +84,38 @@ describe('DataGrid Component', () => {
       expect(queryByTestId('search-text-input')).toBeNull();
     });
 
-    test('when itemsPerPage is 25, it should have a default of 25 rows per page', () => {
-      const { getByTestId } = setup(new ToolbarOptions({ itemsPerPage: 25 }));
+    test('when itemsPerPage is not set, it should defaults to 10 rows per page', () => {
+      const { getByTestId } = setup();
       expect(getByTestId('top-paginator')
         .getElementsByClassName('MuiTablePagination-select MuiSelect-selectMenu')
         .item(0)
-        .textContent).toBe('25');
+        .textContent).toBe('10');
+    });
+
+    test('when itemsPerPage is 50, it should have a default of 50 rows per page', () => {
+      const { getByTestId } = setup(new ToolbarOptions({ itemsPerPage: 50 }));
+      expect(getByTestId('top-paginator')
+        .getElementsByClassName('MuiTablePagination-select MuiSelect-selectMenu')
+        .item(0)
+        .textContent).toBe('50');
     });
   });
 
-  xdescribe('Paging', () => {
-    let TheGrid: any;
+  xdescribe('Behavior', () => {
 
-    beforeEach(() => {
-      TheGrid = () => (
-        <DataGrid
-          columns={validColumnsSample}
-          dataSource={localData}
-          gridName='LocalDataGrid'
-          storage={new LocalStorage()}
-        />
-      );
-    });
+    // TO DO
+    // let TheGrid: any;
+
+    // beforeEach(() => {
+    //   TheGrid = () => (
+    //     <DataGrid
+    //       columns={validColumnsSample}
+    //       dataSource={localData}
+    //       gridName='LocalDataGrid'
+    //       storage={new LocalStorage()}
+    //     />
+    //   );
+    // });
 
     // test('it should navigate over pages properly', async () => {
     //   const { container } = render(<TheGrid />);

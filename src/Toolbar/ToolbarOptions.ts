@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 export class ToolbarOptions {
     public advancePagination: boolean = true;
     public bottomPager: boolean = true;
+    public customItems: ReactNode;
     public exportButton: boolean = true;
     public printButton: boolean = true;
     public searchText: boolean = true;

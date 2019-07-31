@@ -9,6 +9,7 @@ import { ColumnModel } from 'tubular-common';
 import { FixedLinearProgress } from 'uno-material-ui';
 import { useResolutionSwitch } from 'uno-react';
 import { IDataGridStorage } from '../DataGridInterfaces';
+import { IDataGridConfig } from '../DataGridInterfaces/IDataGridConfig';
 import useDataGrid from '../Hooks/useDataGrid';
 import { Paginator } from '../Pagination';
 import { GridToolbar } from '../Toolbar/GridToolbar';
@@ -49,14 +50,20 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
     dataSource,
     toolbarOptions = props.toolbarOptions || new ToolbarOptions(),
     gridName,
-    children,
     onError,
     onRowClick,
     storage,
   } = props;
 
   const classes = useStyles({});
-  const grid = useDataGrid(columns, { storage, gridName, onError }, dataSource);
+  const gridConfig: Partial<IDataGridConfig> = {
+    gridName,
+    itemsPerPage: toolbarOptions.itemsPerPage,
+    onError,
+    storage,
+  };
+
+  const grid = useDataGrid(columns, gridConfig, dataSource);
   const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
 
   if (isMobileResolution) {
