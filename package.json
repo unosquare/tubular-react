@@ -1,6 +1,6 @@
 {
   "name": "tubular-react",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Unosquare Tubular React",
   "main": "dist/index.js",
   "scripts": {
