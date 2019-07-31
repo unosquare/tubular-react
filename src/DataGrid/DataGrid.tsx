@@ -69,9 +69,7 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
 
     return (
       <Paper className={classes.root}>
-        <GridToolbar toolbarOptions={toolbarOptions} grid={grid} gridName={gridName}>
-          {children}
-        </GridToolbar>
+        <GridToolbar toolbarOptions={toolbarOptions} grid={grid} gridName={gridName} />
         <FixedLinearProgress isLoading={grid.state.isLoading} />
         <GridList
           cellHeight='auto'
