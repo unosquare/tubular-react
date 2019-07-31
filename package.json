@@ -20,9 +20,6 @@
   },
   "jest": {
     "automock": false,
-    "setupFiles": [
-      "<rootDir>/test/setupTest.js"
-    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -32,7 +29,7 @@
       "^.+\\.(ts|tsx)$": "ts-jest"
     },
     "testMatch": [
-      "<rootDir>/test/**/useDataGrid.spec.(ts|tsx)"
+      "<rootDir>/test/**/DataGrid.spec.(ts|tsx)"
     ],
     "globals": {
       "ts-jest": {

@@ -1,68 +1,79 @@
-import { Table, TableBody, TableFooter, TableRow } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
-import { createMount } from '@material-ui/core/test-utils';
-
+import { fireEvent, render, waitForDomChange } from '@testing-library/react';
 import * as React from 'react';
-import { DataSourceContext } from '../src';
-import DataGrid from '../src/DataGrid/DataGrid';
-import MockContext from './utils/mockContext';
+import { DataGrid } from '../src/DataGrid';
+import { LocalStorage } from '../src/Storage/LocalStorage';
+import { validColumnsSample } from './utils/columns';
+import { localData } from './utils/localData';
 
-const wrappedGrid = () => (
-  (
-    <DataSourceContext.Provider value={MockContext}>
-      <DataGrid />
-    </DataSourceContext.Provider>
-  )
-);
+const SUPPRESSED_PREFIXES = [
+  'Warning: Do not await the result of calling ReactTestUtils.act(...)',
+  'Warning: An update to %s inside a test was not wrapped in act(...)',
+];
 
-describe('<DataGrid />', () => {
-  let mount: any;
+function isSuppressedErrorMessage(message: string): boolean {
+  return SUPPRESSED_PREFIXES.some((sp) => message.startsWith(sp));
+}
 
-  beforeEach(() => {
-    jest.resetModules();
+const oldError = window.console.error;
+window.console.error = (...args: any[]) => {
+  if (!isSuppressedErrorMessage(args[0])) {
+    oldError(...args);
+  }
+};
 
-    mount = createMount();
-  });
+describe('DataGrid', () => {
 
-  afterEach(() => {
-    mount.cleanUp();
-  });
+  const getPaginatorButtons = (paginator) => {
+    const paginatorButtons = paginator.querySelectorAll('div.MuiTablePagination-actions button');
+    const back = paginatorButtons[0] as HTMLElement;
+    const next = paginatorButtons[1] as HTMLElement;
 
-  test('should exists', () => {
-    expect(mount(wrappedGrid()).exists()).toBeTruthy();
-  });
+    return {
+      back,
+      next,
+    };
+  };
 
-  test('should render a Paper', () => {
-    const wrapper = mount(wrappedGrid());
-    expect(wrapper.find(Paper)).toHaveLength(1);
-  });
+  const getGridStructure = (container) => {
 
-  test('should render a Table', () => {
-    const wrapper = mount(wrappedGrid()).find(Table);
-    expect(wrapper).toHaveLength(1);
-  });
+    const tables = container.getElementsByClassName('MuiTable-root');
 
-  test('should render TableBody', () => {
-    const wrapper = mount(wrappedGrid()).find(TableBody);
-    expect(wrapper).toHaveLength(1);
-  });
+    const topPaginator = tables[0] as HTMLElement;
+    const dataGrid = tables[1] as HTMLElement;
+    const bottomPaginator = tables[2] as HTMLElement;
 
-  test('should render TableBody default ten rows', () => {
-    const wrapper = mount(wrappedGrid())
-      .find(TableBody)
-      .find(TableRow);
-    expect(wrapper).toHaveLength(10);
-  });
+    return {
+      bottomPaginator: { ...getPaginatorButtons(bottomPaginator) },
+      dataGrid,
+      topPaginator: { ...getPaginatorButtons(topPaginator) },
+    };
+  };
 
-  test('should render TableFooter', () => {
-    const wrapper = mount(wrappedGrid()).find(TableFooter);
-    expect(wrapper).toHaveLength(1);
-  });
+  describe('api interactions with DOM', () => {
+    test('it should navigate over pages properly', async () => {
+      const FakeDataGrid = () => (
+        <DataGrid
+          columns={validColumnsSample}
+          dataSource={localData}
+          gridName='LocalDataGrid'
+          storage={new LocalStorage()}
+        />
+      );
 
-  test('should render TableFooter one row', () => {
-    const wrapper = mount(wrappedGrid())
-      .find(TableFooter)
-      .find(TableRow);
-    expect(wrapper).toHaveLength(1);
+      const { container } = render(<FakeDataGrid />);
+      const gridStructure = getGridStructure(container);
+
+      expect(gridStructure.dataGrid.querySelector('tbody').querySelectorAll('tr').length).toBe(0);
+      await waitForDomChange({ container: container.getElementsByTagName('tbody')[0] });
+      expect(gridStructure.dataGrid.querySelector('tbody').querySelectorAll('tr').length).toBe(10);
+
+      fireEvent.click(gridStructure.topPaginator.next);
+      await waitForDomChange({ container: gridStructure.dataGrid });
+      expect(gridStructure.dataGrid.querySelector('tbody').querySelectorAll('tr').length).toBe(10);
+
+      fireEvent.click(gridStructure.topPaginator.next);
+      await waitForDomChange({ container: gridStructure.dataGrid });
+      expect(gridStructure.dataGrid.querySelector('tbody').querySelectorAll('tr').length).toBe(2);
+    });
   });
 });
