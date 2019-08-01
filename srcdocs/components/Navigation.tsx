@@ -10,6 +10,7 @@ import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { MenuList, NavBar } from 'uno-material-ui';
+import { featurePaths } from '../utils/featuresPaths';
 import TubularLogo from '../static/tubular.png';
 
 const useStyles = makeStyles(({ palette }: any) => ({
@@ -67,16 +68,16 @@ export default () => {
                         <Typography>Features</Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails className={classes.details}>
-                        <Link to='/tubular-react/features/pagination' className={classes.link}>
-                            <ListItem button={true}>
-                                <ListItemText primary='Pagination' />
-                            </ListItem>
-                        </Link>
-                        <Link to='/tubular-react/features/toolbar' className={classes.lastLink}>
-                            <ListItem button={true}>
-                                <ListItemText primary='Toolbar' />
-                            </ListItem>
-                        </Link>
+                        {featurePaths.map(((x, i) => (
+                            <Link
+                                to={x.path}
+                                className={i >= (featurePaths.length - 1) ? classes.lastLink : classes.link}
+                            >
+                                <ListItem button={true}>
+                                    <ListItemText primary={x.name} />
+                                </ListItem>
+                            </Link>
+                        )))}
                         <Divider />
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
