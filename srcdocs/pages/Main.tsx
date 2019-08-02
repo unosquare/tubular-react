@@ -6,6 +6,7 @@ import { Route } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import ComponentAPI from './Documentation/ComponentAPI';
 import Pagination from './Documentation/Features/Pagination';
+import Storage from './Documentation/Features/Storage';
 import Toolbar from './Documentation/Features/Toolbar';
 import Home from './Documentation/Home';
 import Sample from './Documentation/Sample';
@@ -41,6 +42,7 @@ export default () => {
                 <Route exact={true} path='/tubular-react/features' component={Sample} />
                 <Route path='/tubular-react/features/pagination' component={Pagination} />
                 <Route path='/tubular-react/features/toolbar' component={Toolbar} />
+                <Route path='/tubular-react/features/storage' component={Storage} />
                 <Route path='/tubular-react/componentAPI/' component={ComponentAPI} />
             </main>
         </div>
