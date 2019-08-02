@@ -74,7 +74,7 @@
     "react-dom": "^16.8.6",
     "tubular-common": "^1.4.1",
     "uno-material-ui": "^1.2.4",
-    "uno-react": "^0.7.5"
+    "uno-react": "^0.8.0"
   },
   "devDependencies": {
     "@testing-library/react": "^8.0.7",
