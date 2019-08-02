@@ -33,7 +33,7 @@ const columns = [
 export default () => (
       <DataGrid
           columns={columns}
-          dataSource={'https://tubular.azurewebsites.net/api/orders/paged'}
+          dataSource='https://tubular.azurewebsites.net/api/orders/paged'
           gridName='Grid'
           storage={new NullStorage()}
           toolbarOptions={new ToolbarOptions()}
@@ -75,7 +75,7 @@ const columns = [
 export default () => (
       <DataGrid
           columns={columns}
-          dataSource={'https://tubular.azurewebsites.net/api/orders/paged'}
+          dataSource='https://tubular.azurewebsites.net/api/orders/paged'
           gridName='Grid'
           storage={new LocalStorage()}
           toolbarOptions={new ToolbarOptions()}
