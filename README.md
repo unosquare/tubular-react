@@ -35,7 +35,7 @@ Table of contents
     * [DataGridTable Props](#datagridtable-props)
     * [ToolbarOptions](#toolbaroptions-class)
     * [ColumnModel](#columnmodel)
-  * [Examples](#how-to-include-functionality-buttons)
+  * [Examples](#examples)
     * [How to include functionality buttons](#how-to-include-functionality-buttons)
     * [Run integrated sample](#run-integrated-sample)
   * [Related projects](#related-projects)
@@ -157,6 +157,26 @@ These are all the available properties (and their default values) for the `Toolb
 
 _If you don't define some of the optional props described above, these will use their defaults values. In the case of `bodyRenderer`, the grid will display its default body; if the `footerRenderer` is not defined, the footer will not be displayed._
 
+### `ColumnModel`
+
+It represents a `DataGrid` column and its constructor requires a name identifier as well as an object of column options with the following properties:
+
+| Name | Type | Default Value | Description | Options   |
+|---------------|-------------------|-------------------------|--------------------------------------------------------------|----------|
+| `Name`          | `string`              |         `NONE`          | This is required and represents a property of the entity which we are binding. |-|
+| `Aggregate`     | `AggregateFunctions`  |         `NONE`          | The aggregation function that will be applied to this column. | `NONE`, `SUM`, `AVERAGE`, `COUNT`, `DISTINCT_COUNT`, `MAX`, `MIN` |
+| `DataType`      | `ColumnDataType`      |       `STRING`          | The column type. | `STRING`, `NUMERIC`, `BOOLEAN`, `DATE`, `DATE_TIME`, `DATE_TIME_UTC` |
+| `Filterable`        | `bool`                |        `false`          | Enables Filterable.|-|
+| `IsKey`         | `bool`                |        `false`          | Defines if a column is an identifier or not. |-|
+| `Label`         | `string`              | The name of the column  | Column label that will be shown. |-|
+| `Searchable`    | `bool`                |        `true`           | Indicates that a column can be used to search upon. |-|
+| `SortDirection` |`ColumnSortDirection`  |        `NONE`           |-| `NONE`, `ASCENDING`, `DESCENDING` |
+| `SortOrder`     | `number`              |         `-1`            |-|-|
+| `Sortable`      | `bool`                |        `false`          | Determines if a column can be sorted. |-|
+| `Visible`       | `bool`                |        `true`           | Specifies if a column should be shown. |-|
+
+## Examples
+
 ### How to include functionality buttons
 
 You can add functionalities to the `DataGridProvider` including extra buttons that can perform an action according to your requirements. Just need include an IconButton Component from @material-ui and define the icon or button that you need between `DataGridProvider` tags and specify the action to perform.
@@ -182,26 +202,7 @@ const LocalDataGrid = () => (
 );
 ```
 
-
-### `ColumnModel`
-
-It represents a `DataGrid` column and its constructor requires a name identifier as well as an object of column options with the following properties:
-
-| Name | Type | Default Value | Description | Options   |
-|---------------|-------------------|-------------------------|--------------------------------------------------------------|----------|
-| `Name`          | `string`              |         `NONE`          | This is required and represents a property of the entity which we are binding. |-|
-| `Aggregate`     | `AggregateFunctions`  |         `NONE`          | The aggregation function that will be applied to this column. | `NONE`, `SUM`, `AVERAGE`, `COUNT`, `DISTINCT_COUNT`, `MAX`, `MIN` |
-| `DataType`      | `ColumnDataType`      |       `STRING`          | The column type. | `STRING`, `NUMERIC`, `BOOLEAN`, `DATE`, `DATE_TIME`, `DATE_TIME_UTC` |
-| `Filterable`        | `bool`                |        `false`          | Enables Filterable.|-|
-| `IsKey`         | `bool`                |        `false`          | Defines if a column is an identifier or not. |-|
-| `Label`         | `string`              | The name of the column  | Column label that will be shown. |-|
-| `Searchable`    | `bool`                |        `true`           | Indicates that a column can be used to search upon. |-|
-| `SortDirection` |`ColumnSortDirection`  |        `NONE`           |-| `NONE`, `ASCENDING`, `DESCENDING` |
-| `SortOrder`     | `number`              |         `-1`            |-|-|
-| `Sortable`      | `bool`                |        `false`          | Determines if a column can be sorted. |-|
-| `Visible`       | `bool`                |        `true`           | Specifies if a column should be shown. |-|
-
-## Run integrated sample
+### Run integrated sample
 
 There is a sample included in this project, you can run it just by doing the following.
 
