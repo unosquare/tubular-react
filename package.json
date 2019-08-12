@@ -77,7 +77,7 @@
     "uno-react": "^0.8.0"
   },
   "devDependencies": {
-    "@testing-library/react": "^8.0.9",
+    "@testing-library/react": "^9.1.0",
     "@testing-library/react-hooks": "^2.0.1",
     "@types/jest": "^24.0.17",
     "@types/node": "^12.7.1",
