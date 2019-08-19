@@ -33,6 +33,7 @@ const timeout = 400;
 interface IProps {
   columns: ColumnModel[];
   dataSource: any[] | string | Request | ITubularHttpClient;
+  deps?: any[];
   gridName: string;
   storage?: IDataGridStorage;
   toolbarOptions?: ToolbarOptions;
@@ -46,6 +47,7 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
   const {
     bodyRenderer,
     columns,
+    deps,
     footerRenderer,
     dataSource,
     toolbarOptions = props.toolbarOptions || new ToolbarOptions(),
@@ -63,7 +65,7 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
     storage,
   };
 
-  const grid = useDataGrid(columns, gridConfig, dataSource);
+  const grid = useDataGrid(columns, gridConfig, dataSource, deps);
   const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
 
   if (isMobileResolution) {

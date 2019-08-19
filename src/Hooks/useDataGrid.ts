@@ -47,6 +47,7 @@ const useDataGrid =
         initColumns: ColumnModel[],
         config: Partial<IDataGridConfig>,
         source: any[] | string | Request | ITubularHttpClient,
+        deps?: any[],
     ): IDataGrid => {
 
         const [isLoading, setIsLoading] = React.useState(false);
@@ -175,9 +176,15 @@ const useDataGrid =
             },
         };
 
+        let dependencies = [getColumns, getPage, getSearchText, getItemsPerPage, source];
+
+        if (deps) {
+            dependencies = dependencies.concat(deps);
+        }
+
         React.useEffect(() => {
             api.processRequest();
-        }, [getColumns, getPage, getSearchText, getItemsPerPage]);
+        }, dependencies);
 
         const initGrid = () => {
             if (getStorage.getPage()) {
