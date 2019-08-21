@@ -37,7 +37,12 @@ interface IProps {
   gridName: string;
   storage?: IDataGridStorage;
   toolbarOptions?: ToolbarOptions;
-  bodyRenderer?(row: object, index: number, columns: ColumnModel[]): React.ReactNode;
+  bodyRenderer?(
+    row: any,
+    index: number,
+    columns: ColumnModel[],
+    onRowClickProxy: (row: any) => void,
+  ): React.ReactNode;
   footerRenderer?(aggregate: any): React.ReactNode;
   onError?(err: any): void;
   onRowClick?(row: any): void;

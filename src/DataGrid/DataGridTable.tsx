@@ -11,7 +11,12 @@ import { GridHeader } from './GridHeader';
 
 interface IProps {
     grid: IDataGrid;
-    bodyRenderer?(row: any, index: number, columns: ColumnModel[]): React.ReactNode;
+    bodyRenderer?(
+        row: any,
+        index: number,
+        columns: ColumnModel[],
+        onRowClickProxy: (row: any) => void,
+    ): React.ReactNode;
     footerRenderer?(aggregate: any): React.ReactNode;
     onRowClick?(row: any): void;
 }

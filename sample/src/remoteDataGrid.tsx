@@ -5,6 +5,7 @@ import TableRow from '@material-ui/core/TableRow';
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 
+import { ColumnModel } from 'tubular-common';
 import { DataGrid, LocalStorage } from '../../src';
 import useGridRefresh from '../../src/Hooks/useGridRefresh';
 import columns from './data/columns';
@@ -20,8 +21,12 @@ const RemoteDataGrid: React.FunctionComponent = () => {
     forceRefresh();
   };
 
-  const bodyRenderer = (row: any) => (
-    <TableRow hover={true} key={row.OrderID}>
+  const rowClick = (row) => {
+    console.log("You clicked on a row: ", row);
+  };
+
+  const bodyRenderer = (row: any, rowIndex: number, gridColumns: ColumnModel[], rowClickProxy: any) => (
+    <TableRow hover={true} key={row.OrderID} onClick={rowClickProxy}>
       <TableCell padding='default'>{row.OrderID}</TableCell>
       <TableCell padding='default'>{row.CustomerName}</TableCell>
       <TableCell padding='default'>
@@ -56,6 +61,7 @@ const RemoteDataGrid: React.FunctionComponent = () => {
         dataSource='https://tubular.azurewebsites.net/api/orders/paged'
         deps={[refresh]}
         bodyRenderer={bodyRenderer}
+        onRowClick={rowClick}
         footerRenderer={footerRenderer}
         storage={new LocalStorage()}
       />
