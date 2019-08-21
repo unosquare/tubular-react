@@ -26,6 +26,7 @@ const getStyles = (isPointer: boolean) => ({
 
 export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, onRowClick }) => {
     const onRowClickProxy = (row: any) => (ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => {
+
         if (onRowClick) {
             onRowClick(row);
         }
@@ -68,7 +69,7 @@ export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, 
                 ? noDataRow
                 : grid.state.data
                     .map((row: any, rowIndex: number) =>
-                        bodyRenderer(row, rowIndex, grid.state.columns, onRowClickProxy))
+                        bodyRenderer(row, rowIndex, grid.state.columns, onRowClickProxy(row)))
             }
         </TableBody>
     );
