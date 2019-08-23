@@ -4,10 +4,8 @@ import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
 import { Route } from 'react-router-dom';
 import Navigation from '../components/Navigation';
+import { featurePaths } from '../utils/featuresPaths';
 import ComponentAPI from './Documentation/ComponentAPI';
-import Pagination from './Documentation/Features/Pagination';
-import Storage from './Documentation/Features/Storage';
-import Toolbar from './Documentation/Features/Toolbar';
 import Home from './Documentation/Home';
 import Sample from './Documentation/Sample';
 
@@ -40,9 +38,9 @@ export default () => {
                 <div className={classes.toolbar} />
                 <Route exact={true} path='/tubular-react/' component={Home} />
                 <Route exact={true} path='/tubular-react/features' component={Sample} />
-                <Route path='/tubular-react/features/pagination' component={Pagination} />
-                <Route path='/tubular-react/features/toolbar' component={Toolbar} />
-                <Route path='/tubular-react/features/storage' component={Storage} />
+                {featurePaths.map((x) => (
+                    <Route key={x.name} path={x.path} component={x.component} />
+                ))}
                 <Route path='/tubular-react/componentAPI/' component={ComponentAPI} />
             </main>
         </div>

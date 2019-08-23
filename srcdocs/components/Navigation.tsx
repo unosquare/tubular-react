@@ -68,8 +68,9 @@ export default () => {
                         <Typography>Features</Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails className={classes.details}>
-                        {featurePaths.map(((x, i) => (
+                        {featurePaths.map((x, i) => (
                             <Link
+                                key={i}
                                 to={x.path}
                                 className={i >= (featurePaths.length - 1) ? classes.lastLink : classes.link}
                             >
@@ -77,7 +78,7 @@ export default () => {
                                     <ListItemText primary={x.name} />
                                 </ListItem>
                             </Link>
-                        )))}
+                        ))}
                         <Divider />
                     </ExpansionPanelDetails>
                 </ExpansionPanel>

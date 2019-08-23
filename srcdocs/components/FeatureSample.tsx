@@ -69,7 +69,12 @@ export default ({ data }: any) => {
                     </Highlight>
                 </Paper>
             </Collapse>
-            <CustomizableGrid toolbarOptions={data.options} />
+            <CustomizableGrid
+                toolbarOptions={data.options}
+                gridColumns={data.columns}
+                deps={[data.refresh]}
+                onRowClick={data.onRowClick}
+            />
         </div>
     );
 };
