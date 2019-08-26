@@ -9,9 +9,7 @@ const columns = [
     IsKey: true,
     Label: 'Id',
   }),
-  new ColumnModel('CustomerName', {
-    Searchable: true,
-  }),
+  new ColumnModel('CustomerName'),
   new ColumnModel('ShippedDate', {
     DataType: ColumnDataType.DATE_TIME,
   }),
