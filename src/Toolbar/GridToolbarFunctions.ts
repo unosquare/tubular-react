@@ -7,17 +7,21 @@ const getYear = require('date-fns/get_year');
 // tslint:disable-next-line: no-var-requires
 const parse = require('date-fns/parse');
 
+function parseDateTime(cell: any, stringFormat: string) {
+    if (!cell) {
+        return '';
+    }
+
+    const dateParsed = parse(cell);
+    return getYear(dateParsed) > 0 ? format(dateParsed, stringFormat) : '';
+}
 const cellValue = (cellDataType: string, cell: any) => {
     switch (cellDataType) {
         case ColumnDataType.DATE:
-            return !cell
-                ? ''
-                : getYear(parse(cell)) > 0 ? format(cell, 'M/D/YYYY') : '';
+            return parseDateTime(cell, 'M/D/YYYY');
         case ColumnDataType.DATE_TIME:
         case ColumnDataType.DATE_TIME_UTC:
-            return !cell
-                ? ''
-                : getYear(parse(cell)) > 0 ? format(cell, 'M/D/YYYY h:mm A') : '';
+            return parseDateTime(cell, 'M/D/YYYY h:mm A');
         case ColumnDataType.BOOLEAN:
             return (cell === true ? 'Yes' : 'No');
         default:

@@ -48,13 +48,17 @@ var e=require("../start_of_week/index.js"),t=6e4,r=6048e5;function i(i,n,o){var 
 var e=require("../parse/index.js");function r(r,u){var a=e(r),l=e(u);return a.getFullYear()-l.getFullYear()}module.exports=r;
 },{"../parse/index.js":"ajCz"}],"F0zg":[function(require,module,exports) {
 var e=require("../parse/index.js"),r=require("../difference_in_calendar_days/index.js"),a=require("../compare_asc/index.js");function i(i,n){var s=e(i),t=e(n),d=a(s,t),u=Math.abs(r(s,t));return s.setDate(s.getDate()-d*u),d*(u-(a(s,t)===-d))}module.exports=i;
-},{"../parse/index.js":"ajCz","../difference_in_calendar_days/index.js":"7dmj","../compare_asc/index.js":"+NJC"}],"lvwL":[function(require,module,exports) {
+},{"../parse/index.js":"ajCz","../difference_in_calendar_days/index.js":"7dmj","../compare_asc/index.js":"+NJC"}],"KKv9":[function(require,module,exports) {
+var e=require("../parse/index.js");function r(r,i){var t=e(r),n=e(i);return t.getTime()-n.getTime()}module.exports=r;
+},{"../parse/index.js":"ajCz"}],"lvwL":[function(require,module,exports) {
 var e=require("../difference_in_milliseconds/index.js"),r=36e5;function i(i,n){var o=e(i,n)/r;return o>0?Math.floor(o):Math.ceil(o)}module.exports=i;
 },{"../difference_in_milliseconds/index.js":"KKv9"}],"jrl+":[function(require,module,exports) {
 var r=require("../add_iso_years/index.js");function e(e,u){var a=Number(u);return r(e,-a)}module.exports=e;
 },{"../add_iso_years/index.js":"bhh0"}],"32aN":[function(require,module,exports) {
 var e=require("../parse/index.js"),r=require("../difference_in_calendar_iso_years/index.js"),i=require("../compare_asc/index.js"),s=require("../sub_iso_years/index.js");function a(a,n){var u=e(a),d=e(n),_=i(u,d),o=Math.abs(r(u,d));return u=s(u,_*o),_*(o-(i(u,d)===-_))}module.exports=a;
-},{"../parse/index.js":"ajCz","../difference_in_calendar_iso_years/index.js":"KVP/","../compare_asc/index.js":"+NJC","../sub_iso_years/index.js":"jrl+"}],"5KzI":[function(require,module,exports) {
+},{"../parse/index.js":"ajCz","../difference_in_calendar_iso_years/index.js":"KVP/","../compare_asc/index.js":"+NJC","../sub_iso_years/index.js":"jrl+"}],"F5+8":[function(require,module,exports) {
+var e=require("../difference_in_milliseconds/index.js"),r=6e4;function i(i,n){var o=e(i,n)/r;return o>0?Math.floor(o):Math.ceil(o)}module.exports=i;
+},{"../difference_in_milliseconds/index.js":"KKv9"}],"5KzI":[function(require,module,exports) {
 var e=require("../parse/index.js"),r=require("../difference_in_calendar_months/index.js"),n=require("../compare_asc/index.js");function a(a,i){var s=e(a),t=e(i),o=n(s,t),d=Math.abs(r(s,t));return s.setMonth(s.getMonth()-o*d),o*(d-(n(s,t)===-o))}module.exports=a;
 },{"../parse/index.js":"ajCz","../difference_in_calendar_months/index.js":"mgfB","../compare_asc/index.js":"+NJC"}],"A399":[function(require,module,exports) {
 var e=require("../difference_in_months/index.js");function r(r,n){var i=e(r,n)/3;return i>0?Math.floor(i):Math.ceil(i)}module.exports=r;
