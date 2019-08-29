@@ -1,12 +1,13 @@
 import * as React from 'react';
 
+import Button from '@material-ui/core/Button';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 
 import { ColumnModel } from 'tubular-common';
-import { DataGrid, LocalStorage } from '../../src';
+import { DataGrid, LocalStorage, ToolbarOptions } from '../../src';
 import useGridRefresh from '../../src/Hooks/useGridRefresh';
 import columns from './data/columns';
 
@@ -14,14 +15,12 @@ import columns from './data/columns';
 const format = require('date-fns/format');
 
 const RemoteDataGrid: React.FunctionComponent = () => {
-  const [getErrorMessage, setErrorMessage] = React.useState(null as string);
-
   const [refresh, forceRefresh] = useGridRefresh();
   const forceGridRefresh = () => {
     forceRefresh();
   };
 
-  const rowClick = (row) => {
+  const rowClick = (row: any) => {
     console.log("You clicked on a row: ", row);
   };
 
@@ -52,9 +51,13 @@ const RemoteDataGrid: React.FunctionComponent = () => {
     </TableRow>
   );
 
+  const toolbarButton = new ToolbarOptions({
+    customItems: (
+      <Button onClick={forceGridRefresh}>Force refresh</Button>
+    ),
+  });
+
   return (
-    <div className='root'>
-      <button onClick={forceGridRefresh}>Force refresh</button>
       <DataGrid
         gridName='Tubular-React'
         columns={[...columns]}
@@ -64,8 +67,8 @@ const RemoteDataGrid: React.FunctionComponent = () => {
         onRowClick={rowClick}
         footerRenderer={footerRenderer}
         storage={new LocalStorage()}
+        toolbarOptions={toolbarButton}
       />
-    </div>
   );
 };
 
