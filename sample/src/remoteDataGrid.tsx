@@ -1,24 +1,19 @@
-import * as React from 'react';
-
 import Button from '@material-ui/core/Button';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
-
+import format from 'date-fns/format';
+import parseISO from 'date-fns/parseISO';
+import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
 import { DataGrid, LocalStorage, ToolbarOptions } from '../../src';
 import useGridRefresh from '../../src/Hooks/useGridRefresh';
 import columns from './data/columns';
 
-// tslint:disable-next-line: no-var-requires
-const format = require('date-fns/format');
-
 const RemoteDataGrid: React.FunctionComponent = () => {
   const [refresh, forceRefresh] = useGridRefresh();
-  const forceGridRefresh = () => {
-    forceRefresh();
-  };
+  const forceGridRefresh = () => forceRefresh();
 
   const rowClick = (row: any) => {
     console.log("You clicked on a row: ", row);
@@ -29,7 +24,7 @@ const RemoteDataGrid: React.FunctionComponent = () => {
       <TableCell padding='default'>{row.OrderID}</TableCell>
       <TableCell padding='default'>{row.CustomerName}</TableCell>
       <TableCell padding='default'>
-        {format(row.ShippedDate, 'MMMM Do YYYY, h:mm:ss a')}
+        {format(parseISO(row.ShippedDate), 'MMMM Do yyyy, h:mm:ss a')}
       </TableCell>
       <TableCell padding='default'>{row.ShipperCity}</TableCell>
       <TableCell padding='default' align={'right'}>

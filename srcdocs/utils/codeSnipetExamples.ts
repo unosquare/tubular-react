@@ -28,7 +28,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Brightness7Rounded from '@material-ui/icons/Brightness7Rounded';
 import Mood from '@material-ui/icons/Mood';
 
-import { DataGridProvider, DataGridTable, ToolbarOptions, withRemoteDataSource } from 'tubular-react';
+import { DataGridProvider, DataGridTable, ToolbarOptions, withRemoteDataSource, renderDateTimeCell } from 'tubular-react';
 
 import { AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection } from 'tubular-common';
 
@@ -82,7 +82,7 @@ const MyComponent = () => {
               <TableCell padding='default'>{row.OrderID}</TableCell>
               <TableCell padding='default'>{row.CustomerName}</TableCell>
               <TableCell padding='default'>
-                {format(row.ShippedDate, 'MMMM Do YYYY, h:mm:ss a')}
+                {renderDateTimeCell(row.ShippedDate, 'MMMM Do yyyy, h:mm:ss a')}
               </TableCell>
               <TableCell padding='default'>{row.ShipperCity}</TableCell>
               <TableCell padding='default' align={'right'}>
@@ -127,8 +127,7 @@ export const simpleFeatures = `import React from 'react';
 import { Snackbar, TableCell, TableRow } from '@material-ui/core';
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
-import format from 'date-fns/format';
-import { DataGridProvider, DataGridTable, ToolbarOptions, withRemoteDataSource } from 'tubular-react';
+import { DataGridProvider, DataGridTable, ToolbarOptions, withRemoteDataSource, renderDateTimeCell } from 'tubular-react';
 
 import {
   AggregateFunctions,
@@ -205,7 +204,7 @@ class SampleFeatures extends React.Component {
                             {row.CustomerName}
                         </TableCell>
                         <TableCell padding='default'>
-                            {format(row.ShippedDate, 'MMMM Do YYYY, h:mm:ss a')}
+                            {renderDateTimeCell(row.ShippedDate, 'MMMM Do yyyy, h:mm:ss a')}
                         </TableCell>
                         <TableCell padding='default'>
                             {row.ShipperCity}
@@ -256,6 +255,7 @@ import {
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from '@material-ui/core/Paper';
 import format from 'date-fns/format';
+import parseISO from 'date-fns/parseISO';
 import import {
   DataSourceContext,
   DataGridProvider,
@@ -263,6 +263,7 @@ import import {
   Paginator,
   SearchTextInput,
   withRemoteDataSource,
+  renderDateTimeCell,
 } from 'tubular-react';
 import {
   AggregateFunctions,
@@ -360,7 +361,7 @@ class SampleGridList extends React.Component<IDataGridProps, IDataGridState> {
                                   {item.ShipperCity}
                                 </Typography>
                                 <Typography component='p'>
-                                  {format(item.ShippedDate, 'MMM D YYYY')}
+                                  {renderDateTimeCell(item.ShippedDate, 'MMM d yyyy')}
                                 </Typography>
                               </CardContent>
                               <CardActions>

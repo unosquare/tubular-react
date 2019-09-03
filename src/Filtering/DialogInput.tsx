@@ -1,11 +1,10 @@
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
+import format from 'date-fns/format';
+import parseISO from 'date-fns/parseISO';
 import * as React from 'react';
-
 import { ColumnDataType, ColumnModel, CompareOperators } from 'tubular-common';
 
-// tslint:disable-next-line: no-var-requires
-const format = require('date-fns/format');
 const dropdown = {
   marginLeft: '10%',
   marginTop: '5%',
@@ -41,16 +40,16 @@ const getValue = (
   switch (dataType) {
     case ColumnDataType.DATE:
       if (value) {
-        return format(value, 'YYYY-MM-DD');
+        return format(parseISO(value), 'yyyy-MM-DD');
       }
       handleTextFieldChange(format(new Date(), 'YYYY-MM-DD'));
       return '';
     case ColumnDataType.DATE_TIME:
     case ColumnDataType.DATE_TIME_UTC:
       if (value) {
-        return format(value, 'YYYY-MM-DD[T]HH:mm');
+        return format(parseISO(value), 'yyyy-MM-DD[T]HH:mm');
       }
-      handleTextFieldChange(format(new Date(), 'YYYY-MM-DD[T]HH:mm'));
+      handleTextFieldChange(format(new Date(), 'yyyy-MM-DD[T]HH:mm'));
       return '';
     case ColumnDataType.BOOLEAN:
       return operator === CompareOperators.NONE

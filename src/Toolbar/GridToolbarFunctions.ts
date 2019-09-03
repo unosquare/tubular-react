@@ -1,27 +1,23 @@
+import format from 'date-fns/format';
+import getYear from 'date-fns/getYear';
+import parseISO from 'date-fns/parseISO';
 import { ColumnDataType } from 'tubular-common';
-
-// tslint:disable-next-line: no-var-requires
-const format = require('date-fns/format');
-// tslint:disable-next-line: no-var-requires
-const getYear = require('date-fns/get_year');
-// tslint:disable-next-line: no-var-requires
-const parse = require('date-fns/parse');
 
 function parseDateTime(cell: any, stringFormat: string) {
     if (!cell) {
         return '';
     }
 
-    const dateParsed = parse(cell);
+    const dateParsed = parseISO(cell);
     return getYear(dateParsed) > 0 ? format(dateParsed, stringFormat) : '';
 }
 const cellValue = (cellDataType: string, cell: any) => {
     switch (cellDataType) {
         case ColumnDataType.DATE:
-            return parseDateTime(cell, 'M/D/YYYY');
+            return parseDateTime(cell, 'M/d/yyyy');
         case ColumnDataType.DATE_TIME:
         case ColumnDataType.DATE_TIME_UTC:
-            return parseDateTime(cell, 'M/D/YYYY h:mm A');
+            return parseDateTime(cell, 'M/d/yyyy h:mm a');
         case ColumnDataType.BOOLEAN:
             return (cell === true ? 'Yes' : 'No');
         default:

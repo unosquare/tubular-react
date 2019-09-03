@@ -1,5 +1,5 @@
 import ITubularHttpClient from './ITubularHttpClient';
-import { renderCellContent, renderCells } from './renders';
+import { renderCellContent, renderCells, renderDateTimeCell } from './renders';
 import ShallowHttpClient, { FetchHandler } from './ShallowHttpClient';
 import TubularHttpClient from './TubularHttpClient';
 
@@ -10,4 +10,5 @@ export {
     TubularHttpClient,
     renderCellContent,
     renderCells,
+    renderDateTimeCell,
 };

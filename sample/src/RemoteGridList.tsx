@@ -12,14 +12,13 @@ import TableCell from '@material-ui/core/TableCell';
 import TableFooter from '@material-ui/core/TableFooter';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
+import format from 'date-fns/format';
+import parseISO from 'date-fns/parseISO';
 import * as React from 'react';
 import { LocalStorage, Paginator, SearchTextInput } from '../../src';
 import useDataGrid from '../../src/Hooks/useDataGrid';
 import CustomHttpClient from './CustomHttpClient';
 import columns from './data/columns';
-
-// tslint:disable-next-line: no-var-requires
-const format = require('date-fns/format');
 
 const styles: any = {
   progress: {
@@ -30,12 +29,12 @@ const styles: any = {
     textAlign: 'right',
   },
 };
+
 const httpClient = new CustomHttpClient(
   'https://tubular.azurewebsites.net/api/orders/paged',
 );
 
 const RemoteGridList: React.FunctionComponent = () => {
-
   const [getErrorMessage, setErrorMessage] = React.useState(null as string);
   const grid = useDataGrid(columns, { storage: new LocalStorage(), gridName: 'RemoteGridList' }, httpClient);
 
@@ -67,7 +66,7 @@ const RemoteGridList: React.FunctionComponent = () => {
                           {row.ShipperCity}
                         </Typography>
                         <Typography component='p'>
-                          {format(row.ShippedDate, 'MMM D YYYY')}
+                          {format(parseISO(row.ShippedDate), 'MMM d yyyy')}
                         </Typography>
                       </CardContent>
                       <CardActions>

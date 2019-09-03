@@ -1,32 +1,20 @@
-import * as React from 'react';
-
 import Snackbar from '@material-ui/core/Snackbar';
+import Table from '@material-ui/core/Table';
 import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
-
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
-
-import Table from '@material-ui/core/Table';
-import TableHead from '@material-ui/core/TableHead';
+import * as React from 'react';
 import { DataGridTable } from '../../src/DataGrid';
 import useDataGrid from '../../src/Hooks/useDataGrid';
 import { Paginator } from '../../src/Pagination';
-import { ToolbarOptions } from '../../src/Toolbar';
+import { renderDateTimeCell } from '../../src/utils';
 import columns from './data/columns';
 import localData from './data/localData';
 
-// tslint:disable-next-line: no-var-requires
-const format = require('date-fns/format');
-const toolbarOptions = new ToolbarOptions({
-  advancePagination: false,
-  bottomPager: false,
-  rowsPerPageOptions: [5, 10],
-  topPager: false,
-});
-
-const CustomLayoutDataGrid: React.FunctionComponent = () => {
+const CustomLayoutDataGrid: React.FunctionComponent = () => { 
 
   const [getErrorMessage, setErrorMessage] = React.useState(null as string);
   const grid = useDataGrid(columns, {}, localData);
@@ -36,7 +24,7 @@ const CustomLayoutDataGrid: React.FunctionComponent = () => {
       <TableCell padding='default'>{row.OrderID}</TableCell>
       <TableCell padding='default'>{row.CustomerName}</TableCell>
       <TableCell padding='default'>
-        {format(row.ShippedDate, 'MMMM Do YYYY, h:mm:ss a')}
+        {renderDateTimeCell(row.ShippedDate, 'MMMM Do yyyy, h:mm:ss a')}
       </TableCell>
       <TableCell padding='default'>{row.ShipperCity}</TableCell>
       <TableCell padding='default' align={'right'}>

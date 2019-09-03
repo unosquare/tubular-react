@@ -16,7 +16,7 @@ export default () => {
       <TableCell padding='default'>{row.OrderID}</TableCell>
       <TableCell padding='default'>{row.CustomerName}</TableCell>
       <TableCell padding='default'>
-        {format(row.ShippedDate, 'MMMM Do YYYY, h:mm:ss a')}
+        {format(row.ShippedDate, 'MMMM Do yyyy, h:mm:ss a')}
       </TableCell>
       <TableCell padding='default'>{row.ShipperCity}</TableCell>
       <TableCell padding='default' align={'right'}>

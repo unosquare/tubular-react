@@ -1,31 +1,30 @@
 import TableCell from '@material-ui/core/TableCell';
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
+import format from 'date-fns/format';
+import getYear from 'date-fns/getYear';
+import parseISO from 'date-fns/parseISO';
 import * as React from 'react';
 import { ColumnDataType, ColumnModel } from 'tubular-common';
 
-// tslint:disable-next-line: no-var-requires
-const format = require('date-fns/format');
-// tslint:disable-next-line: no-var-requires
-const getYear = require('date-fns/get_year');
-// tslint:disable-next-line: no-var-requires
-const parse = require('date-fns/parse');
+export const renderDateTimeCell: any = (value: any, formatString: string) => {
+    if (!value) {
+        return '';
+    }
+
+    const parsedValue = parseISO(value);
+    return getYear(parsedValue) > 0 ? format(parsedValue, formatString) : '';
+};
 
 export const renderCellContent: any = (column: ColumnModel, row: any) => {
     switch (column.DataType) {
         case ColumnDataType.NUMERIC:
             return row[column.Name] || 0;
         case ColumnDataType.DATE:
-            if (!row[column.Name]) {
-                return '';
-            }
-            return getYear(parse(row[column.Name])) > 0 ? format(row[column.Name], 'M/D/YYYY') : '';
+            return renderDateTimeCell(row[column.Name], 'M/d/yyyy');
         case ColumnDataType.DATE_TIME:
         case ColumnDataType.DATE_TIME_UTC:
-            if (!row[column.Name]) {
-                return '';
-            }
-            return getYear(parse(row[column.Name])) > 0 ? format(row[column.Name], 'M/D/YYYY h:mm A') : '';
+            return renderDateTimeCell(row[column.Name], 'M/d/yyyy h:mm a');
         case ColumnDataType.BOOLEAN:
             return row[column.Name] === true ? <CheckBox /> : <CheckBoxOutlineBlank />;
         default:
