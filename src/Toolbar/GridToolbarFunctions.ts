@@ -41,7 +41,7 @@ const processRow = (row: any, columns: any[], ignoreType: boolean) => {
                 result = `"${result}"`;
             }
 
-            return `${prev}${i > 0 ? ',' : ''}${result}`;
+            return `${prev !== undefined ? prev : ''}${i > 0 && prev !== undefined ? ',' : ''}${result}`;
         }, '');
 
     return `${finalVal}\n`;
