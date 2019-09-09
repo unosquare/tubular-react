@@ -16,7 +16,7 @@ const RemoteDataGrid: React.FunctionComponent = () => {
   const forceGridRefresh = () => forceRefresh();
 
   const rowClick = (row: any) => {
-    console.log("You clicked on a row: ", row);
+    console.log('You clicked on a row: ', row);
   };
 
   const bodyRenderer = (row: any, rowIndex: number, gridColumns: ColumnModel[], rowClickProxy: any) => (
@@ -24,7 +24,7 @@ const RemoteDataGrid: React.FunctionComponent = () => {
       <TableCell padding='default'>{row.OrderID}</TableCell>
       <TableCell padding='default'>{row.CustomerName}</TableCell>
       <TableCell padding='default'>
-        {format(parseISO(row.ShippedDate), 'MMMM Do yyyy, h:mm:ss a')}
+        {format(parseISO(row.ShippedDate), 'M/d/yyyy h:mm a')}
       </TableCell>
       <TableCell padding='default'>{row.ShipperCity}</TableCell>
       <TableCell padding='default' align={'right'}>

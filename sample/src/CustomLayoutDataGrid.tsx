@@ -24,7 +24,7 @@ const CustomLayoutDataGrid: React.FunctionComponent = () => {
       <TableCell padding='default'>{row.OrderID}</TableCell>
       <TableCell padding='default'>{row.CustomerName}</TableCell>
       <TableCell padding='default'>
-        {renderDateTimeCell(row.ShippedDate, 'MMMM Do yyyy, h:mm:ss a')}
+        {renderDateTimeCell(row.ShippedDate, 'M/d/yyyy h:mm a')}
       </TableCell>
       <TableCell padding='default'>{row.ShipperCity}</TableCell>
       <TableCell padding='default' align={'right'}>

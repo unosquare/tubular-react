@@ -66,7 +66,7 @@ const RemoteGridList: React.FunctionComponent = () => {
                           {row.ShipperCity}
                         </Typography>
                         <Typography component='p'>
-                          {format(parseISO(row.ShippedDate), 'MMM d yyyy')}
+                          {format(parseISO(row.ShippedDate), 'M/d/yyyy h:mm a')}
                         </Typography>
                       </CardContent>
                       <CardActions>
