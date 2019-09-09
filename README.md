@@ -42,13 +42,12 @@ Table of contents
 
 ## Dependencies
 
-* [date-fns](https://date-fns.org/) - Version: 1.30.1
-* [Material UI Core](https://material-ui.com/) - Version: 4.2.0
-* [React](https://reactjs.org/) - Version: >16.8
-* [Tubular Common](https://github.com/unosquare/tubular-common) - Version: 1.4.1.
-* [uno-react](https://github.com/unosquare/uno-react) - Version: 0.7.5.
-* [uno-material-ui](https://github.com/unosquare/uno-material-ui) - Version: 1.2.4.
-* [JSS](https://cssinjs.org/?v=v10.0.0-alpha.23) - Version: 10.0.0-alpha.10.
+* [date-fns](https://date-fns.org/)
+* [Material UI](https://material-ui.com/)
+* [React](https://reactjs.org/)
+* [Tubular Common](https://github.com/unosquare/tubular-common)
+* [uno-react](https://github.com/unosquare/uno-react)
+* [uno-material-ui](https://github.com/unosquare/uno-material-ui)
 
 ## Installation
 
