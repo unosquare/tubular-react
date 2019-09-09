@@ -73,6 +73,18 @@ const useDataGrid =
             getStorage.setGridName(config.gridName);
         }
 
+        const handleKeyDown = (event: any) => {
+            if (event.key === 'Control' && !getMultiSort) {
+                setMultiSort(true);
+            }
+        };
+
+        const handleKeyUp = (event: any) => {
+            if (event.key === 'Control' && getMultiSort) {
+                setMultiSort(false);
+            }
+        };
+
         const api: IDataGridApi = {
             exportTo: async (allRows: boolean, exportFunc: (payload: any[], columns: ColumnModel[]) => void) => {
                 if (getState.filteredRecordCount === 0) {
@@ -181,6 +193,16 @@ const useDataGrid =
         if (deps) {
             dependencies = dependencies.concat(deps);
         }
+
+        React.useEffect(() => {
+            document.addEventListener('keydown', handleKeyDown);
+            document.addEventListener('keyup', handleKeyUp);
+
+            return (() => {
+                document.removeEventListener('keydown', handleKeyDown);
+                document.removeEventListener('keyup', handleKeyUp);
+            });
+        }, [getMultiSort]);
 
         React.useEffect(() => {
             api.processRequest();
