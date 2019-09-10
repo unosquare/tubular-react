@@ -70,7 +70,7 @@
     "@material-ui/styles": "^4.4.1",
     "date-fns": "^2.1.0",
     "tubular-common": "^1.4.2",
-    "uno-material-ui": "^1.4.2"
+    "uno-material-ui": "^1.5.0"
   },
   "devDependencies": {
     "@testing-library/react": "^9.1.4",
@@ -93,7 +93,7 @@
     "react-router-dom": "^5.0.1",
     "react-router-hash-link": "^1.2.2",
     "ts-jest": "^24.0.2",
-    "tslint": "^5.19.0",
+    "tslint": "^5.20.0",
     "tslint-react": "^4.0.0",
     "typescript": "^3.6.2"
   },
