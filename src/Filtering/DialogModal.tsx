@@ -5,38 +5,9 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Popover from '@material-ui/core/Popover';
 import * as React from 'react';
+import { ColumnModel, CompareOperators, IFilterWrapper } from 'tubular-common';
 import { DialogInput } from './DialogInput';
 import { OperatorsDropdown } from './OperatorsDropdown';
-
-import { ColumnDataType, ColumnModel, CompareOperators } from 'tubular-common';
-import { IFilterWrapper } from '../DataGridInterfaces/IFilterWrapper';
-
-const createFilterPatch = (column: ColumnModel): IFilterWrapper => {
-    let filterText = column.Filter.Text;
-    let filterArgument = column.Filter.Argument[0];
-
-    if (column.DataType === ColumnDataType.NUMERIC) {
-        filterText = parseFloat(filterText);
-        filterArgument = parseFloat(filterArgument);
-    } else if (column.DataType === ColumnDataType.BOOLEAN) {
-        filterText = filterText === 'true';
-        filterArgument = '';
-    }
-
-    return {
-        Argument: [filterArgument],
-        HasFilter: true,
-        Operator: column.Filter.Operator || CompareOperators.AUTO,
-        Text: filterText,
-    };
-};
-
-const clearFilterPatch: IFilterWrapper = {
-    Argument: [''],
-    HasFilter: false,
-    Operator: CompareOperators.NONE,
-    Text: '',
-};
 
 interface IDialogModalProps {
     anchorFilter: HTMLElement;
@@ -48,10 +19,10 @@ interface IDialogModalProps {
 
 export const DialogModal: React.FunctionComponent<IDialogModalProps> =
     ({ anchorFilter, activeColumn, setAnchorFilter, setFilter, handleFilterChange }) => {
-        const clearFilter = () => setFilter(clearFilterPatch);
+        const clearFilter = () => setFilter(ColumnModel.clearFilterPatch());
         const handleInput = (e: any) => handleFilterChange({ Text: e });
         const handleBetweenInput = (e: any) => handleFilterChange({ Argument: [e] });
-        const submit = () => setFilter(createFilterPatch(activeColumn));
+        const submit = () => setFilter(activeColumn.createFilterPatch());
         const onClose = () => setAnchorFilter(null);
 
         return (

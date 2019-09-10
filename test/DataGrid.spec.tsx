@@ -1,7 +1,7 @@
 import { cleanup, Matcher, MatcherOptions, render } from '@testing-library/react';
 import * as React from 'react';
+import { LocalStorage } from 'tubular-common
 import { DataGrid } from '../src/DataGrid';
-import { LocalStorage } from '../src/Storage/LocalStorage';
 import { ToolbarOptions } from '../src/Toolbar/ToolbarOptions';
 import { validColumnsSample } from './utils/columns';
 import { localData } from './utils/localData';

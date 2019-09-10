@@ -1,6 +1,4 @@
-import { GridRequest } from 'tubular-common';
-import ITubularHttpClient from '../../src/utils/ITubularHttpClient';
-import TubularHttpClient from '../../src/utils/TubularHttpClient';
+import { GridRequest, ITubularHttpClient, TubularHttpClient } from 'tubular-common';
 
 export default class CustomHttpClient implements ITubularHttpClient {
   public request: string | Request;

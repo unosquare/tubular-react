@@ -1,8 +1,7 @@
 import TableRow from '@material-ui/core/TableRow';
 import * as React from 'react';
-import { ColumnModel } from 'tubular-common';
+import { ColumnModel, IFilterWrapper } from 'tubular-common';
 import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
-import { IFilterWrapper } from '../DataGridInterfaces/IFilterWrapper';
 import { DialogModal } from '../Filtering/DialogModal';
 import { GridHeaderCell } from './GridHeaderCell';
 
