@@ -120,7 +120,7 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
   );
 
   return (
-    <Paper style={{ overflowX: 'auto', width: '100%' }}>
+    <Paper className={classes.root}>
       <GridToolbar gridName={gridName} toolbarOptions={toolbarOptions} grid={grid} />
       {toolbarOptions.topPager && paginator('top')}
       <div className={classes.linearProgress} data-testid='linear-progress'>

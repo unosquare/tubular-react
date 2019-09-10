@@ -21,16 +21,14 @@ interface IProps {
     onRowClick?(row: any): void;
 }
 
-export const DataGridTable: React.FunctionComponent<IProps> = (props) => {
-    return (
-        <Table data-testid='data-grid-table'>
-            <TableHead>
-                <GridHeader grid={props.grid} />
-            </TableHead>
-            <GridBody grid={props.grid} bodyRenderer={props.bodyRenderer} onRowClick={props.onRowClick} />
-            <TableFooter>
-                {props.footerRenderer && props.footerRenderer(props.grid.state.aggregate)}
-            </TableFooter>
-        </Table>
-    );
-};
+export const DataGridTable: React.FunctionComponent<IProps> = (props) => (
+    <Table data-testid='data-grid-table'>
+        <TableHead>
+            <GridHeader grid={props.grid} />
+        </TableHead>
+        <GridBody grid={props.grid} bodyRenderer={props.bodyRenderer} onRowClick={props.onRowClick} />
+        <TableFooter>
+            {props.footerRenderer && props.footerRenderer(props.grid.state.aggregate)}
+        </TableFooter>
+    </Table>
+);
