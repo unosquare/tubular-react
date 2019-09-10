@@ -2,7 +2,8 @@ import * as React from 'react';
 
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
-import { DataGrid, LocalStorage } from '../../src';
+import { LocalStorage} from 'tubular-common';
+import { DataGrid } from '../../src';
 import { ToolbarOptions } from '../../src/Toolbar/ToolbarOptions';
 import columns from './data/columns';
 import localData from './data/localData';

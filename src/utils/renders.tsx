@@ -2,7 +2,7 @@ import TableCell from '@material-ui/core/TableCell';
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 import * as React from 'react';
-import { ColumnDataType, ColumnModel, formatDate } from 'tubular-common';
+import { ColumnDataType, ColumnModel, formatDate, getColumnAlign } from 'tubular-common';
 
 export const renderCellContent: any = (column: ColumnModel, row: any) => {
     switch (column.DataType) {

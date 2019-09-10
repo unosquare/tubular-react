@@ -4,8 +4,8 @@ import TableRow from '@material-ui/core/TableRow';
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 import * as React from 'react';
-import { ColumnModel, formatDate } from 'tubular-common';
-import { DataGrid, LocalStorage, ToolbarOptions } from '../../src';
+import { ColumnModel, formatDate, LocalStorage } from 'tubular-common';
+import { DataGrid, ToolbarOptions } from '../../src';
 import useGridRefresh from '../../src/Hooks/useGridRefresh';
 import columns from './data/columns';
 
@@ -51,17 +51,17 @@ const RemoteDataGrid: React.FunctionComponent = () => {
   });
 
   return (
-      <DataGrid
-        gridName='Tubular-React'
-        columns={[...columns]}
-        dataSource='https://tubular.azurewebsites.net/api/orders/paged'
-        deps={[refresh]}
-        bodyRenderer={bodyRenderer}
-        onRowClick={rowClick}
-        footerRenderer={footerRenderer}
-        storage={new LocalStorage()}
-        toolbarOptions={toolbarButton}
-      />
+    <DataGrid
+      gridName='Tubular-React'
+      columns={[...columns]}
+      dataSource='https://tubular.azurewebsites.net/api/orders/paged'
+      deps={[refresh]}
+      bodyRenderer={bodyRenderer}
+      onRowClick={rowClick}
+      footerRenderer={footerRenderer}
+      storage={new LocalStorage()}
+      toolbarOptions={toolbarButton}
+    />
   );
 };
 
