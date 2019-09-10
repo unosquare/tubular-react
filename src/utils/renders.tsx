@@ -7,7 +7,7 @@ import parseISO from 'date-fns/parseISO';
 import * as React from 'react';
 import { ColumnDataType, ColumnModel } from 'tubular-common';
 
-export const renderDateTimeCell: any = (value: any, formatString: string) => {
+export const renderDateTimeCell: any = (value: any, formatString: string = 'M/d/yyyy') => {
     if (!value) {
         return '';
     }
@@ -21,7 +21,7 @@ export const renderCellContent: any = (column: ColumnModel, row: any) => {
         case ColumnDataType.NUMERIC:
             return row[column.Name] || 0;
         case ColumnDataType.DATE:
-            return renderDateTimeCell(row[column.Name], 'M/d/yyyy');
+            return renderDateTimeCell(row[column.Name]);
         case ColumnDataType.DATE_TIME:
         case ColumnDataType.DATE_TIME_UTC:
             return renderDateTimeCell(row[column.Name], 'M/d/yyyy h:mm a');
@@ -32,7 +32,7 @@ export const renderCellContent: any = (column: ColumnModel, row: any) => {
     }
 };
 
-export const renderCellAlign: any = (column: ColumnModel) => {
+export const renderCellAlign: string = (column: ColumnModel) => {
     switch (column.DataType) {
         case ColumnDataType.NUMERIC:
             return 'right';

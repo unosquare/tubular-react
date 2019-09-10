@@ -11,14 +11,14 @@ import { OperatorsDropdown } from './OperatorsDropdown';
 import { ColumnDataType, ColumnModel, CompareOperators } from 'tubular-common';
 import { IFilterWrapper } from '../DataGridInterfaces/IFilterWrapper';
 
-const createFilterPatch = (activeColumn: ColumnModel): IFilterWrapper => {
-    let filterText = activeColumn.Filter.Text;
-    let filterArgument = activeColumn.Filter.Argument[0];
+const createFilterPatch = (column: ColumnModel): IFilterWrapper => {
+    let filterText = column.Filter.Text;
+    let filterArgument = column.Filter.Argument[0];
 
-    if (activeColumn.DataType === ColumnDataType.NUMERIC) {
+    if (column.DataType === ColumnDataType.NUMERIC) {
         filterText = parseFloat(filterText);
         filterArgument = parseFloat(filterArgument);
-    } else if (activeColumn.DataType === ColumnDataType.BOOLEAN) {
+    } else if (column.DataType === ColumnDataType.BOOLEAN) {
         filterText = filterText === 'true';
         filterArgument = '';
     }
@@ -26,7 +26,7 @@ const createFilterPatch = (activeColumn: ColumnModel): IFilterWrapper => {
     return {
         Argument: [filterArgument],
         HasFilter: true,
-        Operator: activeColumn.Filter.Operator || CompareOperators.AUTO,
+        Operator: column.Filter.Operator || CompareOperators.AUTO,
         Text: filterText,
     };
 };

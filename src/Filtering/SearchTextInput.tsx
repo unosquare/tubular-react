@@ -19,7 +19,7 @@ interface ISearchTextInput {
   updateSearchText: (value: string) => any;
 }
 
-export const SearchTextInput: React.FunctionComponent<any> = ({ searchText, updateSearchText }) => {
+export const SearchTextInput: React.FunctionComponent<ISearchTextInput> = ({ searchText, updateSearchText }) => {
   const onChange = (e: any) => updateSearchText(e.target.value);
   const onClear = () => updateSearchText('');
 
