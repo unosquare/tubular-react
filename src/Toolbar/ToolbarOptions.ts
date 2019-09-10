@@ -14,4 +14,13 @@ export class ToolbarOptions {
     constructor(options?: Partial<ToolbarOptions>) {
         Object.assign(this, options);
     }
+
+    public SetMobileMode() {
+        this.advancePagination = false;
+        this.bottomPager = false;
+        this.exportButton = false;
+        this.printButton = false;
+        this.rowsPerPageOptions = [5, 10];
+        this.topPager = false;
+    }
 }

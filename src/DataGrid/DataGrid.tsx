@@ -74,12 +74,7 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
   const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
 
   if (isMobileResolution) {
-    toolbarOptions.advancePagination = false;
-    toolbarOptions.bottomPager = false;
-    toolbarOptions.exportButton = false;
-    toolbarOptions.printButton = false;
-    toolbarOptions.rowsPerPageOptions = [5, 10];
-    toolbarOptions.topPager = false;
+    toolbarOptions.SetMobileMode();
 
     return (
       <Paper className={classes.root}>
