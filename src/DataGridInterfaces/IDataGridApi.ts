@@ -1,5 +1,4 @@
-import { ColumnModel, GridResponse } from 'tubular-common';
-import { IFilterWrapper } from './IFilterWrapper';
+import { ColumnModel, IFilterWrapper } from 'tubular-common';
 
 export interface IDataGridApi {
     exportTo: (allRows: boolean, exportFunc: (payload: any[], columns: ColumnModel[]) => void) => void;

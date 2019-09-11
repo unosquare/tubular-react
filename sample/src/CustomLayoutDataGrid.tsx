@@ -10,7 +10,7 @@ import * as React from 'react';
 import { DataGridTable } from '../../src/DataGrid';
 import useDataGrid from '../../src/Hooks/useDataGrid';
 import { Paginator } from '../../src/Pagination';
-import { renderDateTimeCell } from '../../src/utils';
+import { formatDate } from 'tubular-common';
 import columns from './data/columns';
 import localData from './data/localData';
 
@@ -24,7 +24,7 @@ const CustomLayoutDataGrid: React.FunctionComponent = () => {
       <TableCell padding='default'>{row.OrderID}</TableCell>
       <TableCell padding='default'>{row.CustomerName}</TableCell>
       <TableCell padding='default'>
-        {renderDateTimeCell(row.ShippedDate, 'M/d/yyyy h:mm a')}
+        {formatDate(row.ShippedDate, 'M/d/yyyy h:mm a')}
       </TableCell>
       <TableCell padding='default'>{row.ShipperCity}</TableCell>
       <TableCell padding='default' align={'right'}>

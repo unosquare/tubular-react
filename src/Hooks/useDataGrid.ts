@@ -1,32 +1,28 @@
 import * as React from 'react';
-import Transformer, { ColumnModel, CompareOperators, GridRequest, GridResponse } from 'tubular-common';
+import Transformer, {
+    ColumnModel, CompareOperators,
+    GridRequest, GridResponse, IDataGridStorage,
+    IFilterWrapper, ITubularHttpClient, LocalStorage,
+    NullStorage, parsePayload, TubularHttpClient,
+} from 'tubular-common';
 import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
 import { IDataGridApi } from '../DataGridInterfaces/IDataGridApi';
 import { IDataGridConfig } from '../DataGridInterfaces/IDataGridConfig';
-import { IDataGridStorage } from '../DataGridInterfaces/IDataGridStorage';
-import { IFilterWrapper } from '../DataGridInterfaces/IFilterWrapper';
-import { LocalStorage } from '../Storage';
-import { NullStorage } from '../Storage/NullStorage';
-import ITubularHttpClient from '../utils/ITubularHttpClient';
-import TubularHttpClient from '../utils/TubularHttpClient';
 
 const getRemoteDataSource = (request: string | Request | ITubularHttpClient) =>
     async (gridRequest: GridRequest): Promise<GridResponse> => {
         const httpCast = request as ITubularHttpClient;
-        let httpClient: ITubularHttpClient;
-
-        if (httpCast.request) {
-            httpClient = httpCast;
-        } else {
-            httpClient = new TubularHttpClient(request);
-        }
+        const httpClient: ITubularHttpClient = httpCast.request
+            ? httpCast
+            : new TubularHttpClient(request);
 
         const data = await httpClient.fetch(gridRequest);
         if (!TubularHttpClient.isValidResponse(data)) {
             throw new Error('Server response is a invalid Tubular object');
         }
 
-        data.Payload = data.Payload.map((row: any) => TubularHttpClient.parsePayload(row, gridRequest.Columns));
+        data.Payload = data.Payload
+            .map((row: any) => parsePayload(row, gridRequest.Columns));
 
         return data;
     };
@@ -110,9 +106,9 @@ const useDataGrid =
                     ...getActiveColumn,
                     Filter: {
                         ...getActiveColumn.Filter,
-                        ...value,
+                        ...value as any,
                     },
-                });
+                } as ColumnModel);
             },
             processRequest: async () => {
                 setIsLoading(true);

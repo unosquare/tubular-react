@@ -1,4 +1,4 @@
-import { IDataGridStorage } from './IDataGridStorage';
+import { IDataGridStorage } from 'tubular-common';
 
 export interface IDataGridConfig {
     itemsPerPage: number;

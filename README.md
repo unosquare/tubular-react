@@ -42,7 +42,6 @@ Table of contents
 
 ## Dependencies
 
-* [date-fns](https://date-fns.org/)
 * [Material UI](https://material-ui.com/)
 * [React](https://reactjs.org/)
 * [Tubular Common](https://github.com/unosquare/tubular-common)

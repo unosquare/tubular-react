@@ -3,11 +3,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
-import format from 'date-fns/format';
-import parseISO from 'date-fns/parseISO';
 import * as React from 'react';
-import { ColumnModel } from 'tubular-common';
-import { DataGrid, LocalStorage, ToolbarOptions } from '../../src';
+import { ColumnModel, formatDate, LocalStorage } from 'tubular-common';
+import { DataGrid, ToolbarOptions } from '../../src';
 import useGridRefresh from '../../src/Hooks/useGridRefresh';
 import columns from './data/columns';
 
@@ -24,7 +22,7 @@ const RemoteDataGrid: React.FunctionComponent = () => {
       <TableCell padding='default'>{row.OrderID}</TableCell>
       <TableCell padding='default'>{row.CustomerName}</TableCell>
       <TableCell padding='default'>
-        {format(parseISO(row.ShippedDate), 'M/d/yyyy h:mm a')}
+        {formatDate(row.ShippedDate, 'M/d/yyyy h:mm a')}
       </TableCell>
       <TableCell padding='default'>{row.ShipperCity}</TableCell>
       <TableCell padding='default' align={'right'}>
@@ -53,17 +51,17 @@ const RemoteDataGrid: React.FunctionComponent = () => {
   });
 
   return (
-      <DataGrid
-        gridName='Tubular-React'
-        columns={[...columns]}
-        dataSource='https://tubular.azurewebsites.net/api/orders/paged'
-        deps={[refresh]}
-        bodyRenderer={bodyRenderer}
-        onRowClick={rowClick}
-        footerRenderer={footerRenderer}
-        storage={new LocalStorage()}
-        toolbarOptions={toolbarButton}
-      />
+    <DataGrid
+      gridName='Tubular-React'
+      columns={[...columns]}
+      dataSource='https://tubular.azurewebsites.net/api/orders/paged'
+      deps={[refresh]}
+      bodyRenderer={bodyRenderer}
+      onRowClick={rowClick}
+      footerRenderer={footerRenderer}
+      storage={new LocalStorage()}
+      toolbarOptions={toolbarButton}
+    />
   );
 };
 

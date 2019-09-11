@@ -5,16 +5,14 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
-import { ColumnModel } from 'tubular-common';
+import { ColumnModel, IDataGridStorage, ITubularHttpClient } from 'tubular-common';
 import { FixedLinearProgress } from 'uno-material-ui';
 import { useResolutionSwitch } from 'uno-react';
-import { IDataGridStorage } from '../DataGridInterfaces';
 import { IDataGridConfig } from '../DataGridInterfaces/IDataGridConfig';
 import useDataGrid from '../Hooks/useDataGrid';
 import { Paginator } from '../Pagination';
 import { GridToolbar } from '../Toolbar/GridToolbar';
 import { ToolbarOptions } from '../Toolbar/ToolbarOptions';
-import ITubularHttpClient from '../utils/ITubularHttpClient';
 import { DataGridCard, DataGridTable } from './';
 
 const useStyles = makeStyles({
