@@ -1,5 +1,4 @@
-import { ColumnModel } from 'tubular-common';
-import { IDataGridStorage } from './IDataGridStorage';
+import { ColumnModel, IDataGridStorage } from 'tubular-common';
 
 export interface IDataGridState {
     activeColumn: ColumnModel;

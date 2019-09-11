@@ -106,9 +106,9 @@ const useDataGrid =
                     ...getActiveColumn,
                     Filter: {
                         ...getActiveColumn.Filter,
-                        ...value,
+                        ...value as any,
                     },
-                });
+                } as ColumnModel);
             },
             processRequest: async () => {
                 setIsLoading(true);
