@@ -4,7 +4,7 @@
 ![Buils status](https://github.com/unosquare/tubular-react/workflows/Node.js%20Package/badge.svg)
  [![Coverage Status](https://coveralls.io/repos/github/unosquare/tubular-react/badge.svg?branch=master)](https://coveralls.io/github/unosquare/tubular-react?branch=master)
 
- ![Tubular-React](http://unosquare.github.io/tubular/assets/tubular.png)
+ ![Tubular-React](http://unosquare.github.io/tubular-angular/assets/tubular.png)
 
 :star: *Please star this project if you find it useful!*
 
