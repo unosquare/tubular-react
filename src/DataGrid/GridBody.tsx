@@ -40,8 +40,8 @@ export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, 
     if (!bodyRenderer) {
         bodyRenderer = (row, rowIndex, columns) => (
             detailComponent ?
-
-                (<MasterDetailRow
+                (
+                <MasterDetailRow
                     detail={detailComponent}
                     renderCells={renderCells(columns, row)}
                     clickEvent={onRowClickProxy}
@@ -49,20 +49,19 @@ export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, 
                     key={rowIndex}
                     rowData={row}
                     columns={columns}
-                    />
+                />
                 )
-
                 :
-
-                (<TableRow
+                (
+                <TableRow
                     hover={true}
                     key={rowIndex}
                     onClick={onRowClickProxy(row)}
                     style={styles.row}
                 >
                     {renderCells(columns, row)}
-                </TableRow>)
-
+                </TableRow>
+                )
         );
     }
 

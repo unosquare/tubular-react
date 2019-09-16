@@ -39,7 +39,8 @@ export const MasterDetailRow: React.FunctionComponent<IProps> = ({
             <TableRow
                 hover={true}
                 style={style}
-                onClick={clickEvent}>
+                onClick={clickEvent}
+            >
                 <TableCell padding='checkbox' size='small' align='center'>
                     <IconButton size='small' onClick={openMasterDetails}>
                         {open ? <MinimizeIcon /> : <AddIcon />}
@@ -50,7 +51,8 @@ export const MasterDetailRow: React.FunctionComponent<IProps> = ({
             {open &&
             <TableRow
                 hover={true}
-                style={style}>
+                style={style}
+            >
                 <TableCell colSpan={columns.length + 1}>
                     <Collapse in={open} timeout='auto' unmountOnExit={true}>
                         {childWithRowData}
