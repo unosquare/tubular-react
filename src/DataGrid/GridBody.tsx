@@ -39,7 +39,7 @@ export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, 
 
     if (!bodyRenderer) {
         bodyRenderer = (row, rowIndex, columns) => (
-            detailComponent ?
+            (detailComponent ?
                 <MasterDetailRow
                     detail={detailComponent}
                     renderCells={renderCells(columns, row)}
@@ -56,7 +56,7 @@ export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, 
                     style={styles.row}
                 >
                     {renderCells(columns, row)}
-                </TableRow>
+                </TableRow>)
         );
     }
 

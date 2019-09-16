@@ -23,7 +23,7 @@ export const MasterDetailRow: React.FunctionComponent<IProps> = ({ detail, rende
     const [open, openDetails] = useMasterDetails();
     const openMasterDetails = () => {
         openDetails();
-    }
+    };
 
     const childWithRowData = React.cloneElement(detail, { row: rowData });
 
@@ -50,7 +50,7 @@ export const MasterDetailRow: React.FunctionComponent<IProps> = ({ detail, rende
                 </TableCell>
             </TableRow>}
         </>
-    )
+    );
 
 }
 

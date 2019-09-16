@@ -8,13 +8,13 @@ import * as React from 'react';
 import { ColumnModel, IDataGridStorage, ITubularHttpClient } from 'tubular-common';
 import { FixedLinearProgress } from 'uno-material-ui';
 import { useResolutionSwitch } from 'uno-react';
+import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
 import { IDataGridConfig } from '../DataGridInterfaces/IDataGridConfig';
 import useDataGrid from '../Hooks/useDataGrid';
 import { Paginator } from '../Pagination';
 import { GridToolbar } from '../Toolbar/GridToolbar';
 import { ToolbarOptions } from '../Toolbar/ToolbarOptions';
 import { DataGridCard, DataGridTable } from './';
-import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
 
 const useStyles = makeStyles({
   linearProgress: {

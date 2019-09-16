@@ -4,7 +4,7 @@ const useMasterDetails = (): [boolean, () => void] => {
     const [open, openDetails] = React.useState(false);
 
     return [open, () => {
-        openDetails(!open)
+        openDetails(!open);
     }];
 }
 

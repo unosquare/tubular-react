@@ -1,8 +1,8 @@
 import * as React from 'react'
-import IDetailComponent from '../DataGridInterfaces/IDetailComponent'
+import IDetailComponent from '../DataGridInterfaces/IDetailComponent';
 
 export const DetailBaseComponent: React.FunctionComponent<IDetailComponent> = ( {row} ) => {
-    return (<></>)
+    return (<></>);
 }
 
 export default DetailBaseComponent;
