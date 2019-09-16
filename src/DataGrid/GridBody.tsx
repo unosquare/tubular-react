@@ -1,7 +1,9 @@
+import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
+import MasterDetailRow from './MasterDetailRow';
 import Warning from '@material-ui/icons/Warning';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
@@ -16,6 +18,7 @@ interface IProps {
         columns: ColumnModel[],
         onRowClickProxy: (row: any) => void,
     ): React.ReactNode;
+    detailComponent?: React.ReactElement<IDetailComponet>;
     onRowClick?(row: any): void;
 }
 
@@ -24,7 +27,7 @@ const getStyles = (isPointer: boolean) => ({
     title: { paddingLeft: '15px' },
 });
 
-export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, onRowClick }) => {
+export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, onRowClick, detailComponent }) => {
     const onRowClickProxy = (row: any) => (ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => {
 
         if (onRowClick) {
@@ -36,14 +39,24 @@ export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, 
 
     if (!bodyRenderer) {
         bodyRenderer = (row, rowIndex, columns) => (
-            <TableRow
-                hover={true}
-                key={rowIndex}
-                onClick={onRowClickProxy(row)}
-                style={styles.row}
-            >
-                {renderCells(columns, row)}
-            </TableRow>
+            detailComponent ?
+                <MasterDetailRow
+                    detail={detailComponent}
+                    renderCells={renderCells(columns, row)}
+                    clickEvent={onRowClickProxy}
+                    style={styles.row}
+                    key={rowIndex}
+                    rowData={row}
+                    columns={columns} />
+                :
+                <TableRow
+                    hover={true}
+                    key={rowIndex}
+                    onClick={onRowClickProxy(row)}
+                    style={styles.row}
+                >
+                    {renderCells(columns, row)}
+                </TableRow>
         );
     }
 

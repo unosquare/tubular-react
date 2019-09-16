@@ -4,12 +4,15 @@ import { ColumnModel, IFilterWrapper } from 'tubular-common';
 import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
 import { DialogModal } from '../Filtering/DialogModal';
 import { GridHeaderCell } from './GridHeaderCell';
+import { TableCell } from '@material-ui/core';
+import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
 
 interface IProps {
   grid: IDataGrid;
+  detailComponent?: React.ReactElement<IDetailComponet>;
 }
 
-export const GridHeader: React.FunctionComponent<IProps> = ({ grid }) => {
+export const GridHeader: React.FunctionComponent<IProps> = ({ grid, detailComponent }) => {
   const [anchorFilter, setAnchorFilter] = React.useState(null);
 
   const setActiveColumn = (column: ColumnModel, event: React.MouseEvent<HTMLElement>) => {
@@ -32,6 +35,7 @@ export const GridHeader: React.FunctionComponent<IProps> = ({ grid }) => {
           setFilter={setFilter}
           handleFilterChange={grid.api.handleFilterChange}
         />}
+      {detailComponent && <TableCell padding='default' />}
       {grid.state.columns
         .filter((col: ColumnModel) => col.Visible)
         .map((column: ColumnModel) =>
