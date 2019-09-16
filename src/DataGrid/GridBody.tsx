@@ -1,16 +1,17 @@
-import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
-import MasterDetailRow from './MasterDetailRow';
 import Warning from '@material-ui/icons/Warning';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
 import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
+import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
 import { renderCells } from '../utils';
+import MasterDetailRow from './MasterDetailRow';
 
 interface IProps {
+    detailComponent?: React.ReactElement<IDetailComponet>;
     grid: IDataGrid;
     bodyRenderer?(
         row: any,
@@ -18,7 +19,6 @@ interface IProps {
         columns: ColumnModel[],
         onRowClickProxy: (row: any) => void,
     ): React.ReactNode;
-    detailComponent?: React.ReactElement<IDetailComponet>;
     onRowClick?(row: any): void;
 }
 
@@ -39,17 +39,22 @@ export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, 
 
     if (!bodyRenderer) {
         bodyRenderer = (row, rowIndex, columns) => (
-            (detailComponent ?
-                <MasterDetailRow
+            detailComponent ?
+
+                (<MasterDetailRow
                     detail={detailComponent}
                     renderCells={renderCells(columns, row)}
                     clickEvent={onRowClickProxy}
                     style={styles.row}
                     key={rowIndex}
                     rowData={row}
-                    columns={columns} />
+                    columns={columns}
+                    />
+                )
+
                 :
-                <TableRow
+
+                (<TableRow
                     hover={true}
                     key={rowIndex}
                     onClick={onRowClickProxy(row)}
@@ -57,6 +62,7 @@ export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, 
                 >
                     {renderCells(columns, row)}
                 </TableRow>)
+
         );
     }
 

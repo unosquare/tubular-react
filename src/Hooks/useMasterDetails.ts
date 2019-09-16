@@ -6,6 +6,6 @@ const useMasterDetails = (): [boolean, () => void] => {
     return [open, () => {
         openDetails(!open);
     }];
-}
+};
 
 export default useMasterDetails;

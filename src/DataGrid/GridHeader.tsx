@@ -1,11 +1,11 @@
+import { TableCell } from '@material-ui/core';
 import TableRow from '@material-ui/core/TableRow';
 import * as React from 'react';
 import { ColumnModel, IFilterWrapper } from 'tubular-common';
 import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
+import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
 import { DialogModal } from '../Filtering/DialogModal';
 import { GridHeaderCell } from './GridHeaderCell';
-import { TableCell } from '@material-ui/core';
-import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
 
 interface IProps {
   grid: IDataGrid;

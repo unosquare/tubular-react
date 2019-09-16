@@ -1,12 +1,12 @@
-import AddIcon from '@material-ui/icons/Add';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
-import IDetailComponent from '../DataGridInterfaces/IDetailComponent';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import AddIcon from '@material-ui/icons/Add';
 import MinimizeIcon from '@material-ui/icons/Minimize';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
+import IDetailComponent from '../DataGridInterfaces/IDetailComponent';
 import { useMasterDetails } from '../Hooks';
 
 interface IProps {
@@ -18,7 +18,14 @@ interface IProps {
     columns: ColumnModel[];
 }
 
-export const MasterDetailRow: React.FunctionComponent<IProps> = ({ detail, renderCells, style, clickEvent, rowData, columns }) => {
+export const MasterDetailRow: React.FunctionComponent<IProps> = ({
+    detail,
+    renderCells,
+    style,
+    clickEvent,
+    rowData,
+    columns,
+}) => {
 
     const [open, openDetails] = useMasterDetails();
     const openMasterDetails = () => {
@@ -33,18 +40,19 @@ export const MasterDetailRow: React.FunctionComponent<IProps> = ({ detail, rende
                 hover={true}
                 style={style}
                 onClick={clickEvent}>
-                <TableCell padding="checkbox" size='small' align='center'>
+                <TableCell padding='checkbox' size='small' align='center'>
                     <IconButton size='small' onClick={openMasterDetails}>
                         {open ? <MinimizeIcon /> : <AddIcon />}
                     </IconButton>
                 </TableCell>
                 {renderCells}
             </TableRow>
-            {open && <TableRow
+            {open &&
+            <TableRow
                 hover={true}
                 style={style}>
                 <TableCell colSpan={columns.length + 1}>
-                    <Collapse in={open} timeout='auto' unmountOnExit>
+                    <Collapse in={open} timeout='auto' unmountOnExit={true}>
                         {childWithRowData}
                     </Collapse>
                 </TableCell>
@@ -52,6 +60,6 @@ export const MasterDetailRow: React.FunctionComponent<IProps> = ({ detail, rende
         </>
     );
 
-}
+};
 
 export default MasterDetailRow;
