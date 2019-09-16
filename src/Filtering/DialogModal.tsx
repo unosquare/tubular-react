@@ -22,7 +22,7 @@ export const DialogModal: React.FunctionComponent<IDialogModalProps> =
         const clearFilter = () => setFilter(ColumnModel.clearFilterPatch());
         const handleInput = (e: any) => handleFilterChange({ Text: e });
         const handleBetweenInput = (e: any) => handleFilterChange({ Argument: [e] });
-        const submit = () => setFilter(activeColumn.createFilterPatch());
+        const submit = () => setFilter(ColumnModel.createFilterPatch(activeColumn));
         const onClose = () => setAnchorFilter(null);
 
         return (
