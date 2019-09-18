@@ -49,11 +49,13 @@ export const DialogModal: React.FunctionComponent<IDialogModalProps> =
                         />
 
                         {activeColumn.Filter.Operator === CompareOperators.BETWEEN &&
-                            <DialogInput
-                                column={activeColumn}
-                                isPrimary={false}
-                                handleTextFieldChange={handleBetweenInput}
-                            />}
+                            (
+                                <DialogInput
+                                    column={activeColumn}
+                                    isPrimary={false}
+                                    handleTextFieldChange={handleBetweenInput}
+                                />
+                            )}
                     </CardContent>
                     <CardActions>
                         <Button

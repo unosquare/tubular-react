@@ -23,6 +23,12 @@ export const SearchTextInput: React.FunctionComponent<ISearchTextInput> = ({ sea
   const onChange = (e: any) => updateSearchText(e.target.value);
   const onClear = () => updateSearchText('');
 
+  const adorment = (
+    <InputAdornment position='end'>
+      <Search />
+    </InputAdornment>
+  );
+
   return (
     <FormControl style={styles.formControl}>
       <Input
@@ -30,11 +36,7 @@ export const SearchTextInput: React.FunctionComponent<ISearchTextInput> = ({ sea
         type='text'
         value={searchText}
         onChange={onChange}
-        startAdornment={
-          <InputAdornment position='end'>
-            <Search />
-          </InputAdornment>
-        }
+        startAdornment={adorment}
         endAdornment={
           searchText !== '' && (
             <InputAdornment position='end'>

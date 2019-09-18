@@ -25,23 +25,25 @@ export const GridHeader: React.FunctionComponent<IProps> = ({ grid }) => {
   return (
     <TableRow>
       {grid.state.activeColumn &&
-        <DialogModal
-          activeColumn={grid.state.activeColumn}
-          anchorFilter={anchorFilter}
-          setAnchorFilter={setAnchorFilter}
-          setFilter={setFilter}
-          handleFilterChange={grid.api.handleFilterChange}
-        />}
+        (
+          <DialogModal
+            activeColumn={grid.state.activeColumn}
+            anchorFilter={anchorFilter}
+            setAnchorFilter={setAnchorFilter}
+            setFilter={setFilter}
+            handleFilterChange={grid.api.handleFilterChange}
+          />
+        )}
       {grid.state.columns
         .filter((col: ColumnModel) => col.Visible)
-        .map((column: ColumnModel) =>
+        .map((column: ColumnModel) => (
           <GridHeaderCell
             key={column.Name}
             column={column}
             sortColumn={grid.api.sortColumn}
             setActiveColumn={setActiveColumn}
-          />,
-        )}
+          />
+        ))}
     </TableRow>
   );
 };
