@@ -118,9 +118,10 @@ const useDataGrid =
                     const response: GridResponse = await getAllRecords(request);
 
                     const maxPage = Math.ceil(response.TotalRecordCount / getItemsPerPage);
-                    response.CurrentPage = response.CurrentPage > maxPage ? maxPage : response.CurrentPage;
+                    let currentPage = response.CurrentPage > maxPage ? maxPage : response.CurrentPage;
+                    currentPage = currentPage === 0 ? 0 : currentPage - 1;
 
-                    getStorage.setPage(response.CurrentPage - 1);
+                    getStorage.setPage(currentPage);
                     getStorage.setColumns(getColumns);
                     getStorage.setTextSearch(getSearchText);
 
@@ -134,7 +135,7 @@ const useDataGrid =
                     setIsLoading(false);
                     setInitialized(true);
                     setError(null);
-                    setPage(response.CurrentPage - 1);
+                    setPage(currentPage);
                 }
                 catch (err) {
                     if (config.onError) {
