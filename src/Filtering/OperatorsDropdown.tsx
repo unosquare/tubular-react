@@ -22,8 +22,8 @@ export const OperatorsDropdown: React.FunctionComponent<any> = ({ activeColumn, 
       onChange={onChange}
       label='Operator'
     >
-      {activeColumn
-        .getOperators()
+      {ColumnModel
+        .getOperators(activeColumn)
         .map((row: any) => (
           <MenuItem key={row.Value} value={row.Value}>
             {row.Title}

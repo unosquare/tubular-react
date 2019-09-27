@@ -75,7 +75,7 @@ export const AdvancePaginationActions: React.FunctionComponent<IProps> = ({
 
   return (
     <div className={classes.root}>
-      {isAdvanced &&
+      {isAdvanced && (
         <IconButton
           onClick={gotoFirstPage}
           disabled={canNotBack}
@@ -83,7 +83,7 @@ export const AdvancePaginationActions: React.FunctionComponent<IProps> = ({
         >
           <FirstPage />
         </IconButton>
-      }
+      )}
       <IconButton
         onClick={gotoPrevPage}
         disabled={canNotBack}
@@ -114,7 +114,7 @@ export const AdvancePaginationActions: React.FunctionComponent<IProps> = ({
         <KeyboardArrowRight />
       </IconButton>
 
-      {isAdvanced &&
+      {isAdvanced && (
         <IconButton
           onClick={gotoLastPage}
           disabled={canNotFwd}
@@ -122,7 +122,7 @@ export const AdvancePaginationActions: React.FunctionComponent<IProps> = ({
         >
           <LastPage />
         </IconButton>
-      }
+      )}
     </div>
   );
 };

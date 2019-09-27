@@ -5,17 +5,39 @@
   ],
   "jsRules": {
     "class-name": true,
-    "comment-format": [true, "check-space"],
-    "indent": [true, "spaces"],
+    "comment-format": [
+      true,
+      "check-space"
+    ],
+    "indent": [
+      true,
+      "spaces"
+    ],
     "no-duplicate-variable": true,
     "no-eval": true,
     "no-trailing-whitespace": true,
     "no-unsafe-finally": true,
-    "one-line": [true, "check-open-brace", "check-whitespace"],
-    "quotemark": [true, "double"],
-    "semicolon": [true, "always"],
-    "triple-equals": [true, "allow-null-check"],
-    "variable-name": [true, "ban-keywords"],
+    "one-line": [
+      true,
+      "check-open-brace",
+      "check-whitespace"
+    ],
+    "quotemark": [
+      true,
+      "double"
+    ],
+    "semicolon": [
+      true,
+      "always"
+    ],
+    "triple-equals": [
+      true,
+      "allow-null-check"
+    ],
+    "variable-name": [
+      true,
+      "ban-keywords"
+    ],
     "whitespace": [
       true,
       "check-branch",
@@ -29,17 +51,36 @@
     "jsx-no-multiline-js": false,
     "max-classes-per-file": false,
     "class-name": true,
-    "comment-format": [true, "check-space"],
-    "indent": [true, "spaces"],
+    "comment-format": [
+      true,
+      "check-space"
+    ],
+    "indent": [
+      true,
+      "spaces"
+    ],
     "no-eval": true,
     "no-internal-module": true,
     "no-trailing-whitespace": true,
     "no-unsafe-finally": true,
     "no-var-keyword": true,
-    "one-line": [true, "check-open-brace", "check-whitespace"],
-    "quotemark": [true, "single"],
-    "semicolon": [true, "always"],
-    "triple-equals": [true, "allow-null-check"],
+    "one-line": [
+      true,
+      "check-open-brace",
+      "check-whitespace"
+    ],
+    "quotemark": [
+      true,
+      "single"
+    ],
+    "semicolon": [
+      true,
+      "always"
+    ],
+    "triple-equals": [
+      true,
+      "allow-null-check"
+    ],
     "typedef-whitespace": [
       true,
       {
@@ -50,7 +91,10 @@
         "variable-declaration": "nospace"
       }
     ],
-    "variable-name": [true, "ban-keywords"],
+    "variable-name": [
+      true,
+      "ban-keywords"
+    ],
     "whitespace": [
       true,
       "check-branch",
@@ -58,6 +102,16 @@
       "check-operator",
       "check-separator",
       "check-type"
+    ],
+    "react-no-unnecessary-fragment": true,
+    "jsx-whitespace-literal": true,
+    "jsx-curly-brace-presence": true
+  },
+  "linterOptions": {
+    "exclude": [
+      "bin",
+      "build",
+      "node_modules/**"
     ]
   }
 }

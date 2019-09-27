@@ -45,13 +45,17 @@ export const ExportButton: React.FunctionComponent<IExportButtonProps> = ({
                 onClick={handlePrintMenu}
             >
                 {type === 'print' ?
-                    <Tooltip title={toolTip || 'Print'}>
-                        <Print />
-                    </Tooltip>
+                    (
+                        <Tooltip title={toolTip || 'Print'}>
+                            <Print />
+                        </Tooltip>
+                    )
                     :
-                    <Tooltip title={toolTip || 'Download'}>
-                        <CloudDownload />
-                    </Tooltip>
+                    (
+                        <Tooltip title={toolTip || 'Download'}>
+                            <CloudDownload />
+                        </Tooltip>
+                    )
                 }
             </IconButton>
             <Menu

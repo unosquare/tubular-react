@@ -86,14 +86,16 @@ export const DataGridCard = (props) => {
                 }
                 <CardActions className={classes.cardActions}>
                     {onClickCallback &&
-                        <IconButton
-                            className={classes.cardBtn}
-                            color='default'
-                            onClick={onClickCallback}
-                            size='small'
-                        >
-                            <LabelImportant />
-                        </IconButton>
+                        (
+                            <IconButton
+                                className={classes.cardBtn}
+                                color='default'
+                                onClick={onClickCallback}
+                                size='small'
+                            >
+                                <LabelImportant />
+                            </IconButton>
+                        )
                     }
                 </CardActions>
             </CardContent>

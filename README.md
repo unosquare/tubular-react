@@ -59,16 +59,16 @@ $ npm install tubular-react --save
 You can start using `DataGrid` with this sample code. The grid will connect to a remote datasource or have a local datasource depending on what it's passed in the dataSource property.
 
 ```js
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import { DataGrid } from "tubular-react";
+import { DataGrid } from 'tubular-react';
 import { ColumnModel } from 'tubular-common';
 
 const columns = [
-  new ColumnModel("OrderID"),
-  new ColumnModel("CustomerName"),
-  new ColumnModel("ShipperCity")
+  new ColumnModel('OrderID'),
+  new ColumnModel('CustomerName'),
+  new ColumnModel('ShipperCity')
 ];
 
 const SampleGrid = () => (

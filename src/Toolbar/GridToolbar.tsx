@@ -31,28 +31,31 @@ export const GridToolbar: React.FunctionComponent<IProps> = ({ toolbarOptions, g
     <Toolbar data-testid='grid-toolbar'>
       <div style={isMobileResolution ? styles.mobileSpacer : styles.spacer} />
       {toolbarOptions.customItems && toolbarOptions.customItems}
-      {toolbarOptions.exportButton &&
+      {toolbarOptions.exportButton && (
         <ExportButton
           type='csv'
           gridName={gridName}
           exportTo={grid.api.exportTo}
           filteredRecordCount={grid.state.filteredRecordCount}
           data-testid='export-button-csv'
-        />}
-      {toolbarOptions.printButton &&
+        />
+      )}
+      {toolbarOptions.printButton && (
         <ExportButton
           type='print'
           gridName={gridName}
           exportTo={grid.api.exportTo}
           filteredRecordCount={grid.state.filteredRecordCount}
           data-testid='export-button-print'
-        />}
-      {toolbarOptions.searchText &&
+        />
+      )}
+      {toolbarOptions.searchText && (
         <SearchTextInput
           searchText={grid.state.searchText}
           updateSearchText={grid.api.updateSearchText}
           data-testid='search-text-input'
-        />}
+        />
+      )}
     </Toolbar>
   );
 };

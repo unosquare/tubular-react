@@ -22,7 +22,7 @@ export const DialogModal: React.FunctionComponent<IDialogModalProps> =
         const clearFilter = () => setFilter(ColumnModel.clearFilterPatch());
         const handleInput = (e: any) => handleFilterChange({ Text: e });
         const handleBetweenInput = (e: any) => handleFilterChange({ Argument: [e] });
-        const submit = () => setFilter(activeColumn.createFilterPatch());
+        const submit = () => setFilter(ColumnModel.createFilterPatch(activeColumn));
         const onClose = () => setAnchorFilter(null);
 
         return (
@@ -49,11 +49,13 @@ export const DialogModal: React.FunctionComponent<IDialogModalProps> =
                         />
 
                         {activeColumn.Filter.Operator === CompareOperators.BETWEEN &&
-                            <DialogInput
-                                column={activeColumn}
-                                isPrimary={false}
-                                handleTextFieldChange={handleBetweenInput}
-                            />}
+                            (
+                                <DialogInput
+                                    column={activeColumn}
+                                    isPrimary={false}
+                                    handleTextFieldChange={handleBetweenInput}
+                                />
+                            )}
                     </CardContent>
                     <CardActions>
                         <Button
