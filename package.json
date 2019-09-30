@@ -14,8 +14,6 @@
     "lint": "tslint src/**/*.ts src/**/*.tsx",
     "lint:docs": "tslint srcdocs/**/*.ts srcdocs/**/*.tsx",
     "test": "jest",
-    "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
-    "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov",
     "postbuild:docs": "xcopy .\\srcdocs\\static .\\docs\\static\\",
     "poststart:docs": "xcopy .\\srcdocs\\static .\\docs\\static\\"
   },
@@ -38,21 +36,6 @@
         "tsConfig": "tsconfig.base.json"
       }
     }
-  },
-  "nyc": {
-    "extension": [
-      ".ts",
-      ".tsx"
-    ],
-    "exclude": [
-      "test/**/*.*",
-      "dist/**/*.*",
-      "sample/**/*.*",
-      "docs/**/*.*",
-      "pages/**/*.*",
-      "srcdocs/**/*.*"
-    ],
-    "all": true
   },
   "repository": {
     "type": "git",
@@ -80,10 +63,8 @@
     "@types/react-dom": "^16.9.1",
     "@types/react-router": "^5.1.1",
     "@types/react-router-dom": "^5.1.0",
-    "coveralls": "^3.0.6",
     "jest": "^24.9.0",
     "jest-fetch-mock": "^2.1.2",
-    "nyc": "^14.1.1",
     "parcel-bundler": "^1.12.3",
     "parcel-plugin-clean-easy": "^1.0.2",
     "react": "^16.10.1",
