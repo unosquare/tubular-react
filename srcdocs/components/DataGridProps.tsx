@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 });
 
 export default () => {
-    const classes = useStyles();
+    const classes = useStyles({});
 
     return (
         <Paper className={classes.root}>

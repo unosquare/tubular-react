@@ -27,7 +27,7 @@ const useStyles = makeStyles(({ palette }: any) => ({
 }));
 
 const Main: React.FunctionComponent = () => {
-  const classes = useStyles();
+  const classes = useStyles({});
   const [currentValue, setValue] = React.useState(0);
 
   const handleChange = (event: any, value: any) => setValue(value);
