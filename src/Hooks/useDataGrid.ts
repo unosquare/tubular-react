@@ -205,6 +205,10 @@ const useDataGrid =
             api.processRequest();
         }, dependencies);
 
+        React.useEffect(() => {
+            setColumns(initColumns);
+        }, [initColumns]);
+
         const initGrid = () => {
             if (getStorage.getPage()) {
                 setPage(getStorage.getPage());

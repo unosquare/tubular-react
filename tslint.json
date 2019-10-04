@@ -102,10 +102,7 @@
       "check-operator",
       "check-separator",
       "check-type"
-    ],
-    "react-no-unnecessary-fragment": true,
-    "jsx-whitespace-literal": true,
-    "jsx-curly-brace-presence": true
+    ]
   },
   "linterOptions": {
     "exclude": [
