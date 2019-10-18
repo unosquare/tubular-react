@@ -1,4 +1,3 @@
-import GridList from '@material-ui/core/GridList';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
@@ -13,7 +12,8 @@ import useDataGrid from '../Hooks/useDataGrid';
 import { Paginator } from '../Pagination';
 import { GridToolbar } from '../Toolbar/GridToolbar';
 import { ToolbarOptions } from '../Toolbar/ToolbarOptions';
-import { DataGridCard, DataGridTable } from './';
+import { DataGridTable } from './';
+import { MobileDataGridTable } from './MobileDataGridTable';
 
 const useStyles = makeStyles({
   linearProgress: {
@@ -78,22 +78,10 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
       <Paper className={classes.root}>
         <GridToolbar toolbarOptions={toolbarOptions} grid={grid} gridName={gridName} />
         <FixedLinearProgress isLoading={grid.state.isLoading} />
-        <GridList
-          cellHeight='auto'
-          cols={1}
-        >
-          {
-            grid.state.data.map((row: any, index: number) =>
-              (
-                <DataGridCard
-                  columns={grid.state.columns}
-                  item={row}
-                  onClickCallback={onRowClick}
-                  key={index}
-                />
-              ))
-          }
-        </GridList>
+        <MobileDataGridTable
+          grid={grid}
+          onRowClick={onRowClick}
+        />
         <Paginator
           advancePagination={toolbarOptions.advancePagination}
           rowsPerPageOptions={toolbarOptions.rowsPerPageOptions}

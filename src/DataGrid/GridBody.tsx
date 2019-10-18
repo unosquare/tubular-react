@@ -24,6 +24,11 @@ const getStyles = (isPointer: boolean) => ({
     title: { paddingLeft: '15px' },
 });
 
+
+
+//ToDo: Move noDataRow as external render function.
+//ToDo: Move following code to getStandardBodyRender function.
+
 export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, onRowClick }) => {
     const onRowClickProxy = (row: any) => (ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => {
 
