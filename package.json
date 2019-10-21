@@ -1,6 +1,6 @@
 {
   "name": "tubular-react",
-  "version": "2.0.10",
+  "version": "2.1.0",
   "description": "Unosquare Tubular React",
   "main": "dist/index.js",
   "scripts": {
@@ -50,8 +50,7 @@
   "dependencies": {
     "@material-ui/core": "^4.5.1",
     "@material-ui/icons": "^4.5.1",
-    "@material-ui/styles": "^4.5.0",
-    "date-fns": "^2.5.0",
+    "date-fns": "^2.5.1",
     "tubular-common": "^2.0.2",
     "uno-material-ui": "^1.6.2"
   },
