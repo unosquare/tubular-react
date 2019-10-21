@@ -7,6 +7,7 @@ import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
 import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
 import { renderCells } from '../utils';
+import { NoDataRow } from './NoDataRow';
 
 interface IProps {
     grid: IDataGrid;
@@ -24,9 +25,6 @@ const getStyles = (isPointer: boolean) => ({
     title: { paddingLeft: '15px' },
 });
 
-// ToDo: Move noDataRow as external render function.
-// ToDo: Move following code to getStandardBodyRender function.
-
 export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, onRowClick }) => {
     const onRowClickProxy = (row: any) => (ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => {
 
@@ -35,42 +33,31 @@ export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, 
         }
     };
 
-    const styles = getStyles(Boolean(onRowClick));
-
-    if (!bodyRenderer) {
-        bodyRenderer = (row, rowIndex, columns) => (
-            <TableRow
-                hover={true}
-                key={rowIndex}
-                onClick={onRowClickProxy(row)}
-                style={styles.row}
-            >
-                {renderCells(columns, row)}
-            </TableRow>
-        );
-    }
-
-    const noDataRow = (
-        <TableRow>
-            <TableCell
-                colSpan={grid.state.columns.filter((col: any) => col.Visible).length}
-            >
-                <Typography
-                    style={styles.title}
-                    variant='body2'
-                    gutterBottom={true}
-                >
-                    <Warning /> No records found
-                </Typography>
-            </TableCell>
+    const getStandardBodyRenderer = (row: any, rowIndex: any, columns: any) => (
+        <TableRow
+            hover={true}
+            key={rowIndex}
+            onClick={onRowClickProxy(row)}
+            style={styles.row}
+        >
+            {renderCells(columns, row)}
         </TableRow>
     );
 
+    const styles = getStyles(Boolean(onRowClick));
+
+    if (!bodyRenderer) {
+        bodyRenderer = getStandardBodyRenderer;
+    }
+
     return (
         <TableBody>
-            {grid.state.filteredRecordCount === 0 && !grid.state.isLoading
-                ? noDataRow
-                : grid.state.data
+            {grid.state.filteredRecordCount === 0 && !grid.state.isLoading ?
+                <NoDataRow
+                    grid={grid}
+                    styles={styles}
+                /> :
+                grid.state.data
                     .map((row: any, rowIndex: number) =>
                         bodyRenderer(row, rowIndex, grid.state.columns, onRowClickProxy(row)))
             }
