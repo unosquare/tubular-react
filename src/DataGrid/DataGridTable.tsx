@@ -26,9 +26,17 @@ export const DataGridTable: React.FunctionComponent<IProps> = (props) => (
         <TableHead>
             <GridHeader grid={props.grid} />
         </TableHead>
-        <GridBody grid={props.grid} bodyRenderer={props.bodyRenderer} onRowClick={props.onRowClick} />
-        <TableFooter>
-            {props.footerRenderer && props.footerRenderer(props.grid.state.aggregate)}
-        </TableFooter>
+        <GridBody
+            grid={props.grid}
+            bodyRenderer={props.bodyRenderer}
+            onRowClick={props.onRowClick}
+        />
+        {
+            props.footerRenderer !== null && (
+                <TableFooter>
+                    {props.footerRenderer && props.footerRenderer(props.grid.state.aggregate)}
+                </TableFooter>
+            )
+        }
     </Table>
 );
