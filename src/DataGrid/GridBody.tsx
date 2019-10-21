@@ -52,11 +52,12 @@ export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, 
 
     return (
         <TableBody>
-            {grid.state.filteredRecordCount === 0 && !grid.state.isLoading ?
+            {grid.state.filteredRecordCount === 0 && !grid.state.isLoading ? (
                 <NoDataRow
                     grid={grid}
                     styles={styles}
-                /> :
+                />
+            ) :
                 grid.state.data
                     .map((row: any, rowIndex: number) =>
                         bodyRenderer(row, rowIndex, grid.state.columns, onRowClickProxy(row)))
