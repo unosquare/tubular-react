@@ -78,7 +78,7 @@ export const DataGridCard = (props) => {
                                 color='textSecondary'
                                 className={classes.dataValue}
                             >
-                                {columnRender(colum, item); }
+                                {columnRender(column, item)}
                             </Typography>
                         </div>
                     ))
@@ -110,7 +110,7 @@ const columnRender = (column, item) => {
             return renderString(column, item);
         default:
             return renderGeneral(column, item);
-    };
+    }
 };
 
 const renderBoolean = (column: any, item: any) => <input type='checkbox' checked={item[column.Name]} disabled={true} />;
