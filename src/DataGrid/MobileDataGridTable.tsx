@@ -3,7 +3,7 @@ import GridList from '@material-ui/core/GridList';
 import * as React from 'react';
 
 import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
-import { DataGridCard } from './';
+import { TbMobileRow } from './TbMobileRow';
 
 interface IProps {
     grid: IDataGrid;
@@ -18,10 +18,10 @@ export const MobileDataGridTable: React.FunctionComponent<IProps> = ({ grid, onR
         {
             grid.state.data.map((row: any, index: number) =>
                 (
-                    <DataGridCard
+                    <TbMobileRow
                         columns={grid.state.columns}
-                        item={row}
-                        onClickCallback={onRowClick}
+                        row={row}
+                        onRowClick={onRowClick}
                         key={index}
                     />
                 ))

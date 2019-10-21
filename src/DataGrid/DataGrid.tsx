@@ -25,7 +25,6 @@ const useStyles = makeStyles({
   },
 });
 
-const outerWidth = 800;
 const timeout = 400;
 
 interface IProps {
@@ -35,6 +34,12 @@ interface IProps {
   gridName: string;
   storage?: IDataGridStorage;
   toolbarOptions?: ToolbarOptions;
+
+  // ToDo: new ones:
+  mobileBreakpointWidth?: number;
+  rowComponent: React.ReactNode;
+  rowMobileComponent: React.ReactNode;
+
   bodyRenderer?(
     row: any,
     index: number,
@@ -50,14 +55,19 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
   const {
     bodyRenderer,
     columns,
+    dataSource,
     deps,
     footerRenderer,
-    dataSource,
-    toolbarOptions = props.toolbarOptions || new ToolbarOptions(),
     gridName,
+    mobileBreakpointWidth = props.mobileBreakpointWidth || 800,
     onError,
     onRowClick,
+    //ToDo: implement this components
+    rowComponent,
+    rowMobileComponent,
+    
     storage,
+    toolbarOptions = props.toolbarOptions || new ToolbarOptions(),
   } = props;
 
   const classes = useStyles({});
@@ -69,7 +79,7 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
   };
 
   const grid = useDataGrid(columns, gridConfig, dataSource, deps);
-  const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
+  const [isMobileResolution] = useResolutionSwitch(mobileBreakpointWidth, timeout);
 
   if (isMobileResolution) {
     toolbarOptions.SetMobileMode();
