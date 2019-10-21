@@ -48,6 +48,12 @@ const useStyles = makeStyles(({ palette }: any) => ({
     },
 }));
 
+interface IProps {
+    columns: ColumnModel[];
+    item: any;
+    onClickCallback: any;
+}
+
 export const DataGridCard = (props) => {
     const { columns, item, onClickCallback } = props;
     const classes = useStyles({});
@@ -72,14 +78,7 @@ export const DataGridCard = (props) => {
                                 color='textSecondary'
                                 className={classes.dataValue}
                             >
-                                {
-                                    column.DataType === ColumnDataType.BOOLEAN ?
-                                        <input type='checkbox' checked={item[column.Name]} disabled={true} />
-                                        : column.DataType === ColumnDataType.STRING ?
-                                            item[column.Name].length > 50 ? item[column.Name].substring(0, 50) + '...'
-                                                : item[column.Name]
-                                            : item[column.Name]
-                                }
+                                {columnRender(column, item)}
                             </Typography>
                         </div>
                     ))
@@ -102,3 +101,21 @@ export const DataGridCard = (props) => {
         </Card>
     );
 };
+
+const columnRender = (column, item) => {
+    switch (column.DataType) {
+        case ColumnDataType.BOOLEAN:
+            return renderBoolean(column, item);
+        case ColumnDataType.STRING:
+            return renderString(column, item);
+        default:
+            return renderGeneral(column, item);
+    }
+};
+
+const renderBoolean = (column: any, item: any) => <input type='checkbox' checked={item[column.Name]} disabled={true} />;
+
+const renderString = (column: any, item: any) =>
+    item[column.Name].length > 50 ? item[column.Name].substring(0, 50) + '...' : renderGeneral(column, item);
+
+const renderGeneral = (column: any, item: any) => item[column.Name];

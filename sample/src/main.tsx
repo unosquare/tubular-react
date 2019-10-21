@@ -5,12 +5,12 @@ import makeStyles from '@material-ui/styles/makeStyles';
 
 import * as React from 'react';
 
+import ColumnFeatures from './ColumnFeatures/ColumnFeatures';
 import CustomLayoutDataGrid from './CustomLayoutDataGrid';
 import ErrorBoundary from './ErrorBoundary';
 import LocalDataGrid from './localDataGrid';
 import RemoteDataGrid from './remoteDataGrid';
 import RemoteGridList from './remoteGridList';
-import DataGridWithDialog from './DataGridWithDialog';
 
 const useStyles = makeStyles(({ palette }: any) => ({
   logo: {
@@ -27,7 +27,7 @@ const useStyles = makeStyles(({ palette }: any) => ({
 }));
 
 const Main: React.FunctionComponent = () => {
-  const classes = useStyles();
+  const classes = useStyles({});
   const [currentValue, setValue] = React.useState(0);
 
   const handleChange = (event: any, value: any) => setValue(value);
@@ -42,16 +42,18 @@ const Main: React.FunctionComponent = () => {
             alt='Tubular React'
           />
           <Tabs value={currentValue} onChange={handleChange}>
+            <Tab label='Column features' />
             <Tab label='Remote DataGrid' />
             <Tab label='Local DataGrid' />
             <Tab label='Custom DataGrid' />
             <Tab label='Grid List' />
           </Tabs>
         </AppBar>
-        {currentValue === 0 && <RemoteDataGrid />}
-        {currentValue === 1 && <LocalDataGrid />}
-        {currentValue === 2 && <CustomLayoutDataGrid />}
-        {currentValue === 3 && <RemoteGridList />}
+        {currentValue === 0 && <ColumnFeatures />}
+        {currentValue === 1 && <RemoteDataGrid />}
+        {currentValue === 2 && <LocalDataGrid />}
+        {currentValue === 3 && <CustomLayoutDataGrid />}
+        {currentValue === 4 && <RemoteGridList />}
       </div>
     </ErrorBoundary>
   );

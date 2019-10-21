@@ -18,7 +18,7 @@ const useStyles = makeStyles({
 }));
 
 export default () => {
-  const classes = useStyles();
+  const classes = useStyles({});
 
   return (
     <Table>

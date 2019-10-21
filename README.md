@@ -2,7 +2,6 @@
  [![npm version](https://badge.fury.io/js/tubular-react.svg)](https://badge.fury.io/js/tubular-react)
 [![Build status](https://ci.appveyor.com/api/projects/status/xokpdjvlh4djwvri/branch/master?svg=true)](https://ci.appveyor.com/project/geoperez/tubular-react/branch/master)
 ![Buils status](https://github.com/unosquare/tubular-react/workflows/Node.js%20Package/badge.svg)
- [![Coverage Status](https://coveralls.io/repos/github/unosquare/tubular-react/badge.svg?branch=master)](https://coveralls.io/github/unosquare/tubular-react?branch=master)
 
  ![Tubular-React](http://unosquare.github.io/tubular-angular/assets/tubular.png)
 
