@@ -2,8 +2,8 @@ import GridList from '@material-ui/core/GridList';
 
 import * as React from 'react';
 
+import { TbMobileRow } from '../BareBones/TbMobileRow';
 import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
-import { TbMobileRow } from './TbMobileRow';
 
 interface IProps {
     grid: IDataGrid;

@@ -7,6 +7,7 @@ import * as React from 'react';
 import { ColumnModel, IDataGridStorage, ITubularHttpClient } from 'tubular-common';
 import { FixedLinearProgress } from 'uno-material-ui';
 import { useResolutionSwitch } from 'uno-react';
+import { ITbRow, TbRow, TbRow } from '../BareBones/TbRow';
 import { IDataGridConfig } from '../DataGridInterfaces/IDataGridConfig';
 import useDataGrid from '../Hooks/useDataGrid';
 import { Paginator } from '../Pagination';
@@ -37,15 +38,8 @@ interface IProps {
 
   // ToDo: new ones:
   mobileBreakpointWidth?: number;
-  rowComponent: React.ReactNode;
-  rowMobileComponent: React.ReactNode;
-
-  bodyRenderer?(
-    row: any,
-    index: number,
-    columns: ColumnModel[],
-    onRowClickProxy: (row: any) => void,
-  ): React.ReactNode;
+  rowComponent?: React.FunctionComponent<ITbRow>;
+  rowMobileComponent?: React.ReactNode;
   footerRenderer?(aggregate: any): React.ReactNode;
   onError?(err: any): void;
   onRowClick?(row: any): void;
@@ -53,7 +47,6 @@ interface IProps {
 
 export const DataGrid: React.FunctionComponent<IProps> = (props) => {
   const {
-    bodyRenderer,
     columns,
     dataSource,
     deps,
@@ -62,10 +55,8 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
     mobileBreakpointWidth = props.mobileBreakpointWidth || 800,
     onError,
     onRowClick,
-    //ToDo: implement this components
     rowComponent,
     rowMobileComponent,
-    
     storage,
     toolbarOptions = props.toolbarOptions || new ToolbarOptions(),
   } = props;
@@ -124,7 +115,7 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
       </div>
       <DataGridTable
         grid={grid}
-        bodyRenderer={bodyRenderer}
+        rowComponent={rowComponent}
         footerRenderer={footerRenderer}
         onRowClick={onRowClick}
       />

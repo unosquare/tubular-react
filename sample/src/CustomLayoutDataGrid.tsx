@@ -7,45 +7,46 @@ import Typography from '@material-ui/core/Typography';
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 import * as React from 'react';
+import { ColumnModel, formatDate } from 'tubular-common';
+import { ITbRow } from '../../src/BareBones/TbRow';
 import { DataGridTable } from '../../src/DataGrid';
 import useDataGrid from '../../src/Hooks/useDataGrid';
 import { Paginator } from '../../src/Pagination';
-import { formatDate } from 'tubular-common';
-import columns from './data/columns';
+import sampleColumns from './data/columns';
 import localData from './data/localData';
 
-const CustomLayoutDataGrid: React.FunctionComponent = () => { 
+const CustomTbRow: React.FunctionComponent<ITbRow> = ({ row, onRowClick }) => (
+  <TableRow hover={true} key={row.OrderID}>
+    <TableCell padding='default'>{row.OrderID} --</TableCell>
+    <TableCell padding='default'>{row.CustomerName} ---</TableCell>
+    <TableCell padding='default'>
+      {formatDate(row.ShippedDate, 'M/d/yyyy h:mm a')} ---
+    </TableCell>
+    <TableCell padding='default'>{row.ShipperCity}</TableCell>
+    <TableCell padding='default' align={'right'}>
+      {row.Amount || 0}
+    </TableCell>
+    <TableCell padding='default'>
+      {row.IsShipped ? <CheckBox /> : <CheckBoxOutlineBlank />}
+    </TableCell>
+  </TableRow>
+);
+
+const tbFooter = ({ aggregates }: any) => (
+  <TableRow>
+    <TableCell>Total: ddddddddddd</TableCell>
+    <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
+    <TableCell />
+    <TableCell />
+    <TableCell />
+    <TableCell />
+  </TableRow>
+);
+
+const CustomLayoutDataGrid: React.FunctionComponent = () => {
 
   const [getErrorMessage, setErrorMessage] = React.useState(null as string);
-  const grid = useDataGrid(columns, {}, localData);
-
-  const bodyRenderer = (row: any) => (
-    <TableRow hover={true} key={row.OrderID}>
-      <TableCell padding='default'>{row.OrderID}</TableCell>
-      <TableCell padding='default'>{row.CustomerName}</TableCell>
-      <TableCell padding='default'>
-        {formatDate(row.ShippedDate, 'M/d/yyyy h:mm a')}
-      </TableCell>
-      <TableCell padding='default'>{row.ShipperCity}</TableCell>
-      <TableCell padding='default' align={'right'}>
-        {row.Amount || 0}
-      </TableCell>
-      <TableCell padding='default'>
-        {row.IsShipped ? <CheckBox /> : <CheckBoxOutlineBlank />}
-      </TableCell>
-    </TableRow>
-  );
-
-  const footerRenderer = (aggregates: any) => (
-    <TableRow>
-      <TableCell>Total: </TableCell>
-      <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
-      <TableCell />
-      <TableCell />
-      <TableCell />
-      <TableCell />
-    </TableRow>
-  );
+  const grid = useDataGrid(sampleColumns, {}, localData);
 
   return (
     <>
@@ -72,8 +73,8 @@ const CustomLayoutDataGrid: React.FunctionComponent = () => {
 
       <DataGridTable
         grid={grid}
-        bodyRenderer={bodyRenderer}
-        footerRenderer={footerRenderer}
+        rowComponent={CustomTbRow}
+        footerComponent={tbFooter}
       />
     </>
   );

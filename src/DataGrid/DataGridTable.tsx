@@ -3,40 +3,34 @@ import TableFooter from '@material-ui/core/TableFooter';
 import TableHead from '@material-ui/core/TableHead';
 
 import * as React from 'react';
-
-import { ColumnModel } from 'tubular-common';
+import { ITbRow } from '../BareBones/TbRow';
 import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
 import { GridBody } from './GridBody';
 import { GridHeader } from './GridHeader';
 
 interface IProps {
     grid: IDataGrid;
-    bodyRenderer?(
-        row: any,
-        index: number,
-        columns: ColumnModel[],
-        onRowClickProxy: (row: any) => void,
-    ): React.ReactNode;
-    footerRenderer?(aggregate: any): React.ReactNode;
+    rowComponent: React.FunctionComponent<ITbRow>;
+    footerComponent: React.FunctionComponent<any>;
     onRowClick?(row: any): void;
 }
 
-export const DataGridTable: React.FunctionComponent<IProps> = (props) => (
-    <Table data-testid='data-grid-table'>
-        <TableHead>
-            <GridHeader grid={props.grid} />
-        </TableHead>
-        <GridBody
-            grid={props.grid}
-            bodyRenderer={props.bodyRenderer}
-            onRowClick={props.onRowClick}
-        />
-        {
-            props.footerRenderer !== null && (
-                <TableFooter>
-                    {props.footerRenderer && props.footerRenderer(props.grid.state.aggregate)}
-                </TableFooter>
-            )
-        }
-    </Table>
-);
+export const DataGridTable: React.FunctionComponent<IProps> = (props) => {
+    const Footer = props.footerComponent;
+
+    return (
+        <Table data-testid='data-grid-table'>
+            <TableHead>
+                <GridHeader grid={props.grid} />
+            </TableHead>
+            <GridBody grid={props.grid} rowComponent={props.rowComponent} onRowClick={props.onRowClick} />
+            {
+                props.footerComponent && (
+                    <TableFooter>
+                        <Footer aggregates={props.grid.state.aggregate} />
+                    </TableFooter>
+                )
+            }
+        </Table>
+    );
+};

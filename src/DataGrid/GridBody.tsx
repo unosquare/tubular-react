@@ -1,13 +1,12 @@
 import TableBody from '@material-ui/core/TableBody';
 import * as React from 'react';
+import { ITbRow, TbRow } from '../BareBones/TbRow';
 import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
 import { NoDataRow } from './NoDataRow';
-import { TbRow } from './TbRow';
 
 interface IProps {
     grid: IDataGrid;
-    //ToDo: Use the right type for this prop.
-    bodyRenderer: any;
+    rowComponent: React.FunctionComponent<ITbRow>;
     onRowClick?(row: any): void;
 }
 
@@ -16,16 +15,18 @@ const getStyles = (isPointer: boolean) => ({
     title: { paddingLeft: '15px' },
 });
 
-export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, onRowClick }) => {
-    const onRowClickProxy = (row: any) => (ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => {
+const generateOnRowClickProxy = (onRowClick) => {
+    return (row: any) => (ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => {
         if (onRowClick) {
             onRowClick(row);
         }
     };
+};
 
+export const GridBody: React.FunctionComponent<IProps> = ({ grid, rowComponent, onRowClick }) => {
     const styles = getStyles(Boolean(onRowClick));
-    // Note: I'm not pretty sure, that we should wait until this pipeline point to validate the nullability of the prop.
-    const RowComponent = bodyRenderer ? bodyRenderer : TbRow;
+    const RowComponent = rowComponent ? rowComponent : TbRow;
+    const onRowClickProxy = rowComponent ? () => void 0 : generateOnRowClickProxy(onRowClick);
 
     return (
         <TableBody>
@@ -42,11 +43,9 @@ export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, 
                                 row={row}
                                 key={rowIndex}
                                 columns={grid.state.columns}
-                                onRowClickProxy={onRowClickProxy(row)}
-                                style={styles.row}
+                                onRowClick={onRowClickProxy(row)}
                             />
-                        ))
-            }
+                        ))}
         </TableBody>
     );
 };

@@ -3,26 +3,20 @@ import * as React from 'react';
 import ColumnModel from 'tubular-common/dist/Models/ColumnModel';
 import { renderCells } from '../utils/renders';
 
-interface IProps {
-    key: number;
+export interface ITbRow {
     row: any;
     columns: ColumnModel[];
-    onRowClickProxy?: (ev: any) => any;
-    style: any;
+    onRowClick?: (ev: any) => any;
 }
 
-export const TbRow: React.FunctionComponent<IProps> = ({
+export const TbRow: React.FunctionComponent<ITbRow> = ({
     row,
-    key,
     columns,
-    onRowClickProxy,
-    style,
+    onRowClick,
 }) => (
         <TableRow
             hover={true}
-            key={key}
-            onClick={onRowClickProxy}
-            style={style}
+            onClick={onRowClick}
         >
             {renderCells(columns, row)}
         </TableRow>

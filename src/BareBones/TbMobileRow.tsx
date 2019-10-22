@@ -1,17 +1,15 @@
 import * as React from 'react';
 import ColumnModel from 'tubular-common/dist/Models/ColumnModel';
-import { DataGridCard } from '.';
+import { DataGridCard } from '../DataGrid';
 
 interface IProps {
     columns: ColumnModel[];
-    key: number;
     onRowClick: any;
     row: any;
 }
 
 export const TbMobileRow: React.FunctionComponent<IProps> = ({
     columns,
-    key,
     onRowClick,
     row,
 }) => {
@@ -20,7 +18,6 @@ export const TbMobileRow: React.FunctionComponent<IProps> = ({
             columns={columns}
             item={row}
             onClickCallback={onRowClick}
-            key={key}
         />
 
     );
