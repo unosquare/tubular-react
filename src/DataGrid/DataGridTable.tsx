@@ -26,7 +26,7 @@ interface IProps {
 export const DataGridTable: React.FunctionComponent<IProps> = (props) => (
     <Table data-testid='data-grid-table'>
         <TableHead>
-            <GridHeader grid={props.grid} />
+            <GridHeader grid={props.grid} detailComponent={props.detailComponent} />
         </TableHead>
         <GridBody
             grid={props.grid}

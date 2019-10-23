@@ -27,6 +27,7 @@ export const GridHeader: React.FunctionComponent<IProps> = ({ grid, detailCompon
 
   return (
     <TableRow>
+      {detailComponent && <TableCell key="Detail" padding='default' />}
       {grid.state.activeColumn &&
         (
           <DialogModal
@@ -37,7 +38,6 @@ export const GridHeader: React.FunctionComponent<IProps> = ({ grid, detailCompon
             handleFilterChange={grid.api.handleFilterChange}
           />
         )}
-      {detailComponent && <TableCell padding='default' />}
       {grid.state.columns
         .filter((col: ColumnModel) => col.Visible)
         .map((column: ColumnModel) => (
