@@ -27,7 +27,7 @@ export const GridHeader: React.FunctionComponent<IProps> = ({ grid, detailCompon
 
   return (
     <TableRow>
-      {detailComponent && <TableCell key="Detail" padding='default' />}
+      {detailComponent && <TableCell key='Detail' padding='default' />}
       {grid.state.activeColumn &&
         (
           <DialogModal
