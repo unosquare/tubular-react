@@ -49,6 +49,7 @@ export const MasterDetailRow: React.FunctionComponent<IProps> = ({
                 {renderCells}
             </TableRow>
             {open &&
+            (
             <TableRow
                 hover={true}
                 style={style}
@@ -58,7 +59,8 @@ export const MasterDetailRow: React.FunctionComponent<IProps> = ({
                         {childWithRowData}
                     </Collapse>
                 </TableCell>
-            </TableRow>}
+            </TableRow>
+            )}
         </>
     );
 
