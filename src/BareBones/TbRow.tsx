@@ -5,6 +5,7 @@ import { renderCells } from '../utils/renders';
 
 export interface ITbRow {
     row: any;
+    rowIndex: number;
     columns: ColumnModel[];
     onRowClick?: (ev: any) => any;
 }

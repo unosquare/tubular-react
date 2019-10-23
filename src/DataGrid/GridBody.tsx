@@ -26,26 +26,29 @@ const generateOnRowClickProxy = (onRowClick) => {
 export const GridBody: React.FunctionComponent<IProps> = ({ grid, rowComponent, onRowClick }) => {
     const styles = getStyles(Boolean(onRowClick));
     const RowComponent = rowComponent ? rowComponent : TbRow;
+    console.log("ha", RowComponent)
     const onRowClickProxy = rowComponent ? () => void 0 : generateOnRowClickProxy(onRowClick);
+
+    let content = null;
+
+    if (grid.state.filteredRecordCount === 0 && !grid.state.isLoading) {
+        content = <NoDataRow columns={grid.state.columns} styles={styles} />;
+    } else {
+        content = grid.state.data
+            .map((row: any, rowIndex: number) => (
+                <RowComponent
+                    row={row}
+                    key={rowIndex}
+                    rowIndex={rowIndex}
+                    columns={grid.state.columns}
+                    onRowClick={onRowClickProxy(row)}
+                />
+            ));
+    }
 
     return (
         <TableBody>
-            {
-                grid.state.filteredRecordCount === 0 && !grid.state.isLoading ? (
-                    <NoDataRow
-                        grid={grid}
-                        styles={styles}
-                    />
-                ) :
-                    grid.state.data
-                        .map((row: any, rowIndex: number) => (
-                            <RowComponent
-                                row={row}
-                                key={rowIndex}
-                                columns={grid.state.columns}
-                                onRowClick={onRowClickProxy(row)}
-                            />
-                        ))}
+            {content}
         </TableBody>
     );
 };

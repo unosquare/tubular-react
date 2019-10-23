@@ -40,7 +40,7 @@ interface IProps {
   mobileBreakpointWidth?: number;
   rowComponent?: React.FunctionComponent<ITbRow>;
   rowMobileComponent?: React.ReactNode;
-  footerRenderer?(aggregate: any): React.ReactNode;
+  footerComponent?: React.FunctionComponent<any>;
   onError?(err: any): void;
   onRowClick?(row: any): void;
 }
@@ -50,7 +50,7 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
     columns,
     dataSource,
     deps,
-    footerRenderer,
+    footerComponent,
     gridName,
     mobileBreakpointWidth = props.mobileBreakpointWidth || 800,
     onError,
@@ -116,7 +116,7 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
       <DataGridTable
         grid={grid}
         rowComponent={rowComponent}
-        footerRenderer={footerRenderer}
+        footerComponent={footerComponent}
         onRowClick={onRowClick}
       />
       {toolbarOptions.bottomPager && paginator('bottom')}

@@ -3,17 +3,17 @@ import TableRow from '@material-ui/core/TableRow/TableRow';
 import Typography from '@material-ui/core/Typography/Typography';
 import Warning from '@material-ui/icons/Warning';
 import * as React from 'react';
-import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
+import { ColumnModel } from 'tubular-common';
 
 interface IProps {
-    grid: IDataGrid;
+    columns: ColumnModel[];
     styles: any;
 }
 
-export const NoDataRow: React.FunctionComponent<IProps> = ({ grid, styles }) => (
+export const NoDataRow: React.FunctionComponent<IProps> = ({ columns, styles }) => (
     <TableRow>
         <TableCell
-            colSpan={grid.state.columns.filter((col: any) => col.Visible).length}
+            colSpan={columns.filter((col: any) => col.Visible).length}
         >
             <Typography
                 style={styles.title}
