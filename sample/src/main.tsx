@@ -9,6 +9,7 @@ import ColumnFeatures from './ColumnFeatures/ColumnFeatures';
 import CustomLayoutDataGrid from './CustomLayoutDataGrid';
 import ErrorBoundary from './ErrorBoundary';
 import LocalDataGrid from './localDataGrid';
+import MasterDetailRow from './masterDetailRow';
 import RemoteDataGrid from './remoteDataGrid';
 import RemoteGridList from './remoteGridList';
 
@@ -47,6 +48,7 @@ const Main: React.FunctionComponent = () => {
             <Tab label='Local DataGrid' />
             <Tab label='Custom DataGrid' />
             <Tab label='Grid List' />
+            <Tab label='Master Detail Row' />
           </Tabs>
         </AppBar>
         {currentValue === 0 && <ColumnFeatures />}
@@ -54,6 +56,7 @@ const Main: React.FunctionComponent = () => {
         {currentValue === 2 && <LocalDataGrid />}
         {currentValue === 3 && <CustomLayoutDataGrid />}
         {currentValue === 4 && <RemoteGridList />}
+        {currentValue === 5 && <MasterDetailRow />}
       </div>
     </ErrorBoundary>
   );

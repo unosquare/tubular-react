@@ -3,10 +3,13 @@ import TableRow from '@material-ui/core/TableRow';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
 import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
+import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
 import { renderCells } from '../utils';
+import MasterDetailRow from './MasterDetailRow';
 import { NoDataRow } from './NoDataRow';
 
 interface IProps {
+    detailComponent?: React.ReactElement<IDetailComponet>;
     grid: IDataGrid;
     bodyRenderer?(
         row: any,
@@ -22,7 +25,7 @@ const getStyles = (isPointer: boolean) => ({
     title: { paddingLeft: '15px' },
 });
 
-export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, onRowClick }) => {
+export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, onRowClick, detailComponent }) => {
     const onRowClickProxy = (row: any) => (ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => {
 
         if (onRowClick) {
@@ -30,7 +33,19 @@ export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, 
         }
     };
 
-    const getStandardBodyRenderer = (row: any, rowIndex: any, columns: any) => (
+    const getStandardBodyRenderer = (row: any, rowIndex: any, columns: any) => detailComponent ?
+                (
+                <MasterDetailRow
+                    detail={detailComponent}
+                    renderCells={renderCells(columns, row)}
+                    clickEvent={onRowClickProxy}
+                    style={styles.row}
+                    key={rowIndex}
+                    rowData={row}
+                    columns={columns}
+                />
+                )
+                : (
         <TableRow
             hover={true}
             key={rowIndex}

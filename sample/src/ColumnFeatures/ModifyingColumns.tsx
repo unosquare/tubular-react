@@ -43,7 +43,6 @@ const ModifyingColumns: React.FunctionComponent = () => {
             ),
     });
 
-    console.log(gridColumns)
     return (
         <div className='root'>
             {getErrorMessage && (
