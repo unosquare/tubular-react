@@ -26,8 +26,7 @@ const generateOnRowClickProxy = (onRowClick) => {
 export const GridBody: React.FunctionComponent<IProps> = ({ grid, rowComponent, onRowClick }) => {
     const styles = getStyles(Boolean(onRowClick));
     const RowComponent = rowComponent ? rowComponent : TbRow;
-    console.log("ha", RowComponent)
-    const onRowClickProxy = rowComponent ? () => void 0 : generateOnRowClickProxy(onRowClick);
+    const onRowClickProxy = onRowClick ? generateOnRowClickProxy(onRowClick) : () => void 0;
 
     let content = null;
 

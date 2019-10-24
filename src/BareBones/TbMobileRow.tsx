@@ -19,6 +19,5 @@ export const TbMobileRow: React.FunctionComponent<IProps> = ({
             item={row}
             onClickCallback={onRowClick}
         />
-
     );
 };

@@ -39,7 +39,7 @@ interface IProps {
   // ToDo: new ones:
   mobileBreakpointWidth?: number;
   rowComponent?: React.FunctionComponent<ITbRow>;
-  rowMobileComponent?: React.ReactNode;
+  rowMobileComponent?: React.FunctionComponent<ITbRow>;
   footerComponent?: React.FunctionComponent<any>;
   onError?(err: any): void;
   onRowClick?(row: any): void;
@@ -82,6 +82,7 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
         <MobileDataGridTable
           grid={grid}
           onRowClick={onRowClick}
+          rowComponent={rowMobileComponent}
         />
         <Paginator
           advancePagination={toolbarOptions.advancePagination}
