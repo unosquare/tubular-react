@@ -2,9 +2,13 @@ import TableBody from '@material-ui/core/TableBody';
 import * as React from 'react';
 import { ITbRow, TbRow } from '../BareBones/TbRow';
 import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
+import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
+import { renderCells } from '../utils';
+import MasterDetailRow from './MasterDetailRow';
 import { NoDataRow } from './NoDataRow';
 
 interface IProps {
+    detailComponent?: React.ReactElement<IDetailComponet>;
     grid: IDataGrid;
     rowComponent: React.FunctionComponent<ITbRow>;
     onRowClick?(row: any): void;
@@ -23,7 +27,7 @@ const generateOnRowClickProxy = (onRowClick) => {
     };
 };
 
-export const GridBody: React.FunctionComponent<IProps> = ({ grid, rowComponent, onRowClick }) => {
+export const GridBody: React.FunctionComponent<IProps> = ({ grid, rowComponent, onRowClick, detailComponent }) => {
     const styles = getStyles(Boolean(onRowClick));
     const RowComponent = rowComponent ? rowComponent : TbRow;
     const onRowClickProxy = onRowClick ? generateOnRowClickProxy(onRowClick) : () => void 0;
@@ -34,15 +38,32 @@ export const GridBody: React.FunctionComponent<IProps> = ({ grid, rowComponent, 
         content = <NoDataRow columns={grid.state.columns} styles={styles} />;
     } else {
         content = grid.state.data
-            .map((row: any, rowIndex: number) => (
-                <RowComponent
-                    row={row}
-                    key={rowIndex}
-                    rowIndex={rowIndex}
-                    columns={grid.state.columns}
-                    onRowClick={onRowClickProxy(row)}
-                />
-            ));
+            .map((row: any, rowIndex: number) => {
+                if (detailComponent) {
+                    return (
+                        <MasterDetailRow
+                            detail={detailComponent}
+                            renderCells={renderCells(grid.state.columns, row)}
+                            clickEvent={onRowClickProxy}
+                            style={styles.row}
+                            key={rowIndex}
+                            rowData={row}
+                            columns={grid.state.columns}
+                        />
+                    );
+                }
+
+                return (
+                    <RowComponent
+                        row={row}
+                        key={rowIndex}
+                        rowIndex={rowIndex}
+                        columns={grid.state.columns}
+                        onRowClick={onRowClickProxy(row)}
+                    />
+                );
+
+            });
     }
 
     return (

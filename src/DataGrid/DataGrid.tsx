@@ -9,6 +9,7 @@ import { FixedLinearProgress } from 'uno-material-ui';
 import { useResolutionSwitch } from 'uno-react';
 import { ITbRow, TbRow, TbRow } from '../BareBones/TbRow';
 import { IDataGridConfig } from '../DataGridInterfaces/IDataGridConfig';
+import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
 import useDataGrid from '../Hooks/useDataGrid';
 import { Paginator } from '../Pagination';
 import { GridToolbar } from '../Toolbar/GridToolbar';
@@ -32,6 +33,7 @@ interface IProps {
   columns: ColumnModel[];
   dataSource: any[] | string | Request | ITubularHttpClient;
   deps?: any[];
+  detailComponent?: React.ReactElement<IDetailComponet>;
   gridName: string;
   storage?: IDataGridStorage;
   toolbarOptions?: ToolbarOptions;
@@ -59,6 +61,7 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
     rowMobileComponent,
     storage,
     toolbarOptions = props.toolbarOptions || new ToolbarOptions(),
+    detailComponent,
   } = props;
 
   const classes = useStyles({});
@@ -118,6 +121,7 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
         grid={grid}
         rowComponent={rowComponent}
         footerComponent={footerComponent}
+        detailComponent={detailComponent || null}
         onRowClick={onRowClick}
       />
       {toolbarOptions.bottomPager && paginator('bottom')}

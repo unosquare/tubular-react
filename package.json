@@ -1,6 +1,6 @@
 {
   "name": "tubular-react",
-  "version": "2.0.10",
+  "version": "2.2.0",
   "description": "Unosquare Tubular React",
   "main": "dist/index.js",
   "scripts": {
@@ -50,16 +50,15 @@
   "dependencies": {
     "@material-ui/core": "^4.5.1",
     "@material-ui/icons": "^4.5.1",
-    "@material-ui/styles": "^4.5.0",
-    "date-fns": "^2.5.0",
+    "date-fns": "^2.6.0",
     "tubular-common": "^2.0.2",
-    "uno-material-ui": "^1.6.2"
+    "uno-material-ui": "^1.6.4"
   },
   "devDependencies": {
     "@testing-library/react": "^9.3.0",
     "@testing-library/react-hooks": "^3.1.0",
     "@types/jest": "^24.0.19",
-    "@types/react": "^16.9.9",
+    "@types/react": "^16.9.10",
     "@types/react-dom": "^16.9.2",
     "@types/react-router": "^5.1.2",
     "@types/react-router-dom": "^5.1.0",
@@ -67,8 +66,8 @@
     "jest-fetch-mock": "^2.1.2",
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-clean-easy": "^1.0.2",
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
     "react-highlight": "^0.12.0",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
