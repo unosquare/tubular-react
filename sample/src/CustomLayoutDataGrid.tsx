@@ -1,3 +1,6 @@
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Paper from '@material-ui/core/Paper';
 import Snackbar from '@material-ui/core/Snackbar';
 import Table from '@material-ui/core/Table';
 import TableCell from '@material-ui/core/TableCell';
@@ -7,45 +10,94 @@ import Typography from '@material-ui/core/Typography';
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 import * as React from 'react';
+import { ColumnModel, formatDate } from 'tubular-common';
+import { FixedLinearProgress } from 'uno-material-ui/dist/FixedLinearProgress';
+import { useResolutionSwitch } from 'uno-react/lib/hooks/useResolutionSwitch';
+import { ITbRow } from '../../src/BareBones/TbRow';
 import { DataGridTable } from '../../src/DataGrid';
+import { MobileDataGridTable } from '../../src/DataGrid/MobileDataGridTable';
 import useDataGrid from '../../src/Hooks/useDataGrid';
 import { Paginator } from '../../src/Pagination';
-import { formatDate } from 'tubular-common';
-import columns from './data/columns';
+import sampleColumns from './data/columns';
 import localData from './data/localData';
 
-const CustomLayoutDataGrid: React.FunctionComponent = () => { 
+const CustomTbRow: React.FunctionComponent<ITbRow> = ({ row, onRowClick }) => (
+  <TableRow hover={true} key={row.OrderID} onClick={onRowClick}>
+    <TableCell padding='default'>{row.OrderID} </TableCell>
+    <TableCell padding='default'>{row.CustomerName} </TableCell>
+    <TableCell padding='default'>
+      {formatDate(row.ShippedDate, 'M/d/yyyy h:mm a')}
+    </TableCell>
+    <TableCell padding='default'>{row.ShipperCity}</TableCell>
+    <TableCell padding='default' align={'right'}>
+      {row.Amount || 0}
+    </TableCell>
+    <TableCell padding='default'>
+      {row.IsShipped ? <CheckBox /> : <CheckBoxOutlineBlank />}
+    </TableCell>
+  </TableRow>
+);
 
-  const [getErrorMessage, setErrorMessage] = React.useState(null as string);
-  const grid = useDataGrid(columns, {}, localData);
+const CustomTbMobileRow = (props) => {
+  const { columns, row, onRowClick } = props;
 
-  const bodyRenderer = (row: any) => (
-    <TableRow hover={true} key={row.OrderID}>
-      <TableCell padding='default'>{row.OrderID}</TableCell>
-      <TableCell padding='default'>{row.CustomerName}</TableCell>
-      <TableCell padding='default'>
-        {formatDate(row.ShippedDate, 'M/d/yyyy h:mm a')}
-      </TableCell>
-      <TableCell padding='default'>{row.ShipperCity}</TableCell>
-      <TableCell padding='default' align={'right'}>
-        {row.Amount || 0}
-      </TableCell>
-      <TableCell padding='default'>
-        {row.IsShipped ? <CheckBox /> : <CheckBoxOutlineBlank />}
-      </TableCell>
-    </TableRow>
+  return (
+    <Card onClick={onRowClick}>
+      <CardContent>
+        {
+          columns.map((column: ColumnModel, index: number) => (
+            <div key={index}>
+              <Typography
+                component='div'
+                variant='body2'
+                color='textSecondary'
+              >
+                {column.Name}:
+              </Typography>
+              <Typography
+                component='div'
+                variant='body2'
+                color='textSecondary'
+              >
+                {row[column.Name]}
+              </Typography>
+            </div>
+          ))
+        }
+      </CardContent>
+    </Card>
   );
+};
 
-  const footerRenderer = (aggregates: any) => (
-    <TableRow>
-      <TableCell>Total: </TableCell>
-      <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
-      <TableCell />
-      <TableCell />
-      <TableCell />
-      <TableCell />
-    </TableRow>
-  );
+const tbFooter = ({ aggregates }: any) => (
+  <TableRow>
+    <TableCell>Total:</TableCell>
+    <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
+    <TableCell />
+    <TableCell />
+    <TableCell />
+    <TableCell />
+  </TableRow>
+);
+
+const CustomLayoutDataGrid: React.FunctionComponent = () => {
+
+  const [getErrorMessage] = React.useState(null as string);
+  const grid = useDataGrid(sampleColumns, {}, localData);
+  const onRowClick = (row) => console.log(row);
+  const [isMobileResolution] = useResolutionSwitch(800, 400);
+  if (isMobileResolution) {
+    return (
+      <Paper>
+        <FixedLinearProgress isLoading={grid.state.isLoading} />
+        <MobileDataGridTable
+          grid={grid}
+          rowComponent={CustomTbMobileRow}
+          onRowClick={onRowClick}
+        />
+      </Paper>
+    );
+  }
 
   return (
     <>
@@ -63,7 +115,6 @@ const CustomLayoutDataGrid: React.FunctionComponent = () => {
         <TableHead>
           <TableRow>
             <Paginator
-              component='div'
               grid={grid}
             />
           </TableRow>
@@ -72,8 +123,9 @@ const CustomLayoutDataGrid: React.FunctionComponent = () => {
 
       <DataGridTable
         grid={grid}
-        bodyRenderer={bodyRenderer}
-        footerRenderer={footerRenderer}
+        rowComponent={CustomTbRow}
+        footerComponent={tbFooter}
+        onRowClick={onRowClick}
       />
     </>
   );

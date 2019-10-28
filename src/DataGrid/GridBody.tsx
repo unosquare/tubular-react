@@ -1,7 +1,6 @@
 import TableBody from '@material-ui/core/TableBody';
-import TableRow from '@material-ui/core/TableRow';
 import * as React from 'react';
-import { ColumnModel } from 'tubular-common';
+import { ITbRow, TbRow } from '../BareBones/TbRow';
 import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
 import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
 import { renderCells } from '../utils';
@@ -11,12 +10,7 @@ import { NoDataRow } from './NoDataRow';
 interface IProps {
     detailComponent?: React.ReactElement<IDetailComponet>;
     grid: IDataGrid;
-    bodyRenderer?(
-        row: any,
-        index: number,
-        columns: ColumnModel[],
-        onRowClickProxy: (row: any) => void,
-    ): React.ReactNode;
+    rowComponent: React.FunctionComponent<ITbRow>;
     onRowClick?(row: any): void;
 }
 
@@ -25,55 +19,56 @@ const getStyles = (isPointer: boolean) => ({
     title: { paddingLeft: '15px' },
 });
 
-export const GridBody: React.FunctionComponent<IProps> = ({ grid, bodyRenderer, onRowClick, detailComponent }) => {
-    const onRowClickProxy = (row: any) => (ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => {
-
+const generateOnRowClickProxy = (onRowClick) => {
+    return (row: any) => (ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => {
         if (onRowClick) {
             onRowClick(row);
         }
     };
+};
 
-    const getStandardBodyRenderer = (row: any, rowIndex: any, columns: any) => detailComponent ?
-                (
-                <MasterDetailRow
-                    detail={detailComponent}
-                    renderCells={renderCells(columns, row)}
-                    clickEvent={onRowClickProxy}
-                    style={styles.row}
-                    key={rowIndex}
-                    rowData={row}
-                    columns={columns}
-                />
-                )
-                : (
-        <TableRow
-            hover={true}
-            key={rowIndex}
-            onClick={onRowClickProxy(row)}
-            style={styles.row}
-        >
-            {renderCells(columns, row)}
-        </TableRow>
-    );
-
+export const GridBody: React.FunctionComponent<IProps> = ({ grid, rowComponent, onRowClick, detailComponent }) => {
     const styles = getStyles(Boolean(onRowClick));
+    const RowComponent = rowComponent ? rowComponent : TbRow;
+    const onRowClickProxy = onRowClick ? generateOnRowClickProxy(onRowClick) : () => void 0;
 
-    if (!bodyRenderer) {
-        bodyRenderer = getStandardBodyRenderer;
+    let content = null;
+
+    if (grid.state.filteredRecordCount === 0 && !grid.state.isLoading) {
+        content = <NoDataRow columns={grid.state.columns} styles={styles} />;
+    } else {
+        content = grid.state.data
+            .map((row: any, rowIndex: number) => {
+                if (detailComponent) {
+                    return (
+                        <MasterDetailRow
+                            detail={detailComponent}
+                            renderCells={renderCells(grid.state.columns, row)}
+                            clickEvent={onRowClickProxy}
+                            style={styles.row}
+                            key={rowIndex}
+                            rowData={row}
+                            columns={grid.state.columns}
+                        />
+                    );
+                }
+
+                return (
+                    <RowComponent
+                        row={row}
+                        key={rowIndex}
+                        rowIndex={rowIndex}
+                        columns={grid.state.columns}
+                        onRowClick={onRowClickProxy(row)}
+                    />
+                );
+
+            });
     }
 
     return (
         <TableBody>
-            {grid.state.filteredRecordCount === 0 && !grid.state.isLoading ? (
-                <NoDataRow
-                    grid={grid}
-                    styles={styles}
-                />
-            ) :
-                grid.state.data
-                    .map((row: any, rowIndex: number) =>
-                        bodyRenderer(row, rowIndex, grid.state.columns, onRowClickProxy(row)))
-            }
+            {content}
         </TableBody>
     );
 };

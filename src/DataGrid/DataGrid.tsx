@@ -7,6 +7,7 @@ import * as React from 'react';
 import { ColumnModel, IDataGridStorage, ITubularHttpClient } from 'tubular-common';
 import { FixedLinearProgress } from 'uno-material-ui';
 import { useResolutionSwitch } from 'uno-react';
+import { ITbRow } from '../BareBones/TbRow';
 import { IDataGridConfig } from '../DataGridInterfaces/IDataGridConfig';
 import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
 import useDataGrid from '../Hooks/useDataGrid';
@@ -26,7 +27,6 @@ const useStyles = makeStyles({
   },
 });
 
-const outerWidth = 800;
 const timeout = 400;
 
 interface IProps {
@@ -37,29 +37,30 @@ interface IProps {
   gridName: string;
   storage?: IDataGridStorage;
   toolbarOptions?: ToolbarOptions;
-  bodyRenderer?(
-    row: any,
-    index: number,
-    columns: ColumnModel[],
-    onRowClickProxy: (row: any) => void,
-  ): React.ReactNode;
-  footerRenderer?(aggregate: any): React.ReactNode;
+
+  // ToDo: new ones:
+  mobileBreakpointWidth?: number;
+  rowComponent?: React.FunctionComponent<ITbRow>;
+  rowMobileComponent?: React.FunctionComponent<ITbRow>;
+  footerComponent?: React.FunctionComponent<any>;
   onError?(err: any): void;
   onRowClick?(row: any): void;
 }
 
 export const DataGrid: React.FunctionComponent<IProps> = (props) => {
   const {
-    bodyRenderer,
     columns,
-    deps,
-    footerRenderer,
     dataSource,
-    toolbarOptions = props.toolbarOptions || new ToolbarOptions(),
+    deps,
+    footerComponent,
     gridName,
+    mobileBreakpointWidth = props.mobileBreakpointWidth || 800,
     onError,
     onRowClick,
+    rowComponent,
+    rowMobileComponent,
     storage,
+    toolbarOptions = props.toolbarOptions || new ToolbarOptions(),
     detailComponent,
   } = props;
 
@@ -72,7 +73,7 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
   };
 
   const grid = useDataGrid(columns, gridConfig, dataSource, deps);
-  const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
+  const [isMobileResolution] = useResolutionSwitch(mobileBreakpointWidth, timeout);
 
   if (isMobileResolution) {
     toolbarOptions.SetMobileMode();
@@ -84,6 +85,7 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
         <MobileDataGridTable
           grid={grid}
           onRowClick={onRowClick}
+          rowComponent={rowMobileComponent}
         />
         <Paginator
           advancePagination={toolbarOptions.advancePagination}
@@ -117,9 +119,9 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
       </div>
       <DataGridTable
         grid={grid}
+        rowComponent={rowComponent}
+        footerComponent={footerComponent}
         detailComponent={detailComponent || null}
-        bodyRenderer={bodyRenderer}
-        footerRenderer={footerRenderer}
         onRowClick={onRowClick}
       />
       {toolbarOptions.bottomPager && paginator('bottom')}
