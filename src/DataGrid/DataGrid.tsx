@@ -7,7 +7,7 @@ import * as React from 'react';
 import { ColumnModel, IDataGridStorage, ITubularHttpClient } from 'tubular-common';
 import { FixedLinearProgress } from 'uno-material-ui';
 import { useResolutionSwitch } from 'uno-react';
-import { ITbRow, TbRow, TbRow } from '../BareBones/TbRow';
+import { ITbRow } from '../BareBones/TbRow';
 import { IDataGridConfig } from '../DataGridInterfaces/IDataGridConfig';
 import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
 import useDataGrid from '../Hooks/useDataGrid';

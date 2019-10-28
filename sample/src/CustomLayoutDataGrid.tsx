@@ -23,10 +23,10 @@ import localData from './data/localData';
 
 const CustomTbRow: React.FunctionComponent<ITbRow> = ({ row, onRowClick }) => (
   <TableRow hover={true} key={row.OrderID} onClick={onRowClick}>
-    <TableCell padding='default'>{row.OrderID} --</TableCell>
-    <TableCell padding='default'>{row.CustomerName} ---</TableCell>
+    <TableCell padding='default'>{row.OrderID} </TableCell>
+    <TableCell padding='default'>{row.CustomerName} </TableCell>
     <TableCell padding='default'>
-      {formatDate(row.ShippedDate, 'M/d/yyyy h:mm a')} ---
+      {formatDate(row.ShippedDate, 'M/d/yyyy h:mm a')}
     </TableCell>
     <TableCell padding='default'>{row.ShipperCity}</TableCell>
     <TableCell padding='default' align={'right'}>
@@ -71,7 +71,7 @@ const CustomTbMobileRow = (props) => {
 
 const tbFooter = ({ aggregates }: any) => (
   <TableRow>
-    <TableCell>Total: ddddddddddd</TableCell>
+    <TableCell>Total:</TableCell>
     <TableCell>{aggregates && aggregates.CustomerName}</TableCell>
     <TableCell />
     <TableCell />
@@ -82,7 +82,7 @@ const tbFooter = ({ aggregates }: any) => (
 
 const CustomLayoutDataGrid: React.FunctionComponent = () => {
 
-  const [getErrorMessage, setErrorMessage] = React.useState(null as string);
+  const [getErrorMessage] = React.useState(null as string);
   const grid = useDataGrid(sampleColumns, {}, localData);
   const onRowClick = (row) => console.log(row);
   const [isMobileResolution] = useResolutionSwitch(800, 400);
@@ -92,7 +92,7 @@ const CustomLayoutDataGrid: React.FunctionComponent = () => {
         <FixedLinearProgress isLoading={grid.state.isLoading} />
         <MobileDataGridTable
           grid={grid}
-          // rowComponent={CustomTbMobileRow}
+          rowComponent={CustomTbMobileRow}
           onRowClick={onRowClick}
         />
       </Paper>
