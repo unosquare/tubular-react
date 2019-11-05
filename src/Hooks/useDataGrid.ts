@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as ReactDom from 'react-dom';
 import Transformer, {
     ColumnModel, CompareOperators,
     GridRequest, GridResponse, IDataGridStorage,
@@ -45,10 +46,9 @@ const useDataGrid =
         source: any[] | string | Request | ITubularHttpClient,
         deps?: any[],
     ): IDataGrid => {
-
         const [isLoading, setIsLoading] = React.useState(false);
         const [getColumns, setColumns] = React.useState<ColumnModel[]>(initColumns);
-        const [initialized, setInitialized] = React.useState(false);
+        const [isStorageLoaded, setIsStorageLoaded] = React.useState(false);
         const [getActiveColumn, setActiveColumn] = React.useState<ColumnModel>(null);
         const [getMultiSort, setMultiSort] = React.useState(false);
         const [getItemsPerPage, setItemsPerPage] = React.useState<number>(config.itemsPerPage || 10);
@@ -116,6 +116,7 @@ const useDataGrid =
                 try {
                     const request = new GridRequest(getColumns, getItemsPerPage, getPage, getSearchText);
                     const response: GridResponse = await getAllRecords(request);
+                    console.log("Response: ",response)
 
                     const maxPage = Math.ceil(response.TotalRecordCount / getItemsPerPage);
                     let currentPage = response.CurrentPage > maxPage ? maxPage : response.CurrentPage;
@@ -125,17 +126,21 @@ const useDataGrid =
                     getStorage.setColumns(getColumns);
                     getStorage.setTextSearch(getSearchText);
 
-                    setState({
-                        aggregate: response.AggregationPayload,
-                        data: response.Payload,
-                        filteredRecordCount: response.FilteredRecordCount || 0,
-                        totalRecordCount: response.TotalRecordCount || 0,
-                    });
+                    // TODO: Check this won't case an issue
+                    ReactDom.unstable_batchedUpdates(() => {
 
-                    setIsLoading(false);
-                    setInitialized(true);
-                    setError(null);
-                    setPage(currentPage);
+                        setState({
+                            aggregate: response.AggregationPayload,
+                            data: response.Payload,
+                            filteredRecordCount: response.FilteredRecordCount || 0,
+                            totalRecordCount: response.TotalRecordCount || 0,
+                        });
+
+                        setIsLoading(false);
+                        setIsStorageLoaded(true);
+                        setError(null);
+                        setPage(currentPage);
+                    });
                 }
                 catch (err) {
                     if (config.onError) {
@@ -202,7 +207,9 @@ const useDataGrid =
         }, [getMultiSort]);
 
         React.useEffect(() => {
-            api.processRequest();
+            if (!isLoading) {
+                api.processRequest();
+            }
         }, dependencies);
 
         React.useEffect(() => {
@@ -242,10 +249,10 @@ const useDataGrid =
                 setColumns(columns);
             }
 
-            setInitialized(true);
+            setIsStorageLoaded(true);
         };
 
-        if (!initialized) {
+        if (!isStorageLoaded) {
             initGrid();
         }
 
@@ -254,7 +261,7 @@ const useDataGrid =
             activeColumn: getActiveColumn,
             columns: getColumns,
             error: getError,
-            initialized,
+            initialized: isStorageLoaded,
             isLoading,
             itemsPerPage: getItemsPerPage,
             multiSort: getMultiSort,

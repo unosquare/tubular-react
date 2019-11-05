@@ -12,6 +12,7 @@ import LocalDataGrid from './localDataGrid';
 import MasterDetailRow from './masterDetailRow';
 import RemoteDataGrid from './remoteDataGrid';
 import RemoteGridList from './remoteGridList';
+import TbListExample from './TbListExample';
 
 const useStyles = makeStyles(({ palette }: any) => ({
   logo: {
@@ -49,14 +50,16 @@ const Main: React.FunctionComponent = () => {
             <Tab label='Custom DataGrid' />
             <Tab label='Grid List' />
             <Tab label='Master Detail Row' />
+            <Tab label='Tb List' />
           </Tabs>
         </AppBar>
-        {currentValue === 0 && <ColumnFeatures />}
+        {currentValue === 0 && <TbListExample />}
         {currentValue === 1 && <RemoteDataGrid />}
         {currentValue === 2 && <LocalDataGrid />}
         {currentValue === 3 && <CustomLayoutDataGrid />}
         {currentValue === 4 && <RemoteGridList />}
         {currentValue === 5 && <MasterDetailRow />}
+        {currentValue === 6 && <TbListExample />}
       </div>
     </ErrorBoundary>
   );
