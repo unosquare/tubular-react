@@ -1,6 +1,6 @@
 import { ColumnModel, IDataGridStorage } from 'tubular-common';
 
-export interface IDataGridState {
+export interface ITbState {
     activeColumn: ColumnModel;
     aggregate: any;
     columns: ColumnModel[];
@@ -9,7 +9,6 @@ export interface IDataGridState {
     filteredRecordCount: number;
     initialized: boolean;
     isLoading: boolean;
-    multiSort: boolean;
     itemsPerPage: number;
     page: number;
     searchText: string;

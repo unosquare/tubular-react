@@ -13,11 +13,11 @@ import TableFooter from '@material-ui/core/TableFooter';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
+import { formatDate, LocalStorage } from 'tubular-common';
 import { Paginator, SearchTextInput } from '../../src';
-import useDataGrid from '../../src/Hooks/useDataGrid';
+import { useTbTable } from '../../src/Hooks/useTbTable';
 import CustomHttpClient from './CustomHttpClient';
 import columns from './data/columns';
-import { formatDate, LocalStorage } from 'tubular-common';
 
 const styles: any = {
   progress: {
@@ -35,22 +35,30 @@ const httpClient = new CustomHttpClient(
 
 const RemoteGridList: React.FunctionComponent = () => {
   const [getErrorMessage, setErrorMessage] = React.useState(null as string);
-  const grid = useDataGrid(columns, { storage: new LocalStorage(), gridName: 'RemoteGridList' }, httpClient);
+
+  const tbTableInstance = useTbTable(
+    columns,
+    httpClient,
+    { storage: new LocalStorage(), componentName: 'RemoteGridList' },
+  );
 
   return (
     <Paper>
       <div style={styles.search}>
-        <SearchTextInput searchText={grid.state.searchText} updateSearchText={grid.api.updateSearchText} />
+        <SearchTextInput
+          searchText={tbTableInstance.state.searchText}
+          updateSearchText={tbTableInstance.api.updateSearchText}
+        />
       </div>
       <div style={styles.progress}>
-        {grid.state.isLoading && <LinearProgress />}
+        {tbTableInstance.state.isLoading && <LinearProgress />}
       </div>
       <Table>
         <TableBody>
           <TableRow>
             <TableCell>
               <GridList cellHeight={180} cols={5}>
-                {grid.state.data && grid.state.data.map((row) => (
+                {tbTableInstance.state.data && tbTableInstance.state.data.map((row) => (
                   <GridListTile key={row.OrderID}>
                     <Card>
                       <CardContent>
@@ -82,7 +90,7 @@ const RemoteGridList: React.FunctionComponent = () => {
         </TableBody>
         <TableFooter>
           <TableRow>
-            <Paginator grid={grid} />
+            <Paginator tbTableInstance={tbTableInstance} />
           </TableRow>
         </TableFooter>
       </Table>

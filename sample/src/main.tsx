@@ -24,7 +24,10 @@ const useStyles = makeStyles(({ palette }: any) => ({
   },
   root: {
     backgroundColor: palette.background.paper,
+    display: 'flex',
+    flexDirection: 'column',
     flexGrow: 1,
+    height: '100%',
   },
 }));
 
@@ -53,7 +56,7 @@ const Main: React.FunctionComponent = () => {
             <Tab label='Tb List' />
           </Tabs>
         </AppBar>
-        {currentValue === 0 && <TbListExample />}
+        {currentValue === 0 && <ColumnFeatures />}
         {currentValue === 1 && <RemoteDataGrid />}
         {currentValue === 2 && <LocalDataGrid />}
         {currentValue === 3 && <CustomLayoutDataGrid />}

@@ -1,15 +1,15 @@
 import TableBody from '@material-ui/core/TableBody';
 import * as React from 'react';
 import { ITbRow, TbRow } from '../BareBones/TbRow';
-import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
 import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
+import { ITbTableInstance } from '../HookTypes/ITbTableInstance';
 import { renderCells } from '../utils';
 import MasterDetailRow from './MasterDetailRow';
 import { NoDataRow } from './NoDataRow';
 
 interface IProps {
     detailComponent?: React.ReactElement<IDetailComponet>;
-    grid: IDataGrid;
+    tbTableInstance: ITbTableInstance;
     rowComponent: React.FunctionComponent<ITbRow>;
     onRowClick?(row: any): void;
 }
@@ -27,28 +27,34 @@ const generateOnRowClickProxy = (onRowClick) => {
     };
 };
 
-export const GridBody: React.FunctionComponent<IProps> = ({ grid, rowComponent, onRowClick, detailComponent }) => {
+export const GridBody: React.FunctionComponent<IProps> = ({
+    tbTableInstance,
+    rowComponent,
+    onRowClick,
+    detailComponent,
+}) => {
     const styles = getStyles(Boolean(onRowClick));
     const RowComponent = rowComponent ? rowComponent : TbRow;
     const onRowClickProxy = onRowClick ? generateOnRowClickProxy(onRowClick) : () => void 0;
+    const { state } = tbTableInstance;
 
     let content = null;
 
-    if (grid.state.filteredRecordCount === 0 && !grid.state.isLoading) {
-        content = <NoDataRow columns={grid.state.columns} styles={styles} />;
+    if (state.filteredRecordCount === 0 && !state.isLoading) {
+        content = <NoDataRow columns={state.columns} styles={styles} />;
     } else {
-        content = grid.state.data
+        content = state.data
             .map((row: any, rowIndex: number) => {
                 if (detailComponent) {
                     return (
                         <MasterDetailRow
                             detail={detailComponent}
-                            renderCells={renderCells(grid.state.columns, row)}
+                            renderCells={renderCells(state.columns, row)}
                             clickEvent={onRowClickProxy}
                             style={styles.row}
                             key={rowIndex}
                             rowData={row}
-                            columns={grid.state.columns}
+                            columns={state.columns}
                         />
                     );
                 }
@@ -58,7 +64,7 @@ export const GridBody: React.FunctionComponent<IProps> = ({ grid, rowComponent, 
                         row={row}
                         key={rowIndex}
                         rowIndex={rowIndex}
-                        columns={grid.state.columns}
+                        columns={state.columns}
                         onRowClick={onRowClickProxy(row)}
                     />
                 );

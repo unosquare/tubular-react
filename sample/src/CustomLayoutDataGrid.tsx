@@ -16,7 +16,7 @@ import { useResolutionSwitch } from 'uno-react/lib/hooks/useResolutionSwitch';
 import { ITbRow } from '../../src/BareBones/TbRow';
 import { DataGridTable } from '../../src/DataGrid';
 import { MobileDataGridTable } from '../../src/DataGrid/MobileDataGridTable';
-import useDataGrid from '../../src/Hooks/useDataGrid';
+import { useTbTable } from '../../src/Hooks/useTbTable';
 import { Paginator } from '../../src/Pagination';
 import sampleColumns from './data/columns';
 import localData from './data/localData';
@@ -83,15 +83,15 @@ const tbFooter = ({ aggregates }: any) => (
 const CustomLayoutDataGrid: React.FunctionComponent = () => {
 
   const [getErrorMessage] = React.useState(null as string);
-  const grid = useDataGrid(sampleColumns, {}, localData);
+  const tbTableInstance = useTbTable(sampleColumns, localData);
   const onRowClick = (row) => console.log(row);
   const [isMobileResolution] = useResolutionSwitch(800, 400);
   if (isMobileResolution) {
     return (
       <Paper>
-        <FixedLinearProgress isLoading={grid.state.isLoading} />
+        <FixedLinearProgress isLoading={tbTableInstance.state.isLoading} />
         <MobileDataGridTable
-          grid={grid}
+          tbTableInstance={tbTableInstance}
           rowComponent={CustomTbMobileRow}
           onRowClick={onRowClick}
         />
@@ -115,14 +115,14 @@ const CustomLayoutDataGrid: React.FunctionComponent = () => {
         <TableHead>
           <TableRow>
             <Paginator
-              grid={grid}
+              tbTableInstance={tbTableInstance}
             />
           </TableRow>
         </TableHead>
       </Table>
 
       <DataGridTable
-        grid={grid}
+        tbTableInstance={tbTableInstance}
         rowComponent={CustomTbRow}
         footerComponent={tbFooter}
         onRowClick={onRowClick}

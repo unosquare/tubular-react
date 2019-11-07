@@ -1,8 +1,8 @@
 import Toolbar from '@material-ui/core/Toolbar';
 import * as React from 'react';
 import { useResolutionSwitch } from 'uno-react';
-import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
 import { SearchTextInput } from '../Filtering/SearchTextInput';
+import { ITbTableInstance } from '../HookTypes';
 import { ExportButton } from './ExportButton';
 import { ToolbarOptions } from './ToolbarOptions';
 
@@ -21,10 +21,10 @@ const timeout = 400;
 interface IProps {
   toolbarOptions: ToolbarOptions;
   gridName: string;
-  grid: IDataGrid;
+  tbTableInstance: ITbTableInstance;
 }
 
-export const GridToolbar: React.FunctionComponent<IProps> = ({ toolbarOptions, gridName, grid }) => {
+export const GridToolbar: React.FunctionComponent<IProps> = ({ toolbarOptions, gridName, tbTableInstance }) => {
   const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
 
   return (
@@ -35,8 +35,8 @@ export const GridToolbar: React.FunctionComponent<IProps> = ({ toolbarOptions, g
         <ExportButton
           type='csv'
           gridName={gridName}
-          exportTo={grid.api.exportTo}
-          filteredRecordCount={grid.state.filteredRecordCount}
+          exportTo={tbTableInstance.api.exportTo}
+          filteredRecordCount={tbTableInstance.state.filteredRecordCount}
           data-testid='export-button-csv'
         />
       )}
@@ -44,15 +44,15 @@ export const GridToolbar: React.FunctionComponent<IProps> = ({ toolbarOptions, g
         <ExportButton
           type='print'
           gridName={gridName}
-          exportTo={grid.api.exportTo}
-          filteredRecordCount={grid.state.filteredRecordCount}
+          exportTo={tbTableInstance.api.exportTo}
+          filteredRecordCount={tbTableInstance.state.filteredRecordCount}
           data-testid='export-button-print'
         />
       )}
       {toolbarOptions.searchText && (
         <SearchTextInput
-          searchText={grid.state.searchText}
-          updateSearchText={grid.api.updateSearchText}
+          searchText={tbTableInstance.state.searchText}
+          updateSearchText={tbTableInstance.api.updateSearchText}
           data-testid='search-text-input'
         />
       )}
