@@ -25,18 +25,12 @@ const MyListItem: React.FunctionComponent = ({ rowStyle, selectedIndex, onItemCl
   );
 };
 
-const TbListExampleWrapper = () => {
+const TbListExample: React.FunctionComponent<any> = () => {
+  const [data, setData] = React.useState(localData);
   const tbList = useTbList(
     columns,
     'https://tubular.azurewebsites.net/api/orders/paged',
-    { storage: new LocalStorage() },
   );
-
-  return (<TbListExample tbList={tbList} />);
-};
-
-const TbListExample: React.FunctionComponent<any> = ({ tbList }) => {
-  const [data, setData] = React.useState(localData);
 
   const rowClick = (row: any) => {
     console.log('You clicked on a row: ', row);
@@ -53,7 +47,7 @@ const TbListExample: React.FunctionComponent<any> = ({ tbList }) => {
   };
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [searchText, setSearchText] = React.useState(null);
+  const [searchText, setSearchText] = React.useState(tbList.state.searchText);
 
   const handleChangeSearch = (event: any) => {
     setSearchText(event.target.value);
@@ -116,4 +110,4 @@ const TbListExample: React.FunctionComponent<any> = ({ tbList }) => {
   );
 };
 
-export default TbListExampleWrapper;
+export default TbListExample;

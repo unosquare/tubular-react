@@ -22,7 +22,7 @@ const createTbOptions = (tubularOptions?: Partial<ITbOptions>): ITbOptions => {
             page: 0,
         },
         searchText: temp.searchText || '',
-        storage: temp.storage || new NullStorage(),
+        storage: (temp.componentName && temp.storage) || new NullStorage(),
     };
 };
 export const useTubular = (
@@ -30,7 +30,7 @@ export const useTubular = (
     source: any[] | string | Request | ITubularHttpClient,
     tubularOptions?: Partial<ITbOptions>): ITbInstance => {
     const tbOptions = createTbOptions(tubularOptions);
-    console.log("useTubular instance")
+
     const {
         componentName,
         pagination,
@@ -40,12 +40,17 @@ export const useTubular = (
         searchText,
     } = tbOptions;
 
+    const initStorage = storage || new NullStorage();
+    if (initStorage instanceof LocalStorage) {
+        initStorage.setGridName(componentName);
+    }
+
     const [isLoading, setIsLoading] = React.useState(false);
     const [getColumns, setColumns] = React.useState<ColumnModel[]>(initColumns);
     const [isStorageLoaded, setIsStorageLoaded] = React.useState(false);
     const [getActiveColumn, setActiveColumn] = React.useState<ColumnModel>(null);
     const [getItemsPerPage, setItemsPerPage] = React.useState<number>(pagination.itemsPerPage || 10);
-    const [getStorage] = React.useState<IDataGridStorage>(storage || new NullStorage());
+    const [getStorage] = React.useState<IDataGridStorage>(initStorage);
     const [getPage, setPage] = React.useState<number>(pagination.page || 0);
     const [getSearchText, setSearchText] = React.useState<string>(searchText || '');
     const [getError, setError] = React.useState(null);
@@ -57,10 +62,6 @@ export const useTubular = (
         filteredRecordCount: 0,
         totalRecordCount: 0,
     });
-
-    if (getStorage instanceof LocalStorage) {
-        getStorage.setGridName(componentName);
-    }
 
     const api: ITbApi = {
         exportTo: async (allRows: boolean, exportFunc: (payload: any[], columns: ColumnModel[]) => void) => {
@@ -103,12 +104,11 @@ export const useTubular = (
                 let currentPage = response.CurrentPage > maxPage ? maxPage : response.CurrentPage;
                 currentPage = currentPage === 0 ? 0 : currentPage - 1;
 
-                getStorage.setPage(currentPage);
-                getStorage.setColumns(getColumns);
-                getStorage.setTextSearch(getSearchText);
-
                 // TODO: Check this won't case an issue
                 ReactDom.unstable_batchedUpdates(() => {
+                    getStorage.setPage(currentPage);
+                    getStorage.setColumns(getColumns);
+                    getStorage.setTextSearch(getSearchText);
 
                     setState({
                         aggregate: response.AggregationPayload,
@@ -118,7 +118,6 @@ export const useTubular = (
                     });
 
                     setIsLoading(false);
-                    setIsStorageLoaded(true);
                     setError(null);
                     setPage(currentPage);
                 });
@@ -177,19 +176,13 @@ export const useTubular = (
         dependencies = dependencies.concat(deps);
     }
 
-    React.useEffect(() => {
-        if (!isLoading) {
-            api.processRequest();
-        }
-    }, dependencies);
-
-    React.useEffect(() => {
-        setColumns(initColumns);
-    }, [initColumns]);
-
     const initGrid = () => {
         if (getStorage.getPage()) {
             setPage(getStorage.getPage());
+        }
+
+        if (getStorage.getTextSearch()) {
+            setSearchText(getStorage.getTextSearch());
         }
 
         const storedColumns = getStorage.getColumns();
@@ -226,6 +219,16 @@ export const useTubular = (
     if (!isStorageLoaded) {
         initGrid();
     }
+
+    React.useEffect(() => {
+        if (!isLoading) {
+            api.processRequest();
+        }
+    }, dependencies);
+
+    React.useEffect(() => {
+        setColumns(initColumns);
+    }, [initColumns]);
 
     const state = {
         ...getState,
