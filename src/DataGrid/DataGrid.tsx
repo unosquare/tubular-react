@@ -8,9 +8,8 @@ import { ColumnModel, IDataGridStorage, ITubularHttpClient } from 'tubular-commo
 import { FixedLinearProgress } from 'uno-material-ui';
 import { useResolutionSwitch } from 'uno-react';
 import { ITbRow } from '../BareBones/TbRow';
-import { IDataGridConfig } from '../DataGridInterfaces/IDataGridConfig';
 import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
-import useDataGrid from '../Hooks/useDataGrid';
+import { useTbTable } from '../Hooks/useTbTable';
 import { Paginator } from '../Pagination';
 import { GridToolbar } from '../Toolbar/GridToolbar';
 import { ToolbarOptions } from '../Toolbar/ToolbarOptions';
@@ -65,14 +64,17 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
   } = props;
 
   const classes = useStyles({});
-  const gridConfig: Partial<IDataGridConfig> = {
-    gridName,
-    itemsPerPage: toolbarOptions.itemsPerPage,
-    onError,
-    storage,
-  };
 
-  const grid = useDataGrid(columns, gridConfig, dataSource, deps);
+  const tbTableInstance = useTbTable(columns, dataSource, {
+    callbacks: { onError },
+    componentName: gridName,
+    deps,
+    pagination: {
+      itemsPerPage: toolbarOptions.itemsPerPage,
+    },
+    storage,
+  });
+
   const [isMobileResolution] = useResolutionSwitch(mobileBreakpointWidth, timeout);
 
   if (isMobileResolution) {
@@ -80,17 +82,17 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
 
     return (
       <Paper className={classes.root}>
-        <GridToolbar toolbarOptions={toolbarOptions} grid={grid} gridName={gridName} />
-        <FixedLinearProgress isLoading={grid.state.isLoading} />
+        <GridToolbar toolbarOptions={toolbarOptions} tbTableInstance={tbTableInstance} gridName={gridName} />
+        <FixedLinearProgress isLoading={tbTableInstance.state.isLoading} />
         <MobileDataGridTable
-          grid={grid}
+          tbTableInstance={tbTableInstance}
           onRowClick={onRowClick}
           rowComponent={rowMobileComponent}
         />
         <Paginator
           advancePagination={toolbarOptions.advancePagination}
           rowsPerPageOptions={toolbarOptions.rowsPerPageOptions}
-          grid={grid}
+          tbTableInstance={tbTableInstance}
         />
       </Paper>
     );
@@ -103,7 +105,7 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
           <Paginator
             advancePagination={toolbarOptions.advancePagination}
             rowsPerPageOptions={toolbarOptions.rowsPerPageOptions}
-            grid={grid}
+            tbTableInstance={tbTableInstance}
           />
         </TableRow>
       </TableHead>
@@ -112,13 +114,13 @@ export const DataGrid: React.FunctionComponent<IProps> = (props) => {
 
   return (
     <Paper className={classes.root}>
-      <GridToolbar gridName={gridName} toolbarOptions={toolbarOptions} grid={grid} />
+      <GridToolbar gridName={gridName} toolbarOptions={toolbarOptions} tbTableInstance={tbTableInstance} />
       {toolbarOptions.topPager && paginator('top')}
       <div className={classes.linearProgress} data-testid='linear-progress'>
-        <FixedLinearProgress isLoading={grid.state.isLoading} />
+        <FixedLinearProgress isLoading={tbTableInstance.state.isLoading} />
       </div>
       <DataGridTable
-        grid={grid}
+        tbTableInstance={tbTableInstance}
         rowComponent={rowComponent}
         footerComponent={footerComponent}
         detailComponent={detailComponent || null}

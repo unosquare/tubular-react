@@ -4,13 +4,13 @@ import TableHead from '@material-ui/core/TableHead';
 
 import * as React from 'react';
 import { ITbRow } from '../BareBones/TbRow';
-import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
 import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
+import { ITbTableInstance } from '../HookTypes/ITbTableInstance';
 import { GridBody } from './GridBody';
 import { GridHeader } from './GridHeader';
 
 interface IProps {
-    grid: IDataGrid;
+    tbTableInstance: ITbTableInstance;
     rowComponent: React.FunctionComponent<ITbRow>;
     footerComponent: React.FunctionComponent<any>;
     detailComponent?: React.ReactElement<IDetailComponet>;
@@ -23,10 +23,10 @@ export const DataGridTable: React.FunctionComponent<IProps> = (props) => {
     return (
         <Table data-testid='data-grid-table'>
             <TableHead>
-                <GridHeader grid={props.grid} />
+                <GridHeader tbTableInstance={props.tbTableInstance} />
             </TableHead>
             <GridBody
-                grid={props.grid}
+                tbTableInstance={props.tbTableInstance}
                 rowComponent={props.rowComponent}
                 onRowClick={props.onRowClick}
                 detailComponent={props.detailComponent}
@@ -34,7 +34,7 @@ export const DataGridTable: React.FunctionComponent<IProps> = (props) => {
             {
                 props.footerComponent && (
                     <TableFooter>
-                        <Footer aggregates={props.grid.state.aggregate} />
+                        <Footer aggregates={props.tbTableInstance.state.aggregate} />
                     </TableFooter>
                 )
             }

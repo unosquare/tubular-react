@@ -3,10 +3,10 @@ import * as React from 'react';
 
 import { TbMobileRow } from '../BareBones/TbMobileRow';
 import { ITbRow } from '../BareBones/TbRow';
-import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
+import { ITbTableInstance } from '../HookTypes/ITbTableInstance';
 
 interface IProps {
-    grid: IDataGrid;
+    tbTableInstance: ITbTableInstance;
     rowComponent?: React.FunctionComponent<ITbRow>;
     onRowClick?(row: any): void;
 }
@@ -19,7 +19,7 @@ const generateOnRowClickProxy = (onRowClick) => {
     };
 };
 
-export const MobileDataGridTable: React.FunctionComponent<IProps> = ({ grid, rowComponent, onRowClick }) => {
+export const MobileDataGridTable: React.FunctionComponent<IProps> = ({ tbTableInstance, rowComponent, onRowClick }) => {
     const RowComponent = rowComponent ? rowComponent : TbMobileRow;
     const onRowClickProxy = onRowClick ? generateOnRowClickProxy(onRowClick) : () => void 0;
 
@@ -29,10 +29,10 @@ export const MobileDataGridTable: React.FunctionComponent<IProps> = ({ grid, row
             cols={1}
         >
             {
-                grid.state.data.map((row: any, index: number) =>
+                tbTableInstance.state.data.map((row: any, index: number) =>
                     (
                         <RowComponent
-                            columns={grid.state.columns}
+                            columns={tbTableInstance.state.columns}
                             row={row}
                             rowIndex={index}
                             onRowClick={onRowClickProxy(row)}

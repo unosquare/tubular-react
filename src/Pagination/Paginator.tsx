@@ -2,7 +2,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import TablePagination from '@material-ui/core/TablePagination';
 import * as React from 'react';
 import { useResolutionSwitch } from 'uno-react';
-import { IDataGrid } from '../DataGridInterfaces/IDataGrid';
+import { ITbTableInstance } from '../HookTypes';
 import { AdvancePaginationActions } from './AdvancePaginationActions';
 
 const useStyles = makeStyles({
@@ -31,16 +31,16 @@ const message = (totalRecordCount: number, filteredRecordCount: number) => ({
       : `${from} to ${to} of ${count} from ${totalRecordCount} records`;
 
 interface IPaginatorProps {
-  grid: IDataGrid;
+  tbTableInstance: ITbTableInstance;
   rowsPerPageOptions: number[];
   advancePagination: boolean;
 }
 
 export const Paginator: React.FunctionComponent<IPaginatorProps> =
-  ({ grid, rowsPerPageOptions, advancePagination }) => {
+  ({ tbTableInstance, rowsPerPageOptions, advancePagination }) => {
     const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
     const classes = useStyles({});
-    const { state, api } = grid;
+    const { state, api } = tbTableInstance;
 
     if (!state.itemsPerPage) {
       return null;

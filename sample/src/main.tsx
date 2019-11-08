@@ -12,6 +12,7 @@ import LocalDataGrid from './localDataGrid';
 import MasterDetailRow from './masterDetailRow';
 import RemoteDataGrid from './remoteDataGrid';
 import RemoteGridList from './remoteGridList';
+import TbListExample from './TbListExample';
 
 const useStyles = makeStyles(({ palette }: any) => ({
   logo: {
@@ -23,7 +24,10 @@ const useStyles = makeStyles(({ palette }: any) => ({
   },
   root: {
     backgroundColor: palette.background.paper,
+    display: 'flex',
+    flexDirection: 'column',
     flexGrow: 1,
+    height: '100%',
   },
 }));
 
@@ -49,6 +53,7 @@ const Main: React.FunctionComponent = () => {
             <Tab label='Custom DataGrid' />
             <Tab label='Grid List' />
             <Tab label='Master Detail Row' />
+            <Tab label='Tb List' />
           </Tabs>
         </AppBar>
         {currentValue === 0 && <ColumnFeatures />}
@@ -57,6 +62,7 @@ const Main: React.FunctionComponent = () => {
         {currentValue === 3 && <CustomLayoutDataGrid />}
         {currentValue === 4 && <RemoteGridList />}
         {currentValue === 5 && <MasterDetailRow />}
+        {currentValue === 6 && <TbListExample />}
       </div>
     </ErrorBoundary>
   );
