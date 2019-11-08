@@ -30,7 +30,7 @@ export const useTubular = (
     source: any[] | string | Request | ITubularHttpClient,
     tubularOptions?: Partial<ITbOptions>): ITbInstance => {
     const tbOptions = createTbOptions(tubularOptions);
-
+    console.log("useTubular instance")
     const {
         componentName,
         pagination,

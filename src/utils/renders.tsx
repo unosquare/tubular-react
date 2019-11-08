@@ -9,7 +9,7 @@ export const renderDefaultListItem: any = (columns: ColumnModel[], row: any) =>
         .filter((col: ColumnModel) => col.Visible)
         .map((column: ColumnModel) =>
             (
-                renderCellContent(column, row)
+                <div key={column.Name}>{renderCellContent(column, row)}</div>
             ),
         );
 

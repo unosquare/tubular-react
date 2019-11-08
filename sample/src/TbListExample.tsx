@@ -10,6 +10,7 @@ import { useTbList } from '../../src/Hooks/useTbList';
 import { TbList } from '../../src/TbList/TbList';
 import columns from './data/columns';
 import localData from './data/localData';
+import { LocalStorage } from 'tubular-common';
 
 const MyListItem: React.FunctionComponent = ({ rowStyle, selectedIndex, onItemClick, row }: any) => {
   return (
@@ -24,7 +25,17 @@ const MyListItem: React.FunctionComponent = ({ rowStyle, selectedIndex, onItemCl
   );
 };
 
-const TbListExample: React.FunctionComponent = () => {
+const TbListExampleWrapper = () => {
+  const tbList = useTbList(
+    columns,
+    'https://tubular.azurewebsites.net/api/orders/paged',
+    { storage: new LocalStorage() },
+  );
+
+  return (<TbListExample tbList={tbList} />);
+};
+
+const TbListExample: React.FunctionComponent<any> = ({ tbList }) => {
   const [data, setData] = React.useState(localData);
 
   const rowClick = (row: any) => {
@@ -66,8 +77,6 @@ const TbListExample: React.FunctionComponent = () => {
     tbList.api.sortByColumn(columnName);
   };
 
-  const tbList = useTbList(columns, 'https://tubular.azurewebsites.net/api/orders/paged');
-
   return (
     <div className='root' style={{ width: '100%', height: '100%' }}>
       <div>
@@ -80,7 +89,7 @@ const TbListExample: React.FunctionComponent = () => {
             label='Search'
             margin='normal'
             variant='outlined'
-            value={searchText}
+            value={searchText || ''}
             onChange={handleChangeSearch}
           />
         </div>
@@ -107,4 +116,4 @@ const TbListExample: React.FunctionComponent = () => {
   );
 };
 
-export default TbListExample;
+export default TbListExampleWrapper;

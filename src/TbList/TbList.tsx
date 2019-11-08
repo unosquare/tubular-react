@@ -30,21 +30,22 @@ export const TbList: React.FunctionComponent<IProps> = (tbProps) => {
             return;
         }
 
-        // console.log('Loading page: ', pageToLoad);
         tbInstance.api.loadPage(pageToLoad);
     };
 
-    // If there are more items to be loaded then add an extra row to hold a loading indicator.
+    // This cache is enabling better performance when it comes to reload
+    // previously loaded items.
     const cache = new CellMeasurerCache({ defaultHeight: 85, fixedWidth: true });
-    const itemCount = tbInstance.state.list.hasNextPage ?
+    const noRecordsFound = !hasNextPage && !tbInstance.state.isLoading && items.length === 0;
+
+    // We need a place holder to give user some feedback on what's happening
+    const itemCount = tbInstance.state.isLoading || noRecordsFound || hasNextPage ?
         items.length + 1 :
         items.length;
 
-    // Only load 1 page of items at a time.
-    // Pass an empty callback to InfiniteLoader in case it asks us to load more than once.
     const loadMoreItems = loadNextPage;
 
-    // Every row is loaded except for our loading indicator row.
+    // Every row is loaded except for our Loading/NoRecordsFound indicator.
     const isItemLoaded = (index) => !hasNextPage || index < items.length;
 
     const ListItemComponent = listItemComponent ? listItemComponent : TbListItem;
@@ -53,29 +54,31 @@ export const TbList: React.FunctionComponent<IProps> = (tbProps) => {
         const { index, key, style } = props;
         const row = items[index];
         const itemClickProxy = generateOnRowClickProxy(onItemClick)(row);
+        const isPlaceholder = !isItemLoaded(index) || !items[index];
+        const itemToRender = (
+            <ListItemComponent
+                row={row}
+                onItemClick={itemClickProxy}
+                rowStyle={{ ...style, height: props.height }}
+                columns={tbInstance.state.columns}
+            />
+        );
 
-        let content = null;
-        // If this item has not been loaded then
-        // We will put a Loading... placeholder
-        if (!isItemLoaded(index) || !items[index]) {
-            content = (
+        const placeholderItem = (placeholderStyle) => {
+            const placeholderMessage = noRecordsFound ? 'No records found' : 'Loading...';
+            return (
                 <ListItem
                     button={true}
-                    style={style}
+                    style={placeholderStyle}
                 >
-                    <ListItemText primary='Loading...' />
+                    <ListItemText primary={placeholderMessage} />
                 </ListItem>
             );
-        } else {
-            content = (
-                <ListItemComponent
-                    row={row}
-                    onItemClick={itemClickProxy}
-                    rowStyle={{ ...style, height: props.height }}
-                    columns={tbInstance.state.columns}
-                />
-            );
-        }
+        };
+
+        const content = isPlaceholder ?
+            placeholderItem(style) :
+            itemToRender;
 
         return (
             <CellMeasurer
