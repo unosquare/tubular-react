@@ -1,6 +1,6 @@
 {
   "name": "tubular-react",
-  "version": "3.0.0-rc4",
+  "version": "3.0.0-rc5",
   "description": "Unosquare Tubular React",
   "main": "dist/index.js",
   "scripts": {
@@ -48,18 +48,18 @@
   },
   "homepage": "https://github.com/unosquare/tubular-react#readme",
   "dependencies": {
-    "@material-ui/core": "^4.6.1",
+    "@material-ui/core": "^4.7.0",
     "@material-ui/icons": "^4.5.1",
-    "date-fns": "^2.7.0",
+    "date-fns": "^2.8.1",
     "react-virtualized": "^9.21.2",
     "tubular-common": "^2.0.3",
-    "uno-material-ui": "^1.6.9"
+    "uno-material-ui": "^1.7.1"
   },
   "devDependencies": {
     "@testing-library/react": "^9.3.2",
     "@testing-library/react-hooks": "^3.2.1",
     "@types/jest": "^24.0.23",
-    "@types/react": "^16.9.11",
+    "@types/react": "^16.9.12",
     "@types/react-dom": "^16.9.4",
     "@types/react-router": "^5.1.3",
     "@types/react-router-dom": "^5.1.2",
@@ -73,7 +73,7 @@
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "react-router-hash-link": "^1.2.2",
-    "ts-jest": "^24.1.0",
+    "ts-jest": "^24.2.0",
     "tslint": "^5.20.1",
     "tslint-react": "^4.1.0",
     "typescript": "^3.7.2"
