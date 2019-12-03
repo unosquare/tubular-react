@@ -17,7 +17,7 @@
     "postbuild:docs": "xcopy .\\srcdocs\\static .\\docs\\static\\",
     "poststart:docs": "xcopy .\\srcdocs\\static .\\docs\\static\\",
     "preparepackage": "npm run build && npm run copypackage && cd dist && npm pack",
-    "copypackage": "copy package.json dist"
+    "copypackage": "npx shx cp package.json dist"
   },
   "jest": {
     "automock": false,
