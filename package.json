@@ -1,8 +1,8 @@
 {
   "name": "tubular-react",
-  "version": "3.0.0-rc2",
+  "version": "3.0.0-rc7",
   "description": "Unosquare Tubular React",
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
     "build:docs": "parcel build ./srcdocs/index.html --no-source-maps --public-url /tubular-react/ -d ./docs",
     "build:sample": "parcel build ./sample/app/index.html --no-source-maps -d ./distsample",
@@ -15,7 +15,9 @@
     "lint:docs": "tslint srcdocs/**/*.ts srcdocs/**/*.tsx",
     "test": "jest",
     "postbuild:docs": "xcopy .\\srcdocs\\static .\\docs\\static\\",
-    "poststart:docs": "xcopy .\\srcdocs\\static .\\docs\\static\\"
+    "poststart:docs": "xcopy .\\srcdocs\\static .\\docs\\static\\",
+    "preparepackage": "npm run build && npm run copypackage && cd dist && npm pack",
+    "copypackage": "copy package.json dist"
   },
   "jest": {
     "automock": false,
