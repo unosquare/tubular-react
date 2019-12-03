@@ -21,7 +21,10 @@ jobs:
       - name: npm build
         run: |
           npm ci
-          npm run build
+          npm run preparepackage
+      - name: npm publish
+        run: npm publish
+        working-directory: dist
       - name: Publish
         uses: mikeal/merge-release@master
         env:
