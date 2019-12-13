@@ -16,10 +16,10 @@ import { useResolutionSwitch } from 'uno-react/lib/hooks/useResolutionSwitch';
 import { ITbRow } from '../../src/BareBones/TbRow';
 import { DataGridTable } from '../../src/DataGrid';
 import { MobileDataGridTable } from '../../src/DataGrid/MobileDataGridTable';
-import { useTbTable } from '../../src/Hooks/useTbTable';
 import { Paginator } from '../../src/Pagination';
 import sampleColumns from './data/columns';
 import localData from './data/localData';
+import { useTbTable } from 'tubular-react-common/useTbTable';
 
 const CustomTbRow: React.FunctionComponent<ITbRow> = ({ row, onRowClick }) => (
   <TableRow hover={true} key={row.OrderID} onClick={onRowClick}>

@@ -1,8 +1,8 @@
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import TablePagination from '@material-ui/core/TablePagination';
 import * as React from 'react';
+import { ITbTableInstance } from 'tubular-react-common/types/ITbTableInstance';
 import { useResolutionSwitch } from 'uno-react';
-import { ITbTableInstance } from '../HookTypes';
 import { AdvancePaginationActions } from './AdvancePaginationActions';
 
 const useStyles = makeStyles({

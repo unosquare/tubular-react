@@ -1,9 +1,9 @@
 import GridList from '@material-ui/core/GridList';
 import * as React from 'react';
 
+import { ITbTableInstance } from 'tubular-react-common/types/ITbTableInstance';
 import { TbMobileRow } from '../BareBones/TbMobileRow';
 import { ITbRow } from '../BareBones/TbRow';
-import { ITbTableInstance } from '../HookTypes/ITbTableInstance';
 
 interface IProps {
     tbTableInstance: ITbTableInstance;

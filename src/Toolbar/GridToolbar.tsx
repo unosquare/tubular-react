@@ -2,9 +2,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import * as React from 'react';
 import { useResolutionSwitch } from 'uno-react';
 import { SearchTextInput } from '../Filtering/SearchTextInput';
-import { ITbTableInstance } from '../HookTypes';
 import { ExportButton } from './ExportButton';
 import { ToolbarOptions } from './ToolbarOptions';
+import { ITbTableInstance } from 'tubular-react-common/types/ITbTableInstance';
 
 const styles: any = {
   mobileSpacer: {

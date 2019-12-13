@@ -3,9 +3,9 @@ import TableFooter from '@material-ui/core/TableFooter';
 import TableHead from '@material-ui/core/TableHead';
 
 import * as React from 'react';
+import { ITbTableInstance } from 'tubular-react-common/types/ITbTableInstance';
 import { ITbRow } from '../BareBones/TbRow';
 import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
-import { ITbTableInstance } from '../HookTypes/ITbTableInstance';
 import { GridBody } from './GridBody';
 import { GridHeader } from './GridHeader';
 
