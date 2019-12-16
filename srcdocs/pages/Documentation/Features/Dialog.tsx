@@ -3,8 +3,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
+import useGridRefresh from 'tubular-react-common/useGridRefresh';
 import { useToggle } from 'uno-react';
-import useGridRefresh from '../../../../src/Hooks/useGridRefresh';
 import DemoDialog from '../../../components/DemoDialog';
 import FeatureSample from '../../../components/FeatureSample';
 import DialogOptions from '../../../components/Options/Dialog';
@@ -33,7 +33,7 @@ export default () => {
         id: 'Dialog with button in Toolbar',
         open: openGrid,
         options: DialogOptions(toggleOpenDialog),
-        refresh: refresh,
+        refresh,
         toggle: toggleOpenGrid,
     };
 
