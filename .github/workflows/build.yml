@@ -1,33 +1,20 @@
-name: Node.js Package
+name: Node CI
 
-on: push
+on: [push]
 
 jobs:
-  lint:
-    runs-on: [ubuntu-latest]
-    steps:
-      - uses: actions/checkout@v1
-      - name: TSLint checks
-        uses: mooyoul/tslint-actions@v1.1.1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          pattern: 'src/**/*.ts src/**/*.tsx'
-
   build:
-    needs: [lint]
-    runs-on: ubuntu-latest
+    runs-on: [ubuntu-latest]
+    
     steps:
       - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
       - uses: actions/cache@v1
         with:
           path: ~/.npm
           key: node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             node-
-      - name: npm
+      - name: npm build and coverage (pending)
         run: |
           npm ci
           npm test

@@ -1,8 +1,8 @@
 {
   "name": "tubular-react",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Unosquare Tubular React",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build:docs": "parcel build ./srcdocs/index.html --no-source-maps --public-url /tubular-react/ -d ./docs",
     "build:sample": "parcel build ./sample/app/index.html --no-source-maps -d ./distsample",

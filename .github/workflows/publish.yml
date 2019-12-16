@@ -9,9 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
       - uses: actions/cache@v1
         with:
           path: ~/.npm
@@ -21,10 +18,9 @@ jobs:
       - name: npm build
         run: |
           npm ci
-          npm run preparepackage
+          npm run build
       - name: Publish
         uses: mikeal/merge-release@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-          PACKAGE_PATH: ./dist
