@@ -5,8 +5,8 @@ import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 import * as React from 'react';
 import { ColumnModel, formatDate, LocalStorage } from 'tubular-common';
+import useGridRefresh from 'tubular-react-common/useGridRefresh';
 import { DataGrid, ToolbarOptions } from '../../src';
-import useGridRefresh from '../../src/Hooks/useGridRefresh';
 import columns from './data/columns';
 
 const RemoteDataGrid: React.FunctionComponent = () => {

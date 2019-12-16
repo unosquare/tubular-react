@@ -2,9 +2,9 @@ import { TableCell } from '@material-ui/core';
 import TableRow from '@material-ui/core/TableRow';
 import * as React from 'react';
 import { ColumnModel, IFilterWrapper } from 'tubular-common';
+import { ITbTableInstance } from 'tubular-react-common/types/ITbTableInstance';
 import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
 import { DialogModal } from '../Filtering/DialogModal';
-import { ITbTableInstance } from '../HookTypes/ITbTableInstance';
 import { GridHeaderCell } from './GridHeaderCell';
 
 interface IProps {

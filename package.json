@@ -55,6 +55,7 @@
     "date-fns": "^2.8.1",
     "react-virtualized": "^9.21.2",
     "tubular-common": "^2.0.3",
+    "tubular-react-common": "0.0.5",
     "uno-material-ui": "^1.7.1"
   },
   "devDependencies": {

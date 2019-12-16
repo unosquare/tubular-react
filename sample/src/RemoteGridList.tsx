@@ -15,9 +15,9 @@ import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 import { formatDate, LocalStorage } from 'tubular-common';
 import { Paginator, SearchTextInput } from '../../src';
-import { useTbTable } from '../../src/Hooks/useTbTable';
 import CustomHttpClient from './CustomHttpClient';
 import columns from './data/columns';
+import { useTbTable } from 'tubular-react-common/useTbTable';
 
 const styles: any = {
   progress: {

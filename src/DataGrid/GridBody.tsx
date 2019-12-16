@@ -1,8 +1,8 @@
 import TableBody from '@material-ui/core/TableBody';
 import * as React from 'react';
+import { ITbTableInstance } from 'tubular-react-common';
 import { ITbRow, TbRow } from '../BareBones/TbRow';
 import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
-import { ITbTableInstance } from '../HookTypes/ITbTableInstance';
 import { renderCells } from '../utils';
 import MasterDetailRow from './MasterDetailRow';
 import { NoDataRow } from './NoDataRow';

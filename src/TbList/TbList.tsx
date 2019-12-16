@@ -2,9 +2,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import * as React from 'react';
 import { AutoSizer, CellMeasurer, CellMeasurerCache, InfiniteLoader, List } from 'react-virtualized';
-import { ITbListInstance } from '../HookTypes';
-import { generateOnRowClickProxy } from '../utils/helpers';
+import { ITbListInstance } from 'tubular-react-common/types/ITbListInstance';
 import { TbListItem } from './TbListItem';
+import { generateOnRowClickProxy } from 'tubular-react-common';
 
 interface IProps {
     tbInstance: ITbListInstance;
