@@ -10,16 +10,10 @@ interface IProps {
     styles: any;
 }
 
-export const NoDataRow: React.FunctionComponent<IProps> = ({ columns, styles }) => (
+export const NoDataRow: React.FunctionComponent<IProps> = ({ columns, styles }: IProps) => (
     <TableRow>
-        <TableCell
-            colSpan={columns.filter((col: any) => col.Visible).length}
-        >
-            <Typography
-                style={styles.title}
-                variant='body2'
-                gutterBottom={true}
-            >
+        <TableCell colSpan={columns.filter((col: any) => col.Visible).length}>
+            <Typography style={styles.title} variant="body2" gutterBottom={true}>
                 <Warning /> No records found
             </Typography>
         </TableCell>

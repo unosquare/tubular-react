@@ -48,59 +48,12 @@ const useStyles = makeStyles(({ palette }: any) => ({
     },
 }));
 
-interface IProps {
-    columns: ColumnModel[];
-    item: any;
-    onClickCallback: any;
-}
+const renderGeneral = (column: any, item: any) => item[column.Name];
 
-export const DataGridCard = (props) => {
-    const { columns, item, onClickCallback } = props;
-    const classes = useStyles({});
+const renderBoolean = (column: any, item: any) => <input type="checkbox" checked={item[column.Name]} disabled={true} />;
 
-    return (
-        <Card className={classes.cardMobile}>
-            <CardContent>
-                {
-                    columns.map((column: ColumnModel, index: number) => (
-                        <div className={classes.dataRow} key={index}>
-                            <Typography
-                                component='div'
-                                variant='body2'
-                                color='textSecondary'
-                                className={classes.dataLabel}
-                            >
-                                {humanize(column.Name)}:
-                            </Typography>
-                            <Typography
-                                component='div'
-                                variant='body2'
-                                color='textSecondary'
-                                className={classes.dataValue}
-                            >
-                                {columnRender(column, item)}
-                            </Typography>
-                        </div>
-                    ))
-                }
-                <CardActions className={classes.cardActions}>
-                    {onClickCallback &&
-                        (
-                            <IconButton
-                                className={classes.cardBtn}
-                                color='default'
-                                onClick={onClickCallback}
-                                size='small'
-                            >
-                                <LabelImportant />
-                            </IconButton>
-                        )
-                    }
-                </CardActions>
-            </CardContent>
-        </Card>
-    );
-};
+const renderString = (column: any, item: any) =>
+    item[column.Name].length > 50 ? item[column.Name].substring(0, 50) + '...' : renderGeneral(column, item);
 
 const columnRender = (column, item) => {
     switch (column.DataType) {
@@ -113,9 +66,37 @@ const columnRender = (column, item) => {
     }
 };
 
-const renderBoolean = (column: any, item: any) => <input type='checkbox' checked={item[column.Name]} disabled={true} />;
+interface IProps {
+    columns: ColumnModel[];
+    item: any;
+    onClickCallback: any;
+}
 
-const renderString = (column: any, item: any) =>
-    item[column.Name].length > 50 ? item[column.Name].substring(0, 50) + '...' : renderGeneral(column, item);
+export const DataGridCard = (props: IProps) => {
+    const { columns, item, onClickCallback } = props;
+    const classes = useStyles({});
 
-const renderGeneral = (column: any, item: any) => item[column.Name];
+    return (
+        <Card className={classes.cardMobile}>
+            <CardContent>
+                {columns.map((column: ColumnModel, index: number) => (
+                    <div className={classes.dataRow} key={index}>
+                        <Typography component="div" variant="body2" color="textSecondary" className={classes.dataLabel}>
+                            {humanize(column.Name)}:
+                        </Typography>
+                        <Typography component="div" variant="body2" color="textSecondary" className={classes.dataValue}>
+                            {columnRender(column, item)}
+                        </Typography>
+                    </div>
+                ))}
+                <CardActions className={classes.cardActions}>
+                    {onClickCallback && (
+                        <IconButton className={classes.cardBtn} color="default" onClick={onClickCallback} size="small">
+                            <LabelImportant />
+                        </IconButton>
+                    )}
+                </CardActions>
+            </CardContent>
+        </Card>
+    );
+};

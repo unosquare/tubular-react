@@ -19,7 +19,7 @@ const getStyles = (isPointer: boolean) => ({
     title: { paddingLeft: '15px' },
 });
 
-const generateOnRowClickProxy = (onRowClick) => {
+const generateOnRowClickProxy = onRowClick => {
     return (row: any) => (ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => {
         if (onRowClick) {
             onRowClick(row);
@@ -32,7 +32,7 @@ export const GridBody: React.FunctionComponent<IProps> = ({
     rowComponent,
     onRowClick,
     detailComponent,
-}) => {
+}: IProps) => {
     const styles = getStyles(Boolean(onRowClick));
     const RowComponent = rowComponent ? rowComponent : TbRow;
     const onRowClickProxy = onRowClick ? generateOnRowClickProxy(onRowClick) : () => void 0;
@@ -43,38 +43,32 @@ export const GridBody: React.FunctionComponent<IProps> = ({
     if (state.filteredRecordCount === 0 && !state.isLoading) {
         content = <NoDataRow columns={state.columns} styles={styles} />;
     } else {
-        content = state.data
-            .map((row: any, rowIndex: number) => {
-                if (detailComponent) {
-                    return (
-                        <MasterDetailRow
-                            detail={detailComponent}
-                            renderCells={renderCells(state.columns, row)}
-                            clickEvent={onRowClickProxy}
-                            style={styles.row}
-                            key={rowIndex}
-                            rowData={row}
-                            columns={state.columns}
-                        />
-                    );
-                }
-
+        content = state.data.map((row: any, rowIndex: number) => {
+            if (detailComponent) {
                 return (
-                    <RowComponent
-                        row={row}
+                    <MasterDetailRow
+                        detail={detailComponent}
+                        renderCells={renderCells(state.columns, row)}
+                        clickEvent={onRowClickProxy}
+                        style={styles.row}
                         key={rowIndex}
-                        rowIndex={rowIndex}
+                        rowData={row}
                         columns={state.columns}
-                        onRowClick={onRowClickProxy(row)}
                     />
                 );
+            }
 
-            });
+            return (
+                <RowComponent
+                    row={row}
+                    key={rowIndex}
+                    rowIndex={rowIndex}
+                    columns={state.columns}
+                    onRowClick={onRowClickProxy(row)}
+                />
+            );
+        });
     }
 
-    return (
-        <TableBody>
-            {content}
-        </TableBody>
-    );
+    return <TableBody>{content}</TableBody>;
 };

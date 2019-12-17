@@ -13,55 +13,51 @@ interface IGridHeaderCellProps {
     sortColumn: (property: string) => void;
 }
 
-export const GridHeaderCell: React.FunctionComponent<IGridHeaderCellProps> =
-    ({ column, sortColumn, setActiveColumn }) => {
-        const sort = () => sortColumn(column.Name);
-        const handleClick = (e: any) => setActiveColumn(column, e);
+export const GridHeaderCell: React.FunctionComponent<IGridHeaderCellProps> = ({
+    column,
+    sortColumn,
+    setActiveColumn,
+}: IGridHeaderCellProps) => {
+    const sort = () => sortColumn(column.Name);
+    const handleClick = (e: any) => setActiveColumn(column, e);
 
-        const direction = column.SortDirection === ColumnSortDirection.ASCENDING ||
-            column.SortDirection === ColumnSortDirection.NONE ? 'asc' : 'desc';
+    const direction =
+        column.SortDirection === ColumnSortDirection.ASCENDING || column.SortDirection === ColumnSortDirection.NONE
+            ? 'asc'
+            : 'desc';
 
-        const render = column.Sortable ? (
-            <Tooltip
-                title='Click to sort. Press Ctrl to sort by multiple columns'
-                placement='bottom-start'
-                enterDelay={300}
+    const render = column.Sortable ? (
+        <Tooltip
+            title="Click to sort. Press Ctrl to sort by multiple columns"
+            placement="bottom-start"
+            enterDelay={300}
+        >
+            <TableSortLabel
+                onClick={sort}
+                direction={direction}
+                active={column.SortDirection !== ColumnSortDirection.NONE}
             >
-                <TableSortLabel
-                    onClick={sort}
-                    direction={direction}
-                    active={column.SortDirection !== ColumnSortDirection.NONE}
-                >
-                    {column.Label}
-                </TableSortLabel>
-            </Tooltip>
-        ) : (
-                column.Label
-            );
+                {column.Label}
+            </TableSortLabel>
+        </Tooltip>
+    ) : (
+        column.Label
+    );
 
-        const filter = column.Filterable && (
-            <IconButton
-                id={column.Name}
-                onClick={handleClick}
-            >
-                <FilterList
-                    color={
-                        column.Filter.HasFilter &&
-                            column.Filter.Operator !== CompareOperators.NONE
-                            ? 'action'
-                            : 'disabled'
-                    }
-                />
-            </IconButton>
-        );
+    const filter = column.Filterable && (
+        <IconButton id={column.Name} onClick={handleClick}>
+            <FilterList
+                color={
+                    column.Filter.HasFilter && column.Filter.Operator !== CompareOperators.NONE ? 'action' : 'disabled'
+                }
+            />
+        </IconButton>
+    );
 
-        return (
-            <TableCell
-                key={column.Label}
-                padding={column.Label === '' ? 'none' : 'default'}
-            >
-                {render}
-                {filter}
-            </TableCell>
-        );
-    };
+    return (
+        <TableCell key={column.Label} padding={column.Label === '' ? 'none' : 'default'}>
+            {render}
+            {filter}
+        </TableCell>
+    );
+};

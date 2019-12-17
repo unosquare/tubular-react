@@ -8,16 +8,6 @@ interface IProps {
     row: any;
 }
 
-export const TbMobileRow: React.FunctionComponent<IProps> = ({
-    columns,
-    onRowClick,
-    row,
-}) => {
-    return (
-        <DataGridCard
-            columns={columns}
-            item={row}
-            onClickCallback={onRowClick}
-        />
-    );
+export const TbMobileRow: React.FunctionComponent<IProps> = ({ columns, onRowClick, row }: IProps) => {
+    return <DataGridCard columns={columns} item={row} onClickCallback={onRowClick} />;
 };

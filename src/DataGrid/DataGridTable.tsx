@@ -17,11 +17,11 @@ interface IProps {
     onRowClick?(row: any): void;
 }
 
-export const DataGridTable: React.FunctionComponent<IProps> = (props) => {
+export const DataGridTable: React.FunctionComponent<IProps> = (props: IProps) => {
     const Footer = props.footerComponent;
 
     return (
-        <Table data-testid='data-grid-table'>
+        <Table data-testid="data-grid-table">
             <TableHead>
                 <GridHeader tbTableInstance={props.tbTableInstance} />
             </TableHead>
@@ -31,13 +31,11 @@ export const DataGridTable: React.FunctionComponent<IProps> = (props) => {
                 onRowClick={props.onRowClick}
                 detailComponent={props.detailComponent}
             />
-            {
-                props.footerComponent && (
-                    <TableFooter>
-                        <Footer aggregates={props.tbTableInstance.state.aggregate} />
-                    </TableFooter>
-                )
-            }
+            {props.footerComponent && (
+                <TableFooter>
+                    <Footer aggregates={props.tbTableInstance.state.aggregate} />
+                </TableFooter>
+            )}
         </Table>
     );
 };

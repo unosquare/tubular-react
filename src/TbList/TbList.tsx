@@ -12,20 +12,13 @@ interface IProps {
     onItemClick?(row: any): void;
 }
 
-export const TbList: React.FunctionComponent<IProps> = (tbProps) => {
-    const {
-        tbInstance,
-        onItemClick,
-        listItemComponent,
-    } = tbProps;
+export const TbList: React.FunctionComponent<IProps> = tbProps => {
+    const { tbInstance, onItemClick, listItemComponent } = tbProps;
 
-    const {
-        items,
-        hasNextPage,
-    } = tbInstance.state.list;
+    const { items, hasNextPage } = tbInstance.state.list;
 
-    const loadNextPage = (args) => {
-        const pageToLoad = Math.ceil((args.stopIndex) / (tbInstance.state.itemsPerPage - 1)) - 1;
+    const loadNextPage = args => {
+        const pageToLoad = Math.ceil(args.stopIndex / (tbInstance.state.itemsPerPage - 1)) - 1;
         if (tbInstance.state.isLoading || pageToLoad <= tbInstance.state.page) {
             return;
         }
@@ -39,14 +32,12 @@ export const TbList: React.FunctionComponent<IProps> = (tbProps) => {
     const noRecordsFound = !hasNextPage && !tbInstance.state.isLoading && items.length === 0;
 
     // We need a place holder to give user some feedback on what's happening
-    const itemCount = tbInstance.state.isLoading || noRecordsFound || hasNextPage ?
-        items.length + 1 :
-        items.length;
+    const itemCount = tbInstance.state.isLoading || noRecordsFound || hasNextPage ? items.length + 1 : items.length;
 
     const loadMoreItems = loadNextPage;
 
     // Every row is loaded except for our Loading/NoRecordsFound indicator.
-    const isItemLoaded = (index) => !hasNextPage || index < items.length;
+    const isItemLoaded = index => !hasNextPage || index < items.length;
 
     const ListItemComponent = listItemComponent ? listItemComponent : TbListItem;
 
@@ -64,30 +55,19 @@ export const TbList: React.FunctionComponent<IProps> = (tbProps) => {
             />
         );
 
-        const placeholderItem = (placeholderStyle) => {
+        const placeholderItem = placeholderStyle => {
             const placeholderMessage = noRecordsFound ? 'No records found' : 'Loading...';
             return (
-                <ListItem
-                    button={true}
-                    style={placeholderStyle}
-                >
+                <ListItem button={true} style={placeholderStyle}>
                     <ListItemText primary={placeholderMessage} />
                 </ListItem>
             );
         };
 
-        const content = isPlaceholder ?
-            placeholderItem(style) :
-            itemToRender;
+        const content = isPlaceholder ? placeholderItem(style) : itemToRender;
 
         return (
-            <CellMeasurer
-                key={key}
-                cache={cache}
-                parent={props.parent}
-                columnIndex={0}
-                rowIndex={index}
-            >
+            <CellMeasurer key={key} cache={cache} parent={props.parent} columnIndex={0} rowIndex={index}>
                 {content}
             </CellMeasurer>
         );
@@ -103,22 +83,20 @@ export const TbList: React.FunctionComponent<IProps> = (tbProps) => {
         >
             {({ onRowsRendered }) => (
                 <AutoSizer>
-                    {
-                        ({ width, height }) => {
-                            return (
-                                <List
-                                    width={width}
-                                    height={height}
-                                    deferredMeasurementCache={cache}
-                                    rowHeight={cache.rowHeight}
-                                    rowRenderer={rowRenderer}
-                                    onRowsRendered={onRowsRendered}
-                                    rowCount={itemCount}
-                                    overscanRowCount={1}
-                                />
-                            );
-                        }
-                    }
+                    {({ width, height }) => {
+                        return (
+                            <List
+                                width={width}
+                                height={height}
+                                deferredMeasurementCache={cache}
+                                rowHeight={cache.rowHeight}
+                                rowRenderer={rowRenderer}
+                                onRowsRendered={onRowsRendered}
+                                rowCount={itemCount}
+                                overscanRowCount={1}
+                            />
+                        );
+                    }}
                 </AutoSizer>
             )}
         </InfiniteLoader>

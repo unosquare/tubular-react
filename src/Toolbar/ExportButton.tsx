@@ -22,7 +22,7 @@ export const ExportButton: React.FunctionComponent<IExportButtonProps> = ({
     toolTip,
     exportTo,
     filteredRecordCount,
-}) => {
+}: IExportButtonProps) => {
     const [anchorPrint, setAnchorPrint] = React.useState(null);
 
     const handlePrintMenu = (event: React.MouseEvent<HTMLElement>): void =>
@@ -40,35 +40,20 @@ export const ExportButton: React.FunctionComponent<IExportButtonProps> = ({
 
     return (
         <React.Fragment>
-            <IconButton
-                disabled={filteredRecordCount === 0}
-                onClick={handlePrintMenu}
-            >
-                {type === 'print' ?
-                    (
-                        <Tooltip title={toolTip || 'Print'}>
-                            <Print />
-                        </Tooltip>
-                    )
-                    :
-                    (
-                        <Tooltip title={toolTip || 'Download'}>
-                            <CloudDownload />
-                        </Tooltip>
-                    )
-                }
+            <IconButton disabled={filteredRecordCount === 0} onClick={handlePrintMenu}>
+                {type === 'print' ? (
+                    <Tooltip title={toolTip || 'Print'}>
+                        <Print />
+                    </Tooltip>
+                ) : (
+                    <Tooltip title={toolTip || 'Download'}>
+                        <CloudDownload />
+                    </Tooltip>
+                )}
             </IconButton>
-            <Menu
-                anchorEl={anchorPrint}
-                open={Boolean(anchorPrint)}
-                onClose={closePrint}
-            >
-                <MenuItem onClick={printCurrent}>
-                    Current rows
-                </MenuItem>
-                <MenuItem onClick={printAll}>
-                    All rows
-                </MenuItem>
+            <Menu anchorEl={anchorPrint} open={Boolean(anchorPrint)} onClose={closePrint}>
+                <MenuItem onClick={printCurrent}>Current rows</MenuItem>
+                <MenuItem onClick={printAll}>All rows</MenuItem>
             </Menu>
         </React.Fragment>
     );
