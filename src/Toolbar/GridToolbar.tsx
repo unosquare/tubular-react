@@ -4,7 +4,7 @@ import { useResolutionSwitch } from 'uno-react';
 import { SearchTextInput } from '../Filtering/SearchTextInput';
 import { ExportButton } from './ExportButton';
 import { ToolbarOptions } from './ToolbarOptions';
-import { ITbTableInstance } from 'tubular-react-common/types/ITbTableInstance';
+import { ITbTableInstance } from 'tubular-react-common';
 
 const styles: any = {
     mobileSpacer: {

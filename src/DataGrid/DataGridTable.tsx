@@ -3,7 +3,7 @@ import TableFooter from '@material-ui/core/TableFooter';
 import TableHead from '@material-ui/core/TableHead';
 
 import * as React from 'react';
-import { ITbTableInstance } from 'tubular-react-common/types/ITbTableInstance';
+import { ITbTableInstance } from 'tubular-react-common';
 import { ITbRow } from '../BareBones/TbRow';
 import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
 import { GridBody } from './GridBody';

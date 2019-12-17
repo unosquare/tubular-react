@@ -6,7 +6,7 @@ import AddIcon from '@material-ui/icons/Add';
 import MinimizeIcon from '@material-ui/icons/Minimize';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
-import useMasterDetails from 'tubular-react-common/useMasterDetails';
+import { useMasterDetails } from 'tubular-react-common';
 import IDetailComponent from '../DataGridInterfaces/IDetailComponent';
 
 interface IProps {

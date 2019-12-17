@@ -2,14 +2,14 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import * as React from 'react';
 import { AutoSizer, CellMeasurer, CellMeasurerCache, InfiniteLoader, List } from 'react-virtualized';
-import { ITbListInstance } from 'tubular-react-common/types/ITbListInstance';
+import { ITbListInstance } from 'tubular-react-common';
 import { TbListItem } from './TbListItem';
 import { generateOnRowClickProxy } from 'tubular-react-common';
 
 interface IProps {
     tbInstance: ITbListInstance;
-    listItemComponent?: React.FunctionComponent<any>;
-    onItemClick?(row: any): void;
+    listItemComponent?: React.FunctionComponent<{}>;
+    onItemClick?(row: {}): void;
 }
 
 export const TbList: React.FunctionComponent<IProps> = tbProps => {
