@@ -10,15 +10,8 @@ export interface ITbRow {
     onRowClick?: (ev: any) => any;
 }
 
-export const TbRow: React.FunctionComponent<ITbRow> = ({
-    row,
-    columns,
-    onRowClick,
-}) => (
-        <TableRow
-            hover={true}
-            onClick={onRowClick}
-        >
-            {renderCells(columns, row)}
-        </TableRow>
-    );
+export const TbRow: React.FunctionComponent<ITbRow> = ({ row, columns, onRowClick }: ITbRow) => (
+    <TableRow hover={true} onClick={onRowClick}>
+        {renderCells(columns, row)}
+    </TableRow>
+);

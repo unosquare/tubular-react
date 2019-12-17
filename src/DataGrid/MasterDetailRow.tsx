@@ -25,8 +25,7 @@ export const MasterDetailRow: React.FunctionComponent<IProps> = ({
     clickEvent,
     rowData,
     columns,
-}) => {
-
+}: IProps) => {
     const [open, openDetails] = useMasterDetails();
     const openMasterDetails = () => {
         openDetails();
@@ -36,34 +35,25 @@ export const MasterDetailRow: React.FunctionComponent<IProps> = ({
 
     return (
         <>
-            <TableRow
-                hover={true}
-                style={style}
-                onClick={clickEvent}
-            >
-                <TableCell padding='checkbox' size='small' align='center'>
-                    <IconButton size='small' onClick={openMasterDetails}>
+            <TableRow hover={true} style={style} onClick={clickEvent}>
+                <TableCell padding="checkbox" size="small" align="center">
+                    <IconButton size="small" onClick={openMasterDetails}>
                         {open ? <MinimizeIcon /> : <AddIcon />}
                     </IconButton>
                 </TableCell>
                 {renderCells}
             </TableRow>
-            {open &&
-            (
-            <TableRow
-                hover={true}
-                style={style}
-            >
-                <TableCell colSpan={columns.length + 1}>
-                    <Collapse in={open} timeout='auto' unmountOnExit={true}>
-                        {childWithRowData}
-                    </Collapse>
-                </TableCell>
-            </TableRow>
+            {open && (
+                <TableRow hover={true} style={style}>
+                    <TableCell colSpan={columns.length + 1}>
+                        <Collapse in={open} timeout="auto" unmountOnExit={true}>
+                            {childWithRowData}
+                        </Collapse>
+                    </TableCell>
+                </TableRow>
             )}
         </>
     );
-
 };
 
 export default MasterDetailRow;
