@@ -7,7 +7,7 @@ import LabelImportant from '@material-ui/icons/LabelImportant';
 import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
 import { ColumnDataType, ColumnModel } from 'tubular-common';
-import { humanize } from 'uno-react';
+import { humanize } from 'uno-js';
 
 const useStyles = makeStyles(({ palette }: any) => ({
     cardActions: {
