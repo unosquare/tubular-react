@@ -1,5 +1,10 @@
 {
     "compilerOptions": {
+        "noImplicitAny": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "allowJs": false,
+        "module": "commonjs",
         "moduleResolution": "node",
         "preserveConstEnums": true,
         "outDir": "../dist",
