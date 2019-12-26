@@ -1,15 +1,15 @@
 import { TableCell } from '@material-ui/core';
 import TableRow from '@material-ui/core/TableRow';
 import * as React from 'react';
-import { ColumnModel, IFilterWrapper } from 'tubular-common';
+import { ColumnModel, FilterWrapper } from 'tubular-common';
 import { ITbTableInstance } from 'tubular-react-common';
-import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
+import DetailComponet from '../DataGridInterfaces/DetailComponent';
 import { DialogModal } from '../Filtering/DialogModal';
 import { GridHeaderCell } from './GridHeaderCell';
 
 interface IProps {
     tbTableInstance: ITbTableInstance;
-    detailComponent?: React.ReactElement<IDetailComponet>;
+    detailComponent?: React.ReactElement<DetailComponet>;
 }
 
 export const GridHeader: React.FunctionComponent<IProps> = ({ tbTableInstance, detailComponent }: IProps) => {
@@ -20,7 +20,7 @@ export const GridHeader: React.FunctionComponent<IProps> = ({ tbTableInstance, d
         setAnchorFilter(event.currentTarget);
     };
 
-    const setFilter = (filter: IFilterWrapper) => {
+    const setFilter = (filter: FilterWrapper) => {
         api.setFilter(filter);
         setAnchorFilter(null);
     };
@@ -38,10 +38,10 @@ export const GridHeader: React.FunctionComponent<IProps> = ({ tbTableInstance, d
                 />
             )}
             {state.columns
-                .filter((col: ColumnModel) => col.Visible)
+                .filter((col: ColumnModel) => col.visible)
                 .map((column: ColumnModel) => (
                     <GridHeaderCell
-                        key={column.Name}
+                        key={column.name}
                         column={column}
                         sortColumn={api.sortColumn}
                         setActiveColumn={setActiveColumn}

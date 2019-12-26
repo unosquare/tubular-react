@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 const outerWidth = 800;
 const timeout = 400;
 
-const message = (totalRecordCount: number, filteredRecordCount: number) => ({ from, to, count }: any) =>
+const message = (totalRecordCount: number, filteredRecordCount: number) => ({ from, to, count }) =>
     totalRecordCount === filteredRecordCount
         ? `${from}-${to} of ${count}`
         : filteredRecordCount === 0

@@ -7,7 +7,7 @@ import Search from '@material-ui/icons/Search';
 
 import * as React from 'react';
 
-const styles: any = {
+const styles = {
     formControl: {
         margin: '10px',
         width: 250,
@@ -16,7 +16,7 @@ const styles: any = {
 
 interface ISearchTextInput {
     searchText: string;
-    updateSearchText: (value: string) => any;
+    updateSearchText: (value: string) => void;
 }
 
 export const SearchTextInput: React.FunctionComponent<ISearchTextInput> = ({

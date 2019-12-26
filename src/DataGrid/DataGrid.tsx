@@ -4,12 +4,12 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
-import { ColumnModel, IDataGridStorage, ITubularHttpClient } from 'tubular-common';
+import { ColumnModel, DataGridStorage, TubularHttpClientAbstract } from 'tubular-common';
 import { useTbTable } from 'tubular-react-common';
 import { FixedLinearProgress } from 'uno-material-ui';
 import { useResolutionSwitch } from 'uno-react';
 import { ITbRow } from '../BareBones/TbRow';
-import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
+import DetailComponet from '../DataGridInterfaces/DetailComponent';
 import { Paginator } from '../Pagination';
 import { GridToolbar } from '../Toolbar/GridToolbar';
 import { ToolbarOptions } from '../Toolbar/ToolbarOptions';
@@ -30,11 +30,11 @@ const timeout = 400;
 
 interface IProps {
     columns: ColumnModel[];
-    dataSource: any[] | string | Request | ITubularHttpClient;
+    dataSource: {}[] | string | Request | TubularHttpClientAbstract;
     deps?: any[];
-    detailComponent?: React.ReactElement<IDetailComponet>;
+    detailComponent?: React.ReactElement<DetailComponet>;
     gridName: string;
-    storage?: IDataGridStorage;
+    storage?: DataGridStorage;
     toolbarOptions?: ToolbarOptions;
 
     // ToDo: new ones:

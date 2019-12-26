@@ -4,7 +4,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Popover from '@material-ui/core/Popover';
 import * as React from 'react';
-import { ColumnModel, CompareOperators, IFilterWrapper } from 'tubular-common';
+import { ColumnModel, CompareOperators, FilterWrapper } from 'tubular-common';
 import { DialogInput } from './DialogInput';
 import { OperatorsDropdown } from './OperatorsDropdown';
 
@@ -12,8 +12,8 @@ interface IDialogModalProps {
     anchorFilter: HTMLElement;
     activeColumn: ColumnModel;
     setAnchorFilter: (anchorEl: HTMLElement) => void;
-    setFilter: (filter: IFilterWrapper) => void;
-    handleFilterChange: (value: IFilterWrapper | any) => any;
+    setFilter: (filter: FilterWrapper) => void;
+    handleFilterChange: (value: FilterWrapper | any) => any;
 }
 
 export const DialogModal: React.FunctionComponent<IDialogModalProps> = ({
@@ -48,7 +48,7 @@ export const DialogModal: React.FunctionComponent<IDialogModalProps> = ({
                     <OperatorsDropdown activeColumn={activeColumn} handleFilterChange={handleFilterChange} />
                     <DialogInput column={activeColumn} isPrimary={true} handleTextFieldChange={handleInput} />
 
-                    {activeColumn.Filter.Operator === CompareOperators.BETWEEN && (
+                    {activeColumn.filter.operator === CompareOperators.Between && (
                         <DialogInput
                             column={activeColumn}
                             isPrimary={false}
@@ -64,7 +64,7 @@ export const DialogModal: React.FunctionComponent<IDialogModalProps> = ({
                         size="medium"
                         color="primary"
                         onClick={submit}
-                        disabled={activeColumn.Filter.Operator === CompareOperators.NONE}
+                        disabled={activeColumn.filter.operator === CompareOperators.None}
                     >
                         Apply
                     </Button>

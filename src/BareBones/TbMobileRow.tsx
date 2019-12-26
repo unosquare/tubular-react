@@ -4,8 +4,8 @@ import { DataGridCard } from '../DataGrid';
 
 interface IProps {
     columns: ColumnModel[];
-    onRowClick: any;
-    row: any;
+    onRowClick: ({}) => void;
+    row: {};
 }
 
 export const TbMobileRow: React.FunctionComponent<IProps> = ({ columns, onRowClick, row }: IProps) => {

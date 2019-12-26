@@ -2,16 +2,16 @@ import TableBody from '@material-ui/core/TableBody';
 import * as React from 'react';
 import { ITbTableInstance } from 'tubular-react-common';
 import { ITbRow, TbRow } from '../BareBones/TbRow';
-import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
+import DetailComponet from '../DataGridInterfaces/DetailComponent';
 import { renderCells } from '../utils';
 import MasterDetailRow from './MasterDetailRow';
 import { NoDataRow } from './NoDataRow';
 
 interface IProps {
-    detailComponent?: React.ReactElement<IDetailComponet>;
+    detailComponent?: React.ReactElement<DetailComponet>;
     tbTableInstance: ITbTableInstance;
     rowComponent: React.FunctionComponent<ITbRow>;
-    onRowClick?(row: any): void;
+    onRowClick?(row: {}): void;
 }
 
 const getStyles = (isPointer: boolean) => ({
@@ -20,7 +20,7 @@ const getStyles = (isPointer: boolean) => ({
 });
 
 const generateOnRowClickProxy = onRowClick => {
-    return (row: any) => (ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => {
+    return (row: {}) => () => {
         if (onRowClick) {
             onRowClick(row);
         }
@@ -43,7 +43,7 @@ export const GridBody: React.FunctionComponent<IProps> = ({
     if (state.filteredRecordCount === 0 && !state.isLoading) {
         content = <NoDataRow columns={state.columns} styles={styles} />;
     } else {
-        content = state.data.map((row: any, rowIndex: number) => {
+        content = state.data.map((row: {}, rowIndex: number) => {
             if (detailComponent) {
                 return (
                     <MasterDetailRow

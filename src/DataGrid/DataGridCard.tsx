@@ -48,18 +48,20 @@ const useStyles = makeStyles(({ palette }: any) => ({
     },
 }));
 
-const renderGeneral = (column: any, item: any) => item[column.Name];
+const renderGeneral = (column: ColumnModel, item: {}) => item[column.name];
 
-const renderBoolean = (column: any, item: any) => <input type="checkbox" checked={item[column.Name]} disabled={true} />;
+const renderBoolean = (column: ColumnModel, item: {}) => (
+    <input type="checkbox" checked={item[column.name]} disabled={true} />
+);
 
-const renderString = (column: any, item: any) =>
-    item[column.Name].length > 50 ? item[column.Name].substring(0, 50) + '...' : renderGeneral(column, item);
+const renderString = (column: ColumnModel, item: {}) =>
+    item[column.name].length > 50 ? item[column.name].substring(0, 50) + '...' : renderGeneral(column, item);
 
-const columnRender = (column, item) => {
-    switch (column.DataType) {
-        case ColumnDataType.BOOLEAN:
+const columnRender = (column: ColumnModel, item: {}) => {
+    switch (column.dataType) {
+        case ColumnDataType.Boolean:
             return renderBoolean(column, item);
-        case ColumnDataType.STRING:
+        case ColumnDataType.String:
             return renderString(column, item);
         default:
             return renderGeneral(column, item);
@@ -68,8 +70,8 @@ const columnRender = (column, item) => {
 
 interface IProps {
     columns: ColumnModel[];
-    item: any;
-    onClickCallback: any;
+    item: {};
+    onClickCallback: (any) => void;
 }
 
 export const DataGridCard = (props: IProps) => {
@@ -82,7 +84,7 @@ export const DataGridCard = (props: IProps) => {
                 {columns.map((column: ColumnModel, index: number) => (
                     <div className={classes.dataRow} key={index}>
                         <Typography component="div" variant="body2" color="textSecondary" className={classes.dataLabel}>
-                            {humanize(column.Name)}:
+                            {humanize(column.name)}:
                         </Typography>
                         <Typography component="div" variant="body2" color="textSecondary" className={classes.dataValue}>
                             {columnRender(column, item)}

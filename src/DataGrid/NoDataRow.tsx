@@ -12,7 +12,7 @@ interface IProps {
 
 export const NoDataRow: React.FunctionComponent<IProps> = ({ columns, styles }: IProps) => (
     <TableRow>
-        <TableCell colSpan={columns.filter((col: any) => col.Visible).length}>
+        <TableCell colSpan={columns.filter((col: ColumnModel) => col.visible).length}>
             <Typography style={styles.title} variant="body2" gutterBottom={true}>
                 <Warning /> No records found
             </Typography>

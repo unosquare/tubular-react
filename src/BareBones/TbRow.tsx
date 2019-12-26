@@ -4,10 +4,10 @@ import ColumnModel from 'tubular-common/dist/Models/ColumnModel';
 import { renderCells } from '../utils/renders';
 
 export interface ITbRow {
-    row: any;
+    row: {};
     rowIndex: number;
     columns: ColumnModel[];
-    onRowClick?: (ev: any) => any;
+    onRowClick?: (ev: any) => void;
 }
 
 export const TbRow: React.FunctionComponent<ITbRow> = ({ row, columns, onRowClick }: ITbRow) => (

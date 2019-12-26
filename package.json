@@ -1,6 +1,6 @@
 {
   "name": "tubular-react",
-  "version": "3.1.1",
+  "version": "4.0.0",
   "description": "Unosquare Tubular React",
   "main": "dist/index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "build": "tsc --p ./tsconfigs/tsconfig.tubular.json",
     "check": "npm run build && npm test",
     "lint": "tsc --p ./tsconfigs/tsconfig.tubular.json --noEmit && eslint ./src/**/*.{js,ts,tsx} --quiet",
-    "lintfix": "tsc --p ./tsconfigs/tsconfig.tubular.json --noEmit && eslint ./src/**/*.{js,ts,tsx} --quiet --fix",
+    "lint:fix": "eslint ./src/**/*.{js,ts,tsx} --quiet --fix",
     "test": "jest",
     "postbuild:docs": "xcopy .\\srcdocs\\static .\\docs\\static\\",
     "poststart:docs": "xcopy .\\srcdocs\\static .\\docs\\static\\",
@@ -53,14 +53,14 @@
     "@material-ui/icons": "^4.5.1",
     "date-fns": "^2.8.1",
     "react-virtualized": "^9.21.2",
-    "tubular-common": "^2.0.7",
-    "tubular-react-common": "0.0.9",
+    "tubular-common": "^3.0.0",
+    "tubular-react-common": "1.0.0",
     "uno-material-ui": "^1.7.21"
   },
   "devDependencies": {
     "@testing-library/react": "^9.4.0",
     "@testing-library/react-hooks": "^3.2.1",
-    "@types/jest": "^24.0.24",
+    "@types/jest": "^24.0.25",
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",
     "@types/react-router": "^5.1.3",

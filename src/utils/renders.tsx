@@ -4,34 +4,34 @@ import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 import * as React from 'react';
 import { ColumnDataType, ColumnModel, formatDate, getColumnAlign } from 'tubular-common';
 
-export const renderCellContent: any = (column: ColumnModel, row: any) => {
-    switch (column.DataType) {
-        case ColumnDataType.NUMERIC:
-            return row[column.Name] || 0;
-        case ColumnDataType.DATE:
-            return formatDate(row[column.Name]);
-        case ColumnDataType.DATE_TIME:
-        case ColumnDataType.DATE_TIME_UTC:
-            return formatDate(row[column.Name], 'M/d/yyyy h:mm a');
-        case ColumnDataType.BOOLEAN:
-            return row[column.Name] === true ? <CheckBox /> : <CheckBoxOutlineBlank />;
+export const renderCellContent: any = (column: ColumnModel, row: {}) => {
+    switch (column.dataType) {
+        case ColumnDataType.Numeric:
+            return row[column.name] || 0;
+        case ColumnDataType.Date:
+            return formatDate(row[column.name]);
+        case ColumnDataType.DateTime:
+        case ColumnDataType.DateTimeUtc:
+            return formatDate(row[column.name], 'M/d/yyyy h:mm a');
+        case ColumnDataType.Boolean:
+            return row[column.name] === true ? <CheckBox /> : <CheckBoxOutlineBlank />;
         default:
-            return row[column.Name];
+            return row[column.name];
     }
 };
 
-export const renderDefaultListItem: any = (columns: ColumnModel[], row: any) =>
+export const renderDefaultListItem: any = (columns: ColumnModel[], row: {}) =>
     columns
-        .filter((col: ColumnModel) => col.Visible)
-        .map((column: ColumnModel) => <div key={column.Name}>{renderCellContent(column, row)}</div>);
+        .filter((col: ColumnModel) => col.visible)
+        .map((column: ColumnModel) => <div key={column.name}>{renderCellContent(column, row)}</div>);
 
-export const renderCells: any = (columns: ColumnModel[], row: any) =>
+export const renderCells: any = (columns: ColumnModel[], row: {}) =>
     columns
-        .filter((col: ColumnModel) => col.Visible)
+        .filter((col: ColumnModel) => col.visible)
         .map((column: ColumnModel) => (
             <TableCell
-                key={column.Name}
-                padding={column.Label === '' ? 'none' : 'default'}
+                key={column.name}
+                padding={column.label === '' ? 'none' : 'default'}
                 align={getColumnAlign(column)}
             >
                 {renderCellContent(column, row)}

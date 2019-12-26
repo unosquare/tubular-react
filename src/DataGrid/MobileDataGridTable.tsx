@@ -8,14 +8,16 @@ import { ITbRow } from '../BareBones/TbRow';
 interface IProps {
     tbTableInstance: ITbTableInstance;
     rowComponent?: React.FunctionComponent<ITbRow>;
-    onRowClick?(row: any): void;
+    onRowClick?(row: {}): void;
 }
 
 const generateOnRowClickProxy = onRowClick => {
-    return (row: any) => (ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => {
-        if (onRowClick) {
-            onRowClick(row);
-        }
+    return (row: {}) => {
+        return () => {
+            if (onRowClick) {
+                onRowClick(row);
+            }
+        };
     };
 };
 

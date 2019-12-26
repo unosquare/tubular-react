@@ -1,5 +1,5 @@
 import * as React from 'react';
-import IDetailComponent from '../DataGridInterfaces/IDetailComponent';
+import IDetailComponent from '../DataGridInterfaces/DetailComponent';
 
 export type DetailBaseComponent = React.FunctionComponent<IDetailComponent>;
 

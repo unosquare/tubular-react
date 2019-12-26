@@ -18,15 +18,15 @@ export const GridHeaderCell: React.FunctionComponent<IGridHeaderCellProps> = ({
     sortColumn,
     setActiveColumn,
 }: IGridHeaderCellProps) => {
-    const sort = () => sortColumn(column.Name);
+    const sort = () => sortColumn(column.name);
     const handleClick = (e: any) => setActiveColumn(column, e);
 
     const direction =
-        column.SortDirection === ColumnSortDirection.ASCENDING || column.SortDirection === ColumnSortDirection.NONE
+        column.sortDirection === ColumnSortDirection.Ascending || column.sortDirection === ColumnSortDirection.None
             ? 'asc'
             : 'desc';
 
-    const render = column.Sortable ? (
+    const render = column.sortable ? (
         <Tooltip
             title="Click to sort. Press Ctrl to sort by multiple columns"
             placement="bottom-start"
@@ -35,27 +35,27 @@ export const GridHeaderCell: React.FunctionComponent<IGridHeaderCellProps> = ({
             <TableSortLabel
                 onClick={sort}
                 direction={direction}
-                active={column.SortDirection !== ColumnSortDirection.NONE}
+                active={column.sortDirection !== ColumnSortDirection.None}
             >
-                {column.Label}
+                {column.label}
             </TableSortLabel>
         </Tooltip>
     ) : (
-        column.Label
+        column.label
     );
 
-    const filter = column.Filterable && (
-        <IconButton id={column.Name} onClick={handleClick}>
+    const filter = column.filterable && (
+        <IconButton id={column.name} onClick={handleClick}>
             <FilterList
                 color={
-                    column.Filter.HasFilter && column.Filter.Operator !== CompareOperators.NONE ? 'action' : 'disabled'
+                    column.filter.hasFilter && column.filter.operator !== CompareOperators.None ? 'action' : 'disabled'
                 }
             />
         </IconButton>
     );
 
     return (
-        <TableCell key={column.Label} padding={column.Label === '' ? 'none' : 'default'}>
+        <TableCell key={column.label} padding={column.label === '' ? 'none' : 'default'}>
             {render}
             {filter}
         </TableCell>

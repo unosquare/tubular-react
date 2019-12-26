@@ -1,6 +1,6 @@
-import { getCsv, getHtml } from 'tubular-common';
+import { getCsv, getHtml, ColumnModel } from 'tubular-common';
 
-function printDoc(gridResult: any, columns: any, gridName: string) {
+function printDoc(gridResult: [], columns: ColumnModel[], gridName: string) {
     const tableHtml = getHtml(gridResult, columns);
 
     const documentToPrint = window.open('about:blank', 'Print', 'location=0,height=500,width=800');
@@ -15,7 +15,7 @@ function printDoc(gridResult: any, columns: any, gridName: string) {
     documentToPrint.document.close();
 }
 
-function exportFile(gridResult: any, columns: any) {
+function exportFile(gridResult: [], columns: ColumnModel[]) {
     const csvFile = getCsv(gridResult, columns);
 
     const fileURL = URL.createObjectURL(
@@ -35,7 +35,7 @@ function exportFile(gridResult: any, columns: any) {
     URL.revokeObjectURL(fileURL);
 }
 
-export const exportGrid = (media: string, gridResult: any, columns: any, gridName: string) => {
+export const exportGrid = (media: string, gridResult: [], columns: ColumnModel[], gridName: string) => {
     if (media === 'csv') {
         exportFile(gridResult, columns);
     } else {

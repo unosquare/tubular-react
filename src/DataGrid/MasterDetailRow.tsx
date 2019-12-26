@@ -7,14 +7,14 @@ import MinimizeIcon from '@material-ui/icons/Minimize';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
 import { useMasterDetails } from 'tubular-react-common';
-import IDetailComponent from '../DataGridInterfaces/IDetailComponent';
+import DetailComponent from '../DataGridInterfaces/DetailComponent';
 
 interface IProps {
-    detail: React.ReactElement<IDetailComponent>;
+    detail: React.ReactElement<DetailComponent>;
     renderCells: any;
     style: React.CSSProperties;
     clickEvent: (ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void;
-    rowData: any;
+    rowData: {};
     columns: ColumnModel[];
 }
 

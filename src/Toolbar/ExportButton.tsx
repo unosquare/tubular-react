@@ -8,7 +8,7 @@ import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
 import { exportGrid } from './GridToolbarFunctions';
 
-interface IExportButtonProps {
+export interface ExportButtonProps {
     type: string;
     gridName: string;
     filteredRecordCount: number;
@@ -16,13 +16,13 @@ interface IExportButtonProps {
     exportTo: (allRows: boolean, exportFunc: (payload: any[], columns: ColumnModel[]) => void) => void;
 }
 
-export const ExportButton: React.FunctionComponent<IExportButtonProps> = ({
+export const ExportButton: React.FunctionComponent<ExportButtonProps> = ({
     type,
     gridName,
     toolTip,
     exportTo,
     filteredRecordCount,
-}: IExportButtonProps) => {
+}: ExportButtonProps) => {
     const [anchorPrint, setAnchorPrint] = React.useState(null);
 
     const handlePrintMenu = (event: React.MouseEvent<HTMLElement>): void =>
@@ -30,7 +30,7 @@ export const ExportButton: React.FunctionComponent<IExportButtonProps> = ({
 
     const closePrint = () => setAnchorPrint(null);
 
-    const partialExport = (data: any, columns: ColumnModel[]) => {
+    const partialExport = (data: [], columns: ColumnModel[]) => {
         exportGrid(type, data, columns, gridName);
         closePrint();
     };

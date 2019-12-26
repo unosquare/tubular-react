@@ -6,30 +6,28 @@ import { ExportButton } from './ExportButton';
 import { ToolbarOptions } from './ToolbarOptions';
 import { ITbTableInstance } from 'tubular-react-common';
 
-const styles: any = {
-    mobileSpacer: {
-        flexShrink: '1',
-    },
-    spacer: {
-        flex: '1 1 45%',
-    },
-};
+const mobileSpacer: React.CSSProperties = { flexShrink: 1 };
+const spacer: React.CSSProperties = { flex: '1 1 45%' };
 
 const outerWidth = 800;
 const timeout = 400;
 
-interface IProps {
+export interface GridToolbarProps {
     toolbarOptions: ToolbarOptions;
     gridName: string;
     tbTableInstance: ITbTableInstance;
 }
 
-export const GridToolbar: React.FunctionComponent<IProps> = ({ toolbarOptions, gridName, tbTableInstance }: IProps) => {
+export const GridToolbar: React.FunctionComponent<GridToolbarProps> = ({
+    toolbarOptions,
+    gridName,
+    tbTableInstance,
+}: GridToolbarProps) => {
     const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
 
     return (
         <Toolbar data-testid="grid-toolbar">
-            <div style={isMobileResolution ? styles.mobileSpacer : styles.spacer} />
+            <div style={isMobileResolution ? mobileSpacer : spacer} />
             {toolbarOptions.customItems && toolbarOptions.customItems}
             {toolbarOptions.exportButton && (
                 <ExportButton
