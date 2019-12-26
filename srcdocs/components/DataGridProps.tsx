@@ -34,49 +34,72 @@ export default () => {
                 </TableHead>
                 <TableBody>
                     <TableRow hover={true}>
-                        <TableCell><code className={classes.code}>gridName</code></TableCell>
-                        <TableCell><code className={classes.code}>string</code></TableCell>
+                        <TableCell>
+                            <code className={classes.code}>gridName</code>
+                        </TableCell>
+                        <TableCell>
+                            <code className={classes.code}>string</code>
+                        </TableCell>
                         <TableCell>Grid</TableCell>
-                        <TableCell><strong>Optional</strong></TableCell>
+                        <TableCell>
+                            <strong>Optional</strong>
+                        </TableCell>
                     </TableRow>
                     <TableRow hover={true}>
-                        <TableCell><code className={classes.code}>toolbarOptions</code></TableCell>
-                        <TableCell><code className={classes.code}>ToolbarOptions</code></TableCell>
-                        <TableCell><code className={classes.code}>new ToolBarOptions();</code></TableCell>
-                        <TableCell><strong>Optional.</strong>
+                        <TableCell>
+                            <code className={classes.code}>toolbarOptions</code>
+                        </TableCell>
+                        <TableCell>
+                            <code className={classes.code}>ToolbarOptions</code>
+                        </TableCell>
+                        <TableCell>
+                            <code className={classes.code}>new ToolBarOptions();</code>
+                        </TableCell>
+                        <TableCell>
+                            <strong>Optional.</strong>
                             It should be an instance of ToolbarOptions. This encapsulates useful options.
                             <em>see ToolBarOptions props</em>
                         </TableCell>
                     </TableRow>
                     <TableRow hover={true}>
-                        <TableCell><code className={classes.code}>bodyRenderer</code></TableCell>
-                        <TableCell><code className={classes.code}>function</code></TableCell>
+                        <TableCell>
+                            <code className={classes.code}>bodyRenderer</code>
+                        </TableCell>
+                        <TableCell>
+                            <code className={classes.code}>function</code>
+                        </TableCell>
                         <TableCell>-</TableCell>
                         <TableCell>
                             <strong>Optional.</strong>
                             It takes a function with 3 parameters
-                            <code className={classes.code}>
-                                (row: any, index: number, columns: ColumnModel[])
-                            </code> to map all rows.
+                            <code className={classes.code}>(row: any, index: number, columns: ColumnModel[])</code> to
+                            map all rows.
                             <em>see sample Full grid features</em>
                         </TableCell>
                     </TableRow>
                     <TableRow hover={true}>
-                        <TableCell><code className={classes.code}>footerRenderer</code></TableCell>
-                        <TableCell><code className={classes.code}>function</code></TableCell>
+                        <TableCell>
+                            <code className={classes.code}>footerRenderer</code>
+                        </TableCell>
+                        <TableCell>
+                            <code className={classes.code}>function</code>
+                        </TableCell>
                         <TableCell>-</TableCell>
                         <TableCell>
                             <strong>Optional.</strong>
                             It takes an aggregate function with 1 parameter
-                        <code className={classes.code}>
-                                (aggregate: any)
-                        </code> to show in a foot row the results from the aggregate function.
+                            <code className={classes.code}>(aggregate: any)</code> to show in a foot row the results
+                            from the aggregate function.
                             <em>see sample Full grid features</em>
                         </TableCell>
                     </TableRow>
                     <TableRow hover={true}>
-                        <TableCell><code className={classes.code}>onRowClick</code></TableCell>
-                        <TableCell><code className={classes.code}>function</code></TableCell>
+                        <TableCell>
+                            <code className={classes.code}>onRowClick</code>
+                        </TableCell>
+                        <TableCell>
+                            <code className={classes.code}>function</code>
+                        </TableCell>
                         <TableCell>-</TableCell>
                         <TableCell>
                             <strong>Optional.</strong>
@@ -84,8 +107,12 @@ export default () => {
                         </TableCell>
                     </TableRow>
                     <TableRow hover={true}>
-                        <TableCell><code className={classes.code}>storage</code></TableCell>
-                        <TableCell><code className={classes.code}>IDataGridStorage</code></TableCell>
+                        <TableCell>
+                            <code className={classes.code}>storage</code>
+                        </TableCell>
+                        <TableCell>
+                            <code className={classes.code}>IDataGridStorage</code>
+                        </TableCell>
                         <TableCell>LocalStorage</TableCell>
                         <TableCell>
                             <strong>Optional.</strong>

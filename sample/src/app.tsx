@@ -10,4 +10,9 @@ import Main from './main';
 let theme = createMuiTheme();
 theme = responsiveFontSizes(theme);
 
-render(<ThemeProvider theme={theme}><Main /></ThemeProvider>, document.getElementById('root'));
+render(
+    <ThemeProvider theme={theme}>
+        <Main />
+    </ThemeProvider>,
+    document.getElementById('root'),
+);

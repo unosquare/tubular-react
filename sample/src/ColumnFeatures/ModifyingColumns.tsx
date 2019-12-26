@@ -18,9 +18,9 @@ const ModifyingColumns: React.FunctionComponent = () => {
         setGridColumns([
             ...gridColumns,
             new ColumnModel(`Column ${columnCounter}`, {
-                Filterable: true,
-                Searchable: true,
-                Sortable: true,
+                filterable: true,
+                searchable: true,
+                sortable: true,
             }),
         ]);
 

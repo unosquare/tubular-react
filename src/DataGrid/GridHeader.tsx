@@ -1,4 +1,4 @@
-import { TableCell } from '@material-ui/core';
+import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import * as React from 'react';
 import { ColumnModel, FilterWrapper } from 'tubular-common';
@@ -7,14 +7,18 @@ import DetailComponet from '../DataGridInterfaces/DetailComponent';
 import { DialogModal } from '../Filtering/DialogModal';
 import { GridHeaderCell } from './GridHeaderCell';
 
-interface IProps {
+export interface GridHeaderProps {
     tbTableInstance: ITbTableInstance;
     detailComponent?: React.ReactElement<DetailComponet>;
 }
 
-export const GridHeader: React.FunctionComponent<IProps> = ({ tbTableInstance, detailComponent }: IProps) => {
+export const GridHeader: React.FunctionComponent<GridHeaderProps> = ({
+    tbTableInstance,
+    detailComponent,
+}: GridHeaderProps) => {
     const [anchorFilter, setAnchorFilter] = React.useState(null);
     const { api, state } = tbTableInstance;
+
     const setActiveColumn = (column: ColumnModel, event: React.MouseEvent<HTMLElement>) => {
         api.setActiveColumn(column);
         setAnchorFilter(event.currentTarget);

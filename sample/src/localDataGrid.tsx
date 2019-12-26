@@ -12,7 +12,7 @@ const LocalDataGrid: React.FunctionComponent = () => {
     const [getErrorMessage, setErrorMessage] = React.useState(null as string);
     const [data, setData] = React.useState(localData);
 
-    const rowClick = (row: any) => {
+    const rowClick = (row: {}) => {
         console.log('You clicked on a row: ', row);
     };
 

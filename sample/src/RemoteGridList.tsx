@@ -20,82 +20,72 @@ import columns from './data/columns';
 import { useTbTable } from 'tubular-react-common';
 
 const styles: any = {
-  progress: {
-    height: '20px',
-  },
-  search: {
-    margin: '15px 10px 10px 10px',
-    textAlign: 'right',
-  },
+    progress: {
+        height: '20px',
+    },
+    search: {
+        margin: '15px 10px 10px 10px',
+        textAlign: 'right',
+    },
 };
 
-const httpClient = new CustomHttpClient(
-  'https://tubular.azurewebsites.net/api/orders/paged',
-);
+const httpClient = new CustomHttpClient('https://tubular.azurewebsites.net/api/orders/paged');
 
 const RemoteGridList: React.FunctionComponent = () => {
-  const [getErrorMessage, setErrorMessage] = React.useState(null as string);
+    const [getErrorMessage, setErrorMessage] = React.useState(null as string);
 
-  const tbTableInstance = useTbTable(
-    columns,
-    httpClient,
-    { storage: new LocalStorage(), componentName: 'RemoteGridList' },
-  );
+    const tbTableInstance = useTbTable(columns, httpClient, {
+        storage: new LocalStorage(),
+        componentName: 'RemoteGridList',
+    });
 
-  return (
-    <Paper>
-      <div style={styles.search}>
-        <SearchTextInput
-          searchText={tbTableInstance.state.searchText}
-          updateSearchText={tbTableInstance.api.updateSearchText}
-        />
-      </div>
-      <div style={styles.progress}>
-        {tbTableInstance.state.isLoading && <LinearProgress />}
-      </div>
-      <Table>
-        <TableBody>
-          <TableRow>
-            <TableCell>
-              <GridList cellHeight={180} cols={5}>
-                {tbTableInstance.state.data && tbTableInstance.state.data.map((row) => (
-                  <GridListTile key={row.OrderID}>
-                    <Card>
-                      <CardContent>
-                        <Typography
-                          gutterBottom={true}
-                          variant='h5'
-                          component='h2'
-                        >
-                          {row.OrderID} - {row.CustomerName}
-                        </Typography>
-                        <Typography component='p'>
-                          {row.ShipperCity}
-                        </Typography>
-                        <Typography component='p'>
-                          {formatDate(row.ShippedDate, 'M/d/yyyy h:mm a')}
-                        </Typography>
-                      </CardContent>
-                      <CardActions>
-                        <Button size='small' color='primary'>
-                          Learn More
-                              </Button>
-                      </CardActions>
-                    </Card>
-                  </GridListTile>
-                ))}
-              </GridList>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <Paginator tbTableInstance={tbTableInstance} />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </Paper>
-  );
+    return (
+        <Paper>
+            <div style={styles.search}>
+                <SearchTextInput
+                    searchText={tbTableInstance.state.searchText}
+                    updateSearchText={tbTableInstance.api.updateSearchText}
+                />
+            </div>
+            <div style={styles.progress}>{tbTableInstance.state.isLoading && <LinearProgress />}</div>
+            <Table>
+                <TableBody>
+                    <TableRow>
+                        <TableCell>
+                            <GridList cellHeight={180} cols={5}>
+                                {tbTableInstance.state.data &&
+                                    tbTableInstance.state.data.map(row => (
+                                        <GridListTile key={row.OrderID}>
+                                            <Card>
+                                                <CardContent>
+                                                    <Typography gutterBottom={true} variant="h5" component="h2">
+                                                        {row.OrderID} - {row.CustomerName}
+                                                    </Typography>
+                                                    <Typography component="p">{row.ShipperCity}</Typography>
+                                                    <Typography component="p">
+                                                        {formatDate(row.ShippedDate, 'M/d/yyyy h:mm a')}
+                                                    </Typography>
+                                                </CardContent>
+                                                <CardActions>
+                                                    <Button size="small" color="primary">
+                                                        Learn More
+                                                    </Button>
+                                                </CardActions>
+                                            </Card>
+                                        </GridListTile>
+                                    ))}
+                            </GridList>
+                        </TableCell>
+                    </TableRow>
+                </TableBody>
+                <TableFooter>
+                    <TableRow>
+                        <Paginator tbTableInstance={tbTableInstance} />
+                    </TableRow>
+                </TableFooter>
+            </Table>
+        </Paper>
+    );
 };
 
 export default RemoteGridList;
