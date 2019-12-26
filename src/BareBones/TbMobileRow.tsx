@@ -2,12 +2,14 @@ import * as React from 'react';
 import ColumnModel from 'tubular-common/dist/Models/ColumnModel';
 import { DataGridCard } from '../DataGrid';
 
-interface IProps {
+export interface TbMobileRowProps {
     columns: ColumnModel[];
     onRowClick: ({}) => void;
     row: {};
 }
 
-export const TbMobileRow: React.FunctionComponent<IProps> = ({ columns, onRowClick, row }: IProps) => {
-    return <DataGridCard columns={columns} item={row} onClickCallback={onRowClick} />;
-};
+export const TbMobileRow: React.FunctionComponent<TbMobileRowProps> = ({
+    columns,
+    onRowClick,
+    row,
+}: TbMobileRowProps) => <DataGridCard columns={columns} item={row} onClickCallback={onRowClick} />;

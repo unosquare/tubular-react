@@ -68,14 +68,13 @@ const columnRender = (column: ColumnModel, item: {}) => {
     }
 };
 
-interface IProps {
+export interface DataGridCardProps {
     columns: ColumnModel[];
     item: {};
     onClickCallback: (any) => void;
 }
 
-export const DataGridCard = (props: IProps) => {
-    const { columns, item, onClickCallback } = props;
+export const DataGridCard = ({ columns, item, onClickCallback }: DataGridCardProps) => {
     const classes = useStyles({});
 
     return (

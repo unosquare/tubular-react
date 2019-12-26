@@ -9,7 +9,7 @@ import { ColumnModel } from 'tubular-common';
 import { useMasterDetails } from 'tubular-react-common';
 import DetailComponent from '../DataGridInterfaces/DetailComponent';
 
-interface IProps {
+export interface MasterDetailRowProps {
     detail: React.ReactElement<DetailComponent>;
     renderCells: any;
     style: React.CSSProperties;
@@ -18,14 +18,14 @@ interface IProps {
     columns: ColumnModel[];
 }
 
-export const MasterDetailRow: React.FunctionComponent<IProps> = ({
+export const MasterDetailRow: React.FunctionComponent<MasterDetailRowProps> = ({
     detail,
     renderCells,
     style,
     clickEvent,
     rowData,
     columns,
-}: IProps) => {
+}: MasterDetailRowProps) => {
     const [open, openDetails] = useMasterDetails();
     const openMasterDetails = () => {
         openDetails();

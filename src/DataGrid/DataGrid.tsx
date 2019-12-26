@@ -28,7 +28,7 @@ const useStyles = makeStyles({
 
 const timeout = 400;
 
-interface IProps {
+export interface DataGridProps {
     columns: ColumnModel[];
     dataSource: {}[] | string | Request | TubularHttpClientAbstract;
     deps?: any[];
@@ -46,7 +46,7 @@ interface IProps {
     onRowClick?(row: any): void;
 }
 
-export const DataGrid: React.FunctionComponent<IProps> = (props: IProps) => {
+export const DataGrid: React.FunctionComponent<DataGridProps> = (props: DataGridProps) => {
     const {
         columns,
         dataSource,
