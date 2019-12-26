@@ -4,14 +4,14 @@ import TableHead from '@material-ui/core/TableHead';
 
 import * as React from 'react';
 import { ITbTableInstance } from 'tubular-react-common';
-import { ITbRow } from '../BareBones/TbRow';
+import { TbRowProps } from '../BareBones/TbRow';
 import DetailComponet from '../DataGridInterfaces/DetailComponent';
 import { GridBody } from './GridBody';
 import { GridHeader } from './GridHeader';
 
 interface IProps {
     tbTableInstance: ITbTableInstance;
-    rowComponent: React.FunctionComponent<ITbRow>;
+    rowComponent: React.FunctionComponent<TbRowProps>;
     footerComponent: React.FunctionComponent<any>;
     detailComponent?: React.ReactElement<DetailComponet>;
     onRowClick?(row: {}): void;

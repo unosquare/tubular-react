@@ -1,7 +1,7 @@
 import TableBody from '@material-ui/core/TableBody';
 import * as React from 'react';
 import { ITbTableInstance } from 'tubular-react-common';
-import { ITbRow, TbRow } from '../BareBones/TbRow';
+import { TbRowProps, TbRow } from '../BareBones/TbRow';
 import DetailComponet from '../DataGridInterfaces/DetailComponent';
 import { renderCells } from '../utils';
 import MasterDetailRow from './MasterDetailRow';
@@ -10,7 +10,7 @@ import { NoDataRow } from './NoDataRow';
 interface IProps {
     detailComponent?: React.ReactElement<DetailComponet>;
     tbTableInstance: ITbTableInstance;
-    rowComponent: React.FunctionComponent<ITbRow>;
+    rowComponent: React.FunctionComponent<TbRowProps>;
     onRowClick?(row: {}): void;
 }
 

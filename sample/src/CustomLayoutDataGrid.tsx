@@ -13,7 +13,7 @@ import * as React from 'react';
 import { ColumnModel, formatDate } from 'tubular-common';
 import { FixedLinearProgress } from 'uno-material-ui/dist/FixedLinearProgress';
 import { useResolutionSwitch } from 'uno-react/lib/hooks/useResolutionSwitch';
-import { ITbRow } from '../../src/BareBones/TbRow';
+import { TbRowProps } from '../../src/BareBones/TbRow';
 import { DataGridTable } from '../../src/DataGrid';
 import { MobileDataGridTable } from '../../src/DataGrid/MobileDataGridTable';
 import { Paginator } from '../../src/Pagination';
@@ -21,7 +21,7 @@ import sampleColumns from './data/columns';
 import localData from './data/localData';
 import { useTbTable } from 'tubular-react-common';
 
-const CustomTbRow: React.FunctionComponent<ITbRow> = ({ row, onRowClick }) => (
+const CustomTbRow: React.FunctionComponent<TbRowProps> = ({ row, onRowClick }: TbRowProps) => (
     <TableRow hover={true} key={row.OrderID} onClick={onRowClick}>
         <TableCell padding="default">{row.OrderID} </TableCell>
         <TableCell padding="default">{row.CustomerName} </TableCell>
@@ -34,16 +34,16 @@ const CustomTbRow: React.FunctionComponent<ITbRow> = ({ row, onRowClick }) => (
     </TableRow>
 );
 
-const CustomTbMobileRow = ({ columns, row, onRowClick }) => (
+const CustomTbMobileRow = ({ columns, row, onRowClick }: TbRowProps) => (
     <Card onClick={onRowClick}>
         <CardContent>
             {columns.map((column: ColumnModel, index: number) => (
                 <div key={index}>
                     <Typography component="div" variant="body2" color="textSecondary">
-                        {column.Name}:
+                        {column.name}:
                     </Typography>
                     <Typography component="div" variant="body2" color="textSecondary">
-                        {row[column.Name]}
+                        {row[column.name]}
                     </Typography>
                 </div>
             ))}
@@ -97,7 +97,11 @@ const CustomLayoutDataGrid: React.FunctionComponent = () => {
             <Table>
                 <TableHead>
                     <TableRow>
-                        <Paginator tbTableInstance={tbTableInstance} />
+                        <Paginator
+                            tbTableInstance={tbTableInstance}
+                            rowsPerPageOptions={null}
+                            advancePagination={false}
+                        />
                     </TableRow>
                 </TableHead>
             </Table>

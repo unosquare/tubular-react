@@ -8,7 +8,7 @@ import { ColumnModel, DataGridStorage, TubularHttpClientAbstract } from 'tubular
 import { useTbTable } from 'tubular-react-common';
 import { FixedLinearProgress } from 'uno-material-ui';
 import { useResolutionSwitch } from 'uno-react';
-import { ITbRow } from '../BareBones/TbRow';
+import { TbRowProps } from '../BareBones/TbRow';
 import DetailComponet from '../DataGridInterfaces/DetailComponent';
 import { Paginator } from '../Pagination';
 import { GridToolbar } from '../Toolbar/GridToolbar';
@@ -39,8 +39,8 @@ interface IProps {
 
     // ToDo: new ones:
     mobileBreakpointWidth?: number;
-    rowComponent?: React.FunctionComponent<ITbRow>;
-    rowMobileComponent?: React.FunctionComponent<ITbRow>;
+    rowComponent?: React.FunctionComponent<TbRowProps>;
+    rowMobileComponent?: React.FunctionComponent<TbRowProps>;
     footerComponent?: React.FunctionComponent<any>;
     onError?(err: any): void;
     onRowClick?(row: any): void;

@@ -3,11 +3,11 @@ import * as React from 'react';
 
 import { ITbTableInstance } from 'tubular-react-common';
 import { TbMobileRow } from '../BareBones/TbMobileRow';
-import { ITbRow } from '../BareBones/TbRow';
+import { TbRowProps } from '../BareBones/TbRow';
 
 interface IProps {
     tbTableInstance: ITbTableInstance;
-    rowComponent?: React.FunctionComponent<ITbRow>;
+    rowComponent?: React.FunctionComponent<TbRowProps>;
     onRowClick?(row: {}): void;
 }
 
