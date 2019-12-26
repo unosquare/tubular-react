@@ -17,7 +17,7 @@ import { formatDate, LocalStorage } from 'tubular-common';
 import { Paginator, SearchTextInput } from '../../src';
 import CustomHttpClient from './CustomHttpClient';
 import columns from './data/columns';
-import { useTbTable } from 'tubular-react-common/useTbTable';
+import { useTbTable } from 'tubular-react-common';
 
 const styles: any = {
   progress: {

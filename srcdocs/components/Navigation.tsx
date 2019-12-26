@@ -54,17 +54,13 @@ export default () => {
         <React.Fragment>
             <NavBar logo={TubularLogo} />
             <MenuList>
-                <Link to='/tubular-react/' className={classes.link}>
+                <Link to="/tubular-react/" className={classes.link}>
                     <ListItem button={true}>
-                        <ListItemText primary='Home' />
+                        <ListItemText primary="Home" />
                     </ListItem>
                 </Link>
                 <ExpansionPanel className={classes.collapsable}>
-                    <ExpansionPanelSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        id='features'
-                        className={classes.summary}
-                    >
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} id="features" className={classes.summary}>
                         <Typography>Features</Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails className={classes.details}>
@@ -72,7 +68,7 @@ export default () => {
                             <Link
                                 key={i}
                                 to={x.path}
-                                className={i >= (featurePaths.length - 1) ? classes.lastLink : classes.link}
+                                className={i >= featurePaths.length - 1 ? classes.lastLink : classes.link}
                             >
                                 <ListItem button={true}>
                                     <ListItemText primary={x.name} />
@@ -82,9 +78,9 @@ export default () => {
                         <Divider />
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
-                <Link to='/tubular-react/ComponentAPI' className={classes.link}>
+                <Link to="/tubular-react/ComponentAPI" className={classes.link}>
                     <ListItem button={true}>
-                        <ListItemText primary='ComponentAPI' />
+                        <ListItemText primary="ComponentAPI" />
                     </ListItem>
                 </Link>
             </MenuList>

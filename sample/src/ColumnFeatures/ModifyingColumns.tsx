@@ -28,36 +28,33 @@ const ModifyingColumns: React.FunctionComponent = () => {
     };
 
     const handleDeleteLastColumn = () => {
-        setGridColumns([
-            ...gridColumns.filter((c) => c.Name !== gridColumns[gridColumns.length - 1].Name),
-        ]);
+        setGridColumns([...gridColumns.filter(c => c.Name !== gridColumns[gridColumns.length - 1].Name)]);
     };
 
     const toolbarOptions = new ToolbarOptions({
-        customItems:
-            (
-                <div>
-                    <Button onClick={handleAddColumn}>Add new column</Button>
-                    <Button onClick={handleDeleteLastColumn}>Delete last column</Button>
-                </div>
-            ),
+        customItems: (
+            <div>
+                <Button onClick={handleAddColumn}>Add new column</Button>
+                <Button onClick={handleDeleteLastColumn}>Delete last column</Button>
+            </div>
+        ),
     });
 
     return (
-        <div className='root'>
+        <div className="root">
             {getErrorMessage && (
                 <Snackbar
                     anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                     style={{ paddingTop: '10px' }}
                     open={true}
                     ContentProps={{ 'aria-describedby': 'message-id' }}
-                    message={<span id='message-id'>{getErrorMessage}</span>}
+                    message={<span id="message-id">{getErrorMessage}</span>}
                 />
             )}
             <DataGrid
                 columns={gridColumns}
                 dataSource={data}
-                gridName='ModifyingColumns'
+                gridName="ModifyingColumns"
                 storage={new LocalStorage()}
                 onError={setErrorMessage}
                 toolbarOptions={toolbarOptions}

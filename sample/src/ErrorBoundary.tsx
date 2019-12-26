@@ -24,21 +24,18 @@ class ErrorBoundary extends React.Component<any, any> {
 
         return (
             <div>
-                <Typography variant='h5' style={message}>Something went wrong.</Typography>
+                <Typography variant="h5" style={message}>
+                    Something went wrong.
+                </Typography>
                 <details style={{ whiteSpace: 'pre-wrap' }}>
                     <Paper>
                         <br />
-                        <Typography variant='subtitle1'>
-                            {this.state.error && this.state.error.toString()}
-                        </Typography>
-                        <Typography variant='body2'>
-                            {this.state.errorInfo.componentStack}
-                        </Typography>
+                        <Typography variant="subtitle1">{this.state.error && this.state.error.toString()}</Typography>
+                        <Typography variant="body2">{this.state.errorInfo.componentStack}</Typography>
                     </Paper>
-                </details >
+                </details>
             </div>
         );
-
     }
 }
 export default ErrorBoundary;

@@ -4,7 +4,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
 import { HashLink } from 'react-router-hash-link';
-import { humanize } from 'uno-react';
+import { humanize } from 'uno-js';
 
 const useStyles = makeStyles(() => ({
     link: {
@@ -29,18 +29,14 @@ export default ({ links, path }: any) => {
     const classes = useStyles({});
 
     return (
-        <List
-            component='nav'
-            className={classes.list}
-        >
+        <List component="nav" className={classes.list}>
             {links.map((id: string) => (
-                    <ListItem key={id} className={classes.padding}>
-                        <HashLink className={classes.link} to={`${path}${id}`}>
-                            <ListItemText primary={humanize(id)} />
-                        </HashLink>
-                    </ListItem>
-                ),
-            )}
+                <ListItem key={id} className={classes.padding}>
+                    <HashLink className={classes.link} to={`${path}${id}`}>
+                        <ListItemText primary={humanize(id)} />
+                    </HashLink>
+                </ListItem>
+            ))}
         </List>
     );
 };

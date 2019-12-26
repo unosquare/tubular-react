@@ -19,7 +19,7 @@ import { MobileDataGridTable } from '../../src/DataGrid/MobileDataGridTable';
 import { Paginator } from '../../src/Pagination';
 import sampleColumns from './data/columns';
 import localData from './data/localData';
-import { useTbTable } from 'tubular-react-common/useTbTable';
+import { useTbTable } from 'tubular-react-common';
 
 const CustomTbRow: React.FunctionComponent<ITbRow> = ({ row, onRowClick }) => (
   <TableRow hover={true} key={row.OrderID} onClick={onRowClick}>

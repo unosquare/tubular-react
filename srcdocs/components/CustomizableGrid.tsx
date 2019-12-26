@@ -10,13 +10,13 @@ export default ({
     deps = [],
     onRowClick = () => null,
 }) => (
-        <DataGrid
-            columns={gridColumns}
-            dataSource='https://tubular.azurewebsites.net/api/orders/paged'
-            gridName='Tubular Grid'
-            toolbarOptions={toolbarOptions}
-            storage={storage}
-            deps={deps}
-            onRowClick={onRowClick}
-        />
-    );
+    <DataGrid
+        columns={gridColumns}
+        dataSource="https://tubular.azurewebsites.net/api/orders/paged"
+        gridName="Tubular Grid"
+        toolbarOptions={toolbarOptions}
+        storage={storage}
+        deps={deps}
+        onRowClick={onRowClick}
+    />
+);

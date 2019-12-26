@@ -19,8 +19,7 @@ export default () => {
 
     const links = ['Sorting'];
     const path = '/tubular-react/features/sorting#';
-    const sortingDescription =
-    `At column definition, you can select which columns will be sortable, just click on the column header to sort.`;
+    const sortingDescription = `At column definition, you can select which columns will be sortable, just click on the column header to sort.`;
 
     const sorting = {
         code: sortingGrid,
@@ -35,16 +34,15 @@ export default () => {
     return (
         <Grid container={true} className={classes.container}>
             <Grid item={true} xs={10} className={classes.paper}>
-                <Typography variant='h4'>Sorting</Typography>
+                <Typography variant="h4">Sorting</Typography>
                 <Divider />
-                <Typography variant='h6' className={classes.description}>
-                    One of Tubular's feature is the sorting, you can select
-                     which columns will be sortable.
+                <Typography variant="h6" className={classes.description}>
+                    One of Tubular's feature is the sorting, you can select which columns will be sortable.
                 </Typography>
                 <FeatureSample data={sorting} />
             </Grid>
             <Grid item={true} xs={2} className={classes.paper}>
-                <TableOfContent links={links} path={path}/>
+                <TableOfContent links={links} path={path} />
             </Grid>
         </Grid>
     );

@@ -13,25 +13,15 @@ export default ({ onClose, open, forceRefresh }) => {
     };
 
     return (
-        <Dialog maxWidth='sm' open={open} onClose={onClose}>
-            <DialogTitle>
-                New Row
-          </DialogTitle>
+        <Dialog maxWidth="sm" open={open} onClose={onClose}>
+            <DialogTitle>New Row</DialogTitle>
             <DialogContent>
-                <Typography>
-                    Here you can add a new row!
-            </Typography>
+                <Typography>Here you can add a new row!</Typography>
                 <DialogActions>
-                    <Button
-                        onClick={onClose}
-                        color='secondary'
-                    >
+                    <Button onClick={onClose} color="secondary">
                         Cancel
                     </Button>
-                    <Button
-                        onClick={onCloseDialog}
-                        color='primary'
-                    >
+                    <Button onClick={onCloseDialog} color="primary">
                         Add
                     </Button>
                 </DialogActions>

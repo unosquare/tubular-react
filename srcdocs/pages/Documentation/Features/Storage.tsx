@@ -19,12 +19,10 @@ export default () => {
 
     const links = ['LocalStorage', 'NullStorage'];
     const path = '/tubular-react/features/storage#';
-    const localDescription =
-    `You can set that the grid keep data in the local storage, so when you refresh the page,
+    const localDescription = `You can set that the grid keep data in the local storage, so when you refresh the page,
      all filters, sorting and page number will remain.`;
 
-    const nullDescription =
-    `If you don't want that the grid saves your options, you can set a NullStorage,
+    const nullDescription = `If you don't want that the grid saves your options, you can set a NullStorage,
      this will reset everything if you refresh the page`;
 
     const localStorage = {
@@ -48,17 +46,17 @@ export default () => {
     return (
         <Grid container={true} className={classes.container}>
             <Grid item={true} xs={10} className={classes.paper}>
-                <Typography variant='h4'>Storage</Typography>
+                <Typography variant="h4">Storage</Typography>
                 <Divider />
-                <Typography variant='h6' className={classes.description}>
-                    Tubular's storage is one of its useful features. It will save, if you refresh,
-                     your selected options at filtering, sorting, searching and the page number.
+                <Typography variant="h6" className={classes.description}>
+                    Tubular's storage is one of its useful features. It will save, if you refresh, your selected options
+                    at filtering, sorting, searching and the page number.
                 </Typography>
                 <FeatureSample data={localStorage} />
                 <FeatureSample data={nullStorage} />
             </Grid>
             <Grid item={true} xs={2} className={classes.paper}>
-                <TableOfContent links={links} path={path}/>
+                <TableOfContent links={links} path={path} />
             </Grid>
         </Grid>
     );

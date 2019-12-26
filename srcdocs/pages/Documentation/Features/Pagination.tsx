@@ -5,7 +5,7 @@ import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
 import { useToggle } from 'uno-react';
 import FeatureSample from '../../../components/FeatureSample';
-import {AdvancedPagination, BasicPagination} from '../../../components/Options/Pagination';
+import { AdvancedPagination, BasicPagination } from '../../../components/Options/Pagination';
 import TableOfContent from '../../../components/TableOfContent';
 import featuresStyles from '../../../utils/featuresStyles';
 import { advancedPaginationGrid, basicPaginationGrid } from '../../../utils/paginationCodeSamples';
@@ -19,12 +19,10 @@ export default () => {
 
     const links = ['BasicPagination', 'AdvancedPagination'];
     const path = '/tubular-react/features/pagination#';
-    const basicDescription =
-    `By default, every grid has a pagination component that helps you navigate through your data.
+    const basicDescription = `By default, every grid has a pagination component that helps you navigate through your data.
     In the ToolbarOptions object you can select if you want to display pager on top, bottom or both`;
 
-    const advancedDescription =
-    `If you have several data, you can add some useful options to the paginator with advancePagination
+    const advancedDescription = `If you have several data, you can add some useful options to the paginator with advancePagination
      in the ToolbarOptions. This will help to navigate more easily.`;
 
     const basicPagination = {
@@ -48,18 +46,17 @@ export default () => {
     return (
         <Grid container={true} className={classes.container}>
             <Grid item={true} xs={10} className={classes.paper}>
-                <Typography variant='h4'>Pagination</Typography>
+                <Typography variant="h4">Pagination</Typography>
                 <Divider />
-                <Typography variant='h6' className={classes.description}>
-                    One of Tubular's feature is the pagination,
-                     this pagination is server-side, this means
-                     that if you have a lot of data, Tubular will only ask for the number of rows that you need.
+                <Typography variant="h6" className={classes.description}>
+                    One of Tubular's feature is the pagination, this pagination is server-side, this means that if you
+                    have a lot of data, Tubular will only ask for the number of rows that you need.
                 </Typography>
                 <FeatureSample data={basicPagination} />
                 <FeatureSample data={advancedPagination} />
             </Grid>
             <Grid item={true} xs={2} className={classes.paper}>
-                <TableOfContent links={links} path={path}/>
+                <TableOfContent links={links} path={path} />
             </Grid>
         </Grid>
     );
