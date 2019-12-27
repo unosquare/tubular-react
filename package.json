@@ -50,7 +50,7 @@
     "react-virtualized": "^9.21.2",
     "tubular-common": "^3.0.0",
     "tubular-react-common": "1.0.0",
-    "uno-material-ui": "^1.7.21"
+    "uno-material-ui": "^1.7.22"
   },
   "devDependencies": {
     "@testing-library/react": "^9.4.0",
@@ -61,7 +61,7 @@
     "@typescript-eslint/eslint-plugin": "^2.13.0",
     "@typescript-eslint/parser": "^2.13.0",
     "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.8.0",
+    "eslint-config-prettier": "^6.9.0",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.17.0",
     "jest": "^24.9.0",
