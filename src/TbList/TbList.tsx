@@ -6,13 +6,13 @@ import { ITbListInstance } from 'tubular-react-common';
 import { TbListItem } from './TbListItem';
 import { generateOnRowClickProxy } from 'tubular-react-common';
 
-interface IProps {
+export interface TbListProps {
     tbInstance: ITbListInstance;
-    listItemComponent?: React.FunctionComponent<{}>;
+    listItemComponent?: React.FunctionComponent<any>;
     onItemClick?(row: {}): void;
 }
 
-export const TbList: React.FunctionComponent<IProps> = tbProps => {
+export const TbList: React.FunctionComponent<TbListProps> = tbProps => {
     const { tbInstance, onItemClick, listItemComponent } = tbProps;
 
     const { items, hasNextPage } = tbInstance.state.list;

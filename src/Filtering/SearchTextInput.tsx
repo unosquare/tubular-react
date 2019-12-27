@@ -14,15 +14,15 @@ const styles = {
     },
 };
 
-interface ISearchTextInput {
+export interface SearchTextInputProps {
     searchText: string;
     updateSearchText: (value: string) => void;
 }
 
-export const SearchTextInput: React.FunctionComponent<ISearchTextInput> = ({
+export const SearchTextInput: React.FunctionComponent<SearchTextInputProps> = ({
     searchText,
     updateSearchText,
-}: ISearchTextInput) => {
+}: SearchTextInputProps) => {
     const onChange = (e: any) => updateSearchText(e.target.value);
     const onClear = () => updateSearchText('');
 

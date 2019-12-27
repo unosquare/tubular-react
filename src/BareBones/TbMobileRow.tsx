@@ -4,7 +4,7 @@ import { DataGridCard } from '../DataGrid';
 
 export interface TbMobileRowProps {
     columns: ColumnModel[];
-    onRowClick: ({}) => void;
+    onRowClick(row: {}): void;
     row: {};
 }
 
@@ -12,4 +12,6 @@ export const TbMobileRow: React.FunctionComponent<TbMobileRowProps> = ({
     columns,
     onRowClick,
     row,
-}: TbMobileRowProps) => <DataGridCard columns={columns} item={row} onClickCallback={onRowClick} />;
+}: TbMobileRowProps) => {
+    return <DataGridCard columns={columns} item={row} onClickCallback={onRowClick} />;
+};

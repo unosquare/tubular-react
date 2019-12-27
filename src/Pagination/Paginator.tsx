@@ -26,7 +26,7 @@ const message = (totalRecordCount: number, filteredRecordCount: number) => ({ fr
         ? '0 records found'
         : `${from} to ${to} of ${count} from ${totalRecordCount} records`;
 
-interface IPaginatorProps {
+export interface IPaginatorProps {
     tbTableInstance: ITbTableInstance;
     rowsPerPageOptions: number[];
     advancePagination: boolean;

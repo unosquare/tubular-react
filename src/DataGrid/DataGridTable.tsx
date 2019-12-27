@@ -5,7 +5,7 @@ import TableHead from '@material-ui/core/TableHead';
 import * as React from 'react';
 import { ITbTableInstance } from 'tubular-react-common';
 import { TbRowProps } from '../BareBones/TbRow';
-import DetailComponet from '../DataGridInterfaces/DetailComponent';
+import DetailComponent from '../DataGridInterfaces/DetailComponent';
 import { GridBody } from './GridBody';
 import { GridHeader } from './GridHeader';
 
@@ -13,7 +13,7 @@ export interface DataGridTableProps {
     tbTableInstance: ITbTableInstance;
     rowComponent: React.FunctionComponent<TbRowProps>;
     footerComponent: React.FunctionComponent<any>;
-    detailComponent?: React.ReactElement<DetailComponet>;
+    detailComponent?: React.ReactElement<DetailComponent>;
     onRowClick?(row: {}): void;
 }
 

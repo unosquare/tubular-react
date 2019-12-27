@@ -2,13 +2,13 @@ import TableBody from '@material-ui/core/TableBody';
 import * as React from 'react';
 import { ITbTableInstance } from 'tubular-react-common';
 import { TbRowProps, TbRow } from '../BareBones/TbRow';
-import DetailComponet from '../DataGridInterfaces/DetailComponent';
+import DetailComponent from '../DataGridInterfaces/DetailComponent';
 import { renderCells } from '../utils';
 import MasterDetailRow from './MasterDetailRow';
 import { NoDataRow } from './NoDataRow';
 
 interface IProps {
-    detailComponent?: React.ReactElement<DetailComponet>;
+    detailComponent?: React.ReactElement<DetailComponent>;
     tbTableInstance: ITbTableInstance;
     rowComponent: React.FunctionComponent<TbRowProps>;
     onRowClick?(row: {}): void;
@@ -27,12 +27,12 @@ const generateOnRowClickProxy = onRowClick => {
     };
 };
 
-export const GridBody: React.FunctionComponent<IProps> = ({
+export const GridBody: React.FunctionComponent<GridBodyProps> = ({
     tbTableInstance,
     rowComponent,
     onRowClick,
     detailComponent,
-}: IProps) => {
+}: GridBodyProps) => {
     const styles = getStyles(Boolean(onRowClick));
     const RowComponent = rowComponent ? rowComponent : TbRow;
     const onRowClickProxy = onRowClick ? generateOnRowClickProxy(onRowClick) : () => void 0;

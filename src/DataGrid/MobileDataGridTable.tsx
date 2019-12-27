@@ -5,7 +5,7 @@ import { ITbTableInstance } from 'tubular-react-common';
 import { TbMobileRow } from '../BareBones/TbMobileRow';
 import { TbRowProps } from '../BareBones/TbRow';
 
-interface IProps {
+export interface MobileDataGridTableProps {
     tbTableInstance: ITbTableInstance;
     rowComponent?: React.FunctionComponent<TbRowProps>;
     onRowClick?(row: {}): void;
@@ -21,17 +21,17 @@ const generateOnRowClickProxy = onRowClick => {
     };
 };
 
-export const MobileDataGridTable: React.FunctionComponent<IProps> = ({
+export const MobileDataGridTable: React.FunctionComponent<MobileDataGridTableProps> = ({
     tbTableInstance,
     rowComponent,
     onRowClick,
-}: IProps) => {
+}: MobileDataGridTableProps) => {
     const RowComponent = rowComponent ? rowComponent : TbMobileRow;
     const onRowClickProxy = onRowClick ? generateOnRowClickProxy(onRowClick) : () => void 0;
 
     return (
         <GridList cellHeight="auto" cols={1}>
-            {tbTableInstance.state.data.map((row: any, index: number) => (
+            {tbTableInstance.state.data.map((row: {}, index: number) => (
                 <RowComponent
                     columns={tbTableInstance.state.columns}
                     row={row}

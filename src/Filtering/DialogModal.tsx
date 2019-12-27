@@ -8,7 +8,7 @@ import { ColumnModel, CompareOperators, FilterWrapper } from 'tubular-common';
 import { DialogInput } from './DialogInput';
 import { OperatorsDropdown } from './OperatorsDropdown';
 
-interface IDialogModalProps {
+export interface IDialogModalProps {
     anchorFilter: HTMLElement;
     activeColumn: ColumnModel;
     setAnchorFilter: (anchorEl: HTMLElement) => void;

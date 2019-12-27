@@ -8,7 +8,13 @@ import { ToolbarOptions } from '../../src/Toolbar/ToolbarOptions';
 import columns from './data/columns';
 import localData from './data/localData';
 
-const DetailComponent: DetailBaseComponent = ({ row }) => <>This is a test with the row #{row.OrderID}</>;
+export interface DetailBaseComponentProps {
+    row: any;
+}
+
+const DetailComponent: DetailBaseComponent = ({ row }: DetailBaseComponentProps) => (
+    <>This is a test with the row #{row.OrderID}</>
+);
 
 const MasterDetailRow: React.FunctionComponent = () => {
     const [getErrorMessage, setErrorMessage] = React.useState(null as string);

@@ -1,3 +1,3 @@
-export default interface DetailComponet {
+export default interface DetailComponent {
     row?: {};
 }

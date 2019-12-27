@@ -12,7 +12,7 @@ const useStyles = makeStyles({
     },
 });
 
-interface IProps {
+export interface AdvancePaginationActionsProps {
     count: number;
     isAdvanced: boolean;
     isLoading: boolean;
@@ -52,14 +52,14 @@ const getPages = (currentPage: number, totalRows: number, rowsPerPage: number) =
     return pages;
 };
 
-export const AdvancePaginationActions: React.FunctionComponent<IProps> = ({
+export const AdvancePaginationActions: React.FunctionComponent<AdvancePaginationActionsProps> = ({
     count,
     isAdvanced,
     isLoading,
     page,
     rowsPerPage,
     onChangePage,
-}: IProps) => {
+}: AdvancePaginationActionsProps) => {
     const classes = useStyles({});
     const pages = getPages(page, count, rowsPerPage);
     const lastPage = Math.ceil(count / rowsPerPage) - 1;

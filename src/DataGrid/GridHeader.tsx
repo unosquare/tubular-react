@@ -3,13 +3,13 @@ import TableRow from '@material-ui/core/TableRow';
 import * as React from 'react';
 import { ColumnModel, FilterWrapper } from 'tubular-common';
 import { ITbTableInstance } from 'tubular-react-common';
-import DetailComponet from '../DataGridInterfaces/DetailComponent';
+import DetailComponent from '../DataGridInterfaces/DetailComponent';
 import { DialogModal } from '../Filtering/DialogModal';
 import { GridHeaderCell } from './GridHeaderCell';
 
 export interface GridHeaderProps {
     tbTableInstance: ITbTableInstance;
-    detailComponent?: React.ReactElement<DetailComponet>;
+    detailComponent?: React.ReactElement<DetailComponent>;
 }
 
 export const GridHeader: React.FunctionComponent<GridHeaderProps> = ({

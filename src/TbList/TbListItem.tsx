@@ -1,8 +1,23 @@
 import ListItem from '@material-ui/core/ListItem';
 import * as React from 'react';
 import { renderDefaultListItem } from '../utils/renders';
+import { ColumnModel } from 'tubular-common';
 
-export const TbListItem = ({ selectedIndex, onItemClick, row, rowStyle, columns }: any) => {
+export interface TbListItemProps {
+    selectedIndex: number;
+    onItemClick(row): void;
+    row: {};
+    rowStyle: any;
+    columns: ColumnModel[];
+}
+
+export const TbListItem: React.FunctionComponent<TbListItemProps> = ({
+    selectedIndex,
+    onItemClick,
+    row,
+    rowStyle,
+    columns,
+}: TbListItemProps) => {
     return (
         <ListItem
             button={true}

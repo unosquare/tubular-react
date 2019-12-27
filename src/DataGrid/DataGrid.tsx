@@ -42,8 +42,8 @@ export interface DataGridProps {
     rowComponent?: React.FunctionComponent<TbRowProps>;
     rowMobileComponent?: React.FunctionComponent<TbRowProps>;
     footerComponent?: React.FunctionComponent<any>;
-    onError?(err: any): void;
-    onRowClick?(row: any): void;
+    onError?(err: string): void;
+    onRowClick?(row: {}): void;
 }
 
 export const DataGrid: React.FunctionComponent<DataGridProps> = (props: DataGridProps) => {
