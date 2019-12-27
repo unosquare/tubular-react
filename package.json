@@ -29,7 +29,7 @@
     "globals": {
       "ts-jest": {
         "diagnostics": false,
-        "tsConfig": "tsconfig.base.json"
+        "tsConfig": "tsconfig.json"
       }
     }
   },
