@@ -6,7 +6,7 @@ import CloudDownload from '@material-ui/icons/CloudDownload';
 import Print from '@material-ui/icons/Print';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
-import { exportGrid } from './GridToolbarFunctions';
+import { exportGrid } from 'tubular-react-common';
 
 export interface ExportButtonProps {
     type: string;

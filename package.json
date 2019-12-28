@@ -48,8 +48,8 @@
     "@material-ui/icons": "^4.5.1",
     "date-fns": "^2.8.1",
     "react-virtualized": "^9.21.2",
-    "tubular-common": "^3.0.0",
-    "tubular-react-common": "1.0.0",
+    "tubular-common": "^3.0.2",
+    "tubular-react-common": "1.0.4",
     "uno-material-ui": "^1.7.22"
   },
   "devDependencies": {
