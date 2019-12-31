@@ -20,7 +20,7 @@ export const OperatorsDropdown: React.FunctionComponent<OperatorsDropdownProps> 
     activeColumn,
     handleFilterChange,
 }: OperatorsDropdownProps) => {
-    const onChange = ({ target }) => handleFilterChange({ operator: target.value });
+    const onChange = ({ target }: any) => handleFilterChange({ operator: target.value });
 
     return (
         <TextField

@@ -48,16 +48,16 @@ const useStyles = makeStyles(({ palette }: any) => ({
     },
 }));
 
-const renderGeneral = (column: ColumnModel, item: {}) => item[column.name];
+const renderGeneral = (column: ColumnModel, item: any) => item[column.name];
 
-const renderBoolean = (column: ColumnModel, item: {}) => (
+const renderBoolean = (column: ColumnModel, item: any) => (
     <input type="checkbox" checked={item[column.name]} disabled={true} />
 );
 
-const renderString = (column: ColumnModel, item: {}) =>
+const renderString = (column: ColumnModel, item: any) =>
     item[column.name].length > 50 ? item[column.name].substring(0, 50) + '...' : renderGeneral(column, item);
 
-const columnRender = (column: ColumnModel, item: {}) => {
+const columnRender = (column: ColumnModel, item: any) => {
     switch (column.dataType) {
         case ColumnDataType.Boolean:
             return renderBoolean(column, item);
@@ -71,7 +71,7 @@ const columnRender = (column: ColumnModel, item: {}) => {
 export interface DataGridCardProps {
     columns: ColumnModel[];
     item: {};
-    onClickCallback: (any) => void;
+    onClickCallback: (row: any) => void;
 }
 
 export const DataGridCard = ({ columns, item, onClickCallback }: DataGridCardProps) => {

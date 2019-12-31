@@ -29,16 +29,15 @@ const styles: any = {
     },
 };
 
-const httpClient = new CustomHttpClient('https://tubular.azurewebsites.net/api/orders/paged');
-
 const RemoteGridList: React.FunctionComponent = () => {
     const [getErrorMessage, setErrorMessage] = React.useState(null as string);
 
-    const tbTableInstance = useTbTable(columns, httpClient, {
+    const tbTableInstance = useTbTable(columns, 'https://tubular.azurewebsites.net/api/orders/paged', {
         storage: new LocalStorage(),
         componentName: 'RemoteGridList',
     });
 
+    console.log(tbTableInstance);
     return (
         <Paper>
             <div style={styles.search}>

@@ -7,7 +7,7 @@ import { renderCells } from '../utils';
 import MasterDetailRow from './MasterDetailRow';
 import { NoDataRow } from './NoDataRow';
 
-interface IProps {
+interface GridBodyProps {
     detailComponent?: React.ReactElement<DetailComponent>;
     tbTableInstance: ITbTableInstance;
     rowComponent: React.FunctionComponent<TbRowProps>;
@@ -19,7 +19,7 @@ const getStyles = (isPointer: boolean) => ({
     title: { paddingLeft: '15px' },
 });
 
-const generateOnRowClickProxy = onRowClick => {
+const generateOnRowClickProxy = (onRowClick: any) => {
     return (row: {}) => () => {
         if (onRowClick) {
             onRowClick(row);
@@ -35,7 +35,7 @@ export const GridBody: React.FunctionComponent<GridBodyProps> = ({
 }: GridBodyProps) => {
     const styles = getStyles(Boolean(onRowClick));
     const RowComponent = rowComponent ? rowComponent : TbRow;
-    const onRowClickProxy = onRowClick ? generateOnRowClickProxy(onRowClick) : () => void 0;
+    const onRowClickProxy = onRowClick ? generateOnRowClickProxy(onRowClick) : (_row: any): (() => void) => void 0;
     const { state } = tbTableInstance;
 
     let content = null;

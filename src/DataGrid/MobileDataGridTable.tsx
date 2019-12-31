@@ -11,7 +11,7 @@ export interface MobileDataGridTableProps {
     onRowClick?(row: {}): void;
 }
 
-const generateOnRowClickProxy = onRowClick => {
+const generateOnRowClickProxy = (onRowClick: any) => {
     return (row: {}) => {
         return () => {
             if (onRowClick) {
@@ -27,7 +27,7 @@ export const MobileDataGridTable: React.FunctionComponent<MobileDataGridTablePro
     onRowClick,
 }: MobileDataGridTableProps) => {
     const RowComponent = rowComponent ? rowComponent : TbMobileRow;
-    const onRowClickProxy = onRowClick ? generateOnRowClickProxy(onRowClick) : () => void 0;
+    const onRowClickProxy = onRowClick ? generateOnRowClickProxy(onRowClick) : (_row: any): (() => void) => void 0;
 
     return (
         <GridList cellHeight="auto" cols={1}>

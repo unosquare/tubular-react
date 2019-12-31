@@ -6,7 +6,7 @@ import FilterList from '@material-ui/icons/FilterList';
 import * as React from 'react';
 import { ColumnModel, ColumnSortDirection, CompareOperators } from 'tubular-common';
 
-export interface IGridHeaderCellProps {
+export interface GridHeaderCellProps {
     column: ColumnModel;
     key: string;
     setActiveColumn: (column: ColumnModel, event: React.MouseEvent<HTMLElement>) => void;

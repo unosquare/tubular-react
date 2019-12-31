@@ -5,7 +5,7 @@ import { ColumnModel } from 'tubular-common';
 
 export interface TbListItemProps {
     selectedIndex: number;
-    onItemClick(row): void;
+    onItemClick(row: any): void;
     row: {};
     rowStyle: any;
     columns: ColumnModel[];

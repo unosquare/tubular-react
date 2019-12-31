@@ -48,9 +48,9 @@
     "@material-ui/icons": "^4.5.1",
     "date-fns": "^2.8.1",
     "react-virtualized": "^9.21.2",
-    "tubular-common": "^3.0.0",
-    "tubular-react-common": "1.0.0",
-    "uno-material-ui": "^1.7.22"
+    "tubular-common": "^3.0.2",
+    "tubular-react-common": "1.0.4",
+    "uno-material-ui": "^1.7.23"
   },
   "devDependencies": {
     "@testing-library/react": "^9.4.0",
@@ -58,6 +58,7 @@
     "@types/jest": "^24.0.25",
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",
+    "@types/react-virtualized": "^9.21.7",
     "@typescript-eslint/eslint-plugin": "^2.13.0",
     "@typescript-eslint/parser": "^2.13.0",
     "eslint": "^6.8.0",

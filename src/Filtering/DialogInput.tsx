@@ -77,7 +77,7 @@ export const DialogInput: React.FunctionComponent<DialogInputProps> = ({
             : 'First Value'
         : 'Second Value';
 
-    const handleChange = ({ target }) => handleTextFieldChange(target.value);
+    const handleChange = ({ target }: any) => handleTextFieldChange(target.value);
 
     return (
         <TextField

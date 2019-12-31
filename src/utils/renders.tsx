@@ -4,7 +4,7 @@ import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 import * as React from 'react';
 import { ColumnDataType, ColumnModel, formatDate, getColumnAlign } from 'tubular-common';
 
-export const renderCellContent: any = (column: ColumnModel, row: {}) => {
+export const renderCellContent: any = (column: ColumnModel, row: any) => {
     switch (column.dataType) {
         case ColumnDataType.Numeric:
             return row[column.name] || 0;

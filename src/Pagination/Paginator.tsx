@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 const outerWidth = 800;
 const timeout = 400;
 
-const message = (totalRecordCount: number, filteredRecordCount: number) => ({ from, to, count }) =>
+const message = (totalRecordCount: number, filteredRecordCount: number) => ({ from, to, count }: any) =>
     totalRecordCount === filteredRecordCount
         ? `${from}-${to} of ${count}`
         : filteredRecordCount === 0
@@ -48,7 +48,7 @@ export const Paginator: React.FunctionComponent<IPaginatorProps> = ({
     const newProps = {
         count: state.filteredRecordCount,
         labelDisplayedRows: message(state.totalRecordCount, state.filteredRecordCount),
-        onChangePage: (e: any, page: number) => api.goToPage(page),
+        onChangePage: (_e: any, page: number) => api.goToPage(page),
         onChangeRowsPerPage: (e: any) => api.updateItemPerPage(Number(e.target.value)),
         page: state.filteredRecordCount > 0 ? state.page : 0,
         rowsPerPage: state.itemsPerPage,

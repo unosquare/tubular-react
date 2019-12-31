@@ -7,7 +7,7 @@ export interface TbRowProps {
     row: {};
     rowIndex: number;
     columns: ColumnModel[];
-    onRowClick?: (ev: any) => void;
+    onRowClick?(): void;
 }
 
 export const TbRow: React.FunctionComponent<TbRowProps> = ({ row, columns, onRowClick }: TbRowProps) => (
