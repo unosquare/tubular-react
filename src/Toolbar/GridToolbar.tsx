@@ -28,7 +28,7 @@ export const GridToolbar: React.FunctionComponent<GridToolbarProps> = ({
     return (
         <Toolbar data-testid="grid-toolbar">
             <div style={isMobileResolution ? mobileSpacer : spacer} />
-            {toolbarOptions.customItems && toolbarOptions.customItems}
+            {toolbarOptions.customItems}
             {toolbarOptions.exportButton && (
                 <ExportButton
                     type="csv"
