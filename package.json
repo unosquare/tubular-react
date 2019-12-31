@@ -24,7 +24,7 @@
       "^.+\\.(ts|tsx)$": "ts-jest"
     },
     "testMatch": [
-      "<rootDir>/test/**/DataGrid.spec.(ts|tsx)"
+      "<rootDir>/test/**/*.spec.(ts|tsx)"
     ],
     "globals": {
       "ts-jest": {
