@@ -2,34 +2,34 @@ import { AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection } 
 
 const columns = [
     new ColumnModel('OrderID', {
-        DataType: ColumnDataType.NUMERIC,
-        Filterable: true,
-        IsKey: true,
-        Label: 'Id',
-        SortDirection: ColumnSortDirection.ASCENDING,
-        SortOrder: 1,
-        Sortable: true,
+        dataType: ColumnDataType.Numeric,
+        filterable: true,
+        isKey: true,
+        label: 'Id',
+        sortDirection: ColumnSortDirection.Ascending,
+        sortOrder: 1,
+        sortable: true,
     }),
     new ColumnModel('CustomerName', {
-        Aggregate: AggregateFunctions.COUNT,
-        Filterable: true,
-        Searchable: true,
-        Sortable: true,
+        aggregate: AggregateFunctions.Count,
+        filterable: true,
+        searchable: true,
+        sortable: true,
     }),
     new ColumnModel('ShippedDate', {
-        DataType: ColumnDataType.DATE_TIME,
-        Filterable: true,
-        Sortable: true,
+        dataType: ColumnDataType.DateTime,
+        filterable: true,
+        sortable: true,
     }),
     new ColumnModel('ShipperCity'),
     new ColumnModel('Amount', {
-        DataType: ColumnDataType.NUMERIC,
-        Sortable: true,
+        dataType: ColumnDataType.Numeric,
+        sortable: true,
     }),
     new ColumnModel('IsShipped', {
-        DataType: ColumnDataType.BOOLEAN,
-        Filterable: true,
-        Sortable: true,
+        dataType: ColumnDataType.Boolean,
+        filterable: true,
+        sortable: true,
     }),
 ];
 export default columns;

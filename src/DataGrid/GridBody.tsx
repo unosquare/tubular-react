@@ -1,17 +1,17 @@
 import TableBody from '@material-ui/core/TableBody';
 import * as React from 'react';
 import { ITbTableInstance } from 'tubular-react-common';
-import { ITbRow, TbRow } from '../BareBones/TbRow';
-import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
+import { TbRowProps, TbRow } from '../BareBones/TbRow';
+import DetailComponent from '../DataGridInterfaces/DetailComponent';
 import { renderCells } from '../utils';
 import MasterDetailRow from './MasterDetailRow';
 import { NoDataRow } from './NoDataRow';
 
-interface IProps {
-    detailComponent?: React.ReactElement<IDetailComponet>;
+interface GridBodyProps {
+    detailComponent?: React.ReactElement<DetailComponent>;
     tbTableInstance: ITbTableInstance;
-    rowComponent: React.FunctionComponent<ITbRow>;
-    onRowClick?(row: any): void;
+    rowComponent: React.FunctionComponent<TbRowProps>;
+    onRowClick?(row: {}): void;
 }
 
 const getStyles = (isPointer: boolean) => ({
@@ -19,23 +19,23 @@ const getStyles = (isPointer: boolean) => ({
     title: { paddingLeft: '15px' },
 });
 
-const generateOnRowClickProxy = onRowClick => {
-    return (row: any) => (ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => {
+const generateOnRowClickProxy = (onRowClick: any) => {
+    return (row: {}) => () => {
         if (onRowClick) {
             onRowClick(row);
         }
     };
 };
 
-export const GridBody: React.FunctionComponent<IProps> = ({
+export const GridBody: React.FunctionComponent<GridBodyProps> = ({
     tbTableInstance,
     rowComponent,
     onRowClick,
     detailComponent,
-}: IProps) => {
+}: GridBodyProps) => {
     const styles = getStyles(Boolean(onRowClick));
     const RowComponent = rowComponent ? rowComponent : TbRow;
-    const onRowClickProxy = onRowClick ? generateOnRowClickProxy(onRowClick) : () => void 0;
+    const onRowClickProxy = onRowClick ? generateOnRowClickProxy(onRowClick) : (_row: any): (() => void) => void 0;
     const { state } = tbTableInstance;
 
     let content = null;
@@ -43,7 +43,7 @@ export const GridBody: React.FunctionComponent<IProps> = ({
     if (state.filteredRecordCount === 0 && !state.isLoading) {
         content = <NoDataRow columns={state.columns} styles={styles} />;
     } else {
-        content = state.data.map((row: any, rowIndex: number) => {
+        content = state.data.map((row: {}, rowIndex: number) => {
             if (detailComponent) {
                 return (
                     <MasterDetailRow

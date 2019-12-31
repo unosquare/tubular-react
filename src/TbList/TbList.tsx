@@ -1,29 +1,31 @@
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import * as React from 'react';
-import { AutoSizer, CellMeasurer, CellMeasurerCache, InfiniteLoader, List } from 'react-virtualized';
+import { AutoSizer, CellMeasurer, CellMeasurerCache, InfiniteLoader, List, Index, IndexRange } from 'react-virtualized';
 import { ITbListInstance } from 'tubular-react-common';
 import { TbListItem } from './TbListItem';
 import { generateOnRowClickProxy } from 'tubular-react-common';
 
-interface IProps {
+export interface TbListProps {
     tbInstance: ITbListInstance;
-    listItemComponent?: React.FunctionComponent<{}>;
+    listItemComponent?: React.FunctionComponent<any>;
     onItemClick?(row: {}): void;
 }
 
-export const TbList: React.FunctionComponent<IProps> = tbProps => {
+export const TbList: React.FunctionComponent<TbListProps> = tbProps => {
     const { tbInstance, onItemClick, listItemComponent } = tbProps;
 
     const { items, hasNextPage } = tbInstance.state.list;
 
-    const loadNextPage = args => {
+    const loadNextPage = (args: IndexRange) => {
         const pageToLoad = Math.ceil(args.stopIndex / (tbInstance.state.itemsPerPage - 1)) - 1;
         if (tbInstance.state.isLoading || pageToLoad <= tbInstance.state.page) {
             return;
         }
 
         tbInstance.api.loadPage(pageToLoad);
+
+        return new Promise(() => void 0);
     };
 
     // This cache is enabling better performance when it comes to reload
@@ -37,7 +39,7 @@ export const TbList: React.FunctionComponent<IProps> = tbProps => {
     const loadMoreItems = loadNextPage;
 
     // Every row is loaded except for our Loading/NoRecordsFound indicator.
-    const isItemLoaded = index => !hasNextPage || index < items.length;
+    const isItemLoaded = (index: Index) => !hasNextPage || index.index < items.length;
 
     const ListItemComponent = listItemComponent ? listItemComponent : TbListItem;
 
@@ -55,7 +57,7 @@ export const TbList: React.FunctionComponent<IProps> = tbProps => {
             />
         );
 
-        const placeholderItem = placeholderStyle => {
+        const placeholderItem = (placeholderStyle: any) => {
             const placeholderMessage = noRecordsFound ? 'No records found' : 'Loading...';
             return (
                 <ListItem button={true} style={placeholderStyle}>
@@ -81,9 +83,9 @@ export const TbList: React.FunctionComponent<IProps> = tbProps => {
             rowCount={itemCount}
             threshold={tbInstance.state.itemsPerPage}
         >
-            {({ onRowsRendered }) => (
+            {({ onRowsRendered }: any) => (
                 <AutoSizer>
-                    {({ width, height }) => {
+                    {({ width, height }: any) => {
                         return (
                             <List
                                 width={width}

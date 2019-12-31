@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-import { ColumnModel } from 'tubular-common';
+import { ColumnModel, FilterWrapper } from 'tubular-common';
 
 const dropdown = {
     marginLeft: '10%',
@@ -11,14 +11,22 @@ const dropdown = {
 
 const getValue = (op: string) => (!op || op === '' ? 'None' : op);
 
-export const OperatorsDropdown: React.FunctionComponent<any> = ({ activeColumn, handleFilterChange }) => {
-    const onChange = ({ target }: any) => handleFilterChange({ Operator: target.value });
+export interface OperatorsDropdownProps {
+    activeColumn: ColumnModel;
+    handleFilterChange: (value: FilterWrapper | {}) => void;
+}
+
+export const OperatorsDropdown: React.FunctionComponent<OperatorsDropdownProps> = ({
+    activeColumn,
+    handleFilterChange,
+}: OperatorsDropdownProps) => {
+    const onChange = ({ target }: any) => handleFilterChange({ operator: target.value });
 
     return (
         <TextField
             style={dropdown}
             select={true}
-            value={getValue(activeColumn.Filter.Operator)}
+            value={getValue(activeColumn.filter.operator)}
             onChange={onChange}
             label="Operator"
         >

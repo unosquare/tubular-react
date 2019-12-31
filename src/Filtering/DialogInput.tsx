@@ -14,7 +14,7 @@ const BooleanInputOperators = [
     { Value: 'false', Title: 'False' },
 ];
 
-interface IProps {
+export interface DialogInputProps {
     isPrimary: boolean;
     column: ColumnModel;
     handleTextFieldChange(value: string): void;
@@ -29,63 +29,68 @@ const ColumnDataTypeToHtmlType = {
     string: 'text',
 };
 
-const getValue = (dataType: ColumnDataType, operator: CompareOperators, value: string, handleTextFieldChange: any) => {
+const getValue = (
+    dataType: ColumnDataType,
+    operator: CompareOperators | string,
+    value: string,
+    handleTextFieldChange: any,
+) => {
+    const isNone = operator === CompareOperators.None || operator == 'None';
+
     switch (dataType) {
-        case ColumnDataType.DATE:
+        case ColumnDataType.Date:
             if (value) {
                 return formatDate(value, 'yyyy-MM-DD');
             }
             handleTextFieldChange(formatDate(new Date().toISOString(), 'YYYY-MM-DD'));
             return '';
-        case ColumnDataType.DATE_TIME:
-        case ColumnDataType.DATE_TIME_UTC:
+        case ColumnDataType.DateTime:
+        case ColumnDataType.DateTimeUtc:
             if (value) {
                 return formatDate(value, 'yyyy-MM-DD[T]HH:mm');
             }
             handleTextFieldChange(formatDate(new Date().toISOString(), 'yyyy-MM-DD[T]HH:mm'));
             return '';
-        case ColumnDataType.BOOLEAN:
-            return operator === CompareOperators.NONE
-                ? ''
-                : typeof value === 'boolean'
-                ? value === true
-                    ? 'true'
-                    : 'false'
-                : value;
+        case ColumnDataType.Boolean:
+            return isNone ? '' : typeof value === 'boolean' ? (value === true ? 'true' : 'false') : value;
         default:
-            return operator === CompareOperators.NONE ? '' : value || '';
+            return isNone ? '' : value || '';
     }
 };
 
-export const DialogInput: React.FunctionComponent<IProps> = ({ column, handleTextFieldChange, isPrimary }: IProps) => {
+export const DialogInput: React.FunctionComponent<DialogInputProps> = ({
+    column,
+    handleTextFieldChange,
+    isPrimary,
+}: DialogInputProps) => {
     const value =
         getValue(
-            column.DataType,
-            column.Filter.Operator,
-            isPrimary ? column.Filter.Text : column.Filter.Argument[0],
+            column.dataType,
+            column.filter.operator,
+            isPrimary ? column.filter.text : column.filter.argument[0],
             handleTextFieldChange,
         ) || '';
-    const disabled = isPrimary ? column.Filter.Operator === CompareOperators.NONE : false;
+    const disabled = isPrimary ? column.filter.operator === CompareOperators.None : false;
     const label = isPrimary
-        ? column.Filter.Operator !== CompareOperators.BETWEEN
+        ? column.filter.operator !== CompareOperators.Between
             ? 'Value'
             : 'First Value'
         : 'Second Value';
 
-    const handleChange = (e: any) => handleTextFieldChange(e.target.value);
+    const handleChange = ({ target }: any) => handleTextFieldChange(target.value);
 
     return (
         <TextField
-            select={column.DataType === ColumnDataType.BOOLEAN}
+            select={column.dataType === ColumnDataType.Boolean}
             style={dropdown}
-            id={column.Name}
+            id={column.name}
             disabled={disabled}
             value={value}
             label={label}
-            type={(ColumnDataTypeToHtmlType as any)[column.DataType]}
+            type={(ColumnDataTypeToHtmlType as any)[column.dataType]}
             onChange={handleChange}
         >
-            {column.DataType === ColumnDataType.BOOLEAN &&
+            {column.dataType === ColumnDataType.Boolean &&
                 BooleanInputOperators.map(option => (
                     <MenuItem key={option.Value} value={option.Value}>
                         {option.Title}

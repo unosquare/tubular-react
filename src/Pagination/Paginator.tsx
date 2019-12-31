@@ -26,7 +26,7 @@ const message = (totalRecordCount: number, filteredRecordCount: number) => ({ fr
         ? '0 records found'
         : `${from} to ${to} of ${count} from ${totalRecordCount} records`;
 
-interface IPaginatorProps {
+export interface IPaginatorProps {
     tbTableInstance: ITbTableInstance;
     rowsPerPageOptions: number[];
     advancePagination: boolean;
@@ -48,7 +48,7 @@ export const Paginator: React.FunctionComponent<IPaginatorProps> = ({
     const newProps = {
         count: state.filteredRecordCount,
         labelDisplayedRows: message(state.totalRecordCount, state.filteredRecordCount),
-        onChangePage: (e: any, page: number) => api.goToPage(page),
+        onChangePage: (_e: any, page: number) => api.goToPage(page),
         onChangeRowsPerPage: (e: any) => api.updateItemPerPage(Number(e.target.value)),
         page: state.filteredRecordCount > 0 ? state.page : 0,
         rowsPerPage: state.itemsPerPage,

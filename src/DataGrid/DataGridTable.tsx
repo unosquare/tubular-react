@@ -4,20 +4,20 @@ import TableHead from '@material-ui/core/TableHead';
 
 import * as React from 'react';
 import { ITbTableInstance } from 'tubular-react-common';
-import { ITbRow } from '../BareBones/TbRow';
-import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
+import { TbRowProps } from '../BareBones/TbRow';
+import DetailComponent from '../DataGridInterfaces/DetailComponent';
 import { GridBody } from './GridBody';
 import { GridHeader } from './GridHeader';
 
-interface IProps {
+export interface DataGridTableProps {
     tbTableInstance: ITbTableInstance;
-    rowComponent: React.FunctionComponent<ITbRow>;
+    rowComponent: React.FunctionComponent<TbRowProps>;
     footerComponent: React.FunctionComponent<any>;
-    detailComponent?: React.ReactElement<IDetailComponet>;
-    onRowClick?(row: any): void;
+    detailComponent?: React.ReactElement<DetailComponent>;
+    onRowClick?(row: {}): void;
 }
 
-export const DataGridTable: React.FunctionComponent<IProps> = (props: IProps) => {
+export const DataGridTable: React.FunctionComponent<DataGridTableProps> = (props: DataGridTableProps) => {
     const Footer = props.footerComponent;
 
     return (

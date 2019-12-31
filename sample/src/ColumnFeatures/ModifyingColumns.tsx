@@ -10,7 +10,6 @@ import localData from '../data/localData';
 
 const ModifyingColumns: React.FunctionComponent = () => {
     const [getErrorMessage, setErrorMessage] = React.useState(null as string);
-    const [data, setData] = React.useState(localData);
     const [gridColumns, setGridColumns] = React.useState(columns);
     const [columnCounter, setColumnCounter] = React.useState(0);
 
@@ -18,9 +17,9 @@ const ModifyingColumns: React.FunctionComponent = () => {
         setGridColumns([
             ...gridColumns,
             new ColumnModel(`Column ${columnCounter}`, {
-                Filterable: true,
-                Searchable: true,
-                Sortable: true,
+                filterable: true,
+                searchable: true,
+                sortable: true,
             }),
         ]);
 
@@ -28,7 +27,7 @@ const ModifyingColumns: React.FunctionComponent = () => {
     };
 
     const handleDeleteLastColumn = () => {
-        setGridColumns([...gridColumns.filter(c => c.Name !== gridColumns[gridColumns.length - 1].Name)]);
+        setGridColumns([...gridColumns.filter(c => c.name !== gridColumns[gridColumns.length - 1].name)]);
     };
 
     const toolbarOptions = new ToolbarOptions({
@@ -53,7 +52,7 @@ const ModifyingColumns: React.FunctionComponent = () => {
             )}
             <DataGrid
                 columns={gridColumns}
-                dataSource={data}
+                dataSource={localData}
                 gridName="ModifyingColumns"
                 storage={new LocalStorage()}
                 onError={setErrorMessage}

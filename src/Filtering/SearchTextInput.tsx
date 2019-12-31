@@ -7,22 +7,22 @@ import Search from '@material-ui/icons/Search';
 
 import * as React from 'react';
 
-const styles: any = {
+const styles = {
     formControl: {
         margin: '10px',
         width: 250,
     },
 };
 
-interface ISearchTextInput {
+export interface SearchTextInputProps {
     searchText: string;
-    updateSearchText: (value: string) => any;
+    updateSearchText: (value: string) => void;
 }
 
-export const SearchTextInput: React.FunctionComponent<ISearchTextInput> = ({
+export const SearchTextInput: React.FunctionComponent<SearchTextInputProps> = ({
     searchText,
     updateSearchText,
-}: ISearchTextInput) => {
+}: SearchTextInputProps) => {
     const onChange = (e: any) => updateSearchText(e.target.value);
     const onClear = () => updateSearchText('');
 

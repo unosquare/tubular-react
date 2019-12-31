@@ -4,12 +4,12 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
-import { ColumnModel, IDataGridStorage, ITubularHttpClient } from 'tubular-common';
+import { ColumnModel, DataGridStorage, TubularHttpClientAbstract } from 'tubular-common';
 import { useTbTable } from 'tubular-react-common';
 import { FixedLinearProgress } from 'uno-material-ui';
 import { useResolutionSwitch } from 'uno-react';
-import { ITbRow } from '../BareBones/TbRow';
-import IDetailComponet from '../DataGridInterfaces/IDetailComponent';
+import { TbRowProps } from '../BareBones/TbRow';
+import DetailComponet from '../DataGridInterfaces/DetailComponent';
 import { Paginator } from '../Pagination';
 import { GridToolbar } from '../Toolbar/GridToolbar';
 import { ToolbarOptions } from '../Toolbar/ToolbarOptions';
@@ -28,25 +28,25 @@ const useStyles = makeStyles({
 
 const timeout = 400;
 
-interface IProps {
+export interface DataGridProps {
     columns: ColumnModel[];
-    dataSource: any[] | string | Request | ITubularHttpClient;
+    dataSource: {}[] | string | Request | TubularHttpClientAbstract;
     deps?: any[];
-    detailComponent?: React.ReactElement<IDetailComponet>;
+    detailComponent?: React.ReactElement<DetailComponet>;
     gridName: string;
-    storage?: IDataGridStorage;
+    storage?: DataGridStorage;
     toolbarOptions?: ToolbarOptions;
 
     // ToDo: new ones:
     mobileBreakpointWidth?: number;
-    rowComponent?: React.FunctionComponent<ITbRow>;
-    rowMobileComponent?: React.FunctionComponent<ITbRow>;
+    rowComponent?: React.FunctionComponent<TbRowProps>;
+    rowMobileComponent?: React.FunctionComponent<TbRowProps>;
     footerComponent?: React.FunctionComponent<any>;
-    onError?(err: any): void;
-    onRowClick?(row: any): void;
+    onError?(err: string): void;
+    onRowClick?(row: {}): void;
 }
 
-export const DataGrid: React.FunctionComponent<IProps> = (props: IProps) => {
+export const DataGrid: React.FunctionComponent<DataGridProps> = (props: DataGridProps) => {
     const {
         columns,
         dataSource,

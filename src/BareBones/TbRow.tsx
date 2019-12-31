@@ -3,14 +3,14 @@ import * as React from 'react';
 import ColumnModel from 'tubular-common/dist/Models/ColumnModel';
 import { renderCells } from '../utils/renders';
 
-export interface ITbRow {
-    row: any;
+export interface TbRowProps {
+    row: {};
     rowIndex: number;
     columns: ColumnModel[];
-    onRowClick?: (ev: any) => any;
+    onRowClick?(): void;
 }
 
-export const TbRow: React.FunctionComponent<ITbRow> = ({ row, columns, onRowClick }: ITbRow) => (
+export const TbRow: React.FunctionComponent<TbRowProps> = ({ row, columns, onRowClick }: TbRowProps) => (
     <TableRow hover={true} onClick={onRowClick}>
         {renderCells(columns, row)}
     </TableRow>
