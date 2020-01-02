@@ -25,7 +25,9 @@ export const TbList: React.FunctionComponent<TbListProps> = tbProps => {
 
         tbInstance.api.loadPage(pageToLoad);
 
-        return new Promise(() => void 0);
+        // We're resolving immediately because tubular will take care of
+        // updating the values once the request is complete.
+        return Promise.resolve();
     };
 
     // This cache is enabling better performance when it comes to reload
@@ -47,7 +49,7 @@ export const TbList: React.FunctionComponent<TbListProps> = tbProps => {
         const { index, key, style } = props;
         const row = items[index];
         const itemClickProxy = generateOnRowClickProxy(onItemClick)(row);
-        const isPlaceholder = !isItemLoaded(index) || !items[index];
+        const isPlaceholder = !isItemLoaded({ index }) || !items[index];
         const itemToRender = (
             <ListItemComponent
                 row={row}

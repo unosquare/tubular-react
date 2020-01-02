@@ -4,7 +4,7 @@
   "description": "Unosquare Tubular React",
   "main": "dist/index.js",
   "scripts": {
-    "start": "parcel ./sample/app/index.html --open --port 9000 --no-source-maps",
+    "start": "parcel ./sample/app/index.html --open --port 9000",
     "build": "tsc",
     "check": "npm run lint && npm test",
     "lint": "tsc --noEmit && eslint ./src/**/*.{js,ts,tsx} --quiet",
