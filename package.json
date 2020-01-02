@@ -10,11 +10,17 @@
     "lint": "tsc --noEmit && eslint ./src/**/*.{js,ts,tsx} --quiet",
     "lint:fix": "eslint ./src/**/*.{js,ts,tsx} --quiet --fix",
     "test": "jest",
+    "cest": "jest --collect-coverage",
     "preparepackage": "npm run build && npm run copypackage && cd dist && npm pack",
     "copypackage": "npx shx cp package.json dist"
   },
   "jest": {
     "automock": false,
+    "collectCoverageFrom": [
+        "./src/**/*.{ts,tsx}",
+        "!**/node_modules/**",
+        "!./test/**"
+    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
