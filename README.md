@@ -1,6 +1,5 @@
  [![Analytics](https://ga-beacon.appspot.com/UA-8535255-2/unosquare/tubular-react/)](https://github.com/igrigorik/ga-beacon)
  [![npm version](https://badge.fury.io/js/tubular-react.svg)](https://badge.fury.io/js/tubular-react)
-[![Build status](https://ci.appveyor.com/api/projects/status/xokpdjvlh4djwvri/branch/master?svg=true)](https://ci.appveyor.com/project/geoperez/tubular-react/branch/master)
 ![Buils status](https://github.com/unosquare/tubular-react/workflows/Node.js%20Package/badge.svg)
 
  ![Tubular-React](http://unosquare.github.io/tubular-angular/assets/tubular.png)
@@ -24,7 +23,6 @@ Please visit the [Tubular GitHub Page](http://unosquare.github.io/tubular) to le
 Table of contents
 =================
 
-  * [Dependencies](#dependencies)  
   * [💾Installation](#installation)
   * [Usages](#datagrid)
     * [DataGrid](#datagrid)
@@ -38,14 +36,6 @@ Table of contents
     * [How to include functionality buttons](#how-to-include-functionality-buttons)
     * [Run integrated sample](#run-integrated-sample)
   * [Related projects](#related-projects)
-
-## Dependencies
-
-* [Material UI](https://material-ui.com/)
-* [React](https://reactjs.org/)
-* [Tubular Common](https://github.com/unosquare/tubular-common)
-* [uno-react](https://github.com/unosquare/uno-react)
-* [uno-material-ui](https://github.com/unosquare/uno-material-ui)
 
 ## Installation
 
@@ -125,7 +115,6 @@ These are all the available props (and their default values) for the `<DataGrid 
 | `toolbarOptions`  | `ToolbarOptions`  | `new ToolBarOptions()`  | `Optional`. It should be an instance of `ToolbarOptions`. This encapsulates useful options. |                                                |
 | `storage`  | `IDataGridStorage`        | `LocalStorage`         | `Optional`. Use this prop to set the settings storage. |
 
-
 ### `DataGridTable` props
 
 These are all the available props (and their default values) for the `<DataGridProvider />` component.
@@ -135,7 +124,6 @@ These are all the available props (and their default values) for the `<DataGridP
 | `bodyRenderer`    | `function`        | -         | `Optional`. It takes a function with 4 parameters `(row: any, index: number, columns: ColumnModel[], onRowClickProxy: (ev: any) => any)` to map all rows. |
 | `footerRenderer`  | `function`        | -         | `Optional`. It takes an aggregate function with 1 parameter `(aggregate: any)` to show in a foot row the results from the aggregate function. |
 | `onRowClick`  | `function`        | -         | `Optional`. Use this event handler to receive the clicked row. |
-
 
 ### `ToolbarOptions` class
 

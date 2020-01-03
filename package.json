@@ -17,9 +17,9 @@
   "jest": {
     "automock": false,
     "collectCoverageFrom": [
-        "./src/**/*.{ts,tsx}",
-        "!**/node_modules/**",
-        "!./test/**"
+      "./src/**/*.{ts,tsx}",
+      "!**/node_modules/**",
+      "!./test/**"
     ],
     "moduleFileExtensions": [
       "ts",
@@ -54,8 +54,8 @@
     "@material-ui/icons": "^4.5.1",
     "date-fns": "^2.8.1",
     "react-virtualized": "^9.21.2",
-    "tubular-common": "^3.0.2",
-    "tubular-react-common": "1.0.4",
+    "tubular-common": "^3.0.3",
+    "tubular-react-common": "1.0.6",
     "uno-material-ui": "^1.7.23"
   },
   "devDependencies": {
