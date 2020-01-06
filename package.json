@@ -50,13 +50,13 @@
   },
   "homepage": "https://github.com/unosquare/tubular-react#readme",
   "dependencies": {
-    "@material-ui/core": "^4.8.2",
+    "@material-ui/core": "^4.8.3",
     "@material-ui/icons": "^4.5.1",
     "date-fns": "^2.8.1",
     "react-virtualized": "^9.21.2",
     "tubular-common": "^3.0.3",
     "tubular-react-common": "1.0.6",
-    "uno-material-ui": "^1.7.23"
+    "uno-material-ui": "^1.7.25"
   },
   "devDependencies": {
     "@testing-library/react": "^9.4.0",
