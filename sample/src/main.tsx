@@ -43,7 +43,7 @@ const Main: React.FunctionComponent = () => {
                 <AppBar position="static">
                     <img
                         className={classes.logo}
-                        src="https://unosquare.github.io/tubular-react/static/tubular.png"
+                        src="https://unosquare.github.io/tubular-angular/assets/tubular.png"
                         alt="Tubular React"
                     />
                     <Tabs value={currentValue} onChange={handleChange}>
