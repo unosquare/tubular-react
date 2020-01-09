@@ -31,8 +31,8 @@ export const OperatorsDropdown: React.FunctionComponent<OperatorsDropdownProps> 
             label="Operator"
         >
             {ColumnModel.getOperators(activeColumn).map((row: any) => (
-                <MenuItem key={row.Value} value={row.Value}>
-                    {row.Title}
+                <MenuItem key={row.value} value={row.value}>
+                    {row.title}
                 </MenuItem>
             ))}
         </TextField>

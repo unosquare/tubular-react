@@ -40,16 +40,16 @@ const getValue = (
     switch (dataType) {
         case ColumnDataType.Date:
             if (value) {
-                return formatDate(value, 'yyyy-MM-DD');
+                return formatDate(value, 'yyyy-MM-dd');
             }
-            handleTextFieldChange(formatDate(new Date().toISOString(), 'YYYY-MM-DD'));
+            handleTextFieldChange(formatDate(new Date().toISOString(), 'YYYY-MM-dd'));
             return '';
         case ColumnDataType.DateTime:
         case ColumnDataType.DateTimeUtc:
             if (value) {
-                return formatDate(value, 'yyyy-MM-DD[T]HH:mm');
+                return formatDate(value, 'yyyy-MM-dd[T]HH:mm');
             }
-            handleTextFieldChange(formatDate(new Date().toISOString(), 'yyyy-MM-DD[T]HH:mm'));
+            handleTextFieldChange(formatDate(new Date().toISOString(), 'yyyy-MM-dd[T]HH:mm'));
             return '';
         case ColumnDataType.Boolean:
             return isNone ? '' : typeof value === 'boolean' ? (value === true ? 'true' : 'false') : value;
