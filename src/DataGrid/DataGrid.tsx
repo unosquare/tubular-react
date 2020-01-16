@@ -1,3 +1,4 @@
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
@@ -6,7 +7,6 @@ import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
 import { ColumnModel, DataGridStorage, TubularHttpClientAbstract } from 'tubular-common';
 import { useTbTable } from 'tubular-react-common';
-import { FixedLinearProgress } from 'uno-material-ui';
 import { useResolutionSwitch } from 'uno-react';
 import { TbRowProps } from '../BareBones/TbRow';
 import DetailComponet from '../DataGridInterfaces/DetailComponent';
@@ -19,6 +19,7 @@ import { MobileDataGridTable } from './MobileDataGridTable';
 const useStyles = makeStyles({
     linearProgress: {
         marginTop: '-10px',
+        height: '20px',
     },
     root: {
         overflowX: 'auto',
@@ -83,7 +84,9 @@ export const DataGrid: React.FunctionComponent<DataGridProps> = (props: DataGrid
         return (
             <Paper className={classes.root}>
                 <GridToolbar toolbarOptions={toolbarOptions} tbTableInstance={tbTableInstance} gridName={gridName} />
-                <FixedLinearProgress isLoading={tbTableInstance.state.isLoading} />
+                <div className={classes.linearProgress} data-testid="linear-progress">
+                    {tbTableInstance.state.isLoading && <LinearProgress />}
+                </div>
                 <MobileDataGridTable
                     tbTableInstance={tbTableInstance}
                     onRowClick={onRowClick}
@@ -117,7 +120,7 @@ export const DataGrid: React.FunctionComponent<DataGridProps> = (props: DataGrid
             <GridToolbar gridName={gridName} toolbarOptions={toolbarOptions} tbTableInstance={tbTableInstance} />
             {toolbarOptions.topPager && paginator('top')}
             <div className={classes.linearProgress} data-testid="linear-progress">
-                <FixedLinearProgress isLoading={tbTableInstance.state.isLoading} />
+                {tbTableInstance.state.isLoading && <LinearProgress />}
             </div>
             <DataGridTable
                 tbTableInstance={tbTableInstance}
