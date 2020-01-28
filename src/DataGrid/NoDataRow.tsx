@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography/Typography';
 import Warning from '@material-ui/icons/Warning';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
+import { Lang } from '../utils/langService';
 
 export interface NoDataRowProps {
     columns: ColumnModel[];
@@ -14,7 +15,7 @@ export const NoDataRow: React.FunctionComponent<NoDataRowProps> = ({ columns, st
     <TableRow>
         <TableCell colSpan={columns.filter((col: ColumnModel) => col.visible).length}>
             <Typography style={styles.title} variant="body2" gutterBottom={true}>
-                <Warning /> No records found
+                <Warning /> {Lang.translate('NoRecords', 'USSPANISH')}
             </Typography>
         </TableCell>
     </TableRow>
