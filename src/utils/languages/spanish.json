@@ -1,0 +1,21 @@
+{
+    "ClickSort": "Da click para ordenar. Presiona Ctrl para ordenar por multiples columnas",
+    "NoRecords": "No se encontraron registros",
+    "Value": "Valor",
+    "FirstValue": "Primer valor",
+    "SecondValue": "Segundo valor",
+    "None": "Ninguno",
+    "FirstPage": "Primera pagina",
+    "PrevPage": "Pagina anterior",
+    "PageNum": "Pagina {0}",
+    "NextPage": "Pagina siguiente",
+    "LastPage": "Ultima pagina",
+    "Pages": "{0} - {1} de {2}",
+    "TotalRecords": "{0} a {1} de {2} de un total de {3} registros",
+    "Loading": "Cargando...",
+    "Download": "Descargar",
+    "Print": "Imprimir",
+    "CurrentRows": "Filas actuales",
+    "AllRows": "Todas las filas",
+    "Operator": "Operador"
+}

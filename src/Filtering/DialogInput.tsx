@@ -74,9 +74,9 @@ export const DialogInput: React.FunctionComponent<DialogInputProps> = ({
     const disabled = isPrimary ? column.filter.operator === CompareOperators.None : false;
     const label = isPrimary
         ? column.filter.operator !== CompareOperators.Between
-            ? `${Lang.translate('Label_Value', 'USSPANISH')}`
-            : `${Lang.translate('Label_FirstValue', 'USSPANISH')}`
-        : `${Lang.translate('Label_SecondValue', 'USSPANISH')}`;
+            ? `${Lang.translate('Label_Value')}`
+            : `${Lang.translate('Label_FirstValue')}`
+        : `${Lang.translate('Label_SecondValue')}`;
 
     const handleChange = ({ target }: any) => handleTextFieldChange(target.value);
 

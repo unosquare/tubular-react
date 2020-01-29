@@ -13,7 +13,9 @@
         "declaration": true,
         "sourceMap": false,
         "target": "es5",
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "resolveJsonModule": true,
+        "types": ["node"]
     },
     "include": [ "./src/**/*.ts", "./src/**/*.tsx" ],
     "exclude": [ "./test/**/*.*", "./node_modules" ]

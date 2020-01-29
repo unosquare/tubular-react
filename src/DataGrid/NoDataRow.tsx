@@ -15,7 +15,7 @@ export const NoDataRow: React.FunctionComponent<NoDataRowProps> = ({ columns, st
     <TableRow>
         <TableCell colSpan={columns.filter((col: ColumnModel) => col.visible).length}>
             <Typography style={styles.title} variant="body2" gutterBottom={true}>
-                <Warning /> {Lang.translate('NoRecords', 'USSPANISH')}
+                <Warning /> {Lang.translate('NoRecords')}
             </Typography>
         </TableCell>
     </TableRow>

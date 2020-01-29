@@ -5,6 +5,7 @@ import { AutoSizer, CellMeasurer, CellMeasurerCache, InfiniteLoader, List, Index
 import { ITbListInstance } from 'tubular-react-common';
 import { TbListItem } from './TbListItem';
 import { generateOnRowClickProxy } from 'tubular-react-common';
+import { Lang } from '../utils/langService';
 
 export interface TbListProps {
     tbInstance: ITbListInstance;
@@ -60,7 +61,9 @@ export const TbList: React.FunctionComponent<TbListProps> = tbProps => {
         );
 
         const placeholderItem = (placeholderStyle: any) => {
-            const placeholderMessage = noRecordsFound ? 'No records found' : 'Loading...';
+            const placeholderMessage = noRecordsFound ?
+            Lang.translate('NoRecords') :
+            Lang.translate('Loading');
             return (
                 <ListItem button={true} style={placeholderStyle}>
                     <ListItemText primary={placeholderMessage} />

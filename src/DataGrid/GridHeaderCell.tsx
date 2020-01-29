@@ -29,7 +29,7 @@ export const GridHeaderCell: React.FunctionComponent<GridHeaderCellProps> = ({
 
     const render = column.sortable ? (
         <Tooltip
-            title={Lang.translate('ClickSort', 'USSPANISH')}
+            title={Lang.translate('ClickSort')}
             placement="bottom-start"
             enterDelay={300}
         >

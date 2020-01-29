@@ -4,6 +4,7 @@ import * as React from 'react';
 import { ITbTableInstance } from 'tubular-react-common';
 import { useResolutionSwitch } from 'uno-react';
 import { AdvancePaginationActions } from './AdvancePaginationActions';
+import { Lang } from '../utils/langService';
 
 const useStyles = makeStyles({
     caption: {
@@ -21,10 +22,10 @@ const timeout = 400;
 
 const message = (totalRecordCount: number, filteredRecordCount: number) => ({ from, to, count }: any) =>
     totalRecordCount === filteredRecordCount
-        ? `${from}-${to} of ${count}`
+        ? Lang.translate("Pages", `${from}`, `${to}`, `${count}`)
         : filteredRecordCount === 0
-        ? '0 records found'
-        : `${from} to ${to} of ${count} from ${totalRecordCount} records`;
+        ? Lang.translate("NoRecords")
+        : Lang.translate("TotalRecords", `${from}`, `${to}`, `${count}`, `${totalRecordCount}`);
 
 export interface IPaginatorProps {
     tbTableInstance: ITbTableInstance;

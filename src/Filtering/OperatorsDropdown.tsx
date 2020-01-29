@@ -3,6 +3,7 @@ import * as React from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import { ColumnModel, FilterWrapper } from 'tubular-common';
+import { Lang } from '../utils/langService';
 
 const dropdown = {
     marginLeft: '10%',
@@ -28,7 +29,7 @@ export const OperatorsDropdown: React.FunctionComponent<OperatorsDropdownProps> 
             select={true}
             value={getValue(activeColumn.filter.operator)}
             onChange={onChange}
-            label="Operator"
+            label={Lang.translate('Operator')}
         >
             {ColumnModel.getOperators(activeColumn).map((row: any) => (
                 <MenuItem key={row.value} value={row.value}>
