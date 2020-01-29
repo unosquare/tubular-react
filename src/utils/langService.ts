@@ -3,8 +3,8 @@ import * as english from '../utils/languages/english.json';
 const settings = {
     lang: english,
 } as {
-    [key: string]: any,
-}
+    [key: string]: any;
+};
 
 export default class Lang {
     public static translate(key: string, ...args: any[]): string {

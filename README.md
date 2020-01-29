@@ -198,6 +198,23 @@ npm install
 npm start
 ```
 
+## LanguageService
+
+Tubular React now includes a brand new Language Service that will translate the content of the grid to a preferred language.
+Devs can also implement content on their language and import it to use this language.
+By default, Tubular React comes with implementations in **English** and **Spanish**.
+If any key content needs parameters to include in the translation, devs can pass the parameters in the `translate` function.
+
+### Example
+
+``` ts
+import Lang from '../src/utils/langService';
+
+const value: number = 16;
+Lang.translate('PageNum', value + 1)
+```
+
+
 ## Related Projects
 
 Name | Type | Language/tech | Description
