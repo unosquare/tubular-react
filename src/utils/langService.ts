@@ -1,6 +1,7 @@
 import * as english from '../utils/languages/english.json';
 import * as spanish from '../utils/languages/spanish.json';
-import { settings } from '../../settings';
+
+let settings = {langName: 'english'};
 
 export class Lang {
     public static changeLang(lang: string) {

@@ -1,5 +1,4 @@
 import {Lang} from '../src/utils/langService';
-import {settings} from '../settings';
 
 describe('Language service', () => {
     test('Translate text', () => {
