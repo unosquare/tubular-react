@@ -61,9 +61,7 @@ export const TbList: React.FunctionComponent<TbListProps> = tbProps => {
         );
 
         const placeholderItem = (placeholderStyle: any) => {
-            const placeholderMessage = noRecordsFound ?
-            Lang.translate('NoRecords') :
-            Lang.translate('Loading');
+            const placeholderMessage = noRecordsFound ? Lang.translate('NoRecords') : Lang.translate('Loading');
             return (
                 <ListItem button={true} style={placeholderStyle}>
                     <ListItemText primary={placeholderMessage} />

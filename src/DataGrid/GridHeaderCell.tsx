@@ -28,11 +28,7 @@ export const GridHeaderCell: React.FunctionComponent<GridHeaderCellProps> = ({
             : 'desc';
 
     const render = column.sortable ? (
-        <Tooltip
-            title={Lang.translate('ClickSort')}
-            placement="bottom-start"
-            enterDelay={300}
-        >
+        <Tooltip title={Lang.translate('ClickSort')} placement="bottom-start" enterDelay={300}>
             <TableSortLabel
                 onClick={sort}
                 direction={direction}

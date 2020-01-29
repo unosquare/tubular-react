@@ -77,19 +77,11 @@ export const AdvancePaginationActions: React.FunctionComponent<AdvancePagination
     return (
         <div className={classes.root}>
             {isAdvanced && (
-                <IconButton
-                    onClick={gotoFirstPage}
-                    disabled={canNotBack}
-                    aria-label={Lang.translate("FirstPage")}
-                >
+                <IconButton onClick={gotoFirstPage} disabled={canNotBack} aria-label={Lang.translate('FirstPage')}>
                     <FirstPage />
                 </IconButton>
             )}
-            <IconButton
-                onClick={gotoPrevPage} 
-                disabled={canNotBack} 
-                aria-label={Lang.translate("PrevPage")}
-            >
+            <IconButton onClick={gotoPrevPage} disabled={canNotBack} aria-label={Lang.translate('PrevPage')}>
                 <KeyboardArrowLeft />
             </IconButton>
 
@@ -99,29 +91,18 @@ export const AdvancePaginationActions: React.FunctionComponent<AdvancePagination
                         key={value}
                         onClick={gotoPage(value)}
                         disabled={value >= Math.ceil(count / rowsPerPage) || isLoading}
-                        aria-label={
-                            Lang.translate("PageNum", `${value + 1}`)
-                        }
+                        aria-label={Lang.translate('PageNum', `${value + 1}`)}
                         color={value === page ? 'primary' : 'default'}
                     >
                         {value + 1}
                     </IconButton>
                 ))}
-
-            <IconButton
-                onClick={gotoNextPage}
-                disabled={canNotFwd}
-                aria-label={Lang.translate("NextPage")}
-            >
+            <IconButton onClick={gotoNextPage} disabled={canNotFwd} aria-label={Lang.translate('NextPage')}>
                 <KeyboardArrowRight />
             </IconButton>
 
             {isAdvanced && (
-                <IconButton
-                    onClick={gotoLastPage}
-                    disabled={canNotFwd}
-                    aria-label={Lang.translate("LastPage")}
-                >
+                <IconButton onClick={gotoLastPage} disabled={canNotFwd} aria-label={Lang.translate('LastPage')}>
                     <LastPage />
                 </IconButton>
             )}

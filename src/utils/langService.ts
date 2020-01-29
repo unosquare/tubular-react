@@ -1,12 +1,12 @@
 import * as english from '../utils/languages/english.json';
 import * as spanish from '../utils/languages/spanish.json';
 
-let settings = {langName: 'english'};
+const settings = { langName: 'english' };
 
 export class Lang {
     public static changeLang(lang: string) {
         settings.langName = lang || lang.length > 0 ? lang : 'english';
-    };
+    }
 
     public static translate(key: string, ...args: any[]): string {
         let text = this.getTextByLanguage(key);
@@ -17,7 +17,7 @@ export class Lang {
     }
 
     private static getLangDataByCode(): any {
-        switch(settings.langName) {
+        switch (settings.langName) {
             case 'spanish':
                 return spanish;
             default:
@@ -27,13 +27,13 @@ export class Lang {
 
     private static getTextByLanguage(key: string): string {
         const langData = this.getLangDataByCode();
-        var text = langData[key];
+        const text = langData[key];
         return text ? text : 'INVALID KEY';
     }
 
     private static formatTranslation(val: string, args: any[]) {
-        return val.replace(new RegExp(`{([0-${args.length - 1}])}`, 'gi'), (_match: string, index: number) => {  
-            return args[index];  
+        return val.replace(new RegExp(`{([0-${args.length - 1}])}`, 'gi'), (_match: string, index: number) => {
+            return args[index];
         });
     }
 }

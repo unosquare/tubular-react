@@ -53,12 +53,8 @@ export const ExportButton: React.FunctionComponent<ExportButtonProps> = ({
                 )}
             </IconButton>
             <Menu anchorEl={anchorPrint} open={Boolean(anchorPrint)} onClose={closePrint}>
-                <MenuItem onClick={printCurrent}>
-                    {Lang.translate('CurrentRows')}
-                </MenuItem>
-                <MenuItem onClick={printAll}>
-                    {Lang.translate('AllRows')}
-                </MenuItem>
+                <MenuItem onClick={printCurrent}>{Lang.translate('CurrentRows')}</MenuItem>
+                <MenuItem onClick={printAll}>{Lang.translate('AllRows')}</MenuItem>
             </Menu>
         </React.Fragment>
     );
