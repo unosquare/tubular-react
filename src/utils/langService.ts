@@ -3,7 +3,7 @@ import * as spanish from '../utils/languages/spanish.json';
 
 const settings = { langName: 'english' };
 
-export class Lang {
+export default class Lang {
     public static changeLang(lang: string) {
         settings.langName = lang || lang.length > 0 ? lang : 'english';
     }

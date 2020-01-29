@@ -4,7 +4,7 @@ import * as React from 'react';
 import { ITbTableInstance } from 'tubular-react-common';
 import { useResolutionSwitch } from 'uno-react';
 import { AdvancePaginationActions } from './AdvancePaginationActions';
-import { Lang } from '../utils/langService';
+import Lang from '../utils/langService';
 
 const useStyles = makeStyles({
     caption: {
