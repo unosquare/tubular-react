@@ -22,10 +22,10 @@ const timeout = 400;
 
 const message = (totalRecordCount: number, filteredRecordCount: number) => ({ from, to, count }: any) =>
     totalRecordCount === filteredRecordCount
-        ? Lang.translate('Pages', `${from}`, `${to}`, `${count}`)
+        ? Lang.translate('Pages', from, to, count)
         : filteredRecordCount === 0
         ? Lang.translate('NoRecords')
-        : Lang.translate('TotalRecords', `${from}`, `${to}`, `${count}`, `${totalRecordCount}`);
+        : Lang.translate('TotalRecords', from, to, count, totalRecordCount);
 
 export interface IPaginatorProps {
     tbTableInstance: ITbTableInstance;

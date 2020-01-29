@@ -1,13 +1,12 @@
 import * as english from '../utils/languages/english.json';
-import * as spanish from '../utils/languages/spanish.json';
 
-const settings = { langName: 'english' };
+const settings = {
+    lang: english,
+} as {
+    [key: string]: any,
+}
 
 export default class Lang {
-    public static changeLang(lang: string) {
-        settings.langName = lang || lang.length > 0 ? lang : 'english';
-    }
-
     public static translate(key: string, ...args: any[]): string {
         let text = this.getTextByLanguage(key);
         if (args.length > 0) {
@@ -16,18 +15,9 @@ export default class Lang {
         return text;
     }
 
-    private static getLangDataByCode(): any {
-        switch (settings.langName) {
-            case 'spanish':
-                return spanish;
-            default:
-                return english;
-        }
-    }
-
     private static getTextByLanguage(key: string): string {
-        const langData = this.getLangDataByCode();
-        const text = langData[key];
+        const lang = settings.lang;
+        const text = lang[key];
         return text ? text : 'INVALID KEY';
     }
 

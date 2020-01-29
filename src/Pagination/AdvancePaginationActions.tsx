@@ -91,7 +91,7 @@ export const AdvancePaginationActions: React.FunctionComponent<AdvancePagination
                         key={value}
                         onClick={gotoPage(value)}
                         disabled={value >= Math.ceil(count / rowsPerPage) || isLoading}
-                        aria-label={Lang.translate('PageNum', `${value + 1}`)}
+                        aria-label={Lang.translate('PageNum', value + 1)}
                         color={value === page ? 'primary' : 'default'}
                     >
                         {value + 1}
