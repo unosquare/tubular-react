@@ -3,7 +3,7 @@ import * as React from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import { ColumnModel, FilterWrapper } from 'tubular-common';
-import Lang from '../utils/langService';
+import Lang from '../utils/Lang';
 
 const dropdown = {
     marginLeft: '10%',

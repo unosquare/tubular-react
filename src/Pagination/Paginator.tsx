@@ -4,7 +4,7 @@ import * as React from 'react';
 import { ITbTableInstance } from 'tubular-react-common';
 import { useResolutionSwitch } from 'uno-react';
 import { AdvancePaginationActions } from './AdvancePaginationActions';
-import Lang from '../utils/langService';
+import Lang from '../utils/Lang';
 
 const useStyles = makeStyles({
     caption: {
@@ -27,17 +27,17 @@ const message = (totalRecordCount: number, filteredRecordCount: number) => ({ fr
         ? Lang.translate('NoRecords')
         : Lang.translate('TotalRecords', from, to, count, totalRecordCount);
 
-export interface IPaginatorProps {
+export interface PaginatorProps {
     tbTableInstance: ITbTableInstance;
     rowsPerPageOptions: number[];
     advancePagination: boolean;
 }
 
-export const Paginator: React.FunctionComponent<IPaginatorProps> = ({
+export const Paginator: React.FunctionComponent<PaginatorProps> = ({
     tbTableInstance,
     rowsPerPageOptions,
     advancePagination,
-}: IPaginatorProps) => {
+}: PaginatorProps) => {
     const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
     const classes = useStyles({});
     const { state, api } = tbTableInstance;

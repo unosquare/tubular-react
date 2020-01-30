@@ -2,7 +2,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import * as React from 'react';
 import { ColumnDataType, ColumnModel, CompareOperators, formatDate } from 'tubular-common';
-import Lang from '../utils/langService';
+import Lang from '../utils/Lang';
 
 const dropdown = {
     marginLeft: '10%',

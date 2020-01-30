@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography/Typography';
 import Warning from '@material-ui/icons/Warning';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
-import Lang from '../utils/langService';
+import Lang from '../utils/Lang';
 
 export interface NoDataRowProps {
     columns: ColumnModel[];

@@ -5,7 +5,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPage from '@material-ui/icons/LastPage';
 import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
-import Lang from '../utils/langService';
+import Lang from '../utils/Lang';
 
 const useStyles = makeStyles({
     root: {

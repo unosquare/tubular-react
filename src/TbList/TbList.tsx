@@ -5,7 +5,7 @@ import { AutoSizer, CellMeasurer, CellMeasurerCache, InfiniteLoader, List, Index
 import { ITbListInstance } from 'tubular-react-common';
 import { TbListItem } from './TbListItem';
 import { generateOnRowClickProxy } from 'tubular-react-common';
-import Lang from '../utils/langService';
+import Lang from '../utils/Lang';
 
 export interface TbListProps {
     tbInstance: ITbListInstance;

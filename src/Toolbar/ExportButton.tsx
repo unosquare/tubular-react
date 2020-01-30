@@ -7,7 +7,7 @@ import Print from '@material-ui/icons/Print';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
 import { exportGrid } from 'tubular-react-common';
-import Lang from '../utils/langService';
+import Lang from '../utils/Lang';
 
 export interface ExportButtonProps {
     type: string;
