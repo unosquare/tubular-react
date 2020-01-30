@@ -5,6 +5,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import FilterList from '@material-ui/icons/FilterList';
 import * as React from 'react';
 import { ColumnModel, ColumnSortDirection, CompareOperators } from 'tubular-common';
+import Lang from '../utils/Lang';
 
 export interface GridHeaderCellProps {
     column: ColumnModel;
@@ -27,11 +28,7 @@ export const GridHeaderCell: React.FunctionComponent<GridHeaderCellProps> = ({
             : 'desc';
 
     const render = column.sortable ? (
-        <Tooltip
-            title="Click to sort. Press Ctrl to sort by multiple columns"
-            placement="bottom-start"
-            enterDelay={300}
-        >
+        <Tooltip title={Lang.translate('ClickSort')} placement="bottom-start" enterDelay={300}>
             <TableSortLabel
                 onClick={sort}
                 direction={direction}

@@ -2,6 +2,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import * as React from 'react';
 import { ColumnDataType, ColumnModel, CompareOperators, formatDate } from 'tubular-common';
+import Lang from '../utils/Lang';
 
 const dropdown = {
     marginLeft: '10%',
@@ -73,9 +74,9 @@ export const DialogInput: React.FunctionComponent<DialogInputProps> = ({
     const disabled = isPrimary ? column.filter.operator === CompareOperators.None : false;
     const label = isPrimary
         ? column.filter.operator !== CompareOperators.Between
-            ? 'Value'
-            : 'First Value'
-        : 'Second Value';
+            ? `${Lang.translate('Label_Value')}`
+            : `${Lang.translate('Label_FirstValue')}`
+        : `${Lang.translate('Label_SecondValue')}`;
 
     const handleChange = ({ target }: any) => handleTextFieldChange(target.value);
 

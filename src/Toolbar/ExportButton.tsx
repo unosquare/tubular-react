@@ -7,6 +7,7 @@ import Print from '@material-ui/icons/Print';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
 import { exportGrid } from 'tubular-react-common';
+import Lang from '../utils/Lang';
 
 export interface ExportButtonProps {
     type: string;
@@ -42,18 +43,18 @@ export const ExportButton: React.FunctionComponent<ExportButtonProps> = ({
         <React.Fragment>
             <IconButton disabled={filteredRecordCount === 0} onClick={handlePrintMenu}>
                 {type === 'print' ? (
-                    <Tooltip title={toolTip || 'Print'}>
+                    <Tooltip title={toolTip || Lang.translate('Print')}>
                         <Print />
                     </Tooltip>
                 ) : (
-                    <Tooltip title={toolTip || 'Download'}>
+                    <Tooltip title={toolTip || Lang.translate('Download')}>
                         <CloudDownload />
                     </Tooltip>
                 )}
             </IconButton>
             <Menu anchorEl={anchorPrint} open={Boolean(anchorPrint)} onClose={closePrint}>
-                <MenuItem onClick={printCurrent}>Current rows</MenuItem>
-                <MenuItem onClick={printAll}>All rows</MenuItem>
+                <MenuItem onClick={printCurrent}>{Lang.translate('CurrentRows')}</MenuItem>
+                <MenuItem onClick={printAll}>{Lang.translate('AllRows')}</MenuItem>
             </Menu>
         </React.Fragment>
     );
