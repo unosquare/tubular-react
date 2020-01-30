@@ -9,8 +9,8 @@ export class LangBase<T> {
     private currentLanguage: string;
 
     constructor(langKey: string, initialLanguage: T) {
-        this.data[langKey] = initialLanguage;
-        this.currentLanguage = langKey;
+        this.addLanguage(langKey, initialLanguage);
+        this.changeLanguage(langKey);
     }
 
     public translate(key: string, ...args: any[]): string {
@@ -23,6 +23,10 @@ export class LangBase<T> {
 
     public changeLanguage(langKey: string) {
         this.currentLanguage = langKey;
+    }
+
+    public addLanguage(langKey: string, data: T) {
+        this.data[langKey] = data;
     }
 }
 
