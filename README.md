@@ -74,6 +74,11 @@ You will need both a URL and a `ColumnModel` array.
 <DataGrid columns={columns} dataSource={'https://tubular.azurewebsites.net/api/orders/paged'} gridName="Grid" />
 ```
 
+#### Example
+You can try a CodeSandbox demo for RemoteDataGrids:
+
+[![Edit tubular-react - dataGrid](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/tubular-react-datagrid-rr4op?fontsize=14&hidenavigation=1&theme=dark)
+
 ### Using a local data source
 
 You will need both an array of data objects and a `ColumnModel` array. See this [example](https://github.com/unosquare/tubular-react/blob/master/sample/src/data/localData.ts) of how to define the array of objects.
@@ -81,6 +86,11 @@ You will need both an array of data objects and a `ColumnModel` array. See this 
 ```js
 <DataGrid columns={columns} dataSource={localData} gridName="Grid" />
 ```
+
+#### Example
+You can try a CodeSandbox demo for LocalDataGrid
+
+[![Edit tubular-react - localDataGrid](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/localdatagrid-example-vpcs2?fontsize=14&hidenavigation=1&theme=dark)
 
 ### How to include functionality buttons
 
