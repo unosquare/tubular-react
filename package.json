@@ -53,20 +53,20 @@
     "@material-ui/core": "^4.9.1",
     "@material-ui/icons": "^4.9.1",
     "react-virtualized": "^9.21.2",
-    "tubular-common": "^3.1.4",
-    "tubular-react-common": "1.0.13",
+    "tubular-common": "^3.1.5",
+    "tubular-react-common": "1.0.14",
     "uno-material-ui": "^1.7.34",
-    "uno-react": "^0.12.3"
+    "uno-react": "^0.12.7"
   },
   "devDependencies": {
     "@testing-library/react": "^9.4.0",
     "@testing-library/react-hooks": "^3.2.1",
-    "@types/jest": "^25.1.1",
+    "@types/jest": "^25.1.2",
     "@types/react": "^16.9.19",
     "@types/react-dom": "^16.9.5",
     "@types/react-virtualized": "^9.21.7",
-    "@typescript-eslint/eslint-plugin": "^2.18.0",
-    "@typescript-eslint/parser": "^2.18.0",
+    "@typescript-eslint/eslint-plugin": "^2.19.0",
+    "@typescript-eslint/parser": "^2.19.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
@@ -78,7 +78,7 @@
     "prettier": "^1.19.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "ts-jest": "^25.1.0",
+    "ts-jest": "^25.2.0",
     "typescript": "^3.7.5"
   },
   "parcelCleanPaths": [
