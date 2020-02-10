@@ -8,7 +8,7 @@ import { ColumnModel, CompareOperators, FilterWrapper } from 'tubular-common';
 import { DialogInput } from './DialogInput';
 import { OperatorsDropdown } from './OperatorsDropdown';
 
-export interface IDialogModalProps {
+export interface DialogModalProps {
     anchorFilter: HTMLElement;
     activeColumn: ColumnModel;
     setAnchorFilter: (anchorEl: HTMLElement) => void;
@@ -16,13 +16,13 @@ export interface IDialogModalProps {
     handleFilterChange: (value: FilterWrapper | any) => any;
 }
 
-export const DialogModal: React.FunctionComponent<IDialogModalProps> = ({
+export const DialogModal: React.FunctionComponent<DialogModalProps> = ({
     anchorFilter,
     activeColumn,
     setAnchorFilter,
     setFilter,
     handleFilterChange,
-}: IDialogModalProps) => {
+}: DialogModalProps) => {
     const clearFilter = () => setFilter(ColumnModel.clearFilterPatch());
     const handleInput = (e: any) => handleFilterChange({ text: e });
     const handleBetweenInput = (e: any) => handleFilterChange({ argument: [e] });
