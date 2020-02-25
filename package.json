@@ -55,7 +55,7 @@
     "react-virtualized": "^9.21.2",
     "tubular-common": "^3.1.6",
     "tubular-react-common": "1.0.16",
-    "uno-react": "^0.12.8"
+    "uno-react": "^0.13.2"
   },
   "devDependencies": {
     "@testing-library/react": "^9.4.0",
