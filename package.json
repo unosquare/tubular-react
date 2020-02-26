@@ -50,22 +50,22 @@
   },
   "homepage": "https://github.com/unosquare/tubular-react#readme",
   "dependencies": {
-    "@material-ui/core": "^4.9.3",
+    "@material-ui/core": "^4.9.4",
     "@material-ui/icons": "^4.9.1",
     "react-virtualized": "^9.21.2",
-    "tubular-common": "^3.1.6",
-    "tubular-react-common": "1.0.16",
-    "uno-react": "^0.12.8"
+    "tubular-common": "^3.1.9",
+    "tubular-react-common": "1.0.17",
+    "uno-react": "^0.13.2"
   },
   "devDependencies": {
-    "@testing-library/react": "^9.4.0",
+    "@testing-library/react": "^9.4.1",
     "@testing-library/react-hooks": "^3.2.1",
-    "@types/jest": "^25.1.2",
-    "@types/react": "^16.9.20",
+    "@types/jest": "^25.1.3",
+    "@types/react": "^16.9.23",
     "@types/react-dom": "^16.9.5",
     "@types/react-virtualized": "^9.21.8",
-    "@typescript-eslint/eslint-plugin": "^2.20.0",
-    "@typescript-eslint/parser": "^2.20.0",
+    "@typescript-eslint/eslint-plugin": "^2.21.0",
+    "@typescript-eslint/parser": "^2.21.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
@@ -75,10 +75,10 @@
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-clean-easy": "^1.0.2",
     "prettier": "^1.19.1",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
     "ts-jest": "^25.2.1",
-    "typescript": "^3.7.5"
+    "typescript": "^3.8.2"
   },
   "parcelCleanPaths": [
     "dist/*.*"
