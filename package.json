@@ -50,12 +50,12 @@
   },
   "homepage": "https://github.com/unosquare/tubular-react#readme",
   "dependencies": {
-    "@material-ui/core": "^4.9.4",
+    "@material-ui/core": "^4.9.5",
     "@material-ui/icons": "^4.9.1",
     "react-virtualized": "^9.21.2",
     "tubular-common": "^3.1.9",
     "tubular-react-common": "1.0.17",
-    "uno-react": "^0.13.2"
+    "uno-react": "^0.14.1"
   },
   "devDependencies": {
     "@testing-library/react": "^9.4.1",
@@ -78,7 +78,7 @@
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "ts-jest": "^25.2.1",
-    "typescript": "^3.8.2"
+    "typescript": "^3.8.3"
   },
   "parcelCleanPaths": [
     "dist/*.*"
