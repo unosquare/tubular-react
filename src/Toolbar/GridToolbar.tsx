@@ -7,7 +7,7 @@ import { ExportButton } from './ExportButton';
 import { ToolbarOptions } from './ToolbarOptions';
 
 const mobileSpacer: React.CSSProperties = { flexShrink: 1 };
-const spacer: React.CSSProperties = { flex: '1 1 45%' };
+const spacer: React.CSSProperties = { flex: '1 0' };
 
 const outerWidth = 800;
 const timeout = 400;
