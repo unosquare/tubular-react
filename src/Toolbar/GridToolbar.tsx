@@ -1,13 +1,13 @@
 import Toolbar from '@material-ui/core/Toolbar';
 import * as React from 'react';
+import { ITbTableInstance } from 'tubular-react-common';
 import { useResolutionSwitch } from 'uno-react';
 import { SearchTextInput } from '../Filtering/SearchTextInput';
 import { ExportButton } from './ExportButton';
 import { ToolbarOptions } from './ToolbarOptions';
-import { ITbTableInstance } from 'tubular-react-common';
 
 const mobileSpacer: React.CSSProperties = { flexShrink: 1 };
-const spacer: React.CSSProperties = { flex: '1 1 45%' };
+const spacer: React.CSSProperties = { flex: '1 0' };
 
 const outerWidth = 800;
 const timeout = 400;
@@ -27,6 +27,9 @@ export const GridToolbar: React.FunctionComponent<GridToolbarProps> = ({
 
     return (
         <Toolbar data-testid="grid-toolbar">
+            {toolbarOptions.title && (
+                <h2>{toolbarOptions.title}</h2>
+            )}
             <div style={isMobileResolution ? mobileSpacer : spacer} />
             {toolbarOptions.customItems}
             {toolbarOptions.exportButton && (

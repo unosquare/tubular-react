@@ -10,6 +10,7 @@ export class ToolbarOptions {
     public topPager = true;
     public rowsPerPageOptions: number[] = [10, 20, 50, 100];
     public itemsPerPage = 10;
+    public title = '';
 
     constructor(options?: Partial<ToolbarOptions>) {
         Object.assign(this, options);
