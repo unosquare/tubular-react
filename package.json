@@ -52,10 +52,11 @@
   "dependencies": {
     "@material-ui/core": "^4.9.5",
     "@material-ui/icons": "^4.9.1",
+    "npm-check-updates": "^4.0.3",
     "react-virtualized": "^9.21.2",
-    "tubular-common": "^3.1.9",
-    "tubular-react-common": "1.0.17",
-    "uno-react": "^0.14.1"
+    "tubular-common": "^3.1.10",
+    "tubular-react-common": "1.0.18",
+    "uno-react": "^0.14.2"
   },
   "devDependencies": {
     "@testing-library/react": "^9.4.1",
@@ -64,8 +65,8 @@
     "@types/react": "^16.9.23",
     "@types/react-dom": "^16.9.5",
     "@types/react-virtualized": "^9.21.8",
-    "@typescript-eslint/eslint-plugin": "^2.21.0",
-    "@typescript-eslint/parser": "^2.21.0",
+    "@typescript-eslint/eslint-plugin": "^2.22.0",
+    "@typescript-eslint/parser": "^2.22.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
