@@ -54,7 +54,7 @@
     "@material-ui/icons": "^4.9.1",
     "react-virtualized": "^9.21.2",
     "tubular-common": "^3.1.10",
-    "tubular-react-common": "1.0.18",
+    "tubular-react-common": "1.0.19",
     "uno-react": "^0.14.5"
   },
   "devDependencies": {
