@@ -23,7 +23,7 @@ export const DataGridTable: React.FunctionComponent<DataGridTableProps> = (props
     return (
         <Table data-testid="data-grid-table">
             <TableHead>
-                <GridHeader tbTableInstance={props.tbTableInstance} />
+                <GridHeader detailComponent={props.detailComponent} tbTableInstance={props.tbTableInstance} />
             </TableHead>
             <GridBody
                 tbTableInstance={props.tbTableInstance}
