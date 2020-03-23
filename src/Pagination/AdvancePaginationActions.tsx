@@ -86,7 +86,7 @@ export const AdvancePaginationActions: React.FunctionComponent<AdvancePagination
             </IconButton>
 
             {isAdvanced &&
-                pages.map(value => (
+                pages.map((value) => (
                     <IconButton
                         key={value}
                         onClick={gotoPage(value)}

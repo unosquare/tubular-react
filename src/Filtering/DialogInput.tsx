@@ -92,7 +92,7 @@ export const DialogInput: React.FunctionComponent<DialogInputProps> = ({
             onChange={handleChange}
         >
             {column.dataType === ColumnDataType.Boolean &&
-                BooleanInputOperators.map(option => (
+                BooleanInputOperators.map((option) => (
                     <MenuItem key={option.Value} value={option.Value}>
                         {option.Title}
                     </MenuItem>

@@ -27,9 +27,7 @@ export const GridToolbar: React.FunctionComponent<GridToolbarProps> = ({
 
     return (
         <Toolbar data-testid="grid-toolbar">
-            {toolbarOptions.title && (
-                <h2>{toolbarOptions.title}</h2>
-            )}
+            {toolbarOptions.title && <h2>{toolbarOptions.title}</h2>}
             <div style={isMobileResolution ? mobileSpacer : spacer} />
             {toolbarOptions.customItems}
             {toolbarOptions.exportButton && (

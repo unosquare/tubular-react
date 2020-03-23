@@ -13,7 +13,7 @@ export interface TbListProps {
     onItemClick?(row: {}): void;
 }
 
-export const TbList: React.FunctionComponent<TbListProps> = tbProps => {
+export const TbList: React.FunctionComponent<TbListProps> = (tbProps) => {
     const { tbInstance, onItemClick, listItemComponent } = tbProps;
 
     const { items, hasNextPage } = tbInstance.state.list;
