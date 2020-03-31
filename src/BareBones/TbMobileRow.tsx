@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ColumnModel from 'tubular-common/dist/Models/ColumnModel';
+import { ColumnModel } from 'tubular-common';
 import { DataGridCard } from '../DataGrid';
 
 export interface TbMobileRowProps {

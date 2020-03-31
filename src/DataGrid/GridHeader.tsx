@@ -1,7 +1,7 @@
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import * as React from 'react';
-import { ColumnModel, FilterWrapper } from 'tubular-common';
+import { ColumnModel } from 'tubular-common';
 import { ITbTableInstance } from 'tubular-react-common';
 import DetailComponent from '../DataGridInterfaces/DetailComponent';
 import { DialogModal } from '../Filtering/DialogModal';
@@ -24,8 +24,8 @@ export const GridHeader: React.FunctionComponent<GridHeaderProps> = ({
         setAnchorFilter(event.currentTarget);
     };
 
-    const setFilter = (filter: FilterWrapper) => {
-        api.setFilter(filter);
+    const setFilter = (column: Partial<ColumnModel>) => {
+        api.setFilter(column.filterText, column.filterOperator, column.filterArgument);
         setAnchorFilter(null);
     };
 

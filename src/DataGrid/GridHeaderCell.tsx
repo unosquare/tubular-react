@@ -4,7 +4,7 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Tooltip from '@material-ui/core/Tooltip';
 import FilterList from '@material-ui/icons/FilterList';
 import * as React from 'react';
-import { ColumnModel, ColumnSortDirection, CompareOperators } from 'tubular-common';
+import { ColumnModel, ColumnSortDirection, CompareOperators, columnHasFilter } from 'tubular-common';
 import Lang from '../utils/Lang';
 
 export interface GridHeaderCellProps {
@@ -45,7 +45,7 @@ export const GridHeaderCell: React.FunctionComponent<GridHeaderCellProps> = ({
         <IconButton id={column.name} onClick={handleClick}>
             <FilterList
                 color={
-                    column.filter.hasFilter && column.filter.operator !== CompareOperators.None ? 'action' : 'disabled'
+                    columnHasFilter(column) && column.filterOperator !== CompareOperators.None ? 'action' : 'disabled'
                 }
             />
         </IconButton>

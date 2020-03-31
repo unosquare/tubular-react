@@ -4,7 +4,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Popover from '@material-ui/core/Popover';
 import * as React from 'react';
-import { ColumnModel, CompareOperators, FilterWrapper } from 'tubular-common';
+import { ColumnModel, CompareOperators } from 'tubular-common';
 import { DialogInput } from './DialogInput';
 import { OperatorsDropdown } from './OperatorsDropdown';
 
@@ -12,8 +12,8 @@ export interface DialogModalProps {
     anchorFilter: HTMLElement;
     activeColumn: ColumnModel;
     setAnchorFilter: (anchorEl: HTMLElement) => void;
-    setFilter: (filter: FilterWrapper) => void;
-    handleFilterChange: (value: FilterWrapper | any) => any;
+    setFilter: (filter: Partial<ColumnModel>) => void;
+    handleFilterChange: (filterText: string, filterOperator: CompareOperators, filterArgument?: any[]) => any;
 }
 
 export const DialogModal: React.FunctionComponent<DialogModalProps> = ({
@@ -23,10 +23,11 @@ export const DialogModal: React.FunctionComponent<DialogModalProps> = ({
     setFilter,
     handleFilterChange,
 }: DialogModalProps) => {
-    const clearFilter = () => setFilter(ColumnModel.clearFilterPatch());
-    const handleInput = (e: any) => handleFilterChange({ text: e });
-    const handleBetweenInput = (e: any) => handleFilterChange({ argument: [e] });
-    const submit = () => setFilter(ColumnModel.createFilterPatch(activeColumn));
+    const clearFilter = () => setFilter({ filterText: '', filterOperator: CompareOperators.None });
+    const handleInput = (e: any) => handleFilterChange(e, activeColumn.filterOperator);
+    const handleBetweenInput = (e: any) =>
+        handleFilterChange(activeColumn.filterText, activeColumn.filterOperator, [e]);
+    const submit = () => setFilter(activeColumn);
     const onClose = () => setAnchorFilter(null);
 
     return (
@@ -48,7 +49,7 @@ export const DialogModal: React.FunctionComponent<DialogModalProps> = ({
                     <OperatorsDropdown activeColumn={activeColumn} handleFilterChange={handleFilterChange} />
                     <DialogInput column={activeColumn} isPrimary={true} handleTextFieldChange={handleInput} />
 
-                    {activeColumn.filter.operator === CompareOperators.Between && (
+                    {activeColumn.filterOperator === CompareOperators.Between && (
                         <DialogInput
                             column={activeColumn}
                             isPrimary={false}
@@ -64,7 +65,7 @@ export const DialogModal: React.FunctionComponent<DialogModalProps> = ({
                         size="medium"
                         color="primary"
                         onClick={submit}
-                        disabled={activeColumn.filter.operator === CompareOperators.None}
+                        disabled={activeColumn.filterOperator === CompareOperators.None}
                     >
                         Apply
                     </Button>

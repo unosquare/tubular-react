@@ -67,13 +67,13 @@ export const DialogInput: React.FunctionComponent<DialogInputProps> = ({
     const value =
         getValue(
             column.dataType,
-            column.filter.operator,
-            isPrimary ? column.filter.text : column.filter.argument[0],
+            column.filterOperator,
+            isPrimary ? column.filterText : column.filterArgument[0],
             handleTextFieldChange,
         ) || '';
-    const disabled = isPrimary ? column.filter.operator === CompareOperators.None : false;
+    const disabled = isPrimary ? column.filterOperator === CompareOperators.None : false;
     const label = isPrimary
-        ? column.filter.operator !== CompareOperators.Between
+        ? column.filterOperator !== CompareOperators.Between
             ? `${Lang.translate('Label_Value')}`
             : `${Lang.translate('Label_FirstValue')}`
         : `${Lang.translate('Label_SecondValue')}`;
