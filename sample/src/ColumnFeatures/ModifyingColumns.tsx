@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
-import { ColumnModel, LocalStorage } from 'tubular-common';
+import { LocalStorage, createColumn } from 'tubular-common';
 import { DataGrid } from '../../../src';
 import { ToolbarOptions } from '../../../src/Toolbar/ToolbarOptions';
 import columns from '../data/columns';
@@ -16,7 +16,7 @@ const ModifyingColumns: React.FunctionComponent = () => {
     const handleAddColumn = () => {
         setGridColumns([
             ...gridColumns,
-            new ColumnModel(`Column ${columnCounter}`, {
+            createColumn(`Column ${columnCounter}`, {
                 filterable: true,
                 searchable: true,
                 sortable: true,

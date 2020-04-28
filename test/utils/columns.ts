@@ -1,6 +1,6 @@
-import { AggregateFunctions, ColumnDataType, ColumnModel, ColumnSortDirection } from 'tubular-common';
+import { AggregateFunctions, ColumnDataType, ColumnSortDirection, createColumn } from 'tubular-common';
 
-const regularOrderIdCol = new ColumnModel('OrderID', {
+const regularOrderIdCol = createColumn('OrderID', {
     dataType: ColumnDataType.Numeric,
     filterable: true,
     isKey: true,
@@ -12,17 +12,17 @@ const regularOrderIdCol = new ColumnModel('OrderID', {
 // Column samples
 const validColumnsSample = [
     regularOrderIdCol,
-    new ColumnModel('CustomerName', {
+    createColumn('CustomerName', {
         aggregate: AggregateFunctions.Count,
         filterable: true,
         searchable: true,
     }),
-    new ColumnModel('ShippedDate', {
+    createColumn('ShippedDate', {
         dataType: ColumnDataType.DateTime,
         filterable: true,
     }),
-    new ColumnModel('ShipperCity'),
-    new ColumnModel('Amount', { dataType: ColumnDataType.Numeric }),
+    createColumn('ShipperCity'),
+    createColumn('Amount', { dataType: ColumnDataType.Numeric }),
 ];
 
 export { validColumnsSample };
