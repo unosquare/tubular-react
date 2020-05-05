@@ -56,7 +56,7 @@
     "tubular-common": "^4.0.5",
     "tubular-react-common": "2.0.4",
     "uno-material-ui": "^2.0.3",
-    "uno-react": "^0.15.6"
+    "uno-react": "^0.16.2"
   },
   "devDependencies": {
     "@testing-library/react": "^10.0.3",
