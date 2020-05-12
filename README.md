@@ -46,14 +46,15 @@ You can check the documentation of the components at [https://unosquare.github.i
 
 You can start using `DataGrid` with this sample code. The grid will connect to a remote datasource or have a local datasource depending on what it's passed in the dataSource property.
 
+To create Column you have to use **createColumn** function and have to pass the desired name of column as string.
 ```js
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { DataGrid } from 'tubular-react';
-import { ColumnModel } from 'tubular-common';
+import {createColumn} from "tubular-common";
 
-const columns = [new ColumnModel('OrderID'), new ColumnModel('CustomerName'), new ColumnModel('ShipperCity')];
+const columns = [createColumn('OrderID'), createColumn('CustomerName'), createColumn('ShipperCity')];
 
 const SampleGrid = () => (
     <DataGrid columns={columns} dataSource={'https://tubular.azurewebsites.net/api/orders/paged'} gridName="Grid" />
@@ -68,7 +69,7 @@ This is a preview of the previous code:
 
 ### Using a remote data source
 
-You will need both a URL and a `ColumnModel` array.
+You will need both a URL and a `createColumn` array.
 
 ```js
 <DataGrid columns={columns} dataSource={'https://tubular.azurewebsites.net/api/orders/paged'} gridName="Grid" />
@@ -77,20 +78,70 @@ You will need both a URL and a `ColumnModel` array.
 #### Example
 You can try a CodeSandbox demo for RemoteDataGrids:
 
-[![Edit tubular-react - dataGrid](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/tubular-react-datagrid-rr4op?fontsize=14&hidenavigation=1&theme=dark)
+[![Edit tubular-react - dataGrid](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/tubular-react-template-gyjo8)
 
 ### Using a local data source
 
-You will need both an array of data objects and a `ColumnModel` array. See this [example](https://github.com/unosquare/tubular-react/blob/master/sample/src/data/localData.ts) of how to define the array of objects.
+You will need both an array of data objects and a `createColumn` array. See this [example](https://github.com/unosquare/tubular-react/blob/master/sample/src/data/localData.ts) of how to define the array of objects.
 
 ```js
 <DataGrid columns={columns} dataSource={localData} gridName="Grid" />
 ```
+#### Use of Filter and Aggregate Function
+To include filter and aggregate function you have to pass the an object filter type and aggregate as second argument of `createColumn`
+please refer the below code.
 
+```js
+import {
+  AggregateFunctions,
+  ColumnDataType,
+  createColumn,
+  ColumnSortDirection
+} from "tubular-common";
+import { DataGrid } from "tubular-react";
+
+const columns = [
+  createColumn("OrderID", {
+    dataType: ColumnDataType.NUMERIC,
+    filtering: true,
+    isKey: true,
+    label: "Id",
+    sortDirection: ColumnSortDirection.ASCENDING,
+    sortOrder: 1,
+    sortable: true
+  }),
+  createColumn("CustomerName", {
+    aggregate: AggregateFunctions.COUNT,
+    filtering: true,
+    searchable: true,
+    sortable: true
+  }),
+  createColumn("ShippedDate", {
+    dataType: ColumnDataType.DATE_TIME,
+    filtering: true,
+    sortable: true
+  }),
+  createColumn("ShipperCity")
+];
+
+export const GridExample = () => {
+  return (
+    <div>
+      <DataGrid
+        gridName="Tubular-React"
+        columns={columns}
+        dataSource="https://tubular.azurewebsites.net/api/orders/paged"
+      />
+    </div>
+  );
+};
+
+
+```
 #### Example
 You can try a CodeSandbox demo for LocalDataGrid
 
-[![Edit tubular-react - localDataGrid](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/localdatagrid-example-vpcs2?fontsize=14&hidenavigation=1&theme=dark)
+[![Edit tubular-react - localDataGrid](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/tubular-react-template-gyjo8)
 
 ### How to include functionality buttons
 
