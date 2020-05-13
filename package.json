@@ -52,6 +52,7 @@
   "dependencies": {
     "@material-ui/core": "^4.9.12",
     "@material-ui/icons": "^4.9.1",
+    "@svgr/parcel-plugin-svgr": "^5.4.0",
     "react-virtualized": "^9.21.2",
     "tubular-common": "^4.0.5",
     "tubular-react-common": "2.0.4",

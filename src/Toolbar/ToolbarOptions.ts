@@ -2,12 +2,11 @@ import { ReactNode } from 'react';
 
 export class ToolbarOptions {
     public advancePagination = true;
-    public bottomPager = true;
+    public enablePagination = true;
     public customItems: ReactNode;
     public exportButton = true;
     public printButton = true;
     public searchText = true;
-    public topPager = true;
     public rowsPerPageOptions: number[] = [10, 20, 50, 100];
     public itemsPerPage = 10;
     public title = '';
@@ -18,10 +17,9 @@ export class ToolbarOptions {
 
     public SetMobileMode() {
         this.advancePagination = false;
-        this.bottomPager = false;
+        this.enablePagination = false;
         this.exportButton = false;
         this.printButton = false;
         this.rowsPerPageOptions = [5, 10];
-        this.topPager = false;
     }
 }

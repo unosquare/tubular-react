@@ -5,6 +5,10 @@ import { useResolutionSwitch } from 'uno-react';
 import { SearchTextInput } from '../Filtering/SearchTextInput';
 import { ExportButton } from './ExportButton';
 import { ToolbarOptions } from './ToolbarOptions';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import TuneIcon from '@material-ui/icons/Tune';
+
 
 const mobileSpacer: React.CSSProperties = { flexShrink: 1 };
 const spacer: React.CSSProperties = { flex: '1 0' };
@@ -29,7 +33,7 @@ export const GridToolbar: React.FunctionComponent<GridToolbarProps> = ({
         <Toolbar data-testid="grid-toolbar">
             {toolbarOptions.title && <h2>{toolbarOptions.title}</h2>}
             <div style={isMobileResolution ? mobileSpacer : spacer} />
-            {toolbarOptions.customItems}
+            {/* {toolbarOptions.customItems}
             {toolbarOptions.exportButton && (
                 <ExportButton
                     type="csv"
@@ -54,7 +58,13 @@ export const GridToolbar: React.FunctionComponent<GridToolbarProps> = ({
                     updateSearchText={tbTableInstance.api.updateSearchText}
                     data-testid="search-text-input"
                 />
-            )}
+            )} */}
+
+            <Tooltip title="Grid features">
+                <IconButton aria-label="Grid features">
+                    <TuneIcon />
+                </IconButton>
+            </Tooltip>
         </Toolbar>
     );
 };
