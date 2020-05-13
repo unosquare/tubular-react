@@ -15,6 +15,7 @@ import { GridToolbar } from '../Toolbar/GridToolbar';
 import { ToolbarOptions } from '../Toolbar/ToolbarOptions';
 import { DataGridTable } from './';
 import { MobileDataGridTable } from './MobileDataGridTable';
+import { FeaturesDrawer } from './FeaturesDrawer';
 
 const useStyles = makeStyles({
     linearProgress: {
@@ -101,8 +102,8 @@ export const DataGrid: React.FunctionComponent<DataGridProps> = (props: DataGrid
         );
     }
 
-    const paginator = (position: string) => (
-        <Table data-testid={`${position}-paginator`}>
+    const paginator = (
+        <Table data-testid="paginator">
             <TableHead>
                 <TableRow>
                     <Paginator
@@ -118,7 +119,6 @@ export const DataGrid: React.FunctionComponent<DataGridProps> = (props: DataGrid
     return (
         <Paper className={classes.root}>
             <GridToolbar gridName={gridName} toolbarOptions={toolbarOptions} tbTableInstance={tbTableInstance} />
-            {toolbarOptions.topPager && paginator('top')}
             <div className={classes.linearProgress} data-testid="linear-progress">
                 {tbTableInstance.state.isLoading && <LinearProgress />}
             </div>
@@ -129,7 +129,9 @@ export const DataGrid: React.FunctionComponent<DataGridProps> = (props: DataGrid
                 detailComponent={detailComponent || null}
                 onRowClick={onRowClick}
             />
-            {toolbarOptions.bottomPager && paginator('bottom')}
+            {toolbarOptions.enablePagination && paginator}
+
+            <FeaturesDrawer columns={tbTableInstance.state.columns} />
         </Paper>
     );
 };
