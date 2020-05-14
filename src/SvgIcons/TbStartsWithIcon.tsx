@@ -3,7 +3,7 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 
 export const TbStartsWithIcon = () => {
     return (
-        <SvgIcon>
+        <SvgIcon viewBox="0,0,16,16">
             <rect y="1.59" width="11.22" height="11.63" />
             <path
                 fill="white"
