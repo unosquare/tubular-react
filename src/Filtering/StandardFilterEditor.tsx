@@ -28,7 +28,7 @@ const getFilterControl = (column: ColumnModel, onEnter: () => void) => {
         //     return <DateFilter column={column} onApply={onEnter} />;
 
         default:
-            throw 'Error';
+            return null;
     }
 };
 
@@ -60,9 +60,10 @@ export const StandardFilterEditor: React.FunctionComponent<FilterEditorProps> = 
 
     return (
         <>
-            <Grid container={true} spacing={1}>
+            <Grid container={true} spacing={2}>
                 <Grid item={true} xs={3} container={true} justify="center" direction="column">
                     <Button
+                        variant="outlined"
                         color="primary"
                         size="small"
                         aria-controls={open ? 'split-button-menu' : undefined}
@@ -87,7 +88,7 @@ export const StandardFilterEditor: React.FunctionComponent<FilterEditorProps> = 
                         onClick={() => handleOperatorClick(option.key)}
                     >
                         {getOperatorIcon(option.key)}
-                        {option.text}
+                        <span style={{ marginLeft: 10 }}>{option.text}</span>
                     </MenuItem>
                 ))}
             </Menu>

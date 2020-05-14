@@ -1,38 +1,43 @@
 import * as React from 'react';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import FilterListIcon from '@material-ui/icons/FilterList';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Collapse from '@material-ui/core/Collapse';
-import ListItemText from '@material-ui/core/ListItemText';
-import IconButton from '@material-ui/core/IconButton';
 import { ColumnModel, columnHasFilter } from 'tubular-common';
-import { useToggle } from 'uno-react';
 import { StandardFilterEditor } from './StandardFilterEditor';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { Theme, makeStyles } from '@material-ui/core/styles';
 
 export interface FilterControlProps {
     column: ColumnModel;
 }
 
+const useStyles = makeStyles((theme: Theme) => ({
+    root: {
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.primary.contrastText,
+    },
+    expandIcon: {
+        color: theme.palette.primary.contrastText,
+    },
+}));
+
 export const FilterControl: React.FunctionComponent<FilterControlProps> = ({ column }: FilterControlProps) => {
     const hasFilter = columnHasFilter(column);
-    const [isOpen, open] = useToggle(false);
+    const classes = useStyles();
 
     return (
-        <>
-            <ListItem>
-                <ListItemIcon>
-                    <IconButton aria-label="delete" size="small" onClick={open}>
-                        {isOpen ? <KeyboardArrowDownIcon /> : <ChevronRightIcon />}
-                    </IconButton>
-                </ListItemIcon>
-                <ListItemText primary={column.label} />
-                <ListItemIcon>{hasFilter && <FilterListIcon />}</ListItemIcon>
-            </ListItem>
-            <Collapse in={isOpen} timeout="auto" unmountOnExit>
+        <ExpansionPanel>
+            <ExpansionPanelSummary
+                classes={hasFilter ? classes : {}}
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+            >
+                <Typography>{column.label} </Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
                 <StandardFilterEditor column={column} onApply={null} />
-            </Collapse>
-        </>
+            </ExpansionPanelDetails>
+        </ExpansionPanel>
     );
 };

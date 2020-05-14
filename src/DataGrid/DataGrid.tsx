@@ -5,7 +5,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
-import { ColumnModel, DataGridStorage, TubularHttpClientAbstract } from 'tubular-common';
+import { ColumnModel, DataGridStorage, TubularHttpClientAbstract, ColumnModel, CompareOperators } from 'tubular-common';
 import { useTbTable } from 'tubular-react-common';
 import { useResolutionSwitch } from 'uno-react';
 import { TbRowProps } from '../BareBones/TbRow';
@@ -16,6 +16,7 @@ import { ToolbarOptions } from '../Toolbar/ToolbarOptions';
 import { DataGridTable } from './';
 import { MobileDataGridTable } from './MobileDataGridTable';
 import { FeaturesDrawer } from './FeaturesDrawer';
+import { ChipBar } from '../Filtering/ChipBar';
 
 const useStyles = makeStyles({
     linearProgress: {
@@ -116,12 +117,30 @@ export const DataGrid: React.FunctionComponent<DataGridProps> = (props: DataGrid
         </Table>
     );
 
+    const applyOrResetFilter = (columnName: string, value?: string) => {
+        const newColumns = tbTableInstance.state.columns.map((column) => {
+            if (column.name === columnName) {
+                return {
+                    ...column,
+                    filterText: value,
+                    filterOperator: !!value ? CompareOperators.Equals : CompareOperators.None,
+                    filterArgument: !!value ? [] : null,
+                };
+            }
+
+            return column;
+        });
+
+        tbTableInstance.api.setColumns(newColumns);
+    };
+
     return (
         <Paper className={classes.root}>
             <GridToolbar gridName={gridName} toolbarOptions={toolbarOptions} tbTableInstance={tbTableInstance} />
             <div className={classes.linearProgress} data-testid="linear-progress">
                 {tbTableInstance.state.isLoading && <LinearProgress />}
             </div>
+            <ChipBar columns={tbTableInstance.state.columns} onClearFilter={applyOrResetFilter} />
             <DataGridTable
                 tbTableInstance={tbTableInstance}
                 rowComponent={rowComponent}
@@ -130,8 +149,6 @@ export const DataGrid: React.FunctionComponent<DataGridProps> = (props: DataGrid
                 onRowClick={onRowClick}
             />
             {toolbarOptions.enablePagination && paginator}
-
-            <FeaturesDrawer columns={tbTableInstance.state.columns} />
         </Paper>
     );
 };
