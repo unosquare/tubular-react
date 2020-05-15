@@ -3,6 +3,8 @@ import { ColumnModel, ColumnDataType, CompareOperators } from 'tubular-common';
 import Chip from '@material-ui/core/Chip';
 import { getOperatorIcon } from './utils';
 import { makeStyles } from '@material-ui/core/styles';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 
 export interface IChipFilterProps {
     column: ColumnModel;
@@ -30,8 +32,7 @@ const getFilterText = (column: ColumnModel) => {
     }
 
     if (column.dataType === ColumnDataType.Boolean) {
-        const icon = filterText === 'true' ? 'CheckboxCompositeReversed' : 'Checkbox';
-        return '';
+        return filterText === 'true' ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />;
     }
 
     return filterText;

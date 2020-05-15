@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ColumnModel, getOperators, ColumnDataType, CompareOperators } from 'tubular-common';
 import { getOperatorIcon, getOperatorText, FilterEditorProps } from './utils';
-import { IStackStyles, IStackItemStyles } from '@fluentui/react';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 // import { NumericFilter } from './NumericFilter';

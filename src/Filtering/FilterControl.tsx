@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ColumnModel, columnHasFilter } from 'tubular-common';
+import { ColumnModel, columnHasFilter, ColumnDataType } from 'tubular-common';
 import { StandardFilterEditor } from './StandardFilterEditor';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -7,6 +7,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Theme, makeStyles } from '@material-ui/core/styles';
+import { BooleanFilterEditor } from './BooleanFilterEditor';
 
 export interface FilterControlProps {
     column: ColumnModel;
@@ -26,6 +27,8 @@ export const FilterControl: React.FunctionComponent<FilterControlProps> = ({ col
     const hasFilter = columnHasFilter(column);
     const classes = useStyles();
 
+    const FilterEditor = column.dataType === ColumnDataType.Boolean ? BooleanFilterEditor : StandardFilterEditor;
+
     return (
         <ExpansionPanel>
             <ExpansionPanelSummary
@@ -36,7 +39,7 @@ export const FilterControl: React.FunctionComponent<FilterControlProps> = ({ col
                 <Typography>{column.label} </Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-                <StandardFilterEditor column={column} onApply={null} />
+                <FilterEditor column={column} onApply={null} />
             </ExpansionPanelDetails>
         </ExpansionPanel>
     );
