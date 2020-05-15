@@ -99,7 +99,7 @@ export const FeaturesDrawer: React.FunctionComponent<FeaturesDrawerProps> = ({
                         <Button variant="contained" color="primary" onClick={onApplyClick}>
                             Apply
                         </Button>
-                        <Button variant="outlined" color="secondary" style={{ marginLeft: 10 }}>
+                        <Button variant="outlined" color="secondary" onClick={togglePanel} style={{ marginLeft: 10 }}>
                             Cancel
                         </Button>
                     </Grid>
