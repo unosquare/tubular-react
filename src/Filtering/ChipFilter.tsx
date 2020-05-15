@@ -38,6 +38,9 @@ const getFilterText = (column: ColumnModel) => {
 };
 
 const useStyles = makeStyles({
+    root: {
+        marginRight: 6,
+    },
     label: {
         display: 'flex',
         alignItems: 'center',
@@ -49,7 +52,9 @@ export const ChipFilter: React.FunctionComponent<IChipFilterProps> = ({ column, 
     const classes = useStyles();
     const labelNode = (
         <>
-            <span> {column.label}</span> {getOperatorIcon(column.filterOperator)} <span>{filterValue}</span>
+            <span style={{ marginRight: 4 }}>{column.label}</span>
+            {getOperatorIcon(column.filterOperator)}
+            <span style={{ marginLeft: 4 }}>{filterValue}</span>
         </>
     );
 

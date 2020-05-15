@@ -14,6 +14,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { NumericFilter } from './NumericFilter';
 import { StringFilter } from './StringFilter';
+import { DateFilter } from './DateFilter';
 
 const getFilterControl = (column: ColumnModel, onEnter: () => void) => {
     switch (column.dataType) {
@@ -22,10 +23,10 @@ const getFilterControl = (column: ColumnModel, onEnter: () => void) => {
 
         case ColumnDataType.String:
             return <StringFilter column={column} onEnter={onEnter} />;
-        // case ColumnDataType.Date:
-        // case ColumnDataType.DateTime:
-        // case ColumnDataType.DateTimeUtc:
-        //     return <DateFilter column={column} onApply={onEnter} />;
+        case ColumnDataType.Date:
+        case ColumnDataType.DateTime:
+        case ColumnDataType.DateTimeUtc:
+            return <DateFilter column={column} onApply={onEnter} />;
 
         default:
             return null;

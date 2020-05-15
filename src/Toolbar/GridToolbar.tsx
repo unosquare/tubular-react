@@ -40,32 +40,32 @@ export const GridToolbar: React.FunctionComponent<GridToolbarProps> = ({
             <Toolbar data-testid="grid-toolbar">
                 {toolbarOptions.title && <h2>{toolbarOptions.title}</h2>}
                 <div style={isMobileResolution ? mobileSpacer : spacer} />
-                {/* {toolbarOptions.customItems}
-            {toolbarOptions.exportButton && (
-                <ExportButton
-                    type="csv"
-                    gridName={gridName}
-                    exportTo={tbTableInstance.api.exportTo}
-                    filteredRecordCount={tbTableInstance.state.filteredRecordCount}
-                    data-testid="export-button-csv"
-                />
-            )}
-            {toolbarOptions.printButton && (
-                <ExportButton
-                    type="print"
-                    gridName={gridName}
-                    exportTo={tbTableInstance.api.exportTo}
-                    filteredRecordCount={tbTableInstance.state.filteredRecordCount}
-                    data-testid="export-button-print"
-                />
-            )}
-            {toolbarOptions.searchText && (
-                <SearchTextInput
-                    searchText={tbTableInstance.state.searchText}
-                    updateSearchText={tbTableInstance.api.updateSearchText}
-                    data-testid="search-text-input"
-                />
-            )} */}
+                {toolbarOptions.customItems}
+                {toolbarOptions.exportButton && (
+                    <ExportButton
+                        type="csv"
+                        gridName={gridName}
+                        exportTo={tbTableInstance.api.exportTo}
+                        filteredRecordCount={tbTableInstance.state.filteredRecordCount}
+                        data-testid="export-button-csv"
+                    />
+                )}
+                {toolbarOptions.printButton && (
+                    <ExportButton
+                        type="print"
+                        gridName={gridName}
+                        exportTo={tbTableInstance.api.exportTo}
+                        filteredRecordCount={tbTableInstance.state.filteredRecordCount}
+                        data-testid="export-button-print"
+                    />
+                )}
+                {toolbarOptions.searchText && (
+                    <SearchTextInput
+                        searchText={tbTableInstance.state.searchText}
+                        updateSearchText={tbTableInstance.api.updateSearchText}
+                        data-testid="search-text-input"
+                    />
+                )}
 
                 <Tooltip title="Grid features">
                     <IconButton aria-label="Grid features" onClick={togglePanel}>
