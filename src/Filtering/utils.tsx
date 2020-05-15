@@ -13,6 +13,7 @@ import { TbGreaterOrEqualsToIcon } from '../SvgIcons/TbGreaterOrEqualsToIcon';
 import { TbLessThanIcon } from '../SvgIcons/TbLessThanIcon';
 import { TbLessOrEqualsToIcon } from '../SvgIcons/TbLessOrEqualsToIcon';
 import { TbBetweenIcon } from '../SvgIcons/TbBetweenIcon';
+import FilterListIcon from '@material-ui/icons/FilterList';
 
 export const handleFilterChange = (column: ColumnModel) => (
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
@@ -87,6 +88,6 @@ export const getOperatorIcon = (operator: CompareOperators): JSX.Element => {
         case CompareOperators.Between:
             return <TbBetweenIcon />;
         default:
-            return null;
+            return <FilterListIcon />;
     }
 };
