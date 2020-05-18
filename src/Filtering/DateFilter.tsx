@@ -2,7 +2,7 @@ import 'date-fns';
 import * as React from 'react';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import { ColumnModel, CompareOperators } from 'tubular-common';
 
 export interface DateFilterProps {
@@ -32,13 +32,14 @@ export const DateFilter: React.FunctionComponent<DateFilterProps> = ({ column }:
     const [dates, setDates] = React.useState(getInitialDates(column));
 
     const handleDateChange = (isSecondInput?: boolean) => (date: Date | null | undefined) => {
+        const normalizedDate = !!date ? date : null;
         if (isSecondInput) {
             column.filterArgument = [];
-            setDates([dates[0], date]);
-            column.filterArgument[0] = date ? date.toISOString() : null;
+            setDates([dates[0], normalizedDate]);
+            column.filterArgument[0] = normalizedDate ? normalizedDate.toISOString() : null;
         } else {
-            setDates([date, dates[1]]);
-            column.filterText = date ? date.toISOString() : null;
+            setDates([normalizedDate, dates[1]]);
+            column.filterText = normalizedDate ? normalizedDate.toISOString() : null;
         }
     };
 
@@ -48,36 +49,30 @@ export const DateFilter: React.FunctionComponent<DateFilterProps> = ({ column }:
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Grid container={true} direction="column">
                 <Grid item={true}>
-                    <KeyboardDatePicker
+                    <DatePicker
                         autoOk={true}
-                        disableToolbar
-                        variant="inline"
+                        variant="dialog"
+                        clearable={true}
                         format="MM/dd/yyyy"
                         margin="normal"
                         id="date-picker-inline"
                         placeholder={isBetween ? 'From' : 'Selec a date'}
                         value={dates[0]}
                         onChange={handleDateChange()}
-                        KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                        }}
                     />
                 </Grid>
                 {column.filterOperator === CompareOperators.Between && (
                     <Grid item={true}>
-                        <KeyboardDatePicker
+                        <DatePicker
                             autoOk={true}
-                            disableToolbar
-                            variant="inline"
+                            variant="dialog"
+                            clearable={true}
                             format="MM/dd/yyyy"
                             margin="normal"
-                            id="date-picker-inline"
+                            id="date-picker-inline2"
                             placeholder="To"
                             value={dates[1]}
                             onChange={handleDateChange(true)}
-                            KeyboardButtonProps={{
-                                'aria-label': 'change date',
-                            }}
                         />
                     </Grid>
                 )}
