@@ -62,7 +62,7 @@ export const GridToolbar: React.FunctionComponent<GridToolbarProps> = ({
     };
 
     const [isPanelOpen, togglePanel] = useToggle(false);
-    const enableFeaturesDrawer = tbTableInstance.state.columns.find(c => c.filterable);
+    const enableFeaturesDrawer = tbTableInstance.state.columns.find((c) => c.filterable);
 
     return (
         <>
