@@ -114,7 +114,7 @@ export const FeaturesDrawer: React.FunctionComponent<FeaturesDrawerProps> = ({
                         </Tabs>
                     </AppBar>
                     <TabPanel value={value} index="filters">
-                        <FiltersContainer columns={tempColumns.filter((c) => c.filterable)} onApply={onApplyClick} />
+                        <FiltersContainer columns={tempColumns.filter((c) => c.filterable)} />
                     </TabPanel>
                     {/* <TabPanel value={value} index="toggleColumns">
                             Toggle Columns
