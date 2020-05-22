@@ -32,10 +32,7 @@ const getFilterControl = (column: ColumnModel, onEnter: () => void) => {
     }
 };
 
-export const StandardFilterEditor: React.FunctionComponent<FilterEditorProps> = ({
-    column,
-    onApply,
-}: FilterEditorProps) => {
+export const StandardFilterEditor: React.FunctionComponent<FilterEditorProps> = ({ column }: FilterEditorProps) => {
     const [currentOperator, setCurrentOperator] = React.useState(column.filterOperator);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 

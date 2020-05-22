@@ -5,7 +5,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
-import { ColumnModel, DataGridStorage, TubularHttpClientAbstract, ColumnModel, CompareOperators } from 'tubular-common';
+import { ColumnModel, DataGridStorage, TubularHttpClientAbstract, CompareOperators } from 'tubular-common';
 import { useTbTable } from 'tubular-react-common';
 import { useResolutionSwitch } from 'uno-react';
 import { TbRowProps } from '../BareBones/TbRow';
@@ -15,7 +15,6 @@ import { GridToolbar } from '../Toolbar/GridToolbar';
 import { ToolbarOptions } from '../Toolbar/ToolbarOptions';
 import { DataGridTable } from './';
 import { MobileDataGridTable } from './MobileDataGridTable';
-import { FeaturesDrawer } from './FeaturesDrawer';
 import { ChipBar } from '../Filtering/ChipBar';
 
 const useStyles = makeStyles({

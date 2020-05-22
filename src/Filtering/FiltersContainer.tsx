@@ -5,12 +5,10 @@ import { FilterControl } from './FilterControl';
 
 export interface FiltersContainerProps {
     columns: ColumnModel[];
-    onApply: () => void;
 }
 
 export const FiltersContainer: React.FunctionComponent<FiltersContainerProps> = ({
     columns,
-    onApply,
 }: FiltersContainerProps) => {
     return (
         <List component="nav">
