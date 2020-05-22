@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import TuneIcon from '@material-ui/icons/Tune';
 import { FeaturesDrawer } from '../DataGrid/FeaturesDrawer';
-import { ColumnModel } from 'tubular-common';
+import { ColumnModel, CompareOperators, columnHasFilter } from 'tubular-common';
 
 const mobileSpacer: React.CSSProperties = { flexShrink: 1 };
 const spacer: React.CSSProperties = { flex: '1 0' };
@@ -29,11 +29,40 @@ export const GridToolbar: React.FunctionComponent<GridToolbarProps> = ({
     tbTableInstance,
 }: GridToolbarProps) => {
     const [isMobileResolution] = useResolutionSwitch(outerWidth, timeout);
+
+    const applyFilters = (columns: ColumnModel[]): ColumnModel[] => {
+        columns.forEach((fColumn) => {
+            const column = columns.find((c: ColumnModel) => c.name === fColumn.name);
+
+            if (columnHasFilter(fColumn)) {
+                column.filterText = fColumn.filterText;
+                column.filterOperator = fColumn.filterOperator;
+                column.filterArgument = fColumn.filterArgument;
+
+                if (
+                    column.filterOperator === CompareOperators.Between &&
+                    (!column.filterArgument || !column.filterArgument[0])
+                ) {
+                    column.filterOperator = CompareOperators.Gte;
+                    column.filterArgument = null;
+                }
+            } else {
+                column.filterText = null;
+                column.filterOperator = CompareOperators.None;
+                column.filterArgument = null;
+            }
+        });
+
+        return columns;
+    };
+
     const onApplyFeatures = (columns: ColumnModel[]) => {
-        tbTableInstance.api.setColumns(columns);
+        const newColumns = applyFilters(columns);
+        tbTableInstance.api.setColumns(newColumns);
     };
 
     const [isPanelOpen, togglePanel] = useToggle(false);
+    const enableFeaturesDrawer = tbTableInstance.state.columns.find(c => c.filterable);
 
     return (
         <>
@@ -73,7 +102,7 @@ export const GridToolbar: React.FunctionComponent<GridToolbarProps> = ({
                     </IconButton>
                 </Tooltip>
             </Toolbar>
-            {isPanelOpen && (
+            {enableFeaturesDrawer && isPanelOpen && (
                 <FeaturesDrawer
                     togglePanel={togglePanel}
                     columns={tbTableInstance.state.columns}

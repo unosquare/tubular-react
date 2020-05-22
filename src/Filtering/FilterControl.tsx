@@ -36,7 +36,7 @@ export const FilterControl: React.FunctionComponent<FilterControlProps> = ({ col
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
             >
-                <Typography>{column.label} </Typography>
+                <Typography>{column.label}</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
                 <FilterEditor column={column} onApply={null} />
