@@ -56,7 +56,7 @@ export const DateFilter: React.FunctionComponent<DateFilterProps> = ({ column }:
                         format="MM/dd/yyyy"
                         margin="normal"
                         id="date-picker-inline"
-                        placeholder={isBetween ? 'From' : 'Selec a date'}
+                        placeholder={isBetween ? 'From' : 'Select a date'}
                         value={dates[0]}
                         onChange={handleDateChange()}
                     />
