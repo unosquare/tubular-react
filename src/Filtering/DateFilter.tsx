@@ -2,8 +2,9 @@ import 'date-fns';
 import * as React from 'react';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
+import { LocalizationProvider, DatePicker } from '@material-ui/pickers';
 import { ColumnModel, CompareOperators } from 'tubular-common';
+import { TextField } from '@material-ui/core';
 
 export interface DateFilterProps {
     column: ColumnModel;
@@ -46,37 +47,31 @@ export const DateFilter: React.FunctionComponent<DateFilterProps> = ({ column }:
     const isBetween = column.filterOperator === CompareOperators.Between;
 
     return (
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <LocalizationProvider dateAdapter={DateFnsUtils}>
             <Grid container={true} direction="column">
                 <Grid item={true}>
                     <DatePicker
                         autoOk={true}
-                        variant="dialog"
                         clearable={true}
-                        format="MM/dd/yyyy"
-                        margin="normal"
-                        id="date-picker-inline"
-                        placeholder={isBetween ? 'From' : 'Select a date'}
+                        label={isBetween ? 'From' : 'Select a date'}
                         value={dates[0]}
                         onChange={handleDateChange()}
+                        renderInput={props => <TextField {...props} />}
                     />
                 </Grid>
                 {column.filterOperator === CompareOperators.Between && (
                     <Grid item={true}>
                         <DatePicker
                             autoOk={true}
-                            variant="dialog"
                             clearable={true}
-                            format="MM/dd/yyyy"
-                            margin="normal"
-                            id="date-picker-inline2"
-                            placeholder="To"
+                            label="To"
                             value={dates[1]}
                             onChange={handleDateChange(true)}
+                            renderInput={props => <TextField {...props} />}
                         />
                     </Grid>
                 )}
             </Grid>
-        </MuiPickersUtilsProvider>
+        </LocalizationProvider>
     );
 };
