@@ -53,7 +53,7 @@
     "@date-io/date-fns": "^2.6.2",
     "@material-ui/core": "^4.10.1",
     "@material-ui/icons": "^4.9.1",
-    "@material-ui/pickers": "^3.2.10",
+    "@material-ui/pickers": "^4.0.0-alpha.8",
     "@svgr/parcel-plugin-svgr": "^5.4.0",
     "date-fns": "^2.14.0",
     "react-virtualized": "^9.21.2",
