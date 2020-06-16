@@ -9,7 +9,7 @@ const RemoteDataGrid: React.FunctionComponent = () => {
     const [refresh, forceRefresh] = useGridRefresh();
     const forceGridRefresh = () => forceRefresh();
 
-    const rowClick = (row: {}) => console.log('You clicked on a row: ', row);
+    const rowClick = (row: any) => console.log('You clicked on a row: ', row);
 
     const toolbarButton = new ToolbarOptions({
         customItems: <Button onClick={forceGridRefresh}>Force refresh</Button>,

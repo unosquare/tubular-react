@@ -11,7 +11,7 @@ interface GridBodyProps {
     detailComponent?: React.ReactElement<DetailComponent>;
     tbTableInstance: ITbTableInstance;
     rowComponent: React.FunctionComponent<TbRowProps>;
-    onRowClick?(row: {}): void;
+    onRowClick?(row: any): void;
 }
 
 const getStyles = (isPointer: boolean) => ({
@@ -20,7 +20,7 @@ const getStyles = (isPointer: boolean) => ({
 });
 
 const generateOnRowClickProxy = (onRowClick: any) => {
-    return (row: {}) => () => {
+    return (row: any) => () => {
         if (onRowClick) {
             onRowClick(row);
         }
@@ -43,7 +43,7 @@ export const GridBody: React.FunctionComponent<GridBodyProps> = ({
     if (state.filteredRecordCount === 0 && !state.isLoading) {
         content = <NoDataRow columns={state.columns} styles={styles} />;
     } else {
-        content = state.data.map((row: {}, rowIndex: number) => {
+        content = state.data.map((row: any, rowIndex: number) => {
             if (detailComponent) {
                 return (
                     <MasterDetailRow

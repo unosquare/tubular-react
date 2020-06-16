@@ -8,11 +8,11 @@ import { TbRowProps } from '../BareBones/TbRow';
 export interface MobileDataGridTableProps {
     tbTableInstance: ITbTableInstance;
     rowComponent?: React.FunctionComponent<TbRowProps>;
-    onRowClick?(row: {}): void;
+    onRowClick?(row: any): void;
 }
 
 const generateOnRowClickProxy = (onRowClick: any) => {
-    return (row: {}) => {
+    return (row: any) => {
         return () => {
             if (onRowClick) {
                 onRowClick(row);
@@ -31,7 +31,7 @@ export const MobileDataGridTable: React.FunctionComponent<MobileDataGridTablePro
 
     return (
         <GridList cellHeight="auto" cols={1}>
-            {tbTableInstance.state.data.map((row: {}, index: number) => (
+            {tbTableInstance.state.data.map((row: any, index: number) => (
                 <RowComponent
                     columns={tbTableInstance.state.columns}
                     row={row}

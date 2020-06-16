@@ -20,12 +20,12 @@ export const renderCellContent: any = (column: ColumnModel, row: any) => {
     }
 };
 
-export const renderDefaultListItem: any = (columns: ColumnModel[], row: {}) =>
+export const renderDefaultListItem: any = (columns: ColumnModel[], row: any) =>
     columns
         .filter((col: ColumnModel) => col.visible)
         .map((column: ColumnModel) => <div key={column.name}>{renderCellContent(column, row)}</div>);
 
-export const renderCells: any = (columns: ColumnModel[], row: {}) =>
+export const renderCells: any = (columns: ColumnModel[], row: any) =>
     columns
         .filter((col: ColumnModel) => col.visible)
         .map((column: ColumnModel) => (

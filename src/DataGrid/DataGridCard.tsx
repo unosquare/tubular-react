@@ -70,7 +70,7 @@ const columnRender = (column: ColumnModel, item: any) => {
 
 export interface DataGridCardProps {
     columns: ColumnModel[];
-    item: {};
+    item: any;
     onClickCallback: (row: any) => void;
 }
 

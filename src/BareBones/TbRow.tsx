@@ -4,7 +4,7 @@ import { ColumnModel } from 'tubular-common';
 import { renderCells } from '../utils/renders';
 
 export interface TbRowProps {
-    row: {};
+    row: any;
     rowIndex: number;
     columns: ColumnModel[];
     onRowClick?(): void;

@@ -14,7 +14,7 @@ export interface DataGridTableProps {
     rowComponent: React.FunctionComponent<TbRowProps>;
     footerComponent: React.FunctionComponent<any>;
     detailComponent?: React.ReactElement<DetailComponent>;
-    onRowClick?(row: {}): void;
+    onRowClick?(row: any): void;
 }
 
 export const DataGridTable: React.FunctionComponent<DataGridTableProps> = (props: DataGridTableProps) => {

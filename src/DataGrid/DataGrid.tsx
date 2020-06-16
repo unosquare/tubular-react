@@ -32,7 +32,7 @@ const timeout = 400;
 
 export interface DataGridProps {
     columns: ColumnModel[];
-    dataSource: {}[] | string | Request | TubularHttpClientAbstract;
+    dataSource: any[] | string | Request | TubularHttpClientAbstract;
     deps?: any[];
     detailComponent?: React.ReactElement<DetailComponet>;
     gridName: string;
@@ -45,7 +45,7 @@ export interface DataGridProps {
     rowMobileComponent?: React.FunctionComponent<TbRowProps>;
     footerComponent?: React.FunctionComponent<any>;
     onError?(err: string): void;
-    onRowClick?(row: {}): void;
+    onRowClick?(row: any): void;
 }
 
 export const DataGrid: React.FunctionComponent<DataGridProps> = (props: DataGridProps) => {

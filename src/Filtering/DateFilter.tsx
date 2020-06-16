@@ -56,7 +56,7 @@ export const DateFilter: React.FunctionComponent<DateFilterProps> = ({ column }:
                         label={isBetween ? 'From' : 'Select a date'}
                         value={dates[0]}
                         onChange={handleDateChange()}
-                        renderInput={props => <TextField {...props} />}
+                        renderInput={(props) => <TextField {...props} />}
                     />
                 </Grid>
                 {column.filterOperator === CompareOperators.Between && (
@@ -67,7 +67,7 @@ export const DateFilter: React.FunctionComponent<DateFilterProps> = ({ column }:
                             label="To"
                             value={dates[1]}
                             onChange={handleDateChange(true)}
-                            renderInput={props => <TextField {...props} />}
+                            renderInput={(props) => <TextField {...props} />}
                         />
                     </Grid>
                 )}

@@ -86,7 +86,7 @@ export const FeaturesDrawer: React.FunctionComponent<FeaturesDrawerProps> = ({
 
     const [value, setValue] = React.useState('filters');
 
-    const handleChange = (_event: React.ChangeEvent<{}>, newValue: string) => {
+    const handleChange = (_event: React.ChangeEvent<any>, newValue: string) => {
         setValue(newValue);
     };
 
