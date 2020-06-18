@@ -21,21 +21,23 @@ export const TbRow: React.FunctionComponent<TbRowProps> = ({
     onRowClick,
     rowSelectionEnabled,
     selection,
-}: TbRowProps) => (
-    <TableRow hover={true} onClick={onRowClick}>
-        {rowSelectionEnabled && (
-            <TableCell padding="checkbox">
-                <Checkbox
-                    checked={selection.rowSelection[row[columns.find((c) => c.isKey).name]]}
-                    onChange={() => {
-                        console.log(selection.rowSelection);
-                        selection.toggleRowSelection(row[columns.find((c) => c.isKey).name]);
-                    }}
-                    value={selection.rowSelection[row[columns.find((c) => c.isKey).name]]}
-                    inputProps={{ 'aria-label': 'select all desserts' }}
-                />
-            </TableCell>
-        )}
-        {renderCells(columns, row)}
-    </TableRow>
-);
+}: TbRowProps) => {
+    return (
+        <TableRow hover={true} onClick={onRowClick}>
+            {rowSelectionEnabled && selection.rowSelection[row[columns.find((c) => c.isKey).name]] !== undefined && (
+                <TableCell padding="checkbox">
+                    <Checkbox
+                        checked={selection.rowSelection[row[columns.find((c) => c.isKey).name]]}
+                        onChange={() => {
+                            console.log(selection.rowSelection);
+                            selection.toggleRowSelection(row[columns.find((c) => c.isKey).name]);
+                        }}
+                        value={selection.rowSelection[row[columns.find((c) => c.isKey).name]]}
+                        inputProps={{ 'aria-label': 'select all desserts' }}
+                    />
+                </TableCell>
+            )}
+            {renderCells(columns, row)}
+        </TableRow>
+    );
+};

@@ -122,11 +122,14 @@ export const DataGrid: React.FunctionComponent<DataGridProps> = (props: DataGrid
         if (rowSelectionEnabled) {
             const cols = tbTableInstance.state.columns;
             const keyColumn = cols.find((c) => c.isKey).name;
+            const newSelection: any = { ...rowSelection };
             tbTableInstance.state.data.forEach((row: any) => {
-                if (rowSelection[row[keyColumn]] === undefined) {
-                    rowSelection[row[keyColumn]] = false;
+                if (newSelection[row[keyColumn]] === undefined) {
+                    newSelection[row[keyColumn]] = false;
                 }
             });
+
+            setRowSelection(newSelection);
         }
     }, [tbTableInstance.state.data]);
 
