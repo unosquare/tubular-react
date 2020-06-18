@@ -24,6 +24,7 @@ const RemoteDataGrid: React.FunctionComponent = () => {
             onRowClick={rowClick}
             storage={new LocalStorage()}
             toolbarOptions={toolbarButton}
+            rowSelectionEnabled={true}
         />
     );
 };
