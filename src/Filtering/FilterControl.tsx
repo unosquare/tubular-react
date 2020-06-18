@@ -11,6 +11,7 @@ import { BooleanFilterEditor } from './BooleanFilterEditor';
 
 export interface FilterControlProps {
     column: ColumnModel;
+    onApply: () => void;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -23,10 +24,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-export const FilterControl: React.FunctionComponent<FilterControlProps> = ({ column }: FilterControlProps) => {
+export const FilterControl: React.FunctionComponent<FilterControlProps> = ({ column, onApply }: FilterControlProps) => {
     const hasFilter = columnHasFilter(column);
     const classes = useStyles();
-
     const FilterEditor = column.dataType === ColumnDataType.Boolean ? BooleanFilterEditor : StandardFilterEditor;
 
     return (
@@ -39,7 +39,7 @@ export const FilterControl: React.FunctionComponent<FilterControlProps> = ({ col
                 <Typography>{column.label}</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-                <FilterEditor column={column} onApply={null} />
+                <FilterEditor column={column} onApply={onApply} />
             </ExpansionPanelDetails>
         </ExpansionPanel>
     );

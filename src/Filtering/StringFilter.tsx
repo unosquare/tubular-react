@@ -5,17 +5,17 @@ import { handleFilterChange, onKeyDown } from './utils';
 
 export interface StringFilterProps {
     column: ColumnModel;
-    onEnter: () => void;
+    onApply: () => void;
 }
 
-export const StringFilter: React.FunctionComponent<StringFilterProps> = ({ column, onEnter }: StringFilterProps) => {
+export const StringFilter: React.FunctionComponent<StringFilterProps> = ({ column, onApply }: StringFilterProps) => {
     return (
         <>
             <TextField
                 label={''}
                 onChange={handleFilterChange(column)}
                 defaultValue={column.filterText}
-                onKeyDown={onKeyDown(onEnter)}
+                onKeyDown={onKeyDown(onApply)}
             />
         </>
     );

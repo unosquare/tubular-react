@@ -22,7 +22,7 @@ export const handleFilterChange = (column: ColumnModel) => (
 };
 
 export const onKeyDown = (onEnter: () => void) => (ev: React.KeyboardEvent) => {
-    if (ev.keyCode === 13) {
+    if (ev.keyCode === 13 && onEnter) {
         ev.preventDefault();
         ev.stopPropagation();
         onEnter();
