@@ -72,7 +72,7 @@ export const AdvancePaginationActions: React.FunctionComponent<AdvancePagination
     const gotoLastPage = gotoPage(Math.max(0, lastPage));
 
     const canNotBack = page === 0 || isLoading;
-    const canNotFwd = page === lastPage || isLoading;
+    const canNotFwd = page >= lastPage || isLoading;
 
     return (
         <div className={classes.root}>
