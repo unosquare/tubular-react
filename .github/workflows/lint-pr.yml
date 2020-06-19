@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1   
       - name: Lint Code Base
-        uses: github/super-linter@v2.0.0
+        uses: docker://github/super-linter:v2.1.0
         env:
           VALIDATE_RUBY: false
           VALIDATE_YAML: false
