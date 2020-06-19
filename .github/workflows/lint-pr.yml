@@ -10,6 +10,7 @@ jobs:
       - name: Lint Code Base
         uses: github/super-linter@v2.0.0
         env:
+          VALIDATE_RUBY: false
           VALIDATE_YAML: false
           VALIDATE_MD: false
           VALIDATE_JAVASCRIPT_ES: false
