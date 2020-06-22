@@ -17,6 +17,7 @@ import { DataGridTable } from './';
 import { MobileDataGridTable } from './MobileDataGridTable';
 import { ChipBar } from '../Filtering/ChipBar';
 import { useTbSelection } from '../hooks/useTbSelection';
+import { SelectionToolbar } from '../Toolbar/SelectionToolbar';
 
 const useStyles = makeStyles({
     linearProgress: {
@@ -85,12 +86,20 @@ export const DataGrid: React.FunctionComponent<DataGridProps> = (props: DataGrid
     const [isMobileResolution] = useResolutionSwitch(mobileBreakpointWidth, timeout);
     const selection = useTbSelection(tbTableInstance, rowSelectionEnabled);
 
+    const showSelectionToolbar = rowSelectionEnabled && selection.getSelectedCount() > 0;
     if (isMobileResolution) {
         toolbarOptions.SetMobileMode();
 
         return (
             <Paper className={classes.root}>
-                <GridToolbar toolbarOptions={toolbarOptions} tbTableInstance={tbTableInstance} gridName={gridName} />
+                {!showSelectionToolbar && (
+                    <GridToolbar
+                        toolbarOptions={toolbarOptions}
+                        tbTableInstance={tbTableInstance}
+                        gridName={gridName}
+                    />
+                )}
+                {showSelectionToolbar && <SelectionToolbar selection={selection} tbTableInstance={tbTableInstance} />}
                 <div className={classes.linearProgress} data-testid="linear-progress">
                     {tbTableInstance.state.isLoading && <LinearProgress />}
                 </div>
@@ -141,7 +150,10 @@ export const DataGrid: React.FunctionComponent<DataGridProps> = (props: DataGrid
 
     return (
         <Paper className={classes.root}>
-            <GridToolbar gridName={gridName} toolbarOptions={toolbarOptions} tbTableInstance={tbTableInstance} />
+            {!showSelectionToolbar && (
+                <GridToolbar toolbarOptions={toolbarOptions} tbTableInstance={tbTableInstance} gridName={gridName} />
+            )}
+            {showSelectionToolbar && <SelectionToolbar selection={selection} tbTableInstance={tbTableInstance} />}
             <div className={classes.linearProgress} data-testid="linear-progress">
                 {tbTableInstance.state.isLoading && <LinearProgress />}
             </div>

@@ -66,6 +66,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/pickers": "^4.0.0-alpha.8",
     "@svgr/parcel-plugin-svgr": "^5.4.0",
+    "clsx": "^1.1.1",
     "date-fns": "^2.14.0",
     "react-virtualized": "^9.21.2",
     "tubular-common": "^4.0.11",
