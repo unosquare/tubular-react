@@ -52,7 +52,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { DataGrid } from 'tubular-react';
-import {createColumn} from "tubular-common";
+import {createColumn} from "tubular-common"; //ReadMe
 
 const columns = [createColumn('OrderID'), createColumn('CustomerName'), createColumn('ShipperCity')];
 
