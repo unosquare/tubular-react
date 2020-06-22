@@ -14,7 +14,7 @@ export interface ExportButtonProps {
     gridName: string;
     filteredRecordCount: number;
     toolTip?: string;
-    exportTo: (allRows: boolean, exportFunc: (payload: {}[], columns: ColumnModel[]) => void) => void;
+    exportTo: (allRows: boolean, exportFunc: (payload: any[], columns: ColumnModel[]) => void) => void;
 }
 
 export const ExportButton: React.FunctionComponent<ExportButtonProps> = ({

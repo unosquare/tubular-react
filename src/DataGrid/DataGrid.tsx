@@ -33,7 +33,7 @@ const timeout = 400;
 
 export interface DataGridProps {
     columns: ColumnModel[];
-    dataSource: {}[] | string | Request | TubularHttpClientAbstract;
+    dataSource: any[] | string | Request | TubularHttpClientAbstract;
     deps?: any[];
     detailComponent?: React.ReactElement<DetailComponet>;
     gridName: string;

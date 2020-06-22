@@ -14,7 +14,7 @@ export interface MasterDetailRowProps {
     renderCells: any;
     style: React.CSSProperties;
     clickEvent: (ev: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void;
-    rowData: {};
+    rowData: any;
     columns: ColumnModel[];
 }
 

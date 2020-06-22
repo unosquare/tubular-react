@@ -10,7 +10,7 @@ import Lang from '../utils/Lang';
 export interface TbListProps {
     tbInstance: ITbListInstance;
     listItemComponent?: React.FunctionComponent<any>;
-    onItemClick?(row: {}): void;
+    onItemClick?(row: any): void;
 }
 
 export const TbList: React.FunctionComponent<TbListProps> = (tbProps) => {

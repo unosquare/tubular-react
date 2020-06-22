@@ -86,7 +86,7 @@ export const FeaturesDrawer: React.FunctionComponent<FeaturesDrawerProps> = ({
 
     const [value, setValue] = React.useState('filters');
 
-    const handleChange = (_event: React.ChangeEvent<{}>, newValue: string) => {
+    const handleChange = (_event: React.ChangeEvent<any>, newValue: string) => {
         setValue(newValue);
     };
 
@@ -114,7 +114,7 @@ export const FeaturesDrawer: React.FunctionComponent<FeaturesDrawerProps> = ({
                         </Tabs>
                     </AppBar>
                     <TabPanel value={value} index="filters">
-                        <FiltersContainer columns={tempColumns.filter((c) => c.filterable)} />
+                        <FiltersContainer columns={tempColumns.filter((c) => c.filterable)} onApply={onApplyClick} />
                     </TabPanel>
                     {/* <TabPanel value={value} index="toggleColumns">
                             Toggle Columns

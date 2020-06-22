@@ -15,24 +15,24 @@ import { NumericFilter } from './NumericFilter';
 import { StringFilter } from './StringFilter';
 import { DateFilter } from './DateFilter';
 
-const getFilterControl = (column: ColumnModel, onEnter: () => void) => {
+const getFilterControl = (column: ColumnModel, onApply: () => void) => {
     switch (column.dataType) {
         case ColumnDataType.Numeric:
-            return <NumericFilter column={column} onApply={onEnter} />;
+            return <NumericFilter column={column} onApply={onApply} />;
 
         case ColumnDataType.String:
-            return <StringFilter column={column} onEnter={onEnter} />;
+            return <StringFilter column={column} onApply={onApply} />;
         case ColumnDataType.Date:
         case ColumnDataType.DateTime:
         case ColumnDataType.DateTimeUtc:
-            return <DateFilter column={column} onApply={onEnter} />;
+            return <DateFilter column={column} onApply={onApply} />;
 
         default:
             return null;
     }
 };
 
-export const StandardFilterEditor: React.FunctionComponent<FilterEditorProps> = ({ column }: FilterEditorProps) => {
+export const StandardFilterEditor: React.FunctionComponent<FilterEditorProps> = ({ column, onApply }: FilterEditorProps) => {
     const [currentOperator, setCurrentOperator] = React.useState(column.filterOperator);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -74,7 +74,7 @@ export const StandardFilterEditor: React.FunctionComponent<FilterEditorProps> = 
                     </Button>
                 </Grid>
                 <Grid item={true} xs={9}>
-                    {getFilterControl(column, null)}
+                    {getFilterControl(column, onApply)}
                 </Grid>
             </Grid>
             <Menu id="split-button-menu" open={Boolean(anchorEl)} onClose={handleClose} anchorEl={anchorEl}>
