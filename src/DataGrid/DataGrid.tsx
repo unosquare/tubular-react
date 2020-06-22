@@ -16,7 +16,7 @@ import { ToolbarOptions } from '../Toolbar/ToolbarOptions';
 import { DataGridTable } from './';
 import { MobileDataGridTable } from './MobileDataGridTable';
 import { ChipBar } from '../Filtering/ChipBar';
-import { TbSelection } from '../utils/Selection';
+import { useTbSelection } from '../hooks/useTbSelection';
 
 const useStyles = makeStyles({
     linearProgress: {
@@ -82,56 +82,8 @@ export const DataGrid: React.FunctionComponent<DataGridProps> = (props: DataGrid
         storage,
     });
 
-    const [rowSelection, setRowSelection] = React.useState({} as any);
-    const toggleRowSelection = (id: string) => setRowSelection({ ...rowSelection, [id]: !rowSelection[id] });
-    const getSelectedCount = () => Object.keys(rowSelection).filter((k) => rowSelection[k]).length;
-    const getUnSelectedCount = () => Object.keys(rowSelection).filter((k) => !rowSelection[k]).length;
-    const isIndeterminateSelection = () =>
-        Object.keys(rowSelection).length > 0 && getSelectedCount() > 0 && getUnSelectedCount() > 0;
-
-    const toggleAllRowsSelection = () => {
-        const unSelectedCount = Object.keys(rowSelection).filter((k) => !rowSelection[k]).length;
-
-        // all rows are selected
-        if (unSelectedCount === 0) {
-            const newRowSelection: any = {};
-            Object.keys(rowSelection).forEach((f) => (newRowSelection[f] = false));
-            setRowSelection(newRowSelection);
-            console.log(newRowSelection);
-            return;
-        }
-
-        // Indeterminate | non-selected
-        const newRowSelection: any = {};
-        Object.keys(rowSelection).forEach((f) => (newRowSelection[f] = true));
-        console.log(newRowSelection);
-        setRowSelection(newRowSelection);
-    };
-    const selection: TbSelection = {
-        rowSelection,
-        toggleRowSelection,
-        toggleAllRowsSelection,
-        getSelectedCount,
-        getUnSelectedCount,
-        isIndeterminateSelection,
-    };
-
     const [isMobileResolution] = useResolutionSwitch(mobileBreakpointWidth, timeout);
-
-    React.useEffect(() => {
-        if (rowSelectionEnabled) {
-            const cols = tbTableInstance.state.columns;
-            const keyColumn = cols.find((c) => c.isKey).name;
-            const newSelection: any = { ...rowSelection };
-            tbTableInstance.state.data.forEach((row: any) => {
-                if (newSelection[row[keyColumn]] === undefined) {
-                    newSelection[row[keyColumn]] = false;
-                }
-            });
-
-            setRowSelection(newSelection);
-        }
-    }, [tbTableInstance.state.data]);
+    const selection = useTbSelection(tbTableInstance, rowSelectionEnabled);
 
     if (isMobileResolution) {
         toolbarOptions.SetMobileMode();

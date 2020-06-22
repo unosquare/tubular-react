@@ -30,7 +30,7 @@ export const GridHeader: React.FunctionComponent<GridHeaderProps> = ({
                 <TableCell padding="checkbox">
                     <Checkbox
                         indeterminate={selection.isIndeterminateSelection()}
-                        checked={selection.getUnSelectedCount() === 0}
+                        checked={selection.getUnSelectedCount() === 0 && tbTableInstance.state.data.length > 0}
                         onChange={selection.toggleAllRowsSelection}
                         inputProps={{ 'aria-label': 'select all desserts' }}
                     />
