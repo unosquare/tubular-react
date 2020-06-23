@@ -80,6 +80,26 @@ You can add or remove columns quickly and easily.
 
 ![addAndRemoveColumns](https://user-images.githubusercontent.com/36867256/85424009-06cdbb00-b53d-11ea-87b7-2b7b1ae6c96f.gif)
 
+### Using a remote data source
+It is possible to display data from a remote server.
+
+![Remote](https://user-images.githubusercontent.com/36867256/85425475-d71fb280-b53e-11ea-9aee-33308b6f79d4.gif)
+
+### Using a local data source
+It is possible to display data from a local data source.
+
+![Local](https://user-images.githubusercontent.com/36867256/85425715-24038900-b53f-11ea-9248-e03ca1c43d8a.gif)
+
+### Using a Grid
+In addition to lists, it is also possible to display the data on a grid.
+
+![Grid](https://user-images.githubusercontent.com/36867256/85425888-6331da00-b53f-11ea-9359-88f83689da3a.gif)
+
+### Using a Master Detail Row
+When it is necessary to show additional information in each record you can use Master Detail Row.
+
+![MasterDetail](https://user-images.githubusercontent.com/36867256/85426338-f408b580-b53f-11ea-8045-f2aedb90a33f.gif)
+
 ## i18n Support
 
 Tubular React now includes a brand new Language Service that will translate the content of the grid to a preferred language.
