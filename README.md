@@ -77,6 +77,7 @@ npm start
 
 ### Add or Delete a Column
 You can add or remove columns quickly and easily.
+
 ![addAndRemoveColumns](https://user-images.githubusercontent.com/36867256/85424009-06cdbb00-b53d-11ea-87b7-2b7b1ae6c96f.gif)
 
 ## i18n Support
