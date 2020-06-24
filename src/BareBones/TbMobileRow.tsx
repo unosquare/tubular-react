@@ -12,6 +12,7 @@ export const TbMobileRow: React.FunctionComponent<TbMobileRowProps> = ({
     columns,
     onRowClick,
     row,
+    unusedVar,
 }: TbMobileRowProps) => {
     return <DataGridCard columns={columns} item={row} onClickCallback={onRowClick} />;
 };
