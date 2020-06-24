@@ -49,8 +49,6 @@ export interface DataGridProps {
     onError?(err: string): void;
     onRowClick?(row: {}): void;
     rowSelectionEnabled?: boolean;
-    onRowCheck?: any;
-    onAllRowsCheck?: any;
 }
 
 export const DataGrid: React.FunctionComponent<DataGridProps> = (props: DataGridProps) => {
