@@ -16,7 +16,6 @@ const RemoteDataGrid: React.FunctionComponent = () => {
 
     const toolbarButton = new ToolbarOptions({
         customItems: <Button onClick={forceGridRefresh}>Force refresh</Button>,
-        // eslint-disable-next-line react/display-name
         actionsArea: ({ selection }: any) => {
             return (
                 <Tooltip title="Delete">
