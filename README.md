@@ -145,9 +145,7 @@ const ModifyingColumns: React.FunctionComponent = () => {
   );
 };
 
-export default ModifyingColumns;
-
-ReactDOM.render(<ModifyingColumns />, rootElement);
+ReactDOM.render(<ModifyingColumns />, document.getElementById('root'));
 ```
 
 This is a preview of the previous code:
@@ -159,22 +157,231 @@ This is a preview of the previous code:
 ### Using a remote data source
 It is possible to display data from a remote server.
 
+```js
+import * as React from 'react';
+import Button from '@material-ui/core/Button';
+import { LocalStorage } from 'tubular-common';
+import { useGridRefresh } from 'tubular-react-common';
+import { DataGrid, ToolbarOptions } from '../../src';
+import columns from './data/columns';
+
+const RemoteDataGrid: React.FunctionComponent = () => {
+    const [refresh, forceRefresh] = useGridRefresh();
+    const forceGridRefresh = () => forceRefresh();
+
+    const rowClick = (row: any) => console.log('You clicked on a row: ', row);
+
+    const toolbarButton = new ToolbarOptions({
+        customItems: <Button onClick={forceGridRefresh}>Force refresh</Button>,
+    });
+
+    return (
+        <DataGrid
+            gridName="Tubular-React"
+            columns={[...columns]}
+            dataSource="https://tubular.azurewebsites.net/api/orders/paged"
+            deps={[refresh]}
+            onRowClick={rowClick}
+            storage={new LocalStorage()}
+            toolbarOptions={toolbarButton}
+        />
+    );
+};
+
+ReactDOM.render(<RemoteDataGrid />, document.getElementById('root'));
+```
+
+This is a preview of the previous code:
+
 ![Remote](https://user-images.githubusercontent.com/36867256/85425475-d71fb280-b53e-11ea-9aee-33308b6f79d4.gif)
+
+[![Edit RemoteDataGrid -Example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/remotedatagrid-example-5sis8?fontsize=14&hidenavigation=1&theme=dark)
 
 ### Using a local data source
 It is possible to display data from a local data source.
 
+```js
+import * as React from 'react';
+import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
+import { LocalStorage } from 'tubular-common';
+import { DataGrid } from '../../src';
+import { ToolbarOptions } from '../../src/Toolbar/ToolbarOptions';
+import columns from './data/columns';
+import localData from './data/localData';
+
+const LocalDataGrid: React.FunctionComponent = () => {
+    const [getErrorMessage, setErrorMessage] = React.useState(null as string);
+    const [data, setData] = React.useState(localData);
+
+    const rowClick = (row: {}) => {
+        console.log('You clicked on a row: ', row);
+    };
+
+    const handleAddRow = () => {
+        setData([
+            ...data,
+            {
+                Amount: 150.0,
+                CustomerName: 'Tiempo Development',
+                OrderID: 23,
+                ShippedDate: '2016-01-04T18:00:00',
+                ShipperCity: 'Monterrey, NL, Mexico',
+            },
+        ]);
+    };
+
+    const toolbarOptions = new ToolbarOptions({
+        customItems: <Button onClick={handleAddRow}>Add new row</Button>,
+    });
+
+    return (
+        <div className="root">
+            {getErrorMessage && (
+                <Snackbar
+                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                    style={{ paddingTop: '10px' }}
+                    open={true}
+                    ContentProps={{ 'aria-describedby': 'message-id' }}
+                    message={<span id="message-id">{getErrorMessage}</span>}
+                />
+            )}
+            <DataGrid
+                columns={columns}
+                dataSource={data}
+                gridName="LocalDataGrid"
+                storage={new LocalStorage()}
+                onError={setErrorMessage}
+                toolbarOptions={toolbarOptions}
+                onRowClick={rowClick}
+            />
+        </div>
+    );
+};
+
+ReactDOM.render(<LocalDataGrid />, document.getElementById('root'));
+```
+
+This is a preview of the previous code:
+
 ![Local](https://user-images.githubusercontent.com/36867256/85425715-24038900-b53f-11ea-9248-e03ca1c43d8a.gif)
+
+[![Edit LocalDataGrid -Example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/localdatagrid-example-9gzvh?fontsize=14&hidenavigation=1&theme=dark)
 
 ### Using a Grid
 In addition to lists, it is also possible to display the data on a grid.
+
+```js
+
+
+ReactDOM.render(<RemoteDataGrid />, document.getElementById('root'));
+```
+
+This is a preview of the previous code:
 
 ![Grid](https://user-images.githubusercontent.com/36867256/85425888-6331da00-b53f-11ea-9359-88f83689da3a.gif)
 
 ### Using a Master Detail Row
 When it is necessary to show additional information in each record you can use Master Detail Row.
 
+```js
+import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableFooter from '@material-ui/core/TableFooter';
+import TableRow from '@material-ui/core/TableRow';
+import Typography from '@material-ui/core/Typography';
+import * as React from 'react';
+import { formatDate, LocalStorage } from 'tubular-common';
+import { Paginator, SearchTextInput } from '../../src';
+import CustomHttpClient from './CustomHttpClient';
+import columns from './data/columns';
+import { useTbTable } from 'tubular-react-common';
+
+const styles: any = {
+    progress: {
+        height: '20px',
+    },
+    search: {
+        margin: '15px 10px 10px 10px',
+        textAlign: 'right',
+    },
+};
+
+const RemoteGridList: React.FunctionComponent = () => {
+    const [getErrorMessage, setErrorMessage] = React.useState(null as string);
+
+    const tbTableInstance = useTbTable(columns, 'https://tubular.azurewebsites.net/api/orders/paged', {
+        storage: new LocalStorage(),
+        componentName: 'RemoteGridList',
+    });
+
+    console.log(tbTableInstance);
+    return (
+        <Paper>
+            <div style={styles.search}>
+                <SearchTextInput
+                    searchText={tbTableInstance.state.searchText}
+                    updateSearchText={tbTableInstance.api.updateSearchText}
+                />
+            </div>
+            <div style={styles.progress}>{tbTableInstance.state.isLoading && <LinearProgress />}</div>
+            <Table>
+                <TableBody>
+                    <TableRow>
+                        <TableCell>
+                            <GridList cellHeight={180} cols={5}>
+                                {tbTableInstance.state.data &&
+                                    tbTableInstance.state.data.map(row => (
+                                        <GridListTile key={row.OrderID}>
+                                            <Card>
+                                                <CardContent>
+                                                    <Typography gutterBottom={true} variant="h5" component="h2">
+                                                        {row.OrderID} - {row.CustomerName}
+                                                    </Typography>
+                                                    <Typography component="p">{row.ShipperCity}</Typography>
+                                                    <Typography component="p">
+                                                        {formatDate(row.ShippedDate, 'M/d/yyyy h:mm a')}
+                                                    </Typography>
+                                                </CardContent>
+                                                <CardActions>
+                                                    <Button size="small" color="primary">
+                                                        Learn More
+                                                    </Button>
+                                                </CardActions>
+                                            </Card>
+                                        </GridListTile>
+                                    ))}
+                            </GridList>
+                        </TableCell>
+                    </TableRow>
+                </TableBody>
+                <TableFooter>
+                    <TableRow>
+                        <Paginator tbTableInstance={tbTableInstance} />
+                    </TableRow>
+                </TableFooter>
+            </Table>
+        </Paper>
+    );
+};
+
+ReactDOM.render(<RemoteGridList />, document.getElementById('root'));
+```
+
+This is a preview of the previous code:
+
 ![MasterDetail](https://user-images.githubusercontent.com/36867256/85426338-f408b580-b53f-11ea-8045-f2aedb90a33f.gif)
+
+[![Edit RemoteDataGrid -Example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/remotedatagrid-example-5sis8?fontsize=14&hidenavigation=1&theme=dark)
 
 ## i18n Support
 
