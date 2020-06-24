@@ -20,7 +20,7 @@ You can try a [CodeSandbox demo](https://codesandbox.io/s/818mwv72ll).
 
 Please visit the [Tubular GitHub Page](http://unosquare.github.io/tubular) to learn how quickly you can start coding. See [Related projects](#related-projects) below to discover more Tubular libraries and backend solutions.
 
-## Table of contents
+# Table of contents
 
 -   [Installation](#installation)
 -   [Usages](#datagrid)
