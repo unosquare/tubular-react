@@ -17,7 +17,7 @@ export interface DataGridTableProps {
     detailComponent?: React.ReactElement<DetailComponent>;
     rowSelectionEnabled?: boolean;
     selection?: TbSelection;
-    onRowClick?(row: {}): void;
+    onRowClick?(row: any): void;
 }
 
 export const DataGridTable: React.FunctionComponent<DataGridTableProps> = (props: DataGridTableProps) => {

@@ -47,7 +47,7 @@ export interface DataGridProps {
     rowMobileComponent?: React.FunctionComponent<TbRowProps>;
     footerComponent?: React.FunctionComponent<any>;
     onError?(err: string): void;
-    onRowClick?(row: {}): void;
+    onRowClick?(row: any): void;
     rowSelectionEnabled?: boolean;
 }
 
@@ -97,7 +97,7 @@ export const DataGrid: React.FunctionComponent<DataGridProps> = (props: DataGrid
                         gridName={gridName}
                     />
                 )}
-                {showSelectionToolbar && <SelectionToolbar selection={selection} tbTableInstance={tbTableInstance} />}
+                {showSelectionToolbar && <SelectionToolbar selection={selection} />}
                 <div className={classes.linearProgress} data-testid="linear-progress">
                     {tbTableInstance.state.isLoading && <LinearProgress />}
                 </div>
@@ -152,11 +152,7 @@ export const DataGrid: React.FunctionComponent<DataGridProps> = (props: DataGrid
                 <GridToolbar toolbarOptions={toolbarOptions} tbTableInstance={tbTableInstance} gridName={gridName} />
             )}
             {showSelectionToolbar && (
-                <SelectionToolbar
-                    selection={selection}
-                    tbTableInstance={tbTableInstance}
-                    actionsArea={toolbarOptions.actionsArea}
-                />
+                <SelectionToolbar selection={selection} actionsArea={toolbarOptions.actionsArea} />
             )}
             <div className={classes.linearProgress} data-testid="linear-progress">
                 {tbTableInstance.state.isLoading && <LinearProgress />}

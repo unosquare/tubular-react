@@ -13,7 +13,7 @@ interface GridBodyProps {
     tbTableInstance: ITbTableInstance;
     rowComponent: React.FunctionComponent<TbRowProps>;
     rowSelectionEnabled?: boolean;
-    onRowClick?(row: {}): void;
+    onRowClick?(row: any): void;
     selection?: TbSelection;
 }
 
