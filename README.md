@@ -78,6 +78,80 @@ npm start
 ### Add or Delete a Column
 You can add or remove columns quickly and easily.
 
+```js
+import * as React from "react";
+import { DataGrid, ToolbarOptions } from "tubular-react";
+import columns from "./columns";
+import { LocalStorage, createColumn } from "tubular-common";
+import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import localData from "./localData";
+
+const ModifyingColumns: React.FunctionComponent = () => {
+  const [getErrorMessage, setErrorMessage] = React.useState(null as string);
+  const [gridColumns, setGridColumns] = React.useState(columns);
+  const [columnCounter, setColumnCounter] = React.useState(0);
+
+  const handleAddColumn = () => {
+    setGridColumns([
+      ...gridColumns,
+      createColumn(`Column ${columnCounter}`, {
+        filterable: true,
+        searchable: true,
+        sortable: true
+      })
+    ]);
+
+    setColumnCounter(columnCounter + 1);
+  };
+
+  const handleDeleteLastColumn = () => {
+    setGridColumns([
+      ...gridColumns.filter(
+        c => c.name !== gridColumns[gridColumns.length - 1].name
+      )
+    ]);
+  };
+
+  const toolbarOptions = new ToolbarOptions({
+    customItems: (
+      <div>
+        <Button onClick={handleAddColumn}>Add new column</Button>
+        <Button onClick={handleDeleteLastColumn}>Delete last column</Button>
+      </div>
+    )
+  });
+
+  return (
+    <div className="root">
+      {getErrorMessage && (
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          style={{ paddingTop: "10px" }}
+          open={true}
+          ContentProps={{ "aria-describedby": "message-id" }}
+          message={<span id="message-id">{getErrorMessage}</span>}
+        />
+      )}
+      <DataGrid
+        columns={gridColumns}
+        dataSource={localData}
+        gridName="ModifyingColumns"
+        storage={new LocalStorage()}
+        onError={setErrorMessage}
+        toolbarOptions={toolbarOptions}
+      />
+    </div>
+  );
+};
+
+export default ModifyingColumns;
+
+ReactDOM.render(<ModifyingColumns />, rootElement);
+```
+
+This is a preview of the previous code:
+
 ![addAndRemoveColumns](https://user-images.githubusercontent.com/36867256/85424009-06cdbb00-b53d-11ea-87b7-2b7b1ae6c96f.gif)
 
 ### Using a remote data source
