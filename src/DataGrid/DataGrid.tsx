@@ -16,6 +16,8 @@ import { ToolbarOptions } from '../Toolbar/ToolbarOptions';
 import { DataGridTable } from './';
 import { MobileDataGridTable } from './MobileDataGridTable';
 import { ChipBar } from '../Filtering/ChipBar';
+import { useTbSelection } from '../hooks/useTbSelection';
+import { SelectionToolbar } from '../Toolbar/SelectionToolbar';
 
 const useStyles = makeStyles({
     linearProgress: {
@@ -46,6 +48,7 @@ export interface DataGridProps {
     footerComponent?: React.FunctionComponent<any>;
     onError?(err: string): void;
     onRowClick?(row: any): void;
+    rowSelectionEnabled?: boolean;
 }
 
 export const DataGrid: React.FunctionComponent<DataGridProps> = (props: DataGridProps) => {
@@ -63,6 +66,7 @@ export const DataGrid: React.FunctionComponent<DataGridProps> = (props: DataGrid
         storage,
         toolbarOptions = props.toolbarOptions || new ToolbarOptions(),
         detailComponent,
+        rowSelectionEnabled,
     } = props;
 
     const classes = useStyles({});
@@ -78,13 +82,22 @@ export const DataGrid: React.FunctionComponent<DataGridProps> = (props: DataGrid
     });
 
     const [isMobileResolution] = useResolutionSwitch(mobileBreakpointWidth, timeout);
+    const selection = useTbSelection(tbTableInstance, rowSelectionEnabled);
 
+    const showSelectionToolbar = rowSelectionEnabled && selection.getSelectedCount() > 0;
     if (isMobileResolution) {
         toolbarOptions.SetMobileMode();
 
         return (
             <Paper className={classes.root}>
-                <GridToolbar toolbarOptions={toolbarOptions} tbTableInstance={tbTableInstance} gridName={gridName} />
+                {!showSelectionToolbar && (
+                    <GridToolbar
+                        toolbarOptions={toolbarOptions}
+                        tbTableInstance={tbTableInstance}
+                        gridName={gridName}
+                    />
+                )}
+                {showSelectionToolbar && <SelectionToolbar selection={selection} />}
                 <div className={classes.linearProgress} data-testid="linear-progress">
                     {tbTableInstance.state.isLoading && <LinearProgress />}
                 </div>
@@ -135,7 +148,12 @@ export const DataGrid: React.FunctionComponent<DataGridProps> = (props: DataGrid
 
     return (
         <Paper className={classes.root}>
-            <GridToolbar gridName={gridName} toolbarOptions={toolbarOptions} tbTableInstance={tbTableInstance} />
+            {!showSelectionToolbar && (
+                <GridToolbar toolbarOptions={toolbarOptions} tbTableInstance={tbTableInstance} gridName={gridName} />
+            )}
+            {showSelectionToolbar && (
+                <SelectionToolbar selection={selection} actionsArea={toolbarOptions.actionsArea} />
+            )}
             <div className={classes.linearProgress} data-testid="linear-progress">
                 {tbTableInstance.state.isLoading && <LinearProgress />}
             </div>
@@ -146,6 +164,8 @@ export const DataGrid: React.FunctionComponent<DataGridProps> = (props: DataGrid
                 footerComponent={footerComponent}
                 detailComponent={detailComponent || null}
                 onRowClick={onRowClick}
+                rowSelectionEnabled={rowSelectionEnabled}
+                selection={selection}
             />
             {toolbarOptions.enablePagination && paginator}
         </Paper>
