@@ -4,6 +4,9 @@ import { LocalStorage } from 'tubular-common';
 import { useGridRefresh } from 'tubular-react-common';
 import { DataGrid, ToolbarOptions } from '../../src';
 import columns from './data/columns';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const RemoteDataGrid: React.FunctionComponent = () => {
     const [refresh, forceRefresh] = useGridRefresh();
@@ -13,6 +16,16 @@ const RemoteDataGrid: React.FunctionComponent = () => {
 
     const toolbarButton = new ToolbarOptions({
         customItems: <Button onClick={forceGridRefresh}>Force refresh</Button>,
+        // eslint-disable-next-line react/display-name
+        actionsArea: ({ selection }: any) => {
+            return (
+                <Tooltip title="Delete">
+                    <IconButton aria-label="delete" onClick={() => console.log(selection.getSelectedRows())}>
+                        <DeleteIcon />
+                    </IconButton>
+                </Tooltip>
+            );
+        },
     });
 
     return (

@@ -5,4 +5,5 @@ export interface TbSelection {
     getSelectedCount: () => number;
     getUnSelectedCount: () => number;
     isIndeterminateSelection: () => boolean;
+    getSelectedRows: () => any[];
 }

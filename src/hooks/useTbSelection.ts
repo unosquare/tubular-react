@@ -17,9 +17,15 @@ const createRowSelectionFromData = (data: any[], columns: ColumnModel[]) => {
 
 export const useTbSelection = (tbInstance: ITbTableInstance, rowSelectionEnabled: boolean): TbSelection => {
     const [rowSelection, setRowSelection] = React.useState({} as any);
+    const keyColumn = tbInstance.state.columns.find((c) => c.isKey);
     const toggleRowSelection = (id: string) => setRowSelection({ ...rowSelection, [id]: !rowSelection[id] });
     const getSelectedCount = () => Object.keys(rowSelection).filter((k) => rowSelection[k]).length;
     const getUnSelectedCount = () => Object.keys(rowSelection).filter((k) => !rowSelection[k]).length;
+    const getSelectedRows = () => {
+        const selectedKeys = Object.keys(rowSelection).filter((k) => rowSelection[k]);
+        return tbInstance.state.data.filter((row) => selectedKeys.includes(`${row[keyColumn.name]}`));
+    };
+
     const isIndeterminateSelection = () =>
         Object.keys(rowSelection).length > 0 && getSelectedCount() > 0 && getUnSelectedCount() > 0;
 
@@ -53,6 +59,7 @@ export const useTbSelection = (tbInstance: ITbTableInstance, rowSelectionEnabled
         toggleRowSelection,
         toggleAllRowsSelection,
         getSelectedCount,
+        getSelectedRows,
         getUnSelectedCount,
         isIndeterminateSelection,
     };
