@@ -25,9 +25,10 @@ Please visit the [Tubular GitHub Page](http://unosquare.github.io/tubular) to le
 -   [Installation](#installation)
 -   [Usages](#datagrid)
     -   [DataGrid](#datagrid)
-    -   [Using a remote data source](#using-a-remote-data-source)
-    -   [Using a local data source](#using-a-local-data-source)
-    -   [How to include functionality buttons](#how-to-include-functionality-buttons)
+    -   [DataGrid with a remote data source](#dataGrid-with-a-remote-data-source)
+    -   [DataGrid with a local data source](#datagrid-with-a-local-data-source)
+    -   [Tubular react in a grid list](#tubular-react-in-a-grid-list)
+    -   [Adding/Removing columns dynamically](#adding-removing)
     -   [Run integrated sample](#run-integrated-sample)
 -   [i18n Support](#i18n-support)
 -   [Related projects](#related-projects)
@@ -67,102 +68,33 @@ This is a preview of the previous code:
 
 ![DataGrid](https://user-images.githubusercontent.com/25437790/57318742-a7a2b200-70c0-11e9-8d5b-aaf2107bd059.gif)
 
-### Using a remote data source
+### DataGrid with a remote data source
+It is possible to display data from a remote source.
 
-You will need both a URL and a `createColumn` array.
+![Remote](https://user-images.githubusercontent.com/36867256/85425475-d71fb280-b53e-11ea-9aee-33308b6f79d4.gif)
 
-```js
-<DataGrid columns={columns} dataSource={'https://tubular.azurewebsites.net/api/orders/paged'} gridName="Grid" />
-```
+[![Edit RemoteDataGrid -Example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/remotedatagrid-example-5sis8?fontsize=14&hidenavigation=1&theme=dark)
 
-#### Example
-You can try a CodeSandbox demo for RemoteDataGrids:
+### DataGrid with a local data source
+It is possible to display data from a local data source.
 
-[![Edit tubular-react - dataGrid](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/tubular-react-template-gyjo8)
+![Local](https://user-images.githubusercontent.com/36867256/85425715-24038900-b53f-11ea-9248-e03ca1c43d8a.gif)
 
-### Using a local data source
+[![Edit LocalDataGrid -Example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/localdatagrid-example-9gzvh?fontsize=14&hidenavigation=1&theme=dark)
 
-You will need both an array of data objects and a `createColumn` array. See this [example](https://github.com/unosquare/tubular-react/blob/master/sample/src/data/localData.ts) of how to define the array of objects.
+### Tubular react in a grid list
+Tubular can also be used to render data in a different layout.
 
-```js
-<DataGrid columns={columns} dataSource={localData} gridName="Grid" />
-```
-#### Use of Filter and Aggregate Function
-To include filter and aggregate function you have to pass the an object filter type and aggregate as second argument of `createColumn`
-please refer the below code.
+![Grid](https://user-images.githubusercontent.com/36867256/85425888-6331da00-b53f-11ea-9359-88f83689da3a.gif)
 
-```js
-import {
-  AggregateFunctions,
-  ColumnDataType,
-  createColumn,
-  ColumnSortDirection
-} from "tubular-common";
-import { DataGrid } from "tubular-react";
+[![Edit GridList -Example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/gridlist-example-7ys1y?fontsize=14&hidenavigation=1&theme=dark)
 
-const columns = [
-  createColumn("OrderID", {
-    dataType: ColumnDataType.NUMERIC,
-    filtering: true,
-    isKey: true,
-    label: "Id",
-    sortDirection: ColumnSortDirection.ASCENDING,
-    sortOrder: 1,
-    sortable: true
-  }),
-  createColumn("CustomerName", {
-    aggregate: AggregateFunctions.COUNT,
-    filtering: true,
-    searchable: true,
-    sortable: true
-  }),
-  createColumn("ShippedDate", {
-    dataType: ColumnDataType.DATE_TIME,
-    filtering: true,
-    sortable: true
-  }),
-  createColumn("ShipperCity")
-];
+### Adding/Removing columns dynamically<a name="adding-removing"></a>
+You can add or remove columns quickly and easily.
 
-export const GridExample = () => {
-  return (
-    <div>
-      <DataGrid
-        gridName="Tubular-React"
-        columns={columns}
-        dataSource="https://tubular.azurewebsites.net/api/orders/paged"
-      />
-    </div>
-  );
-};
+![addAndRemoveColumns](https://user-images.githubusercontent.com/36867256/85424009-06cdbb00-b53d-11ea-87b7-2b7b1ae6c96f.gif)
 
-
-```
-#### Example
-You can try a CodeSandbox demo for LocalDataGrid
-
-[![Edit tubular-react - localDataGrid](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/tubular-react-template-gyjo8)
-
-### How to include functionality buttons
-
-You can add functionalities to the `DataGridProvider` including extra buttons that can perform an action according to your requirements. Just need include an IconButton Component from @material-ui and define the icon or button that you need between `DataGridProvider` tags and specify the action to perform.
-
-The following snippet shows how to include an Add Button:
-
-```tsx
-import * as React from 'react';
-import AddIcon from '@material-ui/icons/Add';
-import IconButton from '@material-ui/core/IconButton';
-import { DataGrid } from 'tubular-react';
-
-const LocalDataGrid = () => (
-    <DataGrid columns={columns} dataSource={'https://tubular.azurewebsites.net/api/orders/paged'} gridName="Grid">
-        <IconButton color="default" onClick={() => alert('I can help you to add features to your datagrid.')}>
-            <AddIcon />
-        </IconButton>
-    </DataGrid>
-);
-```
+[![Edit ColumnFeatures -Example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/columnfeatures-example-wz010?fontsize=14&hidenavigation=1&theme=dark)
 
 ### Run integrated sample
 
