@@ -6,12 +6,15 @@ import DetailComponent from '../DataGridInterfaces/DetailComponent';
 import { renderCells } from '../utils';
 import MasterDetailRow from './MasterDetailRow';
 import { NoDataRow } from './NoDataRow';
+import { TbSelection } from '../utils/Selection';
 
 interface GridBodyProps {
     detailComponent?: React.ReactElement<DetailComponent>;
     tbTableInstance: ITbTableInstance;
     rowComponent: React.FunctionComponent<TbRowProps>;
+    rowSelectionEnabled?: boolean;
     onRowClick?(row: any): void;
+    selection?: TbSelection;
 }
 
 const getStyles = (isPointer: boolean) => ({
@@ -32,6 +35,8 @@ export const GridBody: React.FunctionComponent<GridBodyProps> = ({
     rowComponent,
     onRowClick,
     detailComponent,
+    rowSelectionEnabled,
+    selection,
 }: GridBodyProps) => {
     const styles = getStyles(Boolean(onRowClick));
     const RowComponent = rowComponent ? rowComponent : TbRow;
@@ -65,6 +70,8 @@ export const GridBody: React.FunctionComponent<GridBodyProps> = ({
                     rowIndex={rowIndex}
                     columns={state.columns}
                     onRowClick={onRowClickProxy(row)}
+                    rowSelectionEnabled={rowSelectionEnabled}
+                    selection={selection}
                 />
             );
         });

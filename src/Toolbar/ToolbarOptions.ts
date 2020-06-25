@@ -4,6 +4,7 @@ export class ToolbarOptions {
     public advancePagination = true;
     public enablePagination = true;
     public customItems: ReactNode;
+    public actionsArea: React.ComponentType<any>;
     public exportButton = true;
     public printButton = true;
     public searchText = true;

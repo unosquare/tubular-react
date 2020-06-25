@@ -52,6 +52,7 @@ const LocalDataGrid: React.FunctionComponent = () => {
                 onError={setErrorMessage}
                 toolbarOptions={toolbarOptions}
                 onRowClick={rowClick}
+                rowSelectionEnabled={true}
             />
         </div>
     );

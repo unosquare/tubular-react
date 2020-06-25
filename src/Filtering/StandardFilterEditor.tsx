@@ -3,10 +3,6 @@ import { ColumnModel, getOperators, ColumnDataType, CompareOperators } from 'tub
 import { getOperatorIcon, getOperatorText, FilterEditorProps } from './utils';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
-// import { NumericFilter } from './NumericFilter';
-// import { StringFilter } from './StringFilter';
-// import { DateFilter } from './DateFilter';
-
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -32,7 +28,10 @@ const getFilterControl = (column: ColumnModel, onApply: () => void) => {
     }
 };
 
-export const StandardFilterEditor: React.FunctionComponent<FilterEditorProps> = ({ column, onApply }: FilterEditorProps) => {
+export const StandardFilterEditor: React.FunctionComponent<FilterEditorProps> = ({
+    column,
+    onApply,
+}: FilterEditorProps) => {
     const [currentOperator, setCurrentOperator] = React.useState(column.filterOperator);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
