@@ -25,10 +25,10 @@ Please visit the [Tubular GitHub Page](http://unosquare.github.io/tubular) to le
 -   [Installation](#installation)
 -   [Usages](#datagrid)
     -   [DataGrid](#datagrid)
-    -   [Add or Delete a Column](#add-or-delete-a-column)
-    -   [Using a remote data source](#using-a-remote-data-source)
-    -   [Using a local data source](#using-a-local-data-source)
-    -   [Using a Grid](#using-a-grid)
+    -   [DataGrid with a remote data source](#using-a-remote-data-source)
+    -   [DataGrid with a local data source](#using-a-local-data-source)
+    -   [Using tubular react in a grid list](#using-a-grid)
+    -   [Add/Delete columns](#add-or-delete-a-column)
     -   [Run integrated sample](#run-integrated-sample)
 -   [i18n Support](#i18n-support)
 -   [Related projects](#related-projects)
@@ -68,41 +68,33 @@ This is a preview of the previous code:
 
 ![DataGrid](https://user-images.githubusercontent.com/25437790/57318742-a7a2b200-70c0-11e9-8d5b-aaf2107bd059.gif)
 
-### Add or Delete a Column
-You can add or remove columns quickly and easily.
-
-This is a preview of the previous code:
-
-![addAndRemoveColumns](https://user-images.githubusercontent.com/36867256/85424009-06cdbb00-b53d-11ea-87b7-2b7b1ae6c96f.gif)
-
-[![Edit ColumnFeatures -Example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/columnfeatures-example-wz010?fontsize=14&hidenavigation=1&theme=dark)
-
-### Using a remote data source
+### DataGrid with a remote data source
 It is possible to display data from a remote server.
-
-This is a preview of the previous code:
 
 ![Remote](https://user-images.githubusercontent.com/36867256/85425475-d71fb280-b53e-11ea-9aee-33308b6f79d4.gif)
 
 [![Edit RemoteDataGrid -Example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/remotedatagrid-example-5sis8?fontsize=14&hidenavigation=1&theme=dark)
 
-### Using a local data source
+### DataGrid with a local data source
 It is possible to display data from a local data source.
-
-This is a preview of the previous code:
 
 ![Local](https://user-images.githubusercontent.com/36867256/85425715-24038900-b53f-11ea-9248-e03ca1c43d8a.gif)
 
 [![Edit LocalDataGrid -Example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/localdatagrid-example-9gzvh?fontsize=14&hidenavigation=1&theme=dark)
 
-### Using a Grid
-In addition to lists, it is also possible to display the data on a grid.
-
-This is a preview of the previous code:
+### Tubular react in a grid list
+Tubular can also be used to render data in a different layout.
 
 ![Grid](https://user-images.githubusercontent.com/36867256/85425888-6331da00-b53f-11ea-9359-88f83689da3a.gif)
 
 [![Edit GridList -Example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/gridlist-example-7ys1y?fontsize=14&hidenavigation=1&theme=dark)
+
+### Adding/Removing columns dynamically
+You can add or remove columns quickly and easily.
+
+![addAndRemoveColumns](https://user-images.githubusercontent.com/36867256/85424009-06cdbb00-b53d-11ea-87b7-2b7b1ae6c96f.gif)
+
+[![Edit ColumnFeatures -Example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/columnfeatures-example-wz010?fontsize=14&hidenavigation=1&theme=dark)
 
 ### Run integrated sample
 
