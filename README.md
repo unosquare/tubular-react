@@ -28,7 +28,7 @@ Please visit the [Tubular GitHub Page](http://unosquare.github.io/tubular) to le
     -   [DataGrid with a remote data source](#dataGrid-with-a-remote-data-source)
     -   [DataGrid with a local data source](#datagrid-with-a-local-data-source)
     -   [Tubular react in a grid list](#tubular-react-in-a-grid-list)
-    -   [Add/Delete columns](#adddelete-columns)
+    -   [Add/Delete columns](#add%2Fdelete-columns)
     -   [Run integrated sample](#run-integrated-sample)
 -   [i18n Support](#i18n-support)
 -   [Related projects](#related-projects)
