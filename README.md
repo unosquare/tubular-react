@@ -69,7 +69,7 @@ This is a preview of the previous code:
 ![DataGrid](https://user-images.githubusercontent.com/25437790/57318742-a7a2b200-70c0-11e9-8d5b-aaf2107bd059.gif)
 
 ### DataGrid with a remote data source
-It is possible to display data from a remote server.
+It is possible to display data from a remote source.
 
 ![Remote](https://user-images.githubusercontent.com/36867256/85425475-d71fb280-b53e-11ea-9aee-33308b6f79d4.gif)
 
