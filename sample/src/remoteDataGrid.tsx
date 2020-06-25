@@ -1,5 +1,5 @@
-import * as React from 'react';
 import Button from '@material-ui/core/Button';
+import * as React from 'react';
 import { LocalStorage } from 'tubular-common';
 import { useGridRefresh } from 'tubular-react-common';
 import { DataGrid, ToolbarOptions } from '../../src';
