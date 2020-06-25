@@ -89,7 +89,7 @@ Tubular can also be used to render data in a different layout.
 
 [![Edit GridList -Example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/gridlist-example-7ys1y?fontsize=14&hidenavigation=1&theme=dark)
 
-### Adding/Removing columns dynamically {#adding-removing}
+### Adding/Removing columns dynamically<a name="adding-removing"></a>
 You can add or remove columns quickly and easily.
 
 ![addAndRemoveColumns](https://user-images.githubusercontent.com/36867256/85424009-06cdbb00-b53d-11ea-87b7-2b7b1ae6c96f.gif)
