@@ -104,6 +104,17 @@ This is a preview of the previous code:
 
 [![Edit GridList -Example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/gridlist-example-7ys1y?fontsize=14&hidenavigation=1&theme=dark)
 
+### Run integrated sample
+
+There is a sample included in this project, you can run it just by doing the following.
+
+```shell
+// Install all the dependencies
+npm install
+// Run the sample project
+npm start
+```
+
 ## i18n Support
 
 Tubular React now includes a brand new Language Service that will translate the content of the grid to a preferred language.
