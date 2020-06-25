@@ -28,7 +28,7 @@ Please visit the [Tubular GitHub Page](http://unosquare.github.io/tubular) to le
     -   [DataGrid with a remote data source](#dataGrid-with-a-remote-data-source)
     -   [DataGrid with a local data source](#datagrid-with-a-local-data-source)
     -   [Tubular react in a grid list](#tubular-react-in-a-grid-list)
-    -   [Adding/Removing columns dynamically](#adding/removing-columns-dynamically)
+    -   [Adding/Removing columns dynamically](#adding-removing)
     -   [Run integrated sample](#run-integrated-sample)
 -   [i18n Support](#i18n-support)
 -   [Related projects](#related-projects)
@@ -89,7 +89,7 @@ Tubular can also be used to render data in a different layout.
 
 [![Edit GridList -Example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/gridlist-example-7ys1y?fontsize=14&hidenavigation=1&theme=dark)
 
-### Adding/Removing columns dynamically
+### Adding/Removing columns dynamically {#adding-removing}
 You can add or remove columns quickly and easily.
 
 ![addAndRemoveColumns](https://user-images.githubusercontent.com/36867256/85424009-06cdbb00-b53d-11ea-87b7-2b7b1ae6c96f.gif)
