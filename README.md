@@ -102,6 +102,8 @@ This is a preview of the previous code:
 
 ![Grid](https://user-images.githubusercontent.com/36867256/85425888-6331da00-b53f-11ea-9359-88f83689da3a.gif)
 
+[![Edit GridList -Example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/gridlist-example-7ys1y?fontsize=14&hidenavigation=1&theme=dark)
+
 ## i18n Support
 
 Tubular React now includes a brand new Language Service that will translate the content of the grid to a preferred language.
