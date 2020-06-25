@@ -26,6 +26,10 @@ Please visit the [Tubular GitHub Page](http://unosquare.github.io/tubular) to le
 -   [Usages](#datagrid)
     -   [DataGrid](#datagrid)
     -   [Run integrated sample](#run-integrated-sample)
+    -   [Add or Delete a Column](#add-or-delete-a-column)
+    -   [Using a remote data source](#using-a-remote-data-source)
+    -   [Using a local data source](#using-a-local-data-source)
+    -   [Using a Grid](#using-a-grid)
 -   [i18n Support](#i18n-support)
 -   [Related projects](#related-projects)
 
