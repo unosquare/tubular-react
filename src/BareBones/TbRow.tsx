@@ -1,4 +1,4 @@
-import TableRow from '@material-ui/core/TableRow/TableRow';
+import TableRow from '@material-ui/core/TableRow';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
 import { renderCells } from '../utils/renders';

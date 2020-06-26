@@ -20,6 +20,12 @@ module.exports = {
         "@typescript-eslint/interface-name-prefix": "off",
         "@typescript-eslint/prop-types": "off",
         "react/display-name": "off",
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": ["@material-ui/*/*/*", "!@material-ui/core/test-utils/*"]
+          }
+        ]
     },
     settings: {
         react: {
