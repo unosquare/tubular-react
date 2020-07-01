@@ -29,7 +29,6 @@ export const TbRow: React.FunctionComponent<TbRowProps> = ({
                     <Checkbox
                         checked={selection.rowSelection[row[columns.find((c) => c.isKey).name]]}
                         onChange={() => {
-                            console.log(selection.rowSelection);
                             selection.toggleRowSelection(row[columns.find((c) => c.isKey).name]);
                         }}
                         value={selection.rowSelection[row[columns.find((c) => c.isKey).name]]}

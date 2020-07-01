@@ -37,13 +37,11 @@ export const useTbSelection = (tbInstance: ITbTableInstance, rowSelectionEnabled
         if (unSelectedCount === 0) {
             Object.keys(rowSelection).forEach((f) => (newRowSelection[f] = false));
             setRowSelection(newRowSelection);
-            console.log(newRowSelection);
             return;
         }
 
         // Indeterminate | non-selected
         Object.keys(rowSelection).forEach((f) => (newRowSelection[f] = true));
-        console.log(newRowSelection);
         setRowSelection(newRowSelection);
     };
 
