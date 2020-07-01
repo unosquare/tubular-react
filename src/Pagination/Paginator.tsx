@@ -50,7 +50,7 @@ export const Paginator: React.FunctionComponent<PaginatorProps> = ({
         count: state.filteredRecordCount,
         labelDisplayedRows: message(state.totalRecordCount, state.filteredRecordCount),
         onChangePage: (_e: any, page: number) => api.goToPage(page),
-        onChangeRowsPerPage: (e: any) => api.updateItemPerPage(Number(e.target.value)),
+        onChangeRowsPerPage: (e: any) => api.updateItemsPerPage(Number(e.target.value)),
         page: state.filteredRecordCount > 0 ? state.page : 0,
         rowsPerPage: state.itemsPerPage,
         rowsPerPageOptions: rowsPerPageOptions || [10, 20, 50],
