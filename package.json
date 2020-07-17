@@ -61,21 +61,21 @@
   },
   "homepage": "https://github.com/unosquare/tubular-react#readme",
   "dependencies": {
-    "@date-io/date-fns": "^2.6.2",
+    "@date-io/date-fns": "^2.8.0",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/pickers": "^4.0.0-alpha.8",
     "@svgr/parcel-plugin-svgr": "^5.4.0",
     "clsx": "^1.1.1",
-    "date-fns": "^2.14.0",
+    "date-fns": "^2.15.0",
     "react-virtualized": "^9.21.2",
-    "tubular-common": "^4.0.14",
+    "tubular-common": "^4.0.15",
     "tubular-react-common": "2.1.3",
-    "uno-material-ui": "^2.0.8",
-    "uno-react": "^0.16.21"
+    "uno-material-ui": "^2.0.9",
+    "uno-react": "^0.16.23"
   },
   "devDependencies": {
-    "@testing-library/react": "^10.4.6",
+    "@testing-library/react": "^10.4.7",
     "@testing-library/react-hooks": "^3.3.0",
     "@types/jest": "^26.0.4",
     "@types/react": "^16.9.43",
@@ -94,8 +94,8 @@
     "prettier": "^2.0.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "ts-jest": "^26.1.2",
-    "typescript": "^3.9.6"
+    "ts-jest": "^26.1.3",
+    "typescript": "^3.9.7"
   },
   "parcelCleanPaths": [
     "dist/*.*"
