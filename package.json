@@ -60,11 +60,13 @@
     "url": "https://github.com/unosquare/tubular-react/issues"
   },
   "homepage": "https://github.com/unosquare/tubular-react#readme",
-  "dependencies": {
-    "@date-io/date-fns": "^2.8.0",
+  "peerDependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
-    "@material-ui/pickers": "^4.0.0-alpha.8",
+    "@material-ui/pickers": "^4.0.0-alpha.8"
+  },
+  "dependencies": {
+    "@date-io/date-fns": "^2.8.0",
     "@svgr/parcel-plugin-svgr": "^5.4.0",
     "clsx": "^1.1.1",
     "date-fns": "^2.15.0",
