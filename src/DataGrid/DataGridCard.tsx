@@ -55,7 +55,7 @@ const renderBoolean = (column: ColumnModel, item: any) => (
 );
 
 const renderString = (column: ColumnModel, item: any) =>
-    item[column.name].length > 50 ? item[column.name].substring(0, 50) + '...' : renderGeneral(column, item);
+    (item[column.name] && item[column.name].length > 50) ? item[column.name].substring(0, 50) + '...' : renderGeneral(column, item);
 
 const columnRender = (column: ColumnModel, item: any) => {
     switch (column.dataType) {
