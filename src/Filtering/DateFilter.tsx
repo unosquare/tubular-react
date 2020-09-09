@@ -51,8 +51,6 @@ export const DateFilter: React.FunctionComponent<DateFilterProps> = ({ column }:
             <Grid container={true} direction="column">
                 <Grid item={true}>
                     <DatePicker
-                        autoOk={true}
-                        clearable={true}
                         label={isBetween ? 'From' : 'Select a date'}
                         value={dates[0]}
                         onChange={handleDateChange()}
@@ -62,8 +60,6 @@ export const DateFilter: React.FunctionComponent<DateFilterProps> = ({ column }:
                 {column.filterOperator === CompareOperators.Between && (
                     <Grid item={true}>
                         <DatePicker
-                            autoOk={true}
-                            clearable={true}
                             label="To"
                             value={dates[1]}
                             onChange={handleDateChange(true)}
