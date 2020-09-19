@@ -71,7 +71,7 @@
     "date-fns": "^2.16.1",
     "react-virtualized": "^9.22.2",
     "tubular-common": "^4.1.0",
-    "tubular-react-common": "2.1.11",
+    "tubular-react-common": "2.2.1",
     "uno-material-ui": "^2.0.10",
     "uno-react": "^0.18.5",
     "@material-ui/pickers": "^4.0.0-alpha.8"
