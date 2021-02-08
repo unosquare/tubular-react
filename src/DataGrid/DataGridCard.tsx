@@ -15,7 +15,7 @@ const useStyles = makeStyles(({ palette }: any) => ({
         paddingTop: 0,
     },
     cardBtn: {
-        color: palette.primary.dark,
+        color: 'none',
         textDecoration: 'none',
     },
     cardMobile: {
