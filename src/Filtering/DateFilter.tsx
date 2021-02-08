@@ -20,7 +20,7 @@ const getInitialDates = (column: ColumnModel) => {
         dates[0] = new Date(startDate);
     }
 
-    const toDate = Date.parse(column.filterArgument && column.filterArgument[0] ? column.filterArgument[0] : null);
+    const toDate = Date.parse(column.filterArgument && column.filterArgument[0] ? column.filterArgument[0].toString() : null);
 
     if (!isNaN(startDate)) {
         dates[1] = new Date(toDate);

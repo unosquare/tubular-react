@@ -5,6 +5,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPage from '@material-ui/icons/LastPage';
 import makeStyles from '@material-ui/styles/makeStyles';
 import * as React from 'react';
+import { getPages } from 'tubular-common';
 import Lang from '../utils/Lang';
 
 const useStyles = makeStyles({
@@ -21,37 +22,6 @@ export interface AdvancePaginationActionsProps {
     rowsPerPage: number;
     onChangePage(event: React.MouseEvent<HTMLElement>, page: number): void;
 }
-
-const getPages = (currentPage: number, totalRows: number, rowsPerPage: number) => {
-    const pages = [];
-
-    // Default page limits
-    const totalPages = Math.ceil(totalRows / rowsPerPage);
-    let startPage = 1;
-    let endPage = totalPages;
-    const maxSize = 6;
-    const isMaxSized = maxSize < totalPages;
-
-    // recompute if maxSize
-    if (isMaxSized) {
-        // Current page is displayed in the middle of the visible ones
-        startPage = Math.max(currentPage - Math.floor(maxSize / 2), 1);
-        endPage = startPage + maxSize - 1;
-
-        // Adjust if limit is exceeded
-        if (endPage > totalPages) {
-            endPage = totalPages;
-            startPage = endPage - maxSize + 1;
-        }
-    }
-
-    // Add page number links
-    for (let num = startPage; num <= endPage; num++) {
-        pages.push(num - 1);
-    }
-
-    return pages;
-};
 
 export const AdvancePaginationActions: React.FunctionComponent<AdvancePaginationActionsProps> = ({
     count,
