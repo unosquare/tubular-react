@@ -2,7 +2,7 @@ import TableCell from '@material-ui/core/TableCell';
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 import * as React from 'react';
-import { ColumnDataType, ColumnModel, getColumnAlign } from 'tubular-common';
+import { ColumnDataType, ColumnModel, getColumnAlign, parseDateColumnValue } from 'tubular-common';
 
 export const formatDate = (date: Date) =>
     date.toLocaleString('en-us', {
@@ -21,18 +21,19 @@ export const formatDateTime = (date: Date) =>
     });
 
 export const renderCellContent: any = (column: ColumnModel, row: any) => {
+    const value = row[column.name];
     switch (column.dataType) {
         case ColumnDataType.Numeric:
-            return row[column.name] || 0;
+            return value || 0;
         case ColumnDataType.Date:
-            return formatDate(row[column.name]);
         case ColumnDataType.DateTime:
         case ColumnDataType.DateTimeUtc:
-            return formatDateTime(row[column.name]);
+            const dateAsString = !value ? '' : parseDateColumnValue(column, value);
+            return dateAsString;
         case ColumnDataType.Boolean:
-            return row[column.name] === true ? <CheckBox /> : <CheckBoxOutlineBlank />;
+            return value === true ? <CheckBox /> : <CheckBoxOutlineBlank />;
         default:
-            return row[column.name];
+            return value;
     }
 };
 
