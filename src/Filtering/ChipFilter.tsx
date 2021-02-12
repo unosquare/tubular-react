@@ -11,8 +11,7 @@ export interface IChipFilterProps {
     onRemoveFilter: (columnName: string) => void;
 }
 
-const convertToFriendlyDateString = (date: string | number) => 
-    new Date(date).toDateString();
+const convertToFriendlyDateString = (date: string | number) => new Date(date).toDateString();
 
 const getFilterText = (column: ColumnModel) => {
     const isDate =
