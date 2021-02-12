@@ -9,7 +9,7 @@ import * as React from 'react';
 import { ColumnDataType, ColumnModel } from 'tubular-common';
 import { humanize } from 'uno-js';
 
-const useStyles = makeStyles(({ palette }: any) => ({
+const useStyles = makeStyles(() => ({
     cardActions: {
         justifyContent: 'flex-end',
         paddingTop: 0,
