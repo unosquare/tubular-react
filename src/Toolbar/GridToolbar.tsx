@@ -59,6 +59,7 @@ export const GridToolbar: React.FunctionComponent<GridToolbarProps> = ({
     const onApplyFeatures = (columns: ColumnModel[]) => {
         const newColumns = applyFilters(columns);
         tbTableInstance.api.setColumns(newColumns);
+        tbTableInstance.api.goToPage(1);
     };
 
     const [isPanelOpen, togglePanel] = useToggle(false);
