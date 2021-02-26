@@ -3,20 +3,17 @@ import * as React from 'react';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import { LocalStorage } from 'tubular-common';
-import { DataGrid, DetailBaseComponent } from '../../src';
+import { DataGrid } from '../../src';
 import { ToolbarOptions } from '../../src/Toolbar/ToolbarOptions';
 import columns from './data/columns';
 import localData from './data/localData';
+import DetailComponentProps from '../../src/BareBones/DetailComponentProps';
 
-export interface DetailBaseComponentProps {
-    row: any;
-}
-
-const DetailComponent: DetailBaseComponent = ({ row }: DetailBaseComponentProps) => (
-    <>This is a test with the row #{row.OrderID}</>
+const DetailComponent: React.FunctionComponent<DetailComponentProps> = ({ row }: DetailComponentProps) => (
+    <div>This is a test with the row #{row.OrderID}</div>
 );
 
-const MasterDetailRow: React.FunctionComponent = () => {
+const MasterDetailRowSample: React.FunctionComponent = () => {
     const [getErrorMessage, setErrorMessage] = React.useState(null as string);
     const [data, setData] = React.useState(localData);
 
@@ -60,10 +57,11 @@ const MasterDetailRow: React.FunctionComponent = () => {
                 onError={setErrorMessage}
                 toolbarOptions={toolbarOptions}
                 onRowClick={rowClick}
-                detailComponent={<DetailComponent />}
+                rowSelectionEnabled={true}
+                detailComponent={DetailComponent}
             />
         </div>
     );
 };
 
-export default MasterDetailRow;
+export default MasterDetailRowSample;

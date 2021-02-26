@@ -9,7 +9,7 @@ import ColumnFeatures from './ColumnFeatures/ColumnFeatures';
 import CustomLayoutDataGrid from './CustomLayoutDataGrid';
 import ErrorBoundary from './ErrorBoundary';
 import LocalDataGrid from './localDataGrid';
-import MasterDetailRow from './masterDetailRow';
+import MasterDetailRowSample from './masterDetailRowSample';
 import RemoteDataGrid from './remoteDataGrid';
 import RemoteGridList from './remoteGridList';
 import TbListExample from './TbListExample';
@@ -61,7 +61,7 @@ const Main: React.FunctionComponent = () => {
                 {currentValue === 2 && <LocalDataGrid />}
                 {currentValue === 3 && <CustomLayoutDataGrid />}
                 {currentValue === 4 && <RemoteGridList />}
-                {currentValue === 5 && <MasterDetailRow />}
+                {currentValue === 5 && <MasterDetailRowSample />}
                 {currentValue === 6 && <TbListExample />}
             </div>
         </ErrorBoundary>

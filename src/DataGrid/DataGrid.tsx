@@ -9,7 +9,7 @@ import { ColumnModel, DataGridStorage, TubularHttpClientAbstract, CompareOperato
 import { useTbTable } from 'tubular-react-common';
 import { useResolutionSwitch } from 'uno-react';
 import { TbRowProps } from '../BareBones/TbRow';
-import DetailComponet from '../DataGridInterfaces/DetailComponent';
+import DetailComponentProps from '../BareBones/DetailComponentProps';
 import { Paginator } from '../Pagination';
 import { GridToolbar } from '../Toolbar/GridToolbar';
 import { ToolbarOptions } from '../Toolbar/ToolbarOptions';
@@ -36,7 +36,7 @@ export interface DataGridProps {
     columns: ColumnModel[];
     dataSource: any[] | string | Request | TubularHttpClientAbstract;
     deps?: any[];
-    detailComponent?: React.ReactElement<DetailComponet>;
+    detailComponent?: React.FunctionComponent<DetailComponentProps>;
     gridName: string;
     storage?: DataGridStorage;
     toolbarOptions?: ToolbarOptions;
