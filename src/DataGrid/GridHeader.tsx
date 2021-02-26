@@ -3,14 +3,14 @@ import TableRow from '@material-ui/core/TableRow';
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
 import { ITbTableInstance } from 'tubular-react-common';
-import DetailComponent from '../DataGridInterfaces/DetailComponent';
 import { GridHeaderCell } from './GridHeaderCell';
 import Checkbox from '@material-ui/core/Checkbox';
 import { TbSelection } from '../utils/Selection';
+import DetailComponentProps from '../BareBones/DetailComponentProps';
 
 export interface GridHeaderProps {
     tbTableInstance: ITbTableInstance;
-    detailComponent?: React.ReactElement<DetailComponent>;
+    detailComponent?: React.FunctionComponent<DetailComponentProps>;
     rowSelectionEnabled: boolean;
     selection?: TbSelection;
 }

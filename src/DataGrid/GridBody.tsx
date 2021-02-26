@@ -2,14 +2,12 @@ import TableBody from '@material-ui/core/TableBody';
 import * as React from 'react';
 import { ITbTableInstance } from 'tubular-react-common';
 import { TbRowProps, TbRow } from '../BareBones/TbRow';
-import DetailComponent from '../DataGridInterfaces/DetailComponent';
-import { renderCells } from '../utils';
-import MasterDetailRow from './MasterDetailRow';
 import { NoDataRow } from './NoDataRow';
 import { TbSelection } from '../utils/Selection';
+import DetailComponentProps from '../BareBones/DetailComponentProps';
 
 interface GridBodyProps {
-    detailComponent?: React.ReactElement<DetailComponent>;
+    detailComponent?: React.FunctionComponent<DetailComponentProps>;
     tbTableInstance: ITbTableInstance;
     rowComponent: React.FunctionComponent<TbRowProps>;
     rowSelectionEnabled?: boolean;
@@ -42,6 +40,7 @@ export const GridBody: React.FunctionComponent<GridBodyProps> = ({
     const RowComponent = rowComponent ? rowComponent : TbRow;
     const onRowClickProxy = onRowClick ? generateOnRowClickProxy(onRowClick) : (_row: any): (() => void) => void 0;
     const { state } = tbTableInstance;
+    const columnKey = tbTableInstance.state.columns.find((c) => c.isKey);
 
     let content = null;
 
@@ -49,26 +48,13 @@ export const GridBody: React.FunctionComponent<GridBodyProps> = ({
         content = <NoDataRow columns={state.columns} styles={styles} />;
     } else {
         content = state.data.map((row: any, rowIndex: number) => {
-            if (detailComponent) {
-                return (
-                    <MasterDetailRow
-                        detail={detailComponent}
-                        renderCells={renderCells(state.columns, row)}
-                        clickEvent={onRowClickProxy}
-                        style={styles.row}
-                        key={rowIndex}
-                        rowData={row}
-                        columns={state.columns}
-                    />
-                );
-            }
-
             return (
                 <RowComponent
                     row={row}
-                    key={rowIndex}
+                    key={row[columnKey.name]}
                     rowIndex={rowIndex}
                     columns={state.columns}
+                    detailComponent={detailComponent}
                     onRowClick={onRowClickProxy(row)}
                     rowSelectionEnabled={rowSelectionEnabled}
                     selection={selection}
